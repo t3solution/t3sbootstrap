@@ -222,10 +222,12 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getHeaderClass($data)
 	{
-		$header['class'] = $data['tx_t3sbootstrap_header_class'];
+		#$header['class'] = $data['tx_t3sbootstrap_header_class'];
 		$header['class'] .= $data['header_position'] ? ' text-'.$data['header_position'] : '';
 
-		$header['hClass'] = $data['tx_t3sbootstrap_header_display'] ?: '';
+		$hClass = $data['tx_t3sbootstrap_header_class'];
+		$hClass .= ' '.$data['tx_t3sbootstrap_header_display'] ?: '';
+		$header['hClass'] = trim($hClass);
 
 		$header['hLinkClass'] = trim($header['hLinkClass']);
 
