@@ -2,7 +2,7 @@
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment> Effect 4 </f:comment>
 <figure class="image {file.properties.tx_t3sbootstrap_hover_effect}{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
-	<f:render partial="Media/Rendering/ImageNoTitle" arguments="{file: file, width: width, height: height, addmedia: addmedia, ratio: ratio}" />
+	<f:render partial="Media/Rendering/Image" arguments="{file: file, width: width, height: height, addmedia: addmedia, ratio: ratio, notitle: 'true'}" />
 	<figcaption class="image-caption">
 		{f:if(condition: '{file.title}', then: '<h2>{file.title}</h2>')}
 		{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}			
