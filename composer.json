@@ -22,7 +22,7 @@
     }
   },
   "replace": {
-    "t3sbootstrap": "self.version",
+    "t3sbs/t3sbootstrap": "self.version",
     "typo3-ter/t3sbootstrap": "self.version"
   }
 }
