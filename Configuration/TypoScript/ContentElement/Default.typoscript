@@ -183,6 +183,8 @@ tt_content {
 	            special = updated
 	            special {
 	                value.field = pages
+			mode = tstamp
+			limit = 20
 	                maxAge = 3600*24*30
 	                excludeNoSearchPages = 1
 	            }
