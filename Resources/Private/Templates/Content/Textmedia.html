@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>no header here</f:comment>
+</f:section>
+<f:section name="Main">
+<f:if condition="{gallery.count.files}">
+	<f:then>
+		<f:if condition="{data.bodytext} || {data.header} || {data.subheader}">
+			<f:then>
+				<f:if condition="!{gallery.headerBeside}">
+					<f:render partial="Header/All" arguments="{_all}" />
+				</f:if>
+				<f:render partial="Content/TextWithImage" arguments="{_all}" />
+			</f:then>
+			<f:else>
+				<f:render partial="Content/Media/Gallery" arguments="{_all}" />
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{data.bodytext}">
+			<f:then>
+				<f:render partial="Content/Text" arguments="{_all}" />
+			</f:then>
+			<f:else>
+				<f:render partial="Header/All" arguments="{_all}" />
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+</f:section>
+</html>

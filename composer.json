@@ -1,0 +1,28 @@
+{
+  "name": "t3sbs/t3sbootstrap",
+  "description": "Startup extension to use bootstrap 4 classes, components and more out of the box. Example and info: www.t3sbootstrap.de",
+  "keywords": ["typo3", "typo3 cms", "bootstrap"],
+  "homepage": "https://t3sbootstrap.de",
+  "authors": [
+    {
+      "name": "Helmut Hackbarth",
+      "email": "info@t3solution.de"
+    }
+  ],
+  "license": "GPL-2.0+",
+  "type": "typo3-cms-extension",
+  "require": {
+    "typo3/cms-core": ">=9.5.7, <9.5.99",
+    "gridelementsteam/gridelements": ">=9.3.0, <9.9.99",
+    "svewap/ws-scss": ">=1.1.12, <1.1.99"
+  },
+  "autoload": {
+    "psr-4": {
+      "T3SBS\\T3sbootstrap\\": "Classes/"
+    }
+  },
+  "replace": {
+    "t3sbootstrap": "self.version",
+    "typo3-ter/t3sbootstrap": "self.version"
+  }
+}

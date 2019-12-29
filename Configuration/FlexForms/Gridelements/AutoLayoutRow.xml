@@ -1,0 +1,137 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Alignment</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+
+					<justify>
+						<TCEforms>
+							<label>Justify content</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">start (default)</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">between</numIndex>
+										<numIndex index="1">between</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">around</numIndex>
+										<numIndex index="1">around</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</justify>
+
+					<alignItem>
+						<TCEforms>
+							<label>Align items</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">start</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">baseline</numIndex>
+										<numIndex index="1">baseline</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">stretch</numIndex>
+										<numIndex index="1">stretch</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</alignItem>
+
+					<responsiveVariations>
+						<TCEforms>
+							<label>Responsive Variations</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">xs</numIndex>
+										<numIndex index="1">xs</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">sm</numIndex>
+										<numIndex index="1">sm</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">md</numIndex>
+										<numIndex index="1">md</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">lg</numIndex>
+										<numIndex index="1">lg</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">xl</numIndex>
+										<numIndex index="1">xl</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</responsiveVariations>
+
+					<noGutters>
+						<TCEforms>
+							<label>No gutters</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</noGutters>
+
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

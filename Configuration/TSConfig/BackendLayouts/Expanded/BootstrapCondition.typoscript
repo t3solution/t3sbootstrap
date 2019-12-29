@@ -1,0 +1,71 @@
+# Set Condition in Modul 'Web' T3SB Config
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition Content]
+# Content only (no Jumbotron = 3 & no Footer = 4)
+mod.SHARED.colPos_list = 0,1,2
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition Jumbotron]
+# Content & Jumbotron
+mod.SHARED.colPos_list = 0,1,2,3
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition Footer]
+# Content & Footer
+mod.SHARED.colPos_list = 0,1,2,4
+[END]
+
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition All]
+# Content & Footer & Jumbotron
+mod.SHARED.colPos_list = 0,1,2,3,4
+[END]
+
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition AllandTop]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,3,4,20
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition AllandBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,3,4,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition JumbotronandTop]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,3,20
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition JumbotronandBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,3,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition FooterandTop]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,4,20
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition FooterandBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,4,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition ContentandTop]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,20
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition ContentandBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition AllandTopBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,3,4,20,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition JumbotronandTopBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,3,20,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition FooterandTopBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,4,20,21
+[END]
+[T3SBS\T3sbootstrap\UserFunction\BootstrapCondition ContentandTopBottom]
+# All & expanded Top
+mod.SHARED.colPos_list = 0,1,2,20,21
+[END]
+
+
+
+

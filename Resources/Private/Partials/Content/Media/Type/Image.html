@@ -1,0 +1,94 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && {file.link} && ({file.description} || {file.title})">
+	<f:then>
+		<f:render partial="Media/Effect/{file.properties.tx_t3sbootstrap_hover_effect}" arguments="{file: file, dimensions: dimensions, addmedia: addmedia,
+		 ratio: ratio}" />
+	</f:then>
+	<f:else>
+		<figure class="image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+			<f:if condition="{file.link}">
+				<f:then>
+					<f:link.typolink parameter="{file.link}" title="{file.title}">
+						<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia}" />
+					</f:link.typolink>
+				</f:then>
+				<f:else>
+					<f:if condition="{addmedia.imagezoom}">
+						<f:then>
+						<f:comment> Lightbox (zoom) </f:comment>
+							<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
+								<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia}" />
+								<f:comment> magnifying glass-icon </f:comment>
+								<f:if condition="{settings.magnifying}">
+									<div class="zoom-overlay{addmedia.zoomOverlay}{f:if(condition: file.description, then: ' description')}">
+										<span class="magnifying-glass-icon">
+											<i class="fas fa-search-plus"></i>
+										</span>
+									</div>
+								</f:if>
+							</ce:link.clickEnlarge>
+						</f:then>
+						<f:else>
+							<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia}" />
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+			<f:comment> Copyright notice && !{celink} </f:comment>
+			<f:if condition="{settings.imgCopyright} == 2 && !{celink}">
+				<f:then>
+					<f:render section="CopyrightOnClick" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:render section="Copyright" arguments="{_all}" />
+				</f:else>
+			</f:if>
+			<f:comment> Description </f:comment>
+			<f:if condition="{file.description}">
+				<div class="caption-wrapper" style="max-width: {dimensions.width}px;">
+					<figcaption class="image-caption text-{file.properties.tx_t3sbootstrap_description_align}">
+						{file.description -> f:format.raw()}
+					</figcaption>
+				</div>
+			</f:if>		
+		</figure>
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="CopyrightOnClick">
+<f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
+	<span class="img-copyright {file.properties.tx_t3sbootstrap_copyright_color}">
+		 <i class="far fa-copyright fa-lg"></i>		
+	</span>
+	<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+		<div class="toast-header">
+			<strong class="mr-auto">Copyright</strong>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body text-left">
+			{file.properties.tx_t3sbootstrap_copyright}
+			<f:if condition="{file.properties.tx_t3sbootstrap_copyright_source}">
+				<br />
+				<nobr>
+				<f:link.typolink parameter="{file.properties.tx_t3sbootstrap_copyright_source}" target="_blank">
+					{file.properties.tx_t3sbootstrap_copyright_source}
+				</f:link.typolink>
+				</nobr>		
+			</f:if>
+		</div>
+	</div>	
+</f:if>
+</f:section>
+
+<f:section name="Copyright">
+<f:if condition="{settings.imgCopyright} && {file.properties.tx_t3sbootstrap_copyright}">
+	<span class="img-copyright-default {file.properties.tx_t3sbootstrap_copyright_color}">
+		<span class="copyright">&copy;</span> <span class="copyright-note">{file.properties.tx_t3sbootstrap_copyright}</span>			
+	</span>
+</f:if>
+</f:section>

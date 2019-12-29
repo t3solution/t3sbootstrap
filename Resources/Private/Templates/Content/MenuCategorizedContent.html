@@ -1,0 +1,16 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+	<f:if condition="{content}">
+		<ul class="nav catcontent{menudirection}{menupills}{menuHorizontalAlignment}">
+			<f:for each="{content}" as="element">
+				<li class="nav-item">
+					<f:link.page pageUid="{element.data.pid}" section="{element.data.uid}" class="nav-link{f:if(condition:'{data.pid} == {element.data.uid}',then:' active')}" title="{element.data.header}">
+						{f:if(condition:'{element.data.header}',then:'{element.data.header}', else:'{element.data.uid} no header')}
+					</f:link.page>
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+</f:section>
+</html>

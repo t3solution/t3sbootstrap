@@ -1,0 +1,884 @@
+
+temp.jsFooterInline = COA
+temp.jsFooterInline {
+
+1 = TEXT
+1.value (
+
+	var isHover = false;
+	var navbarHeight = $("#main-navbar").outerHeight();
+	var fixedNavbar = false;
+
+	if ( $("#main-navbar").hasClass("fixed-top") || $("#main-navbar").hasClass("sticky-top") ) {
+		fixedNavbar = true;
+	}
+
+	// toast active
+	var toast = $('.toast');
+	if ( toast.length ) {
+		$('.toast').toast('show');
+	}
+
+	// collapse
+	var collapse = $( ".collapsible-accordion" );
+	if ( collapse.length && window.location.hash ) {
+		collapse.removeClass("show");
+		var hashArr = window.location.hash.split('c'),
+			coll = $('#collapse-'+hashArr[1]);
+		if (coll.length) {
+			$('#collapse-'+hashArr[1]).addClass('show');
+			var offsetSize = 0;
+			if ( fixedNavbar ) {
+				offsetSize = navbarHeight;
+			}
+			var collAnchor = '#collapse-'+hashArr[1];
+			$("html, body").stop().animate({
+				scrollTop: $(collAnchor).offset().top-offsetSize
+			}, 1500, "easeInOutExpo");
+		}
+	}
+
+	// collapsible active scroll to top
+	$('.collapse').on('shown.bs.collapse', function(e) {
+	  var $card = $(this).closest('.card');
+	  if ( $card.length ) {
+		$('html,body').animate({
+			scrollTop: $card.offset().top-100
+		}, 500);
+	  }
+	});
+
+	// card image overlay on mobile only
+	if ( $(window).width() < 576  && $('.img-overlay').length ) {
+		$('.card .img-overlay').each(function() {
+			$(this).addClass( "card-img-overlay d-flex align-items-end" );
+		});
+	}
+
+	// scroll anchor
+	if (window.location.hash) { 
+		$("html, body").stop().animate({
+			scrollTop: $(window.location.hash).offset().top-180
+		}, 1500, "easeInOutExpo");
+	}
+
+
+
+)
+
+
+
+3 = TEXT
+3.value (
+
+	//  viewportChecker for animate.css - page.jsFooterInline.5.3
+	$( '.animated' ).each(function() {
+		$(this).viewportChecker({{$bootstrap.animateCssInlineJs}});
+	});
+
+
+)
+3.if {
+	value = 2
+	equals = {$bootstrap.extconf.animateCss}
+}
+
+4 = TEXT
+4.value (
+
+	// loading Spinner - page.jsFooterInline.5.4
+	$(window).bind("load", function() {
+	    $('#status').fadeOut();
+	    $('#site-preloader').delay(350).fadeOut('slow');
+	});
+
+
+)
+4.if.isTrue = {$bootstrap.config.loadingSpinner}
+
+5 = TEXT
+5.value (
+
+	// lightbox - page.jsFooterInline.5.5
+	baguetteBox.run(".gallery, .image-gallery");
+
+
+)
+5.if.isTrue = {$bootstrap.config.lightboxSelection}
+
+6 = TEXT
+6.value (
+
+	// dropdown menu - page.jsFooterInline.5.6
+	$(".dropdown-menu a.dropdown-toggle").on("click", function() {
+		if (!$(this).next().hasClass("show")) {
+			$(this).parents(".dropdown-menu").first().find(".show").removeClass("show");
+		}
+		var $subMenu = $(this).next(".dropdown-menu");
+		$subMenu.toggleClass("show");
+
+		$(this).parents("li.nav-item.dropdown.show").on("hidden.bs.dropdown", function() {
+			$(".dropdown-submenu .show").removeClass("show");
+		});
+
+		return false;
+	});
+
+
+)
+6.if {
+	isFalse.cObject = TEXT
+	isFalse.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
+}
+
+7 = TEXT
+7.value (
+
+	// sectionmenu in navbar (one-page-layout) - page.jsFooterInline.5.7 - Animated scrolling and scrollspy
+	$(".section-menu a.js-scroll-trigger").bind("click", function(event) {
+		var anchor = $(this).attr("href");
+		anchor = anchor.split('#');
+		anchor =  "#"+anchor[1];
+
+		if (anchor.length) {
+			var offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
+			if ( fixedNavbar ) {
+				offsetSize = navbarHeight+offsetSize;
+			}
+			$("html, body").stop().animate({
+				scrollTop: $(anchor).offset().top-offsetSize+4
+			}, 1500, "easeInOutExpo");
+			return false;
+		}
+	});
+
+	// Closes responsive menu when a scroll trigger link is clicked
+	$("a.js-scroll-trigger").click(function() {
+		$(".navbar-collapse").collapse("hide");
+	});
+
+	// Activate scrollspy to add active class to navbar items on scroll
+	$("body").scrollspy({
+		target: "#main-navbar",
+		offset: {$bootstrap.config.sectionmenuScrollspyOffset}
+	});
+
+
+)
+7.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
+}
+
+
+8 = TEXT
+8.value (
+
+	// link to top - page.jsFooterInline.5.8
+	var offset = 220;
+	var duration = 500;
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > offset) {
+			$(".back-to-top").fadeIn(duration);
+		} else {
+			$(".back-to-top").fadeOut(duration);
+		}
+	});
+	$(".back-to-top").click(function(event) {
+		event.preventDefault(event);
+		$("html, body").animate({scrollTop: 0}, duration);
+		return false;
+	});
+
+
+)
+8.if.isTrue.data = page:tx_t3sbootstrap_linkToTop
+
+9 = TEXT
+9.value (
+
+	// sticky footer - page.jsFooterInline.5.9
+	var footerHeight = $("#page-footer").outerHeight()-8,
+		footerExtraHeight = {$bootstrap.config.stickyFooterExtraPadding};
+
+	if ( footerExtraHeight > 0 ) {
+		footerHeight += footerExtraHeight;
+	}
+
+	if ( $("#page-footer").hasClass("footer-sticky") ) {
+		$("body").css("padding-bottom", footerHeight+"px");
+	}
+
+
+)
+9.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:footer_sticky
+}
+
+10 = TEXT
+10.value (
+
+	// carousel - page.jsFooterInline.5.10
+	var carousel = $( ".carousel .carousel-inner .carousel-item:first-child" );
+	if ( carousel.length ) {
+		carousel.addClass( "active" );
+	}
+
+	var cardSlider = $( ".carousel.card-slider" );
+	if ( cardSlider.length ) {
+		$(".carousel.card-slider").on("slide.bs.carousel", function(e) {
+			var $e = $(e.relatedTarget);
+			var idx = $e.index();
+			var itemsPerSlide = 3;
+			var totalItems = $(".carousel-item").length;
+
+			if (idx >= totalItems - (itemsPerSlide - 1)) {
+				var it = itemsPerSlide - (totalItems - idx);
+				for (var i = 0; i < it; i++) {
+					if (e.direction == "left") {
+						$(".carousel-item")
+						.eq(i)
+						.appendTo(".carousel-inner");
+					} else {
+						$(".carousel-item")
+						.eq(0)
+						.appendTo(".carousel-inner");
+					}
+				}
+			}
+		});
+	}
+
+
+)
+
+11 = TEXT
+11.value (
+
+	// Mega menu - page.jsFooterInline.5.11
+	$(document).on("click", ".mega-dropdown", function(event) {
+	  event.stopPropagation();
+	})
+
+
+)
+11.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
+}
+
+12 = TEXT
+12.value (
+
+	// nav tab - page.jsFooterInline.5.12
+	var tab = $( ".tab-content .tab-pane:first-child" );
+	if ( tab.length ) {
+		if ( window.location.hash ) {
+			var tabHashArr = window.location.hash.split('c');
+			$('.nav[role="tablist"] a[href="#tab-content-'+tabHashArr[1]+'"]').tab('show');
+			var tabOffsetSize = 30;
+			if ( fixedNavbar ) {
+				tabOffsetSize = navbarHeight+30;
+			}
+			var tabAnchor = '#tab-'+tabHashArr[1];
+
+			if ($(tabAnchor).length) {
+				$("html, body").stop().animate({
+					scrollTop: $(tabAnchor).offset().top-tabOffsetSize
+				}, 1500, "easeInOutExpo");
+			}
+
+		} else {
+			tab.addClass( "show active" );
+		}
+	}
+
+
+)
+
+13 = TEXT
+13.value (
+
+	// Navbar sticky-top - page.jsFooterInline.5.13
+	var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+		var stickyHeight = sticky.outerHeight();
+		var stickyTop = stickyWrapper.offset().top;
+		if (scrollElement.scrollTop() >= stickyTop){
+			stickyWrapper.height(stickyHeight);
+			sticky.addClass("is-sticky");
+		} else{
+			sticky.removeClass("is-sticky");
+			stickyWrapper.height('auto');
+		}
+	};
+
+	$('[data-toggle="sticky-onscroll"]').each(function() {
+		var sticky = $(this);
+		var stickyWrapper = $('<div>').addClass('sticky-wrapper');
+		sticky.before(stickyWrapper);
+		sticky.addClass('sticky');
+
+		$(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+			stickyToggle(sticky, stickyWrapper, $(this));
+		});
+		stickyToggle(sticky, stickyWrapper, $(window));
+	});
+
+
+)
+13.if {
+	value.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_placement
+	equals = sticky-top
+}
+
+14 = TEXT
+14.value (
+
+	// sectionmenu animated scrolling and scrollspy - page.jsFooterInline.5.14 - Animated scrolling
+	$("#sectionmenu .section-menu a.scroll-trigger").bind("click", function(event) {
+		event.preventDefault();
+		var anchor = $(this).attr("href");
+		anchor = anchor.split('#');
+		anchor =  "#"+anchor[1];
+		if (anchor.length) {
+
+
+			var sectionmenuHeight = 0;
+			//var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row-reverse");
+			var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row");
+			var offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
+
+			// If is in sidebar (aside)
+			if ($("#sectionmenu").parent('aside').length) {
+				// do nothing
+			} else {
+				if (sectionmenuRow) {
+					// add menu height if flex-row
+					sectionmenuHeight = $("#sectionmenu").outerHeight();
+					offsetSize = sectionmenuHeight+offsetSize;
+				}
+			}
+
+			if ( fixedNavbar ) {
+				offsetSize = offsetSize + navbarHeight;
+			}
+
+			if ( $("#sectionmenu").hasClass("position-fixed") === false ) {
+				offsetSize = offsetSize + (sectionmenuHeight * 2) - 30;
+			}
+
+			if($(anchor).length)
+			$("html, body").stop().animate({
+				scrollTop: $(anchor).offset().top-offsetSize
+			}, 1500, "easeInOutExpo");
+			return false;
+		}
+
+	});
+
+	// Activate scrollspy to add active class to sectionmenu items on scroll
+	var bgi = $('body').hasClass("bgi");
+	if (!bgi)
+	//$("body").css("position", "relative");
+	$("body").scrollspy({
+		target: "#sectionmenu",
+		offset: {$bootstrap.config.sectionmenuScrollspyOffset}
+	});
+)
+14.if.isTrue = {$bootstrap.config.sectionmenuScrolling}
+
+15 = TEXT
+15.value (
+
+	// sticky top for section-menu etc. - page.jsFooterInline.5.15
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.md} ) {
+
+		// only one is supported
+		if ($('#sectionmenu').length || $('#submenu').length || $('.make-me-sticky').length) {
+
+			var offsetSize = 30;
+			var affix = $('.make-me-sticky');
+
+			if ($('#submenu').length)		affix = $('#submenu');
+			if ($('#sectionmenu').length)	affix = $('#sectionmenu');
+
+			if ( affix.length ){
+
+				// if is in Sidebar (aside)
+				if ( affix.parent('aside').length ) {
+					offsetSize = 30;
+				}
+
+				// if Navbar is fixed-top
+				if ( fixedNavbar ) {
+					if ( $("#main-navbar").hasClass("shrink") ) {
+						offsetSize = 60+offsetSize;
+					} else {
+						offsetSize = navbarHeight+offsetSize;
+					}
+				}
+
+				var affixWidth = affix.outerWidth();
+				var affixOffsetLeft = affix.offset().left;
+				var affixOffsetTop = affix.offset().top;
+				$(window).scroll(function() {
+					if ( (affixOffsetTop  - $(window).scrollTop()) > offsetSize) {
+						affix.removeClass('position-fixed').removeClass('my-0').css({'top' : '','left' : '','width' : '','z-index' : ''});
+					} else {
+						affix.addClass('position-fixed').addClass('my-0').css({'top' : offsetSize,'left' : affixOffsetLeft,'width' : affixWidth,'z-index' : 999});
+					}
+				});
+			}
+		}
+	}
+
+
+)
+15.if.isTrue = {$bootstrap.config.sectionmenuStickyTop}
+
+16 = TEXT
+16.value (
+
+	// magnifying glass icon - page.jsFooterInline.5.16
+	var magnify = $('.zoom-overlay');
+	if ( magnify.length ) {
+		$('figure.image').each(function() {
+			var img = $(this).find('img');
+			var imgwidth = $(img).outerWidth()+'px';
+			var imgheight = $(img).height()+'px';
+			var zoomOverlay = $(this).find('a div.zoom-overlay');
+			if ( $(window).width() < 576 ) {
+				imgwidth = '100%';
+			}
+			if ( zoomOverlay.length ) {
+				zoomOverlay.addClass('card-img-overlay');
+				if ( imgwidth ) {
+					zoomOverlay.css('max-width', imgwidth);
+				}
+				if ( imgheight ) {
+					zoomOverlay.css('max-height', imgheight);
+				}
+			}
+		});
+	}
+
+
+)
+16.if.isTrue = {$bootstrap.config.magnifying}
+16.if.isFalse = {$bootstrap.extconf.lazyLoad}
+
+17 = TEXT
+17.value (
+
+	// card-flipper rotate on click - page.jsFooterInline.5.17
+	$(".card-flipper").addClass("cardflipper").removeClass("card-flipper");
+	$(".cardflipper .mainflip .fa-plus-square").on("click", function() {
+		$(this).parents(".frontside").css("transform", "rotateY(180deg)");
+		$(this).parents(".mainflip").find(".backside").css("transform", "rotateY(0deg)");
+		$(this).parents(".mainflip").find(".backside .jsfooter").remove();
+		$(this).parents(".mainflip").find(".backside .card-body")
+		.after( "<div class='card-footer jsfooter text-center'><i class='fas fa-minus-square fa-2x mx-auto'></i></div>" );
+		$(".cardflipper .mainflip .fa-minus-square").on("click", function() {
+			$(this).parents(".backside").css("transform", "rotateY(180deg)");
+			$(this).parents(".mainflip").find(".frontside").css("transform", "rotateY(0deg)");
+		});
+	});
+
+
+)
+17.if.isTrue = {$bootstrap.config.cardFlipperOnClick}
+
+
+18 = TEXT
+18.value (
+
+	// img copyright on click - page.jsFooterInline.5.18
+	$(".image .toast").removeClass("show").addClass("hide");
+	$(".img-copyright").on("click", function() {
+		$(this).addClass("d-none");
+		var iw = $(this).parent().find("img").width();
+		var th = $(this).parent().find(".toast").outerHeight();
+		$(this).parent().find(".toast").css('max-width', iw+'px').toast('show');
+		$(this).parent().find(".toast").css('margin-top', -th+'px').toast('show');
+	});
+	$(".close").on("click", function() {
+		$(this).parent().parent().prev().removeClass("d-none");
+	});
+
+
+)
+18.if {
+	value = 2
+	equals = {$bootstrap.extconf.imgCopyright}
+}
+
+
+19 = TEXT
+19.value (
+
+	// dropdownAnimate 2 - page.jsFooterInline.5.19
+	$('.dropdown').on('show.bs.dropdown', function(e){
+		$(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
+	});
+
+	$('.dropdown').on('hide.bs.dropdown', function(e){
+		$(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
+	});
+
+
+)
+19.if {
+	value = 2
+	equals = {$bootstrap.navbar.dropdownAnimate}
+}
+
+
+
+
+# Navbar hover dependent on the breakpoint
+50 = TEXT
+50.value (
+
+	// Navbar hover - page.jsFooterInline.5.50
+	function navbarHover() {
+		isHover = true;
+		$("ul.navbar-nav .dropdown, ul.navbar-nav .dropdown-submenu").hover(function() {
+			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeIn();
+			$(this).addClass("show");
+			$(this).next(".dropdown-menu").addClass("show");
+			$(this).next("a").attr("aria-expanded","true");
+		}, function() {
+			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeOut();
+			$(this).removeClass("show");
+			$(this).next(".dropdown-menu").removeClass("show");
+			$(this).next("a").attr("aria-expanded","false");
+		});
+	}
+
+
+)
+50.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
+}
+
+
+51 = TEXT
+51.value (
+
+	// Navbar hover - page.jsFooterInline.5.51 - sm
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.sm}-1 ) {
+		navbarHover();
+
+	}
+
+)
+51.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
+	value.data = register:breakpoint
+	equals = sm
+}
+52 = TEXT
+52.value (
+
+	// Navbar hover - page.jsFooterInline.5.52 - md
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.md}-1 ) {
+		navbarHover();
+
+	}
+
+)
+52.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
+	value.data = register:breakpoint
+	equals = md
+}
+53 = TEXT
+53.value (
+
+	// Navbar hover - page.jsFooterInline.5.53 - lg
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.lg}-1 ) {
+		navbarHover();
+
+	}
+
+)
+53.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
+	value.data = register:breakpoint
+	equals = lg
+}
+54 = TEXT
+54.value (
+
+	// Navbar hover - page.jsFooterInline.5.54 - xl
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.xl}-1 ) {
+		navbarHover();
+
+	}
+)
+54.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
+	value.data = register:breakpoint
+	equals = xl
+}
+
+
+55 = TEXT
+55.value (
+
+	// Navbar hover - page.jsFooterInline.5.55 - no
+	navbarHover();
+
+)
+55.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
+	value.data = register:breakpoint
+	equals = no
+}
+
+
+
+60 = TEXT
+60.value (
+
+	// Clickable parent from dropdown menu - page.jsFooterInline.5.60
+	$(".nav-item.dropdown a.nav-link.dropdown-toggle").on("click",function(e){
+		if ($(this).next(".dropdown-menu").is(":visible")) {
+			window.location = $(this).attr("href");
+		}
+	});
+
+	$(".dropdown-submenu a.dropdown-item.dropdown-toggle").on("click", function() {
+		if ($(this).next(".dropdown-menu").is(":hidden") || isHover) {
+			window.location = $(this).attr("href");
+		}
+	});
+
+	$("#submenu a.nav-link").on("click", function(e) {
+		if ($(this).hasClass("active")) {
+			e.preventDefault();
+		} else {
+			if ($(this).next(".collapse").is(":visible")) {
+				$('#submenu').on('hide.bs.collapse', function (e) {
+					e.preventDefault();
+				});
+				window.location = $(this).attr("href");
+			}
+		}
+	});
+
+
+
+)
+60.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_clickableparent
+}
+
+
+61 = TEXT
+61.value (
+
+	// Shrinking Navbar on scrolling - page.jsFooterInline.5.61
+	var navShrinkColorschemes = $('#main-navbar').data('shrinkcolorschemes'),
+		navShrinkColor = $('#main-navbar').data('shrinkcolor'),
+		navColorschemes = $('#main-navbar').data('colorschemes'),
+		navColor = $('#main-navbar').data('color');
+
+	$(window).scroll(function() {
+		if ($("#main-navbar").offset().top > 100) {
+			$("#main-navbar").removeClass("py-{$bootstrap.config.shrinkingNavPadding}").removeClass(navColorschemes).removeClass(navColor)
+			.addClass("navbar-shrink").addClass(navShrinkColor).addClass(navShrinkColorschemes);
+		} else {
+			$("#main-navbar").addClass("py-{$bootstrap.config.shrinkingNavPadding}").removeClass("navbar-shrink").removeClass(navShrinkColor).removeClass(navShrinkColorschemes)
+			.addClass(navColorschemes).addClass(navColor);
+		}
+	});
+
+
+)
+61.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_shrinkcolor
+}
+
+
+
+70 = TEXT
+70.value (
+
+	// offcanvas navbar - page.jsFooterInline.5.70
+	$('[data-toggle="offcanvas"]').on('click', function () {
+		$('.offcanvas-collapse').toggleClass('open')
+	})
+
+
+)
+70.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+}
+71 = TEXT
+71.value (
+
+	// offcanvas navbar container - page.jsFooterInline.5.71 - sm
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.sm} ) {
+		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+	}
+
+)
+71.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+	value.data = register:breakpoint
+	equals = sm
+}
+72 = TEXT
+72.value (
+
+	// offcanvas navbar container - page.jsFooterInline.5.72 - md
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.md} ) {
+		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+	}
+
+)
+72.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+	value.data = register:breakpoint
+	equals = md
+}
+73 = TEXT
+73.value (
+
+	// offcanvas navbar container - page.jsFooterInline.5.73 - lg
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.lg} ) {
+		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+	}
+
+)
+73.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+	value.data = register:breakpoint
+	equals = lg
+}
+74 = TEXT
+74.value (
+
+	// offcanvas navbar container - page.jsFooterInline.5.74 - xl
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.xl} ) {
+		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+	}
+
+)
+74.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+	value.data = register:breakpoint
+	equals = xl
+}
+75 = TEXT
+75.value (
+
+	// offcanvas navbar container - page.jsFooterInline.5.75 - no
+	$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+
+)
+75.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+	value.data = register:breakpoint
+	equals = no
+}
+
+
+
+
+
+
+# Mega-Menu - dependent on the breakpoint
+
+151 = TEXT
+151.value (
+
+	// Navbar mega-menu - page.jsFooterInline.5.151 - sm
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.sm} ) {
+		$(".remove-sm").remove();
+	} else {
+		$(".show-sm").remove();
+	}
+
+)
+151.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
+	value.data = register:breakpoint
+	equals = sm
+}
+
+152 = TEXT
+152.value (
+
+	// Navbar mega-menu - page.jsFooterInline.5.152 - md
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.md} ) {
+		$(".remove-md").remove();
+	} else {
+		$(".show-md").remove();
+	}
+
+)
+152.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
+	value.data = register:breakpoint
+	equals = md
+}
+
+153 = TEXT
+153.value (
+
+	// Navbar mega-menu - page.jsFooterInline.5.153 - lg
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.lg} ) {
+		$(".remove-lg").remove();
+	} else {
+		$(".show-lg").remove();
+	}
+
+)
+153.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
+	value.data = register:breakpoint
+	equals = lg
+}
+
+154 = TEXT
+154.value (
+
+	// Navbar mega-menu - page.jsFooterInline.5.154 - xl
+	if ( $(window).width() < {$bootstrap.navbar.breakpoint.xl} ) {
+		$(".remove-xl").remove();
+	} else {
+		$(".show-xl").remove();
+	}
+
+)
+154.if {
+	isTrue.cObject = TEXT
+	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
+	value.data = register:breakpoint
+	equals = xl
+}
+
+
+
+
+}

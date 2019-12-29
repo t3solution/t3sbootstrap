@@ -1,0 +1,130 @@
+# ===============================================================================
+# tt_content configuration
+# ===============================================================================
+tt_content {
+
+	# **********************************************************
+	# BOOTSTAP: Button
+	# **********************************************************
+	t3sbs_button =< lib.contentElement
+	t3sbs_button.templateName = Button
+	t3sbs_button.stdWrap.editIcons = tt_content
+
+	# **********************************************************
+	# BOOTSTAP: Card
+	# **********************************************************
+	t3sbs_card =< lib.contentElement
+	t3sbs_card {
+		templateName = Card
+		dataProcessing {
+			10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+			10 {
+				references.fieldName = assets
+			}
+			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
+			20 {
+				maxGalleryWidth = {$styles.content.textmedia.maxW}
+				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
+				columnSpacing = {$styles.content.textmedia.columnSpacing}
+				borderWidth = {$styles.content.textmedia.borderWidth}
+				borderPadding = {$styles.content.textmedia.borderPadding}
+				defaultImgWidthBig = {$bootstrap.image.default.width.big}
+				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+			}
+			223 = T3SBS\T3sbootstrap\DataProcessing\CardProcessor
+		}
+	}
+	t3sbs_card.stdWrap.editIcons = tt_content
+
+	# **********************************************************
+	# BOOTSTAP: Carousel
+	# **********************************************************
+	t3sbs_carousel =< lib.contentElement
+	t3sbs_carousel {
+		templateName = Carousel
+		settings.defaultHeaderType = 3
+		dataProcessing {
+			10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+			10 {
+				references.fieldName = image
+			}
+		}
+	}
+	t3sbs_carousel.stdWrap.editIcons = tt_content
+
+	# **********************************************************
+	# BOOTSTAP: Media object
+	# **********************************************************
+	t3sbs_mediaobject =< lib.contentElement
+	t3sbs_mediaobject {
+		templateName = Mediaobject
+		dataProcessing {
+			10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+			10 {
+				references.fieldName = assets
+			}
+			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
+			20 {
+				maxGalleryWidth = {$styles.content.textmedia.maxW}
+				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
+				columnSpacing = {$styles.content.textmedia.columnSpacing}
+				borderWidth = {$styles.content.textmedia.borderWidth}
+				borderPadding = {$styles.content.textmedia.borderPadding}
+				defaultImgWidthBig = {$bootstrap.image.default.width.big}
+				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				pageContainer.cObject = TEXT
+				pageContainer.cObject.data.dataWrap = DB:pages:{page:uid}:tx_t3sbootstrap_container
+			}
+		}
+	}
+	t3sbs_mediaobject.stdWrap.editIcons = tt_content
+
+	# **********************************************************
+	# Bootstrap Image Gallery
+	# **********************************************************
+	t3sbs_gallery =< lib.contentElement
+	t3sbs_gallery {
+		templateName = ImageGallery
+		settings.defaultHeaderType = 2
+		dataProcessing {
+			10 = T3SBS\T3sbootstrap\DataProcessing\BsImageGalleryProcessor
+			10 {
+				references.fieldName = assets
+				as = files
+				collections.field = file_collections
+				sorting.field = filelink_sorting
+			}
+		}
+	}
+	t3sbs_gallery.stdWrap.editIcons = tt_content
+
+	# **********************************************************
+	# BOOTSTAP: Toast
+	# **********************************************************
+	t3sbs_toast =< lib.contentElement
+	t3sbs_toast {
+		templateName = Toast
+		dataProcessing {
+			10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+			10 {
+				references.fieldName = assets
+			}
+			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
+			20 {
+				maxGalleryWidth = {$styles.content.textmedia.maxW}
+				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
+				columnSpacing = {$styles.content.textmedia.columnSpacing}
+				borderWidth = {$styles.content.textmedia.borderWidth}
+				borderPadding = {$styles.content.textmedia.borderPadding}
+				defaultImgWidthBig = {$bootstrap.image.default.width.big}
+				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				pageContainer.cObject = TEXT
+				pageContainer.cObject.data.dataWrap = DB:pages:{page:uid}:tx_t3sbootstrap_container
+			}
+
+		}
+	}
+	t3sbs_toast.stdWrap.editIcons = tt_content
+
+
+}

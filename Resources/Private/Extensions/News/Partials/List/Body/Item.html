@@ -1,0 +1,57 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.list.info}">
+	<p class="small text-dark mb-0 d-none d-sm-block{f:if(condition: '{settings.templateLayout} == 71', then: ' float-right', else: ' text-right')}">
+		<f:if condition="{newsItem.categories}">
+		<!-- categories -->
+		<span class="news-list-category">
+			<f:for each="{newsItem.categories}" as="category">
+				<f:if condition="{category.shortcut}">
+					<f:then>
+						<f:link.typolink parameter="{category.shortcut}">
+							{category.title}
+						</f:link.typolink>
+					</f:then>
+					<f:else>
+						{category.title}
+					</f:else>
+				</f:if>
+			</f:for>
+		</span>
+		</f:if>
+		<!-- date -->
+		<span itemscope="itemscope" class="news-list-date">
+			<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
+				<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
+			</time>
+		</span>
+	</p>
+</f:if>
+<!-- header -->
+<h3 itemscope="itemscope" class="card-title mt-0 mb-1">
+<f:if condition="{link} == 'true'">
+	<f:then>
+		<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
+			<span itemprop="headline">{newsItem.title}</span>
+		</n:link>
+	</f:then>
+	<f:else>
+		<span itemprop="headline">{newsItem.title}</span>
+	</f:else>
+</f:if>
+</h3>
+<!-- teaser -->
+<div class="card-text">
+	<n:removeMediaTags>
+		<f:if condition="{newsItem.teaser}">
+			<f:then>
+				{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+			</f:then>
+			<f:else>
+				{newsItem.bodytext -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+			</f:else>
+		</f:if>
+	</n:removeMediaTags>
+</div>
+</html>
+
+

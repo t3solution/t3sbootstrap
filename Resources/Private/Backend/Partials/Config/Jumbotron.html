@@ -1,0 +1,163 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group row">
+	<label for="jumbotronEnable" class="col-sm-3 control-label">
+		Enable
+		<f:if condition="{compare.jumbotronEnable}">
+			<br/><small class="text-primary">{compare.jumbotronEnable}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronEnable}">
+			{f:if(condition:'{compare.jumbotronEnable}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronEnable})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="jumbotronEnable" class="form-check-input" property="jumbotronEnable" value="1" />
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronBgimage" class="col-sm-3 control-label">
+		Background image
+		<f:if condition="{compare.jumbotronBgimage}">
+			<br/><small class="text-primary">{compare.jumbotronBgimage}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronBgimage}">
+			{f:if(condition:'{compare.jumbotronBgimage}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronBgimage})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="jumbotronBgimage"
+			class="form-control"
+			property="jumbotronBgimage"
+			options="{jumbotronBgImageOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">Enable background image from pages media OR slider if more than 2 images</small>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronFluid" class="col-sm-3 control-label">
+		Fluid
+		<f:if condition="{compare.jumbotronFluid}">
+			<br/><small class="text-primary">{compare.jumbotronFluid}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronFluid}">
+			{f:if(condition:'{compare.jumbotronFluid}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronFluid})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="jumbotronFluid" class="form-check-input" property="jumbotronFluid" value="1" />
+				<small class="form-text text-muted">To make the jumbotron full width, and without rounded corners</small>
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronSlide" class="col-sm-3 control-label">
+		Slide
+		<f:if condition="{compare.jumbotronSlide}">
+			<br/><small class="text-primary">{compare.jumbotronSlide}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronSlide}">
+			{f:if(condition:'{compare.jumbotronSlide}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronSlide})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="jumbotronSlide" class="form-check-input" property="jumbotronSlide" value="1" />
+				<small class="form-text text-muted">Content of Jumbotron "slide" through the rootline</small>
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronPosition" class="col-sm-3 control-label">
+		Position
+		<f:if condition="{compare.jumbotronPosition}">
+			<br/><small class="text-primary">{compare.jumbotronPosition}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronPosition}">
+			{f:if(condition:'{compare.jumbotronPosition}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronPosition})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="jumbotronPosition"
+			class="form-control"
+			property="jumbotronPosition"
+			options="{jumbotronPositions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronContainer" class="col-sm-3 control-label">
+		Container
+		<f:if condition="{compare.jumbotronContainer}">
+			<br/><small class="text-primary">{compare.jumbotronContainer}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronContainer}">
+			{f:if(condition:'{compare.jumbotronContainer}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronContainer})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="jumbotronContainer"
+			class="form-control"
+			property="jumbotronContainer"
+			options="{jumbotronContainerOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronContainerposition" class="col-sm-3 control-label">
+		Container position
+		<f:if condition="{compare.jumbotronContainerposition}">
+			<br/><small class="text-primary">{compare.jumbotronContainerposition}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronContainerposition}">
+			{f:if(condition:'{compare.jumbotronContainerposition}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronContainerposition})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="jumbotronContainerposition"
+			class="form-control"
+			property="jumbotronContainerposition"
+			options="{jumbotronContainerpositionOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">If "Container" is not "none"</small>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="jumbotronClass" class="col-sm-3 control-label">
+		Extra class
+		<f:if condition="{compare.jumbotronClass}">
+			<br/><small class="text-primary">{compare.jumbotronClass}</small>
+		</f:if>
+		<f:if condition="{override.jumbotronClass}">
+			{f:if(condition:'{compare.jumbotronClass}',then:'',else:'<br/>')}<small class="text-danger"> ({override.jumbotronClass})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="jumbotronClass"
+			class="form-control"
+			property="jumbotronClass"
+		/>
+		<small class="form-text text-muted">e.g. "mb-0" for margin-bottom: 0</small>
+	</div>
+</div>
+</html>

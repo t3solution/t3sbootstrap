@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment> Effect 6 </f:comment>
+<figure class="image {file.properties.tx_t3sbootstrap_hover_effect}{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+	<f:render partial="Media/Rendering/ImageNoTitle" arguments="{file: file, width: width, height: height, addmedia: addmedia, ratio: ratio}" />
+	<f:if condition="{file.title}">
+	  <div class="title">
+	    <div>
+	      <h4>{file.title}</h4>
+	    </div>
+	  </div>
+	</f:if>
+	<f:if condition="{file.description}">
+		<figcaption class="image-caption">
+			<p>{file.description}</p>			
+		</figcaption>
+	</f:if>
+	<f:link.typolink parameter="{file.link}" class="text-hide"></f:link.typolink>
+</figure>

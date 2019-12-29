@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-05-29T16:32:45Z" product-name="t3sbootstrap">
+		<header/>
+		<body>
+
+
+			<!-- New Content Element Wizard -->
+			<trans-unit id="t3sbs_contentelements">
+				<source>T3S Bootstrap</source>
+			</trans-unit>
+			<trans-unit id="t3sbs_fluidtemplate.title">
+				<source>Fluidtemplate</source>
+			</trans-unit>
+			<trans-unit id="t3sbs_fluidtemplate.description">
+				<source>You can include your own Fluidtemplate here (path to the template e.g. fileadmin/template.html).</source>
+			</trans-unit>
+			<trans-unit id="t3sbsgallery.title">
+				<source>Image Gallery</source>
+			</trans-unit>
+			<trans-unit id="t3sbsgallery.description">
+				<source>Imag Gallery with a lightbox.</source>
+			</trans-unit>
+
+
+			<!-- General -->
+			<trans-unit id="default">
+				<source>Default</source>
+			</trans-unit>
+	        <trans-unit id="secondary">
+	            <source>Secondary</source>
+	        </trans-unit>
+	        <trans-unit id="primary">
+	            <source>Primary</source>
+	        </trans-unit>
+	        <trans-unit id="success">
+	            <source>Success</source>
+	        </trans-unit>
+	        <trans-unit id="info">
+	            <source>Info</source>
+	        </trans-unit>
+	        <trans-unit id="warning">
+	            <source>Warning</source>
+	        </trans-unit>
+	        <trans-unit id="danger">
+	            <source>Danger</source>
+	        </trans-unit>
+			<trans-unit id="above">
+				<source>above</source>
+			</trans-unit>
+			<trans-unit id="below">
+				<source>below</source>
+			</trans-unit>
+	        <trans-unit id="predefined.styles">
+	            <source>Predefined styles</source>
+	        </trans-unit>
+	        <trans-unit id="link">
+	            <source>Link</source>
+	        </trans-unit>
+	        <trans-unit id="large">
+	            <source>Large</source>
+	        </trans-unit>
+	        <trans-unit id="small">
+	            <source>Small</source>
+	        </trans-unit>
+	        <trans-unit id="light">
+	            <source>light</source>
+	        </trans-unit>
+	        <trans-unit id="dark">
+	            <source>dark</source>
+	        </trans-unit>
+
+
+
+			<!-- Page.ts -->
+			<trans-unit id="tt_content.imageorient.66">
+				<source>Beside Text, Right (align-items-center)</source>
+			</trans-unit>
+			<trans-unit id="tt_content.imageorient.77">
+				<source>Beside Text, Left (align-items-center)</source>
+			</trans-unit>
+
+
+			<!-- Table.xml -->
+			<trans-unit id="flexforms.table.striped">
+				<source>Striped rows</source>
+			</trans-unit>
+			<trans-unit id="flexforms.table.bordered">
+				<source>Bordered table</source>
+			</trans-unit>
+			<trans-unit id="flexforms.table.hover">
+				<source>Hover rows</source>
+			</trans-unit>
+			<trans-unit id="flexforms.table.small">
+				<source>Condensed table</source>
+			</trans-unit>
+
+
+			<!-- Button.xml -->
+	        <trans-unit id="flexforms.button.size">
+	            <source>Button size</source>
+	        </trans-unit>
+	        <trans-unit id="flexforms.button.block">
+	            <source>Block level button (span the full width)</source>
+	        </trans-unit>
+	        <trans-unit id="flexforms.button.outline">
+	            <source>Outline button</source>
+	        </trans-unit>
+
+
+			<!-- Flexforms in Card.xml -->			
+			<trans-unit id="flexforms.card.imageOverlay">
+				<source>Image overlay</source>
+			</trans-unit>
+			<trans-unit id="flexforms.card.titleOnTop">
+				<source>Card Title on top</source>
+			</trans-unit>
+			<trans-unit id="flexforms.card.buttonText">
+				<source>Button text</source>
+			</trans-unit>
+
+
+			<!-- Gridelements -->
+			<trans-unit id="gridelement.anyColumns.colPos.0">
+				<source>Column 1</source>
+			</trans-unit>
+			<trans-unit id="gridelement.anyColumns.colPos.1">
+				<source>Column 2</source>
+			</trans-unit>
+			<trans-unit id="gridelement.anyColumns.colPos.2">
+				<source>Column 3</source>
+			</trans-unit>
+			<trans-unit id="gridelement.anyColumns.colPos.3">
+				<source>Column 4</source>
+			</trans-unit>
+			<trans-unit id="gridelement.anyColumns.colPos.4">
+				<source>Column 5</source>
+			</trans-unit>
+			<trans-unit id="gridelement.anyColumns.colPos.5">
+				<source>Column 6</source>
+			</trans-unit>
+			<trans-unit id="gridelement.twoColumns.title">
+				<source>2 Columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.twoColumns.description">
+				<source>Container with 2 columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.threeColumns.title">
+				<source>3 Columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.threeColumns.description">
+				<source>Container with 3 columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.fourColumns.title">
+				<source>4 Columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.fourColumns.description">
+				<source>Container with 4 columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.sixColumns.title">
+				<source>6 Columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.sixColumns.description">
+				<source>Container with 6 columns</source>
+			</trans-unit>
+			<trans-unit id="gridelement.tabContainer.title">
+				<source>Tab Container</source>
+			</trans-unit>
+			<trans-unit id="gridelement.tabContainer.description">
+				<source>A container for several tabs (blue frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.tabElement.title">
+				<source>Tab Element</source>
+			</trans-unit>
+			<trans-unit id="gridelement.tabElement.description">
+				<source>A Tab for a TabContainer (green frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.collapsibleContainer.title">
+				<source>Collapsible Container</source>
+			</trans-unit>
+			<trans-unit id="gridelement.collapsibleContainer.description">
+				<source>A container for several collapsible elements (blue frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.collapsibleElement.title">
+				<source>Collapsible Element</source>
+			</trans-unit>
+			<trans-unit id="gridelement.collapsibleElement.description">
+				<source>A collapsible element for a Collapsible Container (green frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.thumbnailsContainer.title">
+				<source>Thumbnail Container</source>
+			</trans-unit>
+			<trans-unit id="gridelement.thumbnailsContainer.description">
+				<source>A container for several Thumbnails (CE:t3sbootstrap_thumbnail) (red frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.modal.title">
+				<source>Modal Container</source>
+			</trans-unit>
+			<trans-unit id="gridelement.modal.description">
+				<source>A container for several content elements (green frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.carouselContainer.title">
+				<source>Carousel Container</source>
+			</trans-unit>
+			<trans-unit id="gridelement.carouselContainer.description">
+				<source>A container for several Carousel slides (CE:t3sbootstrap_carousel) (red frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.grayscaleSection.title">
+				<source>Grayscale Section Container</source>
+			</trans-unit>
+			<trans-unit id="gridelement.grayscaleSection.description">
+				<source>A container for several sections, use only with the grayscale theme backend layout (green frame)</source>
+			</trans-unit>
+			<trans-unit id="gridelement.backgroundWrapper.title">
+				<source>Background wrapper</source>
+			</trans-unit>
+			<trans-unit id="gridelement.backgroundWrapper.description">
+				<source>Full width container with background color or - image</source>
+			</trans-unit>
+			<trans-unit id="gridelement.parallaxWrapper.title">
+				<source>Parallax wrapper</source>
+			</trans-unit>
+			<trans-unit id="gridelement.parallaxWrapper.description">
+				<source>Full width container with parallax image scroll(Handys/Tablets: no scrolling)</source>
+			</trans-unit>
+
+
+			<!-- Flexforms in gridelements -->
+			<trans-unit id="flexforms.settings">
+				<source>Settings</source>
+			</trans-unit>
+			<trans-unit id="flexforms.animation">
+				<source>Animation</source>
+			</trans-unit>
+			<trans-unit id="flexforms.modalsize">
+				<source>Modal size</source>
+			</trans-unit>
+			<trans-unit id="flexforms.usebutton">
+				<source>Button</source>
+			</trans-unit>
+			<trans-unit id="flexforms.buttonstyle">
+				<source>Button style</source>
+			</trans-unit>
+
+
+
+
+			<!-- Backend Layout -->
+			<trans-unit id="backend_layout.bootstrap">
+				<source>Bootstrap</source>
+			</trans-unit>
+
+			<trans-unit id="backend_layout.jumbotron">
+				<source>Jumbotron</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.content">
+				<source>Content</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.sidebar">
+				<source>Sidebar</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.sidebar-left">
+				<source>Left Sidebar</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.sidebar-right">
+				<source>Right Sidebar</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.slider">
+				<source>Slider</source>
+			</trans-unit>
+
+
+			<trans-unit id="backend_layout.footer">
+				<source>Footer</source>
+			</trans-unit>
+
+
+			<trans-unit id="backend_layout.oneCol">
+				<source>1 Column</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.twoCol_9-3">
+				<source>2 Columns (aside right)</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.threeCol">
+				<source>3 Columns</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.twoCol_3-9">
+				<source>2 Columns (aside left)</source>
+			</trans-unit>
+
+
+			<trans-unit id="backend_layout.otc">
+				<source>Optional top content</source>
+			</trans-unit>
+			<trans-unit id="backend_layout.obc">
+				<source>Optional bottom content</source>
+			</trans-unit>
+
+
+			<trans-unit id="flexforms.appearance">
+				<source>Appearance</source>
+			</trans-unit>
+			<trans-unit id="flexforms.effect">
+				<source>Fade effect</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

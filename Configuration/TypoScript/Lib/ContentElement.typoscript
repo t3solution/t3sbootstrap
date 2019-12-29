@@ -1,0 +1,106 @@
+#-------------------------------------------------------------------------------
+#	FluidContent - configuration
+#-------------------------------------------------------------------------------
+lib.contentElement {
+	templateRootPaths >
+	templateRootPaths {
+		0 = EXT:fluid_styled_content/Resources/Private/Templates/
+		1 = EXT:t3sbootstrap/Resources/Private/Templates/
+		2 = EXT:t3sbootstrap/Resources/Private/Templates/Content/
+		3 = {$plugin.tx_t3sbootstrap.view.templateRootPath}
+		4 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Content/
+		10 = {$styles.templates.templateRootPath}
+	}
+	partialRootPaths >
+	partialRootPaths {
+		0 = EXT:fluid_styled_content/Resources/Private/Partials/
+		1 = EXT:t3sbootstrap/Resources/Private/Partials/
+		2 = EXT:t3sbootstrap/Resources/Private/Partials/Content/
+		3 = {$plugin.tx_t3sbootstrap.view.partialRootPath}
+		4 = {$plugin.tx_t3sbootstrap.view.partialRootPath}Content/
+		10 = {$styles.templates.partialRootPath}
+	}
+	layoutRootPaths >
+	layoutRootPaths {
+		0 = EXT:fluid_styled_content/Resources/Private/Layouts/
+		1 = EXT:t3sbootstrap/Resources/Private/Layouts/
+		2 = EXT:t3sbootstrap/Resources/Private/Layouts/Content/
+		3 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}
+		4 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}Content/
+		10 = {$styles.templates.layoutRootPath}
+	}
+	settings {
+		media {
+			popup {
+				bodyTag >
+				wrap = |
+				width = {$styles.content.textmedia.linkWrap.width}
+				height = {$styles.content.textmedia.linkWrap.height}
+				JSwindow = 0
+				directImageLink = 1
+				linkParams.ATagParams.dataWrap >
+				linkParams.ATagParams.stdWrap.cObject = COA
+				linkParams.ATagParams.stdWrap.cObject {
+					98 = TEXT
+					98.data = file:current:description // file:current:title
+					98.stdWrap.htmlSpecialChars = 1
+					98.wrap = data-caption="|"
+					98.required	= 1
+					99 = TEXT
+					99.data = file:current:title
+					99.stdWrap.htmlSpecialChars = 1
+					99.wrap = title="|"
+					99.required	= 1
+				}
+			}
+		}
+		dateformat = {$bootstrap.config.dateFormat}
+		subheaderColor = {$bootstrap.config.subheaderColor}
+		sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
+		magnifying = {$bootstrap.config.magnifying}
+		picturefill = {$bootstrap.image.picturefill}
+		srcsetDesktop = {$bootstrap.image.srcsetDesktop}
+		srcsetTablet = {$bootstrap.image.srcsetTablet}
+		srcsetMobile = {$bootstrap.image.srcsetMobile}
+		lazyLoadBgWrapperImage = {$bootstrap.image.lazyLoadBgWrapperImage}
+		lazyLoad = {$bootstrap.extconf.lazyLoad}
+		imgCopyright = {$bootstrap.extconf.imgCopyright}
+	}
+
+	variables {
+		be_layout = TEXT
+		be_layout.value < temp.pagelayout
+	}
+
+	dataProcessing {
+		224 = T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor
+		224 {
+			defaultHeaderType = {$styles.content.defaultHeaderType}
+			contentMarginTop = {$bootstrap.config.contentMarginTop}
+		}
+	}
+
+}
+
+# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
+[{$bootstrap.config.lightboxSelection} == 2]
+lib.contentElement.settings.media.popup {
+	linkParams.ATagParams.stdWrap >
+	linkParams.ATagParams.dataWrap = class="lightbox" data-toggle="lightbox" data-gallery="gallery-{file:current:uid_foreign}" data-title="{file:current:title}" data-footer="{file:current:description}
+	directImageLink = 1
+}
+[END]
+
+# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
+[{$bootstrap.config.lightboxSelection} == 3]
+lib.contentElement.settings.media.popup {
+	linkParams.ATagParams.stdWrap >
+	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="lightcaseGallery" data-rel="lightcase:collection{file:current:uid_foreign}:slideshow" title="{file:current:title}"
+	directImageLink = 1
+}
+[END]
+
+[{$bootstrap.ext.news} == 1]
+# settings for news lightbox
+plugin.tx_news.settings.media.popup < lib.contentElement.settings.media.popup
+[END]

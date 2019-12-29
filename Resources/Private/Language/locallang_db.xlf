@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-05-29T16:32:45Z" product-name="t3sbootstrap">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config">
+				<source>Config</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_enable">
+				<source>Navbar</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_entry_level">
+				<source>NavBar Entry Level</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_levels">
+				<source>NavBar Levels</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_exclude_uid_list">
+				<source>NavBar Exclude</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_various_settings">
+				<source>Various Settings</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_sectionmenu">
+				<source>Sectionmenu</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_megamenu">
+				<source>Megamenu</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_include_spacer">
+				<source>Include Spacer</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_justify">
+				<source>Fill and justify</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_hover">
+				<source>Hover</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_clickableparent">
+				<source>Clickable parent</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_brand">
+				<source>Brand</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_brand_options">
+				<source>Brand Options</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_brand_text">
+				<source>Brand Text</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_brand_image">
+				<source>Brand Image</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_bg_color">
+				<source>Background Color</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_color_schemes">
+				<source>Color schemes</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_layout">
+				<source>Layout/Placement</source>
+			</trans-unit>
+
+
+		<trans-unit id="tx_t3sbootstrap_domain_model_config.container">
+			<source>Container</source>
+		</trans-unit>
+		<trans-unit id="tx_t3sbootstrap_domain_model_config.placement">
+			<source>Placement</source>
+		</trans-unit>
+		<trans-unit id="tx_t3sbootstrap_domain_model_config.alignment">
+			<source>Alignment</source>
+		</trans-unit>
+		<trans-unit id="tx_t3sbootstrap_domain_model_config.extra_class">
+			<source>Extra class</source>
+		</trans-unit>
+
+		<trans-unit id="tx_t3sbootstrap_domain_model_config.enable">
+			<source>Enable</source>
+		</trans-unit>
+
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_shrinking">
+				<source>Shrinking Navbar</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_height">
+				<source>Navbar height</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_searchbox">
+				<source>Searchbox</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_responsive">
+				<source>Responsive behaviors</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_toggler">
+				<source>Toggler</source>
+			</trans-unit>
+
+		<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_breakpoint">
+			<source>Breakpoint</source>
+		</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_offcanvas">
+				<source>Offcanvas navbar</source>
+			</trans-unit>
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbar_language">
+				<source>Language Navigation</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbarLangUid">
+				<source>Lang Uid</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbarLangHreflang">
+				<source>Lang Hreflang</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sbootstrap_domain_model_config.navbarLangTitle">
+				<source>Lang Title</source>
+			</trans-unit>
+
+
+		</body>
+	</file>
+</xliff>

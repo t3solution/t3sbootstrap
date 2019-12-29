@@ -1,0 +1,35 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{video}">
+	<f:then>
+		<div class="alert alert-danger my-5" role="alert">Videos are not supported</div>
+	</f:then>
+	<f:else>
+		<f:if condition="{parallaxImage}">
+			<f:then>
+				<span class="anchor" id="c{data.uid}"></span>
+				<section id="s{data.uid}" class="{imageRaster}parallax bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
+					 data-speed="{speedFactor}" style="background-image: url('{parallaxImage}');{f:if(condition: '{style}', then: ' {style}')}">
+					<f:render section="SectionInner" arguments="{_all}" />
+				</section>
+			</f:then>
+			<f:else>
+				<div class="alert alert-danger" role="alert">No background-image is loaded!</div>
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="SectionInner">
+<f:if condition="{data.tx_gridelements_view_column_0}">
+	<f:if condition="{container}">
+		<div class="{container}">
+	</f:if>
+		<f:render partial="Header/All" arguments="{_all}" />
+		{data.tx_gridelements_view_column_0 -> f:format.raw()}
+	<f:if condition="{container}">
+		</div>
+	</f:if>
+</f:if>
+</f:section>

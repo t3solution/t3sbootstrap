@@ -1,0 +1,91 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{noConfig}">
+	<f:then>
+		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
+	</f:then>
+	<f:else>
+		<f:spaceless>
+			<f:if condition="{settings.loadingSpinner}">
+				<div id="site-preloader">
+					<div id="site-spinner" class="spinner-{settings.loadingSpinner} text-{settings.loadingSpinnerColor}" style="width: 3rem; height: 3rem;" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+				</div>
+			</f:if>
+			<div id="page-wrapper">
+				<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.contentOnlyOnRootpage}">
+					<f:else>
+						<f:if condition="{metaNavigation} || {config.meta.text}">
+							<f:render partial="Page/Meta" arguments="{metaNavigation: metaNavigation, config: config}" />
+						</f:if>
+						<f:render partial="Page/_main" arguments="{_all}" />
+					</f:else>
+				</f:if>
+				<f:if condition="{settings.expandedContent} && {config.expandedcontentTop.enable}">
+					<f:render partial="Page/ExpandedContent/Top" arguments="{_all}" />
+				</f:if>
+				<f:if condition="{be_layout} == 'OneCol' || {be_layout} == 'FullScreen'">
+					<f:then>
+						<f:if condition="{data.tx_t3sbootstrap_container}">
+							<div class="{data.tx_t3sbootstrap_container}">
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{data.tx_t3sbootstrap_container}">
+							<f:then>
+								<div class="{data.tx_t3sbootstrap_container}">
+							</f:then>
+							<f:else>
+								<div class="container">
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+					<div id="page-content"{f:if(condition: '{settings.pageContentExtraClass}',then: ' class="{settings.pageContentExtraClass}"')}>
+						<f:if condition="{be_layout} && {be_layout} != 'default'">
+							<f:then>
+								<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
+							</f:then>
+							<f:else>
+								<f:render partial="BackendLayouts/OneCol" arguments="{_all}" />
+							</f:else>
+						</f:if>
+					</div>
+				<f:if condition="{be_layout} == 'OneCol' || {be_layout} == 'FullScreen'">
+					<f:then>
+						<f:if condition="{data.tx_t3sbootstrap_container}">
+							</div>
+						</f:if>
+					</f:then>
+					<f:else>
+						</div>
+					</f:else>
+				</f:if>
+			</div>
+			<f:if condition="{settings.expandedContent} && {config.expandedcontentBottom.enable}">
+				<f:render partial="Page/ExpandedContent/Bottom" arguments="{_all}" />
+			</f:if>
+			<f:if condition="{config.breadcrumb.bottom}">
+				<div class="breadcrumb-bottom">
+					<f:render partial="Page/Breadcrumb" arguments="{_all}" />
+				</div>
+			</f:if>
+			<f:if condition="{settings.pagebrowser.enable}">
+				<f:render partial="Page/Pagebrowser" arguments="{_all}" />
+			</f:if>
+			<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.contentOnlyOnRootpage}">
+				<f:else>
+					<f:if condition="{config.footer.enable}">
+						<f:render partial="Page/Footer" arguments="{_all}" />
+					</f:if>
+				</f:else>
+			</f:if>
+			<f:link.page class="back-to-top"
+				style="display: none;"
+				title="to top">
+				<i class="fa fa-chevron-circle-up fa-4x" aria-hidden="true"></i> <span class="d-none">back-to-top</span>
+			</f:link.page>
+		</f:spaceless>
+	</f:else>
+</f:if>
+</html>

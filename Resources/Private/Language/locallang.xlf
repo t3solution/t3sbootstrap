@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-05-29T16:32:45Z" product-name="t3sbootstrap">
+		<header/>
+		<body>
+
+			<trans-unit id="more">
+				<source>mehr</source>
+			</trans-unit>
+			<trans-unit id="read-more">
+				<source>weiter lesen</source>
+			</trans-unit>	
+
+			<trans-unit id="tx_t3sbootstrap_domain_model_config">
+				<source>Config</source>
+			</trans-unit>
+
+			<trans-unit id="lastModifiedContentElement">
+				<source>Zuletzt aktualisiert am:</source>
+			</trans-unit>
+
+			<trans-unit id="form.submit">
+				<source>Search</source>
+			</trans-unit>
+
+			<trans-unit id="form.modal.label">
+				<source>Kontaktformular</source>
+			</trans-unit>
+			<trans-unit id="form.modal.link">
+				<source>Kontaktformular</source>
+			</trans-unit>
+
+
+		</body>
+	</file>
+</xliff>

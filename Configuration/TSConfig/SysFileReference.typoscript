@@ -1,0 +1,165 @@
+## Default Image cropping
+TCEFORM.sys_file_reference.crop.config.cropVariants {
+	default {
+		title = Desktop
+		selectedRatio = NaN
+		allowedAspectRatios {
+			NaN {
+				title = Free
+				value = 0.0
+			}
+			21:9 {
+				title = 21:9
+				value = 2.3333333
+			}
+			16:9 {
+				title = 16:9
+				value = 1.7777777
+			}
+			3:2 {
+				title = 3:2
+				value = 1.5
+			}
+			4:3 {
+				title = 4:3
+				value = 1.3333333
+			}
+			1:1 {
+				title = 1:1
+				value = 1
+			}
+			3:4 {
+				title = 3:4
+				value = 0.75
+			}
+			2:3 {
+				title = 2:3
+				value = 0.66666667
+			}
+			9:16 {
+				title = 9:16
+				value = 0.5625
+			}
+			9:21 {
+				title = 9:21
+				value = 0.42857143
+			}
+			a:b {
+				title = Goldenen Schnitt
+				value = 1,6180339887498948
+			}
+			b:a {
+				title = Silberner Schnitt
+				value = 0.42857143
+			}
+		}
+	}
+	tablet {
+		title = Tablet
+		selectedRatio = NaN
+		allowedAspectRatios {
+			NaN {
+				title = Free
+				value = 0.0
+			}
+			21:9 {
+				title = 21:9
+				value = 2.3333333
+			}
+			16:9 {
+				title = 16:9
+				value = 1.7777777
+			}
+			3:2 {
+				title = 3:2
+				value = 1.5
+			}
+			4:3 {
+				title = 4:3
+				value = 1.3333333
+			}
+			1:1 {
+				title = 1:1
+				value = 1
+			}
+			3:4 {
+				title = 3:4
+				value = 0.75
+			}
+			2:3 {
+				title = 2:3
+				value = 0.66666667
+			}
+			9:16 {
+				title = 9:16
+				value = 0.5625
+			}
+			9:21 {
+				title = 9:21
+				value = 0.42857143
+			}
+			a:b {
+				title = Goldenen Schnitt
+				value = 1,6180339887498948
+			}
+			b:a {
+				title = Silberner Schnitt
+				value = 0.42857143
+			}
+		}
+	}
+	mobile {
+		title = Mobile
+		selectedRatio = NaN
+		allowedAspectRatios {
+			NaN {
+				title = Free
+				value = 0.0
+			}
+			21:9 {
+				title = 21:9
+				value = 2.3333333
+			}
+			16:9 {
+				title = 16:9
+				value = 1.7777777
+			}
+			3:2 {
+				title = 3:2
+				value = 1.5
+			}
+			4:3 {
+				title = 4:3
+				value = 1.3333333
+			}
+			1:1 {
+				title = 1:1
+				value = 1
+			}
+			3:4 {
+				title = 3:4
+				value = 0.75
+			}
+			2:3 {
+				title = 2:3
+				value = 0.66666667
+			}
+			9:16 {
+				title = 9:16
+				value = 0.5625
+			}
+			9:21 {
+				title = 9:21
+				value = 0.42857143
+			}
+			a:b {
+				title = Goldenen Schnitt
+				value = 1,6180339887498948
+			}
+			b:a {
+				title = Silberner Schnitt
+				value = 0.42857143
+			}
+		}
+	}
+}

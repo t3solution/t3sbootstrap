@@ -1,0 +1,87 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group">
+	<label for="pageTitle" class="col-sm-3 control-label">
+		Page Title (h1)
+		<f:if condition="{compare.pageTitle}">
+			<br/><small class="text-primary">{compare.pageTitle}</small>
+		</f:if>
+		<f:if condition="{override.pageTitle}">
+			{f:if(condition:'{compare.pageTitle}',then:'',else:'<br/>')}<small class="text-danger"> ({override.pageTitle})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="pageTitle"
+			class="form-control"
+			property="pageTitle"
+			options="{pageTitleOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">Image replacement: Replace h1 with the brand image (enable in Navbar). INFO: http://getbootstrap.com/docs/4.0/utilities/image-replacement/</small>
+	</div>
+</div>
+<div class="form-group">
+	<label for="pageTitlealign" class="col-sm-3 control-label">
+		Page Title Alignment
+		<f:if condition="{compare.pageTitlealign}">
+			<br/><small class="text-primary">{compare.pageTitlealign}</small>
+		</f:if>
+		<f:if condition="{override.pageTitlealign}">
+			{f:if(condition:'{compare.pageTitlealign}',then:'',else:'<br/>')}<small class="text-danger"> ({override.pageTitlealign})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="pageTitlealign"
+			class="form-control"
+			property="pageTitlealign"
+			options="{pageTitlealignOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbContainer" class="col-sm-3 control-label">
+		Container
+		<f:if condition="{compare.pageTitlecontainer}">
+			<br/><small class="text-primary">{compare.pageTitlecontainer}</small>
+		</f:if>
+		<f:if condition="{override.pageTitlecontainer}">
+			{f:if(condition:'{compare.pageTitlecontainer}',then:'',else:'<br/>')}<small class="text-danger"> ({override.pageTitlecontainer})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="pageTitlecontainer"
+			class="form-control"
+			property="pageTitlecontainer"
+			options="{pageTitlecontainerOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+
+<div class="form-group row">
+	<label for="pageTitleclass" class="col-sm-3 control-label">
+		Extra class
+		<f:if condition="{compare.pageTitleclass}">
+			<br/><small class="text-primary">{compare.pageTitleclass}</small>
+		</f:if>
+		<f:if condition="{override.pageTitleclass}">
+			{f:if(condition:'{compare.pageTitleclass}',then:'',else:'<br/>')}<small class="text-danger"> ({override.pageTitleclass})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="pageTitleclass"
+			class="form-control"
+			property="pageTitleclass"
+		/>
+		<small class="form-text text-muted">e.g. "mb-0" for margin-bottom: 0</small>
+	</div>
+</div>
+
+</html>

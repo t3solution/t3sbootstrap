@@ -1,0 +1,70 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>Gallery Template</f:comment>
+<f:if condition="{gallery.rows} || {files}">
+	<f:comment> In Text right or left</f:comment>
+	<f:if condition="{data.imageorient} == 17 || {data.imageorient} == 18 || {data.imageorient} == 66 || {data.imageorient} == 77">
+		<f:then>
+			<f:if condition="{data.imageorient} == 17 || {data.imageorient} == 18">
+				<f:then>
+					<div class="{gallery.class}" data-ce-columns="{gallery.count.columns}" data-ce-images="{gallery.count.files}">
+						<f:render section="GalleryRows" arguments="{_all}" />
+					</div>
+				</f:then>
+				<f:else>
+					<div class="{gallery.class}" data-ce-columns="{gallery.count.columns}" data-ce-images="{gallery.count.files}">
+						<f:render section="GalleryRows" arguments="{_all}" />
+					</div>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:comment> Beside Text right or left && Above or below the Text </f:comment>
+			<div class="{gallery.class}" data-ce-columns="{gallery.count.columns}" data-ce-images="{gallery.count.files}">
+				<f:render section="GalleryRows" arguments="{_all}" />
+			</div>
+			<f:if condition="{data.imageorient} == 9">
+				<div class="clearfix"></div>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:if>
+</html>
+
+
+<f:section name="GalleryRows">
+<f:if condition="{data.imagecols} == 88 && {gallery.count.files} > 1">
+	<f:then>
+		<f:render partial="Media/Carousel" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:if condition="{gallery.rowClass}">
+			<f:then>
+				<div class="{gallery.rowClass}">
+					<f:render section="Media" arguments="{_all}" />
+				</div>
+			</f:then>
+			<f:else>
+				<f:render section="Media" arguments="{_all}" />
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="Media">
+		<f:for each="{gallery.rows}" as="row" iteration="rowiterator">
+			<div class="row">
+				<f:for each="{row.columns}" as="column" iteration="iterator">
+					<f:if condition="{column.media}">
+						<div class="col-sm{f:if(condition: iterator.isFirst, then: ' first-figure')}{f:if(condition: iterator.isLast, then: ' last-figure')}">
+							<f:render partial="Media/Type" arguments="{
+								file: column.media,
+								dimensions: column.dimensions,
+								addmedia: addmedia,
+								celink: celink}" />
+						</div>
+					</f:if>
+				</f:for>
+			</div>
+		</f:for>
+</f:section>

@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+	<f:if condition="{menu}">
+		<ul class="nav relatedpages{menudirection}{menupills}{menuHorizontalAlignment}">
+			<f:for each="{menu}" as="page">
+				<li class="nav-item">
+					<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}">
+						<f:if condition="{page.nav_title}">
+							<f:then>
+								{page.nav_title}
+							</f:then>
+							<f:else>
+								{page.title}
+							</f:else>
+						</f:if>
+					</a>
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+</f:section>
+</html>

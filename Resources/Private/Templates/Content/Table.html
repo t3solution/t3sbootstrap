@@ -1,0 +1,80 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+	<f:if condition="{tableResponsive}">
+		<div class="table-responsive">
+	</f:if>
+	<f:if condition="{table}">
+		<table class="{tableclass}">
+			<f:if condition="{data.table_caption}">
+				<caption>{data.table_caption}</caption>
+			</f:if>
+			<f:for each="{table}" as="row" iteration="rowIterator">
+
+				<f:if condition="{rowIterator.isFirst}">
+					<f:then>
+						<f:if condition="{data.table_header_position} == 1">
+							<f:then>
+								<f:if condition="{table-row-class.{rowIterator.index}}">
+									<f:then>
+										<thead class="{table-row-class.{rowIterator.index}}">
+									</f:then>
+									<f:else>
+										<thead class="thead-dark">
+									</f:else>
+								</f:if>
+							</f:then>
+							<f:else>
+								<tbody>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{rowIterator.isLast}">
+							<f:if condition="{data.table_tfoot}">
+								</tbody>
+								<tfoot>
+							</f:if>
+						</f:if>
+					</f:else>
+				</f:if>
+				<f:if condition="{table-row-class.{rowIterator.index}}">
+					<f:then>
+						<tr class="{table-row-class.{rowIterator.index}}">
+					</f:then>
+					<f:else>
+						<tr>
+					</f:else>
+				</f:if>
+					<f:for each="{row}" as="cell" iteration="columnIterator">
+						<f:render partial="Table/Columns" arguments="{_all}" />
+					</f:for>
+				</tr>
+				<f:if condition="{rowIterator.isFirst}">
+					<f:then>
+						<f:if condition="{data.table_header_position} == 1">
+							</thead>
+							<tbody>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{rowIterator.isLast}">
+							<f:if condition="{data.table_tfoot}">
+								<f:then>
+									</tfoot>
+								</f:then>
+								<f:else>
+									</tbody>
+								</f:else>
+							</f:if>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:for>
+		</table>
+	</f:if>
+	<f:if condition="{tableResponsive}">
+		</div>
+	</f:if>
+</f:section>
+</html>

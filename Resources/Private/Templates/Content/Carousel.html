@@ -1,0 +1,109 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{multislider}">
+	<f:then>
+		<div class="item">
+			<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
+				<f:render section="Slide" arguments="{_all}" />
+			</figure>
+			<f:render section="Header" arguments="{data: data, carouselLink: carouselLink}" />
+			<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+			<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
+		</div>
+	</f:then>
+	<f:else>
+		<div class="carousel-item">
+			<f:if condition="{files.0}">
+				<f:then>
+					<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
+						<f:render section="Slide" arguments="{_all}" />
+						<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+							<figcaption class="carousel-caption{animate}">
+								<div>
+									<f:render section="Header" arguments="{data: data, carouselLink: carouselLink}" />
+									<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+									<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
+								</div>
+							</figcaption>
+						</f:if>
+					</figure>
+				</f:then>
+				<f:else>
+					<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+						<div class="carousel-caption{animate}">
+							<div>
+								<f:render section="Header" arguments="{data: data, carouselLink: carouselLink}" />
+								<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+								<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
+							</div>
+						</div>
+					</f:if>
+				</f:else>
+			</f:if>
+		</div>
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="Slide">
+<f:if condition="{zoom}">
+	<f:then>
+		<ce:link.clickEnlarge image="{files.0}" configuration="{settings.media.popup}">
+			<f:render section="Image" arguments="{_all}" />
+		</ce:link.clickEnlarge>
+	</f:then>
+	<f:else>
+		<f:render section="Image" arguments="{_all}" />
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="Image">
+	<t3sb:media file="{files.0}" title="{files.0.title}"
+	alt="{f:if(condition: files.0.alternative, then: '{files.0.alternative}', else: '{t3sb:alternative(title:files.0.title, name:files.0.name)}')}"
+	 class="img-fluid{f:if(condition: '{files.0.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}"
+	  width="{dimensions.width}" 
+	  height="auto" 
+	  breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '1200, 1600, 1920, 2600'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '576, 768, 992, 1200'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '380, 575'}
+	  }" 
+	  picturefill="{settings.picturefill}" 
+	  lazyload="{settings.lazyLoad}" 
+	  ratio="{ratio}" 
+	  shift="{shift}" />
+</f:section>
+
+<f:section name="Header">
+<f:if condition="{data.header}">
+	<h5{f:if(condition:'{data.tx_t3sbootstrap_header_class}',then:' class="{data.tx_t3sbootstrap_header_class}"')}>
+		<f:if condition="{carouselLink} == 'header'">
+			<f:then>
+				<f:link.typolink parameter="{data.header_link}">{data.header -> f:format.raw()}</f:link.typolink>
+			</f:then>
+			<f:else>
+				{data.header -> f:format.raw()}
+			</f:else>
+		</f:if>
+	</h5>
+</f:if>
+</f:section>
+
+<f:section name="Button">
+<f:if condition="{data.header_link} && {carouselLink} == 'button'">
+	<f:link.typolink parameter="{data.header_link}" class="btn btn-primary btn-sm">
+		<f:translate id="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:read-more" />
+	</f:link.typolink>
+</f:if>
+</f:section>
+
+<f:section name="Bodytext">
+<f:if condition="{data.bodytext}">
+	<div class="slider-text">
+		{data.bodytext -> f:format.html()}
+	</div>
+</f:if>
+</f:section>

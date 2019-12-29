@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>Button Template</f:comment>
+<f:layout name="Button" />
+<f:section name="Main">
+	<f:if condition="{data.parentgrid_tx_gridelements_backend_layout} == 'button_group'">
+		 <f:then>
+		 	<f:comment> --- if is child of button-group --- </f:comment>
+			<f:link.typolink
+				parameter="{data.header_link}"
+				class="{f:if(condition: '{class}', then: '{class} ')}{typolinkButtonClass}"
+				additionalAttributes="{id: 'btn{data.uid}', role: 'button'}">
+				{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
+				{data.header -> f:format.raw()}
+			</f:link.typolink>
+		 </f:then>
+		 <f:else>
+		 	<f:comment> --- default button --- </f:comment>
+			<f:link.typolink
+				parameter="{data.header_link}"
+				class="{typolinkButtonClass}"
+				additionalAttributes="{role: 'button', name: '{data.header -> f:format.raw()}'}">
+				{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
+				{data.header -> f:format.raw()}
+			</f:link.typolink>
+		 </f:else>
+	</f:if>
+</f:section>
+</html>

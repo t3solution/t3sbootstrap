@@ -1,0 +1,77 @@
+<T3DataStructure>
+	<sheets>
+		<general>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>General</sheetTitle>
+				</TCEforms>
+				<el>
+
+					<animation>
+						<TCEforms>
+							<label>Animation (apply a CSS fade transition to the toast)</label>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</animation>
+
+					<autohide>
+						<TCEforms>
+							<label>Autohide (auto hide the toast)</label>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</autohide>
+
+					<delay>
+						<TCEforms>
+							<label>Delay in ms (delay hiding the toast)</label>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>5000</default>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</delay>
+
+
+					<placement>
+						<TCEforms>
+							<label>Placement</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">default</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">left</numIndex>
+										<numIndex index="1">left</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">right</numIndex>
+										<numIndex index="1">right</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+								</items>
+								<default>center</default>
+							</config>
+						</TCEforms>
+					</placement>
+
+				</el>
+			</ROOT>
+		</general>
+	</sheets>
+</T3DataStructure>

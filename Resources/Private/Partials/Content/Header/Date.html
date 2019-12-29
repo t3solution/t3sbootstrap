@@ -1,0 +1,20 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{date}">
+	<f:if condition="{dateformat}">
+		<f:then>
+			<p class="date{f:if(condition: '{dateColor}',then: ' text-{dateColor}')}">
+				<time datetime="{date -> f:format.date(format: '{dateformat}')}">
+					{date -> f:format.date(format: '{dateformat}')}
+				</time>
+			</p>
+		</f:then>
+		<f:else>
+			<p class="date{f:if(condition: '{dateColor}',then: ' text-{dateColor}')}">
+				<time datetime="{date -> f:format.date(format: 'd.m.Y')}">
+					{date -> f:format.date(format: 'd.m.Y')}
+				</time>
+			</p>
+		</f:else>
+	</f:if>
+</f:if>
+</html>

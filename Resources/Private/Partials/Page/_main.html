@@ -1,0 +1,50 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:if condition="{config.jumbotron.position} == 'above' && {config.navbar.placement} != 'fixed-top'">
+		<f:then>
+			<f:render section="Jumbotron" arguments="{_all}" />
+			<f:render section="Navbar" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="Navbar" arguments="{_all}" />
+			<f:render section="Jumbotron" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</html>
+
+<f:section name="Navbar">
+	<f:if condition="{config.breadcrumb.position} == 'aboveNav'">
+		<f:then>
+			<f:render section="Breadcrumb" arguments="{_all}" />
+			<f:render partial="Page/Navbar" arguments="{_all}" />
+		</f:then>
+		<f:else if="{config.breadcrumb.position} == 'belowNav'">
+			<f:render partial="Page/Navbar" arguments="{_all}" />
+			<f:render section="Breadcrumb" arguments="{_all}" />
+		</f:else>
+		<f:else>
+			<f:render partial="Page/Navbar" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Jumbotron">
+	<f:if condition="{config.breadcrumb.position} == 'aboveJum'">
+		<f:then>
+			<f:render section="Breadcrumb" arguments="{_all}" />
+			<f:render partial="Page/Jumbotron" arguments="{_all}" />
+		</f:then>
+		<f:else if="{config.breadcrumb.position} == 'belowJum'">
+			<f:render partial="Page/Jumbotron" arguments="{_all}" />
+			<f:render section="Breadcrumb" arguments="{_all}" />
+		</f:else>
+		<f:else>
+			<f:render partial="Page/Jumbotron" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Breadcrumb">
+	<f:if condition="{config.breadcrumb.enable}">
+		<f:render partial="Page/Breadcrumb" arguments="{_all}" />
+	</f:if>
+</f:section>

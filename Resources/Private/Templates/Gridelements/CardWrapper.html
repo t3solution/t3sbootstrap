@@ -1,0 +1,187 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+<f:if condition="{card_wrapper_layout} == 'slider' || {card_wrapper_layout} == 'flipper'">
+	<f:then>
+		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+			<f:if condition="{card_wrapper_layout} == 'slider'">
+				<f:then>
+					<f:render section="Slider" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:render section="Flipper" arguments="{_all}" />
+				</f:else>
+			</f:if>
+		</div>
+	</f:then>
+	<f:else>
+		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+			{data.tx_gridelements_view_column_0 -> f:format.raw()}
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Slider">
+<div id="cs{data.uid}" class="carousel card-slider slide" data-ride="carousel">
+	<div class="carousel-inner row w-100 mx-auto">
+		{data.tx_gridelements_view_column_0 -> f:format.raw()}
+	</div>
+	<div class="col-12 lead my-4">
+		<a class="btn btn-outline-secondary prev" href="#cs{data.uid}" role="button" data-slide="prev"><i class="fas fa-lg fa-chevron-left"></i></a>
+		<a class="btn btn-outline-secondary next" href="#cs{data.uid}" role="button" data-slide="next"><i class="fas fa-lg fa-chevron-right"></i></a>
+	</div>
+</div>
+</f:section>
+
+<f:section name="Flipper">
+<div class="row row-eq-height">
+	<f:for each="{cards}" as="card">
+		<div class="{flipper.class}">
+			<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+				<div class="mainflip">
+					<div class="frontside">
+						<div class="card">
+							<f:if condition="{card.file.0}">
+								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}'}" />
+							</f:if>
+							<div class="card-body{card.header_position}">
+								<f:render section="CardTitle" arguments="{_all}" />
+								<f:if condition="{cropMaxCharacters}">
+									<f:then>
+										{card.text.top -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+									</f:then>
+									<f:else>
+										{card.text.top -> f:format.html()}
+									</f:else>
+								</f:if>
+							</div>
+							<div class="card-footer text-center">
+								<f:if condition="{card.footer.text}">
+									<f:then>
+										{card.footer.text -> f:format.raw()}
+									</f:then>
+									<f:else>
+										<i class="fas fa-plus-square fa-2x mx-auto"></i>
+									</f:else>
+								</f:if>
+							</div>
+						</div>
+					</div>
+					<div class="backside">
+						<div class="card">
+							<f:if condition="{card.file.1}">
+								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.1}'}" />
+							</f:if>
+							<div class="card-body{card.header_position}">
+								<h4 class="card-title my-3">{card.backheader -> f:format.raw()}</h4>
+								<f:if condition="{cropMaxCharacters}">
+									<f:then>
+										{card.text.bottom -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+									</f:then>
+									<f:else>
+										{card.text.bottom -> f:format.html()}
+									</f:else>
+								</f:if>
+							</div>
+							<f:if condition="{card.settings.button.enable} && {card.header_link}">
+								<div class="card-footer text-center">
+									<f:render section="Button" arguments="{_all}" />
+								</div>
+							</f:if>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</f:for>
+</div>
+</f:section>
+														   
+
+<f:section name="Image">
+<figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+	<t3sb:media file="{file}"
+	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+	 class="card-img-top img-fluid{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
+	 width="{dimensions.width}"
+	 height="auto"
+	 breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+	 }"
+	 picturefill="{settings.picturefill}"
+	 lazyload="{settings.lazyLoad}"
+	 ratio="{ratio}"
+	/>
+</figure>
+</f:section>
+
+<f:section name="Button">
+	<f:link.typolink parameter="{card.header_link}" class="btn btn{f:if(condition:'{card.settings.button.outline}',then: '-outline')}-{card.settings.button.style}{f:if(condition:'{card.settings.button.block}',then: ' btn-block')}">
+		<f:if condition="{card.settings.button.text}">
+			<f:then>
+					{card.settings.button.text -> f:format.raw()}
+			</f:then>
+			<f:else>
+					{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:more')}
+			</f:else>
+		</f:if>
+	</f:link.typolink>
+</f:section>
+
+<f:section name="CardTitle">
+<f:if condition="{card.header} || {card.subheader}">
+	<f:if condition="{card.settings.button.enable} || !{card.header_link}">
+	<f:then>
+		<f:render section="Title" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:render section="TitleLink" arguments="{_all}" />
+	</f:else>
+	</f:if>
+</f:if>
+</f:section>
+
+<f:section name="Title">
+	<f:if condition="{card.header} && {card.subheader}">
+		<f:then>
+		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
+			<h4 class="card-title">
+				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
+		</header>
+		</f:then>
+		<f:else if="{card.header}">
+			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
+				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+		</f:else>
+		<f:else if="{card.subheader}">
+			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
+				{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}</h4>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="TitleLink">
+	<f:if condition="{card.header} && {card.subheader}">
+		<f:then>
+		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
+			<h4 class="card-title">
+				<f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
+			</h4>
+			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
+		</header>
+		</f:then>
+		<f:else if="{card.header}">
+			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}"><f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink></h4>
+		</f:else>
+		<f:else if="{card.subheader}">
+			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}"><f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}</f:link.typolink></h4>
+		</f:else>
+	</f:if>
+</f:section>

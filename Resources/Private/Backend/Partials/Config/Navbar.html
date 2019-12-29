@@ -1,0 +1,616 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group">
+	<label for="navbarEnable" class="col-sm-3 control-label">
+		Navbar
+		<f:if condition="{compare.navbarEnable}">
+			<br/><small class="text-primary">navbar-{compare.navbarEnable}</small>
+		</f:if>
+		<f:if condition="{override.navbarEnable}">
+			{f:if(condition:'{compare.navbarEnable}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarEnable})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="navbarEnable"
+			class="form-control"
+			property="navbarEnable"
+			options="{navbarEnableOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">Choose from navbar-light for use with light background colors, or navbar-dark for dark background colors</small>	
+	</div>
+</div>
+<div class="form-group">
+	<label for="navbarEntrylevel" class="col-sm-3 control-label">
+		NavBar Entry Level
+		<f:if condition="{compare.navbarEntrylevel}">
+			<br/><small class="text-primary">{f:if(condition:"{compare.navbarEntrylevel} == 'not set'",then:'0',else:'{compare.navbarEntrylevel}')}</small>
+		</f:if>
+		<f:if condition="{override.navbarEntrylevel}">
+			{f:if(condition:'{compare.navbarEntrylevel}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarEntrylevel})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="navbarEntrylevel"
+			class="form-control"
+			property="navbarEntrylevel"
+		/>
+	</div>
+</div>
+<div class="form-group">
+	<label for="navbarLevels" class="col-sm-3 control-label">
+		NavBar Levels
+		<f:if condition="{compare.navbarLevels}">
+			<br/><small class="text-primary">{compare.navbarLevels}</small>
+		</f:if>
+		<f:if condition="{override.navbarLevels}">
+			{f:if(condition:'{compare.navbarLevels}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarLevels})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="navbarLevels"
+			class="form-control"
+			property="navbarLevels"
+		/>
+	</div>
+</div>
+<div class="form-group">
+	<label for="navbarExcludeuiduist" class="col-sm-3 control-label">
+		NavBar Exclude
+		<f:if condition="{compare.navbarExcludeuiduist}">
+			<br/><small class="text-primary">{compare.navbarExcludeuiduist}</small>
+		</f:if>
+		<f:if condition="{override.navbarExcludeuiduist}">
+			{f:if(condition:'{compare.navbarExcludeuiduist}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarExcludeuiduist})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="navbarExcludeuiduist"
+			class="form-control"
+			property="navbarExcludeuiduist"
+		/>
+		<small class="form-text text-muted">Comma-separated list of page ids.</small>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseVarious" aria-expanded="false" aria-controls="collapseVarious">
+			Various Settings
+		</button>
+	</div>
+</div>
+<div class="collapse" id="collapseVarious">
+	<div class="card card-body">
+		<div class="form-group row">
+			<label for="navbarSectionmenu" class="col-sm-3 control-label">
+				Sectionmenu
+				<f:if condition="{compare.navbarSectionmenu}">
+					<br/><small class="text-primary">{compare.navbarSectionmenu}</small>
+				</f:if>
+				<f:if condition="{override.navbarSectionmenu}">
+					{f:if(condition:'{compare.navbarSectionmenu}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarSectionmenu})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarSectionmenu" class="form-check-input" property="navbarSectionmenu" value="1" />
+						<small class="form-text text-muted">Enable for "One Page Layout"</small>
+					 </label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="navbarMegamenu" class="col-sm-3 control-label">
+				Megamenu
+				<f:if condition="{compare.navbarMegamenu}">
+					<br/><small class="text-primary">{compare.navbarMegamenu}</small>
+				</f:if>
+				<f:if condition="{override.navbarMegamenu}">
+					{f:if(condition:'{compare.navbarMegamenu}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarMegamenu})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarMegamenu" class="form-check-input" property="navbarMegamenu" value="1" />
+						<small class="form-text text-muted">Info: https://www.t3sbootstrap.de/demo/mega-menu/</small>
+					 </label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="navbarIncludespacer" class="col-sm-3 control-label">
+				Include Spacer
+				<f:if condition="{compare.navbarIncludespacer}">
+					<br/><small class="text-primary">{compare.navbarIncludespacer}</small>
+				</f:if>
+				<f:if condition="{override.navbarIncludespacer}">
+					{f:if(condition:'{compare.navbarIncludespacer}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarIncludespacer})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarIncludespacer" class="form-check-input" property="navbarIncludespacer" value="1" />
+						<small class="form-text text-muted">Enable spacer in dropdown</small>
+					 </label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="navbarJustify" class="col-sm-3 control-label">
+				Fill and justify
+				<f:if condition="{compare.navbarJustify}">
+					<br/><small class="text-primary">{compare.navbarJustify}</small>
+				</f:if>
+				<f:if condition="{override.navbarJustify}">
+					{f:if(condition:'{compare.navbarJustify}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarJustify})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarJustify" class="form-check-input" property="navbarJustify" value="1" />
+						<small class="form-text text-muted">Force your .nav’s contents to extend the full available width</small>
+					 </label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="navbarHover" class="col-sm-3 control-label">
+				Hover
+				<f:if condition="{compare.navbarHover}">
+					<br/><small class="text-primary">{compare.navbarHover}</small>
+				</f:if>
+				<f:if condition="{override.navbarHover}">
+					{f:if(condition:'{compare.navbarHover}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarHover})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarHover" class="form-check-input" property="navbarHover" value="1" />
+						<small class="form-text text-muted">Open dropdown on hover</small>
+					 </label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="navbarClickableparent" class="col-sm-3 control-label">
+				Clickable parent
+				<f:if condition="{compare.navbarClickableparent}">
+					<br/><small class="text-primary">{compare.navbarClickableparent}</small>
+				</f:if>
+				<f:if condition="{override.navbarClickableparent}">
+					{f:if(condition:'{compare.navbarClickableparent}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarClickableparent})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarClickableparent" class="form-check-input" property="navbarClickableparent" value="1" />
+						<small class="form-text text-muted">Clickable parent if dropdown menu is open</small>
+					 </label>
+				</div>
+			</div>
+		</div>
+	
+<div class="form-group row">
+	<label for="navbarLangmenu" class="col-sm-3 control-label">
+		Language Menu
+		<f:if condition="{compare.navbarLangmenu}">
+			<br/><small class="text-primary">{compare.navbarLangmenu}</small>
+		</f:if>
+		<f:if condition="{override.navbarLangmenu}">
+			{f:if(condition:'{compare.navbarLangmenu}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarLangmenu})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="navbarLangmenu" class="form-check-input" property="navbarLangmenu" value="1" />
+				<small class="form-text text-muted">Setting is taken from the site configuration</small>
+			 </label>
+		</div>
+	</div>
+</div>
+		
+		
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
+			Brand
+		</button>
+	</div>
+</div>
+<div class="collapse" id="collapseBrand">
+	<div class="card card-body">
+		<div class="form-group">
+			<label for="navbarBrand" class="col-sm-3 control-label">
+				Brand Options
+				<f:if condition="{compare.navbarBrand}">
+					<br/><small class="text-primary">{f:if(condition:"{compare.navbarBrand} == 'not set'",then:'none',else:'{compare.navbarBrand}')}</small>
+				</f:if>
+				<f:if condition="{override.navbarBrand}">
+					{f:if(condition:'{compare.navbarBrand}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarBrand})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarBrand"
+					class="form-control"
+					property="navbarBrand"
+					options="{navbarBrandOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="company" class="col-sm-3 control-label">
+				Brand Text
+				<f:if condition="{compare.company}">
+					<br/><small class="text-primary">{compare.company}</small>
+				</f:if>
+				<f:if condition="{override.company}">
+					{f:if(condition:'{compare.company}',then:'',else:'<br/>')}<small class="text-danger"> ({override.company})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.textfield
+					id="company"
+					class="form-control"
+					property="company"
+				/>
+				<small class="form-text text-muted">e.g. Company name (Multilingual Support with pipe "|")</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarImage" class="col-sm-3 control-label">
+				Brand Image
+				<f:if condition="{compare.navbarImage}">
+					<br/><small class="text-primary">{compare.navbarImage}</small>
+				</f:if>
+				<f:if condition="{override.navbarImage}">
+					{f:if(condition:'{compare.navbarImage}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarImage})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.textfield
+					id="navbarImage"
+					class="form-control"
+					property="navbarImage"
+				/>
+				<small class="form-text text-muted">Path to your image - Only if "Brand Options" is "Just an image" or "Image and text"</small>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
+			Background Color
+		</button>
+	</div>
+</div>
+<div class="collapse" id="collapseColor">
+	<div class="card card-body">
+		<div class="form-group">
+			<label for="navbarColor" class="col-sm-3 control-label">
+				Layout/Placement
+				<f:if condition="{compare.navbarColor}">
+					<br/><small class="text-primary">bg-{compare.navbarColor}</small>
+				</f:if>
+				<f:if condition="{override.navbarColor}">
+					{f:if(condition:'{compare.navbarColor}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarColor})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarColor"
+					class="form-control"
+					property="navbarColor"
+					options="{navbarColorOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarBackground" class="col-sm-3 control-label">
+				Background Color
+				<f:if condition="{compare.navbarBackground}">
+					<br/><small class="text-primary">{compare.navbarBackground}</small>
+				</f:if>
+				<f:if condition="{override.navbarBackground}">
+					{f:if(condition:'{compare.navbarBackground}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarBackground})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.textfield
+					id="navbarBackground"
+					class="form-control"
+					property="navbarBackground"
+				/>
+				<small class="form-text text-muted">HTML-color - Color schemes "bg-color" must be activated</small>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseLayout" aria-expanded="false" aria-controls="collapseLayout">
+			Layout/Placement
+		</button>
+	</div>
+</div>
+<div class="collapse" id="collapseLayout">
+	<div class="card card-body">
+		<div class="form-group">
+			<label for="navbarContainer" class="col-sm-3 control-label">
+				Container
+				<f:if condition="{compare.navbarContainer}">
+					<br/><small class="text-primary">{compare.navbarContainer}</small>
+				</f:if>
+				<f:if condition="{override.navbarContainer}">
+					{f:if(condition:'{compare.navbarContainer}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarContainer})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarContainer"
+					class="form-control"
+					property="navbarContainer"
+					options="{navbarContainerOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarPlacement" class="col-sm-3 control-label">
+				Placement
+				<f:if condition="{compare.navbarPlacement}">
+					<br/><small class="text-primary">{f:if(condition:"{compare.navbarPlacement} == 'not set'",then:'default',else:'{compare.navbarPlacement}')}</small>
+				</f:if>
+				<f:if condition="{override.navbarPlacement}">
+					{f:if(condition:'{compare.navbarPlacement}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarPlacement})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarPlacement"
+					class="form-control"
+					property="navbarPlacement"
+					options="{navbarPlacementOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarAlignment" class="col-sm-3 control-label">
+				Alignment
+				<f:if condition="{compare.navbarAlignment}">
+					<br/><small class="text-primary">{f:if(condition:"{compare.navbarAlignment} == 'not set'",then:'default',else:'{compare.navbarAlignment}')}</small>
+				</f:if>
+				<f:if condition="{override.navbarAlignment}">
+					{f:if(condition:'{compare.navbarAlignment}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarAlignment})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarAlignment"
+					class="form-control"
+					property="navbarAlignment"
+					options="{navbarAlignmentOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarClass" class="col-sm-3 control-label">
+				Extra class
+				<f:if condition="{compare.navbarClass}">
+					<br/><small class="text-primary">{compare.navbarClass}</small>
+				</f:if>
+				<f:if condition="{override.navbarClass}">
+					{f:if(condition:'{compare.navbarClass}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarClass})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.textfield
+					id="navbarClass"
+					class="form-control"
+					property="navbarClass"
+				/>
+				<small class="form-text text-muted">e.g. "mb-5" for margin-bottom: 3rem</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarHeight" class="col-sm-3 control-label">
+				Navbar height
+				<f:if condition="{compare.navbarHeight}">
+					<br/><small class="text-primary">{compare.navbarHeight}</small>
+				</f:if>
+				<f:if condition="{override.navbarHeight}">
+					{f:if(condition:'{compare.navbarHeight}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarHeight})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.textfield
+					id="navbarHeight"
+					class="form-control"
+					property="navbarHeight"
+				/>
+				<small class="form-text text-muted">Is used as padding-top in the body tag - use only if NavBar is fixed-top (int+ px / default: "56")</small>
+			</div>
+		</div>
+		<f:if condition="{settings.indexedsearch}">
+			<div class="form-group">
+				<label for="navbarSearchbox" class="col-sm-3 control-label">
+					Searchbox
+					<f:if condition="{compare.navbarSearchbox}">
+						<br/><small class="text-primary">{compare.navbarSearchbox}</small>
+					</f:if>
+					<f:if condition="{override.navbarSearchbox}">
+						{f:if(condition:'{compare.navbarSearchbox}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarSearchbox})</small>
+					</f:if>
+				</label>
+				<div class="col-sm-9">
+					<f:form.select
+						id="navbarSearchbox"
+						class="form-control"
+						property="navbarSearchbox"
+						options="{navbarSearchboxOptions}"
+						optionValueField="key"
+						optionLabelField="value"
+					/>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseShrinking" aria-expanded="false" aria-controls="collapseShrinking">
+			Shrinking Navbar
+		</button>
+	</div>
+</div>
+<div class="collapse" id="collapseShrinking">
+	<div class="card card-body">	
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9">
+				<h3 class="help-block">Shrinking Navbar on scrolling <small>(only if "Placement" = "fixed-top")</small></h3>
+				<p class="small pb-0">Set "Placement" to "fixed-top".<br />Set "Padding (py-1 to py-5)" in Konstanten-Editor.<br />Set "Navbar height" must be adapted for body-padding.<br />Does not work with "Background color" only with "Color schemes".<br />
+					Transparency: "Color schemes" = "bg-color" and "Background color" & "Navbar height" without entry.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarShrinkcolor" class="col-sm-3 control-label">
+				Enable
+				<f:if condition="{compare.navbarShrinkcolor}">
+					<br/><small class="text-primary">navbar-{compare.navbarShrinkcolor}</small>
+				</f:if>
+				<f:if condition="{override.navbarShrinkcolor}">
+					{f:if(condition:'{compare.navbarShrinkcolor}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarShrinkcolor})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarShrinkcolor"
+					class="form-control"
+					property="navbarShrinkcolor"
+					options="{navbarShrinkcolorOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+				<small class="form-text text-muted">Choose from navbar-light for use with light background colors, or navbar-dark for dark background colors</small>	
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarShrinkcolorschemes" class="col-sm-3 control-label">
+				Color schemes
+				<f:if condition="{compare.navbarShrinkcolorschemes}">
+					<br/><small class="text-primary">bg-{compare.navbarShrinkcolorschemes}</small>
+				</f:if>
+				<f:if condition="{override.navbarShrinkcolorschemes}">
+					{f:if(condition:'{compare.navbarShrinkcolorschemes}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarShrinkcolorschemes})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarShrinkcolorschemes"
+					class="form-control"
+					property="navbarShrinkcolorschemes"
+					options="{navbarShrinkcolorschemesOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseResponsive" aria-expanded="false" aria-controls="collapseResponsive">
+			Responsive behaviors
+		</button>
+	</div>
+</div>
+<div class="collapse" id="collapseResponsive">
+	<div class="card card-body">
+		<div class="form-group">
+			<label for="navbarToggler" class="col-sm-3 control-label">
+				Toggler
+				<f:if condition="{compare.navbarToggler}">
+					<br/><small class="text-primary">{compare.navbarToggler}</small>
+				</f:if>
+				<f:if condition="{override.navbarToggler}">
+					{f:if(condition:'{compare.navbarToggler}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarToggler})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarToggler"
+					class="form-control"
+					property="navbarToggler"
+					options="{navbarTogglerOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="navbarBreakpoint" class="col-sm-3 control-label">
+				Breakpoint
+				<f:if condition="{compare.navbarBreakpoint}">
+					<br/><small class="text-primary">{compare.navbarBreakpoint}</small>
+				</f:if>
+				<f:if condition="{override.navbarBreakpoint}">
+					{f:if(condition:'{compare.navbarBreakpoint}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarBreakpoint})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<f:form.select
+					id="navbarBreakpoint"
+					class="form-control"
+					property="navbarBreakpoint"
+					options="{navbarBreakpointOptions}"
+					optionValueField="key"
+					optionLabelField="value"
+				/>
+				<small class="form-text text-muted">Grouping and hiding navbar contents by a parent breakpoint</small>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="navbarOffcanvas" class="col-sm-3 control-label">
+				Offcanvas navbar
+				<f:if condition="{compare.navbarOffcanvas}">
+					<br/><small class="text-primary">{compare.navbarOffcanvas}</small>
+				</f:if>
+				<f:if condition="{override.navbarOffcanvas}">
+					{f:if(condition:'{compare.navbarOffcanvas}',then:'',else:'<br/>')}<small class="text-danger"> ({override.navbarOffcanvas})</small>
+				</f:if>
+			</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					 <label>
+						<f:form.checkbox id="navbarOffcanvas" class="form-check-input" property="navbarOffcanvas" value="1" />
+					 </label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

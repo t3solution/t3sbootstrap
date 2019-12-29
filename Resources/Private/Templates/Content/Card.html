@@ -1,0 +1,149 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>Card Template</f:comment>
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>no header here</f:comment>
+</f:section>
+<f:section name="Main">
+	<f:comment>Card Header</f:comment>
+	<f:if condition="{card.header.text} && !{card.image.overlay}">
+		<div class="card-header">{card.header.text -> f:format.raw()}</div>
+	</f:if>
+	<f:comment>Card Title (top)</f:comment>
+	<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
+		<div class="card-body">
+			<f:render partial="Header/All" arguments="{_all}"/>			
+		</div>
+	</f:if>
+	<f:comment>Card Image (top)</f:comment>
+	<f:if condition="{data.imageorient} == 'top'">
+		<f:render partial="Media/RawGallery" arguments="{_all}" />
+	</f:if>
+	<f:comment>Card Text (top)</f:comment>
+	<f:if condition="{card.text.top}">
+		<f:render section="TextTop" arguments="{_all}" />
+	</f:if>
+	<f:comment>Card List</f:comment>
+	<f:if condition="{card.list} && !{card.image.overlay}">
+		<f:render section="ListGroup" arguments="{_all}" />
+	</f:if>
+	<f:comment>Card Text (bottom)</f:comment>
+	<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
+		<f:render section="TextBottom" arguments="{_all}" />
+	</f:if>
+	<f:comment>Card Image (bottom)</f:comment>
+	<f:if condition="{data.imageorient} == 'bottom'">
+		<f:render partial="Media/RawGallery" arguments="{_all}" />
+	</f:if>	
+	<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
+		<div class="card-footer">
+			{card.footer.text -> f:format.raw()}
+			<f:if condition="{card.button.footer}">
+				<f:render section="Button" arguments="{_all}" />
+			</f:if>
+		</div>
+	</f:if>
+</f:section>
+</html>
+
+
+<f:section name="CardBlock">
+	<div class="{card.block.class}">
+		<f:if condition="{card.title.position} == 'default'">
+			<f:render partial="Header/All" arguments="{_all}"/>
+		</f:if>
+		<f:if condition="{card.text.top}">
+			<f:render section="TextTop" arguments="{_all}" />
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="TextTop">
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay})">
+		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: '{card.mobile.overlay}')}">
+	</f:if>
+	<div class="card-body">
+		<f:comment>Card Title (default)</f:comment>
+		<f:if condition="({card.title.position} == 'default') && ({data.header} || {data.subheader}) ">
+			<f:render partial="Header/All" arguments="{_all}"/>
+		</f:if>
+		<div class="card-text">
+			<f:if condition="{card.cropMaxCharacters}">
+				<f:then>
+					{card.text.top -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				</f:then>
+				<f:else>
+					{card.text.top -> f:format.html()}
+				</f:else>
+			</f:if>
+			<f:if condition="{card.text.bottom} && ({card.image.overlay} || {card.mobile.overlay})">
+				<f:if condition="{card.cropMaxCharacters}">
+					<f:then>
+						{card.text.bottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					</f:then>
+					<f:else>
+						{card.text.bottom -> f:format.html()}
+					</f:else>
+				</f:if>
+			</f:if>
+		</div>
+		<f:if condition="{card.button.position} == 'top' && !{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+	</div>
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="TextBottom">
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
+		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: '{card.mobile.overlay}')}">
+	</f:if>
+	<div class="card-body">
+		<div class="card-text">
+			<f:if condition="{card.cropMaxCharacters}">
+				<f:then>
+					{card.text.bottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				</f:then>
+				<f:else>
+					{card.text.bottom -> f:format.html()}
+				</f:else>
+			</f:if>
+		</div>
+		<f:if condition="{card.button.position} == 'bottom' && !{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+	</div>
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="ListGroup">
+	<ul class="list-group list-group-flush">
+		<f:for each="{card.list}" as="listItem">
+			<li class="list-group-item">{listItem -> f:format.raw()}</li>
+		</f:for>
+	</ul>
+	<f:if condition="{card.button.position} == 'list' && {card.button.enable} && {card.button.link} && !{card.button.footer}">
+		<div class="card-body">
+			<f:render section="Button" arguments="{_all}" />
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="Button">
+	<f:if condition="{card.button.enable} && {card.button.link}">
+		<f:link.typolink parameter="{card.button.link}" class="btn btn{f:if(condition:'{card.button.outline}',then: '-outline')}-{card.button.style}{f:if(condition:'{card.button.block}',then: ' btn-block')}">
+			<f:if condition="{card.button.text}">
+				<f:then>
+					{card.button.text -> f:format.raw()}
+				</f:then>
+				<f:else>
+					{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:more')}
+				</f:else>
+			</f:if>
+		</f:link.typolink>
+	</f:if>
+</f:section>

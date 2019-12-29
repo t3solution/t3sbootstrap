@@ -1,0 +1,321 @@
+
+page {
+	# Page template
+	10 = FLUIDTEMPLATE
+	10 {
+		file = EXT:t3sbootstrap/Resources/Private/Templates/Main.html
+
+		partialRootPaths >
+		partialRootPaths {
+			0 = EXT:fluid_styled_content/Resources/Private/Partials/
+			1 = EXT:t3sbootstrap/Resources/Private/Partials/
+			2 = EXT:t3sbootstrap/Resources/Private/Partials/Content/
+			3 = {$plugin.tx_t3sbootstrap.view.partialRootPath}
+			4 = {$plugin.tx_t3sbootstrap.view.partialRootPath}Content/
+			10 = {$styles.templates.partialRootPath}
+		}
+		layoutRootPaths >
+		layoutRootPaths {
+			0 = EXT:fluid_styled_content/Resources/Private/Layouts/
+			1 = EXT:t3sbootstrap/Resources/Private/Layouts/
+			2 = EXT:t3sbootstrap/Resources/Private/Layouts/Content/
+			3 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}
+			4 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}Content/
+			10 = {$styles.templates.layoutRootPath}
+		}
+		variables {
+			be_layout = TEXT
+			be_layout.value < temp.pagelayout
+			headerslider < lib.t3sheaderslider
+			headerslider.if.isTrue = {$bootstrap.ext.headerslider}
+		}
+		settings	{
+			navbar {
+				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
+				image.width = {$bootstrap.navbar.image.width}
+				image.height = {$bootstrap.navbar.image.height}
+				image.altText = {$bootstrap.navbar.image.altText}
+				extraRow = {$bootstrap.navbar.extraRow}
+				subdropdown.twoColumns = {$bootstrap.navbar.subdropdown.twoColumns}
+				searchboxLink = {$bootstrap.navbar.searchboxLink}
+				feUserName = {$bootstrap.navbar.feUserName}
+				langFlags = {$bootstrap.navbar.langFlags} 
+				dropdownAnimate = {$bootstrap.navbar.dropdownAnimate}
+			}
+			indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+			configOverride = {$bootstrap.extconf.configOverride}
+			expandedContent = {$bootstrap.extconf.expandedContent}
+			date.format = {$bootstrap.config.dateFormat}
+			lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
+			contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
+			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
+			slideLeftAside = {$bootstrap.config.slideLeftAside}
+			slideRightAside = {$bootstrap.config.slideRightAside}
+			globalPaddingTop = {$bootstrap.config.globalPaddingTop}
+			pageContentExtraClass = {$bootstrap.config.pageContentExtraClass}
+			mainExtraClass = {$bootstrap.config.mainExtraClass}
+			asideExtraClass = {$bootstrap.config.asideExtraClass}
+			sidebarMenuPosition = {$bootstrap.config.sidebarMenuPosition}
+			pages {
+				override {
+					smallColumns = {$pages.override.smallColumns}
+					breakpoint = {$pages.override.breakpoint}
+				}
+			}
+			loadingSpinner = {$bootstrap.config.loadingSpinner}
+			loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
+			shrinkingNavPadding = {$bootstrap.config.shrinkingNavPadding}
+			carousel.interval = {$bootstrap.carousel.interval}
+			carousel.pause = {$bootstrap.carousel.pause}
+			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
+			lightboxSelection = {$bootstrap.config.lightboxSelection}
+			backgroundImageEnable =  {$bootstrap.config.backgroundImage.enable}
+			backgroundImageSlide =  {$bootstrap.config.backgroundImage.slide}
+		}
+		dataProcessing {
+			#
+			# NavBar / Main Navigation
+			#
+			10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			10 {
+				entryLevel.cObject = TEXT
+				entryLevel.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_entrylevel
+				levels.cObject = TEXT
+				levels.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_levels
+				levels.cObject.stdWrap.override = {$bootstrap.config.navbar_levels}
+				levels.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.navbar_levels}
+				excludeUidList.cObject = TEXT
+				excludeUidList.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_excludeuiduist
+				excludeUidList.cObject.stdWrap.override = {$bootstrap.config.navbar_excludeuiduist}
+				excludeUidList.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.navbar_excludeuiduist}
+				includeSpacer.cObject = TEXT
+				includeSpacer.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_includespacer
+				includeSpacer.cObject.stdWrap.override = {$bootstrap.config.navbar_includespacer}
+				includeSpacer.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.navbar_includespacer}
+				as = navbarMenu
+			}
+
+			#
+			# NavBar-RIGHT / Main Navigation
+			#
+			11 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			11 {
+				special = list
+				special.value = {$bootstrap.navbar.rightMenuUidList}
+				as = navbarMenuRight
+				if.isTrue = {$bootstrap.navbar.rightMenuUidList}
+			}
+
+			#
+			# Pagebrowser
+			#
+			12 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			12 {
+				special = browse
+				special.items = {$bootstrap.pagebrowser.nextItem}
+				special.items.prevnextToSection = {$bootstrap.pagebrowser.prevnextToSection}
+				entryLevel = {$bootstrap.pagebrowser.entryLevel}
+				as = browseNext
+				if.isTrue = {$bootstrap.pagebrowser.enable}
+			}
+			13 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			13 {
+				special = browse
+				special.items = {$bootstrap.pagebrowser.prevItem}
+				special.items.prevnextToSection = {$bootstrap.pagebrowser.prevnextToSection}	
+				entryLevel = {$bootstrap.pagebrowser.entryLevel}	
+				as = browsePrev
+				if.isTrue = {$bootstrap.pagebrowser.enable}
+			}
+     			
+			#
+			# Sub Navigation in Sidebar
+			#
+			20 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			20 {
+				entryLevel.cObject = TEXT
+				entryLevel.cObject {
+				    data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
+				    override = -1
+				    override.if {
+					    equals = 99
+				        value.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
+				    }
+				}
+				levels.cObject = TEXT
+				levels.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_levels
+				levels.cObject.stdWrap.override = {$bootstrap.config.sidebar_levels}
+				levels.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.sidebar_levels}
+				excludeUidList.cObject = TEXT
+				excludeUidList.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_excludeuiduist
+				excludeUidList.cObject.stdWrap.override = {$bootstrap.config.sidebar_excludeuiduist}
+				excludeUidList.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.sidebar_excludeuiduist}
+				includeSpacer.cObject = TEXT
+				includeSpacer.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_includespacer
+				includeSpacer.cObject.stdWrap.override = {$bootstrap.config.sidebar_includespacer}
+				includeSpacer.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.sidebar_includespacer}
+				as = subNavigation
+				if {
+					isTrue.cObject = COA
+					isTrue.cObject {
+						10 = TEXT
+						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
+						20 = TEXT
+						20.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
+						30 = TEXT
+						30.value = {$bootstrap.config.sidebar_enable}
+						40 = TEXT
+						40.value = {$bootstrap.config.sidebar_rightenable}
+					}
+				}
+			}
+
+			#
+			# Breadcrumb
+			#
+			30 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			30 {
+				special = rootline
+				special.range = 0|-1
+				as = breadcrumb
+			}
+
+ 			#
+			# Language Navigation
+			#
+			40 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			40 {
+				special = language
+				special.value = auto
+				as = languageNavigation
+				if {
+					isTrue.cObject = COA
+					isTrue.cObject {
+						10 = TEXT
+						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_langmenu
+					}
+				}
+			}
+
+			#
+			# Meta Navigation
+			#
+			50 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			50 {
+				special = list
+				special.value.cObject = TEXT
+				special.value.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:meta_value
+				special.value.cObject.stdWrap.override = {$bootstrap.config.meta_value}
+				special.value.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.meta_value}
+				excludeUidList = {register:homepageuid}
+				excludeUidList.insertData = 1
+				levels = 1
+				as = metaNavigation
+				if {
+					isTrue.cObject = COA
+					isTrue.cObject {
+						10 = TEXT
+						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:meta_enable
+						20 = TEXT
+						20.value = {$bootstrap.config.meta_enable}
+					}
+				}
+			}
+
+			#
+			# Section Menu
+			#
+			60 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			60 {
+				special = list
+				special {
+					value {
+						field = pages
+						override {
+							data = page:uid
+							if {
+								isFalse.field = pages
+							}
+						}
+					}
+				}
+				as = sectionMenu
+				dataProcessing {
+					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+					10 {
+						references.fieldName = media
+					}
+					20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+					20 {
+						table = tt_content
+						pidInList.field = uid
+						where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
+						#where = sectionIndex = 1 AND ( colPos = 0 )
+						orderBy = sorting
+						as = content
+						dataProcessing {
+							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+							10 {
+								references.fieldName = image
+							}
+							20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+							20 {
+								table = tt_content
+								pidInList.field = pid
+								#where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
+								where = sectionIndex = 1 AND ( colPos = -1 )
+								#insertData = 1
+								orderBy = sorting
+								as = gridcontent
+							}
+						}
+					}
+				}
+				if {
+					isTrue.cObject = COA
+					isTrue.cObject {
+						10 = TEXT
+						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
+						20 = TEXT
+						20.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
+						30 = TEXT
+						30.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
+						40 = TEXT
+						40.value = {$bootstrap.config.navbar_sectionmenu}
+						50 = TEXT
+						50.value = {$bootstrap.config.sidebar_rightenable}
+						60 = TEXT
+						60.value = {$bootstrap.config.sidebar_enable}
+					}
+				}
+			}
+
+			#
+			# Date of the last modified content element on current page
+			#
+			70 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
+			70.if.isTrue = {$bootstrap.config.lastModifiedContentElement}
+
+			#
+			# Main Config
+			#
+			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
+			90 {
+				navbarExtraRow = {$bootstrap.navbar.extraRow}
+				rootline = {$bootstrap.config.rootline}
+				animateCssInlineJs = {$bootstrap.animateCssInlineJs}
+				dataProcessing {
+					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+					10 {
+						references {
+							table = pages
+							fieldName = media
+						}
+						as = pagemedia
+					}
+				}
+			}
+		}
+	}
+}
+

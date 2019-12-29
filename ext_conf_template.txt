@@ -1,0 +1,67 @@
+# customcategory=custom=Custom SCSS
+# customcategory=t3sb=T3SB
+# customcategory=dif=Different
+# customcategory=flexform=Flexform
+# customsubcategory=a-config=If enabled, the bootstrap SCSS variables in the custom-variables.scss file can be overridden.
+
+	# cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
+spacing = 1
+	# cat=content/enable/20; type=boolean; label=Container: Shows a select-field for a .container or .container-fluid class in any content element if enabled (clear cache).
+container = 1
+	# cat=content/enable/30; type=boolean; label=Color: Shows palette "Bootstrap Color" in almost any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
+color = 1
+	# cat=content/enable/40; type=boolean; label=Image ratio: Shows an option for "Image ratio" in the palette "Media Adjustments" if enabled. (clear cache).
+ratio = 0
+
+	# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache).
+fontawesome = 1
+	# cat=page/enable/20; type=boolean; label=Font Awesome Icon in Page Title: Enable the fa icon in the page title (clear cache).
+fontawesomepagetitle = 1
+
+	# cat=custom/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
+customScss = 0
+	# cat=custom/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Pulse, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Yeti]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
+bootswatch = none
+	# cat=custom/a-config/50; type=string; label=Path to your custom.scss files: e.g.: fileadmin/T3SB/SCSS/ (clear cache and run the Scheduler).
+customScssPath = fileadmin/T3SB/SCSS/
+	# cat=custom/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/ws_scss/ (clear cache).
+editScss = 0
+	# cat=custom/a-config/70; type=boolean; label=Roll your own (experimental): e.g.: Disable tootltip: module.tx_t3sbootstrap.settings.bootstrap.tooltip=0 - the Path to your custom.scss files should be: fileadmin/T3SB/SCSS/ in this case (clear cache and run Scheduler).
+rollyourown = 0
+
+	# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Gridelements/CarouselContainer.xml (clear cache).
+flexformExtend = 0
+	# cat=flexform/enable/20; type=string; label=Path to your flexforms files: e.g.: /fileadmin/T3SB/FlexForms/ (clear cache).
+flexformPath = /fileadmin/T3SB/FlexForms/
+	# cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache).
+flexformModify = 0
+
+	# cat=t3sb/enable/10; type=boolean; label=Config Override: you can override the "T3SB Config" by TypoScript Constants (clear cache).
+configOverride = 0
+	# cat=t3sb/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
+expandedContent = 0
+	# cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
+cTypeClass = 0.
+
+	# cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
+codesnippet = 0
+	# cat=dif/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache).
+imgCopyright = 0
+
+	# cat=dif/enable/20; type=boolean; label=Custom translations:(clear cache).
+customTranslations = 0
+	# cat=dif/enable/30; type=string; label=Path to your custom translations path: e.g.: fileadmin/T3SB/Language/ (clear cache).
+customTranslationsPath = fileadmin/T3SB/Language/
+
+	# cat=advanced/enable/10; type=options[none=0, FA free=1, FA pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2]; label=Font Awesome 5: include Font Awesome SCSS - if deactivated, only some required icons are loaded (clear cache).
+fontawesomeCss = 0
+	# cat=advanced/enable/20; type=options[none=0, only if needed=1, on any page (e.g. if using in the footer only)=2]; label=Animate CSS: include Animate CSS und Viewportchecker (clear cache).
+animateCss = 0
+	# cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
+linkHoverEffect = 0
+	# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2]; label=Lazy Load: for images - include lazyload.min.js (clear cache).
+lazyLoad = 0
+	# cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
+cookieconsent = 0
+
+

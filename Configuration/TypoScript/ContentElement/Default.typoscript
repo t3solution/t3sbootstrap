@@ -1,0 +1,194 @@
+# ===============================================================================
+# tt_content configuration
+# ===============================================================================
+tt_content {
+
+	# **********************************************************
+	# Textmedia
+	# **********************************************************
+	textmedia {
+		dataProcessing {
+			20 >
+			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
+			20 {
+				maxGalleryWidth = {$styles.content.textmedia.maxW}
+				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
+				defaultImgWidthBig = {$bootstrap.image.default.width.big}
+				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
+			}			
+		}
+	}
+
+	# **********************************************************
+	# Textpic
+	# **********************************************************
+	textpic {
+		dataProcessing {
+			20 >
+			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
+			20 {
+				maxGalleryWidth = {$styles.content.textmedia.maxW}
+				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
+				columnSpacing = {$styles.content.textmedia.columnSpacing}
+				defaultImgWidthBig = {$bootstrap.image.default.width.big}
+				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
+			}
+		}
+	}
+
+	# **********************************************************
+	# Image
+	# **********************************************************
+	image {
+		dataProcessing {
+			20 >
+			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
+			20 {
+				maxGalleryWidth = {$styles.content.textmedia.maxW}
+				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
+				columnSpacing = {$styles.content.textmedia.columnSpacing}
+				defaultImgWidthBig = {$bootstrap.image.default.width.big}
+				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
+			}
+		}
+	}
+
+
+	# **********************************************************
+	# Bullet List
+	# **********************************************************
+	bullets {
+		dataProcessing {
+			10.if.value = 5
+			20.if.value = 5
+		}
+	}
+
+	# **********************************************************
+	# Table
+	# **********************************************************
+	table {
+		dataProcessing {
+			 10 = T3SBS\T3sbootstrap\DataProcessing\CommaSeparatedValueProcessor
+			 10 {
+				 fieldName = bodytext
+				 fieldDelimiter.char.cObject = TEXT
+				 fieldDelimiter.char.cObject {
+					 field = table_delimiter
+				 }
+				 fieldEnclosure.char.cObject = TEXT
+				 fieldEnclosure.char.cObject {
+					 field = table_enclosure
+				 }
+				 maximumColumns.field = cols
+				 as = table
+			 }
+		 }
+	}
+
+	# **********************************************************
+	# Fluidtemplate
+	# **********************************************************
+	t3sbs_fluidtemplate = COA
+	t3sbs_fluidtemplate {
+		10 = FLUIDTEMPLATE
+		10 {
+			file.stdWrap.cObject = TEXT
+			file.stdWrap.cObject.field = subheader
+			file.stdWrap.cObject.ifEmpty {
+				cObject = TEXT
+				cObject.value = EXT:t3sbootstrap/Resources/Private/Templates/Content/FluidTemplate.html
+			}
+			variables < page.10.variables
+			settings < page.10.settings
+			dataProcessing {
+				224 = T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor
+				224 {
+					container = {$bootstrap.extconf.container}
+					cType = {$bootstrap.extconf.cTypeClass}
+					sectionmenu = TEXT
+					sectionmenu.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
+					sidebarleft = TEXT
+					sidebarleft.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
+					sidebarright = TEXT
+					sidebarright.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
+				}
+			}
+		}
+	}
+
+	# **********************************************************
+	# menu_section
+	# **********************************************************
+	menu_section {
+		dataProcessing >
+		dataProcessing {
+			10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			10 {
+				special = list
+				special {
+					value {
+						field = pages
+						override {
+							data = page:uid
+							if {
+								isFalse.field = pages
+							}
+						}
+					}
+				}
+				dataProcessing {
+					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+					10 {
+						references.fieldName = media
+					}
+					20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+					20 {
+						table = tt_content
+						pidInList.field = uid
+						as = content
+						where = sectionIndex = 1 AND ( colPos = 0 )
+						orderBy = sorting
+						dataProcessing {
+							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+							10 {
+								references.fieldName = media
+							}
+							20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+							20 {
+								table = tt_content
+								pidInList.field = pid
+								where = sectionIndex = 1 AND ( colPos = -1 )
+								orderBy = sorting
+								as = gridcontent
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	# **********************************************************
+	# menu_recently_updated
+	# **********************************************************
+	menu_recently_updated {
+		dataProcessing >
+	    dataProcessing {
+	        10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+	        10 {
+	            special = updated
+	            special {
+	                value.field = pages
+	                maxAge = 3600*24*30
+	                excludeNoSearchPages = 1
+	            }
+	        }
+	    }
+	}
+
+
+}

@@ -1,0 +1,101 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Lib/ContentElement.typoscript">
+
+lib.parseFunc_RTE.externalBlocks.table.stdWrap.HTMLparser.tags.table.fixAttrib.class.list >
+
+lib.parseFunc.allowTags := addToList( s, mark)
+lib.parseFunc_RTE.allowTags := addToList( s, mark)
+
+lib.parseFunc.tags := addToList( mark)
+lib.parseFunc_RTE.tags := addToList( mark)
+
+lib.parseFunc_RTE.externalBlocks.table.stdWrap{
+  HTMLparser = 1
+  HTMLparser {
+    tags.table.fixAttrib.class {
+      default = table
+      always = 1
+      list >
+    }
+    keepNonMatchedTags = 1
+  }
+}
+
+
+lib.pageTitle = TEXT
+lib.pageTitle.data = leveltitle:-1
+
+
+# used for subdropdown with 2 columns - Navbar.html
+lib.mathCeil = TEXT
+lib.mathCeil {
+	current = 1
+	prioriCalc = 1
+	round = 1
+	round.roundType = ceil
+}
+
+# used in Print.html
+lib.currentDate = TEXT
+lib.currentDate {
+  data = date : U
+  strftime = %A, %e. %B %Y
+}
+
+lib.currentDomain = TEXT
+lib.currentDomain {
+    dataWrap = {getIndpEnv:TYPO3_REQUEST_HOST}|
+    typolink.parameter.current = 1
+    typolink.returnLast = url
+}
+
+lib.printButton = COA
+lib.printButton {
+	10 = TEXT
+	10.value = <i class="fas fa-print"></i>
+	stdWrap.typolinkno_cache = 1
+	stdWrap.typolink.title = Open print version of this page in a new window
+	stdWrap.typolink.ATagParams = target = _blank
+	stdWrap.typolink.parameter.cObject = COA
+	stdWrap.typolink.parameter.cObject {
+		5 = TEXT
+		5.data = page:uid
+		5.wrap = index.php?id=|
+		5.required = 1
+
+		10 = TEXT
+		10.value = &no_cache=1
+
+		20 = TEXT
+		20.data = GP:L
+		20.wrap = &L=|
+		20.required = 1
+
+		30 = TEXT
+		30.data = GP:tx_news_pi1 | news
+		30.wrap = &tx_news_pi1[news]=|
+		30.required = 1
+
+		40 = TEXT
+		40.data = GP:tx_news_pi1 | controller
+		40.wrap = &tx_news_pi1[controller]=|
+		40.required = 1
+
+		50 = TEXT
+		50.data = GP:tx_news_pi1 | action
+		50.wrap = &tx_news_pi1[action]=|
+		50.required = 1
+
+		60 = TEXT
+		60.data = GP:cHash
+		60.wrap = &cHash=|
+		60.required = 1
+
+		70 = TEXT
+		70.value = &type=98
+	}
+}
+
+[siteLanguage("languageId") == "0"]
+lib.printButton.stdWrap.typolink.title = Druckversion dieser Seite in einem neuen Fenster öffnen
+[END]
+

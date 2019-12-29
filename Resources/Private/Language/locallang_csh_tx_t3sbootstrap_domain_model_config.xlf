@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-05-29T16:32:45Z" product-name="t3sbootstrap">
+		<header/>
+		<body>
+			<trans-unit id="navbar_enable.description">
+				<source>navbarEnable</source>
+			</trans-unit>
+			<trans-unit id="navbar_inverse.description">
+				<source>navbarInverse</source>
+			</trans-unit>
+			<trans-unit id="company.description">
+				<source>company</source>
+			</trans-unit>
+			<trans-unit id="pagetitle_prefix.description">
+				<source>pagetitlePrefix</source>
+			</trans-unit>
+			<trans-unit id="pagetitle_suffix.description">
+				<source>pagetitleSuffix</source>
+			</trans-unit>
+			<trans-unit id="homepage_uid.description">
+				<source>homepageUid</source>
+			</trans-unit>
+			<trans-unit id="navbar_entry_level.description">
+				<source>navbarEntryLevel</source>
+			</trans-unit>
+			<trans-unit id="navbar_exclude_uid_list.description">
+				<source>navbarExcludeUidList</source>
+			</trans-unit>
+			<trans-unit id="navbar_right_uid_list.description">
+				<source>navbarRightUidList</source>
+			</trans-unit>
+			<trans-unit id="navbar_right_label.description">
+				<source>navbarRightLabel</source>
+			</trans-unit>
+			<trans-unit id="navbar_hover.description">
+				<source>navbarHover</source>
+			</trans-unit>
+			<trans-unit id="navbar_submenu.description">
+				<source>navbarSubmenu</source>
+			</trans-unit>
+			<trans-unit id="breadcrumb_enable.description">
+				<source>breadcrumbEnable</source>
+			</trans-unit>
+			<trans-unit id="submenu_enable.description">
+				<source>submenuEnable</source>
+			</trans-unit>
+			<trans-unit id="submenu_exclude_uid_list.description">
+				<source>submenuExcludeUidList</source>
+			</trans-unit>
+			<trans-unit id="navbar_search_enable.description">
+				<source>navbarSearchEnable</source>
+			</trans-unit>
+			<trans-unit id="navbar_lang_enable.description">
+				<source>navbarLangEnable</source>
+			</trans-unit>
+			<trans-unit id="navbar_lang_label.description">
+				<source>navbarLangLabel</source>
+			</trans-unit>
+			<trans-unit id="navbar_lang_languages.description">
+				<source>navbarLangLanguages</source>
+			</trans-unit>
+			<trans-unit id="navbar_lang_languages_labels.description">
+				<source>navbarLangLanguagesLabels</source>
+			</trans-unit>
+			<trans-unit id="container_fluid.description">
+				<source>containerFluid</source>
+			</trans-unit>
+			<trans-unit id="jumbotron_enable.description">
+				<source>jumbotronEnable</source>
+			</trans-unit>
+			<trans-unit id="jumbotron_bg_img_enable.description">
+				<source>jumbotronBgImgEnable</source>
+			</trans-unit>
+			<trans-unit id="jumbotron_bg_img_maxwidth.description">
+				<source>jumbotronBgImgMaxwidth</source>
+			</trans-unit>
+			<trans-unit id="jumbotron_bg_img_maxheight.description">
+				<source>jumbotronBgImgMaxheight</source>
+			</trans-unit>
+			<trans-unit id="bs_header_enable.description">
+				<source>bsHeaderEnable</source>
+			</trans-unit>
+			<trans-unit id="navbar_fixedtop.description">
+				<source>navbarFixedtop</source>
+			</trans-unit>
+			<trans-unit id="navbar_top.description">
+				<source>navbarTop</source>
+			</trans-unit>
+			<trans-unit id="navbar_height.description">
+				<source>navbarHeight</source>
+			</trans-unit>
+			<trans-unit id="footer_enable.description">
+				<source>footerEnable</source>
+			</trans-unit>
+			<trans-unit id="footer_fullwidth.description">
+				<source>footerFullwidth</source>
+			</trans-unit>
+			<trans-unit id="footer_sticky.description">
+				<source>footerSticky</source>
+			</trans-unit>
+			<trans-unit id="lightbox_enable.description">
+				<source>lightboxEnable</source>
+			</trans-unit>
+			<trans-unit id="lightbox_group.description">
+				<source>lightboxGroup</source>
+			</trans-unit>
+			<trans-unit id="lightbox_data_attribute.description">
+				<source>lightboxDataAttribute</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

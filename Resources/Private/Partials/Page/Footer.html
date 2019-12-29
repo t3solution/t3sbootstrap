@@ -1,0 +1,65 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<footer id="page-footer" class="{config.footer.class}">
+	<f:if condition="{config.footer.sticky}">
+		<f:then>
+			<f:render section="Inside" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="Container" arguments="{_all}" />
+		</f:else>
+	</f:if>
+	<f:if condition="{settings.lastModifiedContentElement}">
+		<p class="lastModifiedContentElement text-center small my-3">
+			{f:translate(key: 'lastModifiedContentElement', extensionName: 't3sbootstrap')} {lastModifiedContentElement -> f:format.date(format: '{settings.date.format}')}
+		</p>
+	</f:if>
+</footer>
+</html>
+
+
+<f:section name="Container">
+	<f:if condition="{config.footer.container}">
+		<f:then>
+			<f:render section="{config.footer.containerposition}" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="Default" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Default">
+	<div class="footer">
+		<f:render section="Content" arguments="{_all}" />
+	</div>
+</f:section>
+
+
+<f:section name="Inside">
+	<div class="footer">
+		<div class="{config.footer.container}">
+			<f:render section="Content" arguments="{_all}" />
+		</div>
+	</div>
+</f:section>
+
+<f:section name="Outside">
+	<div class="{config.footer.container}">
+		<div class="footer">
+			<f:render section="Content" arguments="{_all}" />
+		</div>
+	</div>
+</f:section>
+
+<f:section name="Content">
+	<f:if condition="{config.footer.slide}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '4'}"/>
+			<f:cObject typoscriptObjectPath="lib.content.footerFromPid"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '4'}"/>
+			<f:cObject typoscriptObjectPath="lib.content.footerFromPid"/>
+		</f:else>
+	</f:if>
+</f:section>

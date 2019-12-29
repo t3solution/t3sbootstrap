@@ -1,0 +1,210 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<h3 class="help-block">Top</h3>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentEnabletop" class="col-sm-3 control-label">
+		Enable
+		<f:if condition="{compare.expandedcontentEnabletop}">
+			<br/><small class="text-primary">{compare.expandedcontentEnabletop}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentEnabletop}">
+			{f:if(condition:'{compare.expandedcontentEnabletop}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentEnabletop})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="expandedcontentEnabletop" class="form-check-input" property="expandedcontentEnabletop" value="1" />
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentSlidetop" class="col-sm-3 control-label">
+		Slide
+		<f:if condition="{compare.expandedcontentSlidetop}">
+			<br/><small class="text-primary">{compare.expandedcontentSlidetop}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentSlidetop}">
+			{f:if(condition:'{compare.expandedcontentSlidetop}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentSlidetop})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="expandedcontentSlidetop" class="form-check-input" property="expandedcontentSlidetop" value="1" />
+				<small class="form-text text-muted">Content of Expanded Content Top "slide" through the rootline</small>
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentContainertop" class="col-sm-3 control-label">
+		Container
+		<f:if condition="{compare.expandedcontentContainertop}">
+			<br/><small class="text-primary">{compare.expandedcontentContainertop}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentContainertop}">
+			{f:if(condition:'{compare.expandedcontentContainertop}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentContainertop})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="expandedcontentContainertop"
+			class="form-control"
+			property="expandedcontentContainertop"
+			options="{expandedcontentContainertopOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentContainerpositiontop" class="col-sm-3 control-label">
+		Container position
+		<f:if condition="{compare.expandedcontentContainerpositiontop}">
+			<br/><small class="text-primary">{compare.expandedcontentContainerpositiontop}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentContainerpositiontop}">
+			{f:if(condition:'{compare.expandedcontentContainerpositiontop}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentContainerpositiontop})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="expandedcontentContainerpositiontop"
+			class="form-control"
+			property="expandedcontentContainerpositiontop"
+			options="{expandedcontentContainerpositiontopOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">If "Container" is not "none"</small>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentClasstop" class="col-sm-3 control-label">
+		Extra class
+		<f:if condition="{compare.expandedcontentClasstop}">
+			<br/><small class="text-primary">{compare.expandedcontentClasstop}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentClasstop}">
+			{f:if(condition:'{compare.expandedcontentClasstop}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentClasstop})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="expandedcontentClasstop"
+			class="form-control"
+			property="expandedcontentClasstop"
+		/>
+		<small class="form-text text-muted">e.g. "mb-0" for margin-bottom: 0</small>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<h3 class="help-block">Bottom</h3>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentEnablebottom" class="col-sm-3 control-label">
+		Enable
+		<f:if condition="{compare.expandedcontentEnablebottom}">
+			<br/><small class="text-primary">{compare.expandedcontentEnablebottom}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentEnablebottom}">
+			{f:if(condition:'{compare.expandedcontentEnablebottom}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentEnablebottom})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="expandedcontentEnablebottom" class="form-check-input" property="expandedcontentEnablebottom" value="1" />
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentSlidebottom" class="col-sm-3 control-label">
+		Slide
+		<f:if condition="{compare.expandedcontentSlidebottom}">
+			<br/><small class="text-primary">{compare.expandedcontentSlidebottom}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentSlidebottom}">
+			{f:if(condition:'{compare.expandedcontentSlidebottom}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentSlidebottom})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="expandedcontentSlidebottom" class="form-check-input" property="expandedcontentSlidebottom" value="1" />
+				<small class="form-text text-muted">Content of Expanded Content Bottom "slide" through the rootline</small>
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentContainerbottom" class="col-sm-3 control-label">
+		Container
+		<f:if condition="{compare.expandedcontentContainerbottom}">
+			<br/><small class="text-primary">{compare.expandedcontentContainerbottom}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentContainerbottom}">
+			{f:if(condition:'{compare.expandedcontentContainerbottom}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentContainerbottom})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="expandedcontentContainerbottom"
+			class="form-control"
+			property="expandedcontentContainerbottom"
+			options="{expandedcontentContainerbottomOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentContainerpositionbottom" class="col-sm-3 control-label">
+		Container position
+		<f:if condition="{compare.expandedcontentContainerpositionbottom}">
+			<br/><small class="text-primary">{compare.expandedcontentContainerpositionbottom}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentContainerpositionbottom}">
+			{f:if(condition:'{compare.expandedcontentContainerpositionbottom}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentContainerpositionbottom})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="expandedcontentContainerpositionbottom"
+			class="form-control"
+			property="expandedcontentContainerpositionbottom"
+			options="{expandedcontentContainerpositionbottomOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">If "Container" is not "none"</small>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="expandedcontentClassbottom" class="col-sm-3 control-label">
+		Extra class
+		<f:if condition="{compare.expandedcontentClassbottom}">
+			<br/><small class="text-primary">{compare.expandedcontentClassbottom}</small>
+		</f:if>
+		<f:if condition="{override.expandedcontentClassbottom}">
+			{f:if(condition:'{compare.expandedcontentClassbottom}',then:'',else:'<br/>')}<small class="text-danger"> ({override.expandedcontentClassbottom})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="expandedcontentClassbottom"
+			class="form-control"
+			property="expandedcontentClassbottom"
+		/>
+		<small class="form-text text-muted">e.g. "mb-0" for margin-bottom: 0</small>
+	</div>
+</div>
+</html>

@@ -1,0 +1,345 @@
+#-------------------------------------------------------------------------------
+#	Plugin Constants
+#-------------------------------------------------------------------------------
+
+plugin.tx_t3sbootstrap {
+	view {
+		# cat=plugin.tx_t3sbootstrap/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:t3sbootstrap/Resources/Private/Templates/
+		# cat=plugin.tx_t3sbootstrap/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:t3sbootstrap/Resources/Private/Partials/
+		# cat=plugin.tx_t3sbootstrap/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:t3sbootstrap/Resources/Private/Layouts/
+	}
+}
+
+#-------------------------------------------------------------------------------
+#	Constant Editor
+#-------------------------------------------------------------------------------
+
+# customcategory=bootstrap-config=* T3SB::Config
+# customsubcategory=a-config=Main T3SB Config
+# customsubcategory=b-config=Main TYPO3 Config
+# customsubcategory=c-config=Content Slide
+# customsubcategory=d-config=Extra Class & Padding
+# customsubcategory=da-config=Loading Spinner
+# customsubcategory=dlb-config=Lightbox
+# customsubcategory=dsm-config=Section Menu
+# customsubcategory=dsn-config=Background Image
+# customsubcategory=e-config=Other Config
+
+bootstrap.config {
+	# cat=bootstrap-config/a-config/10; type=boolean; label=Data for "T3SB Config" on subpages: if disable from rootpage	 or from rootline if enabled (slide).
+	rootline = 1
+	# cat=bootstrap-config/a-config/20; type=boolean; label=Content Only On Rootpage: disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled.
+	contentOnlyOnRootpage = 0
+
+	# cat=bootstrap-config/b-config/10; type=boolean; label=Compress: compress and concatenate JS and CSS.
+	compress = 1
+	# cat=bootstrap-config/b-config/20; type=boolean; label=Disable Prefix Comment:
+	disablePrefixComment = 1
+
+	# cat=bootstrap-config/c-config/010; type=boolean; label=Left Aside Slide: content slide for colPos=1 if enabled
+	slideLeftAside = 0
+	# cat=bootstrap-config/c-config/015; type=boolean; label=Right Aside Slide: content slide for colPos=2 if enabled
+	slideRightAside = 0
+
+	# cat=bootstrap-config/d-config/010; type=small; label=Page Content Extra-Class: e.g. bg-danger or any other classes
+	pageContentExtraClass =
+	# cat=bootstrap-config/d-config/020; type=small; label=Body Extra-Class: e.g. bg-warning or any other classes
+	bodyExtraClass =
+	# cat=bootstrap-config/d-config/021; type=small; label=Page Aside Extra-Class: e.g. bg-danger or any other classes
+	asideExtraClass =
+	# cat=bootstrap-config/d-config/022; type=small; label=Page Main Extra-Class: e.g. bg-warning or any other classes
+	mainExtraClass =
+	# cat=bootstrap-config/d-config/030; type=options[none=0, pt-1=pt-1, pt-2=pt-2, pt-3=pt-3, pt-4=pt-4, pt-5=pt-5]; label=Global top padding: for colPos=0,1 & 2
+	globalPaddingTop = pt-5
+	# cat=bootstrap-config/d-config/040; type=int+; label=Footer Extra Padding: if "footer-sticky" is activated in the BE Modul, the padding-bottom for the body is given by JS. If you like an extra space between the footer and the content, you can do it here (in px).
+	stickyFooterExtraPadding = 0
+	
+	# cat=bootstrap-config/d-config/050; type=options[none=0, mt-1=mt-1, mt-2=mt-2, mt-3=mt-3, mt-4=mt-4, mt-5=mt-5]; label=Content Element Default Top-Margin: here you can set a default space (margin-top) for each content-element (colPos=0).
+	contentMarginTop = 0
+
+	# cat=bootstrap-config/da-config/010; type=options[none=0, Border spinner=border, Growing spinner=grow]; label=Loading Spinner:
+	loadingSpinner = 0
+	# cat=bootstrap-config/da-config/020; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=Loading Spinner Color:
+	loadingSpinnerColor = primary
+
+	# cat=bootstrap-config/dsm-config/040; type=boolean; label=Enable animated scrolling and scrollspy for Section-Menu-Items: jsFooterInline.5.14
+	sectionmenuScrolling = 0
+	# cat=bootstrap-config/dsm-config/043; type=small; label=Anchor extra offset for Section-Menu-Items: in px - jsFooterInline.5.14
+	sectionmenuAnchorOffset = 29
+	# cat=bootstrap-config/dsm-config/044; type=small; label=Scrollspy offset: in px - to activate the menu item - jsFooterInline.5.14
+	sectionmenuScrollspyOffset = 130
+	# cat=bootstrap-config/dsm-config/045; type=boolean; label=Sticky Top: for #sectionmenu, #submenu or .make-me-sticky - jsFooterInline.5.15
+	sectionmenuStickyTop = 0
+
+	# cat=bootstrap-config/dlb-config/010; type=options[none=0, baguettbox=1, ekkolightbox=2, lightcase=3]; label=Lightbox selection:
+	lightboxSelection = 1
+	# cat=bootstrap-config/dlb-config/020; type=boolean; label=Magnifying glass icon: in the center of an image on hover.
+	magnifying = 0
+
+	# cat=bootstrap-config/dsn-config/010; type=boolean; label=Background Image: first image from pages media
+	backgroundImage.enable = 0
+	# cat=bootstrap-config/dsn-config/11; type=boolean; label=Background Image slide: Content Sliding for the background image.
+	backgroundImage.slide = 0
+
+	# cat=bootstrap-config/e-config/010; type=boolean; label=Last Modified Content Element: display the date of the last modified content on current page in the footer.
+	lastModifiedContentElement = 0
+	# cat=bootstrap-config/e-config/020; type=small; label=Date Format: the date format to use in ext:t3sbootstrap.
+	dateFormat = d.m.Y
+	# cat=bootstrap-config/e-config/030; type=small; label=Subheader Color: Contextual text classes e.g. secondary, danger etc.
+	subheaderColor = secondary
+	# cat=bootstrap-config/e-config/060; type=options[above=above, below=below]; label=Sidebar Menu Position: above or below the content.
+	sidebarMenuPosition = above
+	# cat=bootstrap-config/e-config/070; type=options[py-1=1, py-2=2, py-3=3, py-4=4, py-5=5, py-x=x]; label=Padding for Shrinking Navbar: py-x can be set by your stylesheet
+	shrinkingNavPadding = 5
+	# cat=bootstrap-config/e-config/090; type=small; label=Favicon: path to your favicon e.g.: EXT:t3sbootstrap/Resources/Public/Icons/favicon.ico
+	favicon =
+	# cat=bootstrap-config/e-config/110; type=boolean; label=Card Flipper: rotate on click.
+	cardFlipperOnClick = 0
+}
+
+
+
+# customcategory=bootstrap-image=* T3SB::Image settings
+# customsubcategory=a-image=Default Image Size
+# customsubcategory=b-image=Additional image sizes (srcset) that should be generated for each content image.
+# customsubcategory=c-image=Lazyloading Threshold
+# customsubcategory=d-image=Picturefill
+bootstrap.image {
+	# cat=bootstrap-image/a-image/10; type=int+; label=Fallback image size in ColPos=0 (in px): only if BE-layout != OneCol && !imgWidth
+	default.width.big = 825
+	# cat=bootstrap-image/a-image/20; type=int+; label=Fallback image size in ColPos=1 && ColPos=2 (in px): only if BE-layout != OneCol && !imgWidth
+	default.width.small = 385
+	# cat=bootstrap-image/a-image/30; type=boolean; label=Scaling correction: when the total of media elements is wider than the gallery width (default) - if disabled: minimum equalMediaWidth is set to 575px and therefore 100% wide on mobile.
+	mediaScalingCorrection = 1
+	# cat=bootstrap-image/b-image/10; type=small; label=Additional Image Sizes for Desktop min-width 1200px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
+	srcsetDesktop = 255, 385, 540, 768, 992, 1200
+	# cat=bootstrap-image/b-image/20; type=small; label=Additional Image Sizes for Tablet min-width 576px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
+	srcsetTablet = 385, 576, 768, 992, 1200
+	# cat=bootstrap-image/b-image/30; type=small; label=Additional Image Sizes for Mobile max-width 575px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
+	srcsetMobile = 60, 100, 200, 385, 575
+	# cat=bootstrap-image/c-image/010; type=int+; label=Threshold for Lazy load: if "lazyLoad" is activated in the EM config, the distance out of the viewport, expressed in pixel, before which to start loading the images.
+	lazyLoadThreshold = 0
+	# cat=bootstrap-image/c-image/020; type=boolean; label=Lazy load for images in the BG-Wrapper: not the BG-image
+	lazyLoadBgWrapperImage = 0
+	# cat=bootstrap-image/d-image/40; type=boolean; label=A responsive image polyfill: Picturefill enables support for the picture element and associated features in browsers that do not yet support them.
+    picturefill = 0
+}
+
+# customcategory=bootstrap-extensions=* T3SB::Extensions
+# customsubcategory=b-ext=EXT:news
+bootstrap.ext {
+	# cat=bootstrap-extensions/b-ext/10; type=boolean; label=Info (list view): shows the info (date, categories) in list view.
+	news.list.info = 0
+	# cat=bootstrap-extensions/b-ext/11; type=small; label=Image ratio (list view): e.g.: 16:9 or 4:3 - disabled if empty.
+	news.list.imageRatio =
+	# cat=bootstrap-extensions/b-ext/12; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=More button (list view): Utility class for the more button in list view.
+	news.list.buttonClass = primary
+	# cat=bootstrap-extensions/b-ext/13; type=boolean; label=Image mobile overlay (list view): if < 576px for Card-Templates only.
+	news.list.imageOverlay = 1
+	# cat=bootstrap-extensions/b-ext/14; type=options[top=top, bottom=bottom]; label=Loading Spinner Position (list view): with ajax pagination.
+	news.list.loadingSpinnerPosition = top
+
+	# cat=bootstrap-extensions/b-ext/20; type=boolean; label=Info (detail view): shows the info (date, categories, tags, author) in detail view.
+	news.detail.info = 1
+	# cat=bootstrap-extensions/b-ext/21; type=small; label=Image ratio (detail view): e.g.: 16:9 or 4:3 - disabled if empty.
+	news.detail.imageRatio =
+	# cat=bootstrap-extensions/b-ext/22; type=boolean; label=Lightbox (detail view): enable the lightbox in detail view.
+	news.detail.enableLightbox = 1
+	# cat=bootstrap-extensions/b-ext/23; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=Back button (detail view): utility class for the back button in detail view.
+	news.detail.buttonClass = primary
+	# cat=bootstrap-extensions/b-ext/24; type=small; label=Teaser class (detail view): e.g.: "lead" or any other class.
+	news.detail.teaserClass = lead
+	# cat=bootstrap-extensions/b-ext/25; type=boolean; label=Carousel (detail view): shows images in carousel if enabled and more than one image.
+	news.detail.carousel = 1
+	# cat=bootstrap-extensions/b-ext/26; type=options[6=6, 7=7, 8=8, 9=9]; label=Left column width (detail view):
+	news.detail.leftGrid = 7
+	# cat=bootstrap-extensions/b-ext/27; type=boolean; label=Media on top (detail view): shows images or carousel on top if enabled.
+	news.detail.mediaOnTop = 0
+}
+
+
+#-------------------------------------------------------------------------------
+#	NOT in Constant Editor
+#-------------------------------------------------------------------------------
+
+# Background Carousel in Jumbotron.html
+bootstrap.carousel.interval = 5000
+bootstrap.carousel.pause = false
+
+# Pagebrowser - MORE INFO: https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html#special-browse
+bootstrap.pagebrowser.enable = 0
+bootstrap.pagebrowser.prevnextToSection = 1
+# options: index|up|nextsection|next|prev|prevsection
+# used in: page.10.dataProcessing.12 -> Page/Template.typoscript
+bootstrap.pagebrowser.prevItem = prev|prevsection
+bootstrap.pagebrowser.nextItem = nextsection|next
+bootstrap.pagebrowser.entryLevel = 1
+
+bootstrap.animateCssInlineJs = classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0
+
+bootstrap.navbar {
+	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-solid.svg
+	image.width = 30
+	image.height = 30
+	image.altText = Company Logo
+
+	# type=int+; default breakpoints - same like Bootstrap (used as condition for inlineJS e.g. navbar hover)
+	breakpoint {
+		sm = 576
+		md = 768
+		lg = 992
+		xl = 1200
+	}
+	# type=boolean; Enable extra row(s) in the navbar - (fileadmin)/Resources/Partials/Page/NavbarExtraRow.html
+	extraRow = 0
+	# type=int+; subdropdown with two columns if items greater or equal
+	subdropdown.twoColumns = 30
+	# type=int+; Comma-separated list of uid`s (pages) for a right menu in the navbar
+	rightMenuUidList =
+	# type=boolean; page uid with search plugin - link to your search plugin
+	searchboxLink = 0
+	# type=boolean; fe user name in navbar - if logged in
+	feUserName = 0
+	# type=boolean; show flags in the language menu
+	langFlags = 1
+	# type=options[none=0, slideIn 1=1, slideDown (js)=2, slideIn 2=3, fade=4], dropdown animation
+	dropdownAnimate = 0
+}
+
+# enable in EM config (info: https://github.com/insites/cookieconsent)
+bootstrap.cookieconsent {
+	# info, opt-in or opt-out
+	type = info
+	popup.background = #000
+	popup.text = #fff
+	button.background = #f1d600
+	button.text = #000
+	# block (default), edgeless, classic
+	theme = edgeless
+	# top, bottom, top-left, top-right, bottom-left, bottom-right
+	position = top
+	message = Diese Website setzt Cookies und verwendet Google Analytics. Durch die Nutzung unserer Website erklären Sie sich damit einverstanden.
+	dismiss = Info ausblenden
+	allow = zulassen
+	link = Mehr erfahren
+	deny = Cookies ablehnen
+	href = /datenschutzerklaerung/
+	revokeBtn = <div class='cc-revoke {{classes}}'>Cookie Optionen</div>
+	regionalLaw = false
+	location = true
+}
+
+# include print template
+bootstrap.print.enable = 0
+
+
+styles.content.allowTags:= addToList( s, mark)
+
+# in px (preset)
+styles.content.textmedia.maxW = 1110
+styles.content.textmedia.maxWInText = 825
+styles.content.textmedia.linkWrap.width = 1140m
+styles.content.textmedia.linkWrap.height = 800m
+
+#disable some not used constants
+styles.content.textmedia.columnSpacing >
+styles.content.textmedia.rowSpacing >
+styles.content.textmedia.textMargin >
+styles.content.textmedia.borderColor >
+styles.content.textmedia.borderWidth >
+styles.content.textmedia.borderPadding >
+
+# pages override
+pages.override {
+	# 1,2,3,4 or 6 (only)
+	smallColumns =
+	# sm,md,lg or xl (only)
+	breakpoint =
+}
+
+# T3SB Config override
+bootstrap.config {
+	company =
+	page_title =
+	page_titlealign =
+	page_titlecontainer =
+	page_titleclass =
+	meta_enable =
+	meta_value =
+	meta_container =
+	meta_class =
+	meta_text =
+	navbar_enable =
+	navbar_entrylevel =
+	navbar_levels =
+	navbar_excludeuiduist =
+	navbar_includespacer =
+	navbar_justify =
+	navbar_sectionmenu =
+	navbar_megamenu =
+	navbar_hover =
+	navbar_clickableparent =
+	navbar_brand =
+	navbar_image =
+	navbar_color =
+	navbar_background =
+	navbar_container =
+	navbar_placement =
+	navbar_alignment =
+	navbar_class =
+	navbar_toggler =
+	navbar_breakpoint =
+	navbar_offcanvas =
+	navbar_height =
+	navbar_searchbox =
+	navbar_langmenu =
+	navbar_shrinkcolorschemes =
+	navbar_shrinkcolor =
+	jumbotron_enable =
+	jumbotron_bgimage =
+	jumbotron_fluid =
+	jumbotron_slide =
+	jumbotron_position =
+	jumbotron_container =
+	jumbotron_containerposition =
+	jumbotron_class =
+	breadcrumb_enable =
+	breadcrumb_notonrootpage =
+	breadcrumb_corner =
+	breadcrumb_bottom =
+	breadcrumb_position =
+	breadcrumb_container =
+	breadcrumb_containerposition =
+	breadcrumb_faicon =
+	breadcrumb_class =
+	sidebar_enable =
+	sidebar_rightenable =
+	sidebar_entrylevel =
+	sidebar_levels =
+	sidebar_excludeuiduist =
+	sidebar_includespacer =
+	footer_enable =
+	footer_fluid =
+	footer_slide =
+	footer_sticky =
+	footer_container =
+	footer_containerposition =
+	footer_class =
+	footer_pid =
+	expandedcontent_enabletop =
+	expandedcontent_slidetop =
+	expandedcontent_containerpositiontop =
+	expandedcontent_containertop =
+	expandedcontent_classtop =
+	expandedcontent_enablebottom =
+	expandedcontent_slidebottom =
+	expandedcontent_containerpositionbottom =
+	expandedcontent_containerbottom =
+	expandedcontent_classbottom =
+}
+
+# EXT: news
+plugin.tx_news.settings.cssFile =

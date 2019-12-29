@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>No header for t3sbs_mediaobject</f:comment>
+</f:section>
+<f:section name="Main">
+<div class="media">
+	<f:if condition="{mediaobject.order} == 'left'">
+		<f:then>
+			<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</f:then>
+	</f:if>
+	<div class="media-body">
+		<f:render partial="Header/All" arguments="{_all}" />
+		{data.bodytext -> f:format.html()}
+	</div>
+	<f:if condition="{mediaobject.order} == 'right'">
+		<f:then>
+			<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</f:then>
+	</f:if>
+</div>
+</f:section>
+</html>

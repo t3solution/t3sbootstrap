@@ -1,0 +1,181 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group row">
+	<label for="breadcrumbEnable" class="col-sm-3 control-label">
+		Enable
+		<f:if condition="{compare.breadcrumbEnable}">
+			<br/><small class="text-primary">{compare.breadcrumbEnable}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbEnable}">
+			{f:if(condition:'{compare.breadcrumbEnable}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbEnable})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			<label>
+				<f:form.checkbox id="breadcrumbEnable" class="form-check-input" property="breadcrumbEnable" value="1" />
+			</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbNotonrootpage" class="col-sm-3 control-label">
+		Not on rootpage
+		<f:if condition="{compare.breadcrumbNotonrootpage}">
+			<br/><small class="text-primary">{compare.breadcrumbNotonrootpage}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbNotonrootpage}">
+			{f:if(condition:'{compare.breadcrumbNotonrootpage}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbNotonrootpage})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			<label>
+				<f:form.checkbox id="breadcrumbNotonrootpage" class="form-check-input" property="breadcrumbNotonrootpage" value="1" />
+				<small class="form-text text-muted">Not on rootpage if enabled</small>
+			</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbFaicon" class="col-sm-3 control-label">
+		Fontawesome icon
+		<f:if condition="{compare.breadcrumbFaicon}">
+			<br/><small class="text-primary">{compare.breadcrumbFaicon}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbFaicon}">
+			{f:if(condition:'{compare.breadcrumbFaicon}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbFaicon})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			<label>
+				<f:form.checkbox id="breadcrumbFaicon" class="form-check-input" property="breadcrumbFaicon" value="1" />
+				<small class="form-text text-muted">FA icon instead of text for level=0 only if enabled</small>
+			</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbCorner" class="col-sm-3 control-label">
+		No rounded corner
+		<f:if condition="{compare.breadcrumbCorner}">
+			<br/><small class="text-primary">{compare.breadcrumbCorner}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbCorner}">
+			{f:if(condition:'{compare.breadcrumbCorner}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbCorner})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			<label>
+			<f:form.checkbox id="breadcrumbCorner" class="form-check-input" property="breadcrumbCorner" value="1" />
+			<small class="form-text text-muted">To make the breadcrumb without rounded corners</small>
+			</label>
+		</div>
+	</div>
+</div>
+
+<div class="form-group row">
+	<label for="breadcrumbBottom" class="col-sm-3 control-label">
+		Below the content
+		<f:if condition="{compare.breadcrumbBottom}">
+			<br/><small class="text-primary">{compare.breadcrumbBottom}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbBottom}">
+			{f:if(condition:'{compare.breadcrumbBottom}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbBottom})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			<label>
+			<f:form.checkbox id="breadcrumbBottom" class="form-check-input" property="breadcrumbBottom" value="1" />
+			<small class="form-text text-muted">Show the breadcrumb menu below the content (only or also)</small>
+			</label>
+		</div>
+	</div>
+</div>
+
+
+<div class="form-group row">
+	<label for="breadcrumbPosition" class="col-sm-3 control-label">
+		Breadcrumb position
+		<f:if condition="{compare.breadcrumbPosition}">
+			<br/><small class="text-primary">{compare.breadcrumbPosition}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbPosition}">
+			{f:if(condition:'{compare.breadcrumbPosition}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbPosition})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="breadcrumbPosition"
+			class="form-control"
+			property="breadcrumbPosition"
+			options="{breadcrumbPositions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbContainer" class="col-sm-3 control-label">
+		Container
+		<f:if condition="{compare.breadcrumbContainer}">
+			<br/><small class="text-primary">{compare.breadcrumbContainer}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbContainer}">
+			{f:if(condition:'{compare.breadcrumbContainer}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbContainer})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="breadcrumbContainer"
+			class="form-control"
+			property="breadcrumbContainer"
+			options="{breadcrumbContainerOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbContainerposition" class="col-sm-3 control-label">
+		Container position
+		<f:if condition="{compare.breadcrumbContainerposition}">
+			<br/><small class="text-primary">{compare.breadcrumbContainerposition}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbContainerposition}">
+			{f:if(condition:'{compare.breadcrumbContainerposition}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbContainerposition})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="breadcrumbContainerposition"
+			class="form-control"
+			property="breadcrumbContainerposition"
+			options="{breadcrumbContainerpositionOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="breadcrumbClass" class="col-sm-3 control-label">
+		Extra class
+		<f:if condition="{compare.breadcrumbClass}">
+			<br/><small class="text-primary">{compare.breadcrumbClass}</small>
+		</f:if>
+		<f:if condition="{override.breadcrumbClass}">
+			{f:if(condition:'{compare.breadcrumbClass}',then:'',else:'<br/>')}<small class="text-danger"> ({override.breadcrumbClass})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="breadcrumbClass"
+			class="form-control"
+			property="breadcrumbClass"
+		/>
+		<small class="form-text text-muted">e.g. "mb-0" for margin-bottom: 0</small>
+	</div>
+</div>
+</html>

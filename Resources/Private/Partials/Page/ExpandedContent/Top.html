@@ -1,0 +1,58 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.dynamicContent', data: {pageUid: '{data.uid}', colPos: '20'})} != '<!--TYPO3SEARCH_begin--><!--TYPO3SEARCH_end-->' ||
+'lib.dynamicContentSlide', data: {pageUid: '{data.uid}', colPos: '20'})} != '<!--TYPO3SEARCH_begin--><!--TYPO3SEARCH_end-->'">
+	<f:then>
+		{f:variable(name: 'expandetcontent', value: 1)}
+	</f:then>
+	<f:else>
+		{f:variable(name: 'expandetcontent', value: 0)}
+	</f:else>
+</f:if>
+
+<f:if condition="{expandetcontent}">
+	<f:if condition="{config.expandedcontentTop.container} ">
+		<f:then>
+			<f:render section="{config.expandedcontentTop.containerposition}" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="Default" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</f:if>
+</html>
+
+<f:section name="Inside">
+<div id="expanded-content-top" class="{config.expandedcontentTop.class}">
+	<div class="{config.expandedcontentTop.container}">
+		<f:render section="Content" arguments="{_all}" />
+	</div>
+</div>
+</f:section>
+
+<f:section name="Outside">
+<div class="{config.expandedcontentTop.container}">
+	<div id="expanded-content-top" class="{config.expandedcontentTop.class}">
+		<f:render section="Content" arguments="{_all}" />
+	</div>
+</div>
+</f:section>
+
+<f:section name="Default">
+<div id="expanded-content-top" class="{config.expandedcontentTop.class}">
+	<f:render section="Content" arguments="{_all}" />
+</div>
+</f:section>
+
+<f:section name="Content">
+	<f:if condition="{config.general.pageTitle} == 'expanded'">
+		<f:render partial="Page/Title" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{config.expandedcontentTop.slide}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '20'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '20'}"/>
+		</f:else>
+	</f:if>
+</f:section>

@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>no header here</f:comment>
+</f:section>
+<f:section name="Main">
+<f:if condition="{class} || {style}">
+	<div{f:if(condition:'{class}',then:' class="{class}"')}{f:if(condition:'{style}',then:' style="{style}"')}{dataAnimate}>
+</f:if>
+<f:if condition="{data.header} || {data.subheader} || {data.date}">
+	<f:render partial="Header/All" arguments="{_all}" />
+</f:if>
+<f:switch expression="{appearance}">
+	<f:case value="accordion">
+		<div id="accordion-{data.uid}" class="collapsible-accordion" role="tablist">
+			{data.tx_gridelements_view_column_0 -> f:format.raw()}
+		</div>
+	</f:case>
+	<f:case value="button">
+		{data.tx_gridelements_view_column_0 -> f:format.raw()}
+	</f:case>
+</f:switch>
+<f:if condition="{class} || {style}">
+	</div>
+</f:if>
+</f:section>
+</html>

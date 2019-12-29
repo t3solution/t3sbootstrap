@@ -1,0 +1,116 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.jumbotron.enable}">
+	<f:if condition="{bgSlides -> f:count()} > 1 && {config.jumbotron.bgImage}">
+		<f:then>
+			<f:if condition="{config.jumbotron.containerposition} == 'Outside'">
+				<f:then>
+					<div class="{config.jumbotron.container}">
+						<f:render section="JumboBgSlider" arguments="{_all}" />
+					</div>
+				</f:then>
+				<f:else>
+					<f:render section="JumboBgSlider" arguments="{_all}" />
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{config.jumbotron.container}">
+				<f:then>
+					<f:render section="{config.jumbotron.containerposition}" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:render section="Default" arguments="{_all}" />
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:if>
+</html>
+
+
+<f:section name="Default">
+	<f:render section="Div" arguments="{_all}" />
+		<f:format.raw>{headerslider}</f:format.raw>
+		<f:render section="Content" arguments="{_all}" />
+	</div>
+</f:section>
+
+<f:section name="Inside">
+	<f:render section="Div" arguments="{_all}" />
+		<div class="{config.jumbotron.container}">
+			<f:format.raw>{headerslider}</f:format.raw>
+			<f:render section="Content" arguments="{_all}" />
+		</div>
+	</div>
+</f:section>
+
+<f:section name="Outside">
+	<div class="{config.jumbotron.container}">
+		<f:render section="Div" arguments="{_all}" />
+			<f:format.raw>{headerslider}</f:format.raw>
+			<f:render section="Content" arguments="{_all}" />
+		</div>
+	</div>
+</f:section>
+
+<f:section name="Content">
+	<f:if condition="{config.general.pageTitle} == 'jumbotron'">
+		<f:render partial="Page/Title" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{config.jumbotron.slide}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Div">
+	<f:if condition="{config.jumbotron.bgImage}">
+		<f:then>
+			<div id="s{data.uid}" class="jumbotron background-image bgImageSize{config.jumbotron.class}" style="background-image: url('{config.jumbotron.bgImage}');">
+		</f:then>
+		<f:else>
+			<div class="jumbotron{config.jumbotron.class}">
+		</f:else>
+	</f:if>
+</f:section>
+
+
+<f:section name="JumboBgSlider">
+<div id="background-carousel" class="jumbotron p-0{config.jumbotron.class}" >
+	<div id="carouselJumbotronIndicators" class="carousel slide" data-ride="carousel" data-interval="{settings.carousel.interval}" data-pause="{settings.carousel.pause}" >
+		<div id="content-wrapper" class="d-flex">
+			<f:if condition="{config.jumbotron.containerposition} == 'Inside'">
+				<f:then>
+					<div class="{config.jumbotron.container} align-self-center">
+						<f:format.raw>{headerslider}</f:format.raw>
+						<f:render section="Content" arguments="{_all}" />
+					</div>
+				</f:then>
+				<f:else>
+					<div class="align-self-center">
+						<f:format.raw>{headerslider}</f:format.raw>
+						<f:render section="Content" arguments="{_all}" />
+					</div>
+				</f:else>
+			</f:if>
+		</div>
+		<div class="carousel-inner embed-responsive embed-responsive-21by9" role="listbox">
+			<f:for each="{bgSlides}" as="slide">
+				<div class="carousel-item embed-responsive-item" style="background-image: url({f:uri.image(image: '{slide}')})"></div>
+			</f:for>
+		</div>
+		<a class="carousel-control-prev" href="#carouselJumbotronIndicators" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="carousel-control-next" href="#carouselJumbotronIndicators" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+</div>
+</f:section>

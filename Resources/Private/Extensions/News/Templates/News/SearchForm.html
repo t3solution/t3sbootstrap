@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="General" />
+<!--
+	=====================
+		Templates/News/SearchForm.html
+-->
+
+<f:section name="content">
+	<div class="news-search-form">
+		<f:form object="{search}" name="search" pageUid="{settings.listPid}">
+			<fieldset>
+				<div class="form-group">
+					<label for="news-subject"><f:translate key="search-subject" /></label>
+					<f:form.textfield id="news-subject" property="subject" class="form-control"/>
+				</div>
+
+				<div class="form-group">
+					<label for="news-minimumDate"><f:translate key="search-minimumDate" /></label>
+					<f:form.textfield id="news-minimumDate" property="minimumDate" type="date" class="form-control"/>
+				</div>
+
+				<div class="form-group">
+					<label for="news-maximumDate"><f:translate key="search-maximumDate" /></label>
+					<f:form.textfield id="news-maximumDate" property="maximumDate" type="date" class="form-control"/>
+				</div>
+
+				<f:form.submit value="{f:translate(key:'search-start')}" class="btn btn-primary"/>
+			</fieldset>
+		</f:form>
+	</div>
+</f:section>
+</html>

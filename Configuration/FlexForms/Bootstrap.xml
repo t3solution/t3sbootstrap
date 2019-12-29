@@ -1,0 +1,1020 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Utility Settings</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<gridSystem>
+						<TCEforms>
+							<label>Auto-layout</label>
+							<onChange>reload</onChange>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">no .col</numIndex>
+										<numIndex index="1">none</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Equal-width</numIndex>
+										<numIndex index="1">equal</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Column width</numIndex>
+										<numIndex index="1">column</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">Variable width content</numIndex>
+										<numIndex index="1">variable</numIndex>
+									</numIndex>
+								</items>
+								<default>equal</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</gridSystem>
+
+					<newLine>
+						<TCEforms>
+							<label>New line (break to a new line for multiple rows after this col)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</newLine>
+
+					<alignSelf>
+						<TCEforms>
+							<label>Align self</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+										<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">start</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</alignSelf>
+
+					<responsiveVariations>
+						<TCEforms>
+							<label>Responsive Variations</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+										<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">xs</numIndex>
+										<numIndex index="1">xs</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">sm</numIndex>
+										<numIndex index="1">sm</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">md</numIndex>
+										<numIndex index="1">md</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">lg</numIndex>
+										<numIndex index="1">lg</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">xl</numIndex>
+										<numIndex index="1">xl</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</responsiveVariations>
+
+					<autoMargins>
+						<TCEforms>
+							<label>Auto margins</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">right</numIndex>
+										<numIndex index="1">mr</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">left</numIndex>
+										<numIndex index="1">ml</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">top</numIndex>
+										<numIndex index="1">mt</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">bottom</numIndex>
+										<numIndex index="1">mb</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</autoMargins>
+
+					<order>
+						<TCEforms>
+							<label>Order</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">11</numIndex>
+										<numIndex index="1">11</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">12</numIndex>
+										<numIndex index="1">12</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</order>
+
+					<hidden>
+						<TCEforms>
+							<label>Hiding / Display Elements</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Hidden only on xs</numIndex>
+										<numIndex index="1">d-none d-sm-block</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Hidden on sm and down</numIndex>
+										<numIndex index="1">d-none d-md-block</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">Hidden on md and down</numIndex>
+										<numIndex index="1">d-none d-lg-block</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">Hidden on lg and down</numIndex>
+										<numIndex index="1">d-none d-xl-block</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">Hidden only on xl</numIndex>
+										<numIndex index="1">d-xl-none</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">Visible only on xs</numIndex>
+										<numIndex index="1">d-block d-sm-none</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">Visible sm and down</numIndex>
+										<numIndex index="1">d-block d-md-none</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">Visible md and down</numIndex>
+										<numIndex index="1">d-block d-lg-none</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">Visible lg and down</numIndex>
+										<numIndex index="1">d-block d-xl-none</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</hidden>
+
+					<float>
+						<TCEforms>
+							<label>Float</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">float-left</numIndex>
+										<numIndex index="1">float-left</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">float-right</numIndex>
+										<numIndex index="1">float-right</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">float-sm-left</numIndex>
+										<numIndex index="1">float-sm-left</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">float-sm-right</numIndex>
+										<numIndex index="1">float-sm-right</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">float-md-left</numIndex>
+										<numIndex index="1">float-md-left</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">float-md-right</numIndex>
+										<numIndex index="1">float-md-right</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">float-lg-left</numIndex>
+										<numIndex index="1">float-lg-left</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">float-lg-right</numIndex>
+										<numIndex index="1">float-lg-right</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">float-xl-left</numIndex>
+										<numIndex index="1">float-xl-left</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">float-xl-right</numIndex>
+										<numIndex index="1">float-xl-right</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</float>
+
+					<border>
+						<TCEforms>
+							<label>Border</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">border</numIndex>
+										<numIndex index="1">border</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">border - remove top</numIndex>
+										<numIndex index="1">border-top-0</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">border - remove right</numIndex>
+										<numIndex index="1">border-right-0</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">border - remove bottom</numIndex>
+										<numIndex index="1">border-bottom-0</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">border - remove left</numIndex>
+										<numIndex index="1">border-left-0</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</border>
+
+					<borderstyle>
+						<TCEforms>
+							<label>Predefined border styles</label>
+							<displayCond>FIELD:sDEF.border:!=:0</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
+										<numIndex index="1">secondary</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
+										<numIndex index="1">primary</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
+										<numIndex index="1">success</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
+										<numIndex index="1">info</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
+										<numIndex index="1">warning</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
+										<numIndex index="1">danger</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">light</numIndex>
+										<numIndex index="1">light</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">dark</numIndex>
+										<numIndex index="1">dark</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">white</numIndex>
+										<numIndex index="1">white</numIndex>
+									</numIndex>
+								</items>
+								<default>secondary</default>
+							</config>
+						</TCEforms>
+					</borderstyle>
+
+					<borderradius>
+						<TCEforms>
+							<label>Predefined border radius</label>
+							<displayCond>FIELD:sDEF.border:!=:0</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">rounded</numIndex>
+										<numIndex index="1">rounded</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">rounded-top</numIndex>
+										<numIndex index="1">rounded-top</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">rounded-right</numIndex>
+										<numIndex index="1">rounded-right</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">rounded-bottom</numIndex>
+										<numIndex index="1">rounded-bottom</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">rounded-left</numIndex>
+										<numIndex index="1">rounded-left</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">rounded-circle</numIndex>
+										<numIndex index="1">rounded-circle</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</borderradius>
+
+					<menudirection>
+						<TCEforms>
+							<label>Menu in a column or row</label>
+							<onChange>reload</onChange>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">default (flex-row)</numIndex>
+										<numIndex index="1">flex-row</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">column (flex-column)</numIndex>
+										<numIndex index="1">flex-column</numIndex>
+									</numIndex>
+
+								</items>
+								<default>flex-column</default>
+							</config>
+						</TCEforms>
+					</menudirection>
+
+					<menuHorizontalAlignment>
+						<TCEforms>
+							<label>Menu Horizontal Alignment (for flex-row only)</label>
+							 <displayCond>
+								  <and>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</numIndex>
+									<numIndex index="1">FIELD:sDEF.menudirection:=:flex-row</numIndex>
+								  </and>
+							 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Right</numIndex>
+										<numIndex index="1">justify-content-end</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Center</numIndex>
+										<numIndex index="1">justify-content-center</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Left</numIndex>
+										<numIndex index="1">justify-content-start</numIndex>
+									</numIndex>
+
+									<numIndex index="3" type="array">
+										<numIndex index="0">Fill and justify</numIndex>
+										<numIndex index="1">nav-fill</numIndex>
+									</numIndex>
+
+									<numIndex index="4" type="array">
+										<numIndex index="0">Fill and justify (variant w/ arrow)</numIndex>
+										<numIndex index="1">nav-fill variant</numIndex>
+									</numIndex>
+								</items>
+
+								<default>justify-content-end</default>
+							</config>
+						</TCEforms>
+					</menuHorizontalAlignment>
+
+					<menupills>
+						<TCEforms>
+							<label>Enable Pills (nav-pills)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</menupills>
+
+					<menuInclGridelement>
+						<TCEforms>
+							<label>Include content from Gridelements</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</displayCond>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</menuInclGridelement>
+
+				</el>
+			</ROOT>
+		</sDEF>
+		<xs>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>col-*</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<xsColumns>
+						<TCEforms>
+							<label>Columns</label>
+								 <displayCond>
+								   <and>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.gridSystem:=:column</numIndex>
+										<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
+								   </or>
+								   </and>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">11</numIndex>
+										<numIndex index="1">11</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">12</numIndex>
+										<numIndex index="1">12</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">auto</numIndex>
+										<numIndex index="1">auto</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">equal</numIndex>
+										<numIndex index="1">equal</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</xsColumns>
+				</el>
+			</ROOT>
+		</xs>
+		<sm>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>col-sm-*</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<smColumns>
+						<TCEforms>
+							<label>Columns</label>
+								 <displayCond>
+								   <and>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+										<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
+								   </and>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">11</numIndex>
+										<numIndex index="1">11</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">12</numIndex>
+										<numIndex index="1">12</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">auto</numIndex>
+										<numIndex index="1">auto</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">equal</numIndex>
+										<numIndex index="1">equal</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</smColumns>
+				</el>
+			</ROOT>
+		</sm>
+		<md>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>col-md-*</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<mdColumns>
+						<TCEforms>
+							<label>Columns</label>
+								<displayCond>
+									<and>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+										<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
+									</and>
+								</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">11</numIndex>
+										<numIndex index="1">11</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">12</numIndex>
+										<numIndex index="1">12</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">auto</numIndex>
+										<numIndex index="1">auto</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">equal</numIndex>
+										<numIndex index="1">equal</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</mdColumns>
+
+				</el>
+			</ROOT>
+		</md>
+		<lg>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>col-lg-*</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<lgColumns>
+						<TCEforms>
+							<label>Columns</label>
+								 <displayCond>
+								   <and>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+										<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
+								   </and>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">11</numIndex>
+										<numIndex index="1">11</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">12</numIndex>
+										<numIndex index="1">12</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">auto</numIndex>
+										<numIndex index="1">auto</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">equal</numIndex>
+										<numIndex index="1">equal</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</lgColumns>
+
+				</el>
+			</ROOT>
+		</lg>
+		<xl>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>col-xl-*</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+
+					<xlColumns>
+						<TCEforms>
+							<label>Columns</label>
+								 <displayCond>
+								   <and>
+										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+										<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
+								   </and>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">11</numIndex>
+										<numIndex index="1">11</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">12</numIndex>
+										<numIndex index="1">12</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">auto</numIndex>
+										<numIndex index="1">auto</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">equal</numIndex>
+										<numIndex index="1">equal</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</xlColumns>
+
+				</el>
+			</ROOT>
+		</xl>
+	</sheets>
+</T3DataStructure>

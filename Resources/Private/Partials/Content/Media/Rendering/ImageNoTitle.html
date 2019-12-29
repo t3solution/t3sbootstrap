@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+		<t3sb:media
+			file="{file}" 
+			title=""
+			alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}"
+			class="{addmedia.imgclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}"
+			width="{dimensions.width}" 
+			height="{dimensions.height}" 
+			breakpoints="{
+			0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+			1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+			2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+			}"
+			picturefill="{settings.picturefill}"
+			lazyload="{settings.lazyLoad}"
+			ratio="{addmedia.ratio}"
+		/>
+</html>

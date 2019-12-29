@@ -1,0 +1,157 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group row">
+	<label for="footerEnable" class="col-sm-3 control-label">
+		Enable
+		<f:if condition="{compare.footerEnable}">
+			<br/><small class="text-primary">{compare.footerEnable}</small>
+		</f:if>
+		<f:if condition="{override.footerEnable}">
+			{f:if(condition:'{compare.footerEnable}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerEnable})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="footerEnable" class="form-check-input" property="footerEnable" value="1" />
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="footerSticky" class="col-sm-3 control-label">
+		Sticky Footer
+		<f:if condition="{compare.footerSticky}">
+			<br/><small class="text-primary">{compare.footerSticky}</small>
+		</f:if>
+		<f:if condition="{override.footerSticky}">
+			{f:if(condition:'{compare.footerSticky}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerSticky})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="footerSticky" class="form-check-input" property="footerSticky" value="1" />
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="footerFluid" class="col-sm-3 control-label">
+		Fluid
+		<f:if condition="{compare.footerFluid}">
+			<br/><small class="text-primary">{compare.footerFluid}</small>
+		</f:if>
+		<f:if condition="{override.footerFluid}">
+			{f:if(condition:'{compare.footerFluid}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerFluid})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="footerFluid" class="form-check-input" property="footerFluid" value="1" />
+				<small class="form-text text-muted">To make the footer full width, and without rounded corners</small>
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="footerSlide" class="col-sm-3 control-label">
+		Slide
+		<f:if condition="{compare.footerSlide}">
+			<br/><small class="text-primary">{compare.footerSlide}</small>
+		</f:if>
+		<f:if condition="{override.footerSlide}">
+			{f:if(condition:'{compare.footerSlide}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerSlide})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			 <label>
+				<f:form.checkbox id="footerSlide" class="form-check-input" property="footerSlide" value="1" />
+				<small class="form-text text-muted">Content of Footer "slide" through the rootline</small>
+			 </label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="footerContainer" class="col-sm-3 control-label">
+		Container
+		<f:if condition="{compare.footerContainer}">
+			<br/><small class="text-primary">{compare.footerContainer}</small>
+		</f:if>
+		<f:if condition="{override.footerContainer}">
+			{f:if(condition:'{compare.footerContainer}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerContainer})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="footerContainer"
+			class="form-control"
+			property="footerContainer"
+			options="{footerContainerOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="footerContainerposition" class="col-sm-3 control-label">
+		Container position
+		<f:if condition="{compare.footerContainerposition}">
+			<br/><small class="text-primary">{compare.footerContainerposition}</small>
+		</f:if>
+		<f:if condition="{override.footerContainerposition}">
+			{f:if(condition:'{compare.footerContainerposition}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerContainerposition})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.select
+			id="footerContainerposition"
+			class="form-control"
+			property="footerContainerposition"
+			options="{footerContainerpositionOptions}"
+			optionValueField="key"
+			optionLabelField="value"
+		/>
+		<small class="form-text text-muted">If "Container" is not "none"</small>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="footerClass" class="col-sm-3 control-label">
+		Extra class
+		<f:if condition="{compare.footerClass}">
+			<br/><small class="text-primary">{compare.footerClass}</small>
+		</f:if>
+		<f:if condition="{override.footerClass}">
+			{f:if(condition:'{compare.footerClass}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerClass})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="footerClass"
+			class="form-control"
+			property="footerClass"
+		/>
+		<small class="form-text text-muted">e.g. "mb-0" for margin-bottom: 0</small>
+	</div>
+</div>
+<div class="form-group">
+	<label for="footerPid" class="col-sm-3 control-label">
+		Content
+		<f:if condition="{compare.footerPid}">
+			<br/><small class="text-primary">{compare.footerPid}</small>
+		</f:if>
+		<f:if condition="{override.footerPid}">
+			{f:if(condition:'{compare.footerPid}',then:'',else:'<br/>')}<small class="text-danger"> ({override.footerPid})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="footerPid"
+			class="form-control"
+			property="footerPid"
+		/>
+		<small class="form-text text-muted">Page uid for the footer content (colPos= 0)</small>
+	</div>
+</div>
+</html>

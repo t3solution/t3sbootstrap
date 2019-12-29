@@ -1,0 +1,120 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment> Beside Text right or left - align-items-center </f:comment>
+<f:if condition="{data.imageorient} == 66 || {data.imageorient} == 77">
+	<f:then>
+		<f:if condition="{data.imageorient} == 66">
+			<f:then>
+				<div class="row align">
+					<div class="col">
+						<div class="row align-items-center h-100">
+							<div class="col">
+								<f:render section="HeaderBeside" arguments="{_all}" />
+								{data.bodytext -> f:format.html()}
+							</div>
+						</div>
+					</div>
+					<f:if condition="{gallery.rows} || {files}">
+						<div class="col-md-auto{rowwidth}">
+							<f:render partial="Media/Gallery" arguments="{_all}" />
+						</div>
+					</f:if>
+				</div>
+			</f:then>
+			<f:else>
+				<div class="row align">
+					<f:if condition="{gallery.rows} || {files}">
+						<div class="col-md-auto{rowwidth}">
+							<f:render partial="Media/Gallery" arguments="{_all}" />
+						</div>
+					</f:if>
+					<div class="col">
+						<div class="row align-items-center h-100">
+							<div class="col">
+								<f:render section="HeaderBeside" arguments="{_all}" />
+								{data.bodytext -> f:format.html()}
+							</div>
+						</div>
+					</div>
+				</div>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:render section="Default" arguments="{_all}" />
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="Default">
+<f:comment> In Text right or left </f:comment>
+<f:if condition="{data.imageorient} == 17 || {data.imageorient} == 18">
+	<f:then>
+		<f:render partial="Media/Gallery" arguments="{_all}" />
+		<f:render section="HeaderBeside" arguments="{_all}" />
+		{data.bodytext -> f:format.html()}
+	</f:then>
+	<f:else>
+		<f:comment> Beside Text right or left </f:comment>
+		<f:if condition="{gallery.position.noWrap}">
+			<f:then>
+				<f:if condition="{gallery.position.horizontal} == 'left'">
+					<f:then>
+						<div class="row beside">
+							<f:if condition="{gallery.rows} || {files}">
+								<div class="col-md-auto order-2 order-md-1{rowwidth}">
+									<f:render partial="Media/Gallery" arguments="{_all}" />
+								</div>
+							</f:if>
+							<f:if condition="{data.bodytext || data.header || data.subheader}">
+								<div class="col order-1 order-md-2{restrowwidth}">
+									<f:render section="HeaderBeside" arguments="{_all}" />
+									{data.bodytext -> f:format.html()}
+								</div>
+							</f:if>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="row beside">
+							<f:if condition="{data.bodytext || data.header || data.subheader}">
+								<div class="col{restrowwidth}">
+									<f:render section="HeaderBeside" arguments="{_all}" />
+									{data.bodytext -> f:format.html()}
+								</div>
+							</f:if>
+							<f:if condition="{gallery.rows} || {files}">
+								<div class="col-md-auto{rowwidth}">
+									<f:render partial="Media/Gallery" arguments="{_all}" />
+								</div>
+							</f:if>
+						</div>
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+			<f:comment> Above or below the Text </f:comment>
+				<div class="ce-textpic above-below{f:if(condition: gallery.position.noWrap, then: ' ce-nowrap row')}">
+					<f:if condition="{gallery.position.vertical} == 'below'">
+						<f:then>
+							<f:render section="HeaderBeside" arguments="{_all}" />
+							<div class="bodytext">{data.bodytext -> f:format.html()}</div>
+							<f:render partial="Media/Gallery" arguments="{_all}" />
+						</f:then>
+						<f:else>
+							<f:render partial="Media/Gallery" arguments="{_all}" />
+							<f:render section="HeaderBeside" arguments="{_all}" />
+							<div class="bodytext">{data.bodytext -> f:format.html()}</div>
+						</f:else>
+					</f:if>
+				</div>
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="HeaderBeside">
+<f:if condition="{gallery.headerBeside} && {gallery.count.files}">
+	<f:render partial="Header/All" arguments="{_all}" />
+</f:if>
+</f:section>

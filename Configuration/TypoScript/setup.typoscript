@@ -1,0 +1,100 @@
+# Module configuration
+module.tx_t3sbootstrap {
+	view {
+		templateRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Templates/
+		partialRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Partials/
+		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
+	}
+	settings {
+		t3sbConfig.rootline = {$bootstrap.config.rootline}
+		customScss = {$bootstrap.extconf.customScss}
+		customScssPath = {$bootstrap.extconf.customScssPath}
+		editScss = {$bootstrap.extconf.editScss}
+		bootswatch = {$bootstrap.extconf.bootswatch}
+		bootswatchURL = https://bootswatch.com/4/
+		indexedsearch = {$bootstrap.ext.indexedsearch}
+		modalform = {$bootstrap.ext.form.modal}
+		expandedContent = {$bootstrap.extconf.expandedContent}
+		rollyourown = {$bootstrap.extconf.rollyourown}
+	}
+
+	# roll your own (experimental - w/Task)
+	settings.bootstrap {
+		functions = 1
+		variables = 1
+		mixins = 1
+		root = 1
+		reboot = 1
+		type = 1
+		images = 1
+		code = 1
+		grid = 1
+		tables = 1
+		forms = 1
+		buttons = 1
+		transitions = 1
+		dropdown = 1
+		button-group = 1
+		input-group = 1
+		custom-forms = 1
+		nav = 1
+		navbar = 1
+		card = 1
+		breadcrumb = 1
+		pagination = 1
+		badge = 1
+		jumbotron = 1
+		alert = 1
+		progress = 1
+		media = 1
+		list-group = 1
+		close = 1
+		toasts = 1
+		modal = 1
+		tooltip = 1
+		popover = 1
+		carousel = 1
+		spinners = 1
+		utilities = 1
+		print = 1
+	}
+
+
+}
+
+plugin.tx_t3sbootstrap {
+	view < module.tx_t3sbootstrap.view
+	settings {
+		lazyLoad = {$bootstrap.extconf.lazyLoad}
+		# in days for contentconsent
+		cookieExpire = 30
+	}
+}
+
+plugin.tx_felogin_pi1._CSS_DEFAULT_STYLE >
+
+temp.pagelayout {
+	data = pagelayout
+	required = 1
+	split {
+		token = pagets__
+		cObjNum = 1
+		1.current = 1
+	}
+}
+
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/ContentElement/_main.typoscript">
+
+[applicationContext == "Development"]
+config {
+	admPanel = 1
+	compressJs = 0
+	compressCss = 0
+	concatenateJs = 0
+	concatenateCss = 0
+	contentObjectExceptionHandler = 0
+}
+[END]

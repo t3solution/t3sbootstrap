@@ -1,0 +1,72 @@
+####################################################################
+#### Allen Editoren im BE wird der Stil t3sbootstrap zugewiesen ####
+####################################################################
+
+RTE {
+	default {
+		preset = t3sbootstrap
+
+		classesAnchor {
+			page {
+				class = internal-link
+				type = page
+				titleText =
+				target =
+				image =
+				#params =
+				rel =
+			}
+
+			file {
+				class = download-link
+				type = file
+				titleText = Open or download file in new window
+				target = _blank
+				image =
+				#params =
+				rel =
+			}
+
+			mail {
+				class = email-link
+				type = mail
+				titleText = Send email
+				image =
+				#params =
+				rel =
+			}
+
+			url {
+				class = external-link
+				type = url
+				titleText = Open external link in new window
+				target = _blank
+				image =
+				#params =
+				rel =
+			}
+
+		}
+		buttons.link {
+			options.removeItems = folder
+
+			file.properties {
+				class.default =
+			}
+			page.properties{
+				class.default =
+			}
+			url.properties {
+				class.default =
+			}
+			mail.properties {
+				class.default =
+			}
+			properties.class.allowedClasses = external-link,internal-link,email-link,download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark
+			queryParametersSelector.enabled = 0
+
+		}
+	}
+}
+
+

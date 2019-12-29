@@ -1,0 +1,20 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.general.pageTitlealign}">
+	<f:then>
+		<div class="page-title text-{config.general.pageTitlealign}{f:if(condition:'{config.general.pageTitleclass}',then:' {config.general.pageTitleclass}')}">
+	</f:then>
+	<f:else>
+		<div class="page-title{f:if(condition:'{config.general.pageTitleclass}',then:' {config.general.pageTitleclass}')}">
+	</f:else>
+</f:if>
+	<h1 class="display-1">
+		<f:if condition="{settings.fontawesome.pagetitle} && {data.tx_t3sbootstrap_fontawesome_icon}">
+			<i class="{data.tx_t3sbootstrap_fontawesome_icon}"></i>
+		</f:if>
+		{data.title -> f:format.raw()}
+	</h1>
+	<f:if condition="{data.subtitle}">
+		<h2 class="display-4">{data.subtitle -> f:format.raw()}</h2>
+	</f:if>
+</div>
+</html>

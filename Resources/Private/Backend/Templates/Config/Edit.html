@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="content">
+<h1>Edit Config</h1>
+<f:flashMessages />
+<f:render partial="FormErrors" />
+<f:form class="form-horizontal" action="update" name="config" object="{config}" >
+	<f:if condition="{admin}">
+		<f:then>
+			<f:render partial="Config/Accordion" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render partial="NonAdmin/Accordion" arguments="{_all}" />
+		</f:else>
+	</f:if>
+	<f:form.submit value="Save" class="btn btn-success btn-block" style="margin-bottom: 3rem;" />
+</f:form>
+</f:section>
+</html>

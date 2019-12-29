@@ -1,0 +1,74 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:switch expression="{layout}">
+	<f:case value="1">
+		<h1{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</h1>
+	</f:case>
+	<f:case value="2">
+		<h2{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</h2>
+	</f:case>
+	<f:case value="3">
+		<h3{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</h3>
+	</f:case>
+	<f:case value="4">
+		<h4{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</h4>
+	</f:case>
+	<f:case value="5">
+		<h5{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</h5>
+	</f:case>
+	<f:case value="6">
+		<h6{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</h6>
+	</f:case>
+	<f:case value="101">
+		<p{f:if(condition: '{class}',then: ' class="{class}"')}>
+			<f:render section="Headertext" arguments="{_all}" />
+		</p>
+	</f:case>
+	<f:case value="100">
+		<f:comment> -- do not show header -- </f:comment>
+	</f:case>
+	<f:defaultCase>
+		<f:if condition="{default}">
+			<f:render partial="Header/Header" arguments="{
+				header: header,
+				layout: default,
+				link: link,
+				hLinkClass: hLinkClass,
+				hFa: hFa,
+				class: class}"/>
+		</f:if>
+	</f:defaultCase>
+</f:switch>
+</html>
+
+
+<f:section name="Headertext">
+
+
+	<f:if condition="{link}">
+		<f:then>
+			<f:if condition="{hLinkClass}">
+				<f:then>
+					<f:link.typolink parameter="{link}" class="{hLinkClass}">{hFa -> f:format.raw()}{header -> f:format.raw()}</f:link.typolink>
+				</f:then>
+				<f:else>
+					<f:link.typolink parameter="{link}">{hFa -> f:format.raw()}{header -> f:format.raw()}</f:link.typolink>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			{hFa -> f:format.raw()}{header -> f:format.raw()}
+		</f:else>
+	</f:if>
+</f:section>

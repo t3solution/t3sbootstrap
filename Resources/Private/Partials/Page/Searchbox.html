@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:form extensionName="indexedsearch" pluginName="pi2" controller="Search" action="search" method="post" id="searchbox" pageUid="{settings.indexedsearch.targetPid}" class="form-inline my-2 my-lg-0{f:if(condition:'{config.navbar.mauto}',then:'{config.navbar.mauto}',else:' ml-auto')}">
+		<div class="tx-indexedsearch-hidden-fields">
+			<f:form.hidden name="search[_sections]" value="0" />
+			<f:form.hidden name="search[_freeIndexUid]" id="searchbox_freeIndexUid" value="_" />
+			<f:form.hidden name="search[pointer]" id="searchbox_pointer" value="0" />
+			<f:form.hidden name="search[ext]" value="{searchParams.ext}" />
+			<f:form.hidden name="search[searchType]" value="{searchParams.searchType}" />
+			<f:form.hidden name="search[defaultOperand]" value="{searchParams.defaultOperand}" />
+			<f:form.hidden name="search[mediaType]" value="{searchParams.mediaType}" />
+			<f:form.hidden name="search[sortOrder]" value="{searchParams.sortOrder}" />
+			<f:form.hidden name="search[group]" value="{searchParams.group}" />
+			<f:form.hidden name="search[languageUid]" value="{searchParams.languageUid}" />
+			<f:form.hidden name="search[desc]" value="{searchParams.desc}" />
+			<f:form.hidden name="search[numberOfResults]" value="{searchParams.numberOfResults}" />
+			<f:form.hidden name="search[extendedSearch]" value="{searchParams.extendedSearch}" />
+		</div>
+<label class="d-none" for="tx-indexedsearch-searchbox-sword">Searchbox</label>
+		<f:if condition="{config.navbar.searchbox} == 'button'">
+			<f:then>
+				<f:form.textfield name="search[sword]" value="{sword}" id="tx-indexedsearch-searchbox-sword" class="tx-indexedsearch-searchbox-sword form-control mr-sm-2 form-control-sm" />
+				<f:form.submit name="search[submitButton]" value="{f:translate(key: 'LLL:EXT:indexed_search/Resources/Private/Language/locallang.xml:form.submit')}"
+				 id="tx-indexedsearch-searchbox-button-submit" class="tx-indexedsearch-searchbox-button btn btn-outline-{config.navbar.searchboxcolor} my-2 my-sm-0" />
+			</f:then>
+			<f:else>
+				<f:form.textfield name="search[sword]" placeholder="{f:translate(key: 'LLL:EXT:indexed_search/Resources/Private/Language/locallang.xml:form.submit')}"
+				 value="{sword}" id="tx-indexedsearch-searchbox-sword" class="tx-indexedsearch-searchbox-sword form-control mr-sm-2 form-control-sm" />
+			</f:else>
+		</f:if>
+	</f:form>
+</html>

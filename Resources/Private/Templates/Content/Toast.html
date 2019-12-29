@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>No header for t3sbs_toast</f:comment>
+</f:section>
+<f:section name="Main">
+<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="position: relative;">
+	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="{autohide}" data-animation="{animation}" data-delay="{delay}" style="{placement}">
+		<div class="toast-header">
+			<f:if condition="{files.0}">
+				<f:image class="rounded mr-2" image="{files.0}" alt="" width="20c" height="20c" />
+			</f:if>
+			<f:if condition="{data.header}">
+				<strong class="mr-auto">{data.header -> f:format.raw()}</strong>
+			</f:if>
+			<f:if condition="{data.subheader}">
+				<small>{data.subheader -> f:format.raw()}</small>
+			</f:if>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+  		</div>
+	  	<div class="toast-body">
+	  		<f:if condition="{data.bodytext}">
+		 		{data.bodytext -> f:format.raw()}
+			</f:if>
+	  	</div>
+	</div>
+</div>
+</f:section>
+</html>

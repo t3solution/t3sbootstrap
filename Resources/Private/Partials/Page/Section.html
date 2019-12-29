@@ -1,0 +1,55 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{sectionMenu.0.content.0}">
+<div class="collapse d-md-flex bg-light p-2 mb-3" id="sectionmenu">
+	<ul class="nav section-menu flex-column flex-nowrap nav-pills w-100">
+		<f:for each="{sectionMenu.0.content}" as="element">
+			<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
+				<f:then>
+					<li class="nav-item">
+						<a class="nav-link scroll-trigger" href="{element.link}#c{element.data.uid}"
+							 target="{f:if(condition: '{element.target}',then: '{element.target}', else: '_self')}">
+							<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
+								<f:then>
+									{element.data.tx_t3sbootstrap_header_sectionMenu}
+								</f:then>
+								<f:else>
+									{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
+								</f:else>
+							</f:if>
+						</a>
+					</li>
+				</f:then>
+				<f:else>
+					<li class="nav-item">
+						<spa class="nav-link scroll-trigger">
+							* No Header - uid: {element.data.uid} *
+						</spa>
+					</li>
+				</f:else>
+			</f:if>
+			<f:if condition="{element.data.CType} == 'gridelements_pi1'
+			 && {element.data.tx_gridelements_backend_layout} == 'background_wrapper'
+				 && {element.gridcontent}">
+				 	<f:for each="{element.gridcontent}" as="gridelement">
+					<f:if condition="( {gridelement.data.header} || {gridelement.data.tx_t3sbootstrap_header_sectionMenu} ) && {gridelement.data.sectionIndex}">
+						<li class="nav-item">
+							<a class="nav-link scroll-trigger" href="{gridelement.link}#c{gridelement.data.uid}"
+								 target="{f:if(condition: '{gridelement.target}',then: '{gridelement.target}', else: '_self')}">
+								<f:if condition="{gridelement.data.tx_t3sbootstrap_header_sectionMenu}">
+									<f:then>
+										{gridelement.data.tx_t3sbootstrap_header_sectionMenu}
+									</f:then>
+									<f:else>
+										{f:if(condition:'{gridelement.data.header}',then:'{gridelement.data.header}',else:'* No Header for this Link *')}
+									</f:else>
+								</f:if>
+							</a>
+						</li>
+					</f:if>
+				</f:for>
+			</f:if>
+		</f:for>
+	</ul>
+</div>
+</f:if>
+</html>

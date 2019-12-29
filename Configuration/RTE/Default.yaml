@@ -1,0 +1,181 @@
+imports:
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
+    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+
+editor:
+
+  config:
+    contentsCss: "EXT:t3sbootstrap/Resources/Public/Backend/t3sbootstrap.css"
+
+    allowedContent: true
+
+    extraAllowedContent:
+      - dd
+      - dl
+      - dt
+
+    stylesSet:
+      # Blockstile
+      - { name: "Size: Lead", element: "p", attributes: { 'class': 'lead' } }
+      - { name: "Size: Small", element: "p", attributes: { 'class': 'small' } }
+      - { name: "Nowrap", element: "p", attributes: { 'class': 'text-nowrap' } }
+
+      - { name: "h2-style", element: "p", attributes: { 'class': 'h2' } }
+      - { name: "h3-style", element: "p", attributes: { 'class': 'h3' } }
+      - { name: "h4-style", element: "p", attributes: { 'class': 'h4' } }
+      - { name: "h5-style", element: "p", attributes: { 'class': 'h5' } }
+      - { name: "h6-style", element: "p", attributes: { 'class': 'h6' } }
+
+      # Textstile
+      - { name: "Text: small", element: "span", attributes: { 'class': 'small' } }
+      - { name: "Text: Mark", element: "mark" }
+      - { name: "Text: Del", element: "del" }
+      - { name: "Text: Ins", element: "ins" }
+      - { name: "Text: Code", element: "code" }
+      - { name: "Text: Primary", element: "span", attributes: { 'class': 'text-primary' } }
+      - { name: "Text: Secondary", element: "span", attributes: { 'class': 'text-secondary' } }
+      - { name: "Text: Success", element: "span", attributes: { 'class': 'text-success' } }
+      - { name: "Text: Danger", element: "span", attributes: { 'class': 'text-danger' } }
+      - { name: "Text: Warning", element: "span", attributes: { 'class': 'text-warning' } }
+      - { name: "Text: Info", element: "span", attributes: { 'class': 'text-info' } }
+      - { name: "Text: Light", element: "span", attributes: { 'class': 'text-light' } }
+      - { name: "Text: Dark", element: "span", attributes: { 'class': 'text-dark' } }
+      - { name: "Address", element: "address" }
+      - { name: "Text: Zitat", element: "blockquote" ,attributes: { 'class': 'blockquote' }}
+      - { name: "Text: Zitat center", element: "blockquote" ,attributes: { 'class': 'blockquote text-center' }}
+      - { name: "Text: Zitat right", element: "blockquote" ,attributes: { 'class': 'blockquote text-right' }}
+
+      - { name: "Text: h2-style", element: "span", attributes: { 'class': 'h2' } }
+      - { name: "Text: h3-style", element: "span", attributes: { 'class': 'h3' } }
+      - { name: "Text: h4-style", element: "span", attributes: { 'class': 'h4' } }
+      - { name: "Text: h5-style", element: "span", attributes: { 'class': 'h5' } }
+      - { name: "Text: h6-style", element: "span", attributes: { 'class': 'h6' } }
+
+      - { name: "Lowercase", element: "p", attributes: { 'class': 'text-lowercase' } }
+      - { name: "Uppercase", element: "p", attributes: { 'class': 'text-uppercase' } }
+      - { name: "Capitalize", element: "p", attributes: { 'class': 'text-capitalize' } }
+
+      - { name: "Color: Primary", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-primary' } }
+      - { name: "Color: Secondary", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-secondary' } }
+      - { name: "Color: Success", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-success' } }
+      - { name: "Color: Danger", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-danger' } }
+      - { name: "Color: Warning", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-warning' } }
+      - { name: "Color: Info", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-info' } }
+      - { name: "Color: Light", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-light' } }
+      - { name: "Color: Dark", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-dark' } }
+
+      #Tabellen
+      - { name: "Table: Hover", element: "table", attributes: { 'class': 'table table-hover' } }
+      - { name: "Table: Striped", element: "table", attributes: { 'class': 'table table-striped' } }
+      - { name: "Table: Bordered", element: "table", attributes: { 'class': 'table table-bordered' } }
+      - { name: "Table: Small", element: "table", attributes: { 'class': 'table table-sm' } }
+      - { name: "Table: Inverse", element: "table", attributes: { 'class': 'table table-inverse' } }
+
+      # Tabellen-Zeilen
+      - { name: "Row: Active", element: "tr", attributes: { 'class': 'table-active' } }
+      - { name: "Row: Primary", element: "tr", attributes: { 'class': 'table-primary' } }
+      - { name: "Row: Secondary", element: "tr", attributes: { 'class': 'table-secondary' } }
+      - { name: "Row: Success", element: "tr", attributes: { 'class': 'table-success' } }
+      - { name: "Row: Danger", element: "tr", attributes: { 'class': 'table-danger' } }
+      - { name: "Row: Warning", element: "tr", attributes: { 'class': 'table-warning' } }
+      - { name: "Row: Info", element: "tr", attributes: { 'class': 'table-info' } }
+      - { name: "Row: Light", element: "tr", attributes: { 'class': 'table-light' } }
+      - { name: "Row: Dark", element: "tr", attributes: { 'class': 'table-dark' } }
+
+      # Alerts
+      - { name: "Alert: Primary", element: "div", attributes: { 'class': 'alert alert-primary' } }
+      - { name: "Alert: Secondary", element: "div", attributes: { 'class': 'alert alert-secondary' } }
+      - { name: "Alert: Success", element: "div", attributes: { 'class': 'alert alert-success' } }
+      - { name: "Alert: Danger", element: "div", attributes: { 'class': 'alert alert-danger' } }
+      - { name: "Alert: Warning", element: "div", attributes: { 'class': 'alert alert-warning' } }
+      - { name: "Alert: Info", element: "div", attributes: { 'class': 'alert alert-info' } }
+      - { name: "Alert: Light", element: "div", attributes: { 'class': 'alert alert-light' } }
+      - { name: "Alert: Dark", element: "div", attributes: { 'class': 'alert alert-dark' } }
+
+      # Buttons
+      - { name: "Button: Primary", element: "a", attributes: { 'class': 'btn btn-primary' } }
+      - { name: "Button: Secondary", element: "a", attributes: { 'class': 'btn btn-secondary' } }
+      - { name: "Button: Success", element: "a", attributes: { 'class': 'btn btn-success' } }
+      - { name: "Button: Danger", element: "a", attributes: { 'class': 'btn btn-danger' } }
+      - { name: "Button: Warning", element: "a", attributes: { 'class': 'btn btn-warning' } }
+      - { name: "Button: Info", element: "a", attributes: { 'class': 'btn btn-info' } }
+      - { name: "Button: Light", element: "a", attributes: { 'class': 'btn btn-light' } }
+      - { name: "Button: Dark", element: "a", attributes: { 'class': 'btn btn-dark' } }
+
+      # Badges
+      - { name: "Badge: Primary", element: "span", attributes: { 'class': 'badge badge-primary' } }
+      - { name: "Badge: Secondary", element: "span", attributes: { 'class': 'badge badge-secondary' } }
+      - { name: "Badge: Success", element: "span", attributes: { 'class': 'badge badge-success' } }
+      - { name: "Badge: Danger", element: "span", attributes: { 'class': 'badge badge-danger' } }
+      - { name: "Badge: Warning", element: "span", attributes: { 'class': 'badge badge-warning' } }
+      - { name: "Badge: Info", element: "span", attributes: { 'class': 'badge badge-info' } }
+      - { name: "Badge: Light", element: "span", attributes: { 'class': 'badge badge-light' } }
+      - { name: "Badge: Dark", element: "span", attributes: { 'class': 'badge badge-dark' } }
+
+      # Pill badges
+      - { name: "Pill badge: Primary", element: "span", attributes: { 'class': 'badge badge-pill badge-primary' } }
+      - { name: "Pill badge: Secondary", element: "span", attributes: { 'class': 'badge badge-pill badge-secondary' } }
+      - { name: "Pill badge: Success", element: "span", attributes: { 'class': 'badge badge-pill badge-success' } }
+      - { name: "Pill badge: Danger", element: "span", attributes: { 'class': 'badge badge-pill badge-danger' } }
+      - { name: "Pill badge: Warning", element: "span", attributes: { 'class': 'badge badge-pill badge-warning' } }
+      - { name: "Pill badge: Info", element: "span", attributes: { 'class': 'badge badge-pill badge-info' } }
+      - { name: "Pill badge: Light", element: "span", attributes: { 'class': 'badge badge-pill badge-light' } }
+      - { name: "Pill badge: Dark", element: "span", attributes: { 'class': 'badge badge-pill badge-dark' } }
+
+     # Listen
+      - { name: 'List: Unstyled', element: "ul", attributes: { 'class': 'list-unstyled' } }
+      - { name: 'List: Inline', element: "ul", attributes: { 'class': 'list-inline' } }
+
+      - { name: 'List: Definition', element: "dl", attributes: { 'class': 'row' } }
+      - { name: 'List: Definition Terms', element: "dt", attributes: { 'class': 'col-sm-3' } }
+      - { name: 'List: Definition Descriptons', element: "dd", attributes: { 'class': 'col-sm-9' } }
+
+
+    format_tags: "p;h2;h3;h4;h5;h6;pre;div"
+
+    toolbarGroups:
+      - { name: clipboard, groups: [clipboard, undo] }
+      - { name: editing,   groups: [find, selection, spellchecker] }
+      - { name: links }
+      - { name: insert }
+      - { name: tools }
+      - { name: table }
+      - { name: tabletools }
+      - { name: document,  groups: [ mode, document, doctools ] }
+      - { name: others }
+      - "/"
+      - { name: basicstyles, groups: [ basicstyles, cleanup ] }
+      - { name: paragraph,   groups: [ list, indent, blocks, align, showborders ] }
+      - "/"
+      - { name: styles }
+
+    justifyClasses:
+      - text-left
+      - text-center
+      - text-right
+      - text-justify
+
+    extraPlugins:
+      - justify
+      - find
+      - copyformatting
+      - specialchar
+      - showblocks
+
+    removePlugins:
+      - image
+
+    removeButtons:
+      - Anchor
+
+    forcePasteAsPlainText: true
+
+    processing:
+      allowTags:
+        - s
+        - u
+        - mark
+
+      HTMLparser_db:
+        noAttrib:

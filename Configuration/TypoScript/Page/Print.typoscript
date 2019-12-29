@@ -1,0 +1,128 @@
+# printversion
+print = PAGE
+print {
+	typeNum = 98
+	bodyTag = <body onload="javascript:window.print()">
+	config.index_enable = 0
+	headerData.123 = TEXT
+	headerData.123.value = <meta name="robots" content="noindex, nofollow" />
+	headerData.124 = TEXT
+	headerData.124 {
+		field = title
+		noTrimWrap = |<title>| - (printversion)</title>|
+	}
+
+	includeCSS {
+
+		bootstrapFour = EXT:t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss
+		bootstrapFour.forceOnTop = 1
+		bootstrapFour.if.isFalse = {$bootstrap.extconf.customScss}
+
+		customBootstrap = uploads/tx_t3sbootstrap/bootstrap.scss
+		customBootstrap.forceOnTop = 1
+		customBootstrap.if.isTrue = {$bootstrap.extconf.customScss}
+
+		t3sfontawesome = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/scss/fontawesome.scss
+		t3sfontawesome.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
+
+		t3sfontawesomelink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+		t3sfontawesomelink.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
+
+		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
+
+		t3sprint = EXT:t3sbootstrap/Resources/Public/Styles/t3sprint.css
+
+	}
+
+	includeJSFooterlibs {
+
+		t3sbjquery = EXT:t3sbootstrap/Resources/Public/Contrib/jquery.min.js
+		t3sbjquery.forceOnTop = 1
+
+		t3sbpopper = EXT:t3sbootstrap/Resources/Public/Contrib/popper.min.js
+
+		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Contrib/Bootstrap/js/bootstrap.min.js
+	}
+
+	includeJSFooter {
+
+		codesnippet = EXT:t3sbootstrap/Resources/Public/Contrib/Codesnippet/highlight.pack.js
+		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+		picturefill = EXT:t3sbootstrap/Resources/Public/Contrib/picturefill.min.js
+		picturefill.if.isTrue = {$bootstrap.image.picturefill}
+
+	}
+
+	jsFooterInline.4 = TEXT
+	jsFooterInline.4.value (
+
+	hljs.initHighlightingOnLoad();
+
+
+	)
+	jsFooterInline.4.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+	jsFooterInline.5 < temp.jsFooterInline
+	jsFooterInline.5.wrap = (function($){"use strict";|})(jQuery);
+
+	10 =< lib.contentElement
+	10 {
+		templateName = Page
+		templateRootPaths {
+			0 = EXT:t3sbootstrap/Resources/Private/Templates/
+			1 = EXT:t3sbootstrap/Resources/Private/Templates/Print/
+			2 = {$plugin.tx_t3sbootstrap.view.templateRootPath}
+			3 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Print/
+			10 = {$styles.templates.partialRootPath}Print/
+		}
+		variables {
+			be_layout = TEXT
+			be_layout.value < temp.pagelayout
+			headerslider < lib.t3sheaderslider
+			headerslider.if.isTrue = {$bootstrap.ext.headerslider}
+		}
+		settings {
+			navbar {
+				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
+				image.width = {$bootstrap.navbar.image.width}
+				image.height = {$bootstrap.navbar.image.height}
+				extraRow = {$bootstrap.navbar.extraRow}
+				subdropdown.twoColumns = {$bootstrap.navbar.subdropdown.twoColumns}
+			}
+			configOverride = {$bootstrap.extconf.configOverride}
+			expandedContent = {$bootstrap.extconf.expandedContent}
+			date.format = {$bootstrap.config.dateFormat}
+			lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
+			contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
+			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
+			slideLeftAside = {$bootstrap.config.slideLeftAside}
+			slideRightAside = {$bootstrap.config.slideRightAside}
+			globalPaddingTop = {$bootstrap.config.globalPaddingTop}
+			pageContentExtraClass = {$bootstrap.config.pageContentExtraClass}
+			pages {
+				override {
+					smallColumns = {$pages.override.smallColumns}
+					breakpoint = {$pages.override.breakpoint}
+				}
+			}
+			lazyLoad = 0
+		}
+		dataProcessing.90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
+		dataProcessing.90 {
+			navbarExtraRow = {$bootstrap.navbar.extraRow}
+			rootline = {$bootstrap.config.rootline}
+			dataProcessing {
+				10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				10 {
+					references {
+						table = pages
+						fieldName = media
+					}
+					as = pagemedia
+				}
+			}
+		}
+	}
+}
+

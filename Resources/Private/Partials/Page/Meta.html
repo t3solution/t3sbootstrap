@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.meta.align} == 'scroller'">
+	<f:then>
+		<div class="nav-meta-wrapper">
+			<div class="nav-scroller{config.meta.container}{config.meta.class}">
+				<nav class="nav nav-underline">
+					<f:render section="Meta" arguments="{_all}" />
+				</nav>
+			</div>
+		</div>
+	</f:then>
+	<f:else>
+		<div class="nav-meta-wrapper">
+			<div class="nav-meta{config.meta.container}{config.meta.class}">
+				<nav class="nav nav-underline justify-content-{config.meta.align}">
+					<f:render section="Meta" arguments="{_all}" />
+				</nav>
+			</div>
+		</div>
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="Meta">
+<f:if condition="{config.meta.text}">
+	<f:then>
+		<span class="nav-link meta-text">
+			<f:format.raw>{config.meta.text}</f:format.raw>
+		</span>
+	</f:then>
+	<f:else>
+		<f:for each="{metaNavigation}" as="metaItem">
+			<f:link.typolink class="nav-link{f:if(condition: metaItem.active, then:' active')}" parameter="{metaItem.link}">
+				{metaItem.title}
+			</f:link.typolink>
+		</f:for>
+	</f:else>
+</f:if>
+</f:section>
