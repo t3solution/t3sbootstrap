@@ -69,8 +69,16 @@ class SplitFileRefViewHelper extends AbstractViewHelper
         if (!($file instanceof FileInterface || $file instanceof AbstractFileFolder)) {
             throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface or AbstractFileFolder.', 1563891998);
         }
-
+     
         $fileParts = GeneralUtility::split_fileref($file->getPublicUrl());
+
+		$image= $fileParts['path'].$fileParts['filebody'].'.jpg';
+		$fileParts['imgext'] = 'jpg';
+
+		if (!file_exists($image)) {
+			$image= $fileParts['path'].$fileParts['filebody'].'.png';
+			$fileParts['imgext'] = 'png';
+		}
 
         $templateVariableContainer->add($arguments['as'], $fileParts);
         $content = $renderChildrenClosure();
