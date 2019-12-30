@@ -25,6 +25,6 @@ The following extensions must be installed before: gridelements min. v.9.3.0 & w
 
 1) Include the static TypoScript of the extension.
 2) Delete the default PAGE object from your Setup.
-3) Create a configuration on the siteroot with the BE-Modul "T3SB Config"
+3) Create a configuration on the root page with the BE-Modul "T3SB Config"
 
 More infos & demos: https://www.t3sbootstrap.de/
