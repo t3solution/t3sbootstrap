@@ -31,7 +31,7 @@ class DefaultHelper implements SingletonInterface
 
 		if ( $extConf['container']
 		 && $data['tx_t3sbootstrap_container']
-		 && $data['colPos'] === 0 ) {
+		 && ($data['colPos'] === 0 || $data['colPos'] === 20 || $data['colPos'] === 21) ) {
 
 			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
 
