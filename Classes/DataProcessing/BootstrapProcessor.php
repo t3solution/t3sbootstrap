@@ -81,7 +81,11 @@ class BootstrapProcessor implements DataProcessorInterface
 			 * Button group
 			 */
 			if ( $processedData['data']['tx_gridelements_backend_layout'] == 'button_group' ) {
-				$processedData['buttonGroupClass'] = $flexconf['align'] ? ' '.$flexconf['align'] : '';
+				$processedData['buttonGroupClass'] = $flexconf['align'] ?: '';
+				if ( $flexconf['fixedPosition'] ) {
+					$processedData['buttonGroupClass'] .= ' fixedGroupButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
+					$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
+				}
 			}
 
 			/**
@@ -131,6 +135,18 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['modal']['size'] = $flexconf['size'];
 				$processedData['modal']['button'] = $flexconf['button'];
 				$processedData['modal']['style'] = $flexconf['style'];
+				if ( $flexconf['buttonText'] ) {
+					$processedData['modal']['buttonText'] = $flexconf['buttonText'];
+				} elseif ( $processedData['data']['header'] ) {
+					$processedData['modal']['buttonText'] = $processedData['data']['header'];
+				} else {
+					$processedData['modal']['buttonText'] = $processedData['modal']['button'] ? 'Modal-Button' :'Modal-Link';
+				}
+				if ( $flexconf['fixedPosition'] ) {
+					$processedData['modal']['fixedClass'] = 'fixedModalButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
+					$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
+					$processedData['modal']['fixedButton'] = TRUE;
+				}
 			}
 
 			/**
@@ -173,6 +189,10 @@ class BootstrapProcessor implements DataProcessorInterface
 				if ( $processedData['data']['parentgrid_tx_gridelements_backend_layout'] != 'button_group' ) {
 					$typolinkButtonClass .= $flexconf['size'] ? ' '.$flexconf['size']:'';
 					$typolinkButtonClass .= $flexconf['block'] ? ' btn-block':'';
+				}
+				if ( $flexconf['fixedPosition'] ) {
+					$processedData['class'] .= ' fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
+					$typolinkButtonClass .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 				}
 				$processedData['typolinkButtonClass'] = trim($typolinkButtonClass);
 			}
@@ -381,6 +401,13 @@ class BootstrapProcessor implements DataProcessorInterface
 		}
 
 		// animate css
+		if ( ($processedData['data']['CType'] == 't3sbs_button'
+			|| $processedData['data']['tx_gridelements_backend_layout'] == 'modal'
+			|| $processedData['data']['tx_gridelements_backend_layout'] == 'button_group')
+			&&	$flexconf['fixedPosition'] ) {
+			// disable animateCss (conflict)
+			$processedData['data']['tx_t3sbootstrap_animateCss'] = FALSE;
+		}
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
 			$delay = $processedData['data']['tx_t3sbootstrap_animateCssDelay'] ? ' delay-'.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s' : '';
 			// add to class
