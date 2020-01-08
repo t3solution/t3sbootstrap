@@ -6,13 +6,24 @@
 <f:section name="Main">
 <f:if condition="{modal.button}">
 	<f:then>
-		<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
-			{hFa -> f:format.raw()}{f:if(condition:'{data.header}',then:'{data.header -> f:format.raw()}', else: 'Modal-Button')}
-		</button>
+		<f:if condition="{modal.fixedButton}">
+			<f:then>
+				<div class="{modal.fixedClass}">
+					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
+						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+					</button>
+				</div>
+			</f:then>
+			<f:else>
+				<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
+					{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+				</button>
+			</f:else>
+		</f:if>
 	</f:then>
 	<f:else>
 		<a class="modal-link{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}" style="cursor:pointer;">
-			{hFa -> f:format.raw()}{f:if(condition:'{data.header}',then:'{data.header -> f:format.raw()}', else: 'Modal-Link')}</a>
+			{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}</a>
 	</f:else>
 </f:if>
 
