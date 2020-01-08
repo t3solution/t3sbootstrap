@@ -7,7 +7,6 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-
 					<hidden>
 						<TCEforms>
 							<label>Hiding / Display Elements</label>
@@ -60,7 +59,6 @@
 							</config>
 						</TCEforms>
 					</hidden>
-
 					<vertical>
 						<TCEforms>
 							<label>Vertical variation</label>
@@ -69,7 +67,6 @@
 							</config>
 						</TCEforms>
 					</vertical>
-
 					<size>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
@@ -94,7 +91,6 @@
 							</config>
 						</TCEforms>
 					</size>
-
 					<align>
 						<TCEforms>
 							<label>Button Group Alignment</label>
@@ -123,7 +119,56 @@
 							</config>
 						</TCEforms>
 					</align>
-
+					<fixedPosition>
+						<TCEforms>
+							<label>Fixed position</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Left browser edge</numIndex>
+										<numIndex index="1">left</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Right browser edge</numIndex>
+										<numIndex index="1">right</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</fixedPosition>
+					<rotate>
+						<TCEforms>
+							<label>Rotate the Button</label>
+							<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">0 degree</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">+ 90 degree</numIndex>
+										<numIndex index="1">plus</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">- 90 degree</numIndex>
+										<numIndex index="1">minus</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</rotate>
 				</el>
 			</ROOT>
 		</sDEF>
