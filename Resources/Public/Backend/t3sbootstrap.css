@@ -286,17 +286,11 @@ blockquote p {
 
 
 a.btn {
-/*
     display: inline-block;
-*/
     font-weight: 400;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     border: 1px solid transparent;
     padding: .5rem .75rem;
     font-size: 1rem;
