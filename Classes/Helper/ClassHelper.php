@@ -158,7 +158,11 @@ class ClassHelper implements SingletonInterface
 		 */
 		if ( $data['tx_gridelements_backend_layout'] == 'button_group' ) {
 			$class .= $flexconf['size'] ? ' '.$flexconf['size'] : '';
-			$class .= $flexconf['vertical'] ? ' btn-group-vertical' : ' btn-group';
+			if ( $flexconf['fixedPosition'] ) {
+				$class .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
+			} else {
+				$class .= $flexconf['vertical'] ? ' btn-group-vertical' : ' btn-group';
+			}
 		}
 
 		/**
@@ -222,8 +226,7 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getHeaderClass($data)
 	{
-		#$header['class'] = $data['tx_t3sbootstrap_header_class'];
-		$header['class'] .= $data['header_position'] ? ' text-'.$data['header_position'] : '';
+		$header['class'] = $data['header_position'] ? ' text-'.$data['header_position'] : '';
 
 		$hClass = $data['tx_t3sbootstrap_header_class'];
 		$hClass .= ' '.$data['tx_t3sbootstrap_header_display'] ?: '';
