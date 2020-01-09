@@ -1,13 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Header">
-	<f:if condition="{gallery.position.noWrap} == FALSE">
-		<f:if condition="{data.imageorient} == 66 || {data.imageorient} == 77">
-			<f:else>
-				<f:render partial="Header/All" arguments="{_all}" />
-			</f:else>
-		</f:if>
-	</f:if>
+<f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
 <f:if condition="{gallery.count.files}">
