@@ -116,7 +116,7 @@
 			<f:render section="ContentElements" arguments="{_all}" />
 		</f:then>
 		<f:else>
-			<f:if condition="{newsItem.falMedia -> f:count()}">
+			<f:if condition="{newsItem.falMediaNonPreviews}">
 				<f:then>
 					<div class="row">
 					  <div class="col-12 col-md-{settings.detail.leftGrid} order-2 order-md-1">
