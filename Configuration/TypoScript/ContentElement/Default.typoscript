@@ -16,7 +16,7 @@ tt_content {
 				defaultImgWidthBig = {$bootstrap.image.default.width.big}
 				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
 				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
-			}			
+			}
 		}
 	}
 
@@ -150,20 +150,12 @@ tt_content {
 						table = tt_content
 						pidInList.field = uid
 						as = content
-						where = sectionIndex = 1 AND ( colPos = 0 )
-						orderBy = sorting
+						where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
+						orderBy = {$bootstrap.extconf.sectionOrder}
 						dataProcessing {
 							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
 							10 {
 								references.fieldName = media
-							}
-							20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-							20 {
-								table = tt_content
-								pidInList.field = pid
-								where = sectionIndex = 1 AND ( colPos = -1 )
-								orderBy = sorting
-								as = gridcontent
 							}
 						}
 					}
@@ -177,19 +169,19 @@ tt_content {
 	# **********************************************************
 	menu_recently_updated {
 		dataProcessing >
-	    dataProcessing {
-	        10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
-	        10 {
-	            special = updated
-	            special {
-	                value.field = pages
+		 dataProcessing {
+			 10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			 10 {
+				 special = updated
+				 special {
+					 value.field = pages
 			mode = tstamp
 			limit = 20
-	                maxAge = 3600*24*30
-	                excludeNoSearchPages = 1
-	            }
-	        }
-	    }
+					 maxAge = 3600*24*30
+					 excludeNoSearchPages = 1
+				 }
+			 }
+		 }
 	}
 
 
