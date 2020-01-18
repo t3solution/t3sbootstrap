@@ -585,6 +585,15 @@ $tempContentColumns = [
 			'size' => 3
 		]
 	],
+	'tx_t3sbootstrap_sectionOrder' => [
+		'label' => 'Custom order in section Menu',
+		'exclude' => 1,
+		'config' => [
+			'type' => 'input',
+			'eval' => 'int',
+			'size' => 3
+		]
+	],
 ];
 
 
@@ -954,5 +963,15 @@ if ($extconf['animateCss']) {
 	  tx_t3sbootstrap_animateCssRepeat'
 	];
 }
+
+if ($extconf['sectionOrder']) {
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+		'tt_content',
+		'appearanceLinks',
+		'tx_t3sbootstrap_sectionOrder',
+		'after:sectionIndex'
+	);
+}
+
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['t3sbootstrap_pi1'] = 'recursive,select_key,pages';
