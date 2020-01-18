@@ -103,6 +103,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_header_fontawesome varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_position varchar(6) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_sectionMenu varchar(100) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_sectionOrder varchar(5) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_padding_sides varchar(5) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_padding_size varchar(1) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_margin_sides varchar(5) DEFAULT '' NOT NULL,
