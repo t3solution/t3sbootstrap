@@ -39,7 +39,7 @@ page {
 				subdropdown.twoColumns = {$bootstrap.navbar.subdropdown.twoColumns}
 				searchboxLink = {$bootstrap.navbar.searchboxLink}
 				feUserName = {$bootstrap.navbar.feUserName}
-				langFlags = {$bootstrap.navbar.langFlags} 
+				langFlags = {$bootstrap.navbar.langFlags}
 				dropdownAnimate = {$bootstrap.navbar.dropdownAnimate}
 			}
 			indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
@@ -69,7 +69,7 @@ page {
 			carousel.pause = {$bootstrap.carousel.pause}
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
 			lightboxSelection = {$bootstrap.config.lightboxSelection}
-			backgroundImageEnable =  {$bootstrap.config.backgroundImage.enable}
+			backgroundImageEnable =	{$bootstrap.config.backgroundImage.enable}
 			backgroundImageSlide =  {$bootstrap.config.backgroundImage.slide}
 		}
 		dataProcessing {
@@ -122,12 +122,12 @@ page {
 			13 {
 				special = browse
 				special.items = {$bootstrap.pagebrowser.prevItem}
-				special.items.prevnextToSection = {$bootstrap.pagebrowser.prevnextToSection}	
-				entryLevel = {$bootstrap.pagebrowser.entryLevel}	
+				special.items.prevnextToSection = {$bootstrap.pagebrowser.prevnextToSection}
+				entryLevel = {$bootstrap.pagebrowser.entryLevel}
 				as = browsePrev
 				if.isTrue = {$bootstrap.pagebrowser.enable}
 			}
-     			
+
 			#
 			# Sub Navigation in Sidebar
 			#
@@ -135,12 +135,12 @@ page {
 			20 {
 				entryLevel.cObject = TEXT
 				entryLevel.cObject {
-				    data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
-				    override = -1
-				    override.if {
-					    equals = 99
-				        value.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
-				    }
+					data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
+					override = -1
+					override.if {
+						 equals = 99
+						value.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
+					}
 				}
 				levels.cObject = TEXT
 				levels.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_levels
@@ -251,7 +251,7 @@ page {
 						pidInList.field = uid
 						where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
 						#where = sectionIndex = 1 AND ( colPos = 0 )
-						orderBy = sorting
+						orderBy = {$bootstrap.extconf.sectionOrder}
 						as = content
 						dataProcessing {
 							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
