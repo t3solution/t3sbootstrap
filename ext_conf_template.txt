@@ -12,6 +12,8 @@ container = 1
 color = 1
 	# cat=content/enable/40; type=boolean; label=Image ratio: Shows an option for "Image ratio" in the palette "Media Adjustments" if enabled. (clear cache).
 ratio = 0
+	# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a gridelements. (clear cache).
+sectionOrder = 0
 
 	# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache).
 fontawesome = 1
@@ -63,5 +65,3 @@ linkHoverEffect = 0
 lazyLoad = 0
 	# cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
 cookieconsent = 0
-
-
