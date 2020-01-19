@@ -547,7 +547,9 @@ if ($this->beLayout == 'OneCol') {
 		}
 
 	} else {
-		$maxMediaWidth = (int)($galleryWidthMinusBorderAndSpacing / $this->galleryData['count']['columns']);
+		if ( $this->galleryData['count']['columns'] ) {
+			$maxMediaWidth = (int)($galleryWidthMinusBorderAndSpacing / $this->galleryData['count']['columns']);
+		}
 	}
 
 } else {
