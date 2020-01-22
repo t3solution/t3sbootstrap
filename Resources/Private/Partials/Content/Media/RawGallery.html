@@ -6,19 +6,30 @@
 		<f:render partial="Media/Carousel" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<f:for each="{gallery.rows}" as="row" iteration="iterator">
-			<f:for each="{row.columns}" as="column">
-				<f:if condition="{column.media}">
+		<f:if condition="{gallery.rows}">
+			<f:then>
+				<f:for each="{gallery.rows}" as="row" iteration="iterator">
+					<f:for each="{row.columns}" as="column">
+						<f:if condition="{column.media}">
+							<f:render partial="Media/Type" arguments="{
+								file: column.media,
+								dimensions: column.dimensions,
+								addmedia: addmedia,
+								celink: celink}" />
+						</f:if>
+					</f:for>
+				</f:for>
+			</f:then>
+			<f:else>
+				<f:if condition="{files}">
 					<f:render partial="Media/Type" arguments="{
-						file: column.media,
-						dimensions: column.dimensions,
+						file: files.0,
+						dimensions: card.dimensions,
 						addmedia: addmedia,
 						celink: celink}" />
 				</f:if>
-			</f:for>
-		</f:for>
+			</f:else>
+		</f:if>
 	</f:else>
 </f:if>
 </html>
-
-
