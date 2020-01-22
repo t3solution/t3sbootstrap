@@ -86,6 +86,8 @@ class CardProcessor implements DataProcessorInterface {
 
 		$cardData['button']['link'] = $processedData['data']['header_link'];
 		$processedData['data']['header_link'] = '';
+		$cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
+		$cardData['dimensions']['height'] = $processedData['data']['imageheight'];
 
 		// image
 		if ( $cardData['image']['overlay'] ) {
