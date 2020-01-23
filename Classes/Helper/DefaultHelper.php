@@ -41,13 +41,46 @@ class DefaultHelper implements SingletonInterface
 
 		} else {
 
-			$container = FALSE;
-		}
+			if ( $data['colPos'] === 0 ) {
+				$container = FALSE;
+			} else {
 
+				foreach ( self::getFrontendController()->rootLine as $page ) {	
+					$t3sbconfig = self::getConfig($page['uid']);
+					$jumbotronContainer = $t3sbconfig['jumbotron_container'];
+					$footerContainer = $t3sbconfig['footer_container'];
+					$expandedcontentTopContainer = $t3sbconfig['expandedcontent_containertop'];
+					$expandedcontentBottomContainer = $t3sbconfig['expandedcontent_containerbottom'];
+					if(!empty($t3sbconfig)) break;
+				}
+				if ( $data['colPos'] === 3 && !$jumbotronContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( $data['colPos'] === 4 && !$footerContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( $data['colPos'] === 20 && !$expandedcontentTopContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( $data['colPos'] === 21 && !$expandedcontentBottomContainer ) $container = $data['tx_t3sbootstrap_container'];
+
+			}
+		}
 
 		return trim($container);
 	}
 
+
+	/**
+	 * Returns the t3sb configuration
+	 *
+	 * @return configuration
+	 */
+	protected function getConfig($uid)
+	{
+		// Get a QueryBuilder, which should only be used a single time
+		$query = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_t3sbootstrap_domain_model_config');
+		$query->select('*')
+		   ->from('tx_t3sbootstrap_domain_model_config')
+		   ->where(
+		      $query->expr()->eq('uid', $uid)
+		   );
+		return $query->execute()->fetchAll();
+	}
 
 
 	/**
@@ -59,7 +92,5 @@ class DefaultHelper implements SingletonInterface
 	{
 		return $GLOBALS['TSFE'];
 	}
-
-
 
 }
