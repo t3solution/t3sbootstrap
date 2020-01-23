@@ -16,6 +16,7 @@ namespace T3SBS\T3sbootstrap\Helper;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 class DefaultHelper implements SingletonInterface
 {
