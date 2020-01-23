@@ -4,7 +4,13 @@
 <span class="anchor" id="c{data.uid}"></span>
 </f:if>
 <f:if condition="{data.header}">
+<f:if condition="{container}">
+<div class="{container}">
+</f:if>
 <f:render partial="Header/All" arguments="{_all}" />
+<f:if condition="{container}">
+</div>
+</f:if>
 </f:if>
 <f:if condition="{youtubeProperty}">
 	<f:then>
