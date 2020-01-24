@@ -43,7 +43,9 @@ configOverride = 0
 	# cat=t3sb/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
 expandedContent = 0
 	# cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
-cTypeClass = 0.
+cTypeClass = 0
+	# cat=t3sb/enable/60; type=boolean; label=Fixed button on left or right browser edge for Button, Button-Group and Modal if enabled (clear cache).
+fixedButton = 0
 
 	# cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0
