@@ -8,7 +8,7 @@
 	<f:then>
 		<f:if condition="{modal.fixedButton}">
 			<f:then>
-				<div class="{modal.fixedClass}">
+				<div class="d-none {modal.fixedClass}">
 					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
 						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
 					</button>
