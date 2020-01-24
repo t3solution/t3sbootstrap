@@ -61,6 +61,8 @@ call_user_func(function ($extKey) {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.rollyourown = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fixedButton = 0');	
+
 
 	/***************
 	 * Other Extensions
@@ -265,6 +267,12 @@ call_user_func(function ($extKey) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sectionOrder = tx_t3sbootstrap_sectionOrder');
 	} else {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sectionOrder = sorting');
+	}
+	// Optional "fixed button on left or right browser edge"
+	if (array_key_exists('fixedButton', $extconf) && $extconf['fixedButton'] === '1') {
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fixedButton = 1');
+	} else {
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fixedButton = 0');
 	}
 
 	/***************
