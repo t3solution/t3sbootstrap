@@ -62,29 +62,41 @@ temp.jsFooterInline {
 		}, 1500, "easeInOutExpo");
 	}
 
+
+)
+
+2 = TEXT
+2.value (
+
 	// fixed button on left or right browser edge
 	var buttonFixedPosition = $('.fixedPosition');
 	if ( buttonFixedPosition.length ) {
 		$( buttonFixedPosition ).each(function() {
 			if ( $(this).hasClass('fixedModalButton') ) {
-				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2;
+				var fixedButton = $(this).find('button');
 			} else {
-				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2 + 2;
+				if ( $(this).hasClass('fixedGroupButton') ) {
+					var fixedButton = $(this).find('div');
+				} else {
+					var fixedButton = $(this).find('a');				
+				}
 			}
-			var rotateFixedPosition = $(this).children();
-			if ( $(this).hasClass('fixedPosition-left') ) {
-				$(this).css('left', '-'+position+'px');
-			}
-			if ( $(this).hasClass('fixedPosition-right') ) {
-				$(this).css('right', '-'+position+'px');
+			$(this).hide().removeClass('d-none').delay(2000).fadeIn(400);
+
+			if ( fixedButton.hasClass('rotate-minus') || fixedButton.hasClass('rotate-plus') ) {
+				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2;	
+				if ( $(this).hasClass('fixedPosition-right') ) {
+					$(this).css('right', '-'+position+'px');
+				} else {
+					$(this).css('left', '-'+position+'px');	
+				}
 			}
 		});
 	}
 
 
 )
-
-
+2.if.isTrue = {$bootstrap.extconf.fixedButton}
 
 3 = TEXT
 3.value (
