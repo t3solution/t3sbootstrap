@@ -133,7 +133,7 @@
 					</style>
 					<fixedPosition>
 						<TCEforms>
-							<label>Fixed position</label>
+							<label>Fixed position (activate required javascript in extConf)</label>
 							<onChange>reload</onChange>
 							<displayCond>FIELD:general.button:=:1</displayCond>
 							<config>
