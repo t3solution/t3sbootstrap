@@ -34,32 +34,28 @@ class DefaultHelper implements SingletonInterface
 
 			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
 
-			if ( $pageContainer === FALSE ) {
+			if ( $pageContainer === FALSE && $data['colPos'] === 0 ) {
 				$container = $data['tx_t3sbootstrap_container'];
 			} else {
-				$container = FALSE;
-			}
 
-		} else {
-
-			if ( $data['colPos'] === 0 ) {
-				$container = FALSE;
-			} else {
-
-				foreach ( self::getFrontendController()->rootLine as $page ) {	
+				foreach ( self::getFrontendController()->rootLine as $page ) {
 					$t3sbconfig = self::getConfig($page['uid']);
-					$jumbotronContainer = $t3sbconfig['jumbotron_container'];
-					$footerContainer = $t3sbconfig['footer_container'];
-					$expandedcontentTopContainer = $t3sbconfig['expandedcontent_containertop'];
-					$expandedcontentBottomContainer = $t3sbconfig['expandedcontent_containerbottom'];
+					$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
+					$footerContainer = $t3sbconfig[0]['footer_container'];
+					$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
+					$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
 					if(!empty($t3sbconfig)) break;
 				}
 				if ( $data['colPos'] === 3 && !$jumbotronContainer ) $container = $data['tx_t3sbootstrap_container'];
 				if ( $data['colPos'] === 4 && !$footerContainer ) $container = $data['tx_t3sbootstrap_container'];
 				if ( $data['colPos'] === 20 && !$expandedcontentTopContainer ) $container = $data['tx_t3sbootstrap_container'];
 				if ( $data['colPos'] === 21 && !$expandedcontentBottomContainer ) $container = $data['tx_t3sbootstrap_container'];
-
 			}
+
+		} else {
+
+			$container = FALSE;
+
 		}
 
 		return trim($container);
