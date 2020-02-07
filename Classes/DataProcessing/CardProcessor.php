@@ -84,8 +84,10 @@ class CardProcessor implements DataProcessorInterface {
 			$cardData['button']['position'] = 'bottom';
 		}
 
-		$cardData['button']['link'] = $processedData['data']['header_link'];
-		$processedData['data']['header_link'] = '';
+		if ($flexconf['button']['enable']) {
+			$cardData['button']['link'] = $processedData['data']['header_link'];
+			$processedData['data']['header_link'] = '';	
+		}
 		$cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
 		$cardData['dimensions']['height'] = $processedData['data']['imageheight'];
 
