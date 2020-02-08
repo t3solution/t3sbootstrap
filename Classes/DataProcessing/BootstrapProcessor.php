@@ -189,6 +189,9 @@ class BootstrapProcessor implements DataProcessorInterface
 				if ( $processedData['data']['parentgrid_tx_gridelements_backend_layout'] != 'button_group' ) {
 					$typolinkButtonClass .= $flexconf['size'] ? ' '.$flexconf['size']:'';
 					$typolinkButtonClass .= $flexconf['block'] ? ' btn-block':'';
+					if ($processedData['data']['header_position']) {
+						$processedData['class'] .= ' text-'.$processedData['data']['header_position'];
+					}
 					if ( $flexconf['fixedPosition'] ) {
 						$processedData['class'] .= ' d-none fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
 						$typolinkButtonClass .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
