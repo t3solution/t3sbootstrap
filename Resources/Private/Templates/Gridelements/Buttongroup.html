@@ -1,8 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Button" />
 <f:section name="Main">
+<f:render partial="Header/All" arguments="{_all}" />
 <div{f:if(condition: '{class}',then: ' class="{class}"')} role="group" aria-label="btn-{data.uid}"{dataAnimate}>
-	<f:render partial="Header/All" arguments="{_all}" />
 	{data.tx_gridelements_view_column_0 -> f:format.raw()}
 </div>
 </f:section>
