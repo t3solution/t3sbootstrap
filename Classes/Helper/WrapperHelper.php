@@ -134,7 +134,7 @@ class WrapperHelper implements SingletonInterface
 							videoElement.pause();
 							videoElement.currentTime = 0;
 							videoElement.play();
-							$(\'#video-599 video\').attr(\'playsinline\', \'\');
+							$(\'#video-'.$file->getUid().' video\').attr(\'playsinline\', \'\');
 							';
 						}
 
