@@ -40,12 +40,22 @@ temp.jsFooterInline {
 
 	// collapsible active scroll to top
 	$('.collapse').on('shown.bs.collapse', function(e) {
-	  var $card = $(this).closest('.card');
-	  if ( $card.length ) {
-		$('html,body').animate({
-			scrollTop: $card.offset().top-100
-		}, 500);
-	  }
+		var $card = $(this).closest('.card');
+		if ( $card.find('a.temp-gets-shown').length != 1) {
+			return;
+		}
+		$card.find('a.temp-gets-shown').removeClass('temp-gets-shown');
+		if ( $card.length ) {
+			$('html,body').animate({
+				scrollTop: $card.offset().top-100
+			}, 500);
+		}
+	});
+	$('.card a[data-toggle="collapse"]').on('click', function(e) {
+		if ($(this).attr('aria-expanded') ==  'true') {
+			return;
+		}
+		$(this).addClass('temp-gets-shown');
 	});
 
 	// card image overlay on mobile only
