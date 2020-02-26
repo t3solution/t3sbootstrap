@@ -236,7 +236,7 @@ class ClassHelper implements SingletonInterface
 			$header['hClass'] .= ' mt-0';
 		}
 
-		if ($data['header_link']) {
+		if ($data['header_link'] && !$data['tx_t3sbootstrap_header_celink']) {
 			$header['hLinkClass'] = trim($header['hClass']);
 			$header['hClass'] = '';
 		}
