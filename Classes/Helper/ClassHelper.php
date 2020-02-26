@@ -298,6 +298,32 @@ class ClassHelper implements SingletonInterface
 
 	}
 
+	/**
+	 * Returns processedData if parent container
+	 *
+	 * @param array $parentflexconf
+	 * @param array $flexconf
+	 *
+	 * @return string
+	 */
+	public function getContainerClass($parentflexconf, $flexconf)
+	{
+		$class = '';
+
+		if ( $parentflexconf['flexContainer'] ) {
+			if ($flexconf['responsiveVariations']) {
+				$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
+			} else {
+				$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['alignSelf'] : '';
+			}
+
+			$class .= $flexconf['autoMargins'] ? ' '.$flexconf['autoMargins'].'-auto' : '';
+			$class .= $flexconf['order'] ? ' order-'.$flexconf['order'] : '';
+		}
+
+		return $class;
+	}
+
 
 	/**
 	 * Returns the frontend controller
