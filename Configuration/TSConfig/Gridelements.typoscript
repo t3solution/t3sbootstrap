@@ -440,3 +440,27 @@ tx_gridelements.setup.tabs_tab {
 		}
 	}
 }
+
+# **********************************************************
+# BOOTSTAP: List Group Wrapper
+# **********************************************************
+tx_gridelements.setup.listGroup_wrapper {
+	title = List Group Wrapper
+	description = 
+	frame = 1
+	iconIdentifier = ge-accordion-container
+	config {
+		colCount = 1
+		rowCount = 1
+		rows {
+			1 {
+				columns {
+					1 {
+						name = List Group Wrapper
+						colPos = 0
+					}
+				}
+			}
+		}
+	}
+}
