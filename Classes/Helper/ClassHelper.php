@@ -229,13 +229,16 @@ class ClassHelper implements SingletonInterface
 		$header['class'] = $data['header_position'] ? ' text-'.$data['header_position'] : '';
 
 		$hClass = $data['tx_t3sbootstrap_header_class'];
-		$hClass .= ' '.$data['tx_t3sbootstrap_header_display'] ?: '';
+		$hClass .= $data['tx_t3sbootstrap_header_display'] ? ' '.$data['tx_t3sbootstrap_header_display'] : '';
 		$header['hClass'] = trim($hClass);
 
-		$header['hLinkClass'] = trim($header['hLinkClass']);
-
 		if ( $data['CType'] == 't3sbs_mediaobject' ) {
-			$header['hClass'] .= $header['hClass'] ? $header['hClass'].' mt-0' : 'mt-0';
+			$header['hClass'] .= ' mt-0';
+		}
+
+		if ($data['header_link']) {
+			$header['hLinkClass'] = trim($header['hClass']);
+			$header['hClass'] = '';
 		}
 
 		if ( $data['tx_t3sbootstrap_header_fontawesome'] ) {
