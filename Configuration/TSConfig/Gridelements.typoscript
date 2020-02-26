@@ -446,7 +446,7 @@ tx_gridelements.setup.tabs_tab {
 # **********************************************************
 tx_gridelements.setup.listGroup_wrapper {
 	title = List Group Wrapper
-	description = 
+	description = Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"
 	frame = 1
 	iconIdentifier = ge-accordion-container
 	config {
