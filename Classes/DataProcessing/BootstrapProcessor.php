@@ -429,6 +429,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		// child of gridelement (autoLayout_row)
 		if ( $processedData['data']['parentgrid_tx_gridelements_backend_layout'] == 'autoLayout_row' ) {
 			$processedData['newLine'] = $flexconf['newLine'] ? TRUE : FALSE;
+			$processedData['class'] .= $classHelper->getAutoLayoutClass($flexconf);
 		}
 
 		// extend flexforms with custom fields
