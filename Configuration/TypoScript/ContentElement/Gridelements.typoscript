@@ -67,6 +67,10 @@ tt_content {
 		carousel_container.cObject.templateName = CarouselContainer
 		carousel_container.columns.0.renderObj < tt_content.t3sbs_carousel
 
+		listGroup_wrapper < lib.gridelements.defaultGridSetup
+		listGroup_wrapper.cObject.templateName = ListGroupWrapper
+		listGroup_wrapper.columns.0.renderObj =< tt_content
+
 		# **********************************************************
 		# Collapse / Container & Accordion
 		# **********************************************************
