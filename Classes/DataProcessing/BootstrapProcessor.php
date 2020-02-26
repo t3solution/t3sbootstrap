@@ -390,13 +390,15 @@ class BootstrapProcessor implements DataProcessorInterface
 				}
 			}
 
-			$processedData['celink'] = $processedData['data']['header_link'];
+			if ( $processedData['data']['parentgrid_tx_gridelements_backend_layout'] != 'listGroup_wrapper' ) {
+				$processedData['celink'] = $processedData['data']['header_link'];
+				$processedData['class'] .= ' ce-link-content';
+			}
+
 			$processedData['data']['header_link'] = '';
 			// no image zoom if ce-link (did not work)
 			$processedData['data']['image_zoom'] = '';
 			$processedData['addmedia']['imagezoom'] = '';
-			// add to class
-			$processedData['class'] .= ' ce-link-content';
 		}
 
 		// animate css
