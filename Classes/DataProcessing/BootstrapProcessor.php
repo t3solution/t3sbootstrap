@@ -432,6 +432,11 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['class'] .= $classHelper->getAutoLayoutClass($flexconf);
 		}
 
+		// child of gridelement (container)
+		if ( $processedData['data']['parentgrid_tx_gridelements_backend_layout'] == 'container' ) {
+			$processedData['class'] .= $classHelper->getContainerClass($parentflexconf, $flexconf);
+		}
+
 		// extend flexforms with custom fields
 		if ( is_array($flexconf['ffExtra']) ) {
 			$processedData['ffExtra'] = $flexconf['ffExtra'];
