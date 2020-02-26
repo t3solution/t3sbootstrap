@@ -249,6 +249,54 @@ class ClassHelper implements SingletonInterface
 
 	}
 
+	/**
+	 * Returns processedData if parent auto layout
+	 *
+	 * @param array $flexconf
+	 *
+	 * @return string
+	 */
+	public function getAutoLayoutClass($flexconf)
+	{
+		$class = '';
+
+		if ( $flexconf['gridSystem'] ) {
+			switch ( $flexconf['gridSystem'] ) {
+				 case 'equal':
+					$class .= ' col';
+				break;
+				 case 'column':
+					$class .= $flexconf['xsColumns'] ? ' col-'.$flexconf['xsColumns'] : '';
+				break;
+				 case 'variable':
+
+				 if ( $flexconf['xsColumns'] == 'equal'
+					|| $flexconf['smColumns'] == 'equal'
+					|| $flexconf['mdColumns'] == 'equal'
+					|| $flexconf['lgColumns'] == 'equal'
+					|| $flexconf['xlColumns'] == 'equal' ) {
+
+					$class .= $flexconf['xsColumns'] ? ' col-xs' : '';
+					$class .= $flexconf['smColumns'] ? ' col-sm' : '';
+					$class .= $flexconf['mdColumns'] ? ' col-md' : '';
+					$class .= $flexconf['lgColumns'] ? ' col-lg' : '';
+					$class .= $flexconf['xlColumns'] ? ' col-xl': '';
+
+				} else {
+
+					$class .= $flexconf['xsColumns'] ? ' col-'.$flexconf['xsColumns'] : '';
+					$class .= $flexconf['smColumns'] ? ' col-sm-'.$flexconf['smColumns'] : '';
+					$class .= $flexconf['mdColumns'] ? ' col-md-'.$flexconf['mdColumns'] : '';
+					$class .= $flexconf['lgColumns'] ? ' col-lg-'.$flexconf['lgColumns'] : '';
+					$class .= $flexconf['xlColumns'] ? ' col-xl-'.$flexconf['xlColumns'] : '';
+				}
+				break;
+			}
+		}
+
+		return $class;
+
+	}
 
 
 	/**
