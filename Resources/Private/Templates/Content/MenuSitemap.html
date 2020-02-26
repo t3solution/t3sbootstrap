@@ -22,3 +22,23 @@
 	</f:if>
 </f:section>
 </html>
+
+<f:section name="Menu">
+	<ul>
+		<f:for each="{menu}" as="page">
+			<li>
+				<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} title="{page.title}">
+					<f:if condition="{page.nav_title}">
+						<f:then>
+							<span>{page.nav_title}</span>
+						</f:then>
+						<f:else>
+							<span>{page.title}</span>
+						</f:else>
+					</f:if>
+				</a>
+				<f:render section="Menu" arguments="{menu: page.children}" />
+			</li>
+		</f:for>
+	</ul>
+</f:section>
