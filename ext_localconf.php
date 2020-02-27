@@ -65,6 +65,11 @@ call_user_func(function ($extKey) {
 
 
 	/***************
+	 * Extension configuration
+	 */
+	$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+
+	/***************
 	 * Other Extensions
 	 */
 	# if typoscript_rendering is loaded
@@ -101,7 +106,7 @@ call_user_func(function ($extKey) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.headerslider = 1');
 	}
 	 # if news is loaded
-	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('news') ) {
+	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('news') && array_key_exists('extNews', $extconf) && $extconf['extNews'] === '1' ) {
 	 	# TsConfig
 	 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $extKey . '/Resources/Private/Extensions/News/TsConfig.typoscript">');
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($extKey,
@@ -109,11 +114,6 @@ call_user_func(function ($extKey) {
 		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 1');
 	}
-
-	/***************
-	 * Extension configuration
-	 */
-	$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 	// Optional flexform extend
 	if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
