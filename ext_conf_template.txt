@@ -67,3 +67,5 @@ linkHoverEffect = 0
 lazyLoad = 0
 	# cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
 cookieconsent = 0
+	# cat=advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache).
+extNews = 1
