@@ -273,5 +273,22 @@ page.cssInline {
 }
 [END]
 
+# load jquery into the header
+[{$bootstrap.config.jqueryHeader} == 1]
+	page.includeJSLibs {
 
+		# JS
+		jquery >
+		jquery = EXT:t3sbootstrap/Resources/Public/Contrib/jquery.min.js
+		jquery.forceOnTop = 1
+		jquery.if.isTrue = {$bootstrap.ext.wsScss}
 
+		# CDN
+		jqueryCDN >
+		jqueryCDN = https://code.jquery.com/jquery-3.4.1.slim.min.js
+		jqueryCDN.external = 1
+		jqueryCDN.integrity = sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n
+		jqueryCDN.if.isFalse = {$bootstrap.ext.wsScss}		
+		
+	}
+[END]
