@@ -275,11 +275,9 @@ page.cssInline {
 
 # load jquery into the header
 [{$bootstrap.config.jqueryHeader} == 1]
+	page.includeJSFooterlibs.t3sbjquery >
 	page.includeJSLibs {
-
-		t3sbjquery >
 		t3sbjquery = EXT:t3sbootstrap/Resources/Public/Contrib/jquery.min.js
 		t3sbjquery.forceOnTop = 1
-
 	}
 [END]
