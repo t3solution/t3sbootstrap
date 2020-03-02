@@ -33,6 +33,8 @@ bootstrap.config {
 	rootline = 1
 	# cat=bootstrap-config/a-config/20; type=boolean; label=Content Only On Rootpage: disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled.
 	contentOnlyOnRootpage = 0
+	# cat=bootstrap-config/a-config/30; type=boolean; label=jQuery in header: load jquery into the header if activated.
+	jqueryHeader = 0
 
 	# cat=bootstrap-config/b-config/10; type=boolean; label=Compress: compress and concatenate JS and CSS.
 	compress = 1
