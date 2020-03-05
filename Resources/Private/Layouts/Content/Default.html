@@ -1,34 +1,31 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:spaceless>
-<f:if condition="{container}">
-	<div class="{container}">
-</f:if>
-<f:if condition="{cardSlider}">
-	<div class="carousel-item col-md-4">
-</f:if>
+{containerPre -> f:format.raw()}
+{cardSliderPre -> f:format.raw()}
 <f:link.typolink parameter="{celink}" class="ce-link">
 	<f:if condition="{data.CType} != 'gridelements_pi1'">
 		<f:then>
 			<div id="c{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+				<f:render section="Header" optional="true">
+					<f:render partial="Header/All" arguments="{_all}" />
+				</f:render>
+				<f:render section="Main" arguments="{_all}" />
+			</div>
 		</f:then>
 		<f:else>
 			<div id="c{data.uid}">
+				<f:render section="Header" optional="true">
+					<f:render partial="Header/All" arguments="{_all}" />
+				</f:render>
+				<f:render section="Main" arguments="{_all}" />
+			</div>
 		</f:else>
 	</f:if>
-		<f:render section="Header" optional="true">
-			<f:render partial="Header/All" arguments="{_all}" />
-		</f:render>
-		<f:render section="Main" arguments="{_all}" />
-	</div>
 </f:link.typolink>
 <f:if condition="{newLine}">
 	<div class="w-100"></div>
 </f:if>
-<f:if condition="{cardSlider}">
-	</div>
-</f:if>
-<f:if condition="{container}">
-	</div>
-</f:if>
+{cardSliderPost -> f:format.raw()}
+{containerPost -> f:format.raw()}
 </f:spaceless>
 </html>
