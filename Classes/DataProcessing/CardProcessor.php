@@ -150,10 +150,30 @@ class CardProcessor implements DataProcessorInterface {
 
 		// addmedia
 		$processedData['addmedia']['imgclass'] = $cardData['image']['class'];
-#		$processedData['addmedia']['figureclass'] = $processedData['data']['image_zoom'] ? ' text-center gallery' : ' text-center';
 		$processedData['addmedia']['figureclass'] = ' text-center';
 
-		$processedData['cardSlider'] = $parentflexconf['card_wrapper'] == 'slider' ? TRUE : FALSE;
+		if ( $parentflexconf['card_wrapper'] == 'slider' ) {
+
+			switch ( $processedData['data']['parentgrid_tx_gridelements_children'] ) {
+				 case 1:
+				 	$grid = 12;
+				break;
+				 case 2:
+				 	$grid = 6;
+				break;
+				 case 3:
+				 	$grid = 4;
+				break;
+				 case 4:
+				 	$grid = 3;
+				break;
+				 default:
+					$grid = 3;
+			}
+
+			$processedData['cardSliderPre'] = '<div class="carousel-item col-md-'.$grid.'">';
+			$processedData['cardSliderPost'] = '</div>';
+		}
 
 		$processedData['card'] = $cardData;
 
