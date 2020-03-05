@@ -366,7 +366,11 @@ class BootstrapProcessor implements DataProcessorInterface
 		##############################################################################################################################################
 
 		// container class
-		$processedData['container'] = $defaultHelper->getContainerClass($processedData['data']);
+		$container = $defaultHelper->getContainerClass($processedData['data']);
+		if ($container) {
+			$processedData['containerPre'] = '<div class="'.$container.'">';
+			$processedData['containerPost'] = '</div>';
+		}
 
 		// default header type
 		switch ( $processedData['data']['CType'] ) {
