@@ -55,7 +55,9 @@
 		</ce:link.clickEnlarge>
 	</f:then>
 	<f:else>
-		<f:render section="Image" arguments="{_all}" />
+		<f:link.typolink parameter="{files.0.properties.link}" class="carousel-imglink">
+			<f:render section="Image" arguments="{_all}" />
+		</f:link.typolink>
 	</f:else>
 </f:if>
 </f:section>
