@@ -44,10 +44,24 @@
 	<n:removeMediaTags>
 		<f:if condition="{newsItem.teaser}">
 			<f:then>
-				{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				<f:if condition="{settings.templateLayout} > 70 && {settings.templateLayout} < 75">
+					<f:then>
+						{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
+					</f:then>
+					<f:else>
+						{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					</f:else>
+				</f:if>
 			</f:then>
 			<f:else>
-				{newsItem.bodytext -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				<f:if condition="{settings.templateLayout} > 70 && {settings.templateLayout} < 75">
+					<f:then>
+						{newsItem.bodytext -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
+					</f:then>
+					<f:else>
+						{newsItem.bodytext -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					</f:else>
+				</f:if>
 			</f:else>
 		</f:if>
 	</n:removeMediaTags>
