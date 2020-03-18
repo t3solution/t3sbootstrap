@@ -7,7 +7,7 @@
 			<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
 				<f:render section="Slide" arguments="{_all}" />
 			</figure>
-			<f:render section="Header" arguments="{data: data, carouselLink: carouselLink}" />
+			<f:render partial="Header/All" arguments="{_all}" />
 			<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
 			<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
 		</div>
@@ -19,9 +19,9 @@
 					<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
 						<f:render section="Slide" arguments="{_all}" />
 						<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-							<figcaption class="carousel-caption{animate}">
-								<div>
-									<f:render section="Header" arguments="{data: data, carouselLink: carouselLink}" />
+							<figcaption class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
+								<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+									<f:render partial="Header/All" arguments="{_all}" />
 									<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
 									<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
 								</div>
@@ -31,9 +31,9 @@
 				</f:then>
 				<f:else>
 					<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-						<div class="carousel-caption{animate}">
-							<div>
-								<f:render section="Header" arguments="{data: data, carouselLink: carouselLink}" />
+						<div class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
+							<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+								<f:render partial="Header/All" arguments="{_all}" />
 								<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
 								<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
 							</div>
@@ -79,33 +79,18 @@
 	  shift="{shift}" />
 </f:section>
 
-<f:section name="Header">
-<f:if condition="{data.header}">
-	<h5{f:if(condition:'{data.tx_t3sbootstrap_header_class}',then:' class="{data.tx_t3sbootstrap_header_class}"')}>
-		<f:if condition="{carouselLink} == 'header'">
-			<f:then>
-				<f:link.typolink parameter="{data.header_link}">{data.header -> f:format.raw()}</f:link.typolink>
-			</f:then>
-			<f:else>
-				{data.header -> f:format.raw()}
-			</f:else>
-		</f:if>
-	</h5>
-</f:if>
-</f:section>
-
 <f:section name="Button">
-<f:if condition="{data.header_link} && {carouselLink} == 'button'">
-	<f:link.typolink parameter="{data.header_link}" class="btn btn-primary btn-sm">
-		<f:translate id="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:read-more" />
-	</f:link.typolink>
-</f:if>
+	<f:if condition="{data.button_link} && {carouselLink} == 'button'">
+		<f:link.typolink parameter="{data.button_link}" class="btn btn-primary btn-sm">
+			<f:translate id="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:read-more" />
+		</f:link.typolink>
+	</f:if>
 </f:section>
 
 <f:section name="Bodytext">
-<f:if condition="{data.bodytext}">
-	<div class="slider-text">
-		{data.bodytext -> f:format.html()}
-	</div>
-</f:if>
+	<f:if condition="{data.bodytext}">
+		<div class="slider-text">
+			{data.bodytext -> f:format.html()}
+		</div>
+	</f:if>
 </f:section>
