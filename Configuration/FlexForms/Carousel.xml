@@ -30,6 +30,54 @@
 							</config>
 						</TCEforms>
 					</shift>
+					<bgOverlay>
+						<TCEforms>
+							<label>Background for caption</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Caption only</numIndex>
+										<numIndex index="1">caption</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Entire image (overlay)</numIndex>
+										<numIndex index="1">image</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</bgOverlay>
+					<captionVAlign>
+						<TCEforms>
+							<label>Caption vertical align</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Top</numIndex>
+										<numIndex index="1">top</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Bottom</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+								</items>
+								<default>end</default>
+							</config>
+						</TCEforms>
+					</captionVAlign>
 				</el>
 			</ROOT>
 		</general>
