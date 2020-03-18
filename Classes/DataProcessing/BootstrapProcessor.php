@@ -217,7 +217,47 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['dimensions']['height'] = $parentflexconf['height'] ?: '';
 				$processedData['carouselLink'] = $parentflexconf['link'];
 
-				$processedData['animate'] = $parentflexconf['animate'] ? ' caption-animated animated '.$parentflexconf['animate'] : '';
+				if ($parentflexconf['link'] == 'button' && $processedData['data']['header_link']){
+					$processedData['data']['button_link'] = $processedData['data']['header_link'];
+					$processedData['data']['header_link'] = '';
+				}
+
+				$flexconf['captionVAlign'] = $flexconf['captionVAlign'] ? $flexconf['captionVAlign'] : 'end';
+
+				if ($flexconf['bgOverlay'] == 'caption') {
+					$innerCaptionStyle = $processedData['style'].' padding:15px 0';
+					$processedData['style'] = '';
+				} elseif ($flexconf['bgOverlay'] == 'image') {
+					$innerCaptionStyle = '';
+				} else {
+					$processedData['style'] = '';
+				}
+
+				if ($extConf['animateCss'] && $parentflexconf['animate']){
+					$processedData['animate'] = $parentflexconf['animate'] ?
+					 ' caption-animated animated align-items-'.$flexconf['captionVAlign'].' '.$parentflexconf['animate'] : '';
+					$processedData['innerStyle'] = $innerCaptionStyle;
+				} elseif ($processedData['data']['tx_t3sbootstrap_bgcolor']) {
+					$height = $flexconf['captionVAlign'] == 'top' ? '' : 'h-100';
+					$processedData['animate'] = ' '.$height.' d-flex align-items-'.$flexconf['captionVAlign'];
+					$processedData['innerStyle'] = $innerCaptionStyle;
+				} else {
+					$height = $flexconf['captionVAlign'] == 'end' ? '' : 'h-100';
+					$processedData['animate'] = ' '.$height.' d-flex align-items-'.$flexconf['captionVAlign'];
+				}
+
+				$animate = ($extConf['animateCss'] && $parentflexconf['animate']) || $processedData['data']['tx_t3sbootstrap_bgcolor'] ? TRUE : FALSE;
+				$processedData['style'] .= $styleHelper->getCarouselCaptionStyle( $flexconf, $animate );
+
+
+				if (empty($processedData['files'])) {
+					$ratio = $parentflexconf['ratio'] ? $parentflexconf['ratio'] : '16:9';
+					$noImgHeight = explode(':', $parentflexconf['ratio']);
+					$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
+					$processedData['animate'] .= ' position-static';
+					$processedData['style'] .= ' min-height:'.$noImgHeight.'px;';
+					$processedData['style'] .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+				}
 
 				if ( $parentflexconf['multislider'] ) {
 					$processedData['multislider'] = TRUE;
