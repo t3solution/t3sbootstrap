@@ -72,5 +72,42 @@ class StyleHelper implements SingletonInterface
 		return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
 	}
 
+	
+	/**
+	 * Returns carousel caption style
+	 *
+	 * @param boolean $hexdec
+	 * @return string
+	 */
+	public function getCarouselCaptionStyle( $flexconf, $animate )
+	{
+
+		if ($flexconf['bgOverlay'] == 'caption') {
+
+			$captionStyle = ' top:0; left:15%; right:15%; bottom:0;';
+			$captionStyle .= $flexconf['captionVAlign'] == 'top' ? ' bottom:inherit;' : '';
+			$captionStyle .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+
+		} elseif ($flexconf['bgOverlay'] == 'image') {
+
+			$captionStyle = ' top:0; left:0; right:0; bottom:0;';
+			$captionStyle .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+
+		} else {
+
+			$style = $flexconf['captionVAlign'] == 'top' ? ' top:0;' : '';
+			$style .= $flexconf['captionVAlign'] == 'center' ? ' bottom:0;' : '';
+			$style .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+
+		}
+
+		if ($animate){
+
+			$style .= $captionStyle;
+
+		}
+
+		return $style;
+	}
 
 }
