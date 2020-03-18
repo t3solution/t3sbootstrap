@@ -75,9 +75,6 @@ TCEFORM.tt_content {
 	header_layout {
 		types {
 			t3sbs_button.disabled = 1
-			t3sbs_mediaobject.disabled = 1
-			#t3sbs_card.disabled = 1
-			t3sbs_carousel.disabled = 1
 		}
 		altLabels {
 			 1 = H1
@@ -185,7 +182,6 @@ TCEFORM.tt_content {
 	imageheight {
 		types {
 			t3sbs_carousel.disabled = 1
-#			t3sbs_gallery.disabled = 1
 		}
 	}
 	imageborder {
@@ -207,21 +203,30 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_header_class {
 		types {
 			t3sbs_button.disabled = 1
-#			t3sbs_mediaobject.disabled = 1
 		}
 	}
 
 	tx_t3sbootstrap_bgcolor {
 		types {
 			t3sbs_button.disabled = 1
-			t3sbs_carousel.disabled = 1
+
+			t3sbs_carousel {
+				label.default = Caption background color (use with opacity - image link and zoom did not work)
+				label.de = Caption background color (use with opacity - image link and zoom did not work)
+			}
+
 		}
 	}
 
 	tx_t3sbootstrap_bgopacity {
 		types {
 			t3sbs_button.disabled = 1
-			t3sbs_carousel.disabled = 1
+
+			t3sbs_carousel {
+				label.default = Opacity for Caption background color
+				label.de = Opacity for Caption background color
+			}
+
 		}
 	}
 
@@ -235,7 +240,11 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_textcolor {
 		types {
 			t3sbs_button.disabled = 1
-			t3sbs_carousel.disabled = 1
+
+			t3sbs_carousel {
+				label.default = Text color for caption
+				label.de = Text color for caption
+			}
 		}
 	}
 
@@ -269,11 +278,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 		}
 	}
-	tx_t3sbootstrap_flexform {
-		types {
-#			t3sbs_carousel.disabled = 1
-		}
-	}
+
 	tx_t3sbootstrap_inTextImgRowWidth {
 		types {
 			t3sbs_card.disabled = 1
@@ -283,4 +288,3 @@ TCEFORM.tt_content {
 	}
 
 }
-
