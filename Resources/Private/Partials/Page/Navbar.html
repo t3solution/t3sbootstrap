@@ -247,11 +247,11 @@
 <f:section name="Dropdown">
 	<f:if condition="{navbarItem.data.tx_t3sbootstrap_fontawesome_icon}">
 		<f:then>
-			<a class="nav-link dropdown-toggle" id="dropdown-menu-{navbarItem.data.uid}" href="<f:uri.page pageUid="{navbarItem.link}"/>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}">
+			<a class="nav-link dropdown-toggle" id="dropdown-menu-{navbarItem.data.uid}" href="{f:uri.page(pageUid: navbarItem.data.uid)}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}">
 				<i class="{navbarItem.data.tx_t3sbootstrap_fontawesome_icon}"></i>{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',else:' {navbarItem.title}')}</a>
 		</f:then>
 		<f:else>
-			<a class="nav-link dropdown-toggle" id="dropdown-menu-{navbarItem.data.uid}" href="<f:uri.page pageUid="{navbarItem.link}"/>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			<a class="nav-link dropdown-toggle" id="dropdown-menu-{navbarItem.data.uid}" href="{f:uri.page(pageUid: navbarItem.data.uid)}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 				{navbarItem.title}
 			</a>
 		</f:else>
