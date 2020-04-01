@@ -8,6 +8,9 @@
 	<f:then>
 		<f:if condition="{data.bodytext} || {data.header}">
 			<f:then>
+				<f:if condition="!{gallery.headerBeside}">
+					<f:render partial="Header/All" arguments="{_all}" />
+				</f:if>
 				<f:render partial="TextWithImage" arguments="{_all}" />
 			</f:then>
 			<f:else>
