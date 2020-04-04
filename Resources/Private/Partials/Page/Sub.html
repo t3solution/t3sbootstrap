@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{subNavigation}">
-<div class="d-md-flex bg-light p-2 mb-3" id="submenu">
+<div class="d-md-flex mb-3 submenu">
 	<ul class="nav flex-column flex-nowrap nav-pills w-100">
 		<f:for each="{subNavigation}" as="item">
 			<li class="nav-item{f:if(condition: item.active, then:' active')}">
