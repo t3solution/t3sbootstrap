@@ -88,17 +88,17 @@ temp.jsFooterInline {
 				if ( $(this).hasClass('fixedGroupButton') ) {
 					var fixedButton = $(this).find('div');
 				} else {
-					var fixedButton = $(this).find('a');				
+					var fixedButton = $(this).find('a');
 				}
 			}
 			$(this).hide().removeClass('d-none').delay(2000).fadeIn(400);
 
 			if ( fixedButton.hasClass('rotate-minus') || fixedButton.hasClass('rotate-plus') ) {
-				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2;	
+				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2;
 				if ( $(this).hasClass('fixedPosition-right') ) {
 					$(this).css('right', '-'+position+'px');
 				} else {
-					$(this).css('left', '-'+position+'px');	
+					$(this).css('left', '-'+position+'px');
 				}
 			}
 		});
@@ -435,15 +435,19 @@ temp.jsFooterInline {
 	if ( $(window).width() > {$bootstrap.navbar.breakpoint.md} ) {
 
 		// only one is supported
-		if ($('#sectionmenu').length || $('#submenu').length || $('.make-me-sticky').length) {
+		if ($('#sectionmenu').length || $('.submenu').length || $('.make-me-sticky').length) {
 
 			var offsetSize = 30;
 			var affix = $('.make-me-sticky');
 
-			if ($('#submenu').length)		affix = $('#submenu');
+			if ($('.submenu').length)		affix = $('.submenu');
 			if ($('#sectionmenu').length)	affix = $('#sectionmenu');
 
 			if ( affix.length ){
+
+				if ( affix.length > 1 ) {
+					affix = affix.last();
+				}
 
 				// if is in Sidebar (aside)
 				if ( affix.parent('aside').length ) {
@@ -701,12 +705,12 @@ temp.jsFooterInline {
 		}
 	});
 
-	$("#submenu a.nav-link").on("click", function(e) {
+	$(".submenu a.nav-link").on("click", function(e) {
 		if ($(this).hasClass("active")) {
 			e.preventDefault();
 		} else {
 			if ($(this).next(".collapse").is(":visible")) {
-				$('#submenu').on('hide.bs.collapse', function (e) {
+				$('.submenu').on('hide.bs.collapse', function (e) {
 					e.preventDefault();
 				});
 				window.location = $(this).attr("href");
