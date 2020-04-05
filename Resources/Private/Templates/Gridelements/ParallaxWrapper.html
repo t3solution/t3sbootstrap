@@ -23,13 +23,9 @@
 
 <f:section name="SectionInner">
 <f:if condition="{data.tx_gridelements_view_column_0}">
-	<f:if condition="{container}">
-		<div class="{container}">
-	</f:if>
+	{containerPre -> f:format.raw()}
 		<f:render partial="Header/All" arguments="{_all}" />
 		{data.tx_gridelements_view_column_0 -> f:format.raw()}
-	<f:if condition="{container}">
-		</div>
-	</f:if>
+	{containerPost -> f:format.raw()}
 </f:if>
 </f:section>
