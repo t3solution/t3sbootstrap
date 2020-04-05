@@ -4,13 +4,9 @@
 <span class="anchor" id="c{data.uid}"></span>
 </f:if>
 <f:if condition="{data.header}">
-<f:if condition="{container}">
-<div class="{container}">
-</f:if>
-<f:render partial="Header/All" arguments="{_all}" />
-<f:if condition="{container}">
-</div>
-</f:if>
+	{containerPre -> f:format.raw()}
+		<f:render partial="Header/All" arguments="{_all}" />
+	{containerPost -> f:format.raw()}
 </f:if>
 <f:if condition="{youtubeProperty}">
 	<f:then>
@@ -43,7 +39,7 @@
 						</section>
 					</f:then>
 					<f:else>
-					<f:comment>	BG-Image : default </f:comment>			
+					<f:comment>	BG-Image : default </f:comment>
 						<section id="s{data.uid}" class="{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
 							 style="background-image: url('{bgImage}');{f:if(condition: '{style}', then: ' {style}')}">
 							<f:render section="SectionInner" arguments="{_all}" />
@@ -58,7 +54,7 @@
 					<f:comment>	Vimeo video </f:comment>
 						<div class="alert alert-danger my-5" role="alert">
 							Vimeo videos are currently not supported!
-						</div>					
+						</div>
 					</f:then>
 					<f:else>
 						<f:if condition="{file}">
@@ -76,9 +72,9 @@
 												<f:if condition="{settings.lazyLoadBgWrapperImage}">
 													<f:then>
 														<t3sb:media file="{file}" width="2560" height="auto"
-														  class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2
-														   || {settings.lazyLoad} == 1', then: ' lazy')}"
-														  breakpoints="{
+															class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2
+															 || {settings.lazyLoad} == 1', then: ' lazy')}"
+															breakpoints="{
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '1200, 1360, 1600, 1920, 2560'},
 															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '576, 992, 1199'},
 															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '575'}
@@ -86,34 +82,27 @@
 													</f:then>
 													<f:else>
 														<t3sb:media file="{file}" width="2560" height="auto"
-														  class="img-fluid orig-img"
-														  breakpoints="{
+															class="img-fluid orig-img"
+															breakpoints="{
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '1200, 1360, 1600, 1920, 2560'},
 															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '576, 992, 1199'},
 															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '575'}
 														}" picturefill="{settings.picturefill}" lazyload="0" ratio="0" style="{style}" />
 													</f:else>
 												</f:if>
-											</figure>									
+											</figure>
 										</f:else>
 									</f:if>
 									<f:render section="SectionOverlayInner" arguments="{_all}" />
-								</section>									
+								</section>
 							</f:then>
 							<f:else>
 								<f:comment> No media </f:comment>
 								<section id="s-{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}>
 									<f:if condition="{data.tx_gridelements_view_column_0}">
-										<f:if condition="{container}">
-											<f:then>
-												<div class="{container}">
-													{data.tx_gridelements_view_column_0 -> f:format.raw()}
-												</div>
-											</f:then>
-											<f:else>
-												{data.tx_gridelements_view_column_0 -> f:format.raw()}
-											</f:else>
-										</f:if>
+										{containerPre -> f:format.raw()}
+											{data.tx_gridelements_view_column_0 -> f:format.raw()}
+										{containerPost -> f:format.raw()}
 									</f:if>
 								</section>
 							</f:else>
@@ -129,13 +118,9 @@
 
 <f:section name="SectionInner">
 	<f:if condition="{data.tx_gridelements_view_column_0}">
-		<f:if condition="{container}">
-			<div class="{container}">
-		</f:if>
+		{containerPre -> f:format.raw()}
 			{data.tx_gridelements_view_column_0 -> f:format.raw()}
-		<f:if condition="{container}">
-			</div>
-		</f:if>
+		{containerPost -> f:format.raw()}
 	</f:if>
 </f:section>
 
@@ -143,13 +128,9 @@
 	<f:if condition="{data.tx_gridelements_view_column_0}">
 		<div class="v-row align-items-center h-100 w-100 absolute">
 			<div class="col">
-			<f:if condition="{container}">
-				<div class="{container}">
-			</f:if>
-				{data.tx_gridelements_view_column_0 -> f:format.raw()}
-			<f:if condition="{container}">
-				</div>
-			</f:if>
+				{containerPre -> f:format.raw()}
+					{data.tx_gridelements_view_column_0 -> f:format.raw()}
+				{containerPost -> f:format.raw()}
 			</div>
 		</div>
 	</f:if>
