@@ -1,5 +1,5 @@
 page {
-	
+
 	shortcutIcon = {$bootstrap.config.favicon}
 
 	# SCSS & CSS files to be included
@@ -14,18 +14,6 @@ page {
 		customBootstrap.forceOnTop = 1
 		customBootstrap.if.isTrue = {$bootstrap.extconf.customScss}
 
-		t3sfontawesome = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/scss/fontawesome.scss
-		t3sfontawesome.if {
-			value = 1
-			equals = {$bootstrap.extconf.fontawesomeCss}
-		}
-		
-		t3sfontawesomePro = fileadmin/T3SB/FA5Pro/scss/fontawesome.scss
-		t3sfontawesomePro.if {
-			value = 2
-			equals = {$bootstrap.extconf.fontawesomeCss}
-		}
-
 		t3sblightbox = EXT:t3sbootstrap/Resources/Public/Contrib/Lightbox/scss/baguetteBox.scss
 		t3sblightbox.if {
 			value = 1
@@ -33,18 +21,6 @@ page {
 		}
 
 		# CSS files
-		t3sfontawesomelink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
-		t3sfontawesomelink.if {
-			value = 1
-			equals = {$bootstrap.extconf.fontawesomeCss}
-		}
-
-		t3sfontawesomelinkPro = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
-		t3sfontawesomelinkPro.if {
-			value = 2
-			equals = {$bootstrap.extconf.fontawesomeCss}
-		}
-
 		t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
 		t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
 
@@ -156,6 +132,22 @@ page {
 
 	}
 
+	footerData {
+		# using the SVG + JS version of Font Awesome - nesting SVG tags within their parent 
+		61 = TEXT
+		61.value = <script src="/typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Fontawesome/js/all.min.js" data-auto-replace-svg="nest"></script>
+		61.if {
+			value = 1
+			equals = {$bootstrap.extconf.fontawesomeCss}
+		}
+		62 = TEXT
+		62.value = <script src="/fileadmin/T3SB/FA5Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
+		62.if {
+			value = 2
+			equals = {$bootstrap.extconf.fontawesomeCss}
+		}
+	}
+
 	jsInline.5 < temp.jsCookieConsent
 	jsInline.5.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
@@ -182,7 +174,7 @@ new LazyLoad({
 				zoomOverlay.css('max-height', imgheight);
 			}
 		}
-    }
+	}
 });
 
 
@@ -232,8 +224,8 @@ page.jsFooterInline.5.5.value (
 
 	// lightbox - page.jsFooterInline.5.5
 	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-	   event.preventDefault();
-	   $(this).ekkoLightbox();
+		event.preventDefault();
+		$(this).ekkoLightbox();
 	});
 
 )
