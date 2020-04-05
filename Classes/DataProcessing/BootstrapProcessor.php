@@ -410,6 +410,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ($container) {
 			$processedData['containerPre'] = '<div class="'.$container.'">';
 			$processedData['containerPost'] = '</div>';
+			$processedData['container'] = $container;
 		}
 
 		// default header type
