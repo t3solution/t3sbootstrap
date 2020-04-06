@@ -22,7 +22,30 @@ page {
 
 		# CSS files
 		t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
-		t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
+		t3sfontawesomeMin.if (
+			isFalse = {$bootstrap.extconf.fontawesomeCss}
+			isFalse = {$bootstrap.config.faLinkIcons}			
+		)
+
+		t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
+		t3sfontawesomeMinLink.if (
+			isFalse = {$bootstrap.extconf.fontawesomeCss}
+			isTrue = {$bootstrap.config.faLinkIcons}			
+		)
+
+		t3sfontawesomelink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+		t3sfontawesomelink.if {
+			value = 1
+			equals = {$bootstrap.extconf.fontawesomeCss}
+			isTrue = {$bootstrap.config.faLinkIcons}
+		}
+
+		t3sfontawesomelinkPro = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
+		t3sfontawesomelinkPro.if {
+			value = 2
+			equals = {$bootstrap.extconf.fontawesomeCss}
+			isTrue = {$bootstrap.config.faLinkIcons}
+		}
 
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
 
