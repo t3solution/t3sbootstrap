@@ -33,33 +33,6 @@
   font-weight: 900; }
 
 
-
-.internal-link::before,
-.external-link::before,
-.download-link::before,
-.email-link::before {
-    margin-right: 0.5em;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-}
-
-.internal-link::before {
-	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f0c1";
-}
-.external-link::before {
-	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f35d";
-}
-.download-link::before {
-	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f019";
-}
-.email-link::before {
-	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f0e0";
-}
-
-
 /*!
  * From Font Awesome Free @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
