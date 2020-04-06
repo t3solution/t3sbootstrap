@@ -35,6 +35,8 @@ bootstrap.config {
 	contentOnlyOnRootpage = 0
 	# cat=bootstrap-config/a-config/30; type=boolean; label=jQuery in header: load jquery into the header if activated.
 	jqueryHeader = 0
+	# cat=bootstrap-config/a-config/40; type=boolean; label=Fontawesome icons for Links: loads the required CSS-style for links set in the RTE if activeted
+	faLinkIcons = 1
 
 	# cat=bootstrap-config/b-config/10; type=boolean; label=Compress: compress and concatenate JS and CSS.
 	compress = 1
