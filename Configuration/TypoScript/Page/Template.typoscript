@@ -71,6 +71,8 @@ page {
 			lightboxSelection = {$bootstrap.config.lightboxSelection}
 			backgroundImageEnable =	{$bootstrap.config.backgroundImage.enable}
 			backgroundImageSlide =  {$bootstrap.config.backgroundImage.slide}
+			backToTopTitle = {$bootstrap.backToTop.title}
+			backToTopClass =  {$bootstrap.backToTop.class}
 		}
 		dataProcessing {
 			#
