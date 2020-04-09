@@ -117,7 +117,10 @@ class LastModifiedProcessor implements DataProcessorInterface
 		if (!empty($result)) {
 
 			foreach ( $result as $ce ) {
-				$mdtm[$ce['uid']][self::getPageTitle($ce['pid'])] = $ce;
+				$pageTitle = self::getPageTitle($ce['pid']);
+				if ($pageTitle) {
+					$mdtm[$ce['uid']][$pageTitle] = $ce;
+				}
 			}
 		}
 
