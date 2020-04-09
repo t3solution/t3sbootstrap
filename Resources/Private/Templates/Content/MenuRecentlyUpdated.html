@@ -1,23 +1,50 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
-	<f:if condition="{menu}">
+<f:if condition="{recentlyUpdatedContentElements}">
+	<f:then>
 		<ul class="nav updated{menudirection}{menupills}{menuHorizontalAlignment}">
-			<f:for each="{menu}" as="page">
-				<li class="nav-item">
-					<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}" title="{page.title}">
-						<f:if condition="{page.nav_title}">
-							<f:then>
-								<span class="badge badge-secondary"><f:format.date format="%d. %B %Y">{page.data.tstamp}</f:format.date></span> {page.nav_title}
-							</f:then>
-							<f:else>
-								<span class="badge badge-secondary"><f:format.date format="%d. %B %Y">{page.data.tstamp}</f:format.date></span> {page.title}
-							</f:else>
-						</f:if>
-					</a>
-				</li>
+			<f:for each="{recentlyUpdatedContentElements}" as="contents">
+				<f:for each="{contents}" as="content" key="pageTitle">
+					<li class="nav-item">
+						<f:link.page pageUid="{content.pid}" class="nav-link" title="{pageTitle}" section="{content.uid}">
+							<span class="badge badge-secondary mr-2">
+								{f:format.date(date: content.tstamp, format: "{settings.dateformat}")}
+							</span>
+							{pageTitle}{f:if(condition:'{content.header}',then:' - {content.header}')}
+						</f:link.page>
+					</li>
+				</f:for>
 			</f:for>
 		</ul>
-	</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{menu}">
+			<ul class="nav updated{menudirection}{menupills}{menuHorizontalAlignment}">
+				<f:for each="{menu}" as="page">
+					<li class="nav-item">
+						<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}" title="{page.title}">
+							<f:if condition="{page.nav_title}">
+								<f:then>
+									<span class="badge badge-secondary mr-2">
+										{f:format.date(date: page.data.tstamp, format: "{settings.dateformat}")}
+									</span>
+									{page.nav_title}
+								</f:then>
+								<f:else>
+									<span class="badge badge-secondary mr-2">
+										{f:format.date(date: page.data.tstamp, format: "{settings.dateformat}")}
+									</span>
+									{page.title}
+								</f:else>
+							</f:if>
+						</a>
+					</li>
+				</f:for>
+			</ul>
+		</f:if>
+
+	</f:else>
+</f:if>
 </f:section>
 </html>
