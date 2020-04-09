@@ -73,6 +73,7 @@ page {
 			backgroundImageSlide =  {$bootstrap.config.backgroundImage.slide}
 			backToTopTitle = {$bootstrap.backToTop.title}
 			backToTopClass =  {$bootstrap.backToTop.class}
+			langMenuWithFaIcon = {$bootstrap.config.langMenuWithFaIcon}
 		}
 		dataProcessing {
 			#
@@ -185,10 +186,9 @@ page {
  			#
 			# Language Navigation
 			#
-			40 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			40 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
 			40 {
-				special = language
-				special.value = auto
+				languages = auto
 				as = languageNavigation
 				if {
 					isTrue.cObject = COA
