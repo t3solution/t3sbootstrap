@@ -90,6 +90,8 @@ bootstrap.config {
 
 	# cat=bootstrap-config/e-config/010; type=boolean; label=Last Modified Content Element: display the date of the last modified content on current page in the footer.
 	lastModifiedContentElement = 0
+	# cat=bootstrap-config/e-config/011; type=boolean; label=List of recently updated Content Elements: better solution in the Template MenuRecentlyUpdated.html if enabled.
+	recentlyUpdatedContentElements = 0
 	# cat=bootstrap-config/e-config/020; type=small; label=Date Format: the date format to use in ext:t3sbootstrap.
 	dateFormat = d.m.Y
 	# cat=bootstrap-config/e-config/030; type=small; label=Subheader Color: Contextual text classes e.g. secondary, danger etc.
