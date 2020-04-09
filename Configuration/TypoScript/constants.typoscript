@@ -104,6 +104,8 @@ bootstrap.config {
 	favicon =
 	# cat=bootstrap-config/e-config/110; type=boolean; label=Card Flipper: rotate on click.
 	cardFlipperOnClick = 0
+	# cat=bootstrap-config/e-config/120; type=boolean; label=Language Menu Style: you have the choice between two layouts - with FA icon or current language with flag.
+	langMenuWithFaIcon = 1
 }
 
 
