@@ -73,13 +73,18 @@ lib.contentElement {
 	}
 
 	dataProcessing {
+
+		71 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
+		71.recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
+		71.setMaxResults = 10
+		71.if.isTrue = {$bootstrap.config.recentlyUpdatedContentElements}
+
 		224 = T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor
 		224 {
 			defaultHeaderType = {$styles.content.defaultHeaderType}
 			contentMarginTop = {$bootstrap.config.contentMarginTop}
 		}
 	}
-
 }
 
 # 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
