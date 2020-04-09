@@ -296,6 +296,7 @@ page {
 			# Date of the last modified content element on current page
 			#
 			70 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
+			70.lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
 			70.if.isTrue = {$bootstrap.config.lastModifiedContentElement}
 
 			#
