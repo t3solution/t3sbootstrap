@@ -73,20 +73,24 @@ temp.jsFooterInline {
 	// scroll anchor
 	if (window.location.hash) {
 
-		var hash = window.location.hash,
-			idArr = hash.split('#'),
-			targetElement = document.getElementById(idArr[1]),
-			targetOffset = targetElement.offsetTop,
-			offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
-			if ( fixedNavbar ) {
-				offsetSize += navbarHeight;
-			}
-
-			var scrollTo = targetOffset-offsetSize;
-
-		$("html, body").stop().animate({
-			'scrollTop': scrollTo
-		}, 1500, "easeInOutExpo");
+		var hash = window.location.hash;
+	
+		if ($("hash").length) {
+			var idArr = hash.split('#'),
+				targetElement = document.getElementById(idArr[1]),
+				targetOffset = targetElement.offsetTop,
+				offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
+	
+				if ( fixedNavbar ) {
+					offsetSize += navbarHeight;
+				}
+	
+				var scrollTo = targetOffset-offsetSize;
+	
+			$("html, body").stop().animate({
+				'scrollTop': scrollTo
+			}, 1500, "easeInOutExpo");
+		}
 	}
 
 
