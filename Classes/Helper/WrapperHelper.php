@@ -380,6 +380,7 @@ class WrapperHelper implements SingletonInterface
 		$processedData['show'] = $flexconf['active'] ? ' show' : '';
 		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
 		$processedData['buttonstyle'] = $flexconf['style'] ? $flexconf['style'] : 'primary';
+		$processedData['collapsibleByPid'] = $flexconf['collapsibleByPid'] ?: '';
 		$processedData['media'] = $file ? $file : '';
 
 		return $processedData;
