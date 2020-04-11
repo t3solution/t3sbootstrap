@@ -46,8 +46,12 @@ temp.jsFooterInline {
 		}
 		$card.find('a.temp-gets-shown').removeClass('temp-gets-shown');
 		if ( $card.length ) {
+			var offsetSize = $card.find('.card-header').outerHeight()+15;
+			if ( fixedNavbar ) {
+				offsetSize += navbarHeight;
+			}
 			$('html,body').animate({
-				scrollTop: $card.offset().top-100
+				scrollTop: $card.offset().top-offsetSize
 			}, 500);
 		}
 	});
@@ -65,10 +69,23 @@ temp.jsFooterInline {
 		});
 	}
 
+
 	// scroll anchor
 	if (window.location.hash) {
+
+		var hash = window.location.hash,
+			idArr = hash.split('#'),
+			targetElement = document.getElementById(idArr[1]),
+			targetOffset = targetElement.offsetTop,
+			offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
+			if ( fixedNavbar ) {
+				offsetSize += navbarHeight;
+			}
+
+			var scrollTo = targetOffset-offsetSize;
+
 		$("html, body").stop().animate({
-			scrollTop: $(window.location.hash).offset().top-180
+			'scrollTop': scrollTo
 		}, 1500, "easeInOutExpo");
 	}
 
