@@ -72,10 +72,10 @@ class DefaultHelper implements SingletonInterface
 		// Get a QueryBuilder, which should only be used a single time
 		$query = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_t3sbootstrap_domain_model_config');
 		$query->select('*')
-		   ->from('tx_t3sbootstrap_domain_model_config')
-		   ->where(
-		      $query->expr()->eq('uid', $uid)
-		   );
+			 ->from('tx_t3sbootstrap_domain_model_config')
+			 ->where(
+				$query->expr()->eq('uid', $uid)
+			 );
 		return $query->execute()->fetchAll();
 	}
 

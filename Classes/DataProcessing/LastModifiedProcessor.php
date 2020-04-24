@@ -19,7 +19,6 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-
 class LastModifiedProcessor implements DataProcessorInterface
 {
 
@@ -31,7 +30,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 * @param array $processorConfiguration The configuration of this processor
 	 * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
 	 *
-	 * @return array processedData
+	 * @return mixed processedData
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration,	 array $processedData)
 	{
@@ -115,7 +114,6 @@ class LastModifiedProcessor implements DataProcessorInterface
 		$mdtm = [];
 
 		if (!empty($result)) {
-
 			foreach ( $result as $ce ) {
 				$pageTitle = self::getPageTitle($ce['pid']);
 				if ($pageTitle) {

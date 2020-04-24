@@ -47,10 +47,10 @@ temp.jsCookieConsent {
 			revokeBtn: "{$bootstrap.cookieconsent.revokeBtn}",
 			// no popup on this pages
 			blacklistPage: ["{$bootstrap.cookieconsent.href}"],
-	
-		    onStatusChange: function(status) {
-		      console.log(this.hasConsented() ?
-		        'enable cookies' : 'disable cookies');
+
+			  onStatusChange: function(status) {
+				console.log(this.hasConsented() ?
+				  'enable cookies' : 'disable cookies');
 
 				var type = this.options.type;
 				if ( type == 'opt-in' && this.hasConsented() ) {
@@ -59,13 +59,13 @@ temp.jsCookieConsent {
 				if ( type == 'opt-out' && !this.hasConsented() ) {
 					location.reload(true);
 				}
-		    },
-		
-		    law: {
-		      regionalLaw: {$bootstrap.cookieconsent.regionalLaw},
-		    },
-		    location: {$bootstrap.cookieconsent.location},
-	
+			  },
+
+			  law: {
+				regionalLaw: {$bootstrap.cookieconsent.regionalLaw},
+			  },
+			  location: {$bootstrap.cookieconsent.location},
+
 
 		}, function (popup) {
         p = popup;

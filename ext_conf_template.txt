@@ -1,8 +1,8 @@
-# customcategory=custom=Custom SCSS
+# customcategory=custom=Custom-SCSS
 # customcategory=t3sb=T3SB
 # customcategory=dif=Different
 # customcategory=flexform=Flexform
-# customsubcategory=a-config=If enabled, the bootstrap SCSS variables in the custom-variables.scss file can be overridden.
+# customsubcategory=a-config=Bootstrap SCSS variables - only if EXT:ws_scss is loaded!
 
 	# cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
 spacing = 1
@@ -24,8 +24,8 @@ fontawesomepagetitle = 1
 customScss = 0
 	# cat=custom/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Pulse, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Yeti]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
 bootswatch = none
-	# cat=custom/a-config/50; type=string; label=Path to your custom.scss files: e.g.: fileadmin/T3SB/SCSS/ (clear cache and run the Scheduler).
-customScssPath = fileadmin/T3SB/SCSS/
+	# cat=custom/a-config/50; type=string; label=Path to your custom.scss files: e.g.: fileadmin/T3SB/Resources/Public/SCSS/ (clear cache and run the Scheduler).
+customScssPath = fileadmin/T3SB/Resources/Public/SCSS/
 	# cat=custom/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/ws_scss/ (clear cache).
 editScss = 0
 	# cat=custom/a-config/70; type=boolean; label=Roll your own (experimental): e.g.: Disable tootltip: module.tx_t3sbootstrap.settings.bootstrap.tooltip=0 - the Path to your custom.scss files should be: fileadmin/T3SB/SCSS/ in this case (clear cache and run Scheduler).

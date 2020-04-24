@@ -1,0 +1,16 @@
+plugin.tx_indexedsearch {
+	view {
+		templateRootPaths {
+			5 = EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Resources/Private/Templates/
+		}
+		partialRootPaths {
+			5 = EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Resources/Private/Partials/
+		}
+	}
+	settings {
+		# Set the target page UID for the extbase variant of the plugin.
+		targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+		# A list of integer which should be root-pages to search from.
+		rootPidList = {$plugin.tx_indexedsearch.settings.rootPidList}
+	}
+}

@@ -5,9 +5,6 @@ defined('TYPO3_MODE') or die();
 $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 
-/**
- * Add extra field tx_t3sbootstrap_container to pages record
- */
 $tempPagesColumns = [
 	'tx_t3sbootstrap_smallColumns' => [
 		'label' => 'Aside columns width (makes no sense for Backend Layout "1 Column")',

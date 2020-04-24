@@ -7,6 +7,8 @@ page {
 		# Required meta tag for Bootstrap 4
 		viewport = width=device-width, initial-scale=1, shrink-to-fit=no
 	}
+
+	shortcutIcon = {$bootstrap.config.favicon}
 }
 
 config {
@@ -15,5 +17,5 @@ config {
 	compressJs = {$bootstrap.config.compress}
 	compressCss = {$bootstrap.config.compress}
 	concatenateJs = {$bootstrap.config.compress}
-	concatenateCss = {$bootstrap.config.compress}	
+	concatenateCss = {$bootstrap.config.compress}
 }

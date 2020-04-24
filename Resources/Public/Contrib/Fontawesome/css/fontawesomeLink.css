@@ -10,12 +10,12 @@
 .external-link::before,
 .download-link::before,
 .email-link::before {
-    margin-right: 0.5em;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
+	margin-right: 0.5em;
+	display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
 }
 
 .internal-link::before {

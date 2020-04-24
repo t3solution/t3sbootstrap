@@ -41,7 +41,7 @@ class FlexFormHook
 		if ( array_key_exists($identifier['dataStructureKey'],$flexForms) ) {
 
 			if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-			&& $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey'] === $identifier['dataStructureKey']) {
+			&& $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey']) {
 
 				$file = Environment::getPublicPath() . $ffPath.$flexForms[$identifier['dataStructureKey']].'.xml';
 

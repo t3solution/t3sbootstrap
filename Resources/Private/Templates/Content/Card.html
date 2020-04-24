@@ -12,7 +12,7 @@
 	<f:comment>Card Title (top)</f:comment>
 	<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
 		<div class="card-body">
-			<f:render partial="Header/All" arguments="{_all}"/>			
+			<f:render partial="Header/All" arguments="{_all}"/>
 		</div>
 	</f:if>
 	<f:comment>Card Image (top)</f:comment>
@@ -34,7 +34,7 @@
 	<f:comment>Card Image (bottom)</f:comment>
 	<f:if condition="{data.imageorient} == 'bottom'">
 		<f:render partial="Media/RawGallery" arguments="{_all}" />
-	</f:if>	
+	</f:if>
 	<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
 		<div class="card-footer">
 			{card.footer.text -> f:format.raw()}

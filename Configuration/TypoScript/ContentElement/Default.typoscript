@@ -12,10 +12,10 @@ tt_content {
 			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
 			20 {
 				maxGalleryWidth = {$styles.content.textmedia.maxW}
-				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
-				defaultImgWidthBig = {$bootstrap.image.default.width.big}
-				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
-				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
+				minimumWidth = {$bootstrap.image.minimumWidth}
+				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
+				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
+				maxWidthToast =  {$bootstrap.image.maxWidthToast}
 			}
 		}
 	}
@@ -29,11 +29,10 @@ tt_content {
 			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
 			20 {
 				maxGalleryWidth = {$styles.content.textmedia.maxW}
-				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
-				columnSpacing = {$styles.content.textmedia.columnSpacing}
-				defaultImgWidthBig = {$bootstrap.image.default.width.big}
-				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
-				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
+				minimumWidth = {$bootstrap.image.minimumWidth}
+				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
+				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
+				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 			}
 		}
 	}
@@ -47,11 +46,10 @@ tt_content {
 			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
 			20 {
 				maxGalleryWidth = {$styles.content.textmedia.maxW}
-				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
-				columnSpacing = {$styles.content.textmedia.columnSpacing}
-				defaultImgWidthBig = {$bootstrap.image.default.width.big}
-				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
-				mediaScalingCorrection = {$bootstrap.image.mediaScalingCorrection}
+				minimumWidth = {$bootstrap.image.minimumWidth}
+				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
+				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
+				maxWidthToast =  {$bootstrap.image.maxWidthToast}
 			}
 		}
 	}

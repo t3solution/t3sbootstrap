@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-call_user_func(function ($extKey) {
+call_user_func(function () {
 
 	if (TYPO3_MODE === 'BE') {
 
@@ -15,8 +15,8 @@ call_user_func(function ($extKey) {
 			],
 			[
 				'access' => 'user,group',
-				'icon'		 => 'EXT:' . $extKey . '/Resources/Public/Images/bootstrap-solid.svg',
-				'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_m1.xlf',
+				'icon'		 => 'EXT:t3sbootstrap/Resources/Public/Images/bootstrap-solid.svg',
+				'labels' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_m1.xlf',
 			]
 		);
 	}
@@ -24,4 +24,4 @@ call_user_func(function ($extKey) {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_t3sbootstrap_domain_model_config', 'EXT:t3sbootstrap/Resources/Private/Language/locallang_csh_tx_t3sbootstrap_domain_model_config.xlf');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_t3sbootstrap_domain_model_config');
 
-}, $_EXTKEY);
+});

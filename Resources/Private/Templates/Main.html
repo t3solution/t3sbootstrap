@@ -38,12 +38,12 @@
 					<f:else>
 						<f:if condition="{be_layout} == 'OneCol'">
 							<f:then>
-								<f:render section="PageContent" arguments="{_all}" />					
+								<f:render section="PageContent" arguments="{_all}" />
 							</f:then>
 							<f:else>
 								<div class="container">
 									<f:render section="PageContent" arguments="{_all}" />
-								</div>					
+								</div>
 							</f:else>
 						</f:if>
 					</f:else>
@@ -76,7 +76,7 @@
 				<f:link.page class="back-to-top"
 					style="display: none;"
 					title="{settings.backToTopTitle}">
-					<i class="{settings.backToTopClass}" aria-hidden="true"></i> <span class="d-none">back-to-top</span>
+					<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
 				</f:link.page>
 			</f:if>
 		</f:spaceless>

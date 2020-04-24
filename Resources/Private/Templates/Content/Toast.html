@@ -8,7 +8,7 @@
 	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="{autohide}" data-animation="{animation}" data-delay="{delay}" style="{placement}">
 		<div class="toast-header">
 			<f:if condition="{files.0}">
-				<f:image class="rounded mr-2" image="{files.0}" alt="" width="20c" height="20c" />
+				<f:image class="rounded mr-2" image="{files.0}" alt="" width="{gallery.width}" height="" />
 			</f:if>
 			<f:if condition="{data.header}">
 				<strong class="mr-auto">{data.header -> f:format.raw()}</strong>

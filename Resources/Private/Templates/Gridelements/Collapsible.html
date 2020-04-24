@@ -25,10 +25,10 @@
 	</a>
 	<div id="collapse-{data.uid}" class="collapse{show}" role="tabpanel" aria-labelledby="heading-{data.uid}" data-parent="#accordion-{data.parentgrid_uid}">
 	  <div class="card-body">
-		<f:if condition="{collapsibleByPid}">
-			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
-		</f:if>
-		{data.tx_gridelements_view_column_0 -> f:format.raw()}
+			<f:if condition="{collapsibleByPid}">
+				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
+			</f:if>
+			{data.tx_gridelements_view_column_0 -> f:format.raw()}
 	  </div>
 	</div>
 </div>

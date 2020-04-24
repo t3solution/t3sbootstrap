@@ -39,14 +39,16 @@
 
 <f:section name="Flipper">
 <div class="row row-eq-height">
-	<f:for each="{cards}" as="card">
+	<f:for each="{cards}" as="card" iteration="cardIterator">
+		<f:variable name="imgwidth" value="{f:if(condition:'{data.tx_gridelements_view_children.{cardIterator.index}.imagewidth}}',
+			then:' {data.tx_gridelements_view_children.{cardIterator.index}.imagewidth}}', else: '255')}" />
 		<div class="{flipper.class}">
 			<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
 				<div class="mainflip">
 					<div class="frontside">
 						<div class="card">
 							<f:if condition="{card.file.0}">
-								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}'}" />
+								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}', width: '{imgwidth}'}" />
 							</f:if>
 							<div class="card-body{card.header_position}">
 								<f:render section="CardTitle" arguments="{_all}" />
@@ -74,7 +76,7 @@
 					<div class="backside">
 						<div class="card">
 							<f:if condition="{card.file.1}">
-								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.1}'}" />
+								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.1}', width: '{imgwidth}'}" />
 							</f:if>
 							<div class="card-body{card.header_position}">
 								<h4 class="card-title my-3">{card.backheader -> f:format.raw()}</h4>
@@ -100,14 +102,14 @@
 	</f:for>
 </div>
 </f:section>
-														   
+
 
 <f:section name="Image">
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 	<t3sb:media file="{file}"
 	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
 	 class="card-img-top img-fluid{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
-	 width="{dimensions.width}"
+	 width="{width}"
 	 height="auto"
 	 breakpoints="{
 		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
@@ -178,10 +180,18 @@
 		</header>
 		</f:then>
 		<f:else if="{card.header}">
-			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}"><f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink></h4>
+			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
+				then: ' {card.tx_t3sbootstrap_header_class}')}">
+				<f:link.typolink parameter='{card.header_link}'>
+					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
+				</f:link.typolink></h4>
 		</f:else>
 		<f:else if="{card.subheader}">
-			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}"><f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}</f:link.typolink></h4>
+			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
+				then: ' {card.tx_t3sbootstrap_header_class}')}">
+				<f:link.typolink parameter='{card.header_link}'>
+					{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}
+				</f:link.typolink></h4>
 		</f:else>
 	</f:if>
 </f:section>

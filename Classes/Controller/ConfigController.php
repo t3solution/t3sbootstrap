@@ -15,14 +15,12 @@ namespace T3SBS\T3sbootstrap\Controller;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * ConfigController
@@ -44,6 +42,12 @@ class ConfigController extends ActionController
 	 */
 	protected $defaultViewObjectName = BackendTemplateView::class;
 
+	/**
+	 * TYPO3 version
+	 *
+	 * @var int
+	 */
+	protected $version;
 
 
 	/**
@@ -57,6 +61,16 @@ class ConfigController extends ActionController
 	}
 
 
+	public function initializeAction()
+	{
+		if (version_compare(TYPO3_branch, '10.0', '>=')) {
+			$this->version = 10;
+		} else {
+			$this->version = 9;
+		}
+	}
+
+
 	/**
 	 * action list
 	 *
@@ -64,11 +78,15 @@ class ConfigController extends ActionController
 	 */
 	public function listAction()
 	{
-
 		$isSiteroot = self::isSiteroot();
 
 		if ( $isSiteroot ) {
-			$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+
+			if ($this->version == 10) {
+				$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+			} else {
+				$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
+			}
 
 			$configRepository = $this->configRepository->findAll();
 
@@ -91,7 +109,7 @@ class ConfigController extends ActionController
 		$assignedOptions['customScss'] = FALSE;
 		$assignedOptions['scss'] = '';
 
-		if ( (int)$this->settings['customScss'] === 1 ) {
+		if ( (int)$this->settings['customScss'] === 1 && (int)$this->settings['wsScss'] === 1 ) {
 
 			$customScss = self::getCustomScss('custom-variables');
 			$assignedOptions['custom-variables'] = $customScss['custom-variables'];
@@ -99,15 +117,9 @@ class ConfigController extends ActionController
 			$customScss = self::getCustomScss('custom');
 			$assignedOptions['custom'] = $customScss['custom'];
 			$assignedOptions['customScss'] = $customScss['customScss'];
-
 		}
 
-		if ( ExtensionManagementUtility::isLoaded('ws_scss') ) {
-			$assignedOptions['compiler'] = TRUE;
-		} else {
-			$assignedOptions['compiler'] = FALSE;
-			$assignedOptions['config'] = FALSE;
-		}
+		$assignedOptions['version'] = $this->version;
 
 		$this->view->assignMultiple($assignedOptions);
 	}
@@ -131,6 +143,7 @@ class ConfigController extends ActionController
 				$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
 
 				// unset current page
+				if (count($rootLineArray) > 1)
 				unset($rootLineArray[count($rootLineArray)-1]);
 
 				foreach ($rootLineArray as $rootline) {
@@ -179,6 +192,7 @@ class ConfigController extends ActionController
 		}
 
 		$assignedOptions['pid'] = (int)$_GET['id'];
+		$assignedOptions['version'] = $this->version;
 
 		$this->view->assignMultiple($assignedOptions);
 	}
@@ -192,7 +206,7 @@ class ConfigController extends ActionController
 	 */
 	public function createAction(\T3SBS\T3sbootstrap\Domain\Model\Config $newConfig)
 	{
-		$this->addFlashMessage('The new configuration was created.', '', AbstractMessage::WARNING);
+		$this->addFlashMessage('The new configuration was created.');
 
 		if ( self::isSiteroot() ) {
 			$homepageUid = (int)$_GET['id'];
@@ -219,7 +233,6 @@ class ConfigController extends ActionController
 	 */
 	public function editAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
 	{
-
 		$assignedOptions = self::getFieldsOptions();
 		$assignedOptions['config'] = $config;
 		$assignedOptions['pid'] = (int)$_GET['id'];
@@ -248,6 +261,8 @@ class ConfigController extends ActionController
 			$assignedOptions['compare'] = $compare;
 		}
 
+		$assignedOptions['version'] = $this->version;
+
 		$this->view->assignMultiple($assignedOptions);
 	}
 
@@ -260,7 +275,7 @@ class ConfigController extends ActionController
 	 */
 	public function updateAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
 	{
-		$this->addFlashMessage('The configuration was updated.', '', AbstractMessage::WARNING);
+		$this->addFlashMessage('The configuration was updated.');
 
 		if ( self::isSiteroot() ) {
 			$homepageUid = (int)$_GET['id'];
@@ -286,7 +301,7 @@ class ConfigController extends ActionController
 	 */
 	public function deleteAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
 	{
-		$this->addFlashMessage('The object was deleted.', '', AbstractMessage::WARNING);
+		$this->addFlashMessage('The object was deleted.');
 		$this->configRepository->remove($config);
 		$this->redirect('list');
 	}
@@ -466,7 +481,12 @@ class ConfigController extends ActionController
 	 */
 	protected function isSiteroot()
 	{
-		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+		if ($this->version == 10) {
+			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+		} else {
+			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
+		}
+
 		$page = $pageRepository->getPage((int)$_GET['id']);
 
 		if ( $page['is_siteroot'] ) {

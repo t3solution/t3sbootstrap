@@ -1,0 +1,154 @@
+page {
+
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# LIGHTBOX (Baguette Box)
+		#
+		##########################################################################################################
+
+		t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css
+		t3sblightbox.if {
+			value = 1
+			equals = {$bootstrap.config.lightboxSelection}
+		}
+
+		##########################################################################################################
+		#
+		# COOKIECONSENT
+		#
+		##########################################################################################################
+
+		cookieconsentCss = fileadmin/T3SB/Resources/Public/CSS/cookieconsent.min.css
+		cookieconsentCss.if.isTrue = {$bootstrap.extconf.cookieconsent}
+
+		##########################################################################################################
+		#
+		# ANIMATE CSS
+		#
+		##########################################################################################################
+
+		animatecss = fileadmin/T3SB/Resources/Public/CSS/animate.min.css
+		animatecss.if {
+			value = 2
+			equals = {$bootstrap.extconf.animateCss}
+		}
+
+		##########################################################################################################
+		#
+		# Heighlight used with codesnippet
+		#
+		##########################################################################################################
+
+		codesnippet = fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css
+		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+	}
+
+	includeJSFooterlibs {
+
+		##########################################################################################################
+		#
+		# jQuery, Popper & Bootstrap
+		#
+		##########################################################################################################
+
+		jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
+		jquery.forceOnTop = 1
+
+		popper = fileadmin/T3SB/Resources/Public/JS/popper.js
+
+		bootstrap = fileadmin/T3SB/Resources/Public/JS/bootstrap.min.js
+
+	}
+
+	includeJSFooter {
+
+		##########################################################################################################
+		#
+		# LIGHTBOX (Baguette Box)
+		#
+		##########################################################################################################
+
+		t3sblightbox = fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js
+		t3sblightbox.if {
+			value = 1
+			equals = {$bootstrap.config.lightboxSelection}
+		}
+
+		##########################################################################################################
+		#
+		# COOKIECONSENT
+		#
+		##########################################################################################################
+
+		cookieconsentJs = fileadmin/T3SB/Resources/Public/JS/cookieconsent.min.js
+		cookieconsentJs.if.isTrue = {$bootstrap.extconf.cookieconsent}
+
+		##########################################################################################################
+		#
+		# JQUERY EASING
+		#
+		##########################################################################################################
+
+		t3sbjqueryeasing = fileadmin/T3SB/Resources/Public/JS/jquery.easing.min.js
+		t3sbjqueryeasing.forceOnTop = 1
+
+		##########################################################################################################
+		#
+		# HEIGHLIGHT
+		#
+		##########################################################################################################
+
+		codesnippet = fileadmin/T3SB/Resources/Public/JS/highlight.min.js
+		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+		##########################################################################################################
+		#
+		# LAZYLOAD
+		#
+		##########################################################################################################
+
+		lazyload = fileadmin/T3SB/Resources/Public/JS/lazyload.min.js
+		lazyload.if.isTrue = {$bootstrap.extconf.lazyLoad}
+
+		##########################################################################################################
+		#
+		# PICTUREFILL
+		#
+		##########################################################################################################
+
+		# Local
+		picturefill = fileadmin/T3SB/Resources/Public/JS/picturefill.min.js
+		picturefill.if.isTrue = {$bootstrap.image.picturefill}
+
+		##########################################################################################################
+		#
+		# VIEWPORTCHECKER
+		#
+		##########################################################################################################
+
+		viewportchecker = fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js
+		viewportchecker.if {
+			value = 2
+			equals = {$bootstrap.extconf.animateCss}
+		}
+
+	}
+
+	##########################################################################################################
+	#
+	# FONTAWESOME - using the SVG + JS version
+	#
+	##########################################################################################################
+
+	footerData {
+		61 = TEXT
+		61.value = <script src="/fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" data-auto-replace-svg="nest"></script>
+		61.if {
+			value = 1
+			equals = {$bootstrap.extconf.fontawesomeCss}
+		}
+	}
+}

@@ -14,17 +14,19 @@ namespace T3SBS\T3sbootstrap\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Config
  */
-class Config extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Config extends AbstractEntity
 {
 	/**
 	 * pid
 	 *
-	 * @var int
+	 * @var int The id of the page the record is "stored".
 	 */
-	protected $pid = 0;
+	protected $pid;
 
 	/**
 	 * company
@@ -576,26 +578,25 @@ class Config extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	 */
 	protected $expandedcontentClassbottom = '';
 
-
-
-
 	/**
 	 * Returns the pid
 	 *
-	 * @return bool $pid
+	 * @return int|null The pid or NULL if none set yet.
 	 */
-	public function getPid()
+	public function getPid(): ?int
 	{
-		return $this->pid;
+		if ($this->pid === null) {
+			return null;
+		}
+		return (int)$this->pid;
 	}
 
 	/**
 	 * Sets the pid
 	 *
 	 * @param int $pid
-	 * @return void
 	 */
-	public function setPid($pid)
+	public function setPid($pid): void
 	{
 		$this->pid = $pid;
 	}

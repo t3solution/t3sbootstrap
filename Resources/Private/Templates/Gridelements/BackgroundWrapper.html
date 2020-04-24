@@ -11,9 +11,9 @@
 <f:if condition="{youtubeProperty}">
 	<f:then>
 	<f:comment>	Youtube video </f:comment>
-        <div id="control{data.uid}"></div>
-	    <div id="dom{data.uid}" class="player{data.uid} player{f:if(condition: '{class}',then: ' {class}')}"
-		     data-property="{youtubeProperty}"{f:if(condition: '{style}',then: ' style="{style}"')}>
+		<div id="control{data.uid}"></div>
+		 <div id="dom{data.uid}" class="player{data.uid} player{f:if(condition: '{class}',then: ' {class}')}"
+			   data-property="{youtubeProperty}"{f:if(condition: '{style}',then: ' style="{style}"')}>
 			<f:if condition="{contentCenter}">
 				<f:then>
 					<f:render section="SectionInnerCenter" arguments="{_all}" />
@@ -22,7 +22,7 @@
 					<f:render section="SectionInner" arguments="{_all}" />
 				</f:else>
 			</f:if>
-	    </div>
+		 </div>
 	</f:then>
 	<f:else>
 		<f:link.typolink parameter="{celink}" class="ce-link">

@@ -97,7 +97,11 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 			(int)$maximumColumns
 		);
 
+
 ##t3sb
+$tableClass = '';
+$croppedTable = [];
+
 if (is_array($processedData['table'])) {
 	foreach ($processedData['table'] as $key=>$table) {
 		if ( \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($table[count($table)-1], 'ç') ) {
@@ -118,7 +122,7 @@ if (is_array($processedData['table'])) {
 			}
 		}
 	}
-	if (is_array($croppedTable)) {
+	if (!empty($croppedTable)) {
 		$processedData['table'] = $croppedTable;
 	}
 }

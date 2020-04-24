@@ -96,7 +96,6 @@
 					<f:if condition="{config.navbar.searchbox}">
 						<f:render partial="Page/Searchbox" arguments="{_all}" />
 					</f:if>
-
 					<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
 						<f:render section="Language" arguments="{_all}" />
 					</f:if>
@@ -111,7 +110,6 @@
 						<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search mr-3"></i></f:link.page>
 					</li>
 				</f:if>
-
 				<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
 					<ul id="language_menu" class="navbar-nav{f:if(condition:'{config.navbar.mauto}',then:'{config.navbar.mauto}',else:' ml-auto')}">
 						<f:render section="Language" arguments="{_all}" />
@@ -214,7 +212,9 @@
 							<f:render section="Dropdown" arguments="{_all}" />
 						</f:then>
 						<f:else>
-							<f:link.typolink class="nav-link" parameter="{navbarItem.link}" title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}" target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
+							<f:link.typolink class="nav-link" parameter="{navbarItem.link}"
+											 title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}"
+											 target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
 								<f:render section="Title" arguments="{item: navbarItem}" />
 							</f:link.typolink>
 						</f:else>
@@ -268,8 +268,6 @@
 			</div>
 		 </f:then>
 		 <f:else>
-
-
 		 	<div class="dropdown-menu{config.navbar.dropdownAnimate}{f:if(condition: navbarItem.data.tx_t3sbootstrap_dropdownRight, then:' dropdown-menu-right')}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 		 		<f:render section="DropdownItem" arguments="{_all}" />
 			</div>
@@ -278,8 +276,6 @@
 </f:section>
 
 <f:section name="DropdownItem">
-
-
 <f:for each="{navbarItem.children}" as="child">
 	<f:if condition="{child.spacer}">
 		<f:then>
@@ -363,98 +359,53 @@
 </f:section>
 
 <f:section name="Language">
-<f:if condition="{settings.langMenuWithFaIcon}">
-	<f:then>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" id="language" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				<i class="fa-navlink fas fa-globe"></i>
-			</a>
-			<div class="dropdown-menu dropdown-menu-right mt-0 language-menu">
-				<f:for each="{config.lang.uid}" as="lang" iteration="iterator">
-					<f:if condition="{languageNavigation.{iterator.index}.available}">
-						<f:then>
-							<f:if condition="{languageNavigation.{iterator.index}.active}">
-								<f:then>
-									<a href="{languageNavigation.{iterator.index}.link}"
-										class="dropdown-item active"
-										hreflang="{config.lang.hreflang.{lang}}"
-										title="{config.lang.title.{lang}}">
-										<f:if condition="{settings.navbar.langFlags}">
-											<core:icon identifier="{config.lang.flag.{lang}}" size="small" />
-										</f:if>
-										<span>{config.lang.title.{lang}}</span>
-									</a>
-								</f:then>
-								<f:else>
-									<a href="{languageNavigation.{iterator.index}.link}"
-										class="dropdown-item"
-										hreflang="{config.lang.hreflang.{lang}}"
-										title="{config.lang.title.{lang}}">
-										<f:if condition="{settings.navbar.langFlags}">
-											<core:icon identifier="{config.lang.flag.{lang}}" size="small" />
-										</f:if>
-										<span>{config.lang.title.{lang}}</span>
-									</a>
-								</f:else>
-							</f:if>
-						</f:then>
-						<f:else>
-							<span class="dropdown-item text-muted">{config.lang.title.{lang}}</span>
-						</f:else>
-					</f:if>
-				</f:for>
-			</div>
-		</li>
-	</f:then>
-	<f:else>
-		<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" id="language" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-			<f:for each="{languageNavigation}" as="item">
-				<f:if condition="{item.active}">
-					<f:then>
-						<span>
-							<f:if condition="{settings.navbar.langFlags}">
-								<core:icon identifier="{config.lang.flag.{item.languageId}}" size="small" />
-							</f:if>
-							<span class="nav-label">{item.title}</span>
-						</span>
-					</f:then>
-				</f:if>
-			</f:for>
-		</a>
-		<div class="dropdown-menu dropdown-menu-right mt-0 language-menu">
-			<f:for each="{languageNavigation}" as="item">
-			<f:if condition="{item.available}">
-				<f:then>
-					<a
-						href="{item.link}"
-						class="dropdown-item{f:if(condition: '{item.active}', then: ' active')}"
-						hreflang="{item.hreflang}"
-						title="{config.lang.title.{lang}}"
-					>
-					<span>
-						<f:if condition="{settings.navbar.langFlags}">
-							<core:icon identifier="{config.lang.flag.{item.languageId}}" size="small" />
-						</f:if>
-						{item.title}
-					</span>
-					</a>
-				</f:then>
-				<f:else>
-				<span class="dropdown-item text-muted">
-					<f:if condition="{settings.navbar.langFlags}">
-						<core:icon identifier="{config.lang.flag.{item.languageId}}" size="small" />
-					</f:if>
-					{item.title}
-				</span>
-				</f:else>
-			</f:if>
-			</f:for>
-		</div>
-		</li>
-	</f:else>
-</f:if>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" id="language" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+      <f:if condition="{settings.langMenuWithFaIcon}">
+        <f:then>
+          <i class="fa-navlink fas fa-globe"></i>
+        </f:then>
+        <f:else>
+          <f:for each="{languageNavigation}" as="item">
+            <f:if condition="{item.active}">
+              <f:render section="LanguageFlag" arguments="{_all}" />
+              <span class="nav-label">{item.title}</span>
+            </f:if>
+          </f:for>
+        </f:else>
+      </f:if>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right mt-0 language-menu">
+      <f:for each="{languageNavigation}" as="item">
+        <f:if condition="{item.available}">
+          <f:then>
+            <a
+              href="{item.link}" hreflang="{item.hreflang}" title="{item.title}"
+              class="dropdown-item{f:if(condition: '{item.active}', then: ' active')}"
+            >
+              <f:render section="LanguageFlag" arguments="{_all}" />
+              {item.title}
+            </a>
+          </f:then>
+          <f:else>
+            <span class="dropdown-item text-muted">
+              <f:render section="LanguageFlag" arguments="{_all}" />
+              {item.title}
+            </span>
+          </f:else>
+        </f:if>
+      </f:for>
+    </div>
+  </li>
 </f:section>
+
+
+<f:section name="LanguageFlag">
+  <f:if condition="{settings.navbar.langFlags}">
+    <core:icon identifier="{config.lang.flag.{item.languageId}}" size="small" />
+  </f:if>
+</f:section>
+
 
 <f:section name="Title">
 <f:if condition="{item.data.tx_t3sbootstrap_fontawesome_icon}">
