@@ -75,7 +75,7 @@ temp.jsFooterInline {
 
 		var hash = window.location.hash;
 	
-		if ($("hash").length) {
+		if ($(hash).length) {
 			var idArr = hash.split('#'),
 				targetElement = document.getElementById(idArr[1]),
 				targetOffset = targetElement.offsetTop,
