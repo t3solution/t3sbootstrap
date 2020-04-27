@@ -22,7 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 
 
@@ -47,7 +46,6 @@ class BootstrapCondition extends AbstractCondition
 			$config = $configRepository->findOneByPid($pid);
 
 			if ( empty($config) ) {
-				$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 				$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
 
 				// unset current page

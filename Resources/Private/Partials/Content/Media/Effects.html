@@ -1,0 +1,71 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment> Effects </f:comment>
+<figure class="image {file.properties.tx_t3sbootstrap_hover_effect}{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+	<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio, notitle: 'true'}" />
+	<figcaption class="image-caption">
+	<f:switch expression="{file.properties.tx_t3sbootstrap_hover_effect}">
+		<f:case value="snip0015">
+			{f:if(condition: '{file.title}', then: '<h2>{file.title}</h2>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}		
+		</f:case> 
+		<f:case value="snip0016">
+		    <div class="square">
+		      <div></div>
+		    </div>
+			{f:if(condition: '{file.title}', then: '<h2>{file.title}</h2>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}	
+		</f:case> 
+		<f:case value="snip1190">
+		    <div class="square">
+		      <div></div>
+		    </div>
+			{f:if(condition: '{file.title}', then: '<h2>{file.title}</h2>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}	
+		</f:case> 
+		<f:case value="snip1206">
+			{f:if(condition: '{file.title}', then: '<h2>{file.title}</h2>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}
+		</f:case> 
+		<f:case value="snip1273">
+			{f:if(condition: '{file.title}', then: '<h3>{file.title}</h3>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}
+		</f:case> 
+		<f:case value="snip1321">
+			{f:if(condition: '{file.description}', then: '<h4>{file.description}</h4>')}			
+			{f:if(condition: '{file.title}', then: '<h2>{file.title}</h2>')}	
+		</f:case> 
+		<f:case value="snip1361">
+			{f:if(condition: '{file.title}', then: '<h3>{file.title}</h3>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}	
+		</f:case> 
+		<f:case value="snip1477">
+			<f:if condition="{file.title}">
+			  <div class="title">
+			    <div>
+			      <h4>{file.title}</h4>
+			    </div>
+			  </div>
+			</f:if>
+			<f:if condition="{file.description}">
+				<figcaption class="image-caption">
+					<p>{file.description}</p>			
+				</figcaption>
+			</f:if>	
+		</f:case> 
+		<f:case value="snip1573">
+			{f:if(condition: '{file.title}', then: '<h3>{file.title}</h3>')}	
+		</f:case> 
+		<f:case value="snip1577">
+			{f:if(condition: '{file.title}', then: '<h3>{file.title}</h3>')}
+			{f:if(condition: '{file.description}', then: '<h4>{file.description}</h4>')}	
+		</f:case> 
+		<f:defaultCase>
+			{f:if(condition: '{file.title}', then: '<h3>{file.title}</h3>')}
+			{f:if(condition: '{file.description}', then: '<p>{file.description}</p>')}	
+		</f:defaultCase>
+	</f:switch>
+	</figcaption>
+	<f:link.typolink parameter="{file.link}" class="text-hide"></f:link.typolink>
+</figure>
+</html>

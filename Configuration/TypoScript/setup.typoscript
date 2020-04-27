@@ -16,6 +16,25 @@ module.tx_t3sbootstrap {
 		modalform = {$bootstrap.ext.form.modal}
 		expandedContent = {$bootstrap.extconf.expandedContent}
 		rollyourown = {$bootstrap.extconf.rollyourown}
+		wsScss = {$bootstrap.ext.wsScss}
+		cdn {
+			bootstrap = {$bootstrap.cdn.bootstrap}
+			popperjs = {$bootstrap.cdn.popperjs}
+			bootswatch = {$bootstrap.cdn.bootswatch}
+			jquery = {$bootstrap.cdn.jquery}
+			jqueryEasing = {$bootstrap.cdn.jqueryEasing}
+			highlight = {$bootstrap.cdn.highlight}
+			fontawesome = {$bootstrap.cdn.fontawesome}
+			lazyload = {$bootstrap.cdn.lazyload}
+			picturefill = {$bootstrap.cdn.picturefill}
+			viewportchecker = {$bootstrap.cdn.viewportchecker}
+			animate = {$bootstrap.cdn.animate}
+			baguetteBox = {$bootstrap.cdn.baguetteBox}
+			ekkoLightbox = {$bootstrap.cdn.ekkoLightbox}
+			lightcase = {$bootstrap.cdn.lightcase}
+			cookieconsent = {$bootstrap.cdn.cookieconsent}
+			ytPlayer = {$bootstrap.cdn.ytPlayer}
+		}
 	}
 
 	# roll your own (experimental - w/Task)
@@ -58,8 +77,6 @@ module.tx_t3sbootstrap {
 		utilities = 1
 		print = 1
 	}
-
-
 }
 
 plugin.tx_t3sbootstrap {

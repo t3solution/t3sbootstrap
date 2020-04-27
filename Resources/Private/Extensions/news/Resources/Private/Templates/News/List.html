@@ -1,0 +1,179 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+<f:layout name="General" />
+<!--
+	=====================
+		Templates/News/List.html
+-->
+<f:section name="content">
+	<!--TYPO3SEARCH_end-->
+	<f:if condition="{news}">
+		<f:then>
+			<f:if condition="{settings.templateLayout} == 71">
+				<f:then>
+					<f:render section="ListGroup" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:if condition="{settings.templateLayout} > 71 && {settings.templateLayout} < 75">
+						<f:then>
+							<f:render section="Cards" arguments="{_all}" />
+						</f:then>
+						<f:else>
+							<f:if condition="{settings.templateLayout} == 75">
+								<f:then>
+									<f:render section="Columns" arguments="{_all}" />
+								</f:then>
+								<f:else>
+									<f:render section="Default" arguments="{_all}" />
+								</f:else>
+							</f:if>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<div class="no-news-found">
+				<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:list_nonewsfound" />
+			</div>
+		</f:else>
+	</f:if>
+	<!--TYPO3SEARCH_begin-->
+</f:section>
+</html>
+
+
+<f:section name="ListGroup">
+<div class="list-group news-list-view" id="news-container-{contentObjectData.uid}">
+	<f:if condition="{settings.hidePagination}">
+		<f:then>
+			<f:for each="{news}" as="newsItem" iteration="iterator">
+				<f:render partial="List/ListGroup" arguments="{newsItem: newsItem,iterator:iterator}" />
+			</f:for>
+		</f:then>
+		<f:else>
+			<f:render section="LoadingSpinnerTop" arguments="{_all}" />
+			<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}" initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
+				<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
+					<f:render partial="List/ListGroup" arguments="{newsItem: newsItem,iterator:iterator}" />
+				</f:for>
+			</n:widget.paginate>
+			<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</div>
+</f:section>
+
+
+<f:section name="Cards">
+<f:if condition="{settings.hidePagination}">
+	<f:then>
+		<div class="mb-2 card-{f:if(condition:'{settings.templateLayout} == 72',then:'deck')}{f:if(condition:'{settings.templateLayout} == 73',then:'group')}{f:if(condition:'{settings.templateLayout} == 74',then:'columns')}" id="news-container-{contentObjectData.uid}">
+			<f:for each="{news}" as="newsItem" iteration="iterator">
+				<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+			</f:for>
+		</div>
+	</f:then>
+	<f:else>
+		<div id="news-container-{contentObjectData.uid}">
+			<f:render section="LoadingSpinnerTop" arguments="{_all}" />
+			<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
+				 initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
+				<div class="mb-2 card-{f:if(condition:'{settings.templateLayout} == 72',then:'deck')}{f:if(condition:'{settings.templateLayout} == 73',then:'group')}{f:if(condition:'{settings.templateLayout} == 74',then:'columns')}">
+					<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
+						<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+					</f:for>
+				</div>
+			</n:widget.paginate>
+			<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+
+
+<f:section name="Columns">
+<f:if condition="{settings.hidePagination}">
+	<f:then>
+		<f:for each="{news}" as="newsItem" iteration="iterator">
+			<f:if condition="{iterator.isFirst}">
+				<div class="row">
+			</f:if>
+			<f:if condition="{iterator.cycle} % 2">
+				<f:then>
+					<div class="col-md-6">
+						<f:render partial="List/Columns" arguments="{newsItem: newsItem,iterator:iterator, contentObjectData:contentObjectData}"/>
+					</div>
+				</f:then>
+				<f:else>
+					<div class="col-md-6">
+						<f:render partial="List/Columns" arguments="{newsItem: newsItem,iterator:iterator, contentObjectData:contentObjectData}"/>
+					</div>
+					<f:if condition="{iterator.isLast}">
+						<f:then></f:then>
+						<f:else>
+							</div><div class="row">
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+			<f:if condition="{iterator.isLast}">
+				</div>
+			</f:if>
+		</f:for>
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger" role="alert">
+			Pagination did not work with the Template Layout "BS4: 2 Columns"
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+
+
+<f:section name="Default">
+<ul class="list-unstyled" id="news-container-{contentObjectData.uid}">
+	<f:if condition="{settings.hidePagination}">
+		<f:then>
+			<f:for each="{news}" as="newsItem" iteration="iterator">
+				<f:render partial="List/Default" arguments="{newsItem: newsItem, iterator: iterator}" />
+			</f:for>
+		</f:then>
+		<f:else>
+			<f:render section="LoadingSpinnerTop" arguments="{_all}" />
+			<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
+				 initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
+				<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
+					<f:render partial="List/Default" arguments="{newsItem: newsItem, iterator: iterator}" />
+				</f:for>
+			</n:widget.paginate>
+			<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</ul>
+</f:section>
+
+
+<f:section name="LoadingSpinnerTop">
+<f:if condition="{settings.loadingSpinnerPosition} == top">
+	<div id="news-preloader">
+		<div id="news-spinner" class="spinner-{settings.loadingSpinner} text-{settings.loadingSpinnerColor}"
+			 style="width: 3rem; height: 3rem; display: none;" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+</f:if>
+</f:section>
+
+
+<f:section name="LoadingSpinnerBottom">
+<f:if condition="{settings.loadingSpinnerPosition} == bottom">
+	<div id="news-preloader-bottom">
+		<div id="news-spinner" class="spinner-{settings.loadingSpinner} text-{settings.loadingSpinnerColor}"
+			 style="width: 3rem; height: 3rem; display: none;" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+</f:if>
+</f:section>

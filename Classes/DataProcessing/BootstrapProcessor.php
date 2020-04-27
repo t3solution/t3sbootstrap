@@ -59,6 +59,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		$style = $styleHelper->getBgColor($processedData['data']);
 		$processedData['style'] = $processedData['style'] ? $processedData['style'].' '.$style : $style;
 
+
 		##############################################################################################################################################
 		/**
 		 * CType: Gridelements
@@ -74,7 +75,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			 * Background Wrapper
 			 */
 			if ( $processedData['data']['tx_gridelements_backend_layout'] == 'background_wrapper') {
-				$processedData = $wrapperHelper->getBackgroundWrapper($processedData, $flexconf);
+				$processedData = $wrapperHelper->getBackgroundWrapper($processedData, $flexconf, $contentObjectConfiguration['settings.']['cdnEnable']);
 			}
 
 			/**
@@ -354,9 +355,9 @@ class BootstrapProcessor implements DataProcessorInterface
 				if ($processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media']) {
 					$imageorient = $processedData['data']['imageorient'];
 					$galleryUtility = GeneralUtility::makeInstance(GalleryHelper::class);
-					// Gallery row with 25, 50, 75 or 100%
-					$processedData = $galleryUtility->getGalleryRowWidth( $processedData, $imageorient );
-					$processedData = $galleryUtility->getGalleryClasses( $processedData, $imageorient );
+					// Gallery row with 25, 33, 50, 66, 75 or 100%
+					$processedData = $galleryUtility->getGalleryRowWidth( $processedData );
+					$processedData = $galleryUtility->getGalleryClasses( $processedData );
 				}
 			} else {
 				if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
@@ -380,13 +381,12 @@ class BootstrapProcessor implements DataProcessorInterface
 				}
 			}
 
-
 			# if media
 			if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
 
 				$processedData['addmedia']['imgclass'] = $processedData['addmedia']['imgclass'] ?: 'img-fluid';
 				$processedData['addmedia']['imgclass'] .= $processedData['data']['imageborder'] ? ' border' :'';
-				$processedData['addmedia']['imgclass'] .= $processedData['data']['tx_t3sbootstrap_bordercolor']
+				$processedData['addmedia']['imgclass'] .= $processedData['data']['tx_t3sbootstrap_bordercolor'] && $processedData['data']['imageborder']
 				 ? ' border-'.$processedData['data']['tx_t3sbootstrap_bordercolor'] : '';
 				// lazyload
 				if ( $extConf['lazyLoad'] ) {
@@ -411,6 +411,12 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['containerPre'] = '<div class="'.$container.'">';
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = $container;
+		}
+		if ($processedData['be_layout'] == 'OneCol' && !$container) {
+			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
+			if (!$pageContainer && !$processedData['data']['tx_gridelements_container']) {
+				$processedData['containerError'] = TRUE;
+			}
 		}
 
 		// default header type

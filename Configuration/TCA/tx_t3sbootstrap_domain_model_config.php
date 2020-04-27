@@ -11,9 +11,6 @@ return [
 		'searchFields' => '',
 		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif'
 	],
-	'interface' => [
-		'showRecordFieldList' => '',
-	],
 	'types' => [
 		'1' => ['showitem' => ''],
 	],

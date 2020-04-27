@@ -3,14 +3,14 @@
 	<f:if condition="{dateformat}">
 		<f:then>
 			<p class="date{f:if(condition: '{dateColor}',then: ' text-{dateColor}')}">
-				<time datetime="{date -> f:format.date(format: '{dateformat}')}">
+				<time datetime="{date -> f:format.date(format: 'Y-m-d')}">
 					{date -> f:format.date(format: '{dateformat}')}
 				</time>
 			</p>
 		</f:then>
 		<f:else>
 			<p class="date{f:if(condition: '{dateColor}',then: ' text-{dateColor}')}">
-				<time datetime="{date -> f:format.date(format: 'd.m.Y')}">
+				<time datetime="{date -> f:format.date(format: 'Y-m-d')}">
 					{date -> f:format.date(format: 'd.m.Y')}
 				</time>
 			</p>

@@ -21,6 +21,12 @@ body {
 .h6 {font-size: 1rem; }
 
 
+
+.card-content, .card-footer, .card-header, .card-image {
+    padding: .5rem !important;
+}
+
+
 mark {
     background-color: yellow;
     color: black;

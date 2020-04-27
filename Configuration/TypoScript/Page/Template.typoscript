@@ -71,8 +71,9 @@ page {
 			lightboxSelection = {$bootstrap.config.lightboxSelection}
 			backgroundImageEnable =	{$bootstrap.config.backgroundImage.enable}
 			backgroundImageSlide =  {$bootstrap.config.backgroundImage.slide}
-			backToTopTitle = {$bootstrap.backToTop.title}
-			backToTopClass =  {$bootstrap.backToTop.class}
+			backToTopTitle = {$bootstrap.backToTopTitle}
+			backToTopClass = {$bootstrap.backToTopClass}
+			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
 			langMenuWithFaIcon = {$bootstrap.config.langMenuWithFaIcon}
 		}
 		dataProcessing {
@@ -297,7 +298,12 @@ page {
 			#
 			70 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
 			70.lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
-			70.if.isTrue = {$bootstrap.config.lastModifiedContentElement}
+			70.recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
+			70.if {
+				value = {$bootstrap.config.lastModifiedContentElement}
+				equals = 1
+				isTrue.cObject = {$bootstrap.config.recentlyUpdatedContentElements}				
+			}
 
 			#
 			# Main Config
@@ -307,6 +313,9 @@ page {
 				navbarExtraRow = {$bootstrap.navbar.extraRow}
 				rootline = {$bootstrap.config.rootline}
 				animateCssInlineJs = {$bootstrap.animateCssInlineJs}
+				cdnEnable = {$bootstrap.cdn.enable}
+				cdnAnimate = {$bootstrap.cdn.animate}
+				cdnViewportchecker = {$bootstrap.cdn.viewportchecker}
 				dataProcessing {
 					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
 					10 {

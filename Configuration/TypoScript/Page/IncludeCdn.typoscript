@@ -1,0 +1,167 @@
+page {
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# LIGHTBOX (Baguette Box)
+		#
+		##########################################################################################################
+
+		t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{$bootstrap.cdn.baguetteBox}/baguetteBox.min.css
+		t3sblightboxCDN.external = 1
+		t3sblightboxCDN.if {
+			value = 1
+			equals = {$bootstrap.config.lightboxSelection}
+		}
+
+		##########################################################################################################
+		#
+		# COOKIECONSENT
+		#
+		##########################################################################################################
+
+		cookieconsentCssCDN = https://cdn.jsdelivr.net/npm/cookieconsent@{$bootstrap.cdn.cookieconsent}/build/cookieconsent.min.css
+		cookieconsentCssCDN.external = 1
+		cookieconsentCssCDN.if.isTrue = {$bootstrap.extconf.cookieconsent}
+
+		##########################################################################################################
+		#
+		# ANIMATE CSS
+		#
+		##########################################################################################################
+
+		animatecssCDN = https://cdnjs.cloudflare.com/ajax/libs/animate.css/{$bootstrap.cdn.animate}/animate.min.css
+		animatecssCDN.external = 1
+		animatecssCDN.if {
+			value = 2
+			equals = {$bootstrap.extconf.animateCss}
+		}
+
+		##########################################################################################################
+		#
+		# Heighlight used with codesnippet
+		#
+		##########################################################################################################
+
+		codesnippetCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/styles/default.min.css
+		codesnippetCDN.external = 1
+		codesnippetCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+	}
+
+	includeJSFooterlibs {
+
+		##########################################################################################################
+		#
+		# jQuery, Popper & Bootstrap
+		#
+		##########################################################################################################
+
+		jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.min.js
+		jqueryCDN.external = 1
+		jqueryCDN.forceOnTop = 1
+
+		popperCDN = https://unpkg.com/@popperjs/core@{$bootstrap.cdn.popperjs}
+		popperCDN.external = 1
+
+		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/js/bootstrap.min.js
+		bootstrapCDN.external = 1
+
+	}
+
+	includeJSFooter {
+
+		##########################################################################################################
+		#
+		# LIGHTBOX (Baguette Box)
+		#
+		##########################################################################################################
+
+		t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{$bootstrap.cdn.baguetteBox}/baguetteBox.min.js
+		t3sblightboxCDN.external = 1
+		t3sblightboxCDN.if {
+			value = 1
+			equals = {$bootstrap.config.lightboxSelection}
+		}
+
+		##########################################################################################################
+		#
+		# COOKIECONSENT
+		#
+		##########################################################################################################
+
+		cookieconsentJsCDN = https://cdn.jsdelivr.net/npm/cookieconsent@{$bootstrap.cdn.cookieconsent}/build/cookieconsent.min.js
+		cookieconsentJsCDN.external = 1
+		cookieconsentJsCDN.if.isTrue = {$bootstrap.extconf.cookieconsent}
+
+		##########################################################################################################
+		#
+		# JQUERY EASING
+		#
+		##########################################################################################################
+
+		t3sbjqueryeasingCDN = https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/{$bootstrap.cdn.jqueryEasing}/jquery.easing.min.js
+		t3sbjqueryeasingCDN.external = 1
+		t3sbjqueryeasingCDN.forceOnTop = 1
+
+		##########################################################################################################
+		#
+		# HEIGHLIGHT
+		#
+		##########################################################################################################
+
+		codesnippetCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/highlight.min.js
+		codesnippetCDN.external = 1
+		codesnippetCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+		##########################################################################################################
+		#
+		# LAZYLOAD
+		#
+		##########################################################################################################
+
+		lazyloadCDN = https://cdn.jsdelivr.net/npm/vanilla-lazyload@{$bootstrap.cdn.lazyload}/dist/lazyload.min.js
+		lazyloadCDN.external = 1
+		lazyloadCDN.if.isTrue = {$bootstrap.extconf.lazyLoad}
+
+		##########################################################################################################
+		#
+		# PICTUREFILL
+		#
+		##########################################################################################################
+
+		picturefillCDN = https://cdnjs.cloudflare.com/ajax/libs/picturefill/{$bootstrap.cdn.picturefill}/picturefill.min.js
+		picturefillCDN.external = 1
+		picturefillCDN.if.isTrue = {$bootstrap.image.picturefill}
+
+		##########################################################################################################
+		#
+		# VIEWPORTCHECKER
+		#
+		##########################################################################################################
+
+		viewportcheckerCDN = https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/{$bootstrap.cdn.viewportchecker}/jquery.viewportchecker.min.js
+		viewportcheckerCDN.external = 1
+		viewportcheckerCDN.if {
+			value = 2
+			equals = {$bootstrap.extconf.animateCss}
+		}
+
+	}
+
+	##########################################################################################################
+	#
+	# FONTAWESOME - using the SVG + JS version
+	#
+	##########################################################################################################
+
+	footerData {
+		61 = TEXT
+		61.value = <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/{$bootstrap.cdn.fontawesome}/js/all.min.js" data-auto-replace-svg="nest"></script>
+		61.if {
+			value = 1
+			equals = {$bootstrap.extconf.fontawesomeCss}
+		}
+	}
+
+}

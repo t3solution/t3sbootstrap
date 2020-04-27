@@ -5,7 +5,7 @@ defined('TYPO3_MODE') or die();
 if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-		'T3SBS.' . 't3sbootstrap',
+		'T3SBS.T3sbootstrap',
 		'Pi1',
 		'Content Consent'
 	);
@@ -825,51 +825,6 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 
 
 
-# add header_display etc to palette header
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'header',
-	'tx_t3sbootstrap_header_display',
-	'after:header_layout'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'headers',
-	'tx_t3sbootstrap_header_display',
-	'after:header_layout'
-);
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'header',
-	'tx_t3sbootstrap_header_class',
-	'after:date'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'headers',
-	'tx_t3sbootstrap_header_class',
-	'after:date'
-);
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'header',
-	'tx_t3sbootstrap_header_fontawesome',
-	'after:tx_t3sbootstrap_header_class'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'headers',
-	'tx_t3sbootstrap_header_fontawesome',
-	'after:tx_t3sbootstrap_header_class'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'headers',
-	'tx_t3sbootstrap_header_position',
-	'after:tx_t3sbootstrap_header_class'
-);
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
@@ -878,7 +833,6 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'after:sectionIndex'
 );
 
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'header',
@@ -891,28 +845,36 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'tx_t3sbootstrap_header_celink',
 	'after:header_link'
 );
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'gallerySettings',
-	'tx_t3sbootstrap_inTextImgRowWidth',
-	'after:imagecols'
-);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
 	'tx_t3sbootstrap_bordercolor',
 	'after:imageborder'
 );
+
+/*
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
 	'tx_t3sbootstrap_image_ratio',
 	'before:imageborder'
 );
-
+*/
 
 # add palette bootstrap etc
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'--palette--; ;bsRowWidth',
+	'',
+	'after:mediaAdjustments'
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'--palette--; ;bsHeaderExtra',
+	'',
+	'after:header'
+);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--palette--;Bootstrap Color;bootstrapColor',
@@ -939,6 +901,14 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'after:layout'
 );
 
+$GLOBALS['TCA']['tt_content']['palettes']['bsRowWidth'] = [
+  'showitem' => 'tx_t3sbootstrap_image_ratio, tx_t3sbootstrap_inTextImgRowWidth'
+];
+
+$GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
+  'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
+  tx_t3sbootstrap_header_class, tx_t3sbootstrap_header_fontawesome'
+];
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
   'showitem' => 'tx_t3sbootstrap_padding_sides, tx_t3sbootstrap_padding_size, --linebreak--,

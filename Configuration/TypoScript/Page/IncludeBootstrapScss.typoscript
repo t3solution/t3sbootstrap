@@ -1,0 +1,20 @@
+page {
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# BOOTSTRAP SCSS - if EXT:wsScss is loaded
+		#
+		##########################################################################################################
+
+		# Default
+		bootstrapScss = EXT:t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss
+		bootstrapScss.forceOnTop = 1
+		bootstrapScss.if.isFalse = {$bootstrap.extconf.customScss}
+
+		# CUSTOM
+		bootstrapCustom = uploads/tx_t3sbootstrap/bootstrap.scss
+		bootstrapCustom.forceOnTop = 1
+		bootstrapCustom.if.isTrue = {$bootstrap.extconf.customScss}
+	}
+}

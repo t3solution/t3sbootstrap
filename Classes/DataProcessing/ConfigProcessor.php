@@ -23,10 +23,8 @@ use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
-
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class ConfigProcessor implements DataProcessorInterface
@@ -59,7 +57,6 @@ class ConfigProcessor implements DataProcessorInterface
 	{
 
 		$frontendController = self::getFrontendController();
-
 
 		// the table to query
 		$tableName = 'tx_t3sbootstrap_domain_model_config';
@@ -148,7 +145,12 @@ class ConfigProcessor implements DataProcessorInterface
 		$currentPage = $frontendController->page;
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
 
-		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+		if (version_compare(TYPO3_branch, '10.0', '>=')) {
+			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+		} else {
+			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
+		}
+
 		$rootlinePage = $pageRepository->getPage($frontendController->rootLine[0]['uid']);
 
 		$smallColumnsRootline = (int)$rootlinePage['tx_t3sbootstrap_smallColumns'];
@@ -519,14 +521,25 @@ class ConfigProcessor implements DataProcessorInterface
 				$pageRenderer->addJsFooterFile($jsFooterFile);
 			}
 			if ( $animateCSS ) {
-				$cssFile = 'EXT:t3sbootstrap/Resources/Public/Contrib/Animate/animate.min.css';
-				$cssFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
-				$pageRenderer->addCssFile($cssFile);
+				if ($processorConfiguration['cdnEnable']) {
+					$cssFile = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$processorConfiguration['cdnAnimate'].'/animate.min.css';
+					$pageRenderer->addCssFile($cssFile);
+				} else {
+					$cssFile = 'fileadmin/T3SB/Resources/Public/CSS/animate.min.css';
+					$cssFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
+					$pageRenderer->addCssFile($cssFile);
+				}
 			}
 			if ( $repeatCSS ) {
-				$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Contrib/Animate/jquery.viewportchecker.min.js';
-				$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
-				$pageRenderer->addJsFooterFile($jsFooterFile);
+
+				if ($processorConfiguration['cdnEnable']) {
+					$jsFooterFile = 'https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/'.$processorConfiguration['cdnViewportchecker'].'/jquery.viewportchecker.min.js';
+					$pageRenderer->addJsFooterFile($jsFooterFile);
+				} else {
+					$jsFooterFile = 'fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js';
+					$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
+					$pageRenderer->addJsFooterFile($jsFooterFile);
+				}
 
 				$animateCssInlineJs = $processorConfiguration['animateCssInlineJs'] ?: "classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0";
 				if ( $animateCssInlineJs ) {

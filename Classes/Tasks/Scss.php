@@ -40,7 +40,7 @@ class Scss extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 		if ( $settings['customScss'] ) {
 
 			# Custom
-			$customDir = $settings['customScssPath'] ? $settings['customScssPath'] : 'fileadmin/T3SB/SCSS/';
+			$customDir = $settings['customScssPath'] ? $settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
 
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
@@ -184,6 +184,8 @@ if ( $settings['rollyourown'] ) {
 
 			GeneralUtility::writeFile($customFile, $customContent);
 		}
+
+		return TRUE;
 	}
 
 

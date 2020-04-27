@@ -86,7 +86,7 @@ class CardProcessor implements DataProcessorInterface {
 
 		if ($flexconf['button']['enable']) {
 			$cardData['button']['link'] = $processedData['data']['header_link'];
-			$processedData['data']['header_link'] = '';	
+			$processedData['data']['header_link'] = '';
 		}
 		$cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
 		$cardData['dimensions']['height'] = $processedData['data']['imageheight'];
@@ -152,6 +152,7 @@ class CardProcessor implements DataProcessorInterface {
 		$processedData['addmedia']['imgclass'] = $cardData['image']['class'];
 		$processedData['addmedia']['figureclass'] = ' text-center';
 
+		// slider
 		if ( $parentflexconf['card_wrapper'] == 'slider' ) {
 			$processedData['cardSliderPre'] = '<div class="carousel-item col-md-4">';
 			$processedData['cardSliderPost'] = '</div>';

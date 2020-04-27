@@ -24,12 +24,10 @@ tt_content {
 			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
 			20 {
 				maxGalleryWidth = {$styles.content.textmedia.maxW}
-				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
-				columnSpacing = {$styles.content.textmedia.columnSpacing}
-				borderWidth = {$styles.content.textmedia.borderWidth}
-				borderPadding = {$styles.content.textmedia.borderPadding}
-				defaultImgWidthBig = {$bootstrap.image.default.width.big}
-				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				minimumWidth = {$bootstrap.image.minimumWidth}
+				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
+				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
+				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 			}
 			223 = T3SBS\T3sbootstrap\DataProcessing\CardProcessor
 		}
@@ -66,12 +64,10 @@ tt_content {
 			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
 			20 {
 				maxGalleryWidth = {$styles.content.textmedia.maxW}
-				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
-				columnSpacing = {$styles.content.textmedia.columnSpacing}
-				borderWidth = {$styles.content.textmedia.borderWidth}
-				borderPadding = {$styles.content.textmedia.borderPadding}
-				defaultImgWidthBig = {$bootstrap.image.default.width.big}
-				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				minimumWidth = {$bootstrap.image.minimumWidth}
+				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
+				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
+				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				pageContainer.cObject = TEXT
 				pageContainer.cObject.data.dataWrap = DB:pages:{page:uid}:tx_t3sbootstrap_container
 			}
@@ -104,6 +100,7 @@ tt_content {
 	t3sbs_toast =< lib.contentElement
 	t3sbs_toast {
 		templateName = Toast
+
 		dataProcessing {
 			10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
 			10 {
@@ -112,12 +109,10 @@ tt_content {
 			20 = T3SBS\T3sbootstrap\DataProcessing\GalleryProcessor
 			20 {
 				maxGalleryWidth = {$styles.content.textmedia.maxW}
-				maxGalleryWidthInText = {$styles.content.textmedia.maxWInText}
-				columnSpacing = {$styles.content.textmedia.columnSpacing}
-				borderWidth = {$styles.content.textmedia.borderWidth}
-				borderPadding = {$styles.content.textmedia.borderPadding}
-				defaultImgWidthBig = {$bootstrap.image.default.width.big}
-				defaultImgWidthSmall = {$bootstrap.image.default.width.small}
+				minimumWidth = {$bootstrap.image.minimumWidth}
+				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
+				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
+				maxWidthToast =  {$bootstrap.image.maxWidthToast}
 				pageContainer.cObject = TEXT
 				pageContainer.cObject.data.dataWrap = DB:pages:{page:uid}:tx_t3sbootstrap_container
 			}

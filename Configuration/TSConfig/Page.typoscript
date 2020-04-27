@@ -23,11 +23,11 @@ TCEFORM.tt_content {
 	table_class.disabled = 1
 	space_before_class.disabled = 1
 	space_after_class.disabled = 1
-
 	tx_t3sbootstrap_header_celink {
 		types {
 			t3sbs_button.disabled = 1
 			gridelements_pi1.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
 	date {
@@ -36,16 +36,14 @@ TCEFORM.tt_content {
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_card.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
-
 	pi_flexform {
 		types {
 			gridelements_pi1.disabled = 1
 		}
 	}
-
-
 	header {
 		types {
 			t3sbs_button {
@@ -58,7 +56,6 @@ TCEFORM.tt_content {
 			}
 		}
 	}
-
 	header_link {
 		types {
 			t3sbs_button {
@@ -69,12 +66,13 @@ TCEFORM.tt_content {
 				label.default = Link (new button)
 				label.de = Link (neuer Button)
 			}
+			t3sbs_toast.disabled = 1
 		}
 	}
-
 	header_layout {
 		types {
 			t3sbs_button.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 		altLabels {
 			 1 = H1
@@ -85,16 +83,15 @@ TCEFORM.tt_content {
 		}
 		addItems.101 = p
 	}
-
 	tx_t3sbootstrap_header_display {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			#t3sbs_card.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
-
 	header_position {
 		types {
 			t3sbs_button {
@@ -107,22 +104,22 @@ TCEFORM.tt_content {
 			}
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 
 		}
 	}
-
 	subheader {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 			t3sbs_card {
 				label.default = Card subtitle
 				label.de = Card Untertitel
 			}
 		}
 	}
-
 	imageorient.addItems.66 = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tt_content.imageorient.66
 	imageorient.addItems.77 = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tt_content.imageorient.77
 	imageorient {
@@ -154,13 +151,14 @@ TCEFORM.tt_content {
 				addItems.93 = Bottom-aligned media
 			}
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
-
 	imagecols {
 		types {
 			t3sbs_card.disabled = 1
 			t3sbs_mediaobject.disabled = 1
+			t3sbs_toast.disabled = 1
 			t3sbs_carousel.disabled = 1
 			t3sbs_gallery {
 				label.default = Columns
@@ -174,6 +172,12 @@ TCEFORM.tt_content {
 		}
 	}
 
+	tx_t3sbootstrap_image_ratio {
+		types {
+			t3sbs_toast.disabled = 1
+			t3sbs_mediaobject.disabled = 1
+		}
+	}
 	imagewidth {
 		types {
 			t3sbs_carousel.disabled = 1
@@ -182,65 +186,75 @@ TCEFORM.tt_content {
 	imageheight {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
 	imageborder {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_bordercolor {
 		types {
 			t3sbs_gallery.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
 	image_zoom {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
-
+	sectionIndex {
+		types {
+			t3sbs_toast.disabled = 1
+		}
+	}
 	tx_t3sbootstrap_header_class {
 		types {
 			t3sbs_button.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
-
 	tx_t3sbootstrap_bgcolor {
 		types {
 			t3sbs_button.disabled = 1
-
+			t3sbs_toast.disabled = 1
 			t3sbs_carousel {
 				label.default = Caption background color (use with opacity - image link and zoom did not work)
 				label.de = Caption background color (use with opacity - image link and zoom did not work)
 			}
-
 		}
 	}
-
+	tx_t3sbootstrap_header_fontawesome {
+		types {
+			t3sbs_toast.disabled = 1
+		}
+	}
 	tx_t3sbootstrap_bgopacity {
 		types {
 			t3sbs_button.disabled = 1
-
+			t3sbs_toast.disabled = 1
 			t3sbs_carousel {
 				label.default = Opacity for Caption background color
 				label.de = Opacity for Caption background color
 			}
-
 		}
 	}
-
 	tx_t3sbootstrap_contextcolor {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
 
 	tx_t3sbootstrap_textcolor {
 		types {
 			t3sbs_button.disabled = 1
-
+			t3sbs_toast.disabled = 1
 			t3sbs_carousel {
 				label.default = Text color for caption
 				label.de = Text color for caption
@@ -271,20 +285,48 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_container {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_extra_class {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
 		}
 	}
-
 	tx_t3sbootstrap_inTextImgRowWidth {
 		types {
 			t3sbs_card.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
+		}
+	}
+	tx_t3sbootstrap_animateCss {
+		types {
+			t3sbs_toast.disabled = 1
+		}
+	}
+	tx_t3sbootstrap_animateCssDuration {
+		types {
+			t3sbs_toast.disabled = 1
+		}
+	}
+	tx_t3sbootstrap_animateCssDelay {
+		types {
+			t3sbs_toast.disabled = 1
+		}
+	}
+	tx_t3sbootstrap_animateCssRepeat {
+		types {
+			t3sbs_toast.disabled = 1
+		}
+	}
+	tx_t3sbootstrap_header_sectionMenu {
+		types {
+			t3sbs_toast.disabled = 1
 		}
 	}
 
 }
+

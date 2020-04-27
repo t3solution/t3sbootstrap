@@ -31,12 +31,12 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @param array $processedData
 	 * @param array	$flexconf
+	 * @param boolean	$cdnEnable
 	 *
 	 * @return array
 	 */
-	public function getBackgroundWrapper($processedData, $flexconf)
+	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null)
 	{
-
 		// autoheight
 		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
 
@@ -71,8 +71,12 @@ class WrapperHelper implements SingletonInterface
 						$addFilters = '';
 					}
 
-					$cssFile = 'EXT:t3sbootstrap/Resources/Public/Styles/jquery.mb.YTPlayer.min.css';
-					$cssFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
+					if ( $cdnEnable ) {
+						$cssFile = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.1/css/jquery.mb.YTPlayer.min.css';
+					} else {
+						$cssFile = 'fileadmin/T3SB/Resources/Public/CSS/jquery.mb.YTPlayer.min.css';
+						$cssFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
+					}
 
 					if ( $flexconf['videoRatio'] == '16/9' || $flexconf['videoRatio'] == 'auto' ) {
 						$pH = ((int)$flexconf['bgHeight'] / 16) * 9;
@@ -80,8 +84,13 @@ class WrapperHelper implements SingletonInterface
 						$pH = ((int)$flexconf['bgHeight'] / 4) * 3;
 					}
 
-					$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Contrib/jquery.mb.YTPlayer.min.js';
-					$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
+					if ( $cdnEnable ) {
+						$jsFooterFile = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.1/jquery.mb.YTPlayer.min.js';
+					} else {
+						$jsFooterFile = 'fileadmin/T3SB/Resources/Public/JS/jquery.mb.YTPlayer.min.js';
+						$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
+					}
+
 					if ( $flexconf['bgHeight'] ) {
 					$inlineJS = 'jQuery(function(){
 						jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) { $(\'body\').addClass(\'video-loaded\');}});'.$addFilters.'
@@ -219,7 +228,8 @@ class WrapperHelper implements SingletonInterface
 				$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $child['uid']);
 				$children[$key] = $flexFormService->convertFlexFormContentToArray($child['pi_flexform']);
 				if ($flexconf['card_wrapper'] == 'flipper'){
-					$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome'] ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' mr-1"></i> ' : '';
+					$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
+					 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' mr-1"></i> ' : '';
 					$children[$key]['file'] = $fileObjects;
 					$children[$key]['backheader'] = $children[$key]['header']['text'];
 					$children[$key]['header'] = $child['header'];

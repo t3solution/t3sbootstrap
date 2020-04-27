@@ -23,24 +23,48 @@ class GalleryHelper implements SingletonInterface
 	 * Returns row width
 	 *
 	 * @param array $processedData
-	 * @param integer $imageorient
 	 * @return array
 	 */
-	public function getGalleryRowWidth( $processedData, $imageorient )
+	public function getGalleryRowWidth( $processedData )
 	{
-		// Gallery row with 25, 50, 75 or 100%
+		// Gallery row with 25, 33, 50, 66, 75 or 100%
 		if ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] == 'auto' ) {
 
-			if ( $imageorient < 11 ) {
-				$processedData['rowwidth'] = '';
-				$processedData['restrowwidth'] = '';
-			}elseif ($imageorient > 60) {
-				$processedData['rowwidth'] = ' w-50';
-				$processedData['restrowwidth'] = ' w-50';
+			if ($processedData['data']['bodytext']) {
+
+				if ( $processedData['gallery']['position']['vertical'] == 'intext' ) {
+
+					if ( $processedData['gallery']['count']['columns'] == 1) {
+
+						$processedData['rowwidth'] = ' w-33';
+						$processedData['restrowwidth'] = ' w-66';
+
+					} else {
+
+						$processedData['rowwidth'] = ' w-50';
+						$processedData['restrowwidth'] = ' w-50';
+					}
+
+				} else {
+					// above or below
+					if ( $processedData['data']['imageorient'] === 0 || $processedData['data']['imageorient'] === 8 ) {
+						$processedData['rowwidth'] = ' w-100';
+						$processedData['restrowwidth'] = '';
+
+					} else {
+
+						$processedData['rowwidth'] = ' w-66';
+						$processedData['restrowwidth'] = ' w-33';
+					}
+				}
 
 			} else {
-				$processedData['rowwidth'] = ' w-25';
-				$processedData['restrowwidth'] = ' w-75';
+				// image only
+				if ( $processedData['gallery']['position']['vertical'] === 'intext' ) {
+					$processedData['rowwidth'] = ' w-100';
+					$processedData['restrowwidth'] = '';
+				}
+
 			}
 
 		} elseif ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] == 'none' ) {
@@ -83,12 +107,13 @@ class GalleryHelper implements SingletonInterface
 	 * Returns gallery classes
 	 *
 	 * @param array $processedData
-	 * @param integer $imageorient
 	 * @return array
 	 */
-	public function getGalleryClasses( $processedData, $imageorient )
+	public function getGalleryClasses( $processedData )
 	{
-		$galleryClass = 'gallery imageorient-'.$imageorient;
+		$galleryClass = 'gallery imageorient-'.$processedData['data']['imageorient'];
+		$galleryRowClass = '';
+		$imageorient = $processedData['data']['imageorient'];
 
 		// Above or below (0,1,2,8,9,10)
 		if ( $imageorient < 11 ) {
@@ -102,7 +127,6 @@ class GalleryHelper implements SingletonInterface
 				// right
 				$galleryClass .= ' clearfix';
 				$galleryRowClass .= $processedData['rowwidth'].' float-md-right';
-				$processedData['addmedia']['figureclass'] = ' float-right';
 				$processedData['addmedia']['zoomOverlay'] = ' zoom-right';
 			}
 			if ( $imageorient == 2 || $imageorient == 10 ) {
@@ -122,7 +146,7 @@ class GalleryHelper implements SingletonInterface
 		}
 		// Beside Text right or left (align-items-center) (66,77)
 		if ( $imageorient == 66 || $imageorient == 77 ) {
-			$galleryClass .= $imageorient == 66 ? ' float-md-right ml-md-3' : ' float-md-left mr-md-3';
+			$processedData['addmedia']['figureclass'] .= $imageorient == 66 ? ' float-md-right' : ' float-md-left' ;
 		}
 		// gallery class
 		$processedData['gallery']['class'] = trim($galleryClass);

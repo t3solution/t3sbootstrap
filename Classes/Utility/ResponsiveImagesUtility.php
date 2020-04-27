@@ -1,5 +1,4 @@
 <?php
-
 namespace T3SBS\T3sbootstrap\Utility;
 
 use TYPO3\CMS\Core\SingletonInterface;
@@ -99,7 +98,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		if (!$picturefillMarkup) {
 			$tag->addAttribute($attributePrefix . 'src', $fallbackImageUri);
 		}
-
 
 		// Create placeholder image for lazyloading
 		if ($lazyload && $placeholderSize) {
@@ -566,9 +564,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 	{
 		foreach ($breakpoints as &$breakpoint) {
 
-if (!is_array($breakpoint)) {
-	$breakpoint = [$breakpoint];
-}
+		if (!is_array($breakpoint)) {
+			$breakpoint = [$breakpoint];
+		}
 			$breakpoint = array_replace($this->breakpointPrototype, $breakpoint);
 
 		}

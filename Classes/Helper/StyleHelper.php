@@ -72,7 +72,7 @@ class StyleHelper implements SingletonInterface
 		return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
 	}
 
-	
+
 	/**
 	 * Returns carousel caption style
 	 *
