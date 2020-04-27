@@ -1,0 +1,162 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{media}">
+	<!-- media files -->
+	<f:if condition="{settings.detail.carousel} && {media -> f:count()} > 1">
+		<f:then>
+			<f:render section="Carousel" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:for each="{media}" as="mediaElement">
+				<div class="outer">
+					<f:if condition="{mediaElement.originalResource.type} == 2">
+						<f:render partial="Detail/T3sbMediaImage" arguments="{mediaElement: mediaElement}"/>
+					</f:if>
+					<f:if condition="{mediaElement.originalResource.type} == 3">
+						<f:render partial="Detail/T3sMediaVideo" arguments="{mediaElement: mediaElement}"/>
+					</f:if>
+					<f:if condition="{mediaElement.originalResource.type} == 4">
+						<f:render partial="Detail/T3sMediaVideo" arguments="{mediaElement: mediaElement}"/>
+					</f:if>
+					<f:if condition="{mediaElement.originalResource.type} == 5">
+						<f:link.typolink parameter="{mediaElement.originalResource.publicUrl}" title="{mediaElement.originalResource.title}" target="_blank">
+							<f:image
+								image="{mediaElement}"
+								title="{mediaElement.originalResource.title}"
+								alt="{mediaElement.originalResource.alternative}"
+								maxWidth="{f:if(condition: settings.media.maxWidth, then: settings.media.maxWidth, else: settings.detail.image.maxWidth)}"
+								maxHeight="{f:if(condition: settings.media.maxHeight, then: settings.media.maxHeight, else: settings.detail.image.maxHeight)}"
+								class="img-fluid mr-3"
+							/>
+						</f:link.typolink>
+					</f:if>
+				</div>
+			</f:for>
+		</f:else>
+	</f:if>
+</f:if>
+</html>
+
+
+<f:section name="Carousel">
+<div id="carousel-news" class="carousel slide my-3 my-md-0" data-ride="carousel">
+	<ol class="carousel-indicators">
+		<f:for each="{media}" as="file" iteration="iterator">
+			<li data-target="#carousel-news" data-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
+		</f:for>
+	</ol>
+	<div class="carousel-inner text-center">
+		<f:for each="{media}" as="file" iteration="iterator">
+			<div class="carousel-item{f:if(condition:'{iterator.isFirst} == 1',then:' active')}">
+				<f:if condition="{file.properties.link}">
+					<f:then>
+						<f:link.typolink parameter="{file.properties.link}" title="{file.properties.title}">
+							<f:render section="Lightbox" arguments="{_all}" />
+						</f:link.typolink>
+					</f:then>
+					<f:else>
+						<f:if condition="{addmedia.imagezoom}">
+							<f:then>
+								<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
+									<f:render section="Lightbox" arguments="{_all}" />
+								</ce:link.clickEnlarge>
+							</f:then>
+							<f:else>
+								<f:render section="Lightbox" arguments="{_all}" />
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<f:if condition="{file.title} || {file.description}">
+					<div class="carousel-caption d-none d-md-block">
+						<f:if condition="{file.title}">
+							<h5>{file.title -> f:format.html()}</h5>
+						</f:if>
+						<f:if condition="{file.description}">
+							<p>{file.description -> f:format.html()}</p>
+						</f:if>
+					</div>
+				</f:if>
+			</div>
+		</f:for>
+	</div>
+	<a class="carousel-control-prev" href="#carousel-news" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">zurück</span>
+	</a>
+	<a class="carousel-control-next" href="#carousel-news" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">weiter</span>
+	</a>
+</div>
+</f:section>
+
+
+<f:section name="Lightbox">
+	<f:if condition="{file.link}">
+		<f:then>
+			<f:link.typolink parameter="{file.link}" target="{n:targetLink(link:file.link)}">
+				<f:render section="Slide" arguments="{file: file}" />
+			</f:link.typolink>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.detail.lightbox.enabled}">
+				<f:then>
+					<f:if condition="{settings.detail.lightbox.selection} == 1">
+							<a href="{f:uri.image(image:file.originalResource,
+			 					width:'{settings.media.popup.width}',
+				  				height:'{settings.media.popup.height}')}"
+				   			data-caption="{file.description}">
+							<f:render section="Slide" arguments="{file: file}" />
+						</a>
+					</f:if>
+					<f:if condition="{settings.detail.lightbox.selection} == 2">
+						<a href="{f:uri.image(image:file,
+							width:'{settings.media.popup.width}',
+							height:'{settings.media.popup.height}')}"
+							data-toggle="lightbox"
+							data-title="{file.title}"
+							class="lightbox"
+							data-gallery="gallery-{file.originalResource.properties.uid_foreign}">
+							<f:render section="Slide" arguments="{file: file}" />
+						</a>
+					</f:if>
+					<f:if condition="{settings.detail.lightbox.selection} == 3">
+						<a href="{f:uri.image(image:file,
+							width:'{settings.media.popup.width}',
+							height:'{settings.media.popup.height}')}"
+							id="ex-{file.uid}"
+							title="{file.title}"
+							class="lightcaseGallery"
+							data-rel="lightcase:collection{file.originalResource.properties.uid_foreign}:slideshow">
+							<f:render section="Slide" arguments="{file: file}" />
+						</a>
+					</f:if>
+				</f:then>
+				<f:else>
+					<f:render section="Slide" arguments="{file: file}" />
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:section>
+
+
+<f:section name="Slide">
+	<f:comment> lazyload didn't work with Bootstrap carousel -> lazyload="0" </f:comment>
+<figure class="image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
+	<t3sb:media file="{file}" title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+		class="img-fluid{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
+		width="{f:if(condition: settings.media.maxWidth, then: settings.media.maxWidth, else: settings.detail.image.maxWidth)}"
+		height="{f:if(condition: settings.media.maxHeight, then: settings.media.maxHeight, else: settings.detail.image.maxHeight)}"
+		breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+		}"
+		picturefill="{settings.picturefill}"
+		lazyload="0"
+		ratio="{settings.detail.imageRatio}"
+	/>
+</figure>
+</f:section>

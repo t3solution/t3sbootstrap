@@ -7,23 +7,23 @@
 <f:if condition="{data.tx_gridelements_view_children}">
 <f:if condition="{multislider}">
 	<f:then>
-		<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>	
+		<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
 			<f:render partial="Header/All" arguments="{_all}" />
 			<div id="multiSlider-{data.uid}" class="blogSlider{f:if(condition: continuous, then: ' continuous')}">
-			    <div class="MS-content gallery">
+				   <div class="MS-content gallery">
 					{data.tx_gridelements_view_column_0 -> f:format.raw()}
-			    </div>
-				<f:if condition="!{continuous}">    
-				    <div class="MS-controls">
-				        <button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-				        <button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-				    </div>
+				   </div>
+				<f:if condition="!{continuous}">
+					<div class="MS-controls">
+						<button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+						<button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+					</div>
 				</f:if>
 			</div>
 		</div>
 	</f:then>
 	<f:else>
-		<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>	
+		<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
 			<f:render partial="Header/All" arguments="{_all}" />
 			<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-ride="carousel"
 				 data-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>

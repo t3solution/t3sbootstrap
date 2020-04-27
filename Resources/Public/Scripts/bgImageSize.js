@@ -60,7 +60,7 @@ jQuery(function($){
 		}
 
 		if (currentObj.length) {
-	
+
 			if ( winWidth < 577 && key == 576 ) {
 				currentObj.css('background-image', 'url(' + value + ')');
 			}
@@ -82,7 +82,7 @@ jQuery(function($){
 			if ( winWidth > 2560 && key == 'orig' ) {
 				currentObj.css('background-image', 'url(' + value + ')');
 			}
-	
+
 		}
 	}
 	function backgroundSize() {

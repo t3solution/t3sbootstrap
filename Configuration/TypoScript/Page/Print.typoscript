@@ -14,19 +14,18 @@ print {
 
 	includeCSS {
 
-		bootstrapFour = EXT:t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss
-		bootstrapFour.forceOnTop = 1
-		bootstrapFour.if.isFalse = {$bootstrap.extconf.customScss}
+		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/css/bootstrap.min.css
+		bootstrapCDN.external = 1
+		bootstrapCDN.forceOnTop = 1
+		bootstrapCDN.if {
+			isFalse = {$bootstrap.cdn.bootswatch}
+			isTrue = {$bootstrap.cdn.enable}
+		}
 
-		customBootstrap = uploads/tx_t3sbootstrap/bootstrap.scss
-		customBootstrap.forceOnTop = 1
-		customBootstrap.if.isTrue = {$bootstrap.extconf.customScss}
+		t3sfontawesomeCDN = https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+		t3sfontawesomeCDN.external = 1
 
-		t3sfontawesome = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/scss/fontawesome.scss
-		t3sfontawesome.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
-
-		t3sfontawesomelink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
-		t3sfontawesomelink.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
+		t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
 
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
 
@@ -36,23 +35,18 @@ print {
 
 	includeJSFooterlibs {
 
-		t3sbjquery = EXT:t3sbootstrap/Resources/Public/Contrib/jquery.min.js
-		t3sbjquery.forceOnTop = 1
+		jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.min.js
+		jqueryCDN.external = 1
+		jqueryCDN.forceOnTop = 1
 
-		t3sbpopper = EXT:t3sbootstrap/Resources/Public/Contrib/popper.min.js
+		popperCDN = https://unpkg.com/@popperjs/core@{$bootstrap.cdn.popperjs}
+		popperCDN.external = 1
 
-		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Contrib/Bootstrap/js/bootstrap.min.js
+		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/js/bootstrap.min.js
+		bootstrapCDN.external = 1
 	}
 
-	includeJSFooter {
-
-		codesnippet = EXT:t3sbootstrap/Resources/Public/Contrib/Codesnippet/highlight.pack.js
-		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		picturefill = EXT:t3sbootstrap/Resources/Public/Contrib/picturefill.min.js
-		picturefill.if.isTrue = {$bootstrap.image.picturefill}
-
-	}
+	jsFooterInline.3 >
 
 	jsFooterInline.4 = TEXT
 	jsFooterInline.4.value (
@@ -79,8 +73,6 @@ print {
 		variables {
 			be_layout = TEXT
 			be_layout.value < temp.pagelayout
-			headerslider < lib.t3sheaderslider
-			headerslider.if.isTrue = {$bootstrap.ext.headerslider}
 		}
 		settings {
 			navbar {

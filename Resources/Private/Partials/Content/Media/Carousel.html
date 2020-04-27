@@ -24,6 +24,7 @@
 								<ce:link.clickEnlarge image="{media}" configuration="{settings.media.popup}">
 									<f:render section="Slide" arguments="{file: media, dimensions: gallery, ratio: data.tx_t3sbootstrap_image_ratio}" />
 									<f:comment> magnifying glass-icon </f:comment>
+									<f:comment>
 									<f:if condition="{settings.magnifying}">
 										<div class="zoom-overlay{addmedia.zoomOverlay}">
 											<span class="magnifying-glass-icon">
@@ -31,6 +32,7 @@
 											</span>
 										</div>
 									</f:if>
+									</f:comment>
 								</ce:link.clickEnlarge>
 							</f:then>
 							<f:else>

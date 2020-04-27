@@ -19,6 +19,7 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
+use TYPO3\CMS\Core\Context\Context;
 
 class LastModifiedProcessor implements DataProcessorInterface
 {
@@ -31,11 +32,10 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 * @param array $processorConfiguration The configuration of this processor
 	 * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
 	 *
-	 * @return array processedData
+	 * @return mixed processedData
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration,	 array $processedData)
 	{
-
 		if ($processorConfiguration['lastModifiedContentElement']) {
 
 			$processorConfiguration = [];
@@ -98,7 +98,9 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 */
 	protected function getRecentlyUpdated($setMaxResults)
 	{
-		$sysLanguageUid = self::getFrontendController()->sys_language_uid ?: 0;
+		$languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+		$sysLanguageUid = $languageAspect ?: 0;
+
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
 			 ->select('*')
@@ -115,7 +117,6 @@ class LastModifiedProcessor implements DataProcessorInterface
 		$mdtm = [];
 
 		if (!empty($result)) {
-
 			foreach ( $result as $ce ) {
 				$pageTitle = self::getPageTitle($ce['pid']);
 				if ($pageTitle) {

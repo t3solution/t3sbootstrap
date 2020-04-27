@@ -3,9 +3,9 @@
 <f:section name="Header">
 </f:section>
 <f:section name="Main">
-<f:if condition="{class} || {style}">	
+<f:if condition="{class} || {style}">
 	<div{f:if(condition:'{class}',then:' class="{class}"')}{f:if(condition:'{style}',then:' style="{style}"')}{dataAnimate}>
-</f:if>	
+</f:if>
 	<f:render partial="Header/All" arguments="{_all}" />
 	<f:switch expression="{tab.displayType}">
 		<f:case value="pills">
@@ -18,9 +18,9 @@
 			<f:render section="Tabs" arguments="{_all}" />
 		</f:defaultCase>
 	</f:switch>
-<f:if condition="{class} || {style}">	
+<f:if condition="{class} || {style}">
 	</div>
-</f:if>	
+</f:if>
 </f:section>
 </html>
 
@@ -64,8 +64,8 @@
 			</f:for>
 		</div>
 	</div>
-	<div class="col-{pill.mainWidth}">	
-		<f:render section="Content" arguments="{_all}" />	
+	<div class="col-{pill.mainWidth}">
+		<f:render section="Content" arguments="{_all}" />
 	</div>
 </div>
 </f:section>

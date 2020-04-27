@@ -13,9 +13,51 @@ plugin.tx_t3sbootstrap {
 	}
 }
 
+
 #-------------------------------------------------------------------------------
 #	Constant Editor
 #-------------------------------------------------------------------------------
+
+# customcategory=bootstrap-cdn=* T3SB::CDN-Settings
+# customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
+# customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
+bootstrap.cdn {
+	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Rescources/Private/
+	enable = 1
+	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Pulse=pulse, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Yeti=yeti]; label=Bootswatch Themes CDN - works only without EXT ws_scss: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
+	bootswatch = 0
+	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
+	bootstrap = 4.4.1
+	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js: set to 2 only to get v2.x (latest)
+	popperjs = 2
+	# cat=bootstrap-cdn/b-version/20; type=small; label=Fontawesome:
+	fontawesome = 5.13.0
+	# cat=bootstrap-cdn/b-version/30; type=small; label=jQuery library: jQuery 3.5.0 won't work with Bootstrap 4.4.1. Dropdowns and collapse don't work. Reverted to jQuery 3.4.1 to make it work.
+	jquery = 3.4.1
+	# cat=bootstrap-cdn/b-version/50; type=small; label=jQuery Easing:
+	jqueryEasing = 1.4.1
+	# cat=bootstrap-cdn/b-version/11; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
+	cookieconsent = 3
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Highlight: used with codesnippet
+	highlight = 9.18.1
+	# cat=bootstrap-cdn/b-version/70; type=small; label=Lazyload:
+	lazyload = 15.1.1
+	# cat=bootstrap-cdn/b-version/80; type=small; label=Picturefill:
+	picturefill = 3.0.3
+	# cat=bootstrap-cdn/b-version/80; type=small; label=Viewportchecker:
+	viewportchecker = 1.8.8
+	# cat=bootstrap-cdn/b-version/100; type=small; label=Animate CSS:
+	animate = 3.7.2
+	# cat=bootstrap-cdn/b-version/500; type=small; label=Baguette Box:
+	baguetteBox = 1.11.0
+	# cat=bootstrap-cdn/b-version/501; type=small; label=Ekko Lightbox:
+	ekkoLightbox = 5.3.0
+	# cat=bootstrap-cdn/b-version/502; type=small; label=Lightcase:
+	lightcase = 2.5.0
+	# cat=bootstrap-cdn/b-version/600; type=small; label=YouTube player - jquery.mb.YTPlayer: 
+	ytPlayer = 3.3.1
+}
+
 
 # customcategory=bootstrap-config=* T3SB::Config
 # customsubcategory=a-config=Main T3SB Config
@@ -27,7 +69,6 @@ plugin.tx_t3sbootstrap {
 # customsubcategory=dsm-config=Section Menu
 # customsubcategory=dsn-config=Background Image
 # customsubcategory=e-config=Other Config
-
 bootstrap.config {
 	# cat=bootstrap-config/a-config/10; type=boolean; label=Data for "T3SB Config" on subpages: if disable from rootpage	 or from rootline if enabled (slide).
 	rootline = 1
@@ -35,13 +76,13 @@ bootstrap.config {
 	contentOnlyOnRootpage = 0
 	# cat=bootstrap-config/a-config/30; type=boolean; label=jQuery in header: load jquery into the header if activated.
 	jqueryHeader = 0
-	# cat=bootstrap-config/a-config/40; type=boolean; label=Fontawesome icons for Links: loads the required CSS-style for links set in the RTE if activeted
-	faLinkIcons = 1
 
 	# cat=bootstrap-config/b-config/10; type=boolean; label=Compress: compress and concatenate JS and CSS.
 	compress = 1
 	# cat=bootstrap-config/b-config/20; type=boolean; label=Disable Prefix Comment:
 	disablePrefixComment = 1
+	# cat=bootstrap-config/b-config/30; type=boolean; label=Container Error: shows an error message if a container is expected but no container has been selected.
+	containerError = 1
 
 	# cat=bootstrap-config/c-config/010; type=boolean; label=Left Aside Slide: content slide for colPos=1 if enabled
 	slideLeftAside = 0
@@ -60,7 +101,6 @@ bootstrap.config {
 	globalPaddingTop = pt-5
 	# cat=bootstrap-config/d-config/040; type=int+; label=Footer Extra Padding: if "footer-sticky" is activated in the BE Modul, the padding-bottom for the body is given by JS. If you like an extra space between the footer and the content, you can do it here (in px).
 	stickyFooterExtraPadding = 0
-	
 	# cat=bootstrap-config/d-config/050; type=options[none=0, mt-1=mt-1, mt-2=mt-2, mt-3=mt-3, mt-4=mt-4, mt-5=mt-5]; label=Content Element Default Top-Margin: here you can set a default space (margin-top) for each content-element (colPos=0).
 	contentMarginTop = 0
 
@@ -75,7 +115,7 @@ bootstrap.config {
 	sectionmenuAnchorOffset = 29
 	# cat=bootstrap-config/dsm-config/044; type=small; label=Scrollspy offset: in px - to activate the menu item - jsFooterInline.5.14
 	sectionmenuScrollspyOffset = 130
-	# cat=bootstrap-config/dsm-config/045; type=boolean; label=Sticky Top: for #sectionmenu, #submenu or .make-me-sticky - jsFooterInline.5.15
+	# cat=bootstrap-config/dsm-config/045; type=boolean; label=Sticky Top: for #sectionmenu, .submenu or .make-me-sticky - jsFooterInline.5.15
 	sectionmenuStickyTop = 0
 
 	# cat=bootstrap-config/dlb-config/010; type=options[none=0, baguettbox=1, ekkolightbox=2, lightcase=3]; label=Lightbox selection:
@@ -92,6 +132,7 @@ bootstrap.config {
 	lastModifiedContentElement = 0
 	# cat=bootstrap-config/e-config/011; type=boolean; label=List of recently updated Content Elements: better solution in the Template MenuRecentlyUpdated.html if enabled.
 	recentlyUpdatedContentElements = 0
+
 	# cat=bootstrap-config/e-config/020; type=small; label=Date Format: the date format to use in ext:t3sbootstrap.
 	dateFormat = d.m.Y
 	# cat=bootstrap-config/e-config/030; type=small; label=Subheader Color: Contextual text classes e.g. secondary, danger etc.
@@ -101,11 +142,13 @@ bootstrap.config {
 	# cat=bootstrap-config/e-config/070; type=options[py-1=1, py-2=2, py-3=3, py-4=4, py-5=5, py-x=x]; label=Padding for Shrinking Navbar: py-x can be set by your stylesheet
 	shrinkingNavPadding = 5
 	# cat=bootstrap-config/e-config/090; type=small; label=Favicon: path to your favicon e.g.: EXT:t3sbootstrap/Resources/Public/Icons/favicon.ico
-	favicon =
+	favicon = typo3conf/ext/t3sbootstrap/Resources/Public/Icons/favicon.ico
 	# cat=bootstrap-config/e-config/110; type=boolean; label=Card Flipper: rotate on click.
 	cardFlipperOnClick = 0
-	# cat=bootstrap-config/e-config/120; type=boolean; label=Language Menu Style: you have the choice between two layouts - with FA icon or current language with flag.
+	# cat=bootstrap-config/e-config/120; type=boolean; label=Language Menu Style: you have the choice between two layouts - with Fontawesome icon (globe) or current language with flag.
 	langMenuWithFaIcon = 1
+	# cat=bootstrap-config/e-config/130; type=boolean; label=Fontawesome icons for RTE-Links etc. (min): loads the required CSS-style for links set in the RTE or used global if activated
+	faLinkIcons = 1
 }
 
 
@@ -116,14 +159,16 @@ bootstrap.config {
 # customsubcategory=c-image=Lazyloading Threshold
 # customsubcategory=d-image=Picturefill
 bootstrap.image {
-	# cat=bootstrap-image/a-image/10; type=int+; label=Fallback image size in ColPos=0 (in px): only if BE-layout != OneCol && !imgWidth
-	default.width.big = 825
-	# cat=bootstrap-image/a-image/20; type=int+; label=Fallback image size in ColPos=1 && ColPos=2 (in px): only if BE-layout != OneCol && !imgWidth
-	default.width.small = 385
-	# cat=bootstrap-image/a-image/30; type=boolean; label=Scaling correction: when the total of media elements is wider than the gallery width (default) - if disabled: minimum equalMediaWidth is set to 575px and therefore 100% wide on mobile.
-	mediaScalingCorrection = 1
+	# cat=bootstrap-image/a-image/30; type=boolean; label=Min. width: if enabled the minimum "equalMediaWidth" is set to 575px and therefore 100% wide on mobile.
+	minimumWidth = 0
+	# cat=bootstrap-image/a-image/40; type=boolean; label=Ratio: if enabled use width and height for ratio in textmedia, textpic, image, card and media object.
+	ratioWithHeight = 0
+	# cat=bootstrap-image/a-image/50; type=boolean; label=Max. image width Media object: the default max. width for the media object.
+	maxWidthMediaObject = 200
+	# cat=bootstrap-image/a-image/60; type=boolean; label=Max. image width Toast: the default max. width for Bootstrap toast.
+	maxWidthToast = 20
 	# cat=bootstrap-image/b-image/10; type=small; label=Additional Image Sizes for Desktop min-width 1200px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
-	srcsetDesktop = 255, 385, 540, 768, 992, 1200
+	srcsetDesktop = 125, 255, 385, 576, 768, 992, 1200
 	# cat=bootstrap-image/b-image/20; type=small; label=Additional Image Sizes for Tablet min-width 576px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
 	srcsetTablet = 385, 576, 768, 992, 1200
 	# cat=bootstrap-image/b-image/30; type=small; label=Additional Image Sizes for Mobile max-width 575px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
@@ -133,7 +178,7 @@ bootstrap.image {
 	# cat=bootstrap-image/c-image/020; type=boolean; label=Lazy load for images in the BG-Wrapper: not the BG-image
 	lazyLoadBgWrapperImage = 0
 	# cat=bootstrap-image/d-image/40; type=boolean; label=A responsive image polyfill: Picturefill enables support for the picture element and associated features in browsers that do not yet support them.
-    picturefill = 0
+	picturefill = 0
 }
 
 # customcategory=bootstrap-extensions=* T3SB::Extensions
@@ -185,9 +230,6 @@ bootstrap.pagebrowser.prevnextToSection = 1
 bootstrap.pagebrowser.prevItem = prev|prevsection
 bootstrap.pagebrowser.nextItem = nextsection|next
 bootstrap.pagebrowser.entryLevel = 1
-
-bootstrap.backToTop.title = to top
-bootstrap.backToTop.class = fa fa-chevron-circle-up fa-4x
 
 bootstrap.animateCssInlineJs = classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0
 
@@ -246,16 +288,20 @@ bootstrap.cookieconsent {
 # include print template
 bootstrap.print.enable = 0
 
+# back to top button
+bootstrap.backToTopTitle = to top
+bootstrap.backToTopClass = fa fa-chevron-circle-up fa-4x
+bootstrap.backToTopForAllPages = 0
 
 styles.content.allowTags:= addToList( s, mark)
 
 # in px (preset)
-styles.content.textmedia.maxW = 1110
-styles.content.textmedia.maxWInText = 825
+styles.content.textmedia.maxW = 1440
 styles.content.textmedia.linkWrap.width = 1140m
 styles.content.textmedia.linkWrap.height = 800m
 
 #disable some not used constants
+styles.content.textmedia.maxWInText >
 styles.content.textmedia.columnSpacing >
 styles.content.textmedia.rowSpacing >
 styles.content.textmedia.textMargin >
@@ -351,6 +397,3 @@ bootstrap.config {
 	expandedcontent_containerbottom =
 	expandedcontent_classbottom =
 }
-
-# EXT: news
-plugin.tx_news.settings.cssFile =

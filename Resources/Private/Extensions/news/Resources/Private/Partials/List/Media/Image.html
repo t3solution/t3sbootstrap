@@ -1,0 +1,59 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.list.imageRatio}">
+	<f:then>
+		<f:variable name="width" value="{f:if(condition: settings.media.maxWidth, then: settings.media.maxWidth, else: settings.list.media.image.maxWidth)}" />
+		<f:variable name="height" value="" />
+		<f:variable name="ratio" value="{settings.list.imageRatio}" />
+	</f:then>
+	<f:else>
+		<f:if condition="{settings.media.maxWidth} && {settings.media.maxHeight}">
+			<f:then>
+				<f:variable name="width" value="{settings.media.maxWidth}" />
+				<f:variable name="height" value="" />
+				<f:variable name="ratio" value="{settings.media.maxWidth}:{settings.media.maxHeight}" />
+			</f:then>
+			<f:else>
+				<f:if condition="{settings.media.maxWidth}">
+					<f:then>
+						<f:variable name="width" value="{settings.media.maxWidth}" />
+						<f:variable name="height" value="" />
+					</f:then>
+					<f:else>
+						<f:if condition="{settings.media.maxHeight}">
+							<f:then>
+								<f:variable name="width" value="" />
+								<f:variable name="height" value="{settings.media.maxHeight}" />
+							</f:then>
+							<f:else>
+								<f:variable name="width" value="{settings.list.media.image.maxWidth}" />
+								<f:variable name="height" value="{settings.list.media.image.maxHeight}" />
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<f:variable name="ratio" value="" />
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+
+<figure class="text-center image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
+	<t3sb:media
+		file="{file}"
+		title="{file.originalResource.title}"
+		alt="{f:if(condition: file.originalResource.alternative, then: '{file.originalResource.alternative}', else: 'image-{file.originalResource.uid}')}"
+		class="img-fluid mr-3{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_lazy_load} || {settings.lazyLoad} == 1', then:' lazy')}{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}')}"
+		width="{width}"
+		height="{height}"
+		breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+		}"
+		picturefill="{settings.picturefill}"
+		lazyload="{settings.lazyLoad}"
+		ratio="{ratio}"
+	/>
+</figure>
+</html>

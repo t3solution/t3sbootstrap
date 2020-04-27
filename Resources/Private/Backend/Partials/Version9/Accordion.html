@@ -1,0 +1,118 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="metaNavbar">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMeta" aria-expanded="true" aria-controls="collapseMeta">
+					Meta Navigation
+				</a>
+			</h4>
+		</div>
+		<div id="collapseMeta" class="panel-collapse collapse" role="tabpanel" aria-labelledby="metaNavbar">
+			<div class="panel-body">
+				<f:render partial="Config/Meta" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="headerNavbar">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNavbar" aria-expanded="true" aria-controls="collapseNavbar">
+					Navbar
+				</a>
+			</h4>
+		</div>
+		<div id="collapseNavbar" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerNavbar">
+			<div class="panel-body">
+				<f:render partial="Config/Navbar" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="headerJumbotron">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseJumbotron" aria-expanded="true" aria-controls="collapseJumbotron">
+					Jumbotron
+				</a>
+			</h4>
+		</div>
+		<div id="collapseJumbotron" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerJumbotron">
+			<div class="panel-body">
+				<f:render partial="Config/Jumbotron" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="headerPagetitle">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsePagetitle" aria-expanded="true" aria-controls="collapsePagetitle">
+					Page Title
+				</a>
+			</h4>
+		</div>
+		<div id="collapsePagetitle" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerPagetitle">
+			<div class="panel-body">
+				<f:render partial="Config/Pagetitle" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="headerBreadcrumb">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseBreadcrumb" aria-expanded="true" aria-controls="collapseBreadcrumb">
+					Breadcrumb
+				</a>
+			</h4>
+		</div>
+		<div id="collapseBreadcrumb" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerBreadcrumb">
+			<div class="panel-body">
+				<f:render partial="Config/Breadcrumb" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="headerSidebar">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSidebar" aria-expanded="true" aria-controls="collapseSidebar">
+					Sidebar
+				</a>
+			</h4>
+		</div>
+		<div id="collapseSidebar" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerSidebar">
+			<div class="panel-body">
+				<f:render partial="Config/Sidebar" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	<f:if condition="{settings.expandedContent}">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headerExpandedContent">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseExpandedContent" aria-expanded="true" aria-controls="collapseExpandedContent">
+						Expanded Content
+					</a>
+				</h4>
+			</div>
+			<div id="collapseExpandedContent" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerExpandedContent">
+				<div class="panel-body">
+					<f:render partial="Config/ExpandedContent" arguments="{_all}" />
+				</div>
+			</div>
+		</div>
+	</f:if>
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="headerFooter">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFooter" aria-expanded="true" aria-controls="collapseFooter">
+					Footer
+				</a>
+			</h4>
+		</div>
+		<div id="collapseFooter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headerFooter">
+			<div class="panel-body">
+				<f:render partial="Config/Footer" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+</div>
+</html>

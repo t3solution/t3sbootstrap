@@ -1,5 +1,4 @@
 <?php
-
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 use TYPO3\CMS\Core\Resource\FileInterface;
@@ -66,18 +65,17 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	 * @param	FileInterface $image
 	 * @param	string		 $width
 	 * @param	string		 $height
-	 *
-	 * @return string					Rendered img tag
+	 * @param	string|null $fileExtension
+	 * @return string Rendered img tag
 	 */
-	protected function renderImage(FileInterface $image, $width, $height)
+	protected function renderImage(FileInterface $image, $width, $height, ?string $fileExtension=null)
 	{
-
 		if ($this->arguments['breakpoints']) {
 			return $this->renderPicture($image, $width, $height);
 		} elseif ($this->arguments['srcset']) {
 			return $this->renderImageSrcset($image, $width, $height);
 		} else {
-			return parent::renderImage($image, $width, $height);
+			return parent::renderImage($image, $width, $height, $fileExtension);
 		}
 	}
 
@@ -127,12 +125,12 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 				$lazyload = 0;
 			}
 		}
-$placeholderSize = 0;
-$placeholderInline = 0;
-if ($lazyload) {
-$placeholderSize = $this->arguments['placeholderSize'] ? $this->arguments['placeholderSize'] : 60;
-$placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['placeholderInline'] : 1;
-}
+		$placeholderSize = 0;
+		$placeholderInline = 0;
+		if ($lazyload) {
+		$placeholderSize = $this->arguments['placeholderSize'] ?: 60;
+		$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
+		}
 		// Generate picture tag
 		$this->tag = $this->responsiveImagesUtility->createPictureTag(
 			$image,
@@ -198,12 +196,12 @@ $placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['p
 				$lazyload = 0;
 			}
 		}
-$placeholderSize = 0;
-$placeholderInline = 0;
-if ($lazyload) {
-$placeholderSize = $this->arguments['placeholderSize'] ? $this->arguments['placeholderSize'] : 60;
-$placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['placeholderInline'] : 1;
-}
+		$placeholderSize = 0;
+		$placeholderInline = 0;
+		if ($lazyload) {
+		$placeholderSize = $this->arguments['placeholderSize'] ? $this->arguments['placeholderSize'] : 60;
+		$placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['placeholderInline'] : 1;
+		}
 		// Generate image tag
 		$this->tag = $this->responsiveImagesUtility->createImageTagWithSrcset(
 			$image,
@@ -229,7 +227,6 @@ $placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['p
 	 *
 	 * @param	FileInterface $image
 	 * @param	string		 $width
-	 * @param	string		 $height
 	 * @param	Area			 $cropArea
 	 *
 	 * @return FileInterface
@@ -261,7 +258,7 @@ $placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['p
 
 		// Image Gallery only
 		if ( $this->arguments['columns'] ) {
-			$width = $width ? $width : 1110/$this->arguments['columns'];
+			$width = 1110/$this->arguments['columns'];
 		}
 
 		$w = $image->getProperties()['height']/$image->getProperties()['width'] *$l;

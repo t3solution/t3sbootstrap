@@ -82,6 +82,9 @@ figcaption h5 {
 	font-size: .8rem;
 }
 
+picture img.lazy {
+    opacity: 1;
+}
 
 @page {
     size: A4;

@@ -136,6 +136,9 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getGeClass($data, $flexconf, $isVideo, $extConf)
 	{
+
+		$class = '';
+
 		/**
 		 * CType: Gridelements
 		 */

@@ -20,15 +20,13 @@ $EM_CONF[$_EXTKEY] = [
 	'uploadfolder' => true,
 	'createDirs' => '',
 	'clearCacheOnLoad' => true,
-	'version' => '4.4.4',
+	'version' => '4.4.5',
 	'constraints' => [
 	'depends' => [
-		'typo3' => '9.5.7-9.5.99',
-		'gridelements' => '9.3.0-9.99.99',
-		'ws_scss' => '1.1.12-1.99.99'
+		'typo3' => '9.5.13-10.4.99',
+		'gridelements' => '9.3.0-10.99.99'
 	],
 	'conflicts' => [],
-	'suggests' => [],
 	],
 	'autoload' => [
 		'psr-4' => ['T3SBS\\T3sbootstrap\\' => 'Classes']

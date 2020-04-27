@@ -1,0 +1,41 @@
+page {
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# BOOTSTRAP CSS - if EXT:wsScss is NOT loaded
+		#
+		##########################################################################################################
+
+		# Local (fileadmin)
+		bootstrapCSS = fileadmin/T3SB/Resources/Public/CSS/bootstrap.min.css
+		bootstrapCSS.forceOnTop = 1
+		bootstrapCSS.if {
+			isFalse = {$bootstrap.cdn.enable}
+		}
+
+		# CDN
+		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/css/bootstrap.min.css
+		bootstrapCDN.external = 1
+		bootstrapCDN.forceOnTop = 1
+		bootstrapCDN.if {
+			isFalse = {$bootstrap.cdn.bootswatch}
+			isTrue = {$bootstrap.cdn.enable}
+		}
+
+		##########################################################################################################
+		#
+		# BOOTSWATCH
+		#
+		##########################################################################################################
+
+		# CDN
+		bootswatchCDN = https://stackpath.bootstrapcdn.com/bootswatch/{$bootstrap.cdn.bootstrap}/{$bootstrap.cdn.bootswatch}/bootstrap.min.css
+		bootswatchCDN.external = 1
+		bootswatchCDN.forceOnTop = 1
+		bootswatchCDN.if {
+			isTrue = {$bootstrap.cdn.bootswatch}
+			isTrue = {$bootstrap.cdn.enable}
+		}
+	}
+}

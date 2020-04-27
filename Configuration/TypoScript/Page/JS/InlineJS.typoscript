@@ -74,19 +74,19 @@ temp.jsFooterInline {
 	if (window.location.hash) {
 
 		var hash = window.location.hash;
-	
+
 		if ($(hash).length) {
 			var idArr = hash.split('#'),
 				targetElement = document.getElementById(idArr[1]),
 				targetOffset = targetElement.offsetTop,
 				offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
-	
+
 				if ( fixedNavbar ) {
 					offsetSize += navbarHeight;
 				}
-	
+
 				var scrollTo = targetOffset-offsetSize;
-	
+
 			$("html, body").stop().animate({
 				'scrollTop': scrollTo
 			}, 1500, "easeInOutExpo");
@@ -942,6 +942,14 @@ temp.jsFooterInline {
 	value.data = register:breakpoint
 	equals = xl
 }
+
+166 = TEXT
+166.value (
+var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+jQuery.htmlPrefilter = function( html ) {
+    return html.replace( rxhtmlTag, "<$1></$2>" );
+};
+)
 
 
 

@@ -23,67 +23,67 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Split file reference into file parts.
- * Used for poster in local viseo
+ * Used for poster in local video
  */
 class SplitFileRefViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
+	use CompileWithRenderStatic;
 
-    /**
-     * Initialize all arguments
-     */
-    public function initializeArguments()
-    {
-        $this->registerArgument(
-            'file',
-            'object',
-            'File object',
-            true
-        );
-        $this->registerArgument(
-            'as',
-            'string',
-            'The name of the variable with file parts',
-            false,
-            'fileParts'
-        );
-    }
+	/**
+	 * Initialize all arguments
+	 */
+	public function initializeArguments()
+	{
+		$this->registerArgument(
+			'file',
+			'object',
+			'File object',
+			true
+		);
+		$this->registerArgument(
+			'as',
+			'string',
+			'The name of the variable with file parts',
+			false,
+			'fileParts'
+		);
+	}
 
-    /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return string
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
-    {
-        $templateVariableContainer = $renderingContext->getVariableProvider();
-        $file = $arguments['file'];
+	/**
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param RenderingContextInterface $renderingContext
+	 * @return string
+	 */
+	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
+	{
+		$templateVariableContainer = $renderingContext->getVariableProvider();
+		$file = $arguments['file'];
 
-        // get Resource Object (non ExtBase version)
-        if (is_callable([$file, 'getOriginalResource'])) {
-            // We have a domain model, so we need to fetch the FAL resource object from there
-            $file = $file->getOriginalResource();
-        }
+		// get Resource Object (non ExtBase version)
+		if (is_callable([$file, 'getOriginalResource'])) {
+			// We have a domain model, so we need to fetch the FAL resource object from there
+			$file = $file->getOriginalResource();
+		}
 
-        if (!($file instanceof FileInterface || $file instanceof AbstractFileFolder)) {
-            throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface or AbstractFileFolder.', 1563891998);
-        }
+		if (!($file instanceof FileInterface || $file instanceof AbstractFileFolder)) {
+			throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface or AbstractFileFolder.', 1563891998);
+		}
 
-        $fileParts = GeneralUtility::split_fileref($file->getPublicUrl());
+		$fileParts = GeneralUtility::split_fileref($file->getPublicUrl());
 
-	      $image= $fileParts['path'].$fileParts['filebody'].'.jpg';
-	      $fileParts['imgext'] = 'jpg';
+		   $image= $fileParts['path'].$fileParts['filebody'].'.jpg';
+		   $fileParts['imgext'] = 'jpg';
 
-	      if (!file_exists($image)) {
-		        $image= $fileParts['path'].$fileParts['filebody'].'.png';
-		        $fileParts['imgext'] = 'png';
-	      }
+		   if (!file_exists($image)) {
+				  $image= $fileParts['path'].$fileParts['filebody'].'.png';
+				  $fileParts['imgext'] = 'png';
+		   }
 
-        $templateVariableContainer->add($arguments['as'], $fileParts);
-        $content = $renderChildrenClosure();
-        $templateVariableContainer->remove($arguments['as']);
+		$templateVariableContainer->add($arguments['as'], $fileParts);
+		$content = $renderChildrenClosure();
+		$templateVariableContainer->remove($arguments['as']);
 
-        return $content;
-    }
+		return $content;
+	}
 }

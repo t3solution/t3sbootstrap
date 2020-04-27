@@ -2,6 +2,11 @@
 <f:spaceless>
 {containerPre -> f:format.raw()}
 {cardSliderPre -> f:format.raw()}
+<f:if condition="{containerError}">
+	<div class="alert alert-danger" role="alert">
+		Here is a container expected! <small>... you can disable this error message in the constant editor!</small>
+	</div>
+</f:if>
 <f:link.typolink parameter="{celink}" class="ce-link">
 	<f:if condition="{data.CType} != 'gridelements_pi1'">
 		<f:then>

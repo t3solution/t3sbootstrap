@@ -1,0 +1,317 @@
+page {
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# VARIOUS
+		#
+		##########################################################################################################
+
+		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
+
+		stickyFooter = EXT:t3sbootstrap/Resources/Public/Styles/stickyFooter.css
+		stickyFooter.if {
+			isTrue.cObject = TEXT
+			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:footer_sticky
+		}
+
+		megaMenu = EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css
+		megaMenu.if {
+			isTrue.cObject = TEXT
+			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
+		}
+
+		hoverEffects = EXT:t3sbootstrap/Resources/Public/Styles/hoverEffects.css
+		hoverEffects.if.isTrue = {$bootstrap.extconf.linkHoverEffect}
+
+		# Offcanvas Navbar - dependent on the breakpoint
+		offcanvasNavbarSM = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarSM.css
+		offcanvasNavbarSM.if {
+				value.data = register:breakpoint
+				equals = sm
+				isTrue.cObject = TEXT
+				isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+		}
+		offcanvasNavbarMD = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarMD.css
+		offcanvasNavbarMD.if {
+			value.data = register:breakpoint
+			equals = md
+			isTrue.cObject = TEXT
+			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+		}
+		offcanvasNavbarLG = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarLG.css
+		offcanvasNavbarLG.if {
+			value.data = register:breakpoint
+			equals = lg
+			isTrue.cObject = TEXT
+			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+		}
+		offcanvasNavbarXL = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarXL.css
+		offcanvasNavbarXL.if {
+			value.data = register:breakpoint
+			equals = xl
+			isTrue.cObject = TEXT
+			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+		}
+		offcanvasNavbarNO = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarNO.css
+		offcanvasNavbarNO.if {
+			value.data = register:breakpoint
+			equals = no
+			isTrue.cObject = TEXT
+			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+		}
+
+	}
+
+	##########################################################################################################
+	#
+	# FONTAWESOME - using the SVG + JS version
+	#
+	##########################################################################################################
+
+	footerData {
+		62 = TEXT
+		62.value = <script src="/fileadmin/T3SB/FA5Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
+		62.if {
+			value = 2
+			equals = {$bootstrap.extconf.fontawesomeCss}
+		}
+	}
+
+
+	##########################################################################################################
+	#
+	# Inline JS
+	#
+	##########################################################################################################
+
+	jsInline.5 < temp.jsCookieConsent
+	jsInline.5.if.isTrue = {$bootstrap.extconf.cookieconsent}
+
+
+	jsFooterInline.3 = TEXT
+	jsFooterInline.3.value (
+
+new LazyLoad({
+	elements_selector: ".lazy",
+	threshold: {$bootstrap.image.lazyLoadThreshold},
+	callback_loaded: function(img) {
+		var zoomOverlay = $(img).parent().parent().find('div.zoom-overlay');
+		if ( zoomOverlay.length ) {
+			var imgwidth = $(img).outerWidth()+'px';
+			var imgheight = $(img).height()+'px';
+			if ( $(window).width() < 576 ) {
+				imgwidth = '100%';
+			}
+			zoomOverlay.addClass('card-img-overlay');
+			if ( imgwidth ) {
+				zoomOverlay.css('max-width', imgwidth);
+			}
+			if ( imgheight ) {
+				zoomOverlay.css('max-height', imgheight);
+			}
+		}
+	}
+});
+
+
+	)
+	jsFooterInline.3.if.isTrue = {$bootstrap.extconf.lazyLoad}
+
+	jsFooterInline.4 = TEXT
+	jsFooterInline.4.value (
+
+hljs.initHighlightingOnLoad();
+
+
+	)
+	jsFooterInline.4.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+	jsFooterInline.5 < temp.jsFooterInline
+	jsFooterInline.5.wrap = (function($){"use strict";|})(jQuery);
+
+}
+
+temp.jsCookieConsent >
+temp.jsFooterInline >
+
+
+##########################################################################################################
+#
+# Conditions
+#
+##########################################################################################################
+
+#plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
+
+
+# Ajax Pagination for EXT:news
+[{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1]
+page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxPagination.js
+plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
+[END]
+[{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 && {$bootstrap.extconf.lazyLoad} == 1]
+page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxLazyPagination.js
+[END]
+
+##########################################################################################################
+# LIGHTBOX (Ekko Lightbox)
+##########################################################################################################
+# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
+[{$bootstrap.config.lightboxSelection} == 2]
+page.jsFooterInline.5.5 >
+page.jsFooterInline.5.5 = TEXT
+page.jsFooterInline.5.5.value (
+
+
+	// lightbox - page.jsFooterInline.5.5
+	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+		event.preventDefault();
+		$(this).ekkoLightbox();
+	});
+
+)
+[END]
+
+##########################################################################################################
+# LIGHTBOX (Lightcase)
+##########################################################################################################
+# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
+[{$bootstrap.config.lightboxSelection} == 3]
+page.jsFooterInline.5.5 >
+page.jsFooterInline.5.5 = TEXT
+page.jsFooterInline.5.5.value (
+
+
+	// lightbox - page.jsFooterInline.5.5
+	$('.lightcaseGallery').lightcase({
+		showSequenceInfo: false,
+		showCaption: true,
+		maxWidth: 1140,
+		maxHeight: 800
+	});
+
+)
+[END]
+
+# Background Image
+[{$bootstrap.config.backgroundImage.enable} == 1]
+page.cssInline {
+	5 = TEXT
+	5.value = body {background-repeat:no-repeat;background-position: center center;background-size: cover;background-attachment: fixed}
+}
+[END]
+
+
+
+
+##########################################################################################################
+#
+# Lightbox mit CDN
+#
+##########################################################################################################
+
+##########################################################################################################
+# LIGHTBOX (Ekko Lightbox)
+##########################################################################################################
+# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
+[{$bootstrap.config.lightboxSelection} == 2 && {$bootstrap.cdn.enable} == 1]
+page.includeCSS.t3sblightboxCDN >
+page.includeCSS.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/{$bootstrap.cdn.ekkoLightbox}/ekko-lightbox.css
+page.includeCSS.t3sblightboxCDN.external = 1
+page.includeJSFooter.t3sblightboxCDN >
+page.includeJSFooter.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/{$bootstrap.cdn.ekkoLightbox}/ekko-lightbox.min.js
+page.includeJSFooter.t3sblightboxCDN.external = 1
+[END]
+
+##########################################################################################################
+# LIGHTBOX (Lightcase)
+##########################################################################################################
+# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
+[{$bootstrap.config.lightboxSelection} == 3 && {$bootstrap.cdn.enable} == 1]
+page.includeCSS.t3sblightboxCDN >
+page.includeCSS.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$bootstrap.cdn.lightcase}/src/css/lightcase.css
+page.includeCSS.t3sblightboxCDN.external = 1
+page.includeJSFooter.t3sblightboxCDN >
+page.includeJSFooter.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$bootstrap.cdn.lightcase}/src/js/lightcase.min.js
+page.includeJSFooter.t3sblightboxCDN.external = 1
+[END]
+
+# load jquery into the header
+[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 1]
+page.includeJSFooterlibs.jqueryCDN >
+page.includeJSLibs {
+	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js
+	jqueryCDN.external = 1
+	jqueryCDN.forceOnTop = 1
+}
+[END]
+
+
+##########################################################################################################
+#
+# Lightbox ohne CDN
+#
+##########################################################################################################
+
+##########################################################################################################
+# LIGHTBOX (Ekko Lightbox)
+##########################################################################################################
+# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
+[{$bootstrap.config.lightboxSelection} == 2 && {$bootstrap.cdn.enable} == 0]
+page.includeCSS.t3sblightbox >
+page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/ekko-lightbox.css
+page.includeJSFooter.t3sblightbox >
+page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/ekko-lightbox.min.js
+[END]
+
+##########################################################################################################
+# LIGHTBOX (Lightcase)
+##########################################################################################################
+# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
+[{$bootstrap.config.lightboxSelection} == 3 && {$bootstrap.cdn.enable} == 0]
+page.includeCSS.t3sblightbox >
+page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/lightcase.css
+page.includeJSFooter.t3sblightbox >
+page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/lightcase.min.js
+[END]
+
+# load jquery into the header
+[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
+page.includeJSFooterlibs.jquery >
+page.includeJSLibs {
+	jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
+	jquery.forceOnTop = 1
+}
+[END]
+
+
+##########################################################################################################
+#
+# FONTAWESOME - minimal installation with required icons and for link icons set in RTE
+#
+##########################################################################################################
+
+[{$bootstrap.config.faLinkIcons} == 1]
+page.includeCSS {
+	t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+	t3sfontawesomeLink.if {
+		value = 1
+		equals = {$bootstrap.extconf.fontawesomeCss}
+	}
+	t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
+	t3sfontawesomeProLink.if {
+		value = 2
+		equals = {$bootstrap.extconf.fontawesomeCss}
+	}
+	t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
+	t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
+}
+[END]
+
+[{$bootstrap.config.faLinkIcons} == 1]
+page.includeCSS {
+	t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
+	t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
+}
+[END]

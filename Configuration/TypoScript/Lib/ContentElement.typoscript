@@ -47,7 +47,7 @@ lib.contentElement {
 					98.wrap = data-caption="|"
 					98.required	= 1
 					99 = TEXT
-					99.data = file:current:title
+					99.data = file:current:description // file:current:title
 					99.stdWrap.htmlSpecialChars = 1
 					99.wrap = title="|"
 					99.required	= 1
@@ -65,6 +65,8 @@ lib.contentElement {
 		lazyLoadBgWrapperImage = {$bootstrap.image.lazyLoadBgWrapperImage}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
+		cdnEnable = {$bootstrap.cdn.enable}
+		containerError = {$bootstrap.config.containerError}
 	}
 
 	variables {
@@ -73,7 +75,6 @@ lib.contentElement {
 	}
 
 	dataProcessing {
-
 		71 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
 		71.recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
 		71.setMaxResults = 10
@@ -85,7 +86,13 @@ lib.contentElement {
 			contentMarginTop = {$bootstrap.config.contentMarginTop}
 		}
 	}
+
 }
+
+
+[{$bootstrap.image.minimumWidth} == 1]
+lib.contentElement.settings.srcsetMobile = 575
+[END]
 
 # 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
 [{$bootstrap.config.lightboxSelection} == 2]
