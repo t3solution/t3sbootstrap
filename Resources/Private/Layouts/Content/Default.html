@@ -2,7 +2,7 @@
 <f:spaceless>
 {containerPre -> f:format.raw()}
 {cardSliderPre -> f:format.raw()}
-<f:if condition="{containerError}">
+<f:if condition="{containerError} && {settings.containerError}">
 	<div class="alert alert-danger" role="alert">
 		Here is a container expected! <small>... you can disable this error message in the constant editor!</small>
 	</div>
