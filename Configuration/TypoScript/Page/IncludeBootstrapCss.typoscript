@@ -19,8 +19,9 @@ page {
 		bootstrapCDN.external = 1
 		bootstrapCDN.forceOnTop = 1
 		bootstrapCDN.if {
+			value = 1
+			equals = {$bootstrap.cdn.enable}
 			isFalse = {$bootstrap.cdn.bootswatch}
-			isTrue = {$bootstrap.cdn.enable}
 		}
 
 		##########################################################################################################
@@ -34,8 +35,9 @@ page {
 		bootswatchCDN.external = 1
 		bootswatchCDN.forceOnTop = 1
 		bootswatchCDN.if {
+			value = 1
+			equals = {$bootstrap.cdn.enable}
 			isTrue = {$bootstrap.cdn.bootswatch}
-			isTrue = {$bootstrap.cdn.enable}
 		}
 	}
 }
