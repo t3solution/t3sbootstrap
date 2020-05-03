@@ -56,6 +56,19 @@ class DefaultHelper implements SingletonInterface
 
 			$container = FALSE;
 
+			foreach ( self::getFrontendController()->rootLine as $page ) {
+				$t3sbconfig = self::getConfig($page['uid']);
+				$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
+				$footerContainer = $t3sbconfig[0]['footer_container'];
+				$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
+				$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+				if(!empty($t3sbconfig)) break;
+			}
+			if ( $data['colPos'] === 3 && $jumbotronContainer ) $container = 'colPosContainer';
+			if ( $data['colPos'] === 4 && $footerContainer ) $container = 'colPosContainer';
+			if ( $data['colPos'] === 20 && $expandedcontentTopContainer ) 'colPosContainer';
+			if ( $data['colPos'] === 21 && $expandedcontentBottomContainer ) 'colPosContainer';
+
 		}
 
 		return trim($container);
