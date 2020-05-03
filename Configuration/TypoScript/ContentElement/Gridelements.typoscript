@@ -1,7 +1,17 @@
-# ===============================================================================
-# tt_content configuration for gridelements
-# ===============================================================================
+
+lib.gridelements.defaultGridSetup >
+tt_content.gridelements_pi1 >
+
+// stdWrap functions being applied to each element
 lib.gridelements.defaultGridSetup {
+	columns {
+		default {
+			renderObj = COA
+			renderObj {
+				20 =< tt_content
+			}
+		}
+	}
 	cObject =< lib.contentElement
 	cObject {
 		templateRootPaths {
@@ -11,6 +21,27 @@ lib.gridelements.defaultGridSetup {
 	}
 	stdWrap.editIcons = tt_content
 }
+
+
+# ===============================================================================
+# tt_content configuration for gridelements
+# ===============================================================================
+
+tt_content.gridelements_pi1 = COA
+tt_content.gridelements_pi1 {
+	20 = COA
+	20 {
+		10 = USER
+		10 {
+			userFunc = GridElementsTeam\Gridelements\Plugin\Gridelements->main
+			setup {
+				default < lib.gridelements.defaultGridSetup
+			}
+		}
+	}
+}
+
+tt_content.gridelements_view < tt_content.gridelements_pi1
 
 
 # ===============================================================================
