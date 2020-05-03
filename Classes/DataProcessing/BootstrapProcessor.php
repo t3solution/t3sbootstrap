@@ -407,7 +407,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		// container class
 		$container = $defaultHelper->getContainerClass($processedData['data']);
-		if ($container) {
+		if ($container && $container != 'colPosContainer') {
 			$processedData['containerPre'] = '<div class="'.$container.'">';
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = $container;
