@@ -665,8 +665,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
 	'columnsOverrides' => [
 		'bodytext' => [
 			'config' => [
-				'enableRichtext' => true,
-				'richtextConfiguration' => 'default'
+				'enableRichtext' => true
 			]
 		],
  		'image' => [
@@ -684,8 +683,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject'] = $GLOBALS['TCA']['t
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject']['columnsOverrides'] = [
 	'bodytext' => [
 		'config' => [
-			'enableRichtext' => true,
-			'richtextConfiguration' => 'default'
+			'enableRichtext' => true
 		]
 	],
 		'assets' => [
