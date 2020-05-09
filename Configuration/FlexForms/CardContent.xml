@@ -29,7 +29,6 @@
 								 <cols>int,trim</cols>
 								 <rows>3</rows>
 								 <enableRichtext>true</enableRichtext>
-								 <richtextConfiguration>default</richtextConfiguration>
 							</config>
 						</TCEforms>
 					</text.top>
@@ -64,7 +63,6 @@
 								 <cols>int,trim</cols>
 								 <rows>3</rows>
 								 <enableRichtext>true</enableRichtext>
-								 <richtextConfiguration>default</richtextConfiguration>
 							</config>
 						</TCEforms>
 					</text.bottom>
