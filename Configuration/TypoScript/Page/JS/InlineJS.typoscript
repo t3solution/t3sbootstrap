@@ -56,7 +56,7 @@ temp.jsFooterInline {
 		}
 	});
 	$('.card a[data-toggle="collapse"]').on('click', function(e) {
-		if ($(this).attr('aria-expanded') ==  'true') {
+		if ($(this).attr('aria-expanded') ==	'true') {
 			return;
 		}
 		$(this).addClass('temp-gets-shown');
@@ -139,10 +139,7 @@ temp.jsFooterInline {
 
 
 )
-3.if {
-	value = 2
-	equals = {$bootstrap.extconf.animateCss}
-}
+3.if.isTrue = {$bootstrap.extconf.animateCss}
 
 4 = TEXT
 4.value (
@@ -943,13 +940,13 @@ temp.jsFooterInline {
 	equals = xl
 }
 
-166 = TEXT
-166.value (
-var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
-jQuery.htmlPrefilter = function( html ) {
-    return html.replace( rxhtmlTag, "<$1></$2>" );
-};
-)
+#166 = TEXT
+#166.value (
+#var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+#jQuery.htmlPrefilter = function( html ) {
+#	return html.replace( rxhtmlTag, "<$1></$2>" );
+#};
+#)
 
 
 

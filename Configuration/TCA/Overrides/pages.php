@@ -143,21 +143,21 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 */
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
-	'Configuration/TSConfig/Registered/Textpic.typoscript',
+	'Configuration/TSConfig/Registered/Textpic.tsconfig',
 	'Remove CType textpic'
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
-	'Configuration/TSConfig/Registered/Text.typoscript',
+	'Configuration/TSConfig/Registered/Text.tsconfig',
 	'Remove CType text'
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
-	'Configuration/TSConfig/Registered/Image.typoscript',
+	'Configuration/TSConfig/Registered/Image.tsconfig',
 	'Remove CType image'
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
-	'Configuration/TSConfig/Registered/Header.typoscript',
+	'Configuration/TSConfig/Registered/Header.tsconfig',
 	'Remove CType header'
 );

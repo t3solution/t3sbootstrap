@@ -68,8 +68,7 @@ tt_content {
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
-				pageContainer.cObject = TEXT
-				pageContainer.cObject.data.dataWrap = DB:pages:{page:uid}:tx_t3sbootstrap_container
+				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 			}
 		}
 	}
@@ -112,9 +111,8 @@ tt_content {
 				minimumWidth = {$bootstrap.image.minimumWidth}
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
-				maxWidthToast =  {$bootstrap.image.maxWidthToast}
-				pageContainer.cObject = TEXT
-				pageContainer.cObject.data.dataWrap = DB:pages:{page:uid}:tx_t3sbootstrap_container
+				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
+				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 			}
 
 		}

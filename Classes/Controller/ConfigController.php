@@ -50,6 +50,7 @@ class ConfigController extends ActionController
 	protected $version;
 
 
+
 	/**
 	 * Inject a configRepository repository to enable DI
 	 *
@@ -221,7 +222,7 @@ class ConfigController extends ActionController
 		$newConfig->setPid((int)$_GET['id']);
 		$this->configRepository->add($newConfig);
 
-		$this->redirect('list');
+		parent::redirect('list');
 	}
 
 
@@ -289,7 +290,7 @@ class ConfigController extends ActionController
 		$config->setHomepageUid($homepageUid);
 
 		$this->configRepository->update($config);
-		$this->redirect('edit',NULL,Null,array('config' => $config));
+		parent::redirect('edit',NULL,Null,array('config' => $config));
 	}
 
 
@@ -303,7 +304,7 @@ class ConfigController extends ActionController
 	{
 		$this->addFlashMessage('The object was deleted.');
 		$this->configRepository->remove($config);
-		$this->redirect('list');
+		parent::redirect('list');
 	}
 
 

@@ -210,6 +210,11 @@ class GalleryProcessor implements DataProcessorInterface
 	protected $maxWidthToast;
 
 	/**
+	 * @var boolean
+	 */
+	protected $disableAutoRow;
+
+	/**
 	 * @var array
 	 */
 	protected $processedData;
@@ -218,7 +223,6 @@ class GalleryProcessor implements DataProcessorInterface
 	 * @var string
 	 */
 	protected $contentContainer;
-
 
 
 	/**
@@ -258,6 +262,10 @@ class GalleryProcessor implements DataProcessorInterface
 			throw new ContentRenderingException('No files found for key ' . $filesProcessedDataKey . ' in $processedData.', 1436809789);
 		}
 
+		if (empty($this->fileObjects)) {
+			return $processedData;
+		}
+
 		$this->numberOfColumns = (int)$this->getConfigurationValue('numberOfColumns', 'imagecols');
 		$this->mediaOrientation = (int)$this->getConfigurationValue('mediaOrientation', 'imageorient');
 		$this->maxGalleryWidth = (int)$this->getConfigurationValue('maxGalleryWidth') ?: 1140;
@@ -277,6 +285,7 @@ class GalleryProcessor implements DataProcessorInterface
 		$this->rowWidth = $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'];
 		$this->maxWidthMediaObject = $this->getConfigurationValue('maxWidthMediaObject');
 		$this->maxWidthToast = $this->getConfigurationValue('maxWidthToast');
+		$this->disableAutoRow = $this->getConfigurationValue('disableAutoRow');
 
 		$this->determineGalleryPosition();
 		$this->calculateRowsAndColumns();
@@ -345,6 +354,10 @@ class GalleryProcessor implements DataProcessorInterface
 	protected function determineMaximumGalleryWidth()
 	{
 
+		if ( $this->rowWidth == 'auto' && $this->disableAutoRow ) {
+			$this->rowWidth == 'none';
+		}
+
 		if ( $this->rowWidth == 'auto' ) {
 
 			if ( $this->cType == 'textmedia' || $this->cType == 'textpic' || $this->cType == 'image' ) {
@@ -408,10 +421,10 @@ class GalleryProcessor implements DataProcessorInterface
 	{
 		// If no columns defined, set it to 1
 		$columns = max((int)$this->numberOfColumns, 1);
-		
+
 		if ($columns === 88) {
 			$columns = 1;
-		} else {			
+		} else {
 			// When more columns than media elements, set the columns to the amount of media elements
 			if ($columns > $this->galleryData['count']['files']) {
 				$columns = $this->galleryData['count']['files'];
@@ -469,7 +482,7 @@ class GalleryProcessor implements DataProcessorInterface
 		// nax media width
 		$mediaWidth = $bsMaxGridWidth;
 
-		if ( $this->rowWidth != 'none' ) {
+		if ( $this->rowWidth && $this->rowWidth != 'none' ) {
 			$rowWidth = (int) end(explode('-', $this->rowWidth));
 		} else {
 			$rowWidth = 100;
@@ -478,8 +491,12 @@ class GalleryProcessor implements DataProcessorInterface
 		// calculate the default padding
 		$padding = self::getDefaultPadding($rowWidth);
 
-		if ( $this->colPos == 0 || $this->colPos == 1 || $this->colPos == 2	|| $this->colPos === -1 ) {
-
+		if ( $this->colPos == 0
+		  || $this->colPos == 1
+		  || $this->colPos == 2
+		  || ($this->colPos === -1 && $this->parentgridColPos < 3)
+		)
+		{
 			if ($this->beLayout == 'OneCol') {
 				$galleryWidth = ($bsMaxGridWidth * $rowWidth / 100 - $padding) - ($this->galleryData['count']['columns']-1) * 16;
 				$mediaWidth = $galleryWidth / $this->galleryData['count']['columns'];
@@ -521,7 +538,12 @@ class GalleryProcessor implements DataProcessorInterface
 		}
 
 		// Jumbotron, footer && expanded content
-		if ( $this->colPos == 3 || $this->colPos == 4 || $this->colPos == 20 || $this->colPos == 21 || $this->colPos === -1 )
+		if ( $this->colPos == 3
+		  || $this->colPos == 4
+		  || $this->colPos == 20
+		  || $this->colPos == 21
+		  || ($this->colPos === -1 && $this->parentgridColPos > 2)
+		)
 		{
 			$galleryWidth = ($bsMaxGridWidth * $rowWidth / 100 - $padding) - ($this->galleryData['count']['columns']-1) * 16;
 			$mediaWidth = $galleryWidth / $this->galleryData['count']['columns'];
@@ -549,17 +571,21 @@ class GalleryProcessor implements DataProcessorInterface
 		// User entered a predefined width
 		if ($this->equalMediaWidth) {
 
-			if ( $this->equalMediaWidth < $mediaWidth ) {
-				$mediaWidth = $this->equalMediaWidth;
-			}
-
-			if ( $this->rowWidth == 'none' ) {
+			if ( ($this->equalMediaWidth < floor($mediaWidth)) || $this->rowWidth == 'none' ) {
 				$mediaWidth = $this->equalMediaWidth;
 			}
 
 			if ( $this->minimumWidth && $mediaWidth < 575  ) {
 				// set to 575px and therefore 100% wide on mobile (constant: minimumWidth=0)
 				$mediaWidth = 575;
+			}
+
+			if ( $this->cType == 't3sbs_mediaobject' && $this->maxWidthMediaObject < $mediaWidth ) {
+				$mediaWidth = $this->maxWidthMediaObject;
+			}
+
+			if ( $this->cType == 't3sbs_toast' && $this->maxWidthToast < $mediaWidth ) {
+				$mediaWidth = $this->maxWidthToast;
 			}
 
 			// User entered a predefined width & height
@@ -623,11 +649,11 @@ class GalleryProcessor implements DataProcessorInterface
 				$mediaWidth = 575;
 			}
 
-			if ( $this->cType == 't3sbs_mediaobject' ) {
+			if ( $this->cType == 't3sbs_mediaobject' && $this->maxWidthMediaObject < $mediaWidth ) {
 				$mediaWidth = $this->maxWidthMediaObject;
 			}
 
-			if ( $this->cType == 't3sbs_toast' ) {
+			if ( $this->cType == 't3sbs_toast' && $this->maxWidthToast < $mediaWidth ) {
 				$mediaWidth = $this->maxWidthToast;
 			}
 
@@ -644,6 +670,10 @@ class GalleryProcessor implements DataProcessorInterface
 
 			}
 		}
+
+
+
+
 
 		$this->galleryData['width'] = floor($mediaWidth);
 	}

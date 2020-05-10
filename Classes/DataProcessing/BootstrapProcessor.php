@@ -412,6 +412,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = $container;
 		}
+
 		if ($processedData['be_layout'] == 'OneCol' && !$container) {
 			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
 			if (!$pageContainer && !$processedData['data']['tx_gridelements_container']) {
@@ -461,7 +462,8 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['data']['tx_t3sbootstrap_animateCss'] = FALSE;
 		}
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
-			$delay = $processedData['data']['tx_t3sbootstrap_animateCssDelay'] ? ' delay-'.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s' : '';
+
+			$delay = $processedData['data']['tx_t3sbootstrap_animateCssDelay'] ? ' delay-'.$processedData['data']['tx_t3sbootstrap_animateCssDelay'] : '';
 			// add to class
 			if( $processedData['data']['tx_t3sbootstrap_animateCssRepeat'] ) {
 				$processedData['class'] .= ' animated bt_hidden '.$delay;

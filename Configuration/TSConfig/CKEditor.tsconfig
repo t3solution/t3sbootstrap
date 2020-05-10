@@ -46,6 +46,15 @@ RTE {
 				rel =
 			}
 
+			tel {
+				class = phone-link
+				type = tel
+				titleText = Call us
+				target = _blank
+				image =
+				#params =
+				rel =
+			}
 		}
 		buttons.link {
 			options.removeItems = folder
@@ -62,7 +71,10 @@ RTE {
 			mail.properties {
 				class.default =
 			}
-			properties.class.allowedClasses = external-link,internal-link,email-link,download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark
+			tel.properties {
+				class.default =
+			}
+			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark
 			queryParametersSelector.enabled = 0
 
 		}

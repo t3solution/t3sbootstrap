@@ -12,9 +12,9 @@
 			<f:if condition="{settings.detail.lightbox.enabled}">
 				<f:then>
 					<f:if condition="{settings.detail.lightbox.selection} == 1">
-	   					<a href="{f:uri.image(image:mediaElement.originalResource,
-		   					width:'{settings.media.popup.width}',
-			   				height:'{settings.media.popup.height}')}"
+							<a href="{f:uri.image(image:mediaElement.originalResource,
+			 					width:'{settings.media.popup.width}',
+				  				height:'{settings.media.popup.height}')}"
 				   			data-caption="{mediaElement.description}">
 							<f:render section="Image" arguments="{file: mediaElement}" />
 						</a>

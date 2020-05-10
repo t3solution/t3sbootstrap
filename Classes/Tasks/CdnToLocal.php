@@ -71,7 +71,7 @@ class CdnToLocal extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'popper.js';
-				$cdnPath = 'https://unpkg.com/@popperjs/core@'.$version;
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -97,14 +97,17 @@ class CdnToLocal extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 				$customFileName = 'highlight.default.min.css';
 				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/styles/default.min.css';
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-
+				$customFileName = 'highlight.a11y-light.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/styles/a11y-light.min.css';
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'highlight.min.js';
 				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/highlight.min.js';
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
+				$customFileName = 'highlight.php.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/languages/php.min.js';
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
 			if ($key == 'lazyload') {

@@ -59,7 +59,7 @@ customTranslationsPath = fileadmin/T3SB/Language/
 
 	# cat=advanced/enable/10; type=options[none=0, FA free=1, FA pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2]; label=Font Awesome 5: include Font Awesome SCSS - if deactivated, only some required icons are loaded (clear cache).
 fontawesomeCss = 0
-	# cat=advanced/enable/20; type=options[none=0, only if needed (did not work for sliding content)=1, on any page (e.g. if using in the footer only)=2]; label=Animate CSS: include Animate CSS und Viewportchecker (clear cache).
+	# cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS und Viewportchecker (clear cache).
 animateCss = 0
 	# cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
 linkHoverEffect = 0
