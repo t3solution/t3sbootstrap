@@ -30,10 +30,7 @@ page {
 		##########################################################################################################
 
 		animatecss = fileadmin/T3SB/Resources/Public/CSS/animate.min.css
-		animatecss.if {
-			value = 2
-			equals = {$bootstrap.extconf.animateCss}
-		}
+		animatecss.if.isTrue = {$bootstrap.extconf.animateCss}
 
 		##########################################################################################################
 		#
@@ -43,6 +40,9 @@ page {
 
 		codesnippet = fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css
 		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+		heighlight = fileadmin/T3SB/Resources/Public/CSS/highlight.a11y-light.min.css
+		heighlight.if.isTrue = {$bootstrap.extconf.codesnippet}
 
 	}
 
@@ -75,6 +75,7 @@ page {
 		##########################################################################################################
 
 		t3sblightbox = fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js
+		t3sblightbox.type = text/javascript
 		t3sblightbox.if {
 			value = 1
 			equals = {$bootstrap.config.lightboxSelection}
@@ -87,6 +88,7 @@ page {
 		##########################################################################################################
 
 		cookieconsentJs = fileadmin/T3SB/Resources/Public/JS/cookieconsent.min.js
+		cookieconsentJs.type = text/javascript
 		cookieconsentJs.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
 		##########################################################################################################
@@ -96,6 +98,7 @@ page {
 		##########################################################################################################
 
 		t3sbjqueryeasing = fileadmin/T3SB/Resources/Public/JS/jquery.easing.min.js
+		t3sbjqueryeasing.type = text/javascript
 		t3sbjqueryeasing.forceOnTop = 1
 
 		##########################################################################################################
@@ -105,7 +108,12 @@ page {
 		##########################################################################################################
 
 		codesnippet = fileadmin/T3SB/Resources/Public/JS/highlight.min.js
+		codesnippet.type = text/javascript
 		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
+
+		heighlight = fileadmin/T3SB/Resources/Public/JS/highlight.php.min.js
+		heighlight.type = text/javascript
+		heighlight.if.isTrue = {$bootstrap.extconf.codesnippet}
 
 		##########################################################################################################
 		#
@@ -114,6 +122,7 @@ page {
 		##########################################################################################################
 
 		lazyload = fileadmin/T3SB/Resources/Public/JS/lazyload.min.js
+		lazyload.type = text/javascript
 		lazyload.if.isTrue = {$bootstrap.extconf.lazyLoad}
 
 		##########################################################################################################
@@ -124,6 +133,7 @@ page {
 
 		# Local
 		picturefill = fileadmin/T3SB/Resources/Public/JS/picturefill.min.js
+		picturefill.type = text/javascript
 		picturefill.if.isTrue = {$bootstrap.image.picturefill}
 
 		##########################################################################################################
@@ -133,10 +143,8 @@ page {
 		##########################################################################################################
 
 		viewportchecker = fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js
-		viewportchecker.if {
-			value = 2
-			equals = {$bootstrap.extconf.animateCss}
-		}
+		viewportchecker.type = text/javascript
+		viewportchecker.if.isTrue = {$bootstrap.extconf.animateCss}
 
 	}
 

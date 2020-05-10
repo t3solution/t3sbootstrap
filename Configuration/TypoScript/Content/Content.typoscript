@@ -28,7 +28,7 @@ lib.dynamicContent {
 			where.insertData = 1
 			pidInList.data = register:pageUid
 		}
-	}	
+	}
 	90 = RESTORE_REGISTER
 }
 

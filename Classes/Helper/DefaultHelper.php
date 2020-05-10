@@ -34,7 +34,7 @@ class DefaultHelper implements SingletonInterface
 
 			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
 
-			if ( $pageContainer === FALSE && $data['colPos'] === 0 ) {
+			if ( $pageContainer === FALSE && ($data['colPos'] === 0 || $data['parentgrid_colPos'] === 0) ) {
 				$container = $data['tx_t3sbootstrap_container'];
 			} else {
 
@@ -44,12 +44,24 @@ class DefaultHelper implements SingletonInterface
 					$footerContainer = $t3sbconfig[0]['footer_container'];
 					$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
 					$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+
+					$footerByPid = $t3sbconfig[0]['footer_pid'];
+
 					if(!empty($t3sbconfig)) break;
 				}
-				if ( $data['colPos'] === 3 && !$jumbotronContainer ) $container = $data['tx_t3sbootstrap_container'];
-				if ( $data['colPos'] === 4 && !$footerContainer ) $container = $data['tx_t3sbootstrap_container'];
-				if ( $data['colPos'] === 20 && !$expandedcontentTopContainer ) $container = $data['tx_t3sbootstrap_container'];
-				if ( $data['colPos'] === 21 && !$expandedcontentBottomContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( ($data['colPos'] === 3 || $data['parentgrid_colPos'] === 3)
+				 && !$jumbotronContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( ($data['colPos'] === 4 || $data['parentgrid_colPos'] === 4)
+				 && !$footerContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( ($data['colPos'] === 20 || $data['parentgrid_colPos'] === 20)
+				 && !$expandedcontentTopContainer ) $container = $data['tx_t3sbootstrap_container'];
+				if ( ($data['colPos'] === 21 || $data['parentgrid_colPos'] === 21)
+				 && !$expandedcontentBottomContainer ) $container = $data['tx_t3sbootstrap_container'];
+
+				if ($footerByPid && ($data['colPos'] === 0 || $data['parentgrid_colPos'] === 0)) {
+					$container = 'colPosContainer';
+				}
+
 			}
 
 		} else {
@@ -62,13 +74,20 @@ class DefaultHelper implements SingletonInterface
 				$footerContainer = $t3sbconfig[0]['footer_container'];
 				$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
 				$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+
+				$footerByPid = $t3sbconfig[0]['footer_pid'];
+
 				if(!empty($t3sbconfig)) break;
 			}
-			if ( $data['colPos'] === 3 && $jumbotronContainer ) $container = 'colPosContainer';
-			if ( $data['colPos'] === 4 && $footerContainer ) $container = 'colPosContainer';
-			if ( $data['colPos'] === 20 && $expandedcontentTopContainer ) 'colPosContainer';
-			if ( $data['colPos'] === 21 && $expandedcontentBottomContainer ) 'colPosContainer';
 
+			if ( ($data['colPos'] === 3 || $data['parentgrid_colPos'] === 3) && $jumbotronContainer ) $container = 'colPosContainer';
+			if ( ($data['colPos'] === 4 || $data['parentgrid_colPos'] === 4) && $footerContainer ) $container = 'colPosContainer';
+			if ( ($data['colPos'] === 20 || $data['parentgrid_colPos'] === 20) && $expandedcontentTopContainer ) $container = 'colPosContainer';
+			if ( ($data['colPos'] === 21 || $data['parentgrid_colPos'] === 21) && $expandedcontentBottomContainer ) $container = 'colPosContainer';
+
+			if ($footerByPid && ($data['colPos'] === 0 || $data['parentgrid_colPos'] === 0)) {
+				$container = 'colPosContainer';
+			}
 		}
 
 		return trim($container);

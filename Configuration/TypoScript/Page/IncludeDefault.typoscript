@@ -1,67 +1,18 @@
 page {
+
 	includeCSS {
 
 		##########################################################################################################
 		#
-		# VARIOUS
+		# Link Hover Effect CSS
 		#
 		##########################################################################################################
-
-		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
-
-		stickyFooter = EXT:t3sbootstrap/Resources/Public/Styles/stickyFooter.css
-		stickyFooter.if {
-			isTrue.cObject = TEXT
-			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:footer_sticky
-		}
-
-		megaMenu = EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css
-		megaMenu.if {
-			isTrue.cObject = TEXT
-			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
-		}
 
 		hoverEffects = EXT:t3sbootstrap/Resources/Public/Styles/hoverEffects.css
 		hoverEffects.if.isTrue = {$bootstrap.extconf.linkHoverEffect}
 
-		# Offcanvas Navbar - dependent on the breakpoint
-		offcanvasNavbarSM = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarSM.css
-		offcanvasNavbarSM.if {
-				value.data = register:breakpoint
-				equals = sm
-				isTrue.cObject = TEXT
-				isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-		}
-		offcanvasNavbarMD = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarMD.css
-		offcanvasNavbarMD.if {
-			value.data = register:breakpoint
-			equals = md
-			isTrue.cObject = TEXT
-			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-		}
-		offcanvasNavbarLG = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarLG.css
-		offcanvasNavbarLG.if {
-			value.data = register:breakpoint
-			equals = lg
-			isTrue.cObject = TEXT
-			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-		}
-		offcanvasNavbarXL = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarXL.css
-		offcanvasNavbarXL.if {
-			value.data = register:breakpoint
-			equals = xl
-			isTrue.cObject = TEXT
-			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-		}
-		offcanvasNavbarNO = EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbarNO.css
-		offcanvasNavbarNO.if {
-			value.data = register:breakpoint
-			equals = no
-			isTrue.cObject = TEXT
-			isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-		}
-
 	}
+
 
 	##########################################################################################################
 	#
@@ -141,13 +92,16 @@ temp.jsFooterInline >
 # Conditions
 #
 ##########################################################################################################
+
 # Ajax Pagination for EXT:news
 [{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1]
 page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxPagination.js
+page.includeJSFooter.ajaxPagination.type = text/javascript
 plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
 [END]
 [{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 && {$bootstrap.extconf.lazyLoad} == 1]
 page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxLazyPagination.js
+page.includeJSFooter.ajaxPagination.type = text/javascript
 [END]
 
 ##########################################################################################################
@@ -203,7 +157,7 @@ page.cssInline {
 
 ##########################################################################################################
 #
-# Lightbox mit CDN
+# Lightbox with CDN
 #
 ##########################################################################################################
 
@@ -217,6 +171,8 @@ page.includeCSS.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-li
 page.includeCSS.t3sblightboxCDN.external = 1
 page.includeJSFooter.t3sblightboxCDN >
 page.includeJSFooter.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/{$bootstrap.cdn.ekkoLightbox}/ekko-lightbox.min.js
+page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.ekkoLightboxIntegrity}
+page.includeJSFooter.t3sblightboxCDN.type = text/javascript
 page.includeJSFooter.t3sblightboxCDN.external = 1
 [END]
 
@@ -230,6 +186,8 @@ page.includeCSS.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$boots
 page.includeCSS.t3sblightboxCDN.external = 1
 page.includeJSFooter.t3sblightboxCDN >
 page.includeJSFooter.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$bootstrap.cdn.lightcase}/src/js/lightcase.min.js
+page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.lightcaseIntegrity}
+page.includeJSFooter.t3sblightboxCDN.type = text/javascript
 page.includeJSFooter.t3sblightboxCDN.external = 1
 [END]
 
@@ -238,6 +196,7 @@ page.includeJSFooter.t3sblightboxCDN.external = 1
 page.includeJSFooterlibs.jqueryCDN >
 page.includeJSLibs {
 	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js
+	jqueryCDN.type = text/javascript
 	jqueryCDN.external = 1
 	jqueryCDN.forceOnTop = 1
 }
@@ -246,7 +205,7 @@ page.includeJSLibs {
 
 ##########################################################################################################
 #
-# Lightbox ohne CDN
+# Lightbox w/o CDN
 #
 ##########################################################################################################
 
@@ -259,6 +218,7 @@ page.includeCSS.t3sblightbox >
 page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/ekko-lightbox.css
 page.includeJSFooter.t3sblightbox >
 page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/ekko-lightbox.min.js
+page.includeJSFooter.t3sblightbox.type = text/javascript
 [END]
 
 ##########################################################################################################
@@ -270,6 +230,7 @@ page.includeCSS.t3sblightbox >
 page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/lightcase.css
 page.includeJSFooter.t3sblightbox >
 page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/lightcase.min.js
+page.includeJSFooter.t3sblightbox.type = text/javascript
 [END]
 
 # load jquery into the header
@@ -277,6 +238,7 @@ page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/lightcase
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
 	jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
+	jquery.type = text/javascript
 	jquery.forceOnTop = 1
 }
 [END]
@@ -300,12 +262,11 @@ page.includeCSS {
 		value = 2
 		equals = {$bootstrap.extconf.fontawesomeCss}
 	}
+
 	t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
 	t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
 }
-[END]
-
-[{$bootstrap.config.faLinkIcons} == 1]
+[ELSE]
 page.includeCSS {
 	t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
 	t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}

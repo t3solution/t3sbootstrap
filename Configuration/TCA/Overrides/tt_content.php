@@ -4,11 +4,23 @@ defined('TYPO3_MODE') or die();
  # if typoscript_rendering is loaded
 if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 
-	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-		'T3SBS.T3sbootstrap',
-		'Pi1',
-		'Content Consent'
-	);
+	if (version_compare(TYPO3_branch, '10.0', '>=')) {
+
+		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+			'T3sbootstrap',
+			'Pi1',
+			'Content Consent'
+		);
+
+	} else {
+
+		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+			'T3SBS.T3sbootstrap',
+			'Pi1',
+			'Content Consent'
+		);
+
+	}
 
 	$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase('t3sbootstrap');
 	$pluginSignature = strtolower($extensionName) . '_pi1';

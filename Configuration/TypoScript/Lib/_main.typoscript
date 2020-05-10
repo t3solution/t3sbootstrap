@@ -11,12 +11,12 @@ lib.parseFunc_RTE.tags := addToList( mark)
 lib.parseFunc_RTE.externalBlocks.table.stdWrap{
   HTMLparser = 1
   HTMLparser {
-    tags.table.fixAttrib.class {
-      default = table
-      always = 1
-      list >
-    }
-    keepNonMatchedTags = 1
+	tags.table.fixAttrib.class {
+	  default = table
+	  always = 1
+	  list >
+	}
+	keepNonMatchedTags = 1
   }
 }
 
@@ -43,9 +43,9 @@ lib.currentDate {
 
 lib.currentDomain = TEXT
 lib.currentDomain {
-    dataWrap = {getIndpEnv:TYPO3_REQUEST_HOST}|
-    typolink.parameter.current = 1
-    typolink.returnLast = url
+	dataWrap = {getIndpEnv:TYPO3_REQUEST_HOST}|
+	typolink.parameter.current = 1
+	typolink.returnLast = url
 }
 
 lib.printButton = COA

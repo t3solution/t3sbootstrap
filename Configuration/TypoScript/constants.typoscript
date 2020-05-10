@@ -21,41 +21,68 @@ plugin.tx_t3sbootstrap {
 # customcategory=bootstrap-cdn=* T3SB::CDN-Settings
 # customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
 # customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
+# customsubcategory=c-integrity=CDN Integrity - if set crossorigin is set to anonymous
 bootstrap.cdn {
-	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Rescources/Private/
+	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Private/
 	enable = 1
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Pulse=pulse, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Yeti=yeti]; label=Bootswatch Themes CDN - works only without EXT ws_scss: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
 	bootswatch = 0
+
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
 	bootstrap = 4.4.1
-	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js: set to 2 only to get v2.x (latest)
-	popperjs = 2
-	# cat=bootstrap-cdn/b-version/20; type=small; label=Fontawesome:
+	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
+	popperjs = 2.4.0
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
 	fontawesome = 5.13.0
-	# cat=bootstrap-cdn/b-version/30; type=small; label=jQuery library: jQuery 3.5.0 won't work with Bootstrap 4.4.1. Dropdowns and collapse don't work. Reverted to jQuery 3.4.1 to make it work.
+	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library: jQuery 3.5.0 won't work with Bootstrap 4.4.1. Dropdowns and collapse don't work. Reverted to jQuery 3.4.1 to make it work.
 	jquery = 3.4.1
-	# cat=bootstrap-cdn/b-version/50; type=small; label=jQuery Easing:
+	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
-	# cat=bootstrap-cdn/b-version/11; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
+	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
-	# cat=bootstrap-cdn/b-version/60; type=small; label=Highlight: used with codesnippet
+	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
 	highlight = 9.18.1
-	# cat=bootstrap-cdn/b-version/70; type=small; label=Lazyload:
+	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
 	lazyload = 15.1.1
-	# cat=bootstrap-cdn/b-version/80; type=small; label=Picturefill:
+	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
-	# cat=bootstrap-cdn/b-version/80; type=small; label=Viewportchecker:
+	# cat=bootstrap-cdn/b-version/35; type=small; label=Viewportchecker:
 	viewportchecker = 1.8.8
-	# cat=bootstrap-cdn/b-version/100; type=small; label=Animate CSS:
+	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
 	animate = 3.7.2
-	# cat=bootstrap-cdn/b-version/500; type=small; label=Baguette Box:
+	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
 	baguetteBox = 1.11.0
-	# cat=bootstrap-cdn/b-version/501; type=small; label=Ekko Lightbox:
+	# cat=bootstrap-cdn/b-version/42; type=small; label=Ekko Lightbox:
 	ekkoLightbox = 5.3.0
-	# cat=bootstrap-cdn/b-version/502; type=small; label=Lightcase:
+	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
 	lightcase = 2.5.0
-	# cat=bootstrap-cdn/b-version/600; type=small; label=YouTube player - jquery.mb.YTPlayer: 
+	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
 	ytPlayer = 3.3.1
+
+	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
+	bootstrapJsIntegrity = sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6
+	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
+	popperjsIntegrity =
+	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
+	jqueryIntegrity =
+	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
+	jqueryEasingIntegrity =
+	# cat=bootstrap-cdn/c-integrity/25; type=small; label=Cookieconsent:
+	cookieconsentIntegrity =
+	# cat=bootstrap-cdn/c-integrity/27; type=small; label=Highlight:
+	highlightIntegrity =
+	# cat=bootstrap-cdn/c-integrity/30; type=small; label=Lazyload:
+	lazyloadIntegrity =
+	# cat=bootstrap-cdn/c-integrity/32; type=small; label=Picturefill:
+	picturefillIntegrity =
+	# cat=bootstrap-cdn/c-integrity/35; type=small; label=Viewportchecker:
+	viewportcheckerIntegrity =
+	# cat=bootstrap-cdn/c-integrity/37; type=small; label=Baguette Box:
+	baguetteBoxIntegrity =
+	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Ekko Lightbox:
+	ekkoLightboxIntegrity =
+	# cat=bootstrap-cdn/c-integrity/42; type=small; label=Lightcase:
+	lightcaseIntegrity =
 }
 
 
@@ -77,7 +104,7 @@ bootstrap.config {
 	# cat=bootstrap-config/a-config/30; type=boolean; label=jQuery in header: load jquery into the header if activated.
 	jqueryHeader = 0
 
-	# cat=bootstrap-config/b-config/10; type=boolean; label=Compress: compress and concatenate JS and CSS.
+	# cat=bootstrap-config/b-config/10; type=boolean; label=Compress: compress and concatenate JS and CSS - did not work with CDN.
 	compress = 1
 	# cat=bootstrap-config/b-config/20; type=boolean; label=Disable Prefix Comment:
 	disablePrefixComment = 1
@@ -142,7 +169,7 @@ bootstrap.config {
 	# cat=bootstrap-config/e-config/070; type=options[py-1=1, py-2=2, py-3=3, py-4=4, py-5=5, py-x=x]; label=Padding for Shrinking Navbar: py-x can be set by your stylesheet
 	shrinkingNavPadding = 5
 	# cat=bootstrap-config/e-config/090; type=small; label=Favicon: path to your favicon e.g.: EXT:t3sbootstrap/Resources/Public/Icons/favicon.ico
-	favicon = typo3conf/ext/t3sbootstrap/Resources/Public/Icons/favicon.ico
+	favicon =
 	# cat=bootstrap-config/e-config/110; type=boolean; label=Card Flipper: rotate on click.
 	cardFlipperOnClick = 0
 	# cat=bootstrap-config/e-config/120; type=boolean; label=Language Menu Style: you have the choice between two layouts - with Fontawesome icon (globe) or current language with flag.
@@ -163,14 +190,17 @@ bootstrap.image {
 	minimumWidth = 0
 	# cat=bootstrap-image/a-image/40; type=boolean; label=Ratio: if enabled use width and height for ratio in textmedia, textpic, image, card and media object.
 	ratioWithHeight = 0
-	# cat=bootstrap-image/a-image/50; type=boolean; label=Max. image width Media object: the default max. width for the media object.
+	# cat=bootstrap-image/a-image/50; type=small; label=Max. image width Media object: the default max. width for the media object.
 	maxWidthMediaObject = 200
-	# cat=bootstrap-image/a-image/60; type=boolean; label=Max. image width Toast: the default max. width for Bootstrap toast.
+	# cat=bootstrap-image/a-image/60; type=small; label=Max. image width Toast: the default max. width for Bootstrap toast.
 	maxWidthToast = 20
+	# cat=bootstrap-image/a-image/70; type=boolean; label=Disable auto row: the default "Gallery row width in % = auto" is set to "none" if activated.
+	disableAutoRow = 1
+
 	# cat=bootstrap-image/b-image/10; type=small; label=Additional Image Sizes for Desktop min-width 1200px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
 	srcsetDesktop = 125, 255, 385, 576, 768, 992, 1200
 	# cat=bootstrap-image/b-image/20; type=small; label=Additional Image Sizes for Tablet min-width 576px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
-	srcsetTablet = 385, 576, 768, 992, 1200
+	srcsetTablet = 125, 255, 385, 576, 768, 992, 1200
 	# cat=bootstrap-image/b-image/30; type=small; label=Additional Image Sizes for Mobile max-width 575px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
 	srcsetMobile = 60, 100, 200, 385, 575
 	# cat=bootstrap-image/c-image/010; type=int+; label=Threshold for Lazy load: if "lazyLoad" is activated in the EM config, the distance out of the viewport, expressed in pixel, before which to start loading the images.
@@ -232,6 +262,9 @@ bootstrap.pagebrowser.nextItem = nextsection|next
 bootstrap.pagebrowser.entryLevel = 1
 
 bootstrap.animateCssInlineJs = classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0
+
+# disable default css & js included in ConfigProcessor->includeRequiredFiles
+bootstrap.config.disableDefaultCss = 0
 
 bootstrap.navbar {
 	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-solid.svg

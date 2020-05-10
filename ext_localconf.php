@@ -29,9 +29,9 @@ call_user_func(function () {
 	 * TsConfig
 	 */
 	 # Page
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/Page.typoscript">');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/Page.tsconfig">');
 	# CKEditor
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.typoscript">');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig">');
 
 	/***************
 	 * Default Constants
@@ -78,17 +78,35 @@ call_user_func(function () {
 		/***************
 		 * plugin content consent
 		 */
-		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-			'T3SBS.T3sbootstrap',
-			'Pi1',
-			[
-				'Consent' => 'index, ajax',
-			],
-			// non-cacheable actions
-			[
-				'Consent' => 'ajax',
-			]
-		);
+		if (version_compare(TYPO3_branch, '10.0', '>=')) {
+
+			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+				'T3sbootstrap',
+				'Pi1',
+				[
+					'Consent' => 'index, ajax',
+				],
+				// non-cacheable actions
+				[
+					'Consent' => 'ajax',
+				]
+			);
+
+		} else {
+
+			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+				'T3SBS.T3sbootstrap',
+				'Pi1',
+				[
+					'Consent' => 'index, ajax',
+				],
+				// non-cacheable actions
+				[
+					'Consent' => 'ajax',
+				]
+			);
+
+		}
 
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 1');
 	}
@@ -108,7 +126,7 @@ call_user_func(function () {
 	 # if news is loaded
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('news') && array_key_exists('extNews', $extconf) && $extconf['extNews'] === '1' ) {
 	 	# TsConfig
-	 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.typoscript">');
+	 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig">');
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('t3sbootstrap',
 				 'setup','<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TypoScript/setup.typoscript">','defaultContentRendering'
 		);
@@ -256,10 +274,10 @@ call_user_func(function () {
 	// Optional "expanded content"
 	if (array_key_exists('expandedContent', $extconf) && $extconf['expandedContent'] === '1') {
 		# expanded content on top and bottom
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/_main.typoscript">');
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/_main.tsconfig">');
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.expandedContent = 1');
 	} else {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.typoscript">');
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.tsconfig">');
 	}
 	// Optional "config override"
 	if (array_key_exists('configOverride', $extconf) && $extconf['configOverride'] === '1') {
