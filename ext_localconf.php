@@ -84,11 +84,11 @@ call_user_func(function () {
 				'T3sbootstrap',
 				'Pi1',
 				[
-					'Consent' => 'index, ajax',
+					\T3SBS\T3sbootstrap\Controller\ConsentController::class => 'index, ajax',
 				],
 				// non-cacheable actions
 				[
-					'Consent' => 'ajax',
+					\T3SBS\T3sbootstrap\Controller\ConsentController::class => 'ajax',
 				]
 			);
 
