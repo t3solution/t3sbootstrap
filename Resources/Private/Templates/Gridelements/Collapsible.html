@@ -20,6 +20,12 @@
 			<h5 class="mb-0{f:if(condition: '{media.originalFile}', then: ' align-self-center')}{f:if(condition: '{header.class}',then: ' {header.class}')}">
 				{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
 				{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}
+				<f:if condition="{data.subheader}">
+					<br />
+					<small class="m-0 d-block mt-1{f:if(condition: '{settings.subheaderColor}', then: ' text-{settings.subheaderColor}')}">
+						{data.subheader -> f:format.raw()}
+					</small>
+				</f:if>
 			</h5>
 		</div>
 	</a>
