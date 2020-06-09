@@ -498,7 +498,12 @@ class GalleryProcessor implements DataProcessorInterface
 		)
 		{
 
-			$defaultSmallColumns = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'];
+			if (isset($GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'])) {
+				$defaultSmallColumns = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'];	
+			} else {
+				$defaultSmallColumns = 0;	
+			}			
+
 			$smallColumns = $defaultSmallColumns ?: self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
 			
 			if ($this->beLayout == 'OneCol') {
