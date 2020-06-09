@@ -497,13 +497,17 @@ class GalleryProcessor implements DataProcessorInterface
 		  || ($this->colPos === -1 && $this->parentgridColPos < 3)
 		)
 		{
+
+			$defaultSmallColumns = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'];
+			$smallColumns = $defaultSmallColumns ?: self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
+			
 			if ($this->beLayout == 'OneCol') {
 				$galleryWidth = ($bsMaxGridWidth * $rowWidth / 100 - $padding) - ($this->galleryData['count']['columns']-1) * 16;
 				$mediaWidth = $galleryWidth / $this->galleryData['count']['columns'];
 
 			} elseif ($this->beLayout == 'ThreeCol') {
 
-				$bsAsideGridWidth = $bsMaxGridWidth / 12 * (int) self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
+				$bsAsideGridWidth = $bsMaxGridWidth / 12 * (int) $smallColumns;
 				$bsMainGridWidth = $bsMaxGridWidth - $bsAsideGridWidth * 2;
 
 				// Main
@@ -520,7 +524,7 @@ class GalleryProcessor implements DataProcessorInterface
 
 			} else {
 
-				$bsAsideGridWidth = $bsMaxGridWidth / 12 * (int) self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
+				$bsAsideGridWidth = $bsMaxGridWidth / 12 * (int) $smallColumns;
 				$bsMainGridWidth = $bsMaxGridWidth - $bsAsideGridWidth;
 
 				// Main
@@ -554,16 +558,16 @@ class GalleryProcessor implements DataProcessorInterface
 
 			switch ($this->parentgridGridelementsBackendLayout) {
 				case 'two_columns':
-					$mediaWidth = $mediaWidth / 2 - 5;
+					$mediaWidth = $mediaWidth / 12 * 10 - 5;
 					break;
 				case 'three_columns':
-					$mediaWidth = $mediaWidth / 3 - 20;
+					$mediaWidth = $mediaWidth / 12 * 8 - 20;
 					break;
 				case 'four_columns':
-					$mediaWidth = $mediaWidth / 4 - 25;
+					$mediaWidth = $mediaWidth / 12 * 6 - 25;
 					break;
 				case 'six_columns':
-					$mediaWidth = $mediaWidth / 6 - 25;
+					$mediaWidth = $mediaWidth / 12 * 4 - 25;
 					break;
 			}
 		}
