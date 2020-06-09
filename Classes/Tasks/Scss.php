@@ -55,43 +55,41 @@ class Scss extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 
 			foreach ($siteroots as $key=>$siteroot) {
 
-				if ($siteroot['pid'] ===  0) {
+				if ($key === 0) {
+					$customFileName = 'custom-variables.scss';
+					$customFileNameOverride = 'custom.scss';
+					$boottstrapFileName = 'bootstrap.scss';
+				} else {
+					$customFileName = 'custom-variables-'.$siteroot['uid'].'.scss';
+					$customFileNameOverride = 'custom-'.$siteroot['uid'].'.scss';
+					$boottstrapFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
+				}
 
-					if ($key === 0) {
-						$customFileName = 'custom-variables.scss';
-						$customFileNameOverride = 'custom.scss';
-						$boottstrapFileName = 'bootstrap.scss';
-					} else {
-						$customFileName = 'custom-variables-'.$siteroot['uid'].'.scss';
-						$customFileNameOverride = 'custom-'.$siteroot['uid'].'.scss';
-						$boottstrapFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
+				self::writeCustomFile($customPath, $customFileName, $settings, '_variables');
+				self::writeCustomFile($customPath, $customFileNameOverride, $settings, '_bootswatch');
+
+				if ( $settings['rollyourown'] ) {
+					self::rollYourOwn($boottstrapFileName, $customPath, $settings);
+				}
+
+				# Include
+				$includeDir = 'uploads/tx_t3sbootstrap/';
+				$includePath = GeneralUtility::getFileAbsFileName($includeDir);
+
+				if ($key === 0) {
+					self::deleteFilesFromDirectory($includePath);
+					$includeFileName = 'bootstrap.scss';
+				} else {
+					$includeFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
+				}
+
+				$includeFile = $includePath.$includeFileName;
+
+				if (!file_exists($includeFile)) {
+
+					if (!is_dir($includePath)) {
+						mkdir($includePath, 0777, true);
 					}
-
-					self::writeCustomFile($customPath, $customFileName, $settings, '_variables');
-					self::writeCustomFile($customPath, $customFileNameOverride, $settings, '_bootswatch');
-
-					if ( $settings['rollyourown'] ) {
-						self::rollYourOwn($boottstrapFileName, $customPath, $settings);
-					}
-
-					# Include
-					$includeDir = 'uploads/tx_t3sbootstrap/';
-					$includePath = GeneralUtility::getFileAbsFileName($includeDir);
-
-					if ($key === 0) {
-						self::deleteFilesFromDirectory($includePath);
-						$includeFileName = 'bootstrap.scss';
-					} else {
-						$includeFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
-					}
-
-					$includeFile = $includePath.$includeFileName;
-
-					if (!file_exists($includeFile)) {
-
-						if (!is_dir($includePath)) {
-							mkdir($includePath, 0777, true);
-						}
 
 if ( $settings['rollyourown'] ) {
 
@@ -127,9 +125,7 @@ if ( $settings['rollyourown'] ) {
 					}
 
 }
-
-						GeneralUtility::writeFile($includeFile, $includeContent);
-					}
+					GeneralUtility::writeFile($includeFile, $includeContent);
 				}
 			}
 
