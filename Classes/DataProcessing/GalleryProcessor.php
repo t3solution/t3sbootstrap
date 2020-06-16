@@ -504,6 +504,8 @@ class GalleryProcessor implements DataProcessorInterface
 				$defaultSmallColumns = 0;	
 			}			
 
+			$defaultSmallColumns = $this->processorConfiguration['overrideSmallColumns'] ?: $defaultSmallColumns;
+			
 			$smallColumns = $defaultSmallColumns ?: self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
 			
 			if ($this->beLayout == 'OneCol') {
