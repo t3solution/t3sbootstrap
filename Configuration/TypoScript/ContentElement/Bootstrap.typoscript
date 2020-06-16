@@ -28,6 +28,7 @@ tt_content {
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
+				overrideSmallColumns = {$pages.override.smallColumns}
 			}
 			223 = T3SBS\T3sbootstrap\DataProcessing\CardProcessor
 		}
@@ -69,6 +70,7 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
+				overrideSmallColumns = {$pages.override.smallColumns}
 			}
 		}
 	}
@@ -113,6 +115,7 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
+				overrideSmallColumns = {$pages.override.smallColumns}
 			}
 
 		}
