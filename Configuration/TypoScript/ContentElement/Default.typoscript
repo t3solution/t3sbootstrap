@@ -17,6 +17,7 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
+				overrideSmallColumns = {$pages.override.smallColumns}
 			}
 		}
 	}
@@ -35,6 +36,7 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
+				overrideSmallColumns = {$pages.override.smallColumns}
 			}
 		}
 	}
@@ -53,6 +55,7 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
+				overrideSmallColumns = {$pages.override.smallColumns}
 			}
 		}
 	}
