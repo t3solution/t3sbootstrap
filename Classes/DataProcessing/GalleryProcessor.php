@@ -21,6 +21,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\ContentObject\Exception\ContentRenderingException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Service\FlexFormService;
 
 
 /**
@@ -219,11 +220,6 @@ class GalleryProcessor implements DataProcessorInterface
 	 */
 	protected $processedData;
 
-	/**
-	 * @var string
-	 */
-	protected $contentContainer;
-
 
 	/**
 	 * Process data for a gallery, for instance the CType "textmedia"
@@ -278,8 +274,26 @@ class GalleryProcessor implements DataProcessorInterface
 		$this->minimumWidth = $this->getConfigurationValue('minimumWidth');
 		$this->ratioWithHeight = $this->getConfigurationValue('ratioWithHeight');
 		$this->parentgridGridelementsBackendLayout = $processedData['data']['parentgrid_tx_gridelements_backend_layout'];
-		$this->pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
-		$this->contentContainer = $processedData['data']['tx_t3sbootstrap_container'];
+
+		$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'];
+		if ( isset($GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_container']) )
+		$defaultPageContainer = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_container'];
+		$contentContainer = $processedData['data']['tx_t3sbootstrap_container'];
+		if ( isset($GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['tt_content.']['tx_t3sbootstrap_container']) )
+		$defaultContentContainer = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['tt_content.']['tx_t3sbootstrap_container'];
+
+		if ( $pageContainer ) {
+			$this->pageContainer = $pageContainer;
+		} elseif ( $contentContainer ) {
+			$this->pageContainer = $contentContainer;
+		} elseif ( $defaultPageContainer ) {
+			$this->pageContainer = $defaultPageContainer;
+		} elseif ( $defaultContentContainer ) {
+			$this->pageContainer = $defaultContentContainer;
+		} else {
+			$this->pageContainer = '';
+		}
+
 		$this->bodytext = $processedData['data']['bodytext'];
 		$this->cType = $processedData['data']['CType'];
 		$this->rowWidth = $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'];
@@ -385,30 +399,28 @@ class GalleryProcessor implements DataProcessorInterface
 					$this->rowWidth = 100;
 				}
 
-			} else {
-
-				if ( $this->cType == 't3sbs_card' && $this->processedData['data']['tx_gridelements_container']
+			// Cards in card-wrapper inside a container
+			} elseif ( $this->cType == 't3sbs_card' && $this->processedData['data']['tx_gridelements_container']
 					 && $this->processedData['data']['parentgrid_tx_gridelements_backend_layout'] == 'card_wrapper') {
 
-					$children = self::getContentRecord($this->processedData['data']['tx_gridelements_container'], 'tx_gridelements_container');
+				$children = self::getContentRecord($this->processedData['data']['tx_gridelements_container'], 'tx_gridelements_container');
 
-					$x = 0;
-					if (is_array($children))
-					$x = (int) floor(100 / count($children));
+				$x = 0;
+				if (is_array($children))
+				$x = (int) floor(100 / count($children));
 
-					if ( $x == 100 ) {
-						$this->rowWidth = 100;
-					} elseif ( $x == 50 ) {
-						$this->rowWidth = 50;
-					} elseif ( $x == 33 ) {
-						$this->rowWidth = 33;
-					} elseif ( $x < 33 ) {
-						$this->rowWidth = 25;
-					}
-
-				} else {
+				if ( $x == 100 ) {
 					$this->rowWidth = 100;
+				} elseif ( $x == 50 ) {
+					$this->rowWidth = 50;
+				} elseif ( $x == 33 ) {
+					$this->rowWidth = 33;
+				} elseif ( $x < 33 ) {
+					$this->rowWidth = 25;
 				}
+
+			} else {
+				$this->rowWidth = 100;
 			}
 		}
 	}
@@ -454,35 +466,33 @@ class GalleryProcessor implements DataProcessorInterface
 	protected function calculateMediaWidthsAndHeights()
 	{
 
-		if ( $this->processedData['data']['tx_gridelements_container'] && $this->pageContainer == FALSE ) {
+		if ( $this->processedData['data']['tx_gridelements_container'] && !$this->pageContainer ) {
 			$parent = self::getContentRecord($this->processedData['data']['tx_gridelements_container']);
 			if ( $parent[0]['tx_t3sbootstrap_container'] ) {
-				$this->pageContainer = TRUE;
+				$this->pageContainer = $parent[0]['tx_t3sbootstrap_container'];
 			} else {
 				if ( $parent[0]['tx_gridelements_container'] ) {
 					$grandParent = self::getContentRecord($parent[0]['tx_gridelements_container']);
 					if ( $grandParent[0]['tx_t3sbootstrap_container'] ) {
-						$this->pageContainer = TRUE;
+						$this->pageContainer = $grandParent[0]['tx_t3sbootstrap_container'];
 					}
 				}
 			}
-		} else {
-
-			if ($this->pageContainer == FALSE)
-			$this->pageContainer = $this->processedData['data']['tx_t3sbootstrap_container'] ? TRUE : FALSE;
 		}
 
-		if ($this->pageContainer == 'container') {
-			$bsMaxGridWidth = 1140;
-		} else {
+		if ( $this->pageContainer == 'container-fluid' ) {
 			// styles.content.textmedia.maxW
 			$bsMaxGridWidth = $this->maxGalleryWidth;
+		} elseif ( $this->pageContainer == 'container-fluid px-0' ) {
+			$bsMaxGridWidth = $this->maxGalleryWidth + 30;
+		} else {
+			$bsMaxGridWidth = 1140;
 		}
 
 		// nax media width
 		$mediaWidth = $bsMaxGridWidth;
 
-		if ( $this->rowWidth && $this->rowWidth != 'none' ) {
+		if ( $this->rowWidth && $this->rowWidth != 'none' && is_string($this->rowWidth) ) {
 			$rowWidth = (int) end(explode('-', $this->rowWidth));
 		} else {
 			$rowWidth = 100;
@@ -492,23 +502,23 @@ class GalleryProcessor implements DataProcessorInterface
 		$padding = self::getDefaultPadding($rowWidth);
 
 		if ( $this->colPos == 0
-		  || $this->colPos == 1
-		  || $this->colPos == 2
-		  || ($this->colPos === -1 && $this->parentgridColPos < 3)
+			|| $this->colPos == 1
+			|| $this->colPos == 2
+			|| ($this->colPos === -1 && $this->parentgridColPos < 3)
 		)
 		{
-
-			if (isset($GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'])) {
-				$defaultSmallColumns = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'];	
+			if ( $this->processorConfiguration['overrideSmallColumns'] ) {
+				$defaultSmallColumns = $this->processorConfiguration['overrideSmallColumns'];
+			} elseif (isset($GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'])) {
+				$defaultSmallColumns = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'];
 			} else {
-				$defaultSmallColumns = 0;	
-			}			
+				$defaultSmallColumns = 0;
+			}
 
-			$defaultSmallColumns = $this->processorConfiguration['overrideSmallColumns'] ?: $defaultSmallColumns;
-			
 			$smallColumns = $defaultSmallColumns ?: self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
-			
+
 			if ($this->beLayout == 'OneCol') {
+
 				$galleryWidth = ($bsMaxGridWidth * $rowWidth / 100 - $padding) - ($this->galleryData['count']['columns']-1) * 16;
 				$mediaWidth = $galleryWidth / $this->galleryData['count']['columns'];
 
@@ -550,10 +560,10 @@ class GalleryProcessor implements DataProcessorInterface
 
 		// Jumbotron, footer && expanded content
 		if ( $this->colPos == 3
-		  || $this->colPos == 4
-		  || $this->colPos == 20
-		  || $this->colPos == 21
-		  || ($this->colPos === -1 && $this->parentgridColPos > 2)
+			|| $this->colPos == 4
+			|| $this->colPos == 20
+			|| $this->colPos == 21
+			|| ($this->colPos === -1 && $this->parentgridColPos > 2)
 		)
 		{
 			$galleryWidth = ($bsMaxGridWidth * $rowWidth / 100 - $padding) - ($this->galleryData['count']['columns']-1) * 16;
@@ -561,26 +571,14 @@ class GalleryProcessor implements DataProcessorInterface
 		}
 
 		// Child of gridelement
-		if ($this->parentgridGridelementsBackendLayout) {
+		if ( $this->parentgridGridelementsBackendLayout ) {
 
-			switch ($this->parentgridGridelementsBackendLayout) {
-				case 'two_columns':
-					$mediaWidth = $mediaWidth / 12 * 10 - 5;
-					break;
-				case 'three_columns':
-					$mediaWidth = $mediaWidth / 12 * 8 - 20;
-					break;
-				case 'four_columns':
-					$mediaWidth = $mediaWidth / 12 * 6 - 25;
-					break;
-				case 'six_columns':
-					$mediaWidth = $mediaWidth / 12 * 4 - 25;
-					break;
-			}
+			$mediaWidth = self::getCalculatedGridWidth($mediaWidth);
+
 		}
 
 		// User entered a predefined width
-		if ($this->equalMediaWidth) {
+		if ( $this->equalMediaWidth ) {
 
 			if ( ($this->equalMediaWidth < floor($mediaWidth)) || $this->rowWidth == 'none' ) {
 				$mediaWidth = $this->equalMediaWidth;
@@ -600,7 +598,7 @@ class GalleryProcessor implements DataProcessorInterface
 			}
 
 			// User entered a predefined width & height
-			if ($this->equalMediaHeight) {
+			if ( $this->equalMediaHeight ) {
 
 				// Set the corrected dimensions for each media element
 				foreach ($this->fileObjects as $key => $fileObject) {
@@ -682,12 +680,9 @@ class GalleryProcessor implements DataProcessorInterface
 			}
 		}
 
-
-
-
-
 		$this->galleryData['width'] = floor($mediaWidth);
 	}
+
 
 	/**
 	 * When retrieving the height or width for a media file
@@ -708,6 +703,7 @@ class GalleryProcessor implements DataProcessorInterface
 		$cropVariantCollection = CropVariantCollection::create((string)$croppingConfiguration);
 		return (int) $cropVariantCollection->getCropArea($this->cropVariant)->makeAbsoluteBasedOnFile($fileObject)->asArray()[$dimensionalProperty];
 	}
+
 
 	/**
 	 * Prepare the gallery data
@@ -774,10 +770,11 @@ class GalleryProcessor implements DataProcessorInterface
 		return $padding;
 	}
 
+
 	/**
 	 * Returns
 	 *
-	 * @return
+	 * @return $result
 	 */
 	protected function getContentRecord($uid, $equal='uid')
 	{
@@ -791,6 +788,99 @@ class GalleryProcessor implements DataProcessorInterface
 				 ->execute()->fetchAll();
 
 		return $result;
+	}
+
+
+	/**
+	 * Returns calculated grid width
+	 *
+	 * @param int $maxMediaWidth
+	 *
+	 * @return $mediaWidth
+	 */
+	protected function getCalculatedGridWidth($maxMediaWidth)
+	{
+
+		switch ($this->parentgridGridelementsBackendLayout) {
+			case 'two_columns':
+				if ( $this->processedData['data']['tx_gridelements_columns'] == 0 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'one');
+				} else {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'two');
+				}
+				break;
+			case 'three_columns':
+				if ( $this->processedData['data']['tx_gridelements_columns'] == 0 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'one');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 1 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'two');
+				} else {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'three');
+				}
+				break;
+			case 'four_columns':
+				if ( $this->processedData['data']['tx_gridelements_columns'] == 0 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'one');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 1 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'two');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 2 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'three');
+				} else {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'four');
+				}
+				break;
+			case 'six_columns':
+				if ( $this->processedData['data']['tx_gridelements_columns'] == 0 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'one');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 1 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'two');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 2 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'three');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 3 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'four');
+				} elseif ( $this->processedData['data']['tx_gridelements_columns'] == 4 ) {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'five');
+				} else {
+					$mediaWidth = self::getGridWidth($maxMediaWidth, 'six');
+				}
+				break;
+		}
+
+		return $mediaWidth;
+	}
+
+
+	/**
+	 * Returns $ mediaWidth if there is a parent grid element
+	 *
+	 * @param int $maxMediaWidth
+	 * @param string $suffix
+	 *
+	 * @return int $padding
+	 */
+	protected function getGridWidth($maxMediaWidth, $suffix)
+	{
+		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+		$parentflexconf = $flexFormService->convertFlexFormContentToArray($this->processedData['data']['parentgrid_tx_t3sbootstrap_flexform']);
+
+		// width of Bootstrap gridsystem
+		$gridWidth = $maxMediaWidth + 30;
+		// Bootstrap gutter width (should be 7.5 but 7 is on the safe side because of the later rounding)
+		$gutterWidth = $parentflexconf['noGutters'] ? 7 : 30;
+		// # of Bootstrap columns
+		$columns = 12;
+
+		if ($parentflexconf['md_'.$suffix] != 0) {
+			$mediaWidth = $gridWidth / $columns * $parentflexconf['md_'.$suffix] - $gutterWidth;
+		} elseif ($parentflexconf['lg_'.$suffix] != 0) {
+			$mediaWidth = $gridWidth / $columns * $parentflexconf['lg_'.$suffix] - $gutterWidth;
+		} elseif ($parentflexconf['xl_'.$suffix] != 0) {
+			$mediaWidth = $gridWidth / $columns * $parentflexconf['xl_'.$suffix] - $gutterWidth;
+		} else {
+			$mediaWidth = $gridWidth / $columns * 11 - $gutterWidth;
+		}
+
+		return $mediaWidth;
 	}
 
 
