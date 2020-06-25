@@ -29,7 +29,7 @@ $tempPagesColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['no container',''],
+				['no container','0'],
 				['container','container'],
 				['container-fluid','container-fluid'],
 				['container-fluid px-0','container-fluid px-0'],
