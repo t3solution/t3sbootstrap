@@ -477,6 +477,9 @@ class BootstrapProcessor implements DataProcessorInterface
 			if ($processedData['data']['tx_t3sbootstrap_animateCssDuration'] ) {
 				$processedData['style'] .= ' animation-duration: '.$processedData['data']['tx_t3sbootstrap_animateCssDuration'].'s;';
 			}
+			if ($processedData['data']['tx_t3sbootstrap_animateCssDelay'] ) {
+				$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s;';
+			}
 		}
 
 		// child of gridelement (autoLayout_row)
