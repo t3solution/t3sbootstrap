@@ -187,6 +187,12 @@ class WrapperHelper implements SingletonInterface
 				$styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
 				$processedData['bgColorOverlay'] = $styleHelper->getBgColor($processedData['data'], FALSE);
 
+				$filter = $flexconf['imgGrayscale'] ? ' grayscale('.$flexconf['imgGrayscale'].'%) ' : '';
+				$filter .= $flexconf['imgSepia'] ? ' sepia('.$flexconf['imgSepia'].'%) ' : '';
+				$filter .= $flexconf['imgOpacity'] ? ' opacity('.$flexconf['imgOpacity'].'%) ' : '';
+				if ($filter)
+				$processedData['style'] .= 'filter: '.trim($filter).';';
+
 			}
 
 
