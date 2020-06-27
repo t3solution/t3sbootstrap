@@ -463,15 +463,14 @@ class BootstrapProcessor implements DataProcessorInterface
 		}
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
 
-			$delay = $processedData['data']['tx_t3sbootstrap_animateCssDelay'] ? ' delay-'.$processedData['data']['tx_t3sbootstrap_animateCssDelay'] : '';
 			// add to class
 			if( $processedData['data']['tx_t3sbootstrap_animateCssRepeat'] ) {
-				$processedData['class'] .= ' animated bt_hidden '.$delay;
+				$processedData['class'] .= ' animated bt_hidden ';
 				// data-attribute
 				$processedData['dataAnimate'] = ' data-vp-add-class='.$processedData['data']['tx_t3sbootstrap_animateCss'].'';
 				$processedData['dataAnimate'] .= ' data-vp-repeat=true';
 			} else {
-				$processedData['class'] .= ' animated '.$processedData['data']['tx_t3sbootstrap_animateCss'].$delay;
+				$processedData['class'] .= ' animated '.$processedData['data']['tx_t3sbootstrap_animateCss'];
 			}
 			// add to style
 			if ($processedData['data']['tx_t3sbootstrap_animateCssDuration'] ) {
