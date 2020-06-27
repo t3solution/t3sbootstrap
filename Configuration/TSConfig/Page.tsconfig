@@ -300,6 +300,7 @@ TCEFORM.tt_content {
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
+			t3sbs_gallery.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCss {
