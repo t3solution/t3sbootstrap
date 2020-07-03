@@ -215,7 +215,6 @@ class BootstrapProcessor implements DataProcessorInterface
 			 */
 			if ( $processedData['data']['CType'] == 't3sbs_carousel' ) {
 				$processedData['dimensions']['width'] = $parentflexconf['width'] ?: '';
-				$processedData['dimensions']['height'] = $parentflexconf['height'] ?: '';
 				$processedData['carouselLink'] = $parentflexconf['link'];
 
 				if ($parentflexconf['link'] == 'button' && $processedData['data']['header_link']){
@@ -338,7 +337,17 @@ class BootstrapProcessor implements DataProcessorInterface
 			 * Table
 			 */
 			if ( $processedData['data']['CType'] == 'table' ) {
-				$tableclass = $flexconf['tableClass'] ? ' '.$flexconf['tableClass']:'';
+				$tableClassArr = explode(',', $flexconf['tableClass']);
+				if ( count($tableClassArr) > 1 ) {
+					$tableclass = 'table';
+					foreach ($tableClassArr as $tc) {
+						if ( strlen($tc) > 5 ) {
+							$tableclass .= substr($tc, 5);
+						}
+					}
+				} else {
+					$tableclass = $flexconf['tableClass'] ? ' '.$flexconf['tableClass']:'';
+				}
 				$tableclass .= $flexconf['tableInverse'] ? ' table-dark' : '';
 				$tableclass .= $processedData['data']['tx_t3sbootstrap_extra_class'] ? ' '.$processedData['data']['tx_t3sbootstrap_extra_class'] : '';
 				$processedData['tableclass'] = trim($tableclass);
@@ -406,6 +415,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		##############################################################################################################################################
 
 		// container class
+		$processedData['data']['configuid'] = $cObj->stdWrapValue('configuid',$processorConfiguration,'');
 		$container = $defaultHelper->getContainerClass($processedData['data']);
 		if ($container && $container != 'colPosContainer') {
 			$processedData['containerPre'] = '<div class="'.$container.'">';
