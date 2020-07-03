@@ -30,6 +30,9 @@
 				<source>Kontaktformular</source>
 			</trans-unit>
 
+			<trans-unit id="menuheader_type">
+				<source>Dropdownmenu header</source>
+			</trans-unit>
 
 		</body>
 	</file>
