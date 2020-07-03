@@ -160,7 +160,7 @@ $tempSysFileReferenceColumns = [
 unset($tempSysFileReferenceColumns);
 
 
-TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_description_align','after:title');
+TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_description_align','after:description');
 
 TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_extra_class','after:tx_t3sbootstrap_description_align');
 
