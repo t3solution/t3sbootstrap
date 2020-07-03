@@ -67,11 +67,11 @@
 	alt="{f:if(condition: files.0.alternative, then: '{files.0.alternative}', else: '{t3sb:alternative(title:files.0.title, name:files.0.name)}')}"
 	 class="img-fluid{f:if(condition: '{files.0.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}"
 	  width="{dimensions.width}"
-	  height="auto"
+	  height=""
 	  breakpoints="{
-		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '1200, 1600, 1920, 2600'},
-		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '576, 768, 992, 1200'},
-		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '380, 575'}
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 	  }"
 	  picturefill="{settings.picturefill}"
 	  lazyload="{settings.lazyLoad}"
