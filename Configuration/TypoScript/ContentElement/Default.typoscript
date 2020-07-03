@@ -1,3 +1,4 @@
+
 # ===============================================================================
 # tt_content configuration
 # ===============================================================================
@@ -18,6 +19,8 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
+				configuid.cObject = TEXT
+				configuid.cObject.data = register:configuid
 			}
 		}
 	}
@@ -37,6 +40,8 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
+				configuid.cObject = TEXT
+				configuid.cObject.data = register:configuid
 			}
 		}
 	}
@@ -56,6 +61,8 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
+				configuid.cObject = TEXT
+				configuid.cObject.data = register:configuid
 			}
 		}
 	}
@@ -119,6 +126,8 @@ tt_content {
 					sidebarleft.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
 					sidebarright = TEXT
 					sidebarright.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
+					configuid.cObject = TEXT
+					configuid.cObject.data = register:configuid
 				}
 			}
 		}
