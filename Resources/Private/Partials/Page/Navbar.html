@@ -138,7 +138,9 @@
 													<f:render section="Dropdown" arguments="{_all}" />
 												</f:then>
 												<f:else>
-													<f:link.typolink class="dropdown-item" parameter="{navbarItem.link}" title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}" target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
+													<f:link.typolink class="dropdown-item" parameter="{navbarItem.link}"
+													 title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}"
+													 target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
 														<f:render section="Title" arguments="{item: navbarItem}" />
 													</f:link.typolink>
 												</f:else>
@@ -201,27 +203,29 @@
 
 <f:section name="Menu">
 	<f:for each="{navbarMenu}" as="navbarItem">
-		<li id="nav-item-{navbarItem.data.uid}" class="nav-item{f:if(condition: navbarItem.active, then:' active')}{f:if(condition: navbarItem.children, then:' {config.navbar.dropdown}')}{f:if(condition:'{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}',then:' mega-dropdown')}">
-			<f:if condition="{navbarItem.spacer}">
-				<f:then>
-					<span class="nav-link">|</span>
-				</f:then>
-				<f:else>
-					<f:if condition="{navbarItem.children} && {config.navbar.enable} != 'slide'">
-						<f:then>
-							<f:render section="Dropdown" arguments="{_all}" />
-						</f:then>
-						<f:else>
-							<f:link.typolink class="nav-link" parameter="{navbarItem.link}"
-											 title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}"
-											 target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
-								<f:render section="Title" arguments="{item: navbarItem}" />
-							</f:link.typolink>
-						</f:else>
-					</f:if>
-				</f:else>
-			</f:if>
-		</li>
+		<f:if condition="{navbarItem.data.doktype} != 198">
+			<li id="nav-item-{navbarItem.data.uid}" class="nav-item{f:if(condition: navbarItem.active, then:' active')}{f:if(condition: navbarItem.children, then:' {config.navbar.dropdown}')}{f:if(condition:'{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}',then:' mega-dropdown')}">
+				<f:if condition="{navbarItem.spacer}">
+					<f:then>
+						<span class="nav-link">|</span>
+					</f:then>
+					<f:else>
+						<f:if condition="{navbarItem.children} && {config.navbar.enable} != 'slide'">
+							<f:then>
+								<f:render section="Dropdown" arguments="{_all}" />
+							</f:then>
+							<f:else>
+								<f:link.typolink class="nav-link" parameter="{navbarItem.link}"
+												 title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}"
+												 target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
+									<f:render section="Title" arguments="{item: navbarItem}" />
+								</f:link.typolink>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</li>
+		</f:if>
 	</f:for>
 </f:section>
 
@@ -282,20 +286,28 @@
 			<span class="dropdown-divider"></span>
 		</f:then>
 		<f:else>
-			<f:if condition="{child.children}">
+			<f:if condition="{child.data.doktype} == 198">
 				<f:then>
-					<f:render section="Subdropdown" arguments="{child: child, navbarBreakpoint: navbarBreakpoint}" />
+					<h6 class="dropdown-header border-bottom">{child.title}</h6>
 				</f:then>
 				<f:else>
-					<f:link.typolink class="dropdown-item dropdown-item-{child.data.uid}{f:if(condition: child.current, then:' active')}" parameter="{child.link}" title="{f:if(condition:'{child.data.tx_t3sbootstrap_icon_only}',then:'{child.title}',else:'')}" target="{f:if(condition: '{child.target}',then: '{child.target}', else: '_self')}">
-						<f:render section="Title" arguments="{item: child}" />
-					</f:link.typolink>
+					<f:if condition="{child.children}">
+						<f:then>
+							<f:render section="Subdropdown" arguments="{child: child, navbarBreakpoint: navbarBreakpoint}" />
+						</f:then>
+						<f:else>
+							<f:link.typolink class="dropdown-item dropdown-item-{child.data.uid}{f:if(condition: child.current, then:' active')}" parameter="{child.link}" title="{f:if(condition:'{child.data.tx_t3sbootstrap_icon_only}',then:'{child.title}',else:'')}" target="{f:if(condition: '{child.target}',then: '{child.target}', else: '_self')}">
+								<f:render section="Title" arguments="{item: child}" />
+							</f:link.typolink>
+						</f:else>
+					</f:if>
 				</f:else>
 			</f:if>
 		</f:else>
 	</f:if>
 </f:for>
 </f:section>
+
 
 <f:section name="Subdropdown">
 	<f:if condition="{child.children}">
@@ -311,35 +323,42 @@
 								<span class="dropdown-divider"></span>
 							</f:then>
 							<f:else>
-								<f:if condition="{grandchild.children}">
+								<f:if condition="{grandchild.data.doktype} == 198">
 									<f:then>
-										<f:if condition="{iterator.isFirst} && ({settings.navbar.subdropdown.twoColumns} <= {f:count(subject: child.children)})">
-											<div class="col-{navbarBreakpoint}-6 float-none float-{navbarBreakpoint}-left px-0">
-										</f:if>
-										<f:render section="Subdropdown" arguments="{child: grandchild, navbarBreakpoint: navbarBreakpoint}" />
-										<f:if condition="{iterator.isLast} && ({settings.navbar.subdropdown.twoColumns} <= {f:count(subject: child.children)})">
-											</div>
-										</f:if>
+										<h6 class="dropdown-header border-bottom">{grandchild.title}</h6>
 									</f:then>
 									<f:else>
-										<f:if condition="{settings.navbar.subdropdown.twoColumns} <= {f:count(subject: child.children)}">
+										<f:if condition="{grandchild.children}">
 											<f:then>
-												<f:comment> subdropdown with two columns </f:comment>
-												<f:if condition="{iterator.isFirst}">
+												<f:if condition="{iterator.isFirst} && ({settings.navbar.subdropdown.twoColumns} <= {f:count(subject: child.children)})">
 													<div class="col-{navbarBreakpoint}-6 float-none float-{navbarBreakpoint}-left px-0">
 												</f:if>
-												<f:render section="GrandchildLink" arguments="{_all}" />
-												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.mathCeil', data: '{iterator.total}/2')} == {iterator.cycle}">
-													</div>
-													<div class="col-{navbarBreakpoint}-6 float-none float-{navbarBreakpoint}-left px-0">
-												</f:if>
-												<f:if condition="{iterator.isLast}">
+												<f:render section="Subdropdown" arguments="{child: grandchild, navbarBreakpoint: navbarBreakpoint}" />
+												<f:if condition="{iterator.isLast} && ({settings.navbar.subdropdown.twoColumns} <= {f:count(subject: child.children)})">
 													</div>
 												</f:if>
 											</f:then>
 											<f:else>
-												<f:comment> DEFALT - subdropdown with one column </f:comment>
-												<f:render section="GrandchildLink" arguments="{_all}" />
+												<f:if condition="{settings.navbar.subdropdown.twoColumns} <= {f:count(subject: child.children)}">
+													<f:then>
+														<f:comment> subdropdown with two columns </f:comment>
+														<f:if condition="{iterator.isFirst}">
+															<div class="col-{navbarBreakpoint}-6 float-none float-{navbarBreakpoint}-left px-0">
+														</f:if>
+														<f:render section="GrandchildLink" arguments="{_all}" />
+														<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.mathCeil', data: '{iterator.total}/2')} == {iterator.cycle}">
+															</div>
+															<div class="col-{navbarBreakpoint}-6 float-none float-{navbarBreakpoint}-left px-0">
+														</f:if>
+														<f:if condition="{iterator.isLast}">
+															</div>
+														</f:if>
+													</f:then>
+													<f:else>
+														<f:comment> DEFALT - subdropdown with one column </f:comment>
+														<f:render section="GrandchildLink" arguments="{_all}" />
+													</f:else>
+												</f:if>
 											</f:else>
 										</f:if>
 									</f:else>
@@ -363,36 +382,36 @@
 	<a class="nav-link dropdown-toggle" id="language" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 	  <f:if condition="{settings.langMenuWithFaIcon}">
 		<f:then>
-		  <i class="fa-navlink fas fa-globe"></i>
+			<i class="fa-navlink fas fa-globe"></i>
 		</f:then>
 		<f:else>
-		  <f:for each="{languageNavigation}" as="item">
+			<f:for each="{languageNavigation}" as="item">
 			<f:if condition="{item.active}">
-			  <f:render section="LanguageFlag" arguments="{_all}" />
-			  <span class="nav-label">{item.title}</span>
+				 <f:render section="LanguageFlag" arguments="{_all}" />
+				 <span class="nav-label">{item.title}</span>
 			</f:if>
-		  </f:for>
+			</f:for>
 		</f:else>
 	  </f:if>
 	</a>
 	<div class="dropdown-menu dropdown-menu-right mt-0 language-menu">
 	  <f:for each="{languageNavigation}" as="item">
 		<f:if condition="{item.available}">
-		  <f:then>
+			<f:then>
 			<a
-			  href="{item.link}" hreflang="{item.hreflang}" title="{item.title}"
-			  class="dropdown-item{f:if(condition: '{item.active}', then: ' active')}"
+				 href="{item.link}" hreflang="{item.hreflang}" title="{item.title}"
+				 class="dropdown-item{f:if(condition: '{item.active}', then: ' active')}"
 			>
-			  <f:render section="LanguageFlag" arguments="{_all}" />
-			  {item.title}
+				 <f:render section="LanguageFlag" arguments="{_all}" />
+				 {item.title}
 			</a>
-		  </f:then>
-		  <f:else>
+			</f:then>
+			<f:else>
 			<span class="dropdown-item text-muted">
-			  <f:render section="LanguageFlag" arguments="{_all}" />
-			  {item.title}
+				 <f:render section="LanguageFlag" arguments="{_all}" />
+				 {item.title}
 			</span>
-		  </f:else>
+			</f:else>
 		</f:if>
 	  </f:for>
 	</div>
