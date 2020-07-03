@@ -29,14 +29,23 @@
 						<f:if condition="{file.type} == 2">
 							<f:if condition="{file.link}">
 								<f:then>
-									<f:link.typolink parameter="{file.link}">
-										<f:render section="Image" arguments="{_all}" />
-									</f:link.typolink>
+									<figure class="image">
+										<f:link.typolink parameter="{file.link}">
+											<f:render section="Image" arguments="{_all}" />
+										</f:link.typolink>
+									</figure>
 								</f:then>
 								<f:else>
-									<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
-										<f:render section="Image" arguments="{_all}" />
-									</ce:link.clickEnlarge>
+									<figure class="image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+										<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
+											<f:render section="Image" arguments="{_all}" />
+											<div class="zoom-overlay ml-2">
+												<span class="magnifying-glass-icon">
+													<i class="fas fa-search-plus"></i>
+												</span>
+											</div>
+										</ce:link.clickEnlarge>
+									</figure>
 								</f:else>
 							</f:if>
 						</f:if>
@@ -59,13 +68,19 @@
 </f:section>
 </html>
 
-
 <f:section name="Image">
 	<t3sb:media file="{file}" title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
-	 class="img-fluid mx-auto d-block{f:if(condition: '{settings.lazyLoad} == 1', then: ' lazy')}{f:if(condition: '{data.imageborder}',then: ' img-thumbnail')}"
-	  width="{data.imagewidth}" height="{data.imageheight}" breakpoints="{
-		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
-		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-	}" picturefill="{settings.picturefill}" lazyload="{f:if(condition: '{settings.lazyLoad} == 1', then: '1', else: '0')}" ratio="{data.tx_t3sbootstrap_image_ratio}" columns="{data.imagecols}" />
+		class="{addmedia.imgclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2', then: ' lazy')}{f:if(condition: '{data.imageborder}',then: ' img-thumbnail')}"
+		width="{gallery.width}"
+		height="{gallery.height}"
+		breakpoints="{
+			0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+			1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+			2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+		}"
+		picturefill="{settings.picturefill}"
+		lazyload="{f:if(condition: '{settings.lazyLoad} == 1', then: '1', else: '0')}"
+		ratio="{data.tx_t3sbootstrap_image_ratio}"
+		columns="{data.imagecols}"
+	 />
 </f:section>
