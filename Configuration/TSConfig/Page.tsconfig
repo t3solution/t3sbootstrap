@@ -15,6 +15,12 @@ TCAdefaults.pages.tx_t3sbootstrap_container = container
 TCEFORM.pages.tx_t3sbootstrap_dropdownRight.disabled = 1
 [END]
 
+[page|doktype = 198]
+TCEFORM.pages.subtitle.disabled = 1
+TCEFORM.pages.nav_title.disabled = 1
+TCEFORM.pages.crdate.disabled = 1
+[end]
+
 TCAdefaults.tt_content.imagecols = 1
 TCAdefaults.tt_content.imageorient = 0
 
