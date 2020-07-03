@@ -30,6 +30,7 @@ class DefaultHelper implements SingletonInterface
 	{
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
+
 		if ( $extConf['container'] && $data['tx_t3sbootstrap_container'] ) {
 
 			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
@@ -38,17 +39,15 @@ class DefaultHelper implements SingletonInterface
 				$container = $data['tx_t3sbootstrap_container'];
 			} else {
 
-				foreach ( self::getFrontendController()->rootLine as $page ) {
-					$t3sbconfig = self::getConfig($page['uid']);
-					$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
-					$footerContainer = $t3sbconfig[0]['footer_container'];
-					$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
-					$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+				$t3sbconfig = self::getConfig($data['configuid']);
 
-					$footerByPid = $t3sbconfig[0]['footer_pid'];
+				$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
+				$footerContainer = $t3sbconfig[0]['footer_container'];
+				$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
+				$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
 
-					if(!empty($t3sbconfig)) break;
-				}
+				$footerByPid = $t3sbconfig[0]['footer_pid'];
+
 				if ( ($data['colPos'] === 3 || $data['parentgrid_colPos'] === 3)
 				 && !$jumbotronContainer ) $container = $data['tx_t3sbootstrap_container'];
 				if ( ($data['colPos'] === 4 || $data['parentgrid_colPos'] === 4)
@@ -59,26 +58,23 @@ class DefaultHelper implements SingletonInterface
 				 && !$expandedcontentBottomContainer ) $container = $data['tx_t3sbootstrap_container'];
 
 				if ($footerByPid && ($data['colPos'] === 0 || $data['parentgrid_colPos'] === 0)) {
-					$container = 'colPosContainer';
+					$container = $data['tx_t3sbootstrap_container'];
 				}
-
 			}
 
 		} else {
 
 			$container = FALSE;
 
-			foreach ( self::getFrontendController()->rootLine as $page ) {
-				$t3sbconfig = self::getConfig($page['uid']);
-				$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
-				$footerContainer = $t3sbconfig[0]['footer_container'];
-				$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
-				$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+			$t3sbconfig = self::getConfig($data['configuid']);
 
-				$footerByPid = $t3sbconfig[0]['footer_pid'];
+			$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
+			$footerContainer = $t3sbconfig[0]['footer_container'];
+			$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
+			$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
 
-				if(!empty($t3sbconfig)) break;
-			}
+			$footerByPid = $t3sbconfig[0]['footer_pid'];
+
 
 			if ( ($data['colPos'] === 3 || $data['parentgrid_colPos'] === 3) && $jumbotronContainer ) $container = 'colPosContainer';
 			if ( ($data['colPos'] === 4 || $data['parentgrid_colPos'] === 4) && $footerContainer ) $container = 'colPosContainer';
