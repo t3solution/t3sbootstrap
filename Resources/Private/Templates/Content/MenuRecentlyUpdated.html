@@ -11,7 +11,14 @@
 							<span class="badge badge-secondary mr-2">
 								{f:format.date(date: content.tstamp, format: "{settings.dateformat}")}
 							</span>
-							{pageTitle}{f:if(condition:'{content.header}',then:' - {content.header}')}
+							<f:if condition="{content.header}">
+								<f:then>
+									{pageTitle} - {content.header}
+								</f:then>
+								<f:else>
+									{pageTitle} - uid: {content.uid}								
+								</f:else>
+							</f:if>
 						</f:link.page>
 					</li>
 				</f:for>
@@ -43,7 +50,6 @@
 				</f:for>
 			</ul>
 		</f:if>
-
 	</f:else>
 </f:if>
 </f:section>
