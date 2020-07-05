@@ -463,7 +463,7 @@ class ConfigProcessor implements DataProcessorInterface
 				$this->processedData['config']['breadcrumb']['containerposition'] = $processedRecordVariables['breadcrumb_containerposition'];
 				$this->processedData['config']['breadcrumb']['class'] .= $processedRecordVariables['breadcrumb_class']
 				? ' '.$processedRecordVariables['breadcrumb_class'] : '';
-				$this->processedData['config']['breadcrumb']['class'] .= $processedRecordVariables['breadcrumb_corner'] ? ' rounded-0': '';
+				$this->processedData['config']['breadcrumb']['ol-class'] = $processedRecordVariables['breadcrumb_corner'] ? ' rounded-0': '';
 			}
 		}
 
