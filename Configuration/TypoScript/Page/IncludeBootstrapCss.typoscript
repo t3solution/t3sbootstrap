@@ -17,6 +17,7 @@ page {
 		# CDN
 		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/css/bootstrap.min.css
 		bootstrapCDN.external = 1
+		bootstrapCDN.integrity = {$bootstrap.cdn.bootstrapCssIntegrity}
 		bootstrapCDN.forceOnTop = 1
 		bootstrapCDN.if {
 			value = 1
