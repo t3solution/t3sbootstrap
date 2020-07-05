@@ -18,7 +18,6 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-
 use TYPO3\CMS\Core\Context\Context;
 
 class LastModifiedProcessor implements DataProcessorInterface
@@ -75,7 +74,6 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 */
 	protected function isMenuRecentlyUpdatedOnPage()
 	{
-
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
 			 ->select('uid')
@@ -90,6 +88,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 		return empty($result) ? FALSE : TRUE;
 	}
 
+
 	/**
 	 * Returns $mdtm
 	 *
@@ -99,16 +98,16 @@ class LastModifiedProcessor implements DataProcessorInterface
 	protected function getRecentlyUpdated($setMaxResults)
 	{
 		$languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
-		$sysLanguageUid = $languageAspect ?: 0;
+		$sysLanguageUid = $languageAspect->getContentId() ?: 0;
 
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
-			 ->select('*')
+			 ->select('uid','pid','header')
 			 ->from('tt_content')
 			 ->orderBy('tstamp', 'DESC')
 			 ->where(
 				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)),
-				$queryBuilder->expr()->notIn('pid', $queryBuilder->createNamedParameter(self::getFrontendController()->id, \PDO::PARAM_INT))
+				$queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getFrontendController()->id, \PDO::PARAM_INT))
 			 )
 			 ->setMaxResults($setMaxResults)
 			 ->execute()
@@ -142,7 +141,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 		if ($uid) {
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 			$result = $queryBuilder
-				 ->select('title', 'nav_title')
+				 ->select('uid', 'title', 'nav_title')
 				 ->from('pages')
 				 ->where(
 					$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)),
