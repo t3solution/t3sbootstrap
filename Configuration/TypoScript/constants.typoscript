@@ -29,21 +29,21 @@ bootstrap.cdn {
 	bootswatch = 0
 
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 4.4.1
+	bootstrap = 4.5.0
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 2.4.0
+	popperjs = 2.4.4
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
-	fontawesome = 5.13.0
+	fontawesome = 5.13.1
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library: jQuery 3.5.0 won't work with Bootstrap 4.4.1. Dropdowns and collapse don't work. Reverted to jQuery 3.4.1 to make it work.
-	jquery = 3.4.1
+	jquery = 3.5.1
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 9.18.1
+	highlight = 10.1.1
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 15.1.1
+	lazyload = 17.1.0
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/35; type=small; label=Viewportchecker:
@@ -51,16 +51,18 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
 	animate = 3.7.2
 	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
-	baguetteBox = 1.11.0
+	baguetteBox = 1.11.1
 	# cat=bootstrap-cdn/b-version/42; type=small; label=Ekko Lightbox:
 	ekkoLightbox = 5.3.0
 	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
 	lightcase = 2.5.0
 	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
-	ytPlayer = 3.3.1
+	ytPlayer = 3.3.3
 
+	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
+	bootstrapCssIntegrity = sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6
+	bootstrapJsIntegrity = sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
 	popperjsIntegrity =
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
