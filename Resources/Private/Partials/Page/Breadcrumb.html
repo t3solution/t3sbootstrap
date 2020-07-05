@@ -21,23 +21,29 @@
 
 
 <f:section name="Default">
-	<nav class="breadcrumb{config.breadcrumb.class}">
-		<f:render section="Breadcrumb" arguments="{_all}" />
+	<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
+		<ol class="breadcrumb{config.breadcrumb.ol-class}">
+			<f:render section="Breadcrumb" arguments="{_all}" />
+		</ol>
 	</nav>
 </f:section>
 
 <f:section name="Inside">
-	<nav class="breadcrumb{config.breadcrumb.class}">
+	<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
 		<div class="{config.breadcrumb.container}">
-			<f:render section="Breadcrumb" arguments="{_all}" />
+			<ol class="breadcrumb{config.breadcrumb.ol-class}">
+				<f:render section="Breadcrumb" arguments="{_all}" />
+			</ol>
 		</div>
 	</nav>
 </f:section>
 
 <f:section name="Outside">
 	<div class="{config.breadcrumb.container}">
-		<nav class="breadcrumb{config.breadcrumb.class}">
-			<f:render section="Breadcrumb" arguments="{_all}" />
+		<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
+			<ol class="breadcrumb{config.breadcrumb.ol-class}">
+				<f:render section="Breadcrumb" arguments="{_all}" />
+			</ol>
 		</nav>
 	</div>
 </f:section>
@@ -46,21 +52,23 @@
 	<f:for each="{breadcrumb}" as="breadcrumbItem" iteration="iterator">
 		<f:if condition="{breadcrumbItem.current}">
 			<f:then>
-				<span class="breadcrumb-item active">
+				<li class="breadcrumb-item active">
 					<f:render section="Text" arguments="{_all}" />
-				</span>
+				</li>
 			</f:then>
 			<f:else>
 				<f:if condition="{config.navbar.clickableparent} || {iterator.isFirst}">
 					<f:then>
-						<a class="breadcrumb-item{f:if(condition:'{breadcrumbItem.current}',then:' active')}" href="{breadcrumbItem.link}">
-							<f:render section="Text" arguments="{_all}" />
-						</a>
+						<li class="breadcrumb-item">
+							<a class="{f:if(condition:'{breadcrumbItem.current}',then:' active')}" href="{breadcrumbItem.link}">
+								<f:render section="Text" arguments="{_all}" />
+							</a>
+						</li>
 					</f:then>
 					<f:else>
-						<span class="breadcrumb-item">
+						<li class="breadcrumb-item">
 							<f:render section="Text" arguments="{_all}" />
-						</span>
+						</li>
 					</f:else>
 				</f:if>
 			</f:else>
