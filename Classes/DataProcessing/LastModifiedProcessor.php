@@ -102,7 +102,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
-			 ->select('uid','pid','header')
+			 ->select('uid','pid','header', 'tstamp')
 			 ->from('tt_content')
 			 ->orderBy('tstamp', 'DESC')
 			 ->where(
