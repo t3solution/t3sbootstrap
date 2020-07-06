@@ -102,7 +102,7 @@ class DefaultHelper implements SingletonInterface
 		$query->select('*')
 			 ->from('tx_t3sbootstrap_domain_model_config')
 			 ->where(
-				$query->expr()->eq('uid', $uid)
+				$query->expr()->eq('uid', $query->createNamedParameter($uid, \PDO::PARAM_INT))
 			 );
 		return $query->execute()->fetchAll();
 	}
