@@ -64,11 +64,8 @@ class ConfigController extends ActionController
 
 	public function initializeAction()
 	{
-		if (version_compare(TYPO3_branch, '10.0', '>=')) {
-			$this->version = 10;
-		} else {
-			$this->version = 9;
-		}
+		$typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+		$this->version = (int)$typo3Version->getVersion();
 	}
 
 
