@@ -573,8 +573,6 @@ class GalleryProcessor implements DataProcessorInterface
 			{
 				if ( $this->processorConfiguration['overrideSmallColumns'] ) {
 					$defaultSmallColumns = $this->processorConfiguration['overrideSmallColumns'];
-				} elseif (isset($GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'])) {
-					$defaultSmallColumns = $GLOBALS['TSFE']->pagesTSconfig['TCAdefaults.']['pages.']['tx_t3sbootstrap_smallColumns'];
 				} else {
 					$defaultSmallColumns = 0;
 				}
