@@ -3,9 +3,13 @@ defined('TYPO3_MODE') or die();
 
 call_user_func(function () {
 
+
 	if (TYPO3_MODE === 'BE') {
 
-		if (version_compare(TYPO3_branch, '10.0', '>=')) {
+		$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+		$version = (int)$typo3Version->getVersion();
+
+		if ($version == 10) {
 
 			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 				'T3sbootstrap',
@@ -42,44 +46,6 @@ call_user_func(function () {
 		}
 
 	}
-
-	$menuheader = 198;
-
-	// Add new page type:
-	$GLOBALS['PAGES_TYPES'][$menuheader] = [
-		'type' => 'web',
-		'allowedTables' => '*',
-	];
-
-	// Add new page type as possible select item:
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
-		'pages',
-		'doktype',
-		[
-			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:menuheader_type',
-			$menuheader,
-			'content-header'
-		],
-		'2',
-		'after'
-	);
-
-	// Add icon for new page type:
-	\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
-		$GLOBALS['TCA']['pages'],
-		[
-			'ctrl' => [
-				'typeicon_classes' => [
-					$menuheader => 'content-header',
-				],
-			],
-		]
-	);
-
-	// Allow backend users to drag and drop the new page type:
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
-		'options.pageTree.doktypesToShowInNewPageDragArea := addToList(' . $menuheader . ')'
-	);
 
 	
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_t3sbootstrap_domain_model_config', 'EXT:t3sbootstrap/Resources/Private/Language/locallang_csh_tx_t3sbootstrap_domain_model_config.xlf');
