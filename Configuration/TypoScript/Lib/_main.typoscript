@@ -24,6 +24,10 @@ lib.parseFunc_RTE.externalBlocks.table.stdWrap{
 lib.pageTitle = TEXT
 lib.pageTitle.data = leveltitle:-1
 
+lib.newsTitle = TEXT
+lib.newsTitle.data = register:newsTitle
+lib.newsTitle.stdWrap.wrap = <li class="breadcrumb-item active">|</li>
+lib.newsTitle.stdWrap.required = 1
 
 # used for subdropdown with 2 columns - Navbar.html
 lib.mathCeil = TEXT
