@@ -26,7 +26,6 @@ use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 
 
 class ConfigProcessor implements DataProcessorInterface
@@ -183,10 +182,13 @@ class ConfigProcessor implements DataProcessorInterface
 		$currentPage = $frontendController->page;
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
 
-		if (version_compare(TYPO3_branch, '10.0', '>=')) {
-			$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+		$typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+		$version = (int)$typo3Version->getVersion();
+
+		if ($version == 10) {
+			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
 		} else {
-			$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
 		}
 
 		$rootlinePage = $pageRepository->getPage($frontendController->rootLine[0]['uid']);
