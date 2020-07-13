@@ -142,6 +142,40 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 		'after:layout'
 	);
 }
+
+
+$menuheader = 198;
+
+// Add new page type:
+$GLOBALS['PAGES_TYPES'][$menuheader] = [
+	'allowedTables' => '*',
+];
+
+// Add new page type as possible select item:
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
+	'pages',
+	'doktype',
+	[
+		'Dropdownmenu header',
+		$menuheader,
+		'content-header'
+	],
+	'2',
+	'after'
+);
+
+// Add icon for new page type:
+\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
+	$GLOBALS['TCA']['pages'],
+	[
+		'ctrl' => [
+			'typeicon_classes' => [
+				$menuheader => 'content-header',
+			],
+		],
+	]
+);
+
 /***************
  * Register PageTSConfig Files
 */
