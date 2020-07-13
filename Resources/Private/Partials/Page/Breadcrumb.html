@@ -24,6 +24,7 @@
 	<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
 		<ol class="breadcrumb{config.breadcrumb.ol-class}">
 			<f:render section="Breadcrumb" arguments="{_all}" />
+			<f:cObject typoscriptObjectPath="lib.newsTitle"/>
 		</ol>
 	</nav>
 </f:section>
@@ -33,6 +34,7 @@
 		<div class="{config.breadcrumb.container}">
 			<ol class="breadcrumb{config.breadcrumb.ol-class}">
 				<f:render section="Breadcrumb" arguments="{_all}" />
+				<f:cObject typoscriptObjectPath="lib.newsTitle"/>
 			</ol>
 		</div>
 	</nav>
@@ -43,6 +45,7 @@
 		<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
 			<ol class="breadcrumb{config.breadcrumb.ol-class}">
 				<f:render section="Breadcrumb" arguments="{_all}" />
+				<f:cObject typoscriptObjectPath="lib.newsTitle"/>
 			</ol>
 		</nav>
 	</div>
