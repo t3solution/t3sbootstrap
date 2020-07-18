@@ -50,7 +50,6 @@ new LazyLoad({
 		var zoomOverlay = $(img).parent().parent().find('div.zoom-overlay');
 		if ( zoomOverlay.length ) {
 			var imgwidth = $(img).outerWidth()+'px';
-			var imgheight = $(img).height()+'px';
 			if ( $(window).width() < 576 ) {
 				imgwidth = '100%';
 			}
@@ -58,9 +57,7 @@ new LazyLoad({
 			if ( imgwidth ) {
 				zoomOverlay.css('max-width', imgwidth);
 			}
-			if ( imgheight ) {
-				zoomOverlay.css('max-height', imgheight);
-			}
+			zoomOverlay.css('min-height', '100%');
 		}
 	}
 });
