@@ -508,7 +508,6 @@ temp.jsFooterInline {
 		$('figure.image').each(function() {
 			var img = $(this).find('img');
 			var imgwidth = $(img).outerWidth()+'px';
-			var imgheight = $(img).height()+'px';
 			var zoomOverlay = $(this).find('a div.zoom-overlay');
 			if ( $(window).width() < 576 ) {
 				imgwidth = '100%';
@@ -518,9 +517,7 @@ temp.jsFooterInline {
 				if ( imgwidth ) {
 					zoomOverlay.css('max-width', imgwidth);
 				}
-				if ( imgheight ) {
-					zoomOverlay.css('max-height', imgheight);
-				}
+				zoomOverlay.css('min-height', '100%');
 			}
 		});
 	}
