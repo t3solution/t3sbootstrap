@@ -295,13 +295,13 @@ temp.jsFooterInline {
 				var it = itemsPerSlide - (totalItems - idx);
 				for (var i = 0; i < it; i++) {
 					if (e.direction == "left") {
-						$(".carousel-item")
+						$(".card-slider .carousel-item")
 						.eq(i)
-						.appendTo(".carousel-inner");
+						.appendTo(".card-slider .carousel-inner");
 					} else {
-						$(".carousel-item")
+						$(".card-slider .carousel-item")
 						.eq(0)
-						.appendTo(".carousel-inner");
+						.appendTo(".card-slider .carousel-inner");
 					}
 				}
 			}
