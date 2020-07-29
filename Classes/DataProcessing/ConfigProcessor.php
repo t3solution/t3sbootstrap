@@ -94,6 +94,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$this->processedData = $processedData;
 
 		$frontendController = self::getFrontendController();
+		$webp = $this->processorConfiguration['webp'];
 
 		// the table to query
 		$tableName = 'tx_t3sbootstrap_domain_model_config';
@@ -408,29 +409,35 @@ class ConfigProcessor implements DataProcessorInterface
 			# Image from pages media
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = [];
+
 			if ( $processedRecordVariables['jumbotron_bgimage'] == 'root' ) {
-				$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE);
-				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
-				if ( empty($bgImage) ) {
-					$currentUid = $rootLineArray[count($rootLineArray)-1]['uid'];
-					foreach ($rootLineArray as $page) {
-						$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', TRUE, FALSE, [], FALSE, $currentUid);
-						$fileObjects = $fileRepository->findByRelation('pages', 'media', $page['uid']);
-						if ($bgImage) break;
-					}
+				// slide in rootline
+				foreach ($rootLineArray as $page) {
+					$fileObjects = $fileRepository->findByRelation('pages', 'media', $page['uid']);
+					$uid = $page['uid'];
+					if ($fileObjects) break;
 				}
-				if ($bgImage)
-				$this->processedData['config']['jumbotron']['bgImage'] = $bgImage;
+				if ( count($fileObjects) > 1 ) {
+					// slider
+					$this->processedData['bgSlides'] =
+					 $this->getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+				} else {
+					// background image
+					$this->processedData['config']['jumbotron']['bgImage'] =
+					 $this->getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, $this->processedData['data']['uid'], $webp);
+				}
+
 			} elseif ( $processedRecordVariables['jumbotron_bgimage'] == 'page' ) {
-				$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE);
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
-				if ($bgImage)
-				$this->processedData['config']['jumbotron']['bgImage'] = $bgImage;
-			}
-
-
-			if ( count($fileObjects) > 1 ) {
-				$this->processedData['bgSlides'] = $fileObjects;
+				if ( count($fileObjects) > 1 ) {
+					// slider
+					$this->processedData['bgSlides'] =
+					 $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+				} else {
+					// background image
+				$this->processedData['config']['jumbotron']['bgImage'] =
+				 $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+				}
 			}
 		}
 
@@ -438,12 +445,10 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Background Image (body)
 		 */
 		if ( $this->contentObjectConfiguration['settings.']['backgroundImageEnable'] ) {
-
-			$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE);
-
+			$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
 			if ( empty($bgImage) && $this->contentObjectConfiguration['settings.']['backgroundImageSlide'] ) {
 				foreach ($rootLineArray as $page) {
-					$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE);
+					$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
 					if ($bgImage) break;
 				}
 			}

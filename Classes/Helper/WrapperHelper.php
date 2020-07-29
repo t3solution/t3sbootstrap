@@ -35,7 +35,7 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null)
+	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null, $webp=FALSE)
 	{
 		// autoheight
 		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
@@ -165,19 +165,19 @@ class WrapperHelper implements SingletonInterface
 				if ($flexconf['origImage']) {
 					$processedData['file'] = $file;
 				} else {
+
 					$processedData['bgImage'] = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-					->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf);
+						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp);
 					if ($flexconf['paddingTopBottom']) {
 						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 1rem;';
 					}
-
 				}
 
 				// align content items
 				$processedData['alignItem'] = $flexconf['alignItem'] ? ' '.$flexconf['alignItem'] :'';
 
 				// image raster
-				$processedData['imageRaster'] = $flexconf['imageRaster'] ? 'multiple-' : '';
+				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : ' ';
 
 				// Text color - overlay (
 				if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
@@ -194,8 +194,6 @@ class WrapperHelper implements SingletonInterface
 				$processedData['style'] .= 'filter: '.trim($filter).';';
 
 			}
-
-
 
 		} else {
 		// NO file - background color only
@@ -281,7 +279,6 @@ class WrapperHelper implements SingletonInterface
 		}
 		$processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
 
-
 		return $processedData;
 	}
 
@@ -347,8 +344,6 @@ class WrapperHelper implements SingletonInterface
 	}
 
 
-
-
 	/**
 	 * Returns the $processedData
 	 *
@@ -357,7 +352,7 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getParallaxWrapper($processedData, $flexconf)
+	public function getParallaxWrapper($processedData, $flexconf, $webp=FALSE)
 	{
 		$file = self::getFile((int)$processedData['data']['uid']);
 
@@ -366,9 +361,10 @@ class WrapperHelper implements SingletonInterface
 				$processedData['video'] = TRUE;
 			} else {
 				$processedData['parallaxImage'] =
-				 GeneralUtility::makeInstance(BackgroundImageUtility::class)->getBgImage($processedData['data']['uid']);
+				 GeneralUtility::makeInstance(BackgroundImageUtility::class)->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, FALSE, $webp);
+
 				$processedData['speedFactor'] = $flexconf['speedFactor'];
-				$processedData['imageRaster'] = $flexconf['imageRaster'] ? 'multiple-' : '';
+				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : ' ';
 			}
 		}
 

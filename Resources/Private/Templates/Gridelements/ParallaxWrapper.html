@@ -7,8 +7,9 @@
 		<f:if condition="{parallaxImage}">
 			<f:then>
 				<span class="anchor" id="c{data.uid}"></span>
+				<f:comment>	url is set by JS </f:comment>
 				<section id="s{data.uid}" class="{imageRaster}parallax bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
-					 data-speed="{speedFactor}" style="background-image: url('{parallaxImage}');{f:if(condition: '{style}', then: ' {style}')}">
+					 data-speed="{speedFactor}" style="{f:if(condition: '{style}', then: ' {style}')}">
 					<f:render section="SectionInner" arguments="{_all}" />
 				</section>
 			</f:then>

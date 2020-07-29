@@ -12,15 +12,12 @@
   "license": "GPL-2.0-or-later",
   "type": "typo3-cms-extension",
   "require": {
-    "typo3/cms-core": "^9.5.17 || ^10.4.2",
-    "gridelementsteam/gridelements": "^9.3.0 || ^10.0.0"
+    "typo3/cms-core": "^9.5 || ^10.4",
+    "gridelementsteam/gridelements": "^9.3 || ^10.9"
   },
   "autoload": {
     "psr-4": {
       "T3SBS\\T3sbootstrap\\": "Classes/"
     }
-  },
-  "replace": {
-    "typo3-ter/t3sbootstrap": "self.version"
   }
 }
