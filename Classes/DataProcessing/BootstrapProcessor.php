@@ -24,6 +24,7 @@ use T3SBS\T3sbootstrap\Helper\DefaultHelper;
 use T3SBS\T3sbootstrap\Helper\GalleryHelper;
 use T3SBS\T3sbootstrap\Helper\WrapperHelper;
 use T3SBS\T3sbootstrap\Helper\GridHelper;
+use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 
 class BootstrapProcessor implements DataProcessorInterface
 {
@@ -75,7 +76,8 @@ class BootstrapProcessor implements DataProcessorInterface
 			 * Background Wrapper
 			 */
 			if ( $processedData['data']['tx_gridelements_backend_layout'] == 'background_wrapper') {
-				$processedData = $wrapperHelper->getBackgroundWrapper($processedData, $flexconf, $contentObjectConfiguration['settings.']['cdnEnable']);
+				$processedData =
+				 $wrapperHelper->getBackgroundWrapper($processedData, $flexconf, $contentObjectConfiguration['settings.']['cdnEnable'], $processorConfiguration['webp']);
 			}
 
 			/**
@@ -126,6 +128,17 @@ class BootstrapProcessor implements DataProcessorInterface
 			 || $processedData['data']['tx_gridelements_backend_layout'] == 'six_columns' ) {
 				$gridHelper = GeneralUtility::makeInstance(GridHelper::class);
 				$processedData = $gridHelper->getGrid($processedData, $flexconf);
+				$processedData['style'] .= $flexconf['colHeight'] ? ' min-height: '.$flexconf['colHeight'].'px;' : '';
+				$processedData['verticalAlign'] = $flexconf['colHeight'] && $flexconf['verticalAlign'] ? ' d-flex align-items-' . $flexconf['verticalAlign'] : '';
+				if ( $processedData['data']['tx_gridelements_backend_layout'] == 'two_columns') {
+					$bgimages = $this->getBackgroundImageUtility()
+						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
+						 $flexconf, FALSE, $processedData['data']['uid'], $processorConfiguration['webp']);
+					if ($bgimages) {
+						$processedData['bgimages'] = $bgimages;
+						$processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
+					}
+				}
 			}
 
 			/**
@@ -154,7 +167,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			 * Parallax Wrapper
 			 */
 			if ( $processedData['data']['tx_gridelements_backend_layout'] == 'parallax_wrapper' && $processedData['data']['assets'] ) {
-				$processedData = $wrapperHelper->getParallaxWrapper($processedData, $flexconf);
+				$processedData = $wrapperHelper->getParallaxWrapper($processedData, $flexconf, $processorConfiguration['webp']);
 			}
 
 			/**
@@ -392,7 +405,6 @@ class BootstrapProcessor implements DataProcessorInterface
 
 			# if media
 			if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
-
 				$processedData['addmedia']['imgclass'] = $processedData['addmedia']['imgclass'] ?: 'img-fluid';
 				$processedData['addmedia']['imgclass'] .= $processedData['data']['imageborder'] ? ' border' :'';
 				$processedData['addmedia']['imgclass'] .= $processedData['data']['tx_t3sbootstrap_bordercolor'] && $processedData['data']['imageborder']
@@ -532,6 +544,18 @@ class BootstrapProcessor implements DataProcessorInterface
 	{
 		return $GLOBALS['TSFE'];
 	}
+
+
+	/**
+	 * Returns an instance of the background image utility
+	 *
+	 * @return BackgroundImageUtility
+	 */
+	protected function getBackgroundImageUtility()
+	{
+		return GeneralUtility::makeInstance(BackgroundImageUtility::class);
+	}
+
 
 
 }

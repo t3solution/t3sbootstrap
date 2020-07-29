@@ -312,6 +312,7 @@ page {
 			90 {
 				navbarExtraRow = {$bootstrap.navbar.extraRow}
 				rootline = {$bootstrap.config.rootline}
+				webp = {$bootstrap.extconf.webp}
 				disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 				dataProcessing {
 					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor

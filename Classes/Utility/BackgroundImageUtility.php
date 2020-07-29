@@ -24,16 +24,24 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
-
 class BackgroundImageUtility implements SingletonInterface
 {
 
 	/**
-	 * Returns the background image for the background-wrapper used in Bootstrapprocessor.php
+	 * Writes a css file with the background images
 	 *
-	 * @return TypoScriptFrontendController
+	 * @param	string	$uid
+	 * @param	string	$table
+	 * @param	bool	$jumbotron
+	 * @param	bool	$bgColorOnly
+	 * @param	array	$flexconf
+	 * @param	bool	$body
+	 * @param	int		$currentUid
+	 * @param	bool	$webp
+	 *
+	 * @return array
 	 */
-	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=FALSE)
+	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE)
 	{
 
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
@@ -42,95 +50,188 @@ class BackgroundImageUtility implements SingletonInterface
 			$filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
 		}
 
-		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+		if ( $webp ) {
+			$jsModernizr = 'EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js';
+			$jsModernizr = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsModernizr);
+			$this->pageRenderer()->addJsFooterFile($jsModernizr);
+		}
 
-		if ($filesFromRepository) {
+		if ( count($filesFromRepository) > 1 ) {
+			if ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) {
+				// bg-images in two-columns
+				// in the case if two images available but only one is selected in the flexform
+				$file = $filesFromRepository[0];
+				$image = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+				$bgImages = $this->generateSrcsetImages($file, $image);
+				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
+				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf);
 
-			$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-			$imageService = $objectManager->get(ImageService::class);
-
-			$fileFromRepository = $filesFromRepository[0];
-			$image = $imageService->getImage($fileFromRepository->getOriginalFile()->getUid(), $fileFromRepository->getOriginalFile(), 1);
-			$imageUri_orig = $imageService->getImageUri($image);
-
-			$processingInstructions = ['crop' => $fileFromRepository instanceof FileReference ? $fileFromRepository->getReferenceProperty('crop') : null];
-			$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
-
-			$bgImages = [];
-			# same in bgImageSize.js
-			$mediaQueries = [576,768,992,1200,1920,2560];
-			foreach ($mediaQueries as $key=>$querie) {
-				if ($querie == 576) {
-					$cropVariant = 'mobile';
-				} elseif ($querie == 768) {
-					$cropVariant = 'tablet';
-				} else {
-					$cropVariant = 'default';
-				}
-				$cropArea = $cropVariantCollection->getCropArea($cropVariant);
-
-				$processingInstructions = [
-					'width' => $querie,
-					'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
-				];
-				$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
-				$bgImages[$querie] = $imageService->getImageUri($processedImage);
-				if ($key === 0) {
-					$imageUri_mobile = $bgImages[$querie];
-				}
-			}
-			$bgImages['orig'] = $imageUri_orig;
-
-			$currentUid = $currentUid ?: $uid;
-
-			if ($jumbotron) {
-				$pageRenderer->addInlineSetting('JUMBOTRON',$currentUid, json_encode($bgImages));
 			} else {
-				if ($body) {
-					$pageRenderer->addInlineSetting('BODY',$currentUid, json_encode($bgImages));
-				} else {
-					$pageRenderer->addInlineSetting('BGWRAPPER',$currentUid, json_encode($bgImages));
+				// slider in jumbotron or two bg-images in two-columns
+				foreach($filesFromRepository as $fileKey=>$file) {
+					$fileKey = $fileKey+1;
+					$image[$fileKey] = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+					$bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
+					$imageUri_mobile[$fileKey] = $webp ? $bgImages[$fileKey][576].'.webp' : $bgImages[$fileKey][576];
+					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf);
 				}
 			}
-
-			if ( $flexconf['enableAutoheight'] ) {
-				$pageRendererAddHeight = GeneralUtility::makeInstance(PageRenderer::class);
-				if ( $flexconf['addHeight'] ) {
-					$pageRendererAddHeight->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
-				}
-				if ( $flexconf['enableAutoheight'] ) {
-					$pageRendererAddHeight->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);
-				}
-			}
-
-			$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Scripts/bgImageSize.js';
-			$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
-
-			$pageRenderer->addJsFooterFile($jsFooterFile);
-
 		} else {
-			$imageUri_mobile = '';
+			// background-image
+			if (!empty($filesFromRepository) ) {
+				$file = $filesFromRepository[0];
+				$image = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 
-			if ($bgColorOnly) {
+				$uid = $currentUid ?: $uid;
+
+				if ( $flexconf['bgimagePosition'] ) {
+					$uid = $uid . '-' . $flexconf['bgimagePosition'];
+				}
 				if ($jumbotron) {
-					$pageRenderer->addInlineSetting('JUMBOTRON',$uid, json_encode([TRUE]));
+					$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
+				} elseif ($body) {
+					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf);					
 				} else {
-					$pageRenderer->addInlineSetting('BGWRAPPER',$uid, json_encode([TRUE]));
+					if ( $flexconf['enableAutoheight'] ) {
+						if ( $flexconf['addHeight'] ) {
+							$this->pageRenderer()->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
+						}
+						$this->pageRenderer()->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);						
+						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf);
+					} else {
+						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
+					}
 				}
 
-				if ( $flexconf['enableAutoheight'] ) {
-					$pageRendererAddHeight = GeneralUtility::makeInstance(PageRenderer::class);
-					if ( $flexconf['addHeight'] ) {
-						$pageRendererAddHeight->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
-					}
+				$bgImages = $this->generateSrcsetImages($file, $image);
+				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
+
+			} else {
+				$imageUri_mobile = '';
+				if ($bgColorOnly) {
+
 					if ( $flexconf['enableAutoheight'] ) {
-						$pageRendererAddHeight->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);
+						if ( $flexconf['addHeight'] ) {
+							$this->pageRenderer()->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
+						}
+						$this->pageRenderer()->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);
 					}
 				}
 			}
 		}
 
+		$this->getFrontendController()->additionalHeaderData['tx_t3sbootstrapt_styles_for_backgrouns_imagesr'] .= '<style>'.$css.'</style>';
+
+		$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Scripts/bgImageSize.js';
+		$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
+
+		$this->pageRenderer()->addJsFooterFile($jsFooterFile);
+
 		return $imageUri_mobile;
+	}
+
+
+	/**
+	 * generate CSS
+	 *
+	 * @return string $css
+	 */
+	private function generateCss( $uid, $file, $image, $webp, $flexconf=[] ) {
+
+		$imageRaster = $flexconf['imageRaster'] ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
+
+		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
+		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
+
+		$css = '';
+
+		$mediaQueries = [2560,1920,1200,992,768,576];
+		foreach ($mediaQueries as $querie) {
+			if ($querie == 576) {
+				$cropVariant = 'mobile';
+			} elseif ($querie == 768) {
+				$cropVariant = 'tablet';
+			} else {
+				$cropVariant = 'default';
+			}
+			$cropArea = $cropVariantCollection->getCropArea($cropVariant);
+
+			$processingInstructions = [
+				'width' => $querie,
+				'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
+			];
+
+			$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
+
+			$css .= '@media (max-width: '.$querie.'px) {';
+			if ($webp) {
+				$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
+				$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
+			} else {
+				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
+			}
+			$css .= '}';
+
+		}
+
+		return $css;
+	}
+
+
+	/**
+	 * generateSrcsetImages
+	 *
+	 * @return string $css
+	 */
+	private function generateSrcsetImages( $file, $image ) {
+
+		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
+		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
+		$cropVariant = 'mobile';
+		$cropArea = $cropVariantCollection->getCropArea($cropVariant);
+		$processingInstructions = [
+			'width' => 576,
+			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
+		];
+		$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
+		$bgImages[576] = $this->imageService()->getImageUri($processedImage);
+
+		return $bgImages;
+	}
+
+
+	/**
+	 * Returns the ImageService
+	 *
+	 * @return ImageService
+	 */
+	protected function imageService()
+	{
+		$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
+		return $objectManager->get(ImageService::class);
+	}
+
+
+	/**
+	 * Returns the Page Renderer
+	 *
+	 * @return PageRenderer
+	 */
+	protected function pageRenderer()
+	{
+		return GeneralUtility::makeInstance(PageRenderer::class);
+	}
+
+
+	/**
+	 * Returns $typoScriptFrontendController \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 *
+	 * @return TypoScriptFrontendController
+	 */
+	protected function getFrontendController()
+	{
+		return $GLOBALS['TSFE'];
 	}
 
 

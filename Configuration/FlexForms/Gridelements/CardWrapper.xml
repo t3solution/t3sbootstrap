@@ -64,7 +64,6 @@
 					<card_wrapper>
 						<TCEforms>
 							<label>Groups, Decks, Columns or Slider</label>
-
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -95,7 +94,6 @@
 						</TCEforms>
 					</card_wrapper>
 
-
 					<cropMaxCharacters>
 						<TCEforms>
 							<label>Length of card-bodytext (in chars)</label>
@@ -106,8 +104,6 @@
 							</config>
 						</TCEforms>
 					</cropMaxCharacters>
-
-
 				</el>
 			</ROOT>
 		</sDEF>

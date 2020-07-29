@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.jumbotron.enable}">
-	<f:if condition="{bgSlides -> f:count()} > 1 && {config.jumbotron.bgImage}">
+	<f:if condition="{bgSlides -> f:count()} > 1">
 		<f:then>
 			<f:if condition="{config.jumbotron.containerposition} == 'Outside'">
 				<f:then>
@@ -70,7 +70,7 @@
 <f:section name="Div">
 	<f:if condition="{config.jumbotron.bgImage}">
 		<f:then>
-			<div id="s{data.uid}" class="jumbotron background-image bgImageSize{config.jumbotron.class}" style="background-image: url('{config.jumbotron.bgImage}');">
+			<div id="s{data.uid}" class="jumbotron background-image bgImageSize{config.jumbotron.class}">
 		</f:then>
 		<f:else>
 			<div class="jumbotron{config.jumbotron.class}">
@@ -99,8 +99,9 @@
 			</f:if>
 		</div>
 		<div class="carousel-inner embed-responsive embed-responsive-21by9" role="listbox">
-			<f:for each="{bgSlides}" as="slide">
-				<div class="carousel-item embed-responsive-item" style="background-image: url({f:uri.image(image: '{slide}')})"></div>
+			<f:comment>	background-image by css </f:comment>
+			<f:for each="{bgSlides}" as="slide" iteration="iterator">
+				<div id="s{data.uid}-{iterator.cycle}" class="carousel-item embed-responsive-item bgImageSize background-image"></div>
 			</f:for>
 		</div>
 		<a class="carousel-control-prev" href="#carouselJumbotronIndicators" role="button" data-slide="prev">

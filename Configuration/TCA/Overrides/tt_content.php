@@ -836,9 +836,7 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'header_link' => [
 		'displayCond' => 'FIELD:tx_gridelements_backend_layout:!=:collapsible_accordion',
 	]
-
 ];
-
 
 
 
@@ -867,15 +865,6 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'tx_t3sbootstrap_bordercolor',
 	'after:imageborder'
 );
-
-/*
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'mediaAdjustments',
-	'tx_t3sbootstrap_image_ratio',
-	'before:imageborder'
-);
-*/
 
 # add palette bootstrap etc
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(

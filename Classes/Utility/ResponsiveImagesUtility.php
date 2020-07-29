@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 class ResponsiveImagesUtility implements SingletonInterface
 {
@@ -38,103 +39,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		 $this->imageService = $imageService;
 	}
 
-	/**
-	 * Creates an image tag with the provided srcset candidates
-	 *
-	 * @param FileInterface $originalImage
-	 * @param FileInterface $fallbackImage
-	 * @param array|string	$srcset
-	 * @param Area			$cropArea
-	 * @param Area			$focusArea
-	 * @param string		$sizesQuery
-	 * @param TagBuilder	$tag
-	 * @param bool			$picturefillMarkup
-	 * @param bool			$absoluteUri
-	 * @param	int			$lazyload
-	 * @param	array|string $ignoreFileExtensions
-	 * @param	int			$placeholderSize
-	 * @param	bool			$placeholderInline
-	 *
-	 * @return TagBuilder
-	 */
-	public function createImageTagWithSrcset(
-		FileInterface $originalImage,
-		FileInterface $fallbackImage,
-		$srcset,
-		Area $cropArea = null,
-		Area $focusArea = null,
-		string $sizesQuery = null,
-		TagBuilder $tag = null,
-		bool $picturefillMarkup = true,
-		bool $absoluteUri = false,
-		int $lazyload = 0,
-		$ignoreFileExtensions = 'svg',
-		int $placeholderSize = 0,
-		bool $placeholderInline = false
-	): TagBuilder {
-		$tag = $tag ?: GeneralUtility::makeInstance(TagBuilder::class, 'img');
-
-		// Deal with file formats that can't be cropped separately
-		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
-			return $this->createSimpleImageTag(
-				$originalImage,
-				$fallbackImage,
-				$tag,
-				$focusArea,
-				$absoluteUri,
-				$lazyload
-			);
-		}
-
-		// Generate fallback image url
-		$fallbackImageUri = $this->imageService->getImageUri($fallbackImage, $absoluteUri);
-
-		// Use width of fallback image as reference for relative sizes (1x, 2x...)
-		$referenceWidth = $fallbackImage->getProperty('width');
-
-		// if lazyload enabled add data- prefix
-		$attributePrefix = $lazyload ? 'data-' : '';
-
-		if (!$picturefillMarkup) {
-			$tag->addAttribute($attributePrefix . 'src', $fallbackImageUri);
-		}
-
-		// Create placeholder image for lazyloading
-		if ($lazyload && $placeholderSize) {
-			$tag->addAttribute('src', $this->generatePlaceholderImage(
-				$originalImage,
-				$placeholderSize,
-				$cropArea,
-				$placeholderInline,
-				$absoluteUri
-			));
-		}
-
-		// Generate different image sizes for srcset attribute
-		$srcsetImages = $this->generateSrcsetImages($originalImage, $referenceWidth, $srcset, $cropArea, $absoluteUri);
-		$srcsetMode = substr(key($srcsetImages), -1); // x or w
-
-		// Add fallback image to source options
-		$fallbackWidthDescriptor = ($srcsetMode == 'x') ? '1x'	: $referenceWidth . 'w';
-		$srcsetImages[$fallbackWidthDescriptor] = $fallbackImageUri;
-
-		// Set srcset attribute for image tag
-		$tag->addAttribute($attributePrefix . 'srcset', $this->generateSrcsetAttribute($srcsetImages));
-
-		// Add sizes attribute to image tag
-		if ($srcsetMode == 'w' && $sizesQuery) {
-			$tag->addAttribute('sizes', sprintf($sizesQuery, $referenceWidth));
-		}
-
-		// Provide image dimensions to be consistent with TYPO3 core behavior
-		$tag->addAttribute('width', $referenceWidth);
-		$tag->addAttribute('height', $fallbackImage->getProperty('height'));
-
-		// Add metadata to image tag
-		$this->addMetadataToImageTag($tag, $originalImage, $fallbackImage, $focusArea);
-
-		return $tag;
-	}
 
 	/**
 	 * Creates a picture tag with the provided image breakpoints
@@ -172,6 +76,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 	): TagBuilder {
 		$tag = $tag ?: GeneralUtility::makeInstance(TagBuilder::class, 'picture');
 		$fallbackTag = $fallbackTag ?: GeneralUtility::makeInstance(TagBuilder::class, 'img');
+
+		$webpIsLoaded = ExtensionManagementUtility::isLoaded('webp');
 
 		// Deal with file formats that can't be cropped separately
 		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
@@ -247,21 +153,35 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Add metadata to fallback image
 		$this->addMetadataToImageTag($fallbackTag, $originalImage, $fallbackImage, $focusArea);
 
+		if ( $webpIsLoaded ) {
+			$types[0] = 'image/webp';
+		}
+		$types[1] = $originalImage->getProperties()['mime_type'];
+
 		// Generate source tags for image breakpoints
 		$sourceTags = [];
 		foreach ($breakpoints as $breakpoint) {
+
 			$cropArea = $cropVariantCollection->getCropArea($breakpoint['cropVariant']);
-			$sourceTag = $this->createPictureSourceTag(
-				$originalImage,
-				$referenceWidth,
-				$breakpoint['srcset'],
-				$breakpoint['media'],
+
+			foreach ( $types as $type ) {
+
+				$sourceTag = $this->createPictureSourceTag(
+					$originalImage,
+					$referenceWidth,
+					$breakpoint['srcset'],
+					$breakpoint['media'],
 				$breakpoint['sizes'],
-				$cropArea,
-				$absoluteUri,
-				$lazyload
-			);
-			$sourceTags[] = $sourceTag->render();
+					$cropArea,
+					$absoluteUri,
+					$lazyload,
+					$webpIsLoaded,
+					$type
+				);
+
+				$sourceTags[] = $sourceTag->render();
+
+			}
 		}
 
 		// Fill picture tag
@@ -283,6 +203,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param	Area			 $cropArea
 	 * @param	bool			 $absoluteUri
 	 * @param	int			$lazyload
+	 * @param	bool			 $webpIsLoaded
+	 * @param	string		 $type
 	 *
 	 * @return TagBuilder
 	 */
@@ -294,15 +216,17 @@ class ResponsiveImagesUtility implements SingletonInterface
 		string $sizesQuery = '',
 		Area $cropArea = null,
 		bool $absoluteUri = false,
-		int $lazyload = 0
+		int $lazyload = 0,
+		bool $webpIsLoaded = false,
+		string $type = ''
 	): TagBuilder {
 		$cropArea = $cropArea ?: Area::createEmpty();
 
 		// if lazyload enabled add data- prefix
-		$attributePrefix = $lazyload ? 'data-' : '';
+		#$attributePrefix = $lazyload ? 'data-' : '';
 
 		// Generate different image sizes for srcset attribute
-		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri);
+		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $webpIsLoaded, $type);
 		$srcsetMode = substr(key($srcsetImages), -1); // x or w
 
 		// Create source tag for this breakpoint
@@ -314,6 +238,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 		if ($srcsetMode == 'w' && $sizesQuery) {
 			$sourceTag->addAttribute('sizes', sprintf($sizesQuery, $defaultWidth));
 		}
+
+		if ($webpIsLoaded && $type == 'image/webp')
+		 $sourceTag->addAttribute('type', $type);
 
 		return $sourceTag;
 	}
@@ -346,7 +273,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$fallbackImage = ($fallbackImage) ?: $originalImage;
 
 		// if lazyload enabled add data- prefix
-		$attributePrefix = $lazyload ? 'data-' : '';
+		#$attributePrefix = $lazyload ? 'data-' : '';
 
 		// Set image source
 		$tag->addAttribute($attributePrefix . 'src',	$this->imageService->getImageUri($originalImage, $absoluteUri));
@@ -424,6 +351,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param	array|string	  $srcset
 	 * @param	Area				 $cropArea
 	 * @param	bool				 $absoluteUri
+	 * @param	bool			$webpIsLoaded
+	 * @param	string		  	$type
 	 *
 	 * @return array
 	 */
@@ -432,7 +361,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 		int $defaultWidth,
 		$srcset,
 		Area $cropArea = null,
-		bool $absoluteUri = false
+		bool $absoluteUri = false,
+		bool $webpIsLoaded = false,
+		string $type = ''
 	): array {
 		$cropArea = $cropArea ?: Area::createEmpty();
 
@@ -466,6 +397,11 @@ class ResponsiveImagesUtility implements SingletonInterface
 				'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 			];
 			$processedImage =  $this->imageService->applyProcessingInstructions($image, $processingInstructions);
+
+			if ( $webpIsLoaded && $type == 'image/webp' ) {
+				$webpIdentifier = $processedImage->getIdentifier().'.webp';
+				$processedImage->setIdentifier($webpIdentifier);
+			}
 
 			// If processed file isn't as wide as it should be ([GFX][processor_allowUpscaling] set to false)
 			// then use final width of the image as widthDescriptor if not input case 3 is used

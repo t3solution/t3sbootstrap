@@ -192,12 +192,10 @@ temp.jsFooterInline {
 7 = TEXT
 7.value (
 
+
 	// sectionmenu in navbar (one-page-layout) - page.jsFooterInline.5.7 - Animated scrolling and scrollspy
 	$(".section-menu a.js-scroll-trigger").bind("click", function(event) {
 		var anchor = $(this).attr("href");
-		anchor = anchor.split('#');
-		anchor =	"#"+anchor[1];
-
 		if (anchor.length) {
 			var offsetSize = {$bootstrap.config.sectionmenuAnchorOffset};
 			if ( fixedNavbar ) {
@@ -285,26 +283,28 @@ temp.jsFooterInline {
 
 	var cardSlider = $( ".carousel.card-slider" );
 	if ( cardSlider.length ) {
-		$(".carousel.card-slider").on("slide.bs.carousel", function(e) {
-			var $e = $(e.relatedTarget);
-			var idx = $e.index();
-			var itemsPerSlide = 3;
-			var totalItems = $(".card-slider .carousel-item").length;
-
-			if (idx >= totalItems - (itemsPerSlide - 1)) {
-				var it = itemsPerSlide - (totalItems - idx);
-				for (var i = 0; i < it; i++) {
-					if (e.direction == "left") {
-						$(".card-slider .carousel-item")
-						.eq(i)
-						.appendTo(".card-slider .carousel-inner");
-					} else {
-						$(".card-slider .carousel-item")
-						.eq(0)
-						.appendTo(".card-slider .carousel-inner");
+		$( cardSlider ).each(function( index ) {
+			var sliderId = "#" + $( this ).attr("id");
+			$(sliderId).on("slide.bs.carousel", function(e) {
+				var $e = $(e.relatedTarget);
+				var idx = $e.index();
+				var itemsPerSlide = 3;
+				var totalItems = $(sliderId + " .carousel-item").length;
+				if (idx >= totalItems - (itemsPerSlide - 1)) {
+					var it = itemsPerSlide - (totalItems - idx);
+					for (var i = 0; i < it; i++) {
+						if (e.direction == "left") {
+							$(sliderId + " .carousel-item")
+							.eq(i)
+							.appendTo(sliderId + " .carousel-inner");
+						} else {
+							$(sliderId + ".carousel-item")
+							.eq(0)
+							.appendTo(sliderId + " .carousel-inner");
+						}
 					}
 				}
-			}
+			});
 		});
 	}
 
@@ -508,6 +508,7 @@ temp.jsFooterInline {
 		$('figure.image').each(function() {
 			var img = $(this).find('img');
 			var imgwidth = $(img).outerWidth()+'px';
+			var imgheight = $(img).outerHeight()+'px';
 			var zoomOverlay = $(this).find('a div.zoom-overlay');
 			if ( $(window).width() < 576 ) {
 				imgwidth = '100%';
@@ -517,7 +518,9 @@ temp.jsFooterInline {
 				if ( imgwidth ) {
 					zoomOverlay.css('max-width', imgwidth);
 				}
-				zoomOverlay.css('min-height', '100%');
+				if ( imgheight ) {
+					zoomOverlay.css('max-height', imgheight);
+				}
 			}
 		});
 	}
@@ -591,8 +594,6 @@ temp.jsFooterInline {
 	value = 2
 	equals = {$bootstrap.navbar.dropdownAnimate}
 }
-
-
 
 
 # Navbar hover dependent on the breakpoint
@@ -936,16 +937,6 @@ temp.jsFooterInline {
 	value.data = register:breakpoint
 	equals = xl
 }
-
-#166 = TEXT
-#166.value (
-#var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
-#jQuery.htmlPrefilter = function( html ) {
-#	return html.replace( rxhtmlTag, "<$1></$2>" );
-#};
-#)
-
-
 
 
 }

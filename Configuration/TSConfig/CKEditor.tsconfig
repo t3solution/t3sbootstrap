@@ -74,7 +74,7 @@ RTE {
 			tel.properties {
 				class.default =
 			}
-			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark
+			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark, js-scroll-trigger
 			queryParametersSelector.enabled = 0
 
 		}

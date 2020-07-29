@@ -9,12 +9,42 @@
 				<f:render partial="Header/All" arguments="{_all}" />
 			</div>
 		</f:if>
-		<div class="{columnOne}">
-			{data.tx_gridelements_view_column_0 -> f:format.raw()}
-		</div>
-		<div class="{columnTwo}">
-			{data.tx_gridelements_view_column_1 -> f:format.raw()}
-		</div>
+		<f:if condition="{bgimages}">
+			<f:then>
+				<f:if condition="{bgimagePosition} == 1">
+					<div id="s{data.uid}-1" class="{columnOne} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+						{data.tx_gridelements_view_column_0 -> f:format.raw()}
+					</div>
+					<div id="s{data.uid}-2" class="{columnTwo}{verticalAlign}"{colHeight -> f:format.raw()}>
+						{data.tx_gridelements_view_column_1 -> f:format.raw()}
+					</div>	
+				</f:if>
+				<f:if condition="{bgimagePosition} == 2">
+					<div id="s{data.uid}-1" class="{columnOne}{verticalAlign}"{colHeight -> f:format.raw()}>
+						{data.tx_gridelements_view_column_0 -> f:format.raw()}
+					</div>
+					<div id="s{data.uid}-2" class="{columnTwo} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+						{data.tx_gridelements_view_column_1 -> f:format.raw()}
+					</div>
+				</f:if>
+				<f:if condition="{bgimagePosition} == 3">
+					<div id="s{data.uid}-1" class="{columnOne} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+						{data.tx_gridelements_view_column_0 -> f:format.raw()}
+					</div>
+					<div id="s{data.uid}-2" class="{columnTwo} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+						{data.tx_gridelements_view_column_1 -> f:format.raw()}
+					</div>
+				</f:if>
+			</f:then>
+			<f:else>
+				<div id="s{data.uid}-1" class="{columnOne}{verticalAlign}"{colHeight -> f:format.raw()}>
+					{data.tx_gridelements_view_column_0 -> f:format.raw()}
+				</div>
+				<div id="s{data.uid}-2" class="{columnTwo}{verticalAlign}"{colHeight -> f:format.raw()}>
+					{data.tx_gridelements_view_column_1 -> f:format.raw()}
+				</div>	
+			</f:else>		
+		</f:if>
 	</div>
 </f:section>
 </html>

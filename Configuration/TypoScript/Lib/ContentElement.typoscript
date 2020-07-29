@@ -82,6 +82,7 @@ lib.contentElement {
 		224 {
 			defaultHeaderType = {$styles.content.defaultHeaderType}
 			contentMarginTop = {$bootstrap.config.contentMarginTop}
+			webp = {$bootstrap.extconf.webp}
 			configuid.cObject = TEXT
 			configuid.cObject.data = register:configuid
 		}

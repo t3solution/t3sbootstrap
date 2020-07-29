@@ -39,7 +39,6 @@ page {
 	jsInline.5 < temp.jsCookieConsent
 	jsInline.5.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
-
 	jsFooterInline.3 = TEXT
 	jsFooterInline.3.value (
 
@@ -50,6 +49,7 @@ new LazyLoad({
 		var zoomOverlay = $(img).parent().parent().find('div.zoom-overlay');
 		if ( zoomOverlay.length ) {
 			var imgwidth = $(img).outerWidth()+'px';
+			var imgheight = $(img).outerHeight()+'px';
 			if ( $(window).width() < 576 ) {
 				imgwidth = '100%';
 			}
@@ -57,7 +57,9 @@ new LazyLoad({
 			if ( imgwidth ) {
 				zoomOverlay.css('max-width', imgwidth);
 			}
-			zoomOverlay.css('min-height', '100%');
+			if ( imgwidth ) {
+				zoomOverlay.css('max-height', imgheight);
+			}
 		}
 	}
 });
