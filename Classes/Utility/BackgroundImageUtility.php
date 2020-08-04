@@ -44,6 +44,7 @@ class BackgroundImageUtility implements SingletonInterface
 	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE)
 	{
 
+		$frontendController = $this->getFrontendController();
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$filesFromRepository = $fileRepository->findByRelation($table, 'assets', $uid);
 		if ( empty($filesFromRepository) ) {
@@ -68,6 +69,7 @@ class BackgroundImageUtility implements SingletonInterface
 
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
+				$uid = $frontendController->id;
 				foreach($filesFromRepository as $fileKey=>$file) {
 					$fileKey = $fileKey+1;
 					$image[$fileKey] = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
@@ -120,8 +122,7 @@ class BackgroundImageUtility implements SingletonInterface
 			}
 		}
 
-		$this->getFrontendController()->additionalHeaderData['tx_t3sbootstrapt_styles_for_backgrouns_imagesr'] .= '<style>'.$css.'</style>';
-
+		$frontendController->additionalHeaderData['tx_t3sbootstrapt_styles_for_backgrouns_imagesr'] .= '<style>'.$css.'</style>';
 		$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Scripts/bgImageSize.js';
 		$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
 
