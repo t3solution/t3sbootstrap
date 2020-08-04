@@ -723,15 +723,14 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 
 			$customFile = $customPath.$customFileName;
 
-			if (file_exists($customFile)) {
-				unlink($customFile);
-			}
+			if (!file_exists($customFile)) {
 
-			if (!is_dir($customPath)) {
-				mkdir($customPath, 0777, true);
+				if (!is_dir($customPath)) {
+					mkdir($customPath, 0777, true);
+				}
+	
+				GeneralUtility::writeFile($customFile, trim($customContent));
 			}
-
-			GeneralUtility::writeFile($customFile, trim($customContent));
 		}
 	}
 
