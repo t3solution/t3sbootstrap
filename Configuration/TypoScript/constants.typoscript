@@ -200,7 +200,7 @@ bootstrap.image {
 	disableAutoRow = 1
 
 	# cat=bootstrap-image/b-image/10; type=small; label=Additional Image Sizes for Desktop min-width 1200px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
-	srcsetDesktop = 125, 255, 385, 576, 768, 992, 1200
+	srcsetDesktop = 125, 255, 385, 576, 768, 992, 1200, 1440, 1920, 2650
 	# cat=bootstrap-image/b-image/20; type=small; label=Additional Image Sizes for Tablet min-width 576px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
 	srcsetTablet = 125, 255, 385, 576, 768, 992, 1200
 	# cat=bootstrap-image/b-image/30; type=small; label=Additional Image Sizes for Mobile max-width 575px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
