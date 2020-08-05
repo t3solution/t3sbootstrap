@@ -84,10 +84,12 @@ class BootstrapProcessor implements DataProcessorInterface
 			 * Button group
 			 */
 			if ( $processedData['data']['tx_gridelements_backend_layout'] == 'button_group' ) {
-				$processedData['buttonGroupClass'] = $flexconf['align'] ?: '';
+				$processedData['class'] .= $flexconf['vertical'] ? ' btn-group-vertical' : ' btn-group';
+				$processedData['buttonGroupClass'] = ' '.$flexconf['align'] ?: '';
 				if ( $flexconf['fixedPosition'] ) {
 					$processedData['buttonGroupClass'] .= ' d-none fixedGroupButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
 					$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
+					$processedData['class'] .= $flexconf['vertical'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 				}
 			}
 
