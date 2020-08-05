@@ -723,13 +723,25 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 
 			$customFile = $customPath.$customFileName;
 
-			if (!file_exists($customFile)) {
-
+			if (file_exists($customFile)) {
+			
+				$customFileLength = strlen(file_get_contents($customFile));
+				$contentLength = strlen(trim($customContent));
+			
+				if ($customFileLength != $contentLength) {
+			
+					unlink($customFile);					
+					GeneralUtility::writeFile($customFile, trim($customContent));	
+				}
+			
+			} else {
+				
 				if (!is_dir($customPath)) {
 					mkdir($customPath, 0777, true);
 				}
-	
-				GeneralUtility::writeFile($customFile, trim($customContent));
+			
+				GeneralUtility::writeFile($customFile, trim($customContent));		
+
 			}
 		}
 	}
