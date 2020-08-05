@@ -230,9 +230,21 @@ class ClassHelper implements SingletonInterface
 	public function getHeaderClass($data)
 	{
 		$header['class'] = $data['header_position'] ? ' text-'.$data['header_position'] : '';
-		$header['class'] .= $data['tx_t3sbootstrap_header_class'] ? ' '.$data['tx_t3sbootstrap_header_class'] : '';
+		$header['hClass'] = '';
 
-		$header['hClass'] = $data['tx_t3sbootstrap_header_display'] ? ' '.$data['tx_t3sbootstrap_header_display'] : '';
+		if ( $data['tx_t3sbootstrap_header_class'] ) {
+			$textColors = explode(',','text-primary,text-secondary,text-danger,text-success,text-warning,text-info,text-light,text-dark,text-body,text-muted,text-white');
+			foreach ($textColors as $textColor) {
+				if (strpos($data['tx_t3sbootstrap_header_class'], $textColor) !== false) {
+					$header['hClass'] .= $textColor;
+					$data['tx_t3sbootstrap_header_class'] = trim(str_replace($textColor, '', $data['tx_t3sbootstrap_header_class']));	
+					break;
+				}
+			}
+		}
+
+		$header['class'] .= $data['tx_t3sbootstrap_header_class'] ? ' '.$data['tx_t3sbootstrap_header_class'] : '';
+		$header['hClass'] .= $data['tx_t3sbootstrap_header_display'] ? ' '.$data['tx_t3sbootstrap_header_display'] : '';
 
 		if ( $data['CType'] == 't3sbs_mediaobject' ) {
 			$header['hClass'] .= ' mt-0';
