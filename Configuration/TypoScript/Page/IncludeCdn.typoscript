@@ -66,19 +66,16 @@ page {
 
 		jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.min.js
 		jqueryCDN.integrity = {$bootstrap.cdn.jqueryIntegrity}
-		jqueryCDN.type = text/javascript
 		jqueryCDN.external = 1
 		jqueryCDN.forceOnTop = 1
 
 
 		popperCDN = https://cdnjs.cloudflare.com/ajax/libs/popper.js/{$bootstrap.cdn.popperjs}/umd/popper.min.js
 		popperCDN.integrity = {$bootstrap.cdn.popperjsIntegrity}
-		popperCDN.type = text/javascript
 		popperCDN.external = 1
 
 		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/js/bootstrap.min.js
 		bootstrapCDN.integrity = {$bootstrap.cdn.bootstrapJsIntegrity}
-		bootstrapCDN.type = text/javascript
 		bootstrapCDN.external = 1
 
 	}
@@ -93,7 +90,6 @@ page {
 
 		t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{$bootstrap.cdn.baguetteBox}/baguetteBox.min.js
 		t3sblightboxCDN.integrity = {$bootstrap.cdn.baguetteBoxIntegrity}
-		t3sblightboxCDN.type = text/javascript
 		t3sblightboxCDN.external = 1
 		t3sblightboxCDN.if {
 			value = 1
@@ -108,7 +104,6 @@ page {
 
 		cookieconsentJsCDN = https://cdn.jsdelivr.net/npm/cookieconsent@{$bootstrap.cdn.cookieconsent}/build/cookieconsent.min.js
 		cookieconsentJsCDN.integrity = {$bootstrap.cdn.cookieconsentIntegrity}
-		cookieconsentJsCDN.type = text/javascript
 		cookieconsentJsCDN.external = 1
 		cookieconsentJsCDN.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
@@ -120,7 +115,6 @@ page {
 
 		t3sbjqueryeasingCDN = https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/{$bootstrap.cdn.jqueryEasing}/jquery.easing.min.js
 		t3sbjqueryeasingCDN.integrity = {$bootstrap.cdn.jqueryEasingIntegrity}
-		t3sbjqueryeasingCDN.type = text/javascript
 		t3sbjqueryeasingCDN.external = 1
 		t3sbjqueryeasingCDN.forceOnTop = 1
 
@@ -132,13 +126,11 @@ page {
 
 		codesnippetCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/highlight.min.js
 		codesnippetCDN.integrity = {$bootstrap.cdn.highlightIntegrity}
-		codesnippetCDN.type = text/javascript
 		codesnippetCDN.external = 1
 		codesnippetCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
 
 		heighlightCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/languages/php.min.js
 		heighlightCDN.integrity = {$bootstrap.cdn.highlightIntegrity}
-		heighlightCDN.type = text/javascript
 		heighlightCDN.external = 1
 		heighlightCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
 
@@ -150,7 +142,6 @@ page {
 
 		lazyloadCDN = https://cdn.jsdelivr.net/npm/vanilla-lazyload@{$bootstrap.cdn.lazyload}/dist/lazyload.min.js
 		lazyloadCDN.integrity = {$bootstrap.cdn.lazyloadIntegrity}
-		lazyloadCDN.type = text/javascript
 		lazyloadCDN.external = 1
 		lazyloadCDN.if.isTrue = {$bootstrap.extconf.lazyLoad}
 
@@ -162,7 +153,6 @@ page {
 
 		picturefillCDN = https://cdnjs.cloudflare.com/ajax/libs/picturefill/{$bootstrap.cdn.picturefill}/picturefill.min.js
 		picturefillCDN.integrity = {$bootstrap.cdn.picturefillIntegrity}
-		picturefillCDN.type = text/javascript
 		picturefillCDN.external = 1
 		picturefillCDN.if.isTrue = {$bootstrap.image.picturefill}
 
@@ -174,7 +164,6 @@ page {
 
 		viewportcheckerCDN = https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/{$bootstrap.cdn.viewportchecker}/jquery.viewportchecker.min.js
 		viewportcheckerCDN.integrity = {$bootstrap.cdn.viewportcheckerIntegrity}
-		viewportcheckerCDN.type = text/javascript
 		viewportcheckerCDN.external = 1
 		viewportcheckerCDN.if.isTrue = {$bootstrap.extconf.animateCss}
 

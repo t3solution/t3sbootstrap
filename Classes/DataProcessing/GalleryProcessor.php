@@ -1071,7 +1071,7 @@ class GalleryProcessor implements DataProcessorInterface
 	protected function checkMediaWidth($mediaWidth)
 	{
 
-		if ( $this->minimumWidth && $mediaWidth < 575  ) {
+		if ( $this->minimumWidth && $mediaWidth < 575	 ) {
 			// set to 575px and therefore 100% wide on mobile (constant: minimumWidth=1)
 			$mediaWidth = 575;
 		}

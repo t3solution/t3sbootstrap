@@ -3,7 +3,8 @@
   font-style: normal;
   font-weight: 900;
   src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.eot");
-  src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.woff2") format("woff2"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.woff") format("woff"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.ttf") format("truetype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.svg#fontawesome") format("svg"); }
+  src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.woff2") format("woff2"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.woff") format("woff"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.ttf") format("truetype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.svg#fontawesome") format("svg");
+  font-display: swap; }
 
 
 .internal-link::before,

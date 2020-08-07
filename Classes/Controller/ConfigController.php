@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
@@ -204,7 +205,7 @@ class ConfigController extends ActionController
 	 */
 	public function createAction(\T3SBS\T3sbootstrap\Domain\Model\Config $newConfig)
 	{
-		$this->addFlashMessage('The new configuration was created.');
+		$this->addFlashMessage('The new configuration was created.', '', FlashMessage::OK);
 
 		if ( self::isSiteroot() ) {
 			$homepageUid = (int)$_GET['id'];
@@ -273,7 +274,7 @@ class ConfigController extends ActionController
 	 */
 	public function updateAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
 	{
-		$this->addFlashMessage('The configuration was updated.');
+		$this->addFlashMessage('The configuration was updated.', '', FlashMessage::OK);
 
 		if ( self::isSiteroot() ) {
 			$homepageUid = (int)$_GET['id'];
@@ -299,7 +300,7 @@ class ConfigController extends ActionController
 	 */
 	public function deleteAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
 	{
-		$this->addFlashMessage('The object was deleted.');
+		$this->addFlashMessage('The object was deleted.', '', FlashMessage::INFO);
 		$this->configRepository->remove($config);
 		parent::redirect('list');
 	}

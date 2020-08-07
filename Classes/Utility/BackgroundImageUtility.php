@@ -51,12 +51,6 @@ class BackgroundImageUtility implements SingletonInterface
 			$filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
 		}
 
-		if ( $webp ) {
-			$jsModernizr = 'EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js';
-			$jsModernizr = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsModernizr);
-			$this->pageRenderer()->addJsFooterFile($jsModernizr);
-		}
-
 		if ( count($filesFromRepository) > 1 ) {
 			if ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) {
 				// bg-images in two-columns
@@ -92,13 +86,13 @@ class BackgroundImageUtility implements SingletonInterface
 				if ($jumbotron) {
 					$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
 				} elseif ($body) {
-					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf);					
+					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf, TRUE);
 				} else {
 					if ( $flexconf['enableAutoheight'] ) {
 						if ( $flexconf['addHeight'] ) {
 							$this->pageRenderer()->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
 						}
-						$this->pageRenderer()->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);						
+						$this->pageRenderer()->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);
 						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf);
 					} else {
 						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
@@ -137,7 +131,7 @@ class BackgroundImageUtility implements SingletonInterface
 	 *
 	 * @return string $css
 	 */
-	private function generateCss( $uid, $file, $image, $webp, $flexconf=[] ) {
+	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE ) {
 
 		$imageRaster = $flexconf['imageRaster'] ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
 
@@ -166,8 +160,16 @@ class BackgroundImageUtility implements SingletonInterface
 
 			$css .= '@media (max-width: '.$querie.'px) {';
 			if ($webp) {
-				$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
-				$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
+
+				if ($body) {
+					$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
+					$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
+				} else {
+					$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
+					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
+				}
+
+
 			} else {
 				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
 			}

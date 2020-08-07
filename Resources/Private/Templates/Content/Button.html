@@ -18,7 +18,7 @@
 			<f:link.typolink
 				parameter="{data.header_link}"
 				class="{typolinkButtonClass}"
-				additionalAttributes="{role: 'button', name: '{data.header -> f:format.raw()}'}">
+				additionalAttributes="{role: 'button'}">
 				{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
 				{data.header -> f:format.raw()}
 			</f:link.typolink>

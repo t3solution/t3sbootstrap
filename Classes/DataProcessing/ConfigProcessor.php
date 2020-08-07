@@ -524,7 +524,7 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 
 		if (!$this->processorConfiguration['disableDefaultCss']) {
-			self::includeRequiredFiles($processedRecordVariables);
+			self::includeRequiredFiles($processedRecordVariables, $webp);
 		}
 
 		return $this->processedData;
@@ -569,10 +569,11 @@ class ConfigProcessor implements DataProcessorInterface
 	 * Load required css and js files
 	 *
 	 * @param array $processedRecordVariables
+	 * @param bool $webp
 	 *
 	 * @return void
 	 */
-	private function includeRequiredFiles($processedRecordVariables) {
+	private function includeRequiredFiles($processedRecordVariables, $webp) {
 
 		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 		$frontendController = self::getFrontendController();
@@ -704,7 +705,11 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 				'/fileadmin/T3SB/Resources/Public/JS/t3sbProject.js');
 			$pageRenderer->addJsFooterFile($projectJS);
 		}
-
+		if ( $webp ) {
+			$jsModernizr = 'EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js';
+			$jsModernizr = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsModernizr);
+			$pageRenderer->addJsFooterFile($jsModernizr);
+		}
 	}
 
 
@@ -724,26 +729,28 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 			$customFile = $customPath.$customFileName;
 
 			if (file_exists($customFile)) {
-			
+
 				$customFileLength = strlen(file_get_contents($customFile));
 				$contentLength = strlen(trim($customContent));
-			
+
 				if ($customFileLength != $contentLength) {
-			
-					unlink($customFile);					
-					GeneralUtility::writeFile($customFile, trim($customContent));	
+
+					unlink($customFile);
+					GeneralUtility::writeFile($customFile, trim($customContent));
 				}
-			
+
 			} else {
-				
+
 				if (!is_dir($customPath)) {
 					mkdir($customPath, 0777, true);
 				}
-			
-				GeneralUtility::writeFile($customFile, trim($customContent));		
+
+				GeneralUtility::writeFile($customFile, trim($customContent));
 
 			}
 		}
 	}
+
+
 
 }

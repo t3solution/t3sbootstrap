@@ -57,7 +57,7 @@ new LazyLoad({
 			if ( imgwidth ) {
 				zoomOverlay.css('max-width', imgwidth);
 			}
-			if ( imgwidth ) {
+			if ( imgheight ) {
 				zoomOverlay.css('max-height', imgheight);
 			}
 		}
@@ -92,15 +92,21 @@ temp.jsFooterInline >
 #
 ##########################################################################################################
 
+# Bugfix for Safari browser if using webp with lazyload
+[browser('Safari') && {$bootstrap.extconf.webp} == 1 && {$bootstrap.extconf.lazyLoad} > 0]
+page.cssInline {
+	124 = TEXT
+	124.value = picture img.lazy {opacity:1 !important;}
+}
+[GLOBAL]
+
 # Ajax Pagination for EXT:news
 [{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1]
 page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxPagination.js
-page.includeJSFooter.ajaxPagination.type = text/javascript
 plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
 [END]
 [{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 && {$bootstrap.extconf.lazyLoad} == 1]
 page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxLazyPagination.js
-page.includeJSFooter.ajaxPagination.type = text/javascript
 [END]
 
 ##########################################################################################################
@@ -171,7 +177,6 @@ page.includeCSS.t3sblightboxCDN.external = 1
 page.includeJSFooter.t3sblightboxCDN >
 page.includeJSFooter.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/{$bootstrap.cdn.ekkoLightbox}/ekko-lightbox.min.js
 page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.ekkoLightboxIntegrity}
-page.includeJSFooter.t3sblightboxCDN.type = text/javascript
 page.includeJSFooter.t3sblightboxCDN.external = 1
 [END]
 
@@ -186,7 +191,6 @@ page.includeCSS.t3sblightboxCDN.external = 1
 page.includeJSFooter.t3sblightboxCDN >
 page.includeJSFooter.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$bootstrap.cdn.lightcase}/src/js/lightcase.min.js
 page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.lightcaseIntegrity}
-page.includeJSFooter.t3sblightboxCDN.type = text/javascript
 page.includeJSFooter.t3sblightboxCDN.external = 1
 [END]
 
@@ -195,7 +199,6 @@ page.includeJSFooter.t3sblightboxCDN.external = 1
 page.includeJSFooterlibs.jqueryCDN >
 page.includeJSLibs {
 	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js
-	jqueryCDN.type = text/javascript
 	jqueryCDN.external = 1
 	jqueryCDN.forceOnTop = 1
 }
@@ -217,7 +220,6 @@ page.includeCSS.t3sblightbox >
 page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/ekko-lightbox.css
 page.includeJSFooter.t3sblightbox >
 page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/ekko-lightbox.min.js
-page.includeJSFooter.t3sblightbox.type = text/javascript
 [END]
 
 ##########################################################################################################
@@ -229,7 +231,6 @@ page.includeCSS.t3sblightbox >
 page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/lightcase.css
 page.includeJSFooter.t3sblightbox >
 page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/lightcase.min.js
-page.includeJSFooter.t3sblightbox.type = text/javascript
 [END]
 
 # load jquery into the header
@@ -237,7 +238,6 @@ page.includeJSFooter.t3sblightbox.type = text/javascript
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
 	jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
-	jquery.type = text/javascript
 	jquery.forceOnTop = 1
 }
 [END]

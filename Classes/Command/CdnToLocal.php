@@ -1,37 +1,60 @@
 <?php
-namespace T3SBS\T3sbootstrap\Tasks;
+declare(strict_types=1);
 
-/*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+namespace T3SBS\T3sbootstrap\Command;
+
+/**
+ * This file is part of the "tt_address" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
-class CdnToLocal extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
+
+/**
+ * Command for update GRUAN access data
+ */
+class CdnToLocal extends Command
+{
 
 	/**
-	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+	 * @param ConfigurationManagerInterface $configurationManager
 	 */
-	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager)
+	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
 	{
 		$this->configurationManager = $configurationManager;
 	}
 
 
-	public function execute() {
+    /**
+     * Defines the allowed options for this command
+     *
+     * @inheritdoc
+     */
+	protected function configure()
+	{
+	    $this->setDescription('Write required CSS and JS to fileadmin/Resources/Private/');
+	}
+
+
+    /**
+     * Update all records
+     *
+     * @inheritdoc
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
 
 		$this->configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
 		$settings = $this->configurationManager->getConfiguration(
-			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+			ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
 			't3sbootstrap',
 			'm1'
 		);
@@ -282,9 +305,9 @@ class CdnToLocal extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 
 		}
 
-		return TRUE;
-	}
+		return 0;
 
+    }
 
 	private function writeCustomFile($customPath, $customFileName, $cdnPath, $extend=false ) {
 
@@ -312,5 +335,6 @@ class CdnToLocal extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 
 		GeneralUtility::writeFile($customFile, $customContent);
 	}
+
 
 }

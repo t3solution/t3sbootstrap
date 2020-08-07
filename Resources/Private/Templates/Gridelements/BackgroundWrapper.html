@@ -33,8 +33,9 @@
 					<f:comment>	BG-Image : overlay and autoheight </f:comment>
 						<section id="s-{data.uid}" class="card rounded-0 border-0">
 							<f:comment>	background-image by css </f:comment>
-							<div id="bg-img-{data.uid}" class="enableAutoheight{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
-style="{f:if(condition: '{style}', then: ' {style}')}">
+							<div id="bg-img-{data.uid}"
+								 class="enableAutoheight{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
+									  style="{f:if(condition: '{style}', then: ' {style}')}">
 							</div>
 							<f:render section="SectionOverlayInner" arguments="{_all}" />
 						</section>
@@ -42,9 +43,9 @@ style="{f:if(condition: '{style}', then: ' {style}')}">
 					<f:else>
 					<f:comment>	BG-Image : default </f:comment>
 						<f:comment>	background-image by css </f:comment>
-
-						<section id="s{data.uid}" class="{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
-style="{f:if(condition: '{style}', then: ' {style}')}">
+						<section id="s{data.uid}"
+							 class="{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
+								  style="{f:if(condition: '{style}', then: ' {style}')}">
 							<f:render section="SectionInner" arguments="{_all}" />
 						</section>
 					</f:else>
