@@ -14,6 +14,7 @@ namespace T3SBS\T3sbootstrap\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassHelper implements SingletonInterface
 {
@@ -237,7 +238,7 @@ class ClassHelper implements SingletonInterface
 			foreach ($textColors as $textColor) {
 				if (strpos($data['tx_t3sbootstrap_header_class'], $textColor) !== false) {
 					$header['hClass'] .= $textColor;
-					$data['tx_t3sbootstrap_header_class'] = trim(str_replace($textColor, '', $data['tx_t3sbootstrap_header_class']));	
+					$data['tx_t3sbootstrap_header_class'] = trim(str_replace($textColor, '', $data['tx_t3sbootstrap_header_class']));
 					break;
 				}
 			}

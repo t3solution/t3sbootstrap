@@ -152,7 +152,15 @@ $tempContentColumns = [
 					['ml-3 (margin-left)', 'ml-3'],
 					['mr-3 (margin-right)', 'mr-3'],
 					['mx-3 (margin-left and -right)', 'mx-3'],
-					['my-3 (margin-top and -bottom)', 'my-3']
+					['my-3 (margin-top and -bottom)', 'my-3'],
+					['text-primary', 'text-primary'],
+					['text-secondary', 'text-secondary'],
+					['text-danger', 'text-danger'],
+					['text-success', 'text-success'],
+					['text-warning', 'text-warning'],
+					['text-info', 'text-info'],
+					['text-black', 'text-black'],
+					['text-white', 'text-white']
 				],
 			],
 		],

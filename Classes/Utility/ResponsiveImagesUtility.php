@@ -171,7 +171,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 					$referenceWidth,
 					$breakpoint['srcset'],
 					$breakpoint['media'],
-				$breakpoint['sizes'],
+					$breakpoint['sizes'],
 					$cropArea,
 					$absoluteUri,
 					$lazyload,
@@ -352,7 +352,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param	Area				 $cropArea
 	 * @param	bool				 $absoluteUri
 	 * @param	bool			$webpIsLoaded
-	 * @param	string		  	$type
+	 * @param	string			 	$type
 	 *
 	 * @return array
 	 */

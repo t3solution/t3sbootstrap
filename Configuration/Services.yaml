@@ -1,0 +1,20 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  T3SBS\T3sbootstrap\:
+    resource: '../Classes/*'
+
+  T3SBS\T3sbootstrap\Command\CdnToLocal:
+    tags:
+      - name: 'console.command'
+        command: 't3sbootstrap:cdnToLocal'
+        schedulable: true
+
+  T3SBS\T3sbootstrap\Command\CustomScss:
+    tags:
+      - name: 'console.command'
+        command: 't3sbootstrap:customScss'
+        schedulable: true

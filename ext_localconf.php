@@ -255,12 +255,6 @@ call_user_func(function () {
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ws_scss') ) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.wsScss = 1');
 		if (array_key_exists('customScss', $extconf) && $extconf['customScss'] === '1') {
-			# declaring the task to write a custom scss file
-			$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['T3SBS\T3sbootstrap\Tasks\Scss'] = [
-					 'extension' => 't3sbootstrap',
-					 'title' => 'T3SB Custom Scss - write a custom scss file',
-					 'description' => 'T3SB Custom Scss - write a custom scss file',
-			];
 			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScss = 1');
 			// Optional "bootswatch theme"
 			if (array_key_exists('bootswatch', $extconf) && $extconf['bootswatch'] !== 'none') {
@@ -318,13 +312,5 @@ call_user_func(function () {
 	if($rootlinefields != '') $rootlinefields .= ' , ';
 	$rootlinefields .= 'keywords,description';
 
-	/***************
-	 * declaring the task to write required CSS and JS files to fileadmin/Resources/Private/
-	 */
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['T3SBS\T3sbootstrap\Tasks\CdnToLocal'] = [
-		 'extension' => 't3sbootstrap',
-		 'title' => 'T3SB CDN to local',
-		 'description' => 'write required CSS and JS to fileadmin/Resources/Private/',
-	];
 
 });
