@@ -33,6 +33,7 @@ $tempPagesColumns = [
 				['container','container'],
 				['container-fluid','container-fluid'],
 				['container-fluid px-0','container-fluid px-0'],
+				['container-sm','container-sm'],
 				['container-md','container-md'],
 				['container-lg','container-lg'],
 				['container-xl','container-xl']
