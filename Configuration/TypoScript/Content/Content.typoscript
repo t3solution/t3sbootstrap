@@ -58,7 +58,7 @@ lib.content.footerFromPid {
 }
 
 # if indexed_search is loaded
-[userFunc = TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('indexed_search')]
+[loaded('indexed_search')]
 lib.dynamicContent.10.wrap = <!--TYPO3SEARCH_begin-->|<!--TYPO3SEARCH_end-->
 lib.dynamicContentSlide.10.wrap = <!--TYPO3SEARCH_begin-->|<!--TYPO3SEARCH_end-->
 [END]
