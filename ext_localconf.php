@@ -70,6 +70,9 @@ call_user_func(function () {
 	 */
 	$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
+	$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+	$version = $typo3Version->getMajorVersion();
+
 	/***************
 	 * Other Extensions
 	 */
@@ -79,9 +82,6 @@ call_user_func(function () {
 		/***************
 		 * plugin content consent
 		 */
-
-		$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-		$version = (int)$typo3Version->getVersion();
 
 		if ($version == 10) {
 
