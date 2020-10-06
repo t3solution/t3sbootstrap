@@ -46,7 +46,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/35; type=small; label=Viewportchecker:
-	viewportchecker = 2.0.0
+	viewportchecker = 1.8.8
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
 	animate = 3.7.2
 	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
@@ -56,7 +56,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
 	lightcase = 2.5.0
 	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
-	ytPlayer = 3.4.3
+	ytPlayer = 3.3.4
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
 	bootstrapCssIntegrity = sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z	
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
