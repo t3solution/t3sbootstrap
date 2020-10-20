@@ -267,7 +267,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
 				if (empty($processedData['files'])) {
 					$ratio = $parentflexconf['ratio'] ? $parentflexconf['ratio'] : '16:9';
-					$noImgHeight = explode(':', $parentflexconf['ratio']);
+					$noImgHeight = explode(':', $ratio);
 					$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
 					$processedData['animate'] .= ' position-static';
 					$processedData['style'] .= ' min-height:'.$noImgHeight.'px;';
