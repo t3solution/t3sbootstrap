@@ -72,13 +72,17 @@ class SplitFileRefViewHelper extends AbstractViewHelper
 
 		$fileParts = GeneralUtility::split_fileref($file->getPublicUrl());
 
-			 $image= $fileParts['path'].$fileParts['filebody'].'.jpg';
-			 $fileParts['imgext'] = 'jpg';
+		$image= $fileParts['path'].$fileParts['filebody'].'.jpg';
+		$fileParts['imgext'] = 'jpg';
 
-			 if (!file_exists($image)) {
-				  $image= $fileParts['path'].$fileParts['filebody'].'.png';
-				  $fileParts['imgext'] = 'png';
-			 }
+		if (!file_exists($image)) {
+			$image = $fileParts['path'].$fileParts['filebody'].'.png';
+			$fileParts['imgext'] = 'png';
+		}
+
+		if (!file_exists($image)) {
+			$fileParts = null;
+		}
 
 		$templateVariableContainer->add($arguments['as'], $fileParts);
 		$content = $renderChildrenClosure();
