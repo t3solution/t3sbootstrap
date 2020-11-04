@@ -125,6 +125,11 @@ page.jsFooterInline.5.5.value (
 		$(this).ekkoLightbox();
 	});
 
+	if ( $('.MS-content figure a').hasClass('lightbox') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-gallery', 'gallery-'+msId);	
+	}
+
 )
 [END]
 
@@ -145,6 +150,11 @@ page.jsFooterInline.5.5.value (
 		maxWidth: 1140,
 		maxHeight: 800
 	});
+
+	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);	
+	}
 
 )
 [END]
