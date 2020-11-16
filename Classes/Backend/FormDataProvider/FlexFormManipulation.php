@@ -167,9 +167,10 @@ class FlexFormManipulation implements FormDataProviderInterface
 					}
 				}
 			}
-		}
 
-		$result['processedTca']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] = $dataStructure;
+			$result['processedTca']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] = $dataStructure;
+
+		}
 
 		return $result;
 	}
