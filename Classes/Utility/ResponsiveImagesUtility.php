@@ -223,7 +223,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$cropArea = $cropArea ?: Area::createEmpty();
 
 		// if lazyload enabled add data- prefix
-		#$attributePrefix = $lazyload ? 'data-' : '';
+		$attributePrefix = $lazyload ? 'data-' : '';
 
 		// Generate different image sizes for srcset attribute
 		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $webpIsLoaded, $type);
@@ -273,7 +273,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$fallbackImage = ($fallbackImage) ?: $originalImage;
 
 		// if lazyload enabled add data- prefix
-		#$attributePrefix = $lazyload ? 'data-' : '';
+		$attributePrefix = $lazyload ? 'data-' : '';
 
 		// Set image source
 		$tag->addAttribute($attributePrefix . 'src',	$this->imageService->getImageUri($originalImage, $absoluteUri));
