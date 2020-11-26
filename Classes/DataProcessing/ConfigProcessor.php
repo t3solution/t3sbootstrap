@@ -448,7 +448,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
 			if ( empty($bgImage) && $this->contentObjectConfiguration['settings.']['backgroundImageSlide'] ) {
 				foreach ($rootLineArray as $page) {
-					$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
+					$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id, $webp);
 					if ($bgImage) break;
 				}
 			}
