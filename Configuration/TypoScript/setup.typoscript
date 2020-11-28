@@ -6,14 +6,12 @@ module.tx_t3sbootstrap {
 		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
 	}
 	settings {
-		t3sbConfig.rootline = {$bootstrap.config.rootline}
 		customScss = {$bootstrap.extconf.customScss}
 		customScssPath = {$bootstrap.extconf.customScssPath}
 		editScss = {$bootstrap.extconf.editScss}
 		bootswatch = {$bootstrap.extconf.bootswatch}
 		bootswatchURL = https://bootswatch.com/4/
 		indexedsearch = {$bootstrap.ext.indexedsearch}
-		modalform = {$bootstrap.ext.form.modal}
 		expandedContent = {$bootstrap.extconf.expandedContent}
 		rollyourown = {$bootstrap.extconf.rollyourown}
 		wsScss = {$bootstrap.ext.wsScss}

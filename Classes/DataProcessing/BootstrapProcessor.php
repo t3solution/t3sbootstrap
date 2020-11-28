@@ -429,7 +429,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		##############################################################################################################################################
 
 		// container class
-		$processedData['data']['configuid'] = $cObj->stdWrapValue('configuid',$processorConfiguration,'');
+		$processedData['data']['configuid'] = (int)$processorConfiguration['configuid'];
 		$container = $defaultHelper->getContainerClass($processedData['data']);
 		if ($container && $container != 'colPosContainer') {
 			$processedData['containerPre'] = '<div class="'.$container.'">';

@@ -32,7 +32,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         ];
     }
 
-	
+
 	protected function getExtconf(): ExpressionFunction
 	{
 		return new ExpressionFunction('t3sbootstrap', function ($str) {
@@ -66,7 +66,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 		 return $str === $browser;
 	  });
 
-    }
+	}
 
 
 	protected function getColPosList(): ExpressionFunction
@@ -76,9 +76,9 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 		}, function ($arguments, $str) {
 
 			$result = FALSE;
-	
+
 			if ( $_GET['id'] && TYPO3_MODE == 'BE' ) {
-	
+
 				$pid = (int)$_GET['id'];
 				$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 				$configRepository = $objectManager->get(ConfigRepository::class);
@@ -157,7 +157,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 										 $result = TRUE;
 								}
 							}
-	
+
 							if ( $config->getExpandedcontentEnabletop() && $config->getExpandedcontentEnablebottom() ) {
 								if ($str == 'FooterandTopBottom') {
 										 $result = TRUE;
@@ -185,7 +185,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 							}
 						}
 					}
-				}					
+				}
 			}
 
 			return $result;
@@ -199,10 +199,10 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         return new ExpressionFunction('loaded', function () {
             // Not implemented, we only use the evaluator
         }, function ($arguments, $extKey) {
+
             return ExtensionManagementUtility::isLoaded($extKey);
         });
     }
-
 
 
 }

@@ -21,7 +21,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * # Example: Basic example
  * <code>
- * <n:includeFile path="{settings.cssFile}" />
+ * <t3sbs:includeFile path="{settings.cssFile}" />
  * </code>
  * <output>
  * This will include the file provided by {settings} in the header

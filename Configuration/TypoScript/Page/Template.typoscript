@@ -75,29 +75,121 @@ page {
 			backToTopClass = {$bootstrap.backToTopClass}
 			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
 			langMenuWithFaIcon = {$bootstrap.config.langMenuWithFaIcon}
+
+			db {
+				uid = {$bootstrap.db.uid}
+				company = {$bootstrap.db.company}
+				homepage_uid = {$bootstrap.db.homepage_uid}
+				page_title = {$bootstrap.db.page_title}
+				page_titlealign = {$bootstrap.db.page_titlealign}
+				page_titlecontainer = {$bootstrap.db.page_titlecontainer}
+				page_titleclass = {$bootstrap.db.page_titleclass}
+				meta_enable = {$bootstrap.db.meta_enable}
+				meta_value = {$bootstrap.db.meta_value}
+				meta_container = {$bootstrap.db.meta_container}
+				meta_class = {$bootstrap.db.meta_class}
+				meta_text = {$bootstrap.db.meta_text}
+				navbar_enable = {$bootstrap.db.navbar_enable}
+				navbar_entrylevel = {$bootstrap.db.navbar_entrylevel}
+				navbar_levels = {$bootstrap.db.navbar_levels}
+				navbar_excludeuiduist = {$bootstrap.db.navbar_excludeuiduist}
+				navbar_includespacer = {$bootstrap.db.navbar_includespacer}
+				navbar_justify = {$bootstrap.db.navbar_justify}
+				navbar_sectionmenu = {$bootstrap.db.navbar_sectionmenu}
+				navbar_megamenu = {$bootstrap.db.navbar_megamenu}
+				navbar_hover = {$bootstrap.db.navbar_hover}
+				navbar_clickableparent = {$bootstrap.db.navbar_clickableparent}
+				navbar_brand = {$bootstrap.db.navbar_brand}
+				navbar_image = {$bootstrap.db.navbar_image}
+				navbar_color = {$bootstrap.db.navbar_color}
+				navbar_background = {$bootstrap.db.navbar_background}
+				navbar_container = {$bootstrap.db.navbar_container}
+				navbar_placement = {$bootstrap.db.navbar_placement}
+				navbar_alignment = {$bootstrap.db.navbar_alignment}
+				navbar_class = {$bootstrap.db.navbar_class}
+				navbar_toggler = {$bootstrap.db.navbar_toggler}
+				navbar_breakpoint = {$bootstrap.db.navbar_breakpoint}
+				navbar_offcanvas = {$bootstrap.db.navbar_offcanvas}
+				navbar_height = {$bootstrap.db.navbar_height}
+				navbar_searchbox = {$bootstrap.db.navbar_searchbox}
+				navbar_langmenu = {$bootstrap.db.navbar_langmenu}
+				navbar_shrinkcolorschemes = {$bootstrap.db.navbar_shrinkcolorschemes}
+				navbar_shrinkcolor = {$bootstrap.db.navbar_shrinkcolor}
+				jumbotron_enable = {$bootstrap.db.jumbotron_enable}
+				jumbotron_bgimage = {$bootstrap.db.jumbotron_bgimage}
+				jumbotron_fluid = {$bootstrap.db.jumbotron_fluid}
+				jumbotron_slide = {$bootstrap.db.jumbotron_slide}
+				jumbotron_position = {$bootstrap.db.jumbotron_position}
+				jumbotron_container = {$bootstrap.db.jumbotron_container}
+				jumbotron_containerposition = {$bootstrap.db.jumbotron_containerposition}
+				jumbotron_class = {$bootstrap.db.jumbotron_class}
+				breadcrumb_enable = {$bootstrap.db.breadcrumb_enable}
+				breadcrumb_notonrootpage = {$bootstrap.db.breadcrumb_notonrootpage}
+				breadcrumb_faicon = {$bootstrap.db.breadcrumb_faicon}
+				breadcrumb_corner = {$bootstrap.db.breadcrumb_corner}
+				breadcrumb_bottom = {$bootstrap.db.breadcrumb_bottom}
+				breadcrumb_position = {$bootstrap.db.breadcrumb_position}
+				breadcrumb_container = {$bootstrap.db.breadcrumb_container}
+				breadcrumb_containerposition = {$bootstrap.db.breadcrumb_containerposition}
+				breadcrumb_class = {$bootstrap.db.breadcrumb_class}
+				sidebar_enable = {$bootstrap.db.sidebar_enable}
+				sidebar_rightenable = {$bootstrap.db.sidebar_rightenable}
+				sidebar_levels = {$bootstrap.db.sidebar_levels}
+				sidebar_entrylevel = {$bootstrap.db.sidebar_entrylevel}
+				sidebar_excludeuiduist = {$bootstrap.db.sidebar_excludeuiduist}
+				sidebar_includespacer = {$bootstrap.db.sidebar_includespacer}
+				footer_enable = {$bootstrap.db.footer_enable}
+				footer_fluid = {$bootstrap.db.footer_fluid}
+				footer_slide = {$bootstrap.db.footer_slide}
+				footer_sticky = {$bootstrap.db.footer_sticky}
+				footer_container = {$bootstrap.db.footer_container}
+				footer_containerposition = {$bootstrap.db.footer_containerposition}
+				footer_class = {$bootstrap.db.footer_class}
+				footer_pid = {$bootstrap.db.footer_pid}
+				expandedcontent_enabletop = {$bootstrap.db.expandedcontent_enabletop}
+				expandedcontent_slidetop = {$bootstrap.db.expandedcontent_slidetop}
+				expandedcontent_containerpositiontop = {$bootstrap.db.expandedcontent_containerpositiontop}
+				expandedcontent_containertop = {$bootstrap.db.expandedcontent_containertop}
+				expandedcontent_classtop = {$bootstrap.db.expandedcontent_classtop}
+				expandedcontent_enablebottom = {$bootstrap.db.expandedcontent_enablebottom}
+				expandedcontent_slidebottom = {$bootstrap.db.expandedcontent_slidebottom}
+				expandedcontent_containerpositionbottom = {$bootstrap.db.expandedcontent_containerpositionbottom}
+				expandedcontent_containerbottom = {$bootstrap.db.expandedcontent_containerbottom}
+				expandedcontent_classbottom = {$bootstrap.db.expandedcontent_classbottom}
+				general_rootline = {$bootstrap.db.general_rootline}
+			}
+
 		}
 		dataProcessing {
+
 			#
 			# NavBar / Main Navigation
 			#
 			10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
 			10 {
 				entryLevel.cObject = TEXT
-				entryLevel.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_entrylevel
+				entryLevel.cObject.value = {$bootstrap.db.navbar_entrylevel}
+				entryLevel.cObject.override = {$bootstrap.config.navbar_entrylevel}
+				entryLevel.cObject.override.if.isTrue = {$bootstrap.config.navbar_entrylevel}
+
 				levels.cObject = TEXT
-				levels.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_levels
-				levels.cObject.stdWrap.override = {$bootstrap.config.navbar_levels}
-				levels.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.navbar_levels}
+				levels.cObject.value = {$bootstrap.db.navbar_levels}				
+				levels.cObject.override = {$bootstrap.config.navbar_levels}
+				levels.cObject.override.if.isTrue = {$bootstrap.config.navbar_levels}
+
 				excludeUidList.cObject = TEXT
-				excludeUidList.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_excludeuiduist
-				excludeUidList.cObject.stdWrap.override = {$bootstrap.config.navbar_excludeuiduist}
-				excludeUidList.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.navbar_excludeuiduist}
+				excludeUidList.cObject.value = {$bootstrap.db.navbar_excludeuiduist}
+				excludeUidList.cObject.override = {$bootstrap.config.navbar_excludeuiduist}
+				excludeUidList.cObject.override.if.isTrue = {$bootstrap.config.navbar_excludeuiduist}
+
 				includeSpacer.cObject = TEXT
-				includeSpacer.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_includespacer
-				includeSpacer.cObject.stdWrap.override = {$bootstrap.config.navbar_includespacer}
-				includeSpacer.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.navbar_includespacer}
+				includeSpacer.cObject.value = {$bootstrap.db.navbar_includespacer}
+				includeSpacer.cObject.override = {$bootstrap.config.navbar_includespacer}
+				includeSpacer.cObject.override.if.isTrue = {$bootstrap.config.navbar_includespacer}
+
 				as = navbarMenu
 			}
+			10.if.isFalse.value = {$bootstrap.db.navbar_sectionmenu}
 
 			#
 			# NavBar-RIGHT / Main Navigation
@@ -107,8 +199,8 @@ page {
 				special = list
 				special.value = {$bootstrap.navbar.rightMenuUidList}
 				as = navbarMenuRight
-				if.isTrue = {$bootstrap.navbar.rightMenuUidList}
 			}
+			11.if.isTrue = {$bootstrap.navbar.rightMenuUidList}
 
 			#
 			# Pagebrowser
@@ -120,8 +212,9 @@ page {
 				special.items.prevnextToSection = {$bootstrap.pagebrowser.prevnextToSection}
 				entryLevel = {$bootstrap.pagebrowser.entryLevel}
 				as = browseNext
-				if.isTrue = {$bootstrap.pagebrowser.enable}
 			}
+			12.if.isTrue = {$bootstrap.pagebrowser.enable}
+
 			13 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
 			13 {
 				special = browse
@@ -129,8 +222,8 @@ page {
 				special.items.prevnextToSection = {$bootstrap.pagebrowser.prevnextToSection}
 				entryLevel = {$bootstrap.pagebrowser.entryLevel}
 				as = browsePrev
-				if.isTrue = {$bootstrap.pagebrowser.enable}
 			}
+			13.if.isTrue = {$bootstrap.pagebrowser.enable}
 
 			#
 			# Sub Navigation in Sidebar
@@ -139,37 +232,53 @@ page {
 			20 {
 				entryLevel.cObject = TEXT
 				entryLevel.cObject {
-					data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
+					value = {$bootstrap.db.sidebar_entrylevel}
 					override = -1
 					override.if {
-						 equals = 99
-						value.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_entrylevel
+						equals = 99
+						value = {$bootstrap.db.sidebar_entrylevel}
 					}
 				}
 				levels.cObject = TEXT
-				levels.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_levels
-				levels.cObject.stdWrap.override = {$bootstrap.config.sidebar_levels}
-				levels.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.sidebar_levels}
+				levels.cObject.value = {$bootstrap.db.sidebar_levels}
+				levels.cObject.override = {$bootstrap.config.sidebar_levels}
+				levels.cObject.override.if.isTrue = {$bootstrap.config.sidebar_levels}
 				excludeUidList.cObject = TEXT
-				excludeUidList.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_excludeuiduist
-				excludeUidList.cObject.stdWrap.override = {$bootstrap.config.sidebar_excludeuiduist}
-				excludeUidList.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.sidebar_excludeuiduist}
+				excludeUidList.cObject.value = {$bootstrap.db.sidebar_excludeuiduist}
+				excludeUidList.cObject.override = {$bootstrap.config.sidebar_excludeuiduist}
+				excludeUidList.cObject.override.if.isTrue = {$bootstrap.config.sidebar_excludeuiduist}
 				includeSpacer.cObject = TEXT
-				includeSpacer.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_includespacer
-				includeSpacer.cObject.stdWrap.override = {$bootstrap.config.sidebar_includespacer}
-				includeSpacer.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.sidebar_includespacer}
+				includeSpacer.cObject.value = {$bootstrap.db.sidebar_includespacer}
+				includeSpacer.cObject.override = {$bootstrap.config.sidebar_includespacer}
+				includeSpacer.cObject.override.if.isTrue = {$bootstrap.config.sidebar_includespacer}
 				as = subNavigation
-				if {
-					isTrue.cObject = COA
-					isTrue.cObject {
-						10 = TEXT
-						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
-						20 = TEXT
-						20.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
-						30 = TEXT
-						30.value = {$bootstrap.config.sidebar_enable}
-						40 = TEXT
-						40.value = {$bootstrap.config.sidebar_rightenable}
+			}
+			20.if {
+				isTrue.cObject = COA
+				isTrue.cObject {
+					10 = TEXT
+					10.value = 1
+					10.if {
+						equals = Sub
+						value = {$bootstrap.db.sidebar_enable}
+					}
+					20 = TEXT
+					20.value = 1
+					20.if {
+						equals = Sub
+						value = {$bootstrap.db.sidebar_rightenable}
+					}
+					30 = TEXT
+					30.value = 1
+					30.if {
+						equals = Sub
+						value = {$bootstrap.config.sidebar_rightenable}
+					}
+					40 = TEXT
+					40.value = 1
+					40.if {
+						equals = Sub
+						value = {$bootstrap.config.sidebar_enable}
 					}
 				}
 			}
@@ -183,6 +292,8 @@ page {
 				special.range = 0|-1
 				as = breadcrumb
 			}
+			30.if.isTrue = {$bootstrap.db.breadcrumb_enable}
+
 
  			#
 			# Language Navigation
@@ -191,14 +302,9 @@ page {
 			40 {
 				languages = auto
 				as = languageNavigation
-				if {
-					isTrue.cObject = COA
-					isTrue.cObject {
-						10 = TEXT
-						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_langmenu
-					}
-				}
+
 			}
+			40.if.isTrue = {$bootstrap.db.navbar_langmenu}
 
 			#
 			# Meta Navigation
@@ -207,21 +313,22 @@ page {
 			50 {
 				special = list
 				special.value.cObject = TEXT
-				special.value.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:meta_value
-				special.value.cObject.stdWrap.override = {$bootstrap.config.meta_value}
-				special.value.cObject.stdWrap.override.if.isTrue = {$bootstrap.config.meta_value}
-				excludeUidList = {register:homepageuid}
-				excludeUidList.insertData = 1
+				special.value.cObject.value = {$bootstrap.db.meta_value}
+				special.value.cObject.override = {$bootstrap.config.meta_value}
+				special.value.cObject.override.if.isTrue = {$bootstrap.config.meta_value}
+				excludeUidList.cObject = TEXT
+				excludeUidList.cObject.value = {$bootstrap.db.homepage_uid}
 				levels = 1
 				as = metaNavigation
-				if {
-					isTrue.cObject = COA
-					isTrue.cObject {
-						10 = TEXT
-						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:meta_enable
-						20 = TEXT
-						20.value = {$bootstrap.config.meta_enable}
-					}
+
+			}
+			50.if {
+				isTrue.cObject = COA
+				isTrue.cObject {
+					10 = TEXT
+					10.value = {$bootstrap.db.meta_enable}
+					20 = TEXT
+					20.value = {$bootstrap.config.meta_enable}
 				}
 			}
 
@@ -267,28 +374,46 @@ page {
 								pidInList.field = pid
 								#where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
 								where = sectionIndex = 1 AND ( colPos = -1 )
-								#insertData = 1
 								orderBy = sorting
 								as = gridcontent
 							}
 						}
 					}
 				}
-				if {
-					isTrue.cObject = COA
-					isTrue.cObject {
-						10 = TEXT
-						10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
-						20 = TEXT
-						20.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
-						30 = TEXT
-						30.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
-						40 = TEXT
-						40.value = {$bootstrap.config.navbar_sectionmenu}
-						50 = TEXT
-						50.value = {$bootstrap.config.sidebar_rightenable}
-						60 = TEXT
-						60.value = {$bootstrap.config.sidebar_enable}
+
+			}
+			60.if {
+				isTrue.cObject = COA
+				isTrue.cObject {
+					10 = TEXT
+					10.value = 1
+					10.if.isTrue = {$bootstrap.db.navbar_sectionmenu}
+					20 = TEXT
+					20.value = 1
+					20.if {
+						equals = Section
+						value = {$bootstrap.db.sidebar_enable}
+					}
+					30 = TEXT
+					30.value = 1
+					30.if {
+						equals = Section
+						value = {$bootstrap.db.sidebar_rightenable}
+					}
+					40 = TEXT
+					40.value = 1
+					40.if.isTrue = {$bootstrap.config.navbar_sectionmenu}
+					50 = TEXT
+					50.value = 1
+					50.if {
+						equals = Section
+						value = {$bootstrap.config.sidebar_rightenable}
+					}
+					60 = TEXT
+					60.value = 1
+					60.if {
+						equals = Section
+						value = {$bootstrap.config.sidebar_enable}
 					}
 				}
 			}
@@ -302,8 +427,8 @@ page {
 			70.if {
 				value = {$bootstrap.config.lastModifiedContentElement}
 				equals = 1
-				isTrue.cObject = {$bootstrap.config.recentlyUpdatedContentElements}
 			}
+			70.isTrue = {$bootstrap.config.recentlyUpdatedContentElements}
 
 			#
 			# Main Config
@@ -311,21 +436,10 @@ page {
 			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
 			90 {
 				navbarExtraRow = {$bootstrap.navbar.extraRow}
-				rootline = {$bootstrap.config.rootline}
+				rootline = {$bootstrap.db.general_rootline}
 				webp = {$bootstrap.extconf.webp}
 				disableDefaultCss = {$bootstrap.config.disableDefaultCss}
-				dataProcessing {
-					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
-					10 {
-						references {
-							table = pages
-							fieldName = media
-						}
-						as = pagemedia
-					}
-				}
 			}
 		}
 	}
 }
-

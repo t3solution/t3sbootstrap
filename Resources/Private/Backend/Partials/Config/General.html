@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group row">
+	<label for="generalRootline" class="col-sm-3 control-label">
+		"T3SB Config" on subpages
+		<f:if condition="{compare.rootlineEnable}">
+			<br/><small class="text-primary">{compare.generalRootline}</small>
+		</f:if>
+		<f:if condition="{override.generalRootline}">
+			{f:if(condition:'{compare.generalRootline}',then:'',else:'<br/>')}<small class="text-danger"> ({override.generalRootline})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<div class="checkbox">
+			<label>
+				<f:form.checkbox id="generalRootline" class="form-check-input" property="generalRootline" value="1" />
+			</label>
+		</div>
+		<small class="form-text text-muted">Use configuration from rootline (slide) if enabled or from rootpage if disabled.<br/>
+			If your installation only needs one configuration, this should be disabled!<br/><br/>
+			(formerly known as a constant: <code>bootstrap.config.rootline</code>)
+		</small>
+	</div>
+</div>
+</html>
+
+

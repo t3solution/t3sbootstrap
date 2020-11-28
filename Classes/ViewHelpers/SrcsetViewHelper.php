@@ -1,5 +1,4 @@
 <?php
-
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 /**

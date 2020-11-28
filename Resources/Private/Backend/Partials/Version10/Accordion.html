@@ -1,6 +1,21 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="accordion" id="accordion">
 	<div class="card">
+		<div class="card-header" id="headerGeneral">
+			<h4 class="card-title">
+				<button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapseGeneral" aria-expanded="true" aria-controls="collapseGeneral">
+					General Settings
+				</button>
+			</h4>
+		</div>
+		<div id="collapseGeneral" class="collapse" aria-labelledby="headerGeneral" data-parent="#accordion">
+			<div class="card-body">
+				<f:render partial="Config/General" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+
+	<div class="card">
 		<div class="card-header" id="headerMeta">
 			<h4 class="card-title">
 				<button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapseMeta" aria-expanded="true" aria-controls="collapseMeta">

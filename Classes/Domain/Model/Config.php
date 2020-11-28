@@ -204,7 +204,6 @@ class Config extends AbstractEntity
 	protected $navbarBackground = '';
 
 
-
 	/**
 	 * navbarShrinkcolorschemes
 	 *
@@ -577,6 +576,15 @@ class Config extends AbstractEntity
 	 * @var string
 	 */
 	protected $expandedcontentClassbottom = '';
+
+
+	/**
+	 * generalRootline
+	 *
+	 * @var bool
+	 */
+	protected $generalRootline = false;
+
 
 	/**
 	 * Returns the pid
@@ -2375,7 +2383,7 @@ class Config extends AbstractEntity
 	 *
 	 * @return bool $expandedcontentEnablebottom
 	 */
-	public function getexpandedcontentEnablebottom()
+	public function getExpandedcontentEnablebottom()
 	{
 		return $this->expandedcontentEnablebottom;
 	}
@@ -2386,7 +2394,7 @@ class Config extends AbstractEntity
 	 * @param bool $expandedcontentEnablebottom
 	 * @return void
 	 */
-	public function setexpandedcontentEnablebottom($expandedcontentEnablebottom)
+	public function setExpandedcontentEnablebottom($expandedcontentEnablebottom)
 	{
 		$this->expandedcontentEnablebottom = $expandedcontentEnablebottom;
 	}
@@ -2396,7 +2404,7 @@ class Config extends AbstractEntity
 	 *
 	 * @return bool
 	 */
-	public function isexpandedcontentEnablebottom()
+	public function isExpandedcontentEnablebottom()
 	{
 		return $this->expandedcontentEnablebottom;
 	}
@@ -2494,5 +2502,37 @@ class Config extends AbstractEntity
 	{
 		$this->expandedcontentClassbottom = $expandedcontentClassbottom;
 	}
+
+	/**
+	 * Returns the generalRootline
+	 *
+	 * @return bool $generalRootline
+	 */
+	public function getGeneralRootline()
+	{
+		return $this->generalRootline;
+	}
+
+	/**
+	 * Sets the generalRootline
+	 *
+	 * @param bool $generalRootline
+	 * @return void
+	 */
+	public function setGeneralRootline($generalRootline)
+	{
+		$this->generalRootline = $generalRootline;
+	}
+
+	/**
+	 * Returns the boolean state of generalRootline
+	 *
+	 * @return bool
+	 */
+	public function isGeneralRootline()
+	{
+		return $this->generalRootline;
+	}
+
 
 }

@@ -103,17 +103,7 @@ print {
 		dataProcessing.90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
 		dataProcessing.90 {
 			navbarExtraRow = {$bootstrap.navbar.extraRow}
-			rootline = {$bootstrap.config.rootline}
-			dataProcessing {
-				10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
-				10 {
-					references {
-						table = pages
-						fieldName = media
-					}
-					as = pagemedia
-				}
-			}
+			rootline = {$bootstrap.db.general_rootline}
 		}
 	}
 }

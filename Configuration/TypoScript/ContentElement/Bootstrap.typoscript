@@ -29,8 +29,7 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 			223 = T3SBS\T3sbootstrap\DataProcessing\CardProcessor
 		}
@@ -73,8 +72,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 		}
 	}
@@ -102,11 +100,10 @@ tt_content {
 				minimumWidth = {$bootstrap.image.minimumWidth}
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
-				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
-				disableAutoRow =  {$bootstrap.image.disableAutoRow}
+				maxWidthToast =	{$bootstrap.image.maxWidthToast}
+				disableAutoRow = {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 
 		}
@@ -134,8 +131,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 
 		}

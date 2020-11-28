@@ -1,6 +1,21 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="generalNavbar">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMeta" aria-expanded="true" aria-controls="collapseGeneral">
+					General Settings
+				</a>
+			</h4>
+		</div>
+		<div id="collapseGeneral" class="panel-collapse collapse" role="tabpanel" aria-labelledby="generalNavbar">
+			<div class="panel-body">
+				<f:render partial="Config/General" arguments="{_all}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="metaNavbar">
 			<h4 class="panel-title">
 				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMeta" aria-expanded="true" aria-controls="collapseMeta">

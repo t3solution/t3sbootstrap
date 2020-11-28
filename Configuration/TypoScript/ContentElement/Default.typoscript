@@ -19,8 +19,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 		}
 	}
@@ -40,8 +39,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 		}
 	}
@@ -61,8 +59,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid.cObject = TEXT
-				configuid.cObject.data = register:configuid
+				configuid = {$bootstrap.db.uid}
 			}
 		}
 	}
@@ -115,21 +112,6 @@ tt_content {
 			}
 			variables < page.10.variables
 			settings < page.10.settings
-			dataProcessing {
-				224 = T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor
-				224 {
-					container = {$bootstrap.extconf.container}
-					cType = {$bootstrap.extconf.cTypeClass}
-					sectionmenu = TEXT
-					sectionmenu.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
-					sidebarleft = TEXT
-					sidebarleft.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_enable
-					sidebarright = TEXT
-					sidebarright.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:sidebar_rightenable
-					configuid.cObject = TEXT
-					configuid.cObject.data = register:configuid
-				}
-			}
 		}
 	}
 
