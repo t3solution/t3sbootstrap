@@ -23,6 +23,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 
+
 /**
  * ConfigController
  */
@@ -87,12 +88,27 @@ class ConfigController extends ActionController
 				$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
 			}
 
+			$childPages = $pageRepository->getMenu((int)$_GET['id'], 'uid');
+			$childUids = array_keys($childPages);
+			$subChildPages = $pageRepository->getMenu($childUids, 'uid');
+			$allPages = array_merge($childPages, $subChildPages);
+			foreach ( $allPages as $page ) {
+				$pageList .= $page['uid'].',';
+			}
+			$pageList = rtrim($pageList, ',');
+
 			$configRepository = $this->configRepository->findAll();
 
 			foreach ( $configRepository as $key => $config ) {
-				$page = $pageRepository->getPage($config->getPid());
-				$allConfig[$page['uid']]['title'] = $page['title'];
-				$allConfig[$page['uid']]['uid'] = $page['uid'];
+
+				if (\TYPO3\CMS\Core\Utility\GeneralUtility::inList($pageList, $config->getPid())) {
+
+					$page = $pageRepository->getPage($config->getPid());
+
+					$allConfig[$page['uid']]['title'] = $page['title'];
+					$allConfig[$page['uid']]['uid'] = $page['uid'];
+
+				}
 			}
 
 			$assignedOptions['allConfig'] = $allConfig;
@@ -137,7 +153,7 @@ class ConfigController extends ActionController
 
 		if ( $rootConfig ) {
 			// config from rootline
-			if ( $this->settings['t3sbConfig']['rootline'] ) {
+			if ( $rootConfig->getGeneralRootline() ) {
 
 				$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
 
@@ -219,6 +235,9 @@ class ConfigController extends ActionController
 		$newConfig->setHomepageUid($homepageUid);
 		$newConfig->setPid((int)$_GET['id']);
 		$this->configRepository->add($newConfig);
+		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
+		$persistenceManager->persistAll();
+		self::writeConstants();
 
 		parent::redirect('list');
 	}
@@ -288,6 +307,10 @@ class ConfigController extends ActionController
 		$config->setHomepageUid($homepageUid);
 
 		$this->configRepository->update($config);
+		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
+		$persistenceManager->persistAll();
+		self::writeConstants();
+
 		parent::redirect('edit',NULL,Null,array('config' => $config));
 	}
 
@@ -302,6 +325,10 @@ class ConfigController extends ActionController
 	{
 		$this->addFlashMessage('The object was deleted.', '', FlashMessage::INFO);
 		$this->configRepository->remove($config);
+		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
+		$persistenceManager->persistAll();
+		self::writeConstants();
+
 		parent::redirect('list');
 	}
 
@@ -463,11 +490,13 @@ class ConfigController extends ActionController
 		$newConfig->setExpandedcontentContainertop( $rootConfig->getExpandedcontentContainertop() );
 		$newConfig->setExpandedcontentClasstop( $rootConfig->getExpandedcontentClasstop() );
 
-		$newConfig->setexpandedcontentEnablebottom( $rootConfig->getexpandedcontentEnablebottom() );
+		$newConfig->setExpandedcontentEnablebottom( $rootConfig->getExpandedcontentEnablebottom() );
 		$newConfig->setExpandedcontentSlidebottom( $rootConfig->getExpandedcontentSlidebottom() );
 		$newConfig->setExpandedcontentContainerpositionbottom( $rootConfig->getExpandedcontentContainerpositionbottom() );
 		$newConfig->setExpandedcontentContainerbottom( $rootConfig->getExpandedcontentContainerbottom() );
 		$newConfig->setExpandedcontentClassbottom( $rootConfig->getExpandedcontentClassbottom() );
+
+		$newConfig->setGeneralRootline( $rootConfig->getGeneralRootline() );
 
 		return $newConfig;
 	}
@@ -527,7 +556,7 @@ class ConfigController extends ActionController
 		$compare = [];
 		$rootConfig = $this->configRepository->findOneByPid(self::getRootPageUid());
 
-		$fileds = 'getCompany, getHomepageUid, getPageTitle, getPageTitlealign, getPageTitlecontainer, getPageTitleclass, getMetaEnable, getMetaValue, getMetaContainer, getMetaClass, getMetaText, getNavbarEnable, getNavbarEntrylevel, getNavbarLevels, getNavbarExcludeuiduist, getNavbarIncludespacer, getNavbarJustify, getNavbarSectionmenu, getNavbarMegamenu, getNavbarHover, getNavbarClickableparent, getNavbarBrand, getNavbarImage, getNavbarColor, getNavbarShrinkcolorschemes, getNavbarShrinkcolor, getNavbarBackground, getNavbarContainer, getNavbarPlacement, getNavbarAlignment, getNavbarClass, getNavbarToggler, getNavbarBreakpoint, getNavbarOffcanvas, getNavbarHeight, getNavbarSearchbox, getNavbarLangmenu, getJumbotronEnable, getJumbotronBgimage, getJumbotronFluid, getJumbotronSlide, getJumbotronPosition, getJumbotronContainer, getJumbotronContainerposition, getJumbotronClass, getBreadcrumbEnable, getBreadcrumbNotonrootpage, getBreadcrumbFaicon, getBreadcrumbCorner, getBreadcrumbBottom, getBreadcrumbPosition, getBreadcrumbContainer, getBreadcrumbContainerposition, getBreadcrumbClass, getSidebarEnable, getSidebarRightenable, , getSidebarEntrylevel, getSidebarLevels, getSidebarExcludeuiduist, getSidebarIncludespacer, getFooterEnable, getFooterFluid, getFooterSlide, getFooterSticky, getFooterContainer, getFooterContainerposition, getFooterClass, getFooterPid, getExpandedcontentEnabletop, getExpandedcontentSlidetop, getExpandedcontentContainerpositiontop, getExpandedcontentContainertop, getExpandedcontentClasstop, getexpandedcontentEnablebottom, getExpandedcontentSlidebottom, getExpandedcontentContainerpositionbottom, getExpandedcontentContainerbottom, getExpandedcontentClassbottom';
+		$fileds = 'getCompany, getHomepageUid, getPageTitle, getPageTitlealign, getPageTitlecontainer, getPageTitleclass, getMetaEnable, getMetaValue, getMetaContainer, getMetaClass, getMetaText, getNavbarEnable, getNavbarEntrylevel, getNavbarLevels, getNavbarExcludeuiduist, getNavbarIncludespacer, getNavbarJustify, getNavbarSectionmenu, getNavbarMegamenu, getNavbarHover, getNavbarClickableparent, getNavbarBrand, getNavbarImage, getNavbarColor, getNavbarShrinkcolorschemes, getNavbarShrinkcolor, getNavbarBackground, getNavbarContainer, getNavbarPlacement, getNavbarAlignment, getNavbarClass, getNavbarToggler, getNavbarBreakpoint, getNavbarOffcanvas, getNavbarHeight, getNavbarSearchbox, getNavbarLangmenu, getJumbotronEnable, getJumbotronBgimage, getJumbotronFluid, getJumbotronSlide, getJumbotronPosition, getJumbotronContainer, getJumbotronContainerposition, getJumbotronClass, getBreadcrumbEnable, getBreadcrumbNotonrootpage, getBreadcrumbFaicon, getBreadcrumbCorner, getBreadcrumbBottom, getBreadcrumbPosition, getBreadcrumbContainer, getBreadcrumbContainerposition, getBreadcrumbClass, getSidebarEnable, getSidebarRightenable, , getSidebarEntrylevel, getSidebarLevels, getSidebarExcludeuiduist, getSidebarIncludespacer, getFooterEnable, getFooterFluid, getFooterSlide, getFooterSticky, getFooterContainer, getFooterContainerposition, getFooterClass, getFooterPid, getExpandedcontentEnabletop, getExpandedcontentSlidetop, getExpandedcontentContainerpositiontop, getExpandedcontentContainertop, getExpandedcontentClasstop, getExpandedcontentEnablebottom, getExpandedcontentSlidebottom, getExpandedcontentContainerpositionbottom, getExpandedcontentContainerbottom, getExpandedcontentClassbottom, getGeneralRootline';
 
 		$filedsArr = GeneralUtility::trimExplode(',', $fileds, 1);
 
@@ -556,7 +585,11 @@ class ConfigController extends ActionController
 	}
 
 
-
+	/**
+	 * SCSS in the BE
+	 *
+	 * @return array
+	 */
 	public function getCustomScss( $file ) {
 
 		$customScssDir = $this->settings['customScssPath'] ? $this->settings['customScssPath'] : 'fileadmin/T3SB/SCSS/';
@@ -625,7 +658,11 @@ class ConfigController extends ActionController
 	}
 
 
-
+	/**
+	 * Delete files from directory
+	 *
+	 * @return void
+	 */
 	public function deleteFilesFromDirectory($directory){
 		if (is_dir($directory)) {
 			if ($dh = opendir($directory)) {
@@ -638,5 +675,195 @@ class ConfigController extends ActionController
 			}
 		}
 	}
+
+
+	/**
+	 * Write data from DB to constant file and import in sys_template
+	 *
+	 * @return void
+	 */
+	public function writeConstants() {
+
+		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
+		$rootTemplates = $queryBuilder
+			 ->select('uid','pid', 'constants')
+			 ->from('sys_template')
+			 ->where(
+				$queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
+			 )
+			 ->execute()->fetchAll();
+
+
+		if ( count($rootTemplates) ) {
+
+			$configRepository = $this->configRepository->findAll();
+
+			foreach ($rootTemplates as $key=>$rootTemplate) {
+
+				$import = "@import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants-".$rootTemplate['pid'].".typoscript'";
+
+				$pos = strpos($rootTemplate['constants'], $import);
+
+				if ($pos === FALSE) {
+
+					$setConstants = "# Please do not delete or comment out the following line".PHP_EOL;
+					$setConstants .= $import.PHP_EOL;
+					$setConstants .= $rootTemplate['constants'];
+
+					$update = $queryBuilder
+						->update('sys_template')
+						->where(
+							$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($rootTemplate['uid'], \PDO::PARAM_INT))
+						)
+						->set('constants', $setConstants)
+						->execute();
+				}
+
+				$filecontent = '';
+
+				foreach ( $configRepository as $config ) {
+
+					if ( $config->getPid() == $rootTemplate['pid'] ) {
+						$filecontent .= self::getContents($config).PHP_EOL;
+
+					} else {
+
+						$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $config->getPid())->get();
+
+						if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+
+							if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
+								$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
+							} else {
+								$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
+							}
+
+							$filecontent .= self::getContents($config);
+							$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
+						}
+					}
+				}
+
+				$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 't3sbconstants-'.$rootTemplate['pid'].'.typoscript';
+				$customFile = $customPath.$customFileName;
+
+				if (file_exists($customFile)) {
+					unlink($customFile);
+				}
+				if (!is_dir($customPath)) {
+					mkdir($customPath, 0777, true);
+				}
+
+				GeneralUtility::writeFile($customFile, $filecontent);
+
+			}
+		}
+
+	}
+
+
+	/**
+	 * Get the data from DB
+	 *
+	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @return string
+	 */
+	private function getContents(\T3SBS\T3sbootstrap\Domain\Model\Config $config) {
+
+		$constants = 'bootstrap.db.uid = '.$config->getUid() .PHP_EOL;
+		$constants .= 'bootstrap.db.company = '.$config->getCompany() .PHP_EOL;
+		$constants .= 'bootstrap.db.homepage_uid = '.$config->getHomepageUid() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.page_title = '.$config->getPageTitle() .PHP_EOL;
+		$constants .= 'bootstrap.db.page_titlealign = '.$config->getPageTitlealign() .PHP_EOL;
+		$constants .= 'bootstrap.db.page_titlecontainer = '.$config->getPageTitlecontainer() .PHP_EOL;
+		$constants .= 'bootstrap.db.page_titleclass = '.$config->getPageTitleclass() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.meta_enable = '.$config->getMetaEnable() .PHP_EOL;
+		$constants .= 'bootstrap.db.meta_value = '.$config->getMetaValue() .PHP_EOL;
+		$constants .= 'bootstrap.db.meta_container = '.$config->getMetaContainer() .PHP_EOL;
+		$constants .= 'bootstrap.db.meta_class = '.$config->getMetaClass() .PHP_EOL;
+		$constants .= 'bootstrap.db.meta_text = '.$config->getMetaText() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.navbar_enable = '.$config->getNavbarEnable() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_entrylevel = '.$config->getNavbarEntrylevel() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_levels = '.$config->getNavbarLevels() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_excludeuiduist = '.$config->getNavbarExcludeuiduist() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_includespacer = '.$config->getNavbarIncludespacer() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_justify = '.$config->getNavbarJustify() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_sectionmenu = '.$config->getNavbarSectionmenu() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_megamenu = '.$config->getNavbarMegamenu() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_hover = '.$config->getNavbarHover() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_clickableparent = '.$config->getNavbarClickableparent() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_brand = '.$config->getNavbarBrand() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_image = '.$config->getNavbarImage() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_color = '.$config->getNavbarColor() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_background = '.$config->getNavbarBackground() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_container = '.$config->getNavbarContainer() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_placement = '.$config->getNavbarPlacement() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_alignment = '.$config->getNavbarAlignment() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_class = '.$config->getNavbarClass() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_toggler = '.$config->getNavbarToggler() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_breakpoint = '.$config->getNavbarBreakpoint() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_offcanvas = '.$config->getNavbarOffcanvas() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_height = '.$config->getNavbarHeight() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_searchbox = '.$config->getNavbarSearchbox() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_langmenu = '.$config->getNavbarLangmenu() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_shrinkcolorschemes = '.$config->getNavbarShrinkcolorschemes() .PHP_EOL;
+		$constants .= 'bootstrap.db.navbar_shrinkcolor = '.$config->getNavbarShrinkcolor() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.jumbotron_enable = '.$config->getJumbotronEnable() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_bgimage = '.$config->getJumbotronBgimage() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_fluid = '.$config->getJumbotronFluid() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_slide = '.$config->getJumbotronSlide() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_position = '.$config->getJumbotronPosition() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_container = '.$config->getJumbotronContainer() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_containerposition = '.$config->getJumbotronContainerposition() .PHP_EOL;
+		$constants .= 'bootstrap.db.jumbotron_class = '.$config->getJumbotronClass() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.breadcrumb_enable = '.$config->getBreadcrumbEnable() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_notonrootpage = '.$config->getBreadcrumbNotonrootpage() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_faicon = '.$config->getBreadcrumbFaicon() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_corner = '.$config->getBreadcrumbCorner() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_bottom = '.$config->getBreadcrumbBottom() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_position = '.$config->getBreadcrumbPosition() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_container = '.$config->getBreadcrumbContainer() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_containerposition = '.$config->getBreadcrumbContainerposition() .PHP_EOL;
+		$constants .= 'bootstrap.db.breadcrumb_class = '.$config->getBreadcrumbClass() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.sidebar_enable = '.$config->getSidebarEnable() .PHP_EOL;
+		$constants .= 'bootstrap.db.sidebar_rightenable = '.$config->getSidebarRightenable() .PHP_EOL;
+		$constants .= 'bootstrap.db.sidebar_levels = '.$config->getSidebarEntrylevel() .PHP_EOL;
+		$constants .= 'bootstrap.db.sidebar_entrylevel = '.$config->getSidebarEntrylevel() .PHP_EOL;
+		$constants .= 'bootstrap.db.sidebar_excludeuiduist = '.$config->getSidebarExcludeuiduist() .PHP_EOL;
+		$constants .= 'bootstrap.db.sidebar_includespacer = '.$config->getSidebarIncludespacer() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.footer_enable = '.$config->getFooterEnable() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_fluid = '.$config->getFooterFluid() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_slide = '.$config->getFooterSlide() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_sticky = '.$config->getFooterSticky() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_container = '.$config->getFooterContainer() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_containerposition = '.$config->getFooterContainerposition() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_class = '.$config->getFooterClass() .PHP_EOL;
+		$constants .= 'bootstrap.db.footer_pid = '.$config->getFooterPid() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.expandedcontent_enabletop = '.$config->getexpandedcontentEnabletop() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_slidetop = '.$config->getExpandedcontentSlidetop() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_containerpositiontop = '.$config->getExpandedcontentContainerpositiontop() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_containertop = '.$config->getExpandedcontentContainertop() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_classtop = '.$config->getExpandedcontentClasstop() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_enablebottom = '.$config->getExpandedcontentEnablebottom() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_slidebottom = '.$config->getExpandedcontentSlidebottom() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_containerpositionbottom = '.$config->getExpandedcontentContainerpositionbottom() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_containerbottom = '.$config->getExpandedcontentContainerbottom() .PHP_EOL;
+		$constants .= 'bootstrap.db.expandedcontent_classbottom = '.$config->getExpandedcontentClassbottom() .PHP_EOL;
+
+		$constants .= 'bootstrap.db.general_rootline = '.$config->getGeneralRootline() .PHP_EOL;
+
+		return $constants;
+	}
+
 
 }

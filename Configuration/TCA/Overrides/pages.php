@@ -113,6 +113,54 @@ $tempPagesColumns = [
 				'type' => 'check',
 		]
 	]
+
+
+/*
+
+
+'sectionmenu' => [
+	'exclude' => 1,
+	'label' => 'sectionmenu',
+	'config' => [
+		'type' => 'check',
+		'default' => 1
+	]
+],
+'sidebar_right' => [
+	'exclude' => 1,
+	'label' => 'sidebar_right',
+	'config' => [
+		'type' => 'check',
+		'default' => 1
+	]
+],
+'sidebar' => [
+	'exclude' => 1,
+	'label' => 'sidebar',
+	'config' => [
+		'type' => 'check',
+		'default' => 1
+	]
+],
+'langmenu' => [
+	'exclude' => 1,
+	'label' => 'langmenu',
+	'config' => [
+		'type' => 'check',
+		'default' => 1
+	]
+],
+'metamenu' => [
+	'exclude' => 1,
+	'label' => 'metamenu',
+	'config' => [
+		'type' => 'check',
+		'default' => 1
+	]
+],
+
+*/
+
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages',$tempPagesColumns);
@@ -143,6 +191,9 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 		'after:layout'
 	);
 }
+
+
+
 
 
 $menuheader = 198;

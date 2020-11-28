@@ -826,7 +826,8 @@ class GalleryProcessor implements DataProcessorInterface
 			|| ($this->colPos === -1 && $this->processedData['data']['parentgrid_tx_gridelements_backend_layout'] == 'background_wrapper')
 		)
 		{
-			$t3sbconfig = self::getContentRecord($this->getConfigurationValue('configuid'), 'tx_t3sbootstrap_domain_model_config');
+
+			$t3sbconfig = self::getContentRecord((int)$this->getConfigurationValue('configuid'), 'tx_t3sbootstrap_domain_model_config');
 
 			$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
 			$footerContainer = $t3sbconfig[0]['footer_container'];

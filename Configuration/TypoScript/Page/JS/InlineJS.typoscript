@@ -184,10 +184,8 @@ temp.jsFooterInline {
 
 
 )
-6.if {
-	isFalse.cObject = TEXT
-	isFalse.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
-}
+6.if.isFalse = {$bootstrap.db.navbar_sectionmenu}
+
 
 7 = TEXT
 7.value (
@@ -221,10 +219,7 @@ temp.jsFooterInline {
 
 
 )
-7.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_sectionmenu
-}
+7.if.isTrue = {$bootstrap.db.navbar_sectionmenu}
 
 
 8 = TEXT
@@ -250,6 +245,7 @@ temp.jsFooterInline {
 )
 8.if.isTrue.data = page:tx_t3sbootstrap_linkToTop
 
+
 9 = TEXT
 9.value (
 
@@ -267,10 +263,8 @@ temp.jsFooterInline {
 
 
 )
-9.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:footer_sticky
-}
+9.if.isTrue = {$bootstrap.db.footer_sticky}
+
 
 10 = TEXT
 10.value (
@@ -321,10 +315,8 @@ temp.jsFooterInline {
 
 
 )
-11.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
-}
+11.if.isTrue = {$bootstrap.db.navbar_megamenu}
+
 
 12 = TEXT
 12.value (
@@ -386,7 +378,7 @@ temp.jsFooterInline {
 
 )
 13.if {
-	value.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_placement
+	value = {$bootstrap.db.navbar_placement}
 	equals = sticky-top
 }
 
@@ -395,13 +387,12 @@ temp.jsFooterInline {
 
 	// sectionmenu animated scrolling and scrollspy - page.jsFooterInline.5.14 - Animated scrolling
 	$("#sectionmenu .section-menu a.scroll-trigger").bind("click", function(event) {
+
 		event.preventDefault();
 		var anchor = $(this).attr("href");
 		anchor = anchor.split('#');
 		anchor =	"#"+anchor[1];
 		if (anchor.length) {
-
-
 			var sectionmenuHeight = 0;
 			//var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row-reverse");
 			var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row");
@@ -444,7 +435,36 @@ temp.jsFooterInline {
 		offset: {$bootstrap.config.sectionmenuScrollspyOffset}
 	});
 )
-14.if.isTrue = {$bootstrap.config.sectionmenuScrolling}
+14.if {
+	isTrue.cObject = COA
+	isTrue.cObject {
+		10 = TEXT
+		10.value = 1
+		10.if {
+			equals = Section
+			value = {$bootstrap.db.sidebar_enable}
+		}
+		20 = TEXT
+		20.value = 1
+		20.if {
+			equals = Section
+			value = {$bootstrap.db.sidebar_rightenable}
+		}
+		30 = TEXT
+		30.value = 1
+		30.if {
+			equals = Section
+			value = {$bootstrap.config.sidebar_rightenable}
+		}
+		40 = TEXT
+		40.value = 1
+		40.if {
+			equals = Section
+			value = {$bootstrap.config.sidebar_enable}
+		}
+	}
+}
+
 
 15 = TEXT
 15.value (
@@ -618,73 +638,74 @@ temp.jsFooterInline {
 
 
 )
-50.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
-}
+50.if.isTrue = {$bootstrap.db.navbar_hover}
+
 
 
 51 = TEXT
 51.value (
 
 	// Navbar hover - page.jsFooterInline.5.51 - sm
-	if ( $(window).width() > {$bootstrap.navbar.breakpoint.sm}-1 ) {
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.sm} ) {
 		navbarHover();
 
 	}
 
 )
 51.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_hover}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = sm
 }
+
+
 52 = TEXT
 52.value (
 
 	// Navbar hover - page.jsFooterInline.5.52 - md
-	if ( $(window).width() > {$bootstrap.navbar.breakpoint.md}-1 ) {
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.md} ) {
 		navbarHover();
 
 	}
 
 )
 52.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_hover}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = md
 }
 53 = TEXT
 53.value (
 
 	// Navbar hover - page.jsFooterInline.5.53 - lg
-	if ( $(window).width() > {$bootstrap.navbar.breakpoint.lg}-1 ) {
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.lg} ) {
 		navbarHover();
 
 	}
 
 )
 53.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_hover}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = lg
 }
+
+
+
+
+
 54 = TEXT
 54.value (
 
 	// Navbar hover - page.jsFooterInline.5.54 - xl
-	if ( $(window).width() > {$bootstrap.navbar.breakpoint.xl}-1 ) {
+	if ( $(window).width() > {$bootstrap.navbar.breakpoint.xl} ) {
 		navbarHover();
 
 	}
 )
 54.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_hover}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = xl
 }
 
@@ -697,9 +718,8 @@ temp.jsFooterInline {
 
 )
 55.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_hover
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_hover}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = no
 }
 
@@ -735,12 +755,9 @@ temp.jsFooterInline {
 	});
 
 
-
 )
-60.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_clickableparent
-}
+60.if.isTrue = {$bootstrap.db.navbar_clickableparent}
+
 
 
 61 = TEXT
@@ -764,10 +781,7 @@ temp.jsFooterInline {
 
 
 )
-61.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_shrinkcolor
-}
+61.if.isTrue = {$bootstrap.db.navbar_shrinkcolor}
 
 
 
@@ -782,8 +796,7 @@ temp.jsFooterInline {
 
 )
 70.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
+	isTrue = {$bootstrap.db.navbar_offcanvas}
 }
 71 = TEXT
 71.value (
@@ -795,9 +808,8 @@ temp.jsFooterInline {
 
 )
 71.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_offcanvas}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = sm
 }
 72 = TEXT
@@ -810,9 +822,8 @@ temp.jsFooterInline {
 
 )
 72.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_offcanvas}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = md
 }
 73 = TEXT
@@ -825,9 +836,8 @@ temp.jsFooterInline {
 
 )
 73.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_offcanvas}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = lg
 }
 74 = TEXT
@@ -840,9 +850,8 @@ temp.jsFooterInline {
 
 )
 74.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_offcanvas}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = xl
 }
 75 = TEXT
@@ -853,9 +862,8 @@ temp.jsFooterInline {
 
 )
 75.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_offcanvas
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_offcanvas}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = no
 }
 
@@ -878,9 +886,8 @@ temp.jsFooterInline {
 
 )
 151.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_megamenu}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = sm
 }
 
@@ -896,9 +903,8 @@ temp.jsFooterInline {
 
 )
 152.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_megamenu}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = md
 }
 
@@ -914,9 +920,8 @@ temp.jsFooterInline {
 
 )
 153.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_megamenu}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = lg
 }
 
@@ -932,9 +937,8 @@ temp.jsFooterInline {
 
 )
 154.if {
-	isTrue.cObject = TEXT
-	isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_megamenu
-	value.data = register:breakpoint
+	isTrue = {$bootstrap.db.navbar_megamenu}
+	value = {$bootstrap.db.navbar_breakpoint}
 	equals = xl
 }
 

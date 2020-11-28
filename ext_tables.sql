@@ -84,6 +84,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	expandedcontent_containerpositionbottom varchar(7) DEFAULT '' NOT NULL,
 	expandedcontent_containerbottom varchar(15) DEFAULT '' NOT NULL,
 	expandedcontent_classbottom varchar(255) DEFAULT '' NOT NULL,
+	general_rootline tinyint(1) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

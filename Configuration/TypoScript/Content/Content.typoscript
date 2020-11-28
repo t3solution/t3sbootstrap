@@ -52,9 +52,9 @@ lib.content.footerFromPid {
 	select {
 		orderBy = sorting
 		where = colPos=0
-		pidInList.data = register:footerpid
+		pidInList = {$bootstrap.db.footer_pid}
 	}
-	if.isTrue.data = register:footerpid
+	if.isTrue = {$bootstrap.db.footer_pid}
 }
 
 # if indexed_search is loaded

@@ -1020,6 +1020,18 @@ return [
 				'size' => 20
 			]
 		],
+		'general_rootline' => [
+			'exclude' => false,
+			'label' => 'Rootline_enable',
+			'config' => [
+				'type' => 'check',
+				'items' => [
+					'1' => [
+						'0' => 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:labels.enabled'
+					]
+				]
+			]
+		],
 
 	],
 ];

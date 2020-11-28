@@ -16,7 +16,6 @@ namespace T3SBS\T3sbootstrap\DataProcessing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
@@ -96,60 +95,21 @@ class ConfigProcessor implements DataProcessorInterface
 		$frontendController = self::getFrontendController();
 		$webp = $this->processorConfiguration['webp'];
 
-		// the table to query
-		$tableName = 'tx_t3sbootstrap_domain_model_config';
-		$this->processorConfiguration['pidInList'] = $frontendController->id;
+		if ( is_numeric($this->contentObjectConfiguration['settings.']['db.']['uid']) ) {
 
-		// execute a SQL statement to fetch the records from current page
-		$records = $this->contentObjectRenderer->getRecords($tableName, $this->processorConfiguration);
+			$processedRecordVariables = $this->contentObjectConfiguration['settings.']['db.'];
 
-		$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$this->processedData['data']['uid'])->get();
+		} else {
 
-		if ( empty($records) ) {
+			$this->processedData['noConfig'] = TRUE;
 
-			if ( $this->processorConfiguration['rootline'] ) {
-				// config from rootline
-				// unset current page
-				$rlA = $rootLineArray;
-				unset($rlA[count($rlA)-1]);
-
-				foreach ($rlA as $rootline) {
-					$this->processorConfiguration['pidInList'] = $rootline['uid'];
-					$records = $this->contentObjectRenderer->getRecords($tableName, $this->processorConfiguration);
-
-					if ( !empty($records) ) break;
-				}
-			} else {
-				// config from root page
-				if ( $this->processedData['data']['is_siteroot'] ) {
-					$rootPageUid = $this->processedData['data']['uid'];
-				} else {
-					$rootPageUid = $rootLineArray[0]['uid'];
-				}
-				$this->processorConfiguration['pidInList'] = $rootPageUid;
-				$records = $this->contentObjectRenderer->getRecords($tableName, $this->processorConfiguration);
-			}
- 		}
-
- 		if ( empty($records) ) {
-
- 			$this->processedData['noConfig'] = TRUE;
-
- 			return $this->processedData;
-
- 		} else {
-
-			$this->contentObjectRenderer->start($records[0], $tableName);
-			$processedRecordVariables = $this->contentDataProcessor->process($this->contentObjectRenderer, $this->processorConfiguration, $records[0]);
+			return $this->processedData;
 		}
 
 		// override config by TS
 		if ( $this->contentObjectConfiguration['settings.']['configOverride'] ) {
 			foreach ( $this->contentObjectConfiguration['settings.']['override.'] as $key=>$override ) {
-
-
 				if ( ($override || $override === '0' || $override === 'false')	&& $override[1] != '$' ) {
-
 					if ( $override === 'none' ) {
 						$processedRecordVariables[$key] = '';
 					} else {
@@ -159,7 +119,6 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 		}
 
-#\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($processedRecordVariables, '$processedRecordVariables');
 
 		/**
 		 * General
@@ -192,8 +151,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
 		}
 
-		$rootlinePage = $pageRepository->getPage($frontendController->rootLine[0]['uid']);
-
+		$rootlinePage = $pageRepository->getPage($processedRecordVariables['uid']);
 		$smallColumnsRootline = (int)$rootlinePage['tx_t3sbootstrap_smallColumns'];
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 
@@ -211,7 +169,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$threeCol = $currentPage['backend_layout'] == 'pagets__ThreeCol' ? TRUE : FALSE;
 		} else {
 
-			foreach ($rootLineArray as $subPage) {
+			foreach ($frontendController->rootLine as $subPage) {
 				$bel = $subPage['backend_layout_next_level'];
 				if ( !empty($subPage['backend_layout_next_level']) ) break;
 			}
@@ -236,11 +194,6 @@ class ConfigProcessor implements DataProcessorInterface
 			break;
 				  default:
 				$this->processedData['colMain'] = 9;
-		}
-
-		// image from pages media
-		if ( $processedRecordVariables['pagemedia'] ) {
-			$this->processedData['pagemedia'] = $processedRecordVariables['pagemedia'];
 		}
 
 		// grid breakpoint
@@ -312,7 +265,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$this->processedData['config']['navbar']['enable'] = $processedRecordVariables['navbar_enable'];
 			$this->processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbar_sectionmenu'] ? ' section-menu' : '';
 			$this->processedData['config']['navbar']['brand'] = $processedRecordVariables['navbar_brand'];
-			if ( $rootLineArray[1]['doktype'] == 4) {
+			if ( $frontendController->rootLine[1]['doktype'] == 4) {
 				$this->processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
 				$this->processedData['config']['navbar']['clickableparent'] = $processedRecordVariables['navbar_clickableparent'];
@@ -412,7 +365,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 			if ( $processedRecordVariables['jumbotron_bgimage'] == 'root' ) {
 				// slide in rootline
-				foreach ($rootLineArray as $page) {
+				foreach ($frontendController->rootLine as $page) {
 					$fileObjects = $fileRepository->findByRelation('pages', 'media', $page['uid']);
 					$uid = $page['uid'];
 					if ($fileObjects) break;
@@ -447,7 +400,7 @@ class ConfigProcessor implements DataProcessorInterface
 		if ( $this->contentObjectConfiguration['settings.']['backgroundImageEnable'] ) {
 			$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
 			if ( empty($bgImage) && $this->contentObjectConfiguration['settings.']['backgroundImageSlide'] ) {
-				foreach ($rootLineArray as $page) {
+				foreach ($frontendController->rootLine as $page) {
 					$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id, $webp);
 					if ($bgImage) break;
 				}
@@ -501,7 +454,6 @@ class ConfigProcessor implements DataProcessorInterface
 			$footerClass .= $processedRecordVariables['footer_fluid'] ? ' jumbotron-fluid' : '';
 			$footerClass .= $processedRecordVariables['footer_sticky'] ? ' footer-sticky' : '';
 			$this->processedData['config']['footer']['class'] = trim($footerClass);
-
 		}
 
 		/**
@@ -520,7 +472,6 @@ class ConfigProcessor implements DataProcessorInterface
 			$this->processedData['config']['expandedcontentBottom']['container'] = $processedRecordVariables['expandedcontent_containerbottom'];
 			$this->processedData['config']['expandedcontentBottom']['containerposition'] = $processedRecordVariables['expandedcontent_containerpositionbottom'];
 			$this->processedData['config']['expandedcontentBottom']['class'] = $processedRecordVariables['expandedcontent_classbottom'];
-
 		}
 
 		if (!$this->processorConfiguration['disableDefaultCss']) {
@@ -694,6 +645,7 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 			self::writeCustomFile($customPath, $customFileName, $js);
 		}
 
+
 		// include required files to fileadmin
 		if ($css) {
 			$projectCSS = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize(
@@ -734,7 +686,6 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 				$contentLength = strlen(trim($customContent));
 
 				if ($customFileLength != $contentLength) {
-
 					unlink($customFile);
 					GeneralUtility::writeFile($customFile, trim($customContent));
 				}
@@ -750,7 +701,6 @@ html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;w
 			}
 		}
 	}
-
 
 
 }

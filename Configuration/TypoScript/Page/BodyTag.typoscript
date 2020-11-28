@@ -35,7 +35,7 @@ page {
 			}
 			50 = TEXT
 			50 {
-				data = register:breakpoint
+				value = {$bootstrap.db.navbar_breakpoint}
 				noTrimWrap = | ||
 			}
 
@@ -44,15 +44,12 @@ page {
 		30 {
 			stdWrap.noTrimWrap = | style="|"|
 			10 = TEXT
-			10.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_height
+			10.value = {$bootstrap.db.navbar_height}
 			10.wrap = padding-top:|px;
-			if {
-				isTrue.cObject = TEXT
-				isTrue.cObject.data.dataWrap = DB:tx_t3sbootstrap_domain_model_config:{register:configuid}:navbar_height
-			}
+			if.isTrue = {$bootstrap.db.navbar_height}
 		}
 		40 = TEXT
-		40.data = register:breakpoint
+		40.value = {$bootstrap.db.navbar_breakpoint}
 		40.noTrimWrap = | data-navbar-breakpoint="|"|
 	}
 }

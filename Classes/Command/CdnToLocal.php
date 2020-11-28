@@ -76,17 +76,17 @@ class CdnToLocal extends Command
 
 				if ($settings['cdn']['bootswatch']) {
 					$bootswatchTheme = $settings['cdn']['bootswatch'];
-					$cdnPath = 'https://stackpath.bootstrapcdn.com/bootswatch/'.$settings['cdn']['bootstrap'].'/'.$bootswatchTheme.'/bootstrap.min.css';
+					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootswatch@'.$settings['cdn']['bootstrap'].'/dist/'.$bootswatchTheme.'/bootstrap.min.css';
 					self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 				} else {
-					$cdnPath = 'https://stackpath.bootstrapcdn.com/bootstrap/'.$settings['cdn']['bootstrap'].'/css/bootstrap.min.css';
+					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$settings['cdn']['bootstrap'].'/dist/css/bootstrap.min.css';
 					self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 				}
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'bootstrap.min.js';
-				$cdnPath = 'https://stackpath.bootstrapcdn.com/bootstrap/'.$version.'/js/bootstrap.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/bootstrap.min.js';
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 

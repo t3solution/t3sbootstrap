@@ -13,7 +13,6 @@ plugin.tx_t3sbootstrap {
 	}
 }
 
-
 #-------------------------------------------------------------------------------
 #	Constant Editor
 #-------------------------------------------------------------------------------
@@ -28,11 +27,11 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Pulse=pulse, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Yeti=yeti]; label=Bootswatch Themes CDN - works only without EXT ws_scss: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
 	bootswatch = 0
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 4.5.2
+	bootstrap = 4.5.3
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
 	popperjs = 1.16.1
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
-	fontawesome = 5.14.0
+	fontawesome = 5.15.1
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library: jQuery 3.5.0 won't work with Bootstrap 4.4.1. Dropdowns and collapse don't work. Reverted to jQuery 3.4.1 to make it work.
 	jquery = 3.5.1
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
@@ -40,9 +39,9 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 10.2.0
+	highlight = 10.4.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 17.1.2
+	lazyload = 17.3.0
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/35; type=small; label=Viewportchecker:
@@ -56,13 +55,13 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
 	lightcase = 2.5.0
 	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
-	ytPlayer = 3.3.4
+	ytPlayer = 3.3.5
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z	
+	bootstrapCssIntegrity = sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV
+	bootstrapJsIntegrity = sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
-	popperjsIntegrity =
+	popperjsIntegrity = sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
 	jqueryIntegrity =
 	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
@@ -97,8 +96,6 @@ bootstrap.cdn {
 # customsubcategory=dsn-config=Background Image
 # customsubcategory=e-config=Other Config
 bootstrap.config {
-	# cat=bootstrap-config/a-config/10; type=boolean; label=Data for "T3SB Config" on subpages: if disable from rootpage	 or from rootline if enabled (slide).
-	rootline = 1
 	# cat=bootstrap-config/a-config/20; type=boolean; label=Content Only On Rootpage: disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled.
 	contentOnlyOnRootpage = 0
 	# cat=bootstrap-config/a-config/30; type=boolean; label=jQuery in header: load jquery into the header if activated.
@@ -136,8 +133,6 @@ bootstrap.config {
 	# cat=bootstrap-config/da-config/020; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=Loading Spinner Color:
 	loadingSpinnerColor = primary
 
-	# cat=bootstrap-config/dsm-config/040; type=boolean; label=Enable animated scrolling and scrollspy for Section-Menu-Items: jsFooterInline.5.14
-	sectionmenuScrolling = 0
 	# cat=bootstrap-config/dsm-config/043; type=small; label=Anchor extra offset for Section-Menu-Items: in px - jsFooterInline.5.14
 	sectionmenuAnchorOffset = 29
 	# cat=bootstrap-config/dsm-config/044; type=small; label=Scrollspy offset: in px - to activate the menu item - jsFooterInline.5.14
@@ -334,13 +329,13 @@ styles.content.textmedia.linkWrap.width = 1140m
 styles.content.textmedia.linkWrap.height = 800m
 
 #disable some not used constants
-styles.content.textmedia.maxWInText >
-styles.content.textmedia.columnSpacing >
-styles.content.textmedia.rowSpacing >
-styles.content.textmedia.textMargin >
-styles.content.textmedia.borderColor >
-styles.content.textmedia.borderWidth >
-styles.content.textmedia.borderPadding >
+styles.content.textmedia.maxWInText =
+styles.content.textmedia.columnSpacing =
+styles.content.textmedia.rowSpacing =
+styles.content.textmedia.textMargin =
+styles.content.textmedia.borderColor =
+styles.content.textmedia.borderWidth =
+styles.content.textmedia.borderPadding =
 
 # pages override
 pages.override {

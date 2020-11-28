@@ -77,9 +77,7 @@ class BackgroundImageUtility implements SingletonInterface
 			if (!empty($filesFromRepository) ) {
 				$file = $filesFromRepository[0];
 				$image = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
-
 				$uid = $currentUid ?: $uid;
-
 				if ( $flexconf['bgimagePosition'] ) {
 					$uid = $uid . '-' . $flexconf['bgimagePosition'];
 				}
