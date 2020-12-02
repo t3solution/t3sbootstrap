@@ -204,7 +204,6 @@
 							</config>
 						</TCEforms>
 					</multislider>
-
 					<number>
 						<TCEforms>
 							<label>Number of items</label>
@@ -214,20 +213,44 @@
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">100%</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
 										<numIndex index="0">2</numIndex>
 										<numIndex index="1">50%</numIndex>
 									</numIndex>
-									<numIndex index="1" type="array">
+									<numIndex index="2" type="array">
 										<numIndex index="0">3</numIndex>
 										<numIndex index="1">33.3333%</numIndex>
 									</numIndex>
-									<numIndex index="2" type="array">
+									<numIndex index="3" type="array">
 										<numIndex index="0">4</numIndex>
 										<numIndex index="1">25%</numIndex>
 									</numIndex>
-									<numIndex index="3" type="array">
+									<numIndex index="4" type="array">
 										<numIndex index="0">5</numIndex>
 										<numIndex index="1">20%</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">16.6666%</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">14.2857%</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">12.5%</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">11.1111%</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10%</numIndex>
 									</numIndex>
 								</items>
 								<default>25%</default>
