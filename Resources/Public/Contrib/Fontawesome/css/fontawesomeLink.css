@@ -10,7 +10,8 @@
 .internal-link::before,
 .external-link::before,
 .download-link::before,
-.email-link::before {
+.email-link::before,
+.phone-link::before {
 	margin-right: 0.5em;
 	display: inline-block;
 	font-style: normal;
@@ -31,5 +32,6 @@
 .email-link::before {
 	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f0e0";
 }
-
-
+.phone-link::before {
+	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f095";
+}
