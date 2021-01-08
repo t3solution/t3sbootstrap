@@ -46,9 +46,9 @@ RTE {
 				rel =
 			}
 
-			tel {
+			telephone {
 				class = phone-link
-				type = tel
+				type = telephone
 				titleText = Call us
 				target = _blank
 				image =
@@ -71,7 +71,7 @@ RTE {
 			mail.properties {
 				class.default =
 			}
-			tel.properties {
+			telephone.properties {
 				class.default =
 			}
 			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark, js-scroll-trigger
