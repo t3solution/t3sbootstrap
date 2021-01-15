@@ -2,11 +2,12 @@
 
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
-/**
- * This file is part of the "news" Extension for TYPO3 CMS.
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
+ * LICENSE file that was distributed with this source code.
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -68,7 +69,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
 		} else {
 			// JS
 			if (strtolower(substr($path, -3)) === '.js') {
-				$pageRenderer->addJsFile($path, null, $compress, false, '', true);
+				$pageRenderer->addJsFooterFile($path, null, $compress, false, '', true);
 
 			// CSS
 			} elseif (strtolower(substr($path, -4)) === '.css') {

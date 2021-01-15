@@ -546,17 +546,6 @@
 						</TCEforms>
 					</menupills>
 
-					<menuInclGridelement>
-						<TCEforms>
-							<label>Include content from Gridelements</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</displayCond>
-							<config>
-								<type>check</type>
-								<default>1</default>
-							</config>
-						</TCEforms>
-					</menuInclGridelement>
-
 				</el>
 			</ROOT>
 		</sDEF>

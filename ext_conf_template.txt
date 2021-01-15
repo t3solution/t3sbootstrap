@@ -12,7 +12,9 @@ container = 1
 color = 1
 	# cat=content/enable/40; type=boolean; label=Image ratio: Shows an option for "Image ratio" in the palette "Media Adjustments" if enabled. (clear cache).
 ratio = 0
-	# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a gridelements. (clear cache).
+	# cat=content/enable/41; type=boolean; label=Image Tag: Option in the FAL to output image in <img> - instead in <picture> tag in the FE.
+imgtag = 0
+	# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a "container". (clear cache).
 sectionOrder = 0
 
 	# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache).
@@ -31,15 +33,13 @@ editScss = 0
 	# cat=custom/a-config/70; type=boolean; label=Roll your own (experimental): e.g.: Disable tootltip: module.tx_t3sbootstrap.settings.bootstrap.tooltip=0 - the Path to your custom.scss files should be: fileadmin/T3SB/SCSS/ in this case (clear cache and run Scheduler).
 rollyourown = 0
 
-	# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Gridelements/CarouselContainer.xml (clear cache).
+	# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache).
 flexformExtend = 0
 	# cat=flexform/enable/20; type=string; label=Path to your flexforms files: e.g.: /fileadmin/T3SB/FlexForms/ (clear cache).
 flexformPath = /fileadmin/T3SB/FlexForms/
 	# cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache).
 flexformModify = 0
 
-	# cat=t3sb/enable/10; type=boolean; label=Config Override: you can override the "T3SB Config" by TypoScript Constants (clear cache).
-configOverride = 0
 	# cat=t3sb/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
 expandedContent = 0
 	# cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
@@ -49,6 +49,7 @@ fixedButton = 0
 
 	# cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0
+
 	# cat=dif/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache).
 imgCopyright = 0
 

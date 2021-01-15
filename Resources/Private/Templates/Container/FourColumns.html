@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+</f:section>
+<f:section name="Main">
+	<div class="row{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+		<f:if condition="{data.header} || {data.subheader} || {data.date}">
+			<div class="col-12">
+				<f:render partial="Header/All" arguments="{_all}" />
+			</div>
+		</f:if>
+		<div class="column {columnOne}">
+			<f:if condition="{col_241}">
+				   <f:for each="{col_241}" as="child">
+					   <f:cObject typoscriptObjectPath="lib.contentByUid" data="{child.uid}" />
+				   </f:for>
+			</f:if>
+		</div>
+		<div class="column {columnTwo}">
+			<f:if condition="{col_242}">
+				   <f:for each="{col_242}" as="child">
+					   <f:cObject typoscriptObjectPath="lib.contentByUid" data="{child.uid}" />
+				   </f:for>
+			</f:if>
+		</div>
+		<div class="column {columnThree}">
+			<f:if condition="{col_243}">
+				   <f:for each="{col_243}" as="child">
+					   <f:cObject typoscriptObjectPath="lib.contentByUid" data="{child.uid}" />
+				   </f:for>
+			</f:if>
+		</div>
+		<div class="column {columnFour}">
+			<f:if condition="{col_244}">
+				   <f:for each="{col_244}" as="child">
+					   <f:cObject typoscriptObjectPath="lib.contentByUid" data="{child.uid}" />
+				   </f:for>
+			</f:if>
+		</div>
+	</div>
+</f:section>
+</html>

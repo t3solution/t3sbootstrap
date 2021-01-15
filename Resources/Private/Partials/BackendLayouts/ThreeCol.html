@@ -28,49 +28,49 @@
 
 
 <f:section name="Default">
-	<aside class="col-{gridBreakpoint}-{colAside}{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside}{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="LeftAside" arguments="{_all}" />
 	</aside>
-	<main class="col-{gridBreakpoint}-{colMain} main-content{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.mainExtraClass, then: ' {settings.mainExtraClass}')}">
+	<main class="col-{gridBreakpoint}-{colMain} main-content{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
 		<f:render section="MainContent" arguments="{_all}" />
 	</main>
-	<aside class="col-{gridBreakpoint}-{colAside}{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside}{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="RightAside" arguments="{_all}" />
 	</aside>
 </f:section>
 
 <f:section name="Top">
-	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="LeftAside" arguments="{_all}" />
 	</aside>
-	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="RightAside" arguments="{_all}" />
 	</aside>
-	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.mainExtraClass, then: ' {settings.mainExtraClass}')}">
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
 		<f:render section="MainContent" arguments="{_all}" />
 	</main>
 </f:section>
 
 <f:section name="Bottom">
-	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.mainExtraClass, then: ' {settings.mainExtraClass}')}">
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
 		<f:render section="MainContent" arguments="{_all}" />
 	</main>
-	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="LeftAside" arguments="{_all}" />
 	</aside>
-	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="RightAside" arguments="{_all}" />
 	</aside>
 </f:section>
 
 <f:section name="LeftBottom">
-	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="RightAside" arguments="{_all}" />
 	</aside>
-	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.mainExtraClass, then: ' {settings.mainExtraClass}')}">
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
 		<f:render section="MainContent" arguments="{_all}" />
 	</main>
-	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.asideExtraClass, then: ' {settings.asideExtraClass}')}">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
 		<f:render section="LeftAside" arguments="{_all}" />
 	</aside>
 </f:section>
@@ -91,10 +91,10 @@
 </f:section>
 
 <f:section name="LeftAside">
-	<f:if condition="{config.sidebar.left} && {settings.sidebarMenuPosition} == 'above'">
+	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'above'">
 		<f:render partial="Page/{config.sidebar.left}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
 	</f:if>
-	<f:if condition="{settings.slideLeftAside}">
+	<f:if condition="{settings.config.slideLeftAside}">
 		<f:then>
 			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '1'}"/>
 		</f:then>
@@ -102,16 +102,16 @@
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '1'}"/>
 		</f:else>
 	</f:if>
-	<f:if condition="{config.sidebar.left} && {settings.sidebarMenuPosition} == 'below'">
+	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'below'">
 		<f:render partial="Page/{config.sidebar.left}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
 	</f:if>
 </f:section>
 
 <f:section name="RightAside">
-	<f:if condition="{config.sidebar.right} && {settings.sidebarMenuPosition} == 'above'">
+	<f:if condition="{config.sidebar.right} && {settings.config.sidebarMenuPosition} == 'above'">
 		<f:render partial="Page/{config.sidebar.right}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
 	</f:if>
-	<f:if condition="{settings.slideRightAside}">
+	<f:if condition="{settings.config.slideRightAside}">
 		<f:then>
 			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '2'}"/>
 		</f:then>
@@ -119,7 +119,7 @@
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '2'}"/>
 		</f:else>
 	</f:if>
-	<f:if condition="{config.sidebar.right} && {settings.sidebarMenuPosition} == 'below'">
+	<f:if condition="{config.sidebar.right} && {settings.config.sidebarMenuPosition} == 'below'">
 		<f:render partial="Page/{config.sidebar.right}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
 	</f:if>
 </f:section>

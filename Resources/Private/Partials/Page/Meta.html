@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.config.metaEnable}">
 <f:if condition="{config.meta.align} == 'scroller'">
 	<f:then>
 		<div class="nav-meta-wrapper">
@@ -18,6 +19,7 @@
 			</div>
 		</div>
 	</f:else>
+</f:if>
 </f:if>
 </html>
 

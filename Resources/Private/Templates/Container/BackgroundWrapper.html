@@ -1,0 +1,220 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{data.colPos} == 0">
+<span class="anchor" id="c{data.uid}"></span>
+</f:if>
+<f:if condition="{data.header}">
+	{containerPre -> f:format.raw()}
+		<f:render partial="Header/All" arguments="{_all}" />
+	{containerPost -> f:format.raw()}
+</f:if>
+<f:if condition="{youtubeProperty}">
+	<f:then>
+	<f:comment>	Youtube video </f:comment>
+		<div id="control{data.uid}"></div>
+		 <div id="dom{data.uid}" class="player{data.uid} player{f:if(condition: '{class}',then: ' {class}')}"
+				  data-property="{youtubeProperty}"{f:if(condition: '{style}',then: ' style="{style}"')}>
+			<f:if condition="{contentCenter}">
+				<f:then>
+					<f:render section="SectionInnerCenter" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:render section="SectionInner" arguments="{_all}" />
+				</f:else>
+			</f:if>
+		 </div>
+	</f:then>
+	<f:else>
+		<f:link.typolink parameter="{celink}" class="ce-link">
+		<f:if condition="{bgImage}">
+			<f:then>
+				<f:if condition="{enableAutoheight} && {addHeight} ">
+					<f:then>
+						<f:asset.script identifier="enableAutoheight">
+	// Autoheight for backgroundimages
+	function addHeight(objKey) {
+		var overlay = $('#'+objKey).next('.card-img-overlay');
+		if (overlay.length) {
+			var totalHeight = 0;
+			var addHeight = 0;
+			var outerHeight = 0;
+			$.each( TYPO3.settings.ADDHEIGHT, function( addKey, addValue ) {
+				if (objKey == 'bg-img-'+addKey) {
+					addHeight = parseInt(addValue);
+				}
+			});
+			$.each( overlay, function( objKeyOverlay, objValueOverlay ) {
+				$(objValueOverlay).children().each(function(){
+					if ($(this).hasClass('container')) {
+						var container = $(this);
+						container.children().each(function(){
+							outerHeight = parseInt($(this).outerHeight(true));
+							totalHeight = totalHeight + outerHeight;
+						});
+					} else {
+						outerHeight = parseInt($(this).outerHeight(true));
+						totalHeight = totalHeight + outerHeight;
+					}
+				});
+			});
+			totalHeight = totalHeight + addHeight;
+			$('#'+objKey).css('min-height', totalHeight+'px');
+		}
+	}
+	if ($(".enableAutoheight").length) {
+		$.each( $(".enableAutoheight"), function( key, value ) {
+			addHeight($(this).attr('id'));
+		});
+	}
+	var mobile = false;
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		mobile = true;
+	}
+	if (mobile){
+		$('.background-image').removeClass('background-fixed');
+	}
+					</f:asset.script>
+					<f:comment>	BG-Image : overlay and autoheight </f:comment>
+						<section id="s-{data.uid}" class="card rounded-0 border-0">
+							<f:comment>	background-image by css </f:comment>
+							<div id="bg-img-{data.uid}"
+								 class="enableAutoheight{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
+									  style="{f:if(condition: '{style}', then: ' {style}')}">
+							</div>
+							<f:render section="SectionOverlayInner" arguments="{_all}" />
+						</section>
+					</f:then>
+					<f:else>
+					<f:comment>	BG-Image : default </f:comment>
+						<f:comment>	background-image by css </f:comment>
+						<section id="s{data.uid}"
+							 class="{imageRaster}background-image bgImageSize{f:if(condition: '{class}', then: ' {class}')}"
+								  style="{f:if(condition: '{style}', then: ' {style}')}">
+							<f:render section="SectionInner" arguments="{_all}" />
+						</section>
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+			<f:comment>	No BG-Image </f:comment>
+				<f:if condition="{vimeo}">
+					<f:then>
+					<f:comment>	Vimeo video </f:comment>
+						<div class="alert alert-danger my-5" role="alert">
+							Vimeo videos are currently not supported!
+						</div>
+					</f:then>
+					<f:else>
+						<f:if condition="{file}">
+							<f:then>
+								<section id="s-{data.uid}" class="card rounded-0 border-0{f:if(condition: '{class}', then: ' {class}')}">
+									<f:if condition="{file.type} == 4">
+										<f:then>
+										<f:comment>	Local video </f:comment>
+											<f:render partial="Media/Type/Video" arguments="{file: file, aspectRatio: aspectRatio,
+											 dimensions: dimensions, class: class, border: border, addmedia: addmedia, position: position}" />
+										</f:then>
+										<f:else>
+										<f:comment> Real image </f:comment>
+											<figure>
+												<f:if condition="{settings.lazyLoadBgWrapperImage}">
+													<f:then>
+														<t3sb:media file="{file}" width="2560" height="auto"
+															class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2
+															 || {settings.lazyLoad} == 1', then: ' lazy')}"
+															breakpoints="{
+															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '1200, 1360, 1600, 1920, 2560'},
+															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '576, 992, 1199'},
+															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '575'}
+														}" picturefill="{settings.picturefill}" lazyload="{settings.lazyLoad}" ratio="0" style="{style}" />
+													</f:then>
+													<f:else>
+														<t3sb:media file="{file}" width="2560" height="auto"
+															class="img-fluid orig-img"
+															breakpoints="{
+															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '1200, 1360, 1600, 1920, 2560'},
+															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '576, 992, 1199'},
+															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '575'}
+														}" picturefill="{settings.picturefill}" lazyload="0" ratio="0" style="{style}" />
+													</f:else>
+												</f:if>
+											</figure>
+										</f:else>
+									</f:if>
+									<f:render section="SectionOverlayInner" arguments="{_all}" />
+								</section>
+							</f:then>
+							<f:else>
+								<f:comment> No media </f:comment>
+								<section id="s-{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}>
+									<f:if condition="{col_273.0}">
+										{containerPre -> f:format.raw()}
+											<f:for each="{col_273}" as="row">
+												{row.renderedContent -> f:format.raw()}
+											</f:for>
+										{containerPost -> f:format.raw()}
+									</f:if>
+								</section>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+		</f:link.typolink>
+	</f:else>
+</f:if>
+</html>
+
+<f:section name="SectionInner">
+	<f:if condition="{col_273.0}">
+		{containerPre -> f:format.raw()}
+			<f:for each="{col_273}" as="row">
+				{row.renderedContent -> f:format.raw()}
+			</f:for>
+		{containerPost -> f:format.raw()}
+	</f:if>
+</f:section>
+
+<f:section name="SectionInnerCenter">
+	<f:if condition="{col_273.0}">
+		<div class="v-row align-items-center h-100 w-100 absolute">
+			<div class="col">
+				{containerPre -> f:format.raw()}
+					<f:for each="{col_273}" as="row">
+						{row.renderedContent -> f:format.raw()}
+					</f:for>
+				{containerPost -> f:format.raw()}
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="SectionOverlayInner">
+<f:if condition="{container}">
+	<f:then>
+		<div class="card-img-overlay d-flex{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
+			<f:if condition="{col_273.0}">
+				<div class="{container} d-flex">
+					<div class="card-text w-100{alignItem}">
+						<f:for each="{col_273}" as="row">
+							{row.renderedContent -> f:format.raw()}
+						</f:for>
+					</div>
+				</div>
+			</f:if>
+		</div>
+	</f:then>
+	<f:else>
+		<div class="card-img-overlay d-flex{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
+			<f:if condition="{col_273.0}">
+				<div class="card-text w-100{alignItem}">
+					<f:for each="{col_273}" as="row">
+						{row.renderedContent -> f:format.raw()}
+					</f:for>
+				</div>
+			</f:if>
+		</div>
+	</f:else>
+</f:if>
+</f:section>

@@ -31,11 +31,11 @@ page {
 			40 {
 				value = bgi
 				noTrimWrap = | ||
-				if.isTrue = {$bootstrap.config.backgroundImage.enable}
+				if.isTrue = {$bootstrap.config.backgroundImageEnable}
 			}
 			50 = TEXT
 			50 {
-				value = {$bootstrap.db.navbar_breakpoint}
+				value = {$bootstrap.config.navbarBreakpoint}
 				noTrimWrap = | ||
 			}
 
@@ -44,12 +44,12 @@ page {
 		30 {
 			stdWrap.noTrimWrap = | style="|"|
 			10 = TEXT
-			10.value = {$bootstrap.db.navbar_height}
+			10.value = {$bootstrap.config.navbarHeight}
 			10.wrap = padding-top:|px;
-			if.isTrue = {$bootstrap.db.navbar_height}
+			if.isTrue = {$bootstrap.config.navbarHeight}
 		}
 		40 = TEXT
-		40.value = {$bootstrap.db.navbar_breakpoint}
+		40.value = {$bootstrap.config.navbarBreakpoint}
 		40.noTrimWrap = | data-navbar-breakpoint="|"|
 	}
 }

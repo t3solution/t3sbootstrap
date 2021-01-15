@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<main class="main-content{f:if(condition: settings.globalPaddingTop, then: ' {settings.globalPaddingTop}')}{f:if(condition: settings.mainExtraClass, then: ' {settings.mainExtraClass}')}">
+<main class="main-content{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
 	<f:if condition="{config.general.pageTitle} == 'content'">
 		<f:render partial="Page/Title" arguments="{_all}" />
 	</f:if>

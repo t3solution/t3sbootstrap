@@ -1,18 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Helper;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
+
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -26,10 +23,9 @@ class DefaultHelper implements SingletonInterface
 	 *
 	 * @return string
 	 */
-	public function getContainerClass($data)
+	public function getContainerClass($data): string
 	{
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-
 
 		if ( $extConf['container'] && $data['tx_t3sbootstrap_container'] ) {
 
@@ -41,12 +37,12 @@ class DefaultHelper implements SingletonInterface
 
 				$t3sbconfig = self::getConfig($data['configuid']);
 
-				$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
-				$footerContainer = $t3sbconfig[0]['footer_container'];
-				$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
-				$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+				$jumbotronContainer = $t3sbconfig['jumbotron_container'];
+				$footerContainer = $t3sbconfig['footer_container'];
+				$expandedcontentTopContainer = $t3sbconfig['expandedcontent_containertop'];
+				$expandedcontentBottomContainer = $t3sbconfig['expandedcontent_containerbottom'];
 
-				$footerByPid = $t3sbconfig[0]['footer_pid'];
+				$footerByPid = $t3sbconfig['footer_pid'];
 
 				if ( ($data['colPos'] === 3 || $data['parentgrid_colPos'] === 3)
 				 && !$jumbotronContainer ) $container = $data['tx_t3sbootstrap_container'];
@@ -64,17 +60,16 @@ class DefaultHelper implements SingletonInterface
 
 		} else {
 
-			$container = FALSE;
+			$container = '';
 
 			$t3sbconfig = self::getConfig($data['configuid']);
 
-			$jumbotronContainer = $t3sbconfig[0]['jumbotron_container'];
-			$footerContainer = $t3sbconfig[0]['footer_container'];
-			$expandedcontentTopContainer = $t3sbconfig[0]['expandedcontent_containertop'];
-			$expandedcontentBottomContainer = $t3sbconfig[0]['expandedcontent_containerbottom'];
+			$jumbotronContainer = $t3sbconfig['jumbotron_container'];
+			$footerContainer = $t3sbconfig['footer_container'];
+			$expandedcontentTopContainer = $t3sbconfig['expandedcontent_containertop'];
+			$expandedcontentBottomContainer = $t3sbconfig['expandedcontent_containerbottom'];
 
-			$footerByPid = $t3sbconfig[0]['footer_pid'];
-
+			$footerByPid = $t3sbconfig['footer_pid'];
 
 			if ( ($data['colPos'] === 3 || $data['parentgrid_colPos'] === 3) && $jumbotronContainer ) $container = 'colPosContainer';
 			if ( ($data['colPos'] === 4 || $data['parentgrid_colPos'] === 4) && $footerContainer ) $container = 'colPosContainer';
@@ -86,25 +81,25 @@ class DefaultHelper implements SingletonInterface
 			}
 		}
 
-		return trim($container);
+		return trim((string)$container);
 	}
 
 
 	/**
 	 * Returns the t3sb configuration
 	 *
-	 * @return configuration
+	 * @return array
 	 */
-	protected function getConfig($uid)
+	protected function getConfig($uid): array
 	{
-		// Get a QueryBuilder, which should only be used a single time
+
 		$query = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_t3sbootstrap_domain_model_config');
 		$query->select('*')
 			 ->from('tx_t3sbootstrap_domain_model_config')
 			 ->where(
 				$query->expr()->eq('uid', $query->createNamedParameter($uid, \PDO::PARAM_INT))
 			 );
-		return $query->execute()->fetchAll();
+		return $query->execute()->fetch();
 	}
 
 
@@ -113,7 +108,7 @@ class DefaultHelper implements SingletonInterface
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController()
+	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

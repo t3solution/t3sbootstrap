@@ -1,7 +1,12 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
+
 <f:if condition="{menu}">
+	<f:render partial="Page/Assets" arguments="{scrollspy:'true'}" />
+	<f:if condition="{settings.sectionmenuStickyTop}">
+		<f:render partial="Page/Assets" arguments="{stickytop:'true'}" />
+	</f:if>
 	<div id="sectionmenu">
 		<f:if condition="{onlyCurrentPageSelected}">
 			<f:then>
@@ -13,6 +18,7 @@
 		</f:if>
 	</div>
 </f:if>
+
 </f:section>
 </html>
 
@@ -34,20 +40,6 @@
 								<f:render section="NavLink" arguments="{element: element}" />
 							</a>
 						</f:if>
-						<f:if condition="{element.data.CType} == 'gridelements_pi1'
-							&& {element.gridcontent} && {menuInclGridelement}">
-								<f:for each="{element.gridcontent}" as="gridelement">
-								<f:if condition="( {gridelement.data.header} || {gridelement.data.tx_t3sbootstrap_header_sectionMenu} )
-								 && {gridelement.data.sectionIndex}">
-								<a href="{f:if(condition:'{pageLink}',then:'{page.link}')}#c{gridelement.data.uid}"
-									target="{f:if(condition: '{gridelement.target}',then: '{gridelement.target}', else: '_self')}"
-									title="{gridelement.data.header}"
-									class="nav-item nav-link scroll-trigger rounded-0}">
-									<f:render section="NavLink" arguments="{element: gridelement}" />
-								</a>
-								</f:if>
-							</f:for>
-						</f:if>
 					</f:for>
 				</nav>
 			</f:if>
@@ -55,7 +47,6 @@
 	</f:for>
 </ul>
 </f:section>
-
 
 <f:section name="OnlyCurrent">
 	<f:for each="{menu}" as="page">
@@ -72,27 +63,11 @@
 							</a>
 						</f:if>
 					</f:if>
-					<f:if condition="{element.data.CType} == 'gridelements_pi1'
-					  && {element.gridcontent} && {menuInclGridelement}">
-					  	<f:for each="{element.gridcontent}" as="gridelement">
-							<f:if condition="( {gridelement.data.header} || {gridelement.data.tx_t3sbootstrap_header_sectionMenu} )
-							 && {gridelement.data.sectionIndex}">
-								<a href="{f:if(condition:'{pageLink}',then:'{page.link}')}#c{gridelement.data.uid}"
-									target="{f:if(condition: '{gridelement.target}',then: '{gridelement.target}', else: '_self')}"
-									title="{gridelement.data.header}"
-									class="nav-item nav-link scroll-trigger rounded-0">
-									<f:render section="NavLink" arguments="{element: gridelement}" />
-								</a>
-							</f:if>
-						</f:for>
-					</f:if>
 				</f:for>
 			</nav>
 		</f:if>
-
 	</f:for>
 </f:section>
-
 
 <f:section name="NavLink">
 <f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
@@ -104,7 +79,6 @@
 	</f:else>
 </f:if>
 </f:section>
-
 
 <f:section name="PageTitle">
 <a href="{page.link}" target="{page.target}" title="{page.title}">

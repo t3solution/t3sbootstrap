@@ -1,23 +1,22 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+
 
 class CardProcessor implements DataProcessorInterface {
 
@@ -36,7 +35,27 @@ class CardProcessor implements DataProcessorInterface {
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 		$pi_flexform = $flexformService->convertFlexFormContentToArray($processedData['data']['pi_flexform']);
 		$tx_t3sbootstrap_flexform = $flexformService->convertFlexFormContentToArray($processedData['data']['tx_t3sbootstrap_flexform']);
-		$parentflexconf = $flexformService->convertFlexFormContentToArray($processedData['data']['parentgrid_tx_t3sbootstrap_flexform']);
+		$parentUid = $processedData['data']['tx_container_parent'];
+		$parentflexconf = [];
+
+		if ($processedData['data']['tx_container_parent']) {
+
+			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+			$queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+			$parent = $queryBuilder
+				->select('tx_t3sbootstrap_flexform')
+				->from('tt_content')
+				->where(
+					$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($processedData['data']['tx_container_parent'], \PDO::PARAM_INT))
+				)
+				->execute()
+				->fetch();
+
+			if ($parent['tx_t3sbootstrap_flexform'])
+			$parentflexconf = $flexformService->convertFlexFormContentToArray($parent['tx_t3sbootstrap_flexform']);
+		}
+
 		$flexconf = array_merge ($pi_flexform, $tx_t3sbootstrap_flexform);
 
 		// List-group if available

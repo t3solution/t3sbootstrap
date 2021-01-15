@@ -1,0 +1,144 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>For assets used on more than one page</f:comment>
+<f:if condition="{carousel}">
+<f:comment>CardWrapper.html, CarouselContainer.html, Jumbotron.html</f:comment>
+<f:asset.script identifier="carousel">
+	// Carousel - Page/Assets.html
+	var carousel = $(".carousel .carousel-inner .carousel-item:first-child");
+	if ( carousel.length ) {
+		carousel.addClass( "active" );
+	}
+</f:asset.script>
+</f:if>
+<f:if condition="{fixedbutton}">
+	<f:comment>Button.html, Modal.html</f:comment>
+	<f:asset.script identifier="fixedbutton">
+	// Fixed button on left or right browser edge - Page/Assets.html
+	var buttonFixedPosition = $('.fixedPosition');
+	if ( buttonFixedPosition.length ) {
+		$( buttonFixedPosition ).each(function() {
+			if ( $(this).hasClass('fixedModalButton') ) {
+				var fixedButton = $(this).find('button');
+			} else {
+				if ( $(this).hasClass('fixedGroupButton') ) {
+					var fixedButton = $(this).find('div');
+				} else {
+					var fixedButton = $(this).find('a');
+				}
+			}
+			$(this).hide().removeClass('d-none').delay(2000).fadeIn(400);
+			if ( fixedButton.hasClass('rotate-minus') || fixedButton.hasClass('rotate-plus') ) {
+				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2;
+				if ( $(this).hasClass('fixedPosition-right') ) {
+					$(this).css('right', '-'+position+'px');
+				} else {
+					$(this).css('left', '-'+position+'px');
+				}
+			}
+		});
+	}
+	</f:asset.script>
+</f:if>
+<f:if condition="{scrollspy}">
+	<f:comment>Page/Section.html, Page/MenuSection.html</f:comment>
+	<f:asset.script identifier="scrollspy">
+	// Sectionmenu animated scrolling and scrollspy - Page/Assets.html
+	$("#sectionmenu .section-menu a.scroll-trigger").bind("click", function(event) {
+		event.preventDefault();
+		var anchor = $(this).attr("href");
+		anchor = anchor.split('#');
+		anchor =	"#"+anchor[1];
+		if (anchor.length) {
+			var sectionmenuHeight = 0;
+			//var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row-reverse");
+			var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row");
+			var offsetSize = {settings.config.sectionmenuAnchorOffset};
+
+			// If is in sidebar (aside)
+			if ($("#sectionmenu").parent('aside').length) {
+				// do nothing
+			} else {
+				if (sectionmenuRow) {
+					// add menu height if flex-row
+					sectionmenuHeight = $("#sectionmenu").outerHeight();
+					offsetSize = sectionmenuHeight+offsetSize;
+				}
+			}
+			if ( fixedNavbar ) {
+				offsetSize = offsetSize + navbarHeight;
+			}
+			if ( $("#sectionmenu").hasClass("position-fixed") === false ) {
+				offsetSize = offsetSize + (sectionmenuHeight * 2) - 30;
+			}
+			if($(anchor).length)
+			$("html, body").stop().animate({
+				scrollTop: $(anchor).offset().top-offsetSize
+			}, 1500, "easeInOutExpo");
+			return false;
+		}
+	});
+	// Activate scrollspy to add active class to sectionmenu items on scroll
+	var scrollspyOffset = {settings.config.sectionmenuScrollspyOffset};
+	$("body").scrollspy({
+		target: "#sectionmenu",
+		offset: scrollspyOffset
+	});
+	</f:asset.script>
+</f:if>
+<f:if condition="{stickytop}">
+	<f:comment>MenuSubpages.html, Section.html, MenuSection.html</f:comment>
+	<f:asset.script identifier="stickytop">
+	// Sticky top for section-menu - Page/Assets.html
+	var breakpoint = $( 'body' ).attr( 'data-navbar-breakpoint' );
+	if (breakpoint == 'sm') {
+		var winWidth = {settings.navbar.sm};
+	}
+	if (breakpoint == 'md') {
+		var winWidth = {settings.navbar.md};
+	}
+	if (breakpoint == 'lg') {
+		var winWidth = {settings.navbar.lg};
+	}
+	if (breakpoint == 'xl') {
+		var winWidth = {settings.navbar.xl};
+	}
+	if ( $(window).width() > winWidth ) {
+		// only one is supported
+		if ($('#sectionmenu').length || $('.submenu').length || $('.make-me-sticky').length) {
+			var offsetSize = 30;
+			var affix = $('.make-me-sticky');
+			if ($('.submenu').length)		affix = $('.submenu');
+			if ($('#sectionmenu').length)	affix = $('#sectionmenu');
+			if ( affix.length ){
+				if ( affix.length > 1 ) {
+					affix = affix.last();
+				}
+				// if is in Sidebar (aside)
+				if ( affix.parent('aside').length ) {
+					offsetSize = 30;
+				}
+				// if Navbar is fixed-top
+				if ( fixedNavbar ) {
+					if ( $("#main-navbar").hasClass("shrink") ) {
+						offsetSize = 60+offsetSize;
+					} else {
+						offsetSize = navbarHeight+offsetSize;
+					}
+				}
+				var affixWidth = affix.outerWidth();
+				var affixOffsetLeft = affix.offset().left;
+				var affixOffsetTop = affix.offset().top;
+				$(window).scroll(function() {
+					if ( (affixOffsetTop  - $(window).scrollTop()) > offsetSize) {
+						affix.removeClass('position-fixed').removeClass('my-0').css({'top' : '','left' : '','width' : '','z-index' : ''});
+					} else {
+						affix.addClass('position-fixed').addClass('my-0').css({'top' : offsetSize,'left' : affixOffsetLeft,'width' : affixWidth,'z-index' : 999});
+					}
+				});
+			}
+		}
+	}
+	</f:asset.script>
+</f:if>
+</html>

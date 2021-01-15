@@ -1,28 +1,23 @@
 <?php
+declare(strict_types=0);
+
 namespace T3SBS\T3sbootstrap\Utility;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\ImageService;
-use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
+use TYPO3\CMS\Core\Page\AssetCollector;
 
 class BackgroundImageUtility implements SingletonInterface
 {
@@ -43,15 +38,17 @@ class BackgroundImageUtility implements SingletonInterface
 	 */
 	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE)
 	{
-
 		$frontendController = $this->getFrontendController();
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$filesFromRepository = $fileRepository->findByRelation($table, 'assets', $uid);
 		if ( empty($filesFromRepository) ) {
 			$filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
 		}
+		#if ( empty($filesFromRepository) ) {
+		#	$filesFromRepository = $fileRepository->findByRelation($table, 'consentpreviewimage', $uid);
+		#}
 
-		if ( count($filesFromRepository) > 1 ) {
+		if ( count($filesFromRepository) > 1 && $body == FALSE ) {
 			if ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) {
 				// bg-images in two-columns
 				// in the case if two images available but only one is selected in the flexform
@@ -60,13 +57,12 @@ class BackgroundImageUtility implements SingletonInterface
 				$bgImages = $this->generateSrcsetImages($file, $image);
 				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
 				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf);
-
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
 				$uid = $frontendController->id;
 				foreach($filesFromRepository as $fileKey=>$file) {
 					$fileKey = $fileKey+1;
-					$image[$fileKey] = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+					$image[$fileKey] = $this->imageService()->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
 					$bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
 					$imageUri_mobile[$fileKey] = $webp ? $bgImages[$fileKey][576].'.webp' : $bgImages[$fileKey][576];
 					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf);
@@ -76,8 +72,9 @@ class BackgroundImageUtility implements SingletonInterface
 			// background-image
 			if (!empty($filesFromRepository) ) {
 				$file = $filesFromRepository[0];
-				$image = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+				$image = $this->imageService()->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
 				$uid = $currentUid ?: $uid;
+
 				if ( $flexconf['bgimagePosition'] ) {
 					$uid = $uid . '-' . $flexconf['bgimagePosition'];
 				}
@@ -88,9 +85,11 @@ class BackgroundImageUtility implements SingletonInterface
 				} else {
 					if ( $flexconf['enableAutoheight'] ) {
 						if ( $flexconf['addHeight'] ) {
-							$this->pageRenderer()->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
+							$inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
+							if($inline)
+							GeneralUtility::makeInstance(AssetCollector::class)
+								  ->addInlineJavaScript('addheight-'.$uid, $inline);
 						}
-						$this->pageRenderer()->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);
 						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf);
 					} else {
 						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
@@ -103,22 +102,20 @@ class BackgroundImageUtility implements SingletonInterface
 			} else {
 				$imageUri_mobile = '';
 				if ($bgColorOnly) {
-
 					if ( $flexconf['enableAutoheight'] ) {
 						if ( $flexconf['addHeight'] ) {
-							$this->pageRenderer()->addInlineSetting('ADDHEIGHT', $uid, $flexconf['addHeight']);
+							$inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
+							if($inline)
+							GeneralUtility::makeInstance(AssetCollector::class)
+								  ->addInlineJavaScript('addheight-'.$uid, $inline);
 						}
-						$this->pageRenderer()->addInlineSetting('ENABLEHEIGHT', $uid, $flexconf['enableAutoheight']);
 					}
 				}
 			}
 		}
-
-		$frontendController->additionalHeaderData['tx_t3sbootstrapt_styles_for_backgrouns_imagesr'] .= '<style>'.$css.'</style>';
-		$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Scripts/bgImageSize.js';
-		$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
-
-		$this->pageRenderer()->addJsFooterFile($jsFooterFile);
+		if($css)
+		GeneralUtility::makeInstance(AssetCollector::class)
+			 ->addInlineStyleSheet('bgimgutility-'.$uid, $css,[],['priority' => true]);
 
 		return $imageUri_mobile;
 	}
@@ -129,8 +126,8 @@ class BackgroundImageUtility implements SingletonInterface
 	 *
 	 * @return string $css
 	 */
-	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE ) {
-
+	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE ): string
+	{
 		$imageRaster = $flexconf['imageRaster'] ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
 
 		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
@@ -167,7 +164,6 @@ class BackgroundImageUtility implements SingletonInterface
 					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
 				}
 
-
 			} else {
 				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
 			}
@@ -182,10 +178,10 @@ class BackgroundImageUtility implements SingletonInterface
 	/**
 	 * generateSrcsetImages
 	 *
-	 * @return string $css
+	 * @return array $bgImages
 	 */
-	private function generateSrcsetImages( $file, $image ) {
-
+	private function generateSrcsetImages( $file, $image ): array
+	{
 		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
 		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
 		$cropVariant = 'mobile';
@@ -204,9 +200,9 @@ class BackgroundImageUtility implements SingletonInterface
 	/**
 	 * Returns the ImageService
 	 *
-	 * @return ImageService
+	 * @return \TYPO3\CMS\Extbase\Service\ImageService
 	 */
-	protected function imageService()
+	protected function imageService(): ImageService
 	{
 		$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
@@ -215,22 +211,11 @@ class BackgroundImageUtility implements SingletonInterface
 
 
 	/**
-	 * Returns the Page Renderer
-	 *
-	 * @return PageRenderer
-	 */
-	protected function pageRenderer()
-	{
-		return GeneralUtility::makeInstance(PageRenderer::class);
-	}
-
-
-	/**
 	 * Returns $typoScriptFrontendController \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController()
+	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

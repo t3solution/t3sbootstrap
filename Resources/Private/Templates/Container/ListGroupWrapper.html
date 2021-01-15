@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="ListgroupWrapper" />
+<f:section name="Main">
+<div class="list-group{f:if(condition: '{class}',then: ' {class}')}">
+<f:for each="{col_282}" as="child">
+	<f:if condition="{child.header_link} && {child.tx_t3sbootstrap_header_celink}">
+		<f:then>
+			<f:link.typolink parameter="{child.header_link}" class="list-group-item list-group-item-action" title="{child.header -> f:format.raw()}">
+				<f:render section="Child" arguments="{_all}" />
+			</f:link.typolink>
+		</f:then>
+		<f:else>
+			<div class="list-group-item list-group-item-action">
+				<f:render section="Child" arguments="{_all}" />
+			</div>
+		</f:else>
+	</f:if>
+</f:for>
+</div>
+</f:section>
+</html>
+
+
+<f:section name="Child">
+	<div class="media d-flex w-100 justify-content-between">
+		{child.renderedContent -> f:format.raw()}
+	</div>
+</f:section>

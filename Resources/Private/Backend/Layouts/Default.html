@@ -1,8 +1,38 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers">
+	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers">
 <div class="t3sb-config">
 	<t3sb:includeFile path="../typo3conf/ext/t3sbootstrap/Resources/Public/Backend/styles.css"/>
 	<f:flashMessages/>
+	<f:if condition="{isSiteroot}">
+		<div class="t3sb-ext-navigation">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<f:link.action action="list" class="navbar-brand" title="Configuration">T3SBootstrap</f:link.action>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#t3sbNavbarToggler"
+				 aria-controls="t3sbNavbarToggler" aria-expanded="false" aria-label="Toggle navigation" style="float: right;">
+				 	<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="t3sbNavbarToggler">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="z-index: 2;">
+					<li class="nav-item {f:if(condition: '{action}==list || action}==edit', then: 'active')}">
+						<f:link.action action="list" class="nav-link" title="Configuration">
+							<em class="fa fas fa-cogs" aria-hidden="true"></em> Configuration
+						</f:link.action>
+					</li>
+					<li class="nav-item {f:if(condition: '{action}==constants', then: 'active')}">
+						<f:link.action action="constants" class="nav-link" title="Settings">
+							<em class="fa fa-bars" aria-hidden="true"></em> Outsourced Constants
+						</f:link.action>
+					</li>
+					<li class="nav-item {f:if(condition: '{action}==dashboard', then: 'active')}">
+						<f:link.action action="dashboard" class="nav-link" title="Dashboard">
+							<em class="fa fa-cog" aria-hidden="true"></em> EM Config
+						</f:link.action>
+					</li>
+				  </ul>
+				</div>
+			</nav>
+		</div>
+	</f:if>
 	<f:render section="content"/>
 </div>
 </html>

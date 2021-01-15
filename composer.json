@@ -12,8 +12,9 @@
   "license": "GPL-2.0-or-later",
   "type": "typo3-cms-extension",
   "require": {
-      "typo3/cms-core": "^9.5.17 || ^10.4.2",
-      "gridelementsteam/gridelements": "^9 || ^10"
+      "typo3/cms-core": "^10.4.10",
+      "b13/container": "^1.2.0",
+      "ichhabrecht/content-defender": "^3.1.0"
   },
   "autoload": {
     "psr-4": {

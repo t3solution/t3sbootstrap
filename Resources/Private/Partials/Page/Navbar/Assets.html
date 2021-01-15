@@ -1,0 +1,193 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.config.navbarSectionmenu}">
+	<f:then>
+		<f:asset.script identifier="navbarsection">
+	// Sectionmenu in navbar (one-page-layout) - Navbar/Assets.html
+	$(".section-menu a.js-scroll-trigger").bind("click", function(event) {
+		var anchor = $(this).attr("href");
+		if (anchor.length) {
+			var offsetSize = {settings.config.sectionmenuAnchorOffset};
+			if ( fixedNavbar ) {
+				offsetSize = navbarHeight+offsetSize;
+			}
+			$("html, body").stop().animate({
+				scrollTop: $(anchor).offset().top-offsetSize+4
+			}, 1500, "easeInOutExpo");
+			return false;
+		}
+	});
+	$("a.js-scroll-trigger").click(function() {
+		$(".navbar-collapse").collapse("hide");
+	});
+	var scrollspyOffset = {settings.config.sectionmenuScrollspyOffset};
+	$("body").scrollspy({
+		target: "#main-navbar",
+		offset: scrollspyOffset
+	});
+		</f:asset.script>
+	</f:then>
+	<f:else>
+		<f:asset.script identifier="navbardefault">
+	// Navbar dropdown menu - Navbar/Assets.html
+	$(".dropdown-menu a.dropdown-toggle").on("click", function() {
+		if (!$(this).next().hasClass("show")) {
+			$(this).parents(".dropdown-menu").first().find(".show").removeClass("show");
+		}
+		var $subMenu = $(this).next(".dropdown-menu");
+		$subMenu.toggleClass("show");
+		$(this).parents("li.nav-item.dropdown.show").on("hidden.bs.dropdown", function() {
+			$(".dropdown-submenu .show").removeClass("show");
+		});
+		return false;
+	});
+		</f:asset.script>
+	</f:else>
+</f:if>
+
+<f:if condition="{settings.config.navbarOffcanvas}">
+<f:asset.css priority="true" identifier="offcanvasCss">
+/*	Offcanvas - Navbar/Assets.html */
+@media (max-width:{f:if(condition:'{winWidth}',then:'{winWidth}', else:'9999')}px){
+html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0;width:100%;padding-right:1rem;padding-left:1rem;overflow-y:auto;background-color:var(--gray-dark);transition:-webkit-transform .3s ease-in-out;transition:transform .3s ease-in-out;transition:transform .3s ease-in-out,-webkit-transform .3s ease-in-out;-webkit-transform:translateX(100%);transform:translateX(100%)}.offcanvas-collapse.open{-webkit-transform:translateX(-1rem);transform:translateX(-1rem)}.offcanvas-collapse .navbar-nav .nav-link{color:rgba(255,255,255,.75)}.offcanvas-collapse .navbar-nav .nav-link:hover,.offcanvas-collapse .navbar-nav .nav-link:focus{color:#fff}.dropdown-item.active,.dropdown-item:active{color:#fff}.dropdown-item.active:hover,.dropdown-item:active:hover{color:rgba(0,0,0,.75)}.offcanvas-collapse .navbar-nav .active .nav-link{color:rgba(255,255,255,.75);color:#fff}.navbar > .offcanvas-container{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}
+}
+</f:asset.css>
+<f:asset.script identifier="offcanvasJs">
+	// Offcanvas - Navbar/Assets.html
+	$('[data-toggle="offcanvas"]').on('click', function () {
+		$('.offcanvas-collapse').toggleClass('open')
+	})
+	if ( $(window).width() < {f:if(condition:'{winWidth}',then:'{winWidth}', else:'9999')} ) {
+		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+	}
+</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarMegamenu}">
+<f:asset.css priority="true" identifier="navbarMegamenuCss" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />
+<f:asset.script identifier="navbarmegamenuJs">
+	// Navbar mega-menu - Navbar/Assets.html
+	$(document).on("click", ".mega-dropdown", function(event) {
+	  event.stopPropagation();
+	})
+	if ( $(window).width() < {f:if(condition:'{winWidth}',then:'{winWidth}', else:'9999')} ) {
+		$(".remove-{settings.config.navbarBreakpoint}").remove();
+	} else {
+		$(".show-{settings.config.navbarBreakpoint}").remove();
+	}
+</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarHover}">
+<f:asset.script identifier="navbarhover">
+	// Navbar hover - Navbar/Assets.html
+	function navbarHover() {
+		$("ul.navbar-nav .dropdown, ul.navbar-nav .dropdown-submenu").hover(function() {
+			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeIn();
+			$(this).addClass("show");
+			$(this).next(".dropdown-menu").addClass("show");
+			$(this).next("a").attr("aria-expanded","true");
+		}, function() {
+			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeOut();
+			$(this).removeClass("show");
+			$(this).next(".dropdown-menu").removeClass("show");
+			$(this).next("a").attr("aria-expanded","false");
+		});
+	}
+
+	if ( $(window).width() > {winWidth} ) {
+		navbarHover();
+	}
+</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarClickableparent}">
+<f:asset.script identifier="navbarclickableparent">
+	// Clickable parent from dropdown menu - Navbar/Assets.html
+	$(".nav-item.dropdown a.nav-link.dropdown-toggle").on("click",function(e){
+		if ($(this).next(".dropdown-menu").is(":visible")) {
+			window.location = $(this).attr("href");
+		}
+	});
+	var isHover = {settings.config.navbarHover};
+	$(".dropdown-submenu a.dropdown-item.dropdown-toggle").on("click", function() {
+		if ($(this).next(".dropdown-menu").is(":hidden") || isHover) {
+			window.location = $(this).attr("href");
+		}
+	});
+	$(".submenu a.nav-link").on("click", function(e) {
+		if ($(this).hasClass("active")) {
+			e.preventDefault();
+		} else {
+			if ($(this).next(".collapse").is(":visible")) {
+				$('.submenu').on('hide.bs.collapse', function (e) {
+					e.preventDefault();
+				});
+				window.location = $(this).attr("href");
+			}
+		}
+	});
+</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarShrinkcolor}">
+<f:asset.script identifier="navbarshrinkcolor">
+	// Shrinking Navbar on scrolling - Navbar/Assets.html
+	var navShrinkColorschemes = $('#main-navbar').data('shrinkcolorschemes'),
+		navShrinkColor = $('#main-navbar').data('shrinkcolor'),
+		navColorschemes = $('#main-navbar').data('colorschemes'),
+		navColor = $('#main-navbar').data('color');
+
+	$(window).scroll(function() {
+		if ($("#main-navbar").offset().top > 100) {
+			$("#main-navbar").removeClass("py-{settings.config.shrinkingNavPadding}").removeClass(navColorschemes).removeClass(navColor)
+			.addClass("navbar-shrink").addClass(navShrinkColor).addClass(navShrinkColorschemes);
+		} else {
+			$("#main-navbar").addClass("py-{settings.config.shrinkingNavPadding}")
+			.removeClass("navbar-shrink").removeClass(navShrinkColor).removeClass(navShrinkColorschemes)
+			.addClass(navColorschemes).addClass(navColor);
+		}
+	});
+	</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarDropdownAnimate} == '2'">
+<f:asset.script identifier="navbardropdownanimate">
+	// Dropdown Animate (2) - Navbar/Assets.html
+	$('.dropdown').on('show.bs.dropdown', function(e){
+		$(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
+	});
+	$('.dropdown').on('hide.bs.dropdown', function(e){
+		$(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
+	});
+</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarPlacement} == 'sticky-top'">
+<f:asset.script identifier="navbarstickytop">
+	// Navbar sticky-top - Navbar/Assets.html
+	var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+		var stickyHeight = sticky.outerHeight();
+		var stickyTop = stickyWrapper.offset().top;
+		if (scrollElement.scrollTop() >= stickyTop){
+			stickyWrapper.height(stickyHeight);
+			sticky.addClass("is-sticky");
+		} else{
+			sticky.removeClass("is-sticky");
+			stickyWrapper.height('auto');
+		}
+	};
+	$('[data-toggle="sticky-onscroll"]').each(function() {
+		var sticky = $(this);
+		var stickyWrapper = $('<div>').addClass('sticky-wrapper');
+		sticky.before(stickyWrapper);
+		sticky.addClass('sticky');
+
+		$(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+			stickyToggle(sticky, stickyWrapper, $(this));
+		});
+		stickyToggle(sticky, stickyWrapper, $(window));
+	});
+</f:asset.script>
+</f:if>
+</html>

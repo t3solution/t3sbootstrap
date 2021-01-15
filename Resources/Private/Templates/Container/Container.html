@@ -1,0 +1,20 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>Container Template</f:comment>
+<f:layout name="Default" />
+<f:section name="Main">
+	<f:if condition="{class} || {style}">
+		<f:then>
+			<div{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}>
+				<f:for each="{col_275}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
+			</div>
+		</f:then>
+		<f:else>
+			<f:for each="{col_275}" as="row">
+				{row.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:else>
+	</f:if>
+</f:section>
+</html>

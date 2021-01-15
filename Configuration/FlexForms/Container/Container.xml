@@ -1,0 +1,344 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Container Settings</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<hidden>
+						<TCEforms>
+							<label>Hiding / Display Elements</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Hidden only on xs</numIndex>
+										<numIndex index="1">d-none d-sm-block</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Hidden on sm and down</numIndex>
+										<numIndex index="1">d-none d-md-block</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">Hidden on md and down</numIndex>
+										<numIndex index="1">d-none d-lg-block</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">Hidden on lg and down</numIndex>
+										<numIndex index="1">d-none d-xl-block</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">Hidden only on xl</numIndex>
+										<numIndex index="1">d-xl-none</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">Visible only on xs</numIndex>
+										<numIndex index="1">d-block d-sm-none</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">Visible sm and down</numIndex>
+										<numIndex index="1">d-block d-md-none</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">Visible md and down</numIndex>
+										<numIndex index="1">d-block d-lg-none</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">Visible lg and down</numIndex>
+										<numIndex index="1">d-block d-xl-none</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</hidden>
+
+					<flexContainer>
+						<TCEforms>
+							<label>Enable flex behaviors</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">flex</numIndex>
+										<numIndex index="1">flex</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">inline-flex</numIndex>
+										<numIndex index="1">inline-flex</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</flexContainer>
+
+					<responsiveVariations>
+						<TCEforms>
+							<label>Responsive Variations</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
+										<numIndex index="1">FIELD:sDEF.flexContainer:=:inline-flex</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">xs</numIndex>
+										<numIndex index="1">xs</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">sm</numIndex>
+										<numIndex index="1">sm</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">md</numIndex>
+										<numIndex index="1">md</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">lg</numIndex>
+										<numIndex index="1">lg</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">xl</numIndex>
+										<numIndex index="1">xl</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</responsiveVariations>
+
+					<direction>
+						<TCEforms>
+							<label>Direction</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
+										<numIndex index="1">FIELD:sDEF.flexContainer:=:inline-flex</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">horizontal direction (.flex-row)</numIndex>
+										<numIndex index="1">row</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">horizontal direction from the opposite side (.flex-row-reverse)</numIndex>
+										<numIndex index="1">row-reverse</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">vertical direction (.flex-column)</numIndex>
+										<numIndex index="1">column</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">vertical direction from the opposite side (.flex-column-reverse)</numIndex>
+										<numIndex index="1">column-reverse</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</direction>
+
+					<justify>
+						<TCEforms>
+							<label>Justify content</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
+										<numIndex index="1">FIELD:sDEF.flexContainer:=:inline-flex</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">start (default)</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">between</numIndex>
+										<numIndex index="1">between</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">around</numIndex>
+										<numIndex index="1">around</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</justify>
+
+					<alignItem>
+						<TCEforms>
+							<label>Align items</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
+										<numIndex index="1">FIELD:sDEF.flexContainer:=:inline-flex</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">start</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">baseline</numIndex>
+										<numIndex index="1">baseline</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">stretch</numIndex>
+										<numIndex index="1">stretch</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</alignItem>
+
+					<wrap>
+						<TCEforms>
+							<label>Wrap</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
+										<numIndex index="1">FIELD:sDEF.flexContainer:=:inline-flex</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">nowrap (default)</numIndex>
+										<numIndex index="1">nowrap</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">wrap</numIndex>
+										<numIndex index="1">wrap</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">wrap-reverse</numIndex>
+										<numIndex index="1">wrap-reverse</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</wrap>
+
+					<alignContent>
+						<TCEforms>
+							<label>Align content</label>
+								 <displayCond>
+								   <or>
+										<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
+										<numIndex index="1">FIELD:sDEF.flexContainer:=:inline-flex</numIndex>
+								   </or>
+								 </displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">start</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">around</numIndex>
+										<numIndex index="1">around</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">stretch</numIndex>
+										<numIndex index="1">stretch</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</alignContent>
+
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

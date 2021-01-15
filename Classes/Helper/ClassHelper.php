@@ -1,18 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Helper;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
+
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -28,10 +25,10 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return string
 	 */
-	public function getAllClass($data, $flexconf, $extConf)
+	public function getAllClass($data, $flexconf, $extConf): string
 	{
 	 	// class
-		if ( $extConf['cTypeClass'] && $data['CType'] != 'gridelements_pi1') {
+		if ( $extConf['cTypeClass']) {
 			$class = 'fsc-default ce-'. $data['CType'];
 		} else {
 			$class = '';
@@ -126,7 +123,7 @@ class ClassHelper implements SingletonInterface
 
 
 	/**
-	 * Returns the CSS-class for gridelements
+	 * Returns the CSS-class for tx_container
 	 *
 	 * @param array $data
 	 * @param array	$flexconf
@@ -135,22 +132,15 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return string
 	 */
-	public function getGeClass($data, $flexconf, $isVideo, $extConf)
+	public function getTxContainerClass($data, $flexconf, $isVideo, $extConf): string
 	{
 
 		$class = '';
 
 		/**
-		 * CType: Gridelements
-		 */
-		if ( $extConf['cTypeClass'] ) {
-			$class .= 'ge ge_'. $data['tx_gridelements_backend_layout'];
-		}
-
-		/**
 		 * Background Wrapper
 		 */
-		if ( $data['tx_gridelements_backend_layout'] == 'background_wrapper' && $isVideo == FALSE ) {
+		if ( $data['CType'] == 'background_wrapper' && $isVideo == FALSE ) {
 			$class .= $flexconf['bgAttachmentFixed'] ? ' background-fixed' : '';
 			if ((!$data['assets'] && $flexconf['imageRaster']) || ($flexconf['origImage'] && $flexconf['imageRaster'])) {
 				$class .= ' bg-raster';
@@ -160,7 +150,7 @@ class ClassHelper implements SingletonInterface
 		/**
 		 * Button group
 		 */
-		if ( $data['tx_gridelements_backend_layout'] == 'button_group' ) {
+		if ( $data['CType'] == 'button_group' ) {
 			$class .= $flexconf['size'] ? ' '.$flexconf['size'] : '';
 			if ( $flexconf['fixedPosition'] ) {
 				$class .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
@@ -172,7 +162,7 @@ class ClassHelper implements SingletonInterface
 		/**
 		 * Auto-layout row/column
 		 */
-		if ( $data['tx_gridelements_backend_layout'] == 'autoLayout_row' ) {
+		if ( $data['CType'] == 'autoLayout_row' ) {
 			$class .= $flexconf['noGutters'] ? ' no-gutters' : '';
 			if ($flexconf['responsiveVariations']) {
 				$class .= $flexconf['justify'] ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
@@ -186,7 +176,7 @@ class ClassHelper implements SingletonInterface
 		/**
 		 * Container
 		 */
-		if ( $data['tx_gridelements_backend_layout'] == 'container' ) {
+		if ( $data['CType'] == 'container' ) {
 			if ($flexconf['flexContainer']) {
 				if ($flexconf['responsiveVariations']) {
 					$class .= $flexconf['flexContainer'] ? ' d-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
@@ -209,10 +199,10 @@ class ClassHelper implements SingletonInterface
 		/**
 		 * Grid
 		 */
-		if ( $data['tx_gridelements_backend_layout'] == 'two_columns'
-		 || $data['tx_gridelements_backend_layout'] == 'three_columns'
-		 || $data['tx_gridelements_backend_layout'] == 'four_columns'
-		 || $data['tx_gridelements_backend_layout'] == 'six_columns' ) {
+		if ( $data['CType'] == 'two_columns'
+		 || $data['CType'] == 'three_columns'
+		 || $data['CType'] == 'four_columns'
+		 || $data['CType'] == 'six_columns' ) {
 			$class .= $flexconf['noGutters'] ? ' no-gutters' : '';
 			$class .= $flexconf['equalHeight'] ? ' row-eq-height' : '';
 		}
@@ -228,13 +218,14 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getHeaderClass($data)
+	public function getHeaderClass($data): array
 	{
 		$header['class'] = $data['header_position'] ? ' text-'.$data['header_position'] : '';
 		$header['hClass'] = '';
 
 		if ( $data['tx_t3sbootstrap_header_class'] ) {
-			$textColors = explode(',','text-primary,text-secondary,text-danger,text-success,text-warning,text-info,text-light,text-dark,text-body,text-muted,text-white');
+			$textColors = explode(',','text-primary,text-secondary,text-danger,text-success,text-warning,
+			text-info,text-light,text-dark,text-body,text-muted,text-white');
 			foreach ($textColors as $textColor) {
 				if (strpos($data['tx_t3sbootstrap_header_class'], $textColor) !== false) {
 					$header['hClass'] .= $textColor;
@@ -271,7 +262,7 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return string
 	 */
-	public function getAutoLayoutClass($flexconf)
+	public function getAutoLayoutClass($flexconf): string
 	{
 		$class = '';
 
@@ -321,7 +312,7 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return string
 	 */
-	public function getContainerClass($parentflexconf, $flexconf)
+	public function getContainerClass($parentflexconf, $flexconf): string
 	{
 		$class = '';
 
@@ -345,7 +336,7 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController()
+	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

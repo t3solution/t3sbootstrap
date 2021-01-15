@@ -1,16 +1,109 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">	
+<f:comment> Hover Effect </f:comment>
+<f:if condition="{hoverEffect} && {settings.linkHoverEffect}">
+	<f:asset.css priority="true" identifier="linkHoverEffect" href="EXT:t3sbootstrap/Resources/Public/Styles/hoverEffects.css" />
+</f:if>
+<f:comment> Codesnippet </f:comment>
+<f:if condition="{codesnippet} && {settings.codesnippet}">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css priority="true" identifier="codesnippetCssPrimary"
+				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/default.min.css" />
+			<f:asset.css priority="true" identifier="codesnippetCssSeconrady"
+				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/a11y-light.min.css" />
+			<f:asset.script identifier="codesnippetJsPrimary"
+				src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/highlight.min.js"
+				integrity="{settings.highlightIntegrity}" />
+			<f:asset.script identifier="codesnippetJsSeconrady"
+				src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/languages/php.min.js"
+				integrity="{settings.highlightIntegrity}" />
+		</f:then>
+		<f:else>
+			<f:asset.css priority="true" identifier="codesnippetCssPrimary" href="fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css" />
+			<f:asset.css priority="true" identifier="codesnippetCssSeconrady" href="fileadmin/T3SB/Resources/Public/CSS/highlight.a11y-light.min.css" />
+			<f:asset.script identifier="codesnippetJsPrimary" src="fileadmin/T3SB/Resources/Public/JS/highlight.min.js" />
+			<f:asset.script identifier="codesnippetJsSeconrady" src="fileadmin/T3SB/Resources/Public/JS/highlight.php.min.js" />
+		</f:else>
+	</f:if>
+	<f:asset.script identifier="codesnippetJsInline">
+// Highlighting for codesnippet - Layouts/Content/Default.html
+hljs.initHighlightingOnLoad();
+	</f:asset.script>
+</f:if>
+<f:comment> AnimateCss </f:comment>
+<f:if condition="{isAnimateCss} && {settings.animateCss}">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css priority="true" identifier="animateCss"
+				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.min.css" />
+			<f:asset.script identifier="animateJs"
+				src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/{settings.viewportcheckerVersion}/jquery.viewportchecker.min.js"
+				integrity="{settings.viewportcheckerIntegrity}" />
+		</f:then>
+		<f:else>
+			<f:asset.css priority="true" identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.min.css" />
+			<f:asset.script identifier="animateJs" src="fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js" />
+		</f:else>
+	</f:if>
+	<f:asset.script identifier="animatecssJsInline">
+	// ViewportChecker for animateCss - Layouts/Content/Default.html
+	$( '.animated' ).each(function() {
+		$(this).viewportChecker({classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0});
+	});
+	</f:asset.script>
+</f:if>
+<f:comment> Lightbox - same in News/Detail.html </f:comment>
+<f:if condition="({settings.lightboxSelection} && {data.image_zoom}) || ({settings.lightboxSelection} && {data.CType} == 't3sbs_gallery')">
+	<f:comment> Baguette Box </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 1">
+		<f:asset.script identifier="lightbox">
+	// Baguette Box (lightbox) - Layouts/Content/Default.html
+	baguetteBox.run(".gallery, .image-gallery");
+		</f:asset.script>
+	</f:if>
+	<f:comment> Ekko Lightbox </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 2">
+		<f:asset.script identifier="lightbox">
+	// Ekko Lightbox (lightbox) - Layouts/Content/Default.html
+	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+		event.preventDefault();
+		$(this).ekkoLightbox();
+	});
+	if ( $('.MS-content figure a').hasClass('lightbox') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-gallery', 'gallery-'+msId);
+	}
+		</f:asset.script>
+	</f:if>
+	<f:comment> Lightcase </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 3">
+		<f:asset.script identifier="lightbox">
+	// Lightcase (lightbox) - Layouts/Content/Default.html
+	$('.lightcaseGallery').lightcase({
+		showSequenceInfo: false,
+		showCaption: true,
+		maxWidth: 1140,
+		maxHeight: 800
+	});
+	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);
+	}
+		</f:asset.script>
+	</f:if>
+</f:if>
 <f:spaceless>
 {containerPre -> f:format.raw()}
 {cardSliderPre -> f:format.raw()}
 <f:if condition="{containerError} && {settings.containerError}">
 	<div class="alert alert-danger" role="alert">
-		Here is a container expected! <small>... you can disable this error message in the constant editor!</small>
+		Here is a container expected! <small>... you can disable this error message in the BE Modul!</small>
 	</div>
 </f:if>
 <f:link.typolink parameter="{celink}" class="ce-link">
-	<f:if condition="{data.CType} != 'gridelements_pi1'">
+	<f:if condition="{isTxContainer}">
 		<f:then>
-			<div id="c{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+			<div id="c{data.uid}">
 				<f:render section="Header" optional="true">
 					<f:render partial="Header/All" arguments="{_all}" />
 				</f:render>
@@ -18,7 +111,7 @@
 			</div>
 		</f:then>
 		<f:else>
-			<div id="c{data.uid}">
+			<div id="c{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
 				<f:render section="Header" optional="true">
 					<f:render partial="Header/All" arguments="{_all}" />
 				</f:render>

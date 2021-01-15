@@ -19,19 +19,18 @@ use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterface {
 
 
-    /**
-     * @return array
-     */
-    public function getFunctions(): array
-    {
-        return [
-            $this->getExtconf(),
-            $this->getBrowser(),
+	/**
+	 * @return array
+	 */
+	public function getFunctions(): array
+	{
+		return [
+			$this->getExtconf(),
+			$this->getBrowser(),
 			$this->getColPosList(),
 			$this->getExtensionLoaded(),
-        ];
-    }
-
+		];
+	}
 
 	protected function getExtconf(): ExpressionFunction
 	{
@@ -46,7 +45,6 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 		});
 	}
 
-
 	protected function getBrowser(): ExpressionFunction
 	{
 	  return new ExpressionFunction('browser', function ($str) {
@@ -54,20 +52,19 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 	  }, function ($arguments, $str) {
 
 		$user_agent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
-		 $browser = 'Other';
+		$browser = 'Other';
 
-		 if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) $browser = 'Opera';
-		 elseif (strpos($user_agent, 'Edge')) $browser = 'Edge';
-		 elseif (strpos($user_agent, 'Chrome')) $browser = 'Chrome';
-		 elseif (strpos($user_agent, 'Safari')) $browser = 'Safari';
-		 elseif (strpos($user_agent, 'Firefox')) $browser = 'Firefox';
-		 elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) $browser = 'Internet Explorer';
+		if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) $browser = 'Opera';
+		elseif (strpos($user_agent, 'Edge')) $browser = 'Edge';
+		elseif (strpos($user_agent, 'Chrome')) $browser = 'Chrome';
+		elseif (strpos($user_agent, 'Safari')) $browser = 'Safari';
+		elseif (strpos($user_agent, 'Firefox')) $browser = 'Firefox';
+		elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) $browser = 'Internet Explorer';
 
-		 return $str === $browser;
+		return $str === $browser;
 	  });
 
 	}
-
 
 	protected function getColPosList(): ExpressionFunction
 	{
@@ -193,16 +190,14 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 		});
 	}
 
+	protected function getExtensionLoaded(): ExpressionFunction
+	{
+		return new ExpressionFunction('loaded', function () {
+			// Not implemented, we only use the evaluator
+		}, function ($arguments, $extKey) {
 
-    protected function getExtensionLoaded(): ExpressionFunction
-    {
-        return new ExpressionFunction('loaded', function () {
-            // Not implemented, we only use the evaluator
-        }, function ($arguments, $extKey) {
-
-            return ExtensionManagementUtility::isLoaded($extKey);
-        });
-    }
-
+			return ExtensionManagementUtility::isLoaded($extKey);
+		});
+	}
 
 }

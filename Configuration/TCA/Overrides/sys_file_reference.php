@@ -52,13 +52,18 @@ $tempSysFileReferenceColumns = [
 	'tx_t3sbootstrap_hover_effect' => [
 		'label' => 'Link Hover Effect (title and/or description)',
 		'exclude' => 1,
+/*
 		'displayCond' => [
-			'OR' => [
+			 'AND' => [
 				'FIELD:tablenames:=:tt_content',
-				'FIELD:fieldname:=:assets',
-				'FIELD:fieldname:=:image',
-			],
+				'OR' => [
+						'FIELD:CType:=:textmedia',
+						'FIELD:CType:=:textpic',
+						'FIELD:CType:=:image',
+				]
+			 ]
 		],
+*/
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
@@ -151,7 +156,31 @@ $tempSysFileReferenceColumns = [
 			'eval' => 'trim',
 		],
 	],
+	'tx_t3sbootstrap_imgtag' => [
+		'label' => 'Output image in <img> - instead in <picture> tag',
+		'exclude' => 1,
+/*
+		'displayCond' => [
+			 'AND' => [
+				'FIELD:tablenames:=:tt_content',
+				'OR' => [
+						'FIELD:CType:=:textmedia',
+						'FIELD:CType:=:textpic',
+						'FIELD:CType:=:image',
+				]
+			 ]
+		],
+*/
 
+		'config' => [
+			'type' => 'check',
+				'items' => [
+				'1' => [
+					'0' => 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:labels.enabled'
+				]
+			]
+		]
+	],
 
 ];
 
@@ -183,5 +212,9 @@ if (array_key_exists('linkHoverEffect', $extconf) && $extconf['linkHoverEffect']
 
 if (array_key_exists('lazyLoad', $extconf) && $extconf['lazyLoad'] === '2') {
 	TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_lazy_load','after:tx_t3sbootstrap_extra_imgclass');
+}
+
+if (array_key_exists('imgtag', $extconf) && $extconf['imgtag']) {
+	TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_imgtag','after:tx_t3sbootstrap_description_align');
 }
 

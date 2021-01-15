@@ -1,10 +1,99 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{version} == 10">
-	<f:then>
-		<f:render partial="Version10/Accordion" arguments="{_all}" />
-	</f:then>
-	<f:else>
-		<f:render partial="Version9/Accordion" arguments="{_all}" />
-	</f:else>
-</f:if>
+<f:comment> - ACCORDION - </f:comment>
+<div class="accordion" id="accordion">
+	<f:for each="{tcaColumns}" as="columns" key="colkey">
+		<f:if condition="{colkey} == 8 || {colkey} == 9">
+			<f:then>
+				<f:if condition="{settings.expandedContent}">
+					<f:render section="Card" arguments="{_all}" />
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:render section="Card" arguments="{_all}" />
+			</f:else>
+		</f:if>
+	</f:for>
+</div>
 </html>
+
+
+<f:section name="Card">
+<div class="card">
+	<div class="card-header" id="header-{colkey}" style="padding: 0 !important;">
+		<h4 class="mb-0">
+			<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+			 data-target="#collapse-{colkey}" aria-expanded="true" aria-controls="collapse-{colkey}"
+			 style="font-size: 1.3rem !important;" >
+				<f:translate key="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:accordion_{colkey}" />
+			</button>
+		</h4>
+	</div>
+	<div id="collapse-{colkey}" class="collapse" aria-labelledby="header-{colkey}" data-parent="#accordion">
+		<div class="card-body">
+			<f:render section="ExtraTop" arguments="{ckey: colkey}" />
+			<f:for each="{columns}" as="field" key="ckey">
+				<f:if condition="{field.noSub}">
+					<f:then>
+						<f:comment> - FORM FIELD - </f:comment>
+						<f:if condition="{isSiteroot}">
+							<f:then>
+								<f:render partial="Config/{field.type}" arguments="{_all}" />
+							</f:then>
+							<f:else>
+								<f:if condition="{field.property} != 'contentOnlyOnRootpage'">
+									<f:render partial="Config/{field.type}" arguments="{_all}" />
+								</f:if>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+					<f:comment> - NESTED ACCORDION - </f:comment>
+						<div class="accordion accordion-sub" id="accordion-{ckey}">
+							<div class="card">
+								<div class="card-header" id="header-{ckey}" style="background-color: #1aa3b9 !important;padding: 0 !important;">
+									<h4 class="mb-0">
+										<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+										 data-target="#collapse-{ckey}" aria-expanded="true" aria-controls="collapse-{ckey}"
+										 style="font-size: 1.3rem !important;">
+											<f:translate key="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:accordion_{ckey}" />
+										</button>
+									</h4>
+								</div>
+								<div id="collapse-{ckey}" class="collapse" aria-labelledby="header-{ckey}" data-parent="#accordion-{ckey}">
+									<div class="card-body" style="background-color: #f8f8f8;">
+										<f:render section="ExtraSubTop" arguments="{ckey: ckey}" />
+										<f:for each="{field}" as="field">
+											<f:comment> - FORM FIELD - </f:comment>
+											<f:render partial="Config/{field.type}" arguments="{_all}" />
+										</f:for>
+									</div>
+								</div>
+							</div>
+						</div>
+					</f:else>
+				</f:if>
+			</f:for>
+		</div>
+	</div>
+</div>
+</f:section>
+
+<f:section name="ExtraTop">
+
+</f:section>
+
+<f:section name="ExtraSubTop">
+<f:if condition="{ckey} == '3-5'">
+	<f:comment> - Navbar -> Shrinking Navbar - </f:comment>
+	<div class="row">
+		<div class="col-sm-offset-3 col-sm-9" style="margin-bottom: 2rem;">
+			<h3 class="help-block" style="margin-top: 0;">Shrinking Navbar on scrolling</h3>
+			<p class="small pb-0"><span style="font-weight: 700;">Set "Placement" to "fixed-top"</span>.
+				<br />Set "Navbar height" must be adapted for body-padding.
+				<br />Does not work with "Background color" only with "Color schemes".
+				<br />Transparency: "Color schemes" = "bg-color" and "Background color" & "Navbar height" without entry.
+			</p>
+		</div>
+	</div>
+</f:if>
+</f:section>

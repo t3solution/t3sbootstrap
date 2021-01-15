@@ -1,17 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,23 +15,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\Resource\FileCollector;
 
-/**
- * This data processor can be used for processing data for record which contain
- * relations to sys_file records (e.g. sys_file_reference records) or for fetching
- * files directly from UIDs or from folders or collections.
- *
- *
- * Example TypoScript configuration:
- *
- * 10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
- * 10 {
- *	 references.fieldName = image
- *	 collections = 13,15
- *	 as = myfiles
- * }
- *
- * whereas "myfiles" can further be used as a variable {myfiles} inside a Fluid template for iteration.
- */
+
 class BsImageGalleryProcessor implements DataProcessorInterface
 {
 	/**

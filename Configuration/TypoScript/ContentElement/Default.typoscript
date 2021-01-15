@@ -19,7 +19,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid = {$bootstrap.db.uid}
+				configuid = {$bootstrap.config.uid}
 			}
 		}
 	}
@@ -39,7 +39,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid = {$bootstrap.db.uid}
+				configuid = {$bootstrap.config.uid}
 			}
 		}
 	}
@@ -59,7 +59,7 @@ tt_content {
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
 				overrideSmallColumns = {$pages.override.smallColumns}
-				configuid = {$bootstrap.db.uid}
+				configuid = {$bootstrap.config.uid}
 			}
 		}
 	}
@@ -145,7 +145,7 @@ tt_content {
 						table = tt_content
 						pidInList.field = uid
 						as = content
-						where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
+						where = sectionIndex = 1 AND ( colPos = 0 OR colPos > 199 )
 						orderBy = {$bootstrap.extconf.sectionOrder}
 						dataProcessing {
 							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor

@@ -1,17 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -22,7 +18,6 @@ use TYPO3\CMS\Core\Context\Context;
 
 class LastModifiedProcessor implements DataProcessorInterface
 {
-
 	/**
 	 * Fetches records from the database as an array
 	 *
@@ -70,9 +65,9 @@ class LastModifiedProcessor implements DataProcessorInterface
 	/**
 	 * Returns true if is page w/ content.cType == menu_recently_updated
 	 *
-	 * @return $mdtm
+	 * @return bool $mdtm
 	 */
-	protected function isMenuRecentlyUpdatedOnPage()
+	protected function isMenuRecentlyUpdatedOnPage(): bool
 	{
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
@@ -95,7 +90,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 * @param int $setMaxResults
 	 * @return array $mdtm
 	 */
-	protected function getRecentlyUpdated($setMaxResults)
+	protected function getRecentlyUpdated($setMaxResults): array
 	{
 		$languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
 		$sysLanguageUid = $languageAspect->getContentId() ?: 0;
@@ -134,7 +129,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 * @param int $uid
 	 * @return string page title
 	 */
-	protected function getPageTitle($uid)
+	protected function getPageTitle($uid): string
 	{
 		$pageTitle = '';
 
@@ -148,12 +143,12 @@ class LastModifiedProcessor implements DataProcessorInterface
 					$queryBuilder->expr()->eq('doktype', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 				 )
 				 ->execute()
-				 ->fetchAll();
+				 ->fetch();
 
-			$pageTitle = $result[0]['nav_title'] ?: $result[0]['title'];
+			$pageTitle = $result['nav_title'] ?: $result['title'];
 		}
 
-		return $pageTitle;
+		return (string)$pageTitle;
 	}
 
 
@@ -162,7 +157,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController()
+	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

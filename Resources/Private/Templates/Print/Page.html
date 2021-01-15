@@ -1,11 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="page">
-
 	<div class="jumbotron p-3	border-bottom">
 		<f:render partial="Page/Title" arguments="{_all}" />
 	</div>
-
-
 	<f:if condition="{data.content_from_pid}">
 		<f:then>
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.content_from_pid}', colPos: '0'}"/>
@@ -14,8 +11,6 @@
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '0'}"/>
 		</f:else>
 	</f:if>
-
-
 	<div id="footer" class="mt-5 text-center border-top">
 		<div class="row no-gutters my-5">
 			<div class="col-sm">
@@ -29,21 +24,5 @@
 			</div>
 		</div>
 	</div>
-
 </div>
-
 </html>
-
-
-<f:comment>
-		<f:if condition="{config.footer.slide}">
-			<f:then>
-				<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '4'}"/>
-				<f:cObject typoscriptObjectPath="lib.content.footerFromPid"/>
-			</f:then>
-			<f:else>
-				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '4'}"/>
-				<f:cObject typoscriptObjectPath="lib.content.footerFromPid"/>
-			</f:else>
-		</f:if>
-</f:comment>

@@ -13,6 +13,7 @@ page {
 
 config {
 	disablePrefixComment = {$bootstrap.config.disablePrefixComment}
+	removeDefaultJS = external
 
 	compressJs = {$bootstrap.config.compress}
 	compressCss = {$bootstrap.config.compress}

@@ -1,79 +1,26 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
-use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
-use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileRepository;
-
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 class ConfigProcessor implements DataProcessorInterface
 {
-
-	/**
-	 * The content object renderer
-	 *
-	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
-	 */
-	protected $contentObjectRenderer;
-
-	/**
-	 * The contentObject configuration
-	 *
-	 * @var array
-	 */
-	protected $contentObjectConfiguration;
-
-	/**
-	 * The processor configuration
-	 *
-	 * @var array
-	 */
-	protected $processorConfiguration;
-
-	/**
-	 * processed data
-	 *
-	 * @var array
-	 */
-	protected $processedData;
-
-	/**
-	 * @var ContentDataProcessor
-	 */
-	protected $contentDataProcessor;
-
-
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->contentDataProcessor = GeneralUtility::makeInstance(ContentDataProcessor::class);
-	}
-
-
 	/**
 	 * Fetches records from the database as an array
 	 *
@@ -86,39 +33,15 @@ class ConfigProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
 	{
-
-		$this->contentObjectRenderer = $cObj;
-		$this->contentObjectConfiguration = $contentObjectConfiguration;
-		$this->processorConfiguration = $processorConfiguration;
-		$this->processedData = $processedData;
-
 		$frontendController = self::getFrontendController();
-		$webp = $this->processorConfiguration['webp'];
+		$webp = $processorConfiguration['webp'];
 
-		if ( is_numeric($this->contentObjectConfiguration['settings.']['db.']['uid']) ) {
-
-			$processedRecordVariables = $this->contentObjectConfiguration['settings.']['db.'];
-
+		if ( is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
+			$processedRecordVariables = $contentObjectConfiguration['settings.']['config.'];
 		} else {
-
-			$this->processedData['noConfig'] = TRUE;
-
-			return $this->processedData;
+			$processedData['noConfig'] = TRUE;
+			return $processedData;
 		}
-
-		// override config by TS
-		if ( $this->contentObjectConfiguration['settings.']['configOverride'] ) {
-			foreach ( $this->contentObjectConfiguration['settings.']['override.'] as $key=>$override ) {
-				if ( ($override || $override === '0' || $override === 'false')	&& $override[1] != '$' ) {
-					if ( $override === 'none' ) {
-						$processedRecordVariables[$key] = '';
-					} else {
-						$processedRecordVariables[$key] = $override;
-					}
-				}
-			}
-		}
-
 
 		/**
 		 * General
@@ -126,44 +49,35 @@ class ConfigProcessor implements DataProcessorInterface
 		// company w/ multilingual support
 		$company = $processedRecordVariables['company'];
 		$companyArr = GeneralUtility::trimExplode('|', $company);
-		$sysLanguageUid = $this->processedData['data']['sys_language_uid'];
+		$sysLanguageUid = $processedData['data']['sys_language_uid'];
 		if ( $sysLanguageUid && $company ) {
 			$company = $companyArr[$sysLanguageUid] ?: $company;
 		} else {
 			$company = $companyArr[0] ?: $company;
 		}
-		$this->processedData['config']['general']['company'] = trim($company);
-		$this->processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepage_uid'] ?: 1;
-		$this->processedData['config']['general']['pageTitle'] = $processedRecordVariables['page_title'] ?: '';
-		$this->processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['page_titlealign'] ?: '';
-		$this->processedData['config']['general']['pageTitleclass'] = $processedRecordVariables['page_titleclass'] ?: '';
+		$processedData['config']['general']['company'] = trim($company);
+		$processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepageUid'] ?: 1;
+		$processedData['config']['general']['pageTitle'] = $processedRecordVariables['pageTitle'] ?: '';
+		$processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['pageTitlealign'] ?: '';
+		$processedData['config']['general']['pageTitleclass'] = $processedRecordVariables['pageTitleclass'] ?: '';
 
 		// flexible small columns
 		$currentPage = $frontendController->page;
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
-
-		$typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-		$version = (int)$typo3Version->getVersion();
-
-		if ($version == 10) {
-			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
-		} else {
-			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
-		}
-
-		$rootlinePage = $pageRepository->getPage($processedRecordVariables['uid']);
+		$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+		$rootlinePage = $pageRepository->getPage($processedRecordVariables['homepageUid']);
 		$smallColumnsRootline = (int)$rootlinePage['tx_t3sbootstrap_smallColumns'];
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 
-		if ( $this->contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns'] ) {
-			if ( GeneralUtility::inList('1,2,3,4,6', $this->contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns']) ) {
-				$smallColumns = $this->contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns'];
+		if ( $contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns'] ) {
+			if ( GeneralUtility::inList('1,2,3,4,6', $contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns']) ) {
+				$smallColumns = $contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns'];
 			} else {
 				$smallColumns = 3;
 			}
 		}
 
-		$this->processedData['colAside'] = $smallColumns;
+		$processedData['colAside'] = $smallColumns;
 
 		if ($currentPage['backend_layout']) {
 			$threeCol = $currentPage['backend_layout'] == 'pagets__ThreeCol' ? TRUE : FALSE;
@@ -176,42 +90,40 @@ class ConfigProcessor implements DataProcessorInterface
 			$threeCol = $bel == 'pagets__ThreeCol' ? TRUE : FALSE;
 		}
 
-		switch ( $this->processedData['colAside'] ) {
+		switch ( $processedData['colAside'] ) {
 			 case 1:
-				$this->processedData['colMain'] = $threeCol ? 10 : 11;
+				$processedData['colMain'] = $threeCol ? 10 : 11;
 			break;
 			 case 2:
-				$this->processedData['colMain'] = $threeCol ? 8 : 10;
+				$processedData['colMain'] = $threeCol ? 8 : 10;
 			break;
 			 case 3:
-				$this->processedData['colMain'] = $threeCol ? 6 : 9;
+				$processedData['colMain'] = $threeCol ? 6 : 9;
 			break;
 			 case 4:
-				$this->processedData['colMain'] = $threeCol ? 4 : 8;
+				$processedData['colMain'] = $threeCol ? 4 : 8;
 			break;
 			 case 6:
-				$this->processedData['colMain'] = $threeCol ? 0 : 6;
+				$processedData['colMain'] = $threeCol ? 0 : 6;
 			break;
 				  default:
-				$this->processedData['colMain'] = 9;
+				$processedData['colMain'] = 9;
 		}
 
 		// grid breakpoint
-		$this->processedData['gridBreakpoint'] = $currentPage['tx_t3sbootstrap_breakpoint'] ?: 'md';
-
-		if ( $this->contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint'] ) {
-			if ( GeneralUtility::inList('sm,md,lg,xl', $this->contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint']) ) {
-				$this->processedData['gridBreakpoint'] = $this->contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint'];
+		$processedData['gridBreakpoint'] = $currentPage['tx_t3sbootstrap_breakpoint'] ?: 'md';
+		if ( $contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint'] ) {
+			if ( GeneralUtility::inList('sm,md,lg,xl', $contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint']) ) {
+				$processedData['gridBreakpoint'] = $contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint'];
 			} else {
-				$this->processedData['gridBreakpoint'] = $currentPage['tx_t3sbootstrap_breakpoint'] ?: 'md';
+				$processedData['gridBreakpoint'] = $currentPage['tx_t3sbootstrap_breakpoint'] ?: 'md';
 			}
 		}
 
 		/**
 		 * Language Navigation
 		 */
-
-		$site = $this->getCurrentSite();
+		$site = self::getCurrentSite();
 
 		foreach ($site->getLanguages() as $lang ) {
 			$langUid[$lang->getLanguageId()] = $lang->getLanguageId();
@@ -220,150 +132,153 @@ class ConfigProcessor implements DataProcessorInterface
 			$langFlag[$lang->getLanguageId()] = $lang->getFlagIdentifier();
 		}
 
-		$this->processedData['config']['lang']['uid'] = $langUid ?: '';
-		$this->processedData['config']['lang']['hreflang'] = $langHref ?: '';
-		$this->processedData['config']['lang']['title'] = $langTitle ?: '';
-		$this->processedData['config']['lang']['flag'] = $langFlag ?: '';
+		$processedData['config']['lang']['uid'] = $langUid ?: '';
+		$processedData['config']['lang']['hreflang'] = $langHref ?: '';
+		$processedData['config']['lang']['title'] = $langTitle ?: '';
+		$processedData['config']['lang']['flag'] = $langFlag ?: '';
 
 		/**
 		 * Meta Navigation
 		 */
-		if ( $processedRecordVariables['meta_enable'] ) {
-			$this->processedData['config']['meta']['align'] = $processedRecordVariables['meta_enable'];
-			$this->processedData['config']['meta']['container'] = $processedRecordVariables['meta_container'] ? ' '.$processedRecordVariables['meta_container'] : '';
-			$metaClass = $processedRecordVariables['meta_class'] ?: '';
-			$this->processedData['config']['meta']['class'] = ' '.trim($metaClass);
-			$this->processedData['config']['meta']['text'] = trim($processedRecordVariables['meta_text']);
+		if ( $processedRecordVariables['metaEnable'] ) {
+			$processedData['config']['meta']['align'] = $processedRecordVariables['metaEnable'];
+			$processedData['config']['meta']['container'] = $processedRecordVariables['metaContainer']
+			 ? ' '.$processedRecordVariables['metaContainer'] : '';
+			$metaClass = $processedRecordVariables['metaClass'] ?: '';
+			$processedData['config']['meta']['class'] = ' '.trim($metaClass);
+			$processedData['config']['meta']['text'] = trim($processedRecordVariables['metaText']);
 		}
 
 		/**
 		 * Navbar
 		 */
-		if ( $processedRecordVariables['navbar_enable'] ) {
-
-			switch ( $this->contentObjectConfiguration['settings.']['navbar.']['dropdownAnimate'] ) {
+		if ( $processedRecordVariables['navbarEnable'] ) {
+			switch ( $contentObjectConfiguration['settings.']['config.']['dropdownAnimate'] ) {
 				 case 1:
 				 	# & css
-					$this->processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-1 slideIn';
+					$processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-1 slideIn';
 				break;
 				 case 2:
-				 	# & inlineJS.ts - 19
-					$this->processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-2';
+				 	# & inlineJS
+					$processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-2';
 				break;
 				 case 3:
 				 	# & css
-					$this->processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-3';
+					$processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-3';
 				break;
 				 case 4:
 				 	# & css
-					$this->processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-4';
+					$processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-4';
 				break;
 					  default:
-					$this->processedData['config']['navbar']['dropdownAnimate'] = '';
+					$processedData['config']['navbar']['dropdownAnimate'] = '';
 			}
 
-			$this->processedData['config']['navbar']['enable'] = $processedRecordVariables['navbar_enable'];
-			$this->processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbar_sectionmenu'] ? ' section-menu' : '';
-			$this->processedData['config']['navbar']['brand'] = $processedRecordVariables['navbar_brand'];
+			$processedData['config']['navbar']['enable'] = $processedRecordVariables['navbarEnable'];
+			$processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbarSectionmenu'] ? ' section-menu' : '';
+			$processedData['config']['navbar']['brand'] = $processedRecordVariables['navbarBrand'];
 			if ( $frontendController->rootLine[1]['doktype'] == 4) {
-				$this->processedData['config']['navbar']['clickableparent'] = 1;
+				$processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
-				$this->processedData['config']['navbar']['clickableparent'] = $processedRecordVariables['navbar_clickableparent'];
+				$processedData['config']['navbar']['clickableparent'] = $processedRecordVariables['navbarClickableparent'];
 			}
-			$this->processedData['config']['navbar']['image'] = $processedRecordVariables['navbar_image']
-			? $processedRecordVariables['navbar_image']	: $this->contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
-			$this->processedData['config']['navbar']['toggler'] = $processedRecordVariables['navbar_toggler'];
+			$processedData['config']['navbar']['image'] = $processedRecordVariables['navbarImage']
+			? $processedRecordVariables['navbarImage']	: $contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
+			$processedData['config']['navbar']['toggler'] = $processedRecordVariables['navbarToggler'];
 
-			if ( $processedRecordVariables['navbar_container'] == 'none' ) {
-				$this->processedData['config']['navbar']['container'] = '';
+			if ( $processedRecordVariables['navbarContainer'] == 'none' ) {
+				$processedData['config']['navbar']['container'] = '';
 			} else {
-				if ( $processedRecordVariables['navbar_container'] == 'fluid' ) {
-					$this->processedData['config']['navbar']['container'] = 'container-fluid';
+				if ( $processedRecordVariables['navbarContainer'] == 'fluid' ) {
+					$processedData['config']['navbar']['container'] = 'container-fluid';
 				} else {
-					$this->processedData['config']['navbar']['containerposition'] = $processedRecordVariables['navbar_container'];
-					$this->processedData['config']['navbar']['container'] = 'container';
+					$processedData['config']['navbar']['containerposition'] = $processedRecordVariables['navbarContainer'];
+					$processedData['config']['navbar']['container'] = 'container';
 				}
 			}
-			$navbarClass = 'navbar-'.$processedRecordVariables['navbar_enable'];
-			$navbarClass .= $processedRecordVariables['navbar_breakpoint'] ? ' navbar-expand-'.$processedRecordVariables['navbar_breakpoint'] : ' navbar-expand-sm';
+			$navbarClass = 'navbar-'.$processedRecordVariables['navbarEnable'];
+			$navbarClass .= $processedRecordVariables['navbarBreakpoint']
+			 ? ' navbar-expand-'.$processedRecordVariables['navbarBreakpoint'] : ' navbar-expand-sm';
 			// navbar breakpoint
-			$this->processedData['navbarBreakpoint'] = $processedRecordVariables['navbar_breakpoint'] ?: 'md';
-			if ( $processedRecordVariables['navbar_placement'] == 'fixed-top' && $processedRecordVariables['navbar_shrinkcolor'] ) {
-				$navbarClass .= ' shrink py-'.$this->contentObjectConfiguration['settings.']['shrinkingNavPadding'];
+			$processedData['navbarBreakpoint'] = $processedRecordVariables['navbarBreakpoint'] ?: 'md';
+			if ( $processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
+				$navbarClass .= ' shrink py-'.$contentObjectConfiguration['settings.']['config.']['shrinkingNavPadding'];
 			}
-			$this->processedData['config']['navbar']['breakpoint'] = $processedRecordVariables['navbar_breakpoint'];
+			$processedData['config']['navbar']['breakpoint'] = $processedRecordVariables['navbarBreakpoint'];
 
-			$navbarClass .= $processedRecordVariables['navbar_class'] ? ' '.$processedRecordVariables['navbar_class'] : '';
+			$navbarClass .= $processedRecordVariables['navbarClass'] ? ' '.$processedRecordVariables['navbarClass'] : '';
 
-			if ( $processedRecordVariables['navbar_color'] == 'color' ) {
-				if ( $processedRecordVariables['navbar_background'] ) {
-					$navbarStyle = 'background-color: '.$processedRecordVariables['navbar_background'].';';
-					$this->processedData['config']['navbar']['style'] = $navbarStyle;
+			if ( $processedRecordVariables['navbarColor'] == 'color' ) {
+				if ( $processedRecordVariables['navbarBackground'] ) {
+					$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
+					$processedData['config']['navbar']['style'] = $navbarStyle;
 				} else {
-					$this->processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbar_shrinkcolorschemes'];
-					$this->processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbar_color'];
+					$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
+					$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
 				}
 			} else {
-				$navbarClass .= ' bg-'.$processedRecordVariables['navbar_color'];
-				$this->processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbar_shrinkcolorschemes'];
-				$this->processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbar_color'];
+				$navbarClass .= ' bg-'.$processedRecordVariables['navbarColor'];
+				$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
+				$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
 			}
 
-			if ( ($processedRecordVariables['navbar_placement'] == 'fixed-top' && $processedRecordVariables['navbar_shrinkcolor'])
-			 && ($processedRecordVariables['navbar_enable'] == 'light' || $processedRecordVariables['navbar_enable'] == 'dark') ) {
-				$this->processedData['config']['navbar']['shrinkColor'] = 'navbar-'.$processedRecordVariables['navbar_shrinkcolor'];
-				$this->processedData['config']['navbar']['color'] = 'navbar-'.$processedRecordVariables['navbar_enable'];
+			if ( ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'])
+			 && ($processedRecordVariables['navbarEnable'] == 'light' || $processedRecordVariables['navbarEnable'] == 'dark') ) {
+				$processedData['config']['navbar']['shrinkColor'] = 'navbar-'.$processedRecordVariables['navbarShrinkcolor'];
+				$processedData['config']['navbar']['color'] = 'navbar-'.$processedRecordVariables['navbarEnable'];
 			}
 
-			if ($processedRecordVariables['navbar_placement']) {
-				if ( $this->processedData['config']['navbar']['containerposition'] == 'outside' ) {
-					$this->processedData['config']['navbar']['container'] =
-					trim($this->processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbar_placement']);
+			if ($processedRecordVariables['navbarPlacement']) {
+				if ( $processedData['config']['navbar']['containerposition'] == 'outside' ) {
+					$processedData['config']['navbar']['container'] =
+					trim($processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbarPlacement']);
 				} else {
-					$navbarClass = $navbarClass.' '.$processedRecordVariables['navbar_placement'];
+					$navbarClass = $navbarClass.' '.$processedRecordVariables['navbarPlacement'];
 				}
 			}
 
-			$this->processedData['config']['navbar']['class'] = trim($navbarClass);
-			$dropdown = $processedRecordVariables['navbar_placement'] == 'fixed-bottom' ? 'dropup' : 'dropdown';
-			$this->processedData['config']['navbar']['dropdown'] = $dropdown;
-			$this->processedData['config']['navbar']['spacer'] = $processedRecordVariables['navbar_includespacer'];
-			$this->processedData['config']['navbar']['megamenu'] = $processedRecordVariables['navbar_megamenu'];
-			$this->processedData['config']['navbar']['placement'] = $processedRecordVariables['navbar_placement'];
-			$this->processedData['config']['navbar']['sticky'] = $processedRecordVariables['navbar_placement'] == 'sticky-top' ? TRUE : FALSE;
-			$this->processedData['config']['navbar']['alignment'] = $processedRecordVariables['navbar_alignment'];
-			$this->processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbar_alignment'] == 'right') ? ' ml-auto': '';
-			if ( $this->processorConfiguration['navbarExtraRow'] ) {
-				$this->processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbar_alignment'] == 'right') ? ' ml-auto': ' mr-auto';
+			$processedData['config']['navbar']['class'] = trim($navbarClass);
+			$dropdown = $processedRecordVariables['navbarPlacement'] == 'fixed-bottom' ? 'dropup' : 'dropdown';
+			$processedData['config']['navbar']['dropdown'] = $dropdown;
+
+			$processedData['config']['navbar']['spacer'] = $processedRecordVariables['navbarIncludespacer'];
+			$processedData['config']['navbar']['megamenu'] = $processedRecordVariables['navbarMegamenu'];
+			$processedData['config']['navbar']['placement'] = $processedRecordVariables['navbarPlacement'];
+			$processedData['config']['navbar']['sticky'] = $processedRecordVariables['navbarPlacement'] == 'sticky-top' ? TRUE : FALSE;
+			$processedData['config']['navbar']['alignment'] = $processedRecordVariables['navbarAlignment'];
+			$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] == 'right') ? ' ml-auto': '';
+
+			if ( $processedRecordVariables['navbarExtraRow'] ) {
+				$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] == 'right') ? ' ml-auto': ' mr-auto';
 			}
-			$this->processedData['config']['navbar']['justify'] = $processedRecordVariables['navbar_justify'] ? ' nav-fill w-100' : '';
-			$this->processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbar_offcanvas'];
-			if ( $processedRecordVariables['navbar_searchbox'] ) {
-				$this->processedData['config']['navbar']['searchbox'] = $processedRecordVariables['navbar_searchbox'];
-				$this->processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbar_enable'] == 'light' ? 'dark' : 'light';
+			$processedData['config']['navbar']['justify'] = $processedRecordVariables['navbarJustify'] ? ' nav-fill w-100' : '';
+			$processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbarOffcanvas'];
+			if ( $processedRecordVariables['navbarSearchbox'] ) {
+				$processedData['config']['navbar']['searchbox'] = $processedRecordVariables['navbarSearchbox'];
+				$processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbarEnable'] == 'light' ? 'dark' : 'light';
 			}
 		}
 
 		/**
 		 * Jumbotron
 		 */
-		if ( $processedRecordVariables['jumbotron_enable'] ) {
-			$this->processedData['config']['jumbotron']['enable'] = $processedRecordVariables['jumbotron_enable'];
-			$this->processedData['config']['jumbotron']['fluid'] = $processedRecordVariables['jumbotron_fluid'];
-			$this->processedData['config']['jumbotron']['slide'] = $processedRecordVariables['jumbotron_slide'];
-			$this->processedData['config']['jumbotron']['position'] = $processedRecordVariables['jumbotron_position'];
-			$this->processedData['config']['jumbotron']['container'] = $processedRecordVariables['jumbotron_container'];
-			$this->processedData['config']['jumbotron']['containerposition'] = $processedRecordVariables['jumbotron_containerposition'];
+		if ( $processedRecordVariables['jumbotronEnable'] ) {
+			$processedData['config']['jumbotron']['enable'] = $processedRecordVariables['jumbotronEnable'];
+			$processedData['config']['jumbotron']['fluid'] = $processedRecordVariables['jumbotronFluid'];
+			$processedData['config']['jumbotron']['slide'] = $processedRecordVariables['jumbotronSlide'];
+			$processedData['config']['jumbotron']['position'] = $processedRecordVariables['jumbotronPosition'];
+			$processedData['config']['jumbotron']['container'] = $processedRecordVariables['jumbotronContainer'];
+			$processedData['config']['jumbotron']['containerposition'] = $processedRecordVariables['jumbotronContainerposition'];
 
-			$jumbotronClass = $processedRecordVariables['jumbotron_class'] ?: '';
-			$jumbotronClass .= $processedRecordVariables['jumbotron_fluid'] ? ' jumbotron-fluid' : '';
-			$this->processedData['config']['jumbotron']['class'] = ' '.trim($jumbotronClass);
+			$jumbotronClass = $processedRecordVariables['jumbotronClass'] ?: '';
+			$jumbotronClass .= $processedRecordVariables['jumbotronFluid'] ? ' jumbotron-fluid' : '';
+			$processedData['config']['jumbotron']['class'] = ' '.trim($jumbotronClass);
 
 			# Image from pages media
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = [];
 
-			if ( $processedRecordVariables['jumbotron_bgimage'] == 'root' ) {
+			if ( $processedRecordVariables['jumbotronBgimage'] == 'root' ) {
 				// slide in rootline
 				foreach ($frontendController->rootLine as $page) {
 					$fileObjects = $fileRepository->findByRelation('pages', 'media', $page['uid']);
@@ -372,36 +287,38 @@ class ConfigProcessor implements DataProcessorInterface
 				}
 				if ( count($fileObjects) > 1 ) {
 					// slider
-					$this->processedData['bgSlides'] =
-					 $this->getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+					$processedData['bgSlides'] =
+					 self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
 				} else {
 					// background image
-					$this->processedData['config']['jumbotron']['bgImage'] =
-					 $this->getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, $this->processedData['data']['uid'], $webp);
+					$processedData['config']['jumbotron']['bgImage'] =
+					 self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, $processedData['data']['uid'], $webp);
 				}
 
-			} elseif ( $processedRecordVariables['jumbotron_bgimage'] == 'page' ) {
+			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				if ( count($fileObjects) > 1 ) {
 					// slider
-					$this->processedData['bgSlides'] =
-					 $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+					$processedData['bgSlides'] =
+					 self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
 				} else {
 					// background image
-				$this->processedData['config']['jumbotron']['bgImage'] =
-				 $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+				$processedData['config']['jumbotron']['bgImage'] =
+				 self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
 				}
 			}
 		}
 
+
 		/**
 		 * Background Image (body)
 		 */
-		if ( $this->contentObjectConfiguration['settings.']['backgroundImageEnable'] ) {
-			$bgImage = $this->getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
-			if ( empty($bgImage) && $this->contentObjectConfiguration['settings.']['backgroundImageSlide'] ) {
+		if ( $contentObjectConfiguration['settings.']['config.']['backgroundImageEnable'] ) {
+			$bgImage = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
+			if ( empty($bgImage) && $contentObjectConfiguration['settings.']['config.']['backgroundImageSlide'] ) {
 				foreach ($frontendController->rootLine as $page) {
-					$bgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id, $webp);
+					$bgImage = self::getBackgroundImageUtility()
+					->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id, $webp);
 					if ($bgImage) break;
 				}
 			}
@@ -410,75 +327,94 @@ class ConfigProcessor implements DataProcessorInterface
 		/**
 		 * Breadcrumb
 		 */
-		$this->processedData['config']['breadcrumb']['class'] = '';
-		if ( $processedRecordVariables['breadcrumb_enable'] || $processedRecordVariables['breadcrumb_bottom'] ) {
-			if ( ($processedRecordVariables['homepage_uid'] == $frontendController->id) && $processedRecordVariables['breadcrumb_notonrootpage'] ) {
-				$this->processedData['config']['breadcrumb']['enable'] = FALSE;
-				$this->processedData['config']['breadcrumb']['bottom'] = FALSE;
+		$processedData['config']['breadcrumb']['class'] = '';
+		if ( $processedRecordVariables['breadcrumbEnable'] || $processedRecordVariables['breadcrumbBottom'] ) {
+			if ( ($processedRecordVariables['homepageUid'] == $frontendController->id) && $processedRecordVariables['breadcrumbNotonrootpage'] ) {
+				$processedData['config']['breadcrumb']['enable'] = FALSE;
+				$processedData['config']['breadcrumb']['bottom'] = FALSE;
 			} else {
-				$this->processedData['config']['breadcrumb']['enable'] = $processedRecordVariables['breadcrumb_enable'];
-				$this->processedData['config']['breadcrumb']['bottom'] = $processedRecordVariables['breadcrumb_bottom'];
-				$this->processedData['config']['breadcrumb']['faicon'] = $processedRecordVariables['breadcrumb_faicon'];
-				$this->processedData['config']['breadcrumb']['position'] = $processedRecordVariables['breadcrumb_position'];
-				$this->processedData['config']['breadcrumb']['container'] = $processedRecordVariables['breadcrumb_container'];
-				$this->processedData['config']['breadcrumb']['containerposition'] = $processedRecordVariables['breadcrumb_containerposition'];
-				$this->processedData['config']['breadcrumb']['class'] .= $processedRecordVariables['breadcrumb_class']
-				? ' '.$processedRecordVariables['breadcrumb_class'] : '';
-				$this->processedData['config']['breadcrumb']['ol-class'] = $processedRecordVariables['breadcrumb_corner'] ? ' rounded-0': '';
+				$processedData['config']['breadcrumb']['enable'] = $processedRecordVariables['breadcrumbEnable'];
+				$processedData['config']['breadcrumb']['bottom'] = $processedRecordVariables['breadcrumbBottom'];
+				$processedData['config']['breadcrumb']['faicon'] = $processedRecordVariables['breadcrumbFaicon'];
+				$processedData['config']['breadcrumb']['position'] = $processedRecordVariables['breadcrumbPosition'];
+				$processedData['config']['breadcrumb']['container'] = $processedRecordVariables['breadcrumbContainer'];
+				$processedData['config']['breadcrumb']['containerposition'] = $processedRecordVariables['breadcrumbContainerposition'];
+				$processedData['config']['breadcrumb']['class'] .= $processedRecordVariables['breadcrumbClass']
+				? ' '.$processedRecordVariables['breadcrumbClass'] : '';
+				$processedData['config']['breadcrumb']['ol-class'] = $processedRecordVariables['breadcrumbCorner'] ? ' rounded-0': '';
 			}
 		}
 
 		/**
 		 * Sidebar / submenu
 		 */
-		if ( $processedRecordVariables['sidebar_enable'] ) {
-			$this->processedData['config']['sidebar']['left'] = $processedRecordVariables['sidebar_enable'];
+		if ( $processedRecordVariables['sidebarEnable'] ) {
+			$processedData['config']['sidebar']['left'] = $processedRecordVariables['sidebarEnable'];
 		}
-		if ( $processedRecordVariables['sidebar_rightenable'] ) {
-			$this->processedData['config']['sidebar']['right'] = $processedRecordVariables['sidebar_rightenable'];
+		if ( $processedRecordVariables['sidebarRightenable'] ) {
+			$processedData['config']['sidebar']['right'] = $processedRecordVariables['sidebarRightenable'];
 		}
 
 		/**
 		 * Footer
 		 */
-		if ( $processedRecordVariables['footer_enable'] ) {
+		if ( $processedRecordVariables['footerEnable'] ) {
 
-			$this->processedData['config']['footer']['enable'] = $processedRecordVariables['footer_enable'];
-			$this->processedData['config']['footer']['sticky'] = $processedRecordVariables['footer_sticky'];
-			$this->processedData['config']['footer']['fluid'] = $processedRecordVariables['footer_fluid'];
-			$this->processedData['config']['footer']['slide'] = $processedRecordVariables['footer_slide'];
-			$this->processedData['config']['footer']['container'] = $processedRecordVariables['footer_container'];
-			$this->processedData['config']['footer']['containerposition'] = $processedRecordVariables['footer_containerposition'];
+			$processedData['config']['footer']['enable'] = $processedRecordVariables['footerEnable'];
+			$processedData['config']['footer']['sticky'] = $processedRecordVariables['footerSticky'];
+			$processedData['config']['footer']['fluid'] = $processedRecordVariables['footerFluid'];
+			$processedData['config']['footer']['slide'] = $processedRecordVariables['footerSlide'];
+			$processedData['config']['footer']['container'] = $processedRecordVariables['footerContainer'];
+			$processedData['config']['footer']['containerposition'] = $processedRecordVariables['footerContainerposition'];
 
-			$footerClass = $processedRecordVariables['footer_class'] ?: '';
-			$footerClass .= $processedRecordVariables['footer_fluid'] ? ' jumbotron-fluid' : '';
-			$footerClass .= $processedRecordVariables['footer_sticky'] ? ' footer-sticky' : '';
-			$this->processedData['config']['footer']['class'] = trim($footerClass);
+			$footerClass = $processedRecordVariables['footerClass'] ?: '';
+			$footerClass .= $processedRecordVariables['footerFluid'] ? ' jumbotron-fluid' : '';
+			$footerClass .= $processedRecordVariables['footerSticky'] ? ' footer-sticky' : '';
+			$processedData['config']['footer']['class'] = trim($footerClass);
 		}
 
 		/**
 		 * Expandedcontent Top & Bottom
 		 */
-		if ( $processedRecordVariables['expandedcontent_enabletop'] ) {
-			$this->processedData['config']['expandedcontentTop']['enable'] = $processedRecordVariables['expandedcontent_enabletop'];
-			$this->processedData['config']['expandedcontentTop']['slide'] = $processedRecordVariables['expandedcontent_slidetop'];
-			$this->processedData['config']['expandedcontentTop']['container'] = $processedRecordVariables['expandedcontent_containertop'];
-			$this->processedData['config']['expandedcontentTop']['containerposition'] = $processedRecordVariables['expandedcontent_containerpositiontop'];
-			$this->processedData['config']['expandedcontentTop']['class'] = $processedRecordVariables['expandedcontent_classtop'];
+		if ( $processedRecordVariables['expandedcontentEnabletop'] ) {
+			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+			$numberOfTop = $queryBuilder
+				->count('uid')
+				->from('tt_content')
+				->where(
+					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, \PDO::PARAM_INT))
+				)
+			->execute()
+			->fetchColumn();
+			$processedData['config']['expandedcontentTop']['enable'] = $numberOfTop ? $processedRecordVariables['expandedcontentEnabletop'] : 0;
+			$processedData['config']['expandedcontentTop']['slide'] = $processedRecordVariables['expandedcontentSlidetop'];
+			$processedData['config']['expandedcontentTop']['container'] = $processedRecordVariables['expandedcontentContainertop'];
+			$processedData['config']['expandedcontentTop']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositiontop'];
+			$processedData['config']['expandedcontentTop']['class'] = trim($processedRecordVariables['expandedcontentClasstop']);
 		}
-		if ( $processedRecordVariables['expandedcontent_enablebottom'] ) {
-			$this->processedData['config']['expandedcontentBottom']['enable'] = $processedRecordVariables['expandedcontent_enablebottom'];
-			$this->processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontent_slidebottom'];
-			$this->processedData['config']['expandedcontentBottom']['container'] = $processedRecordVariables['expandedcontent_containerbottom'];
-			$this->processedData['config']['expandedcontentBottom']['containerposition'] = $processedRecordVariables['expandedcontent_containerpositionbottom'];
-			$this->processedData['config']['expandedcontentBottom']['class'] = $processedRecordVariables['expandedcontent_classbottom'];
+		if ( $processedRecordVariables['expandedcontentEnablebottom'] ) {
+			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+			$numberOfBottom = $queryBuilder
+				->count('uid')
+				->from('tt_content')
+				->where(
+					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, \PDO::PARAM_INT))
+				)
+			->execute()
+			->fetchColumn();
+			$processedData['config']['expandedcontentBottom']['enable'] = $numberOfBottom ? $processedRecordVariables['expandedcontentEnablebottom'] : 0;
+			$processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontentSlidebottom'];
+			$processedData['config']['expandedcontentBottom']['container'] = $processedRecordVariables['expandedcontentContainerbottom'];
+			$processedData['config']['expandedcontentBottom']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositionbottom'];
+			$processedData['config']['expandedcontentBottom']['class'] = trim($processedRecordVariables['expandedcontentClassbottom']);
 		}
 
-		if (!$this->processorConfiguration['disableDefaultCss']) {
-			self::includeRequiredFiles($processedRecordVariables, $webp);
-		}
+		// used for js-conditions
+		$processedData['winWidth'] = (int)$processorConfiguration['breakpoint.'][$processedRecordVariables['navbarBreakpoint']];
 
-		return $this->processedData;
+		return $processedData;
 	}
 
 
@@ -490,7 +426,7 @@ class ConfigProcessor implements DataProcessorInterface
 	protected function getCurrentSite(): SiteInterface
 	{
 		$matcher = GeneralUtility::makeInstance(SiteMatcher::class);
-		return $matcher->matchByPageId((int)$this->getFrontendController()->id);
+		return $matcher->matchByPageId((int)self::getFrontendController()->id);
 	}
 
 
@@ -499,7 +435,7 @@ class ConfigProcessor implements DataProcessorInterface
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController()
+	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}
@@ -510,196 +446,9 @@ class ConfigProcessor implements DataProcessorInterface
 	 *
 	 * @return BackgroundImageUtility
 	 */
-	protected function getBackgroundImageUtility()
+	protected function getBackgroundImageUtility(): BackgroundImageUtility
 	{
 		return GeneralUtility::makeInstance(BackgroundImageUtility::class);
-	}
-
-
-	/**
-	 * Load required css and js files
-	 *
-	 * @param array $processedRecordVariables
-	 * @param bool $webp
-	 *
-	 * @return void
-	 */
-	private function includeRequiredFiles($processedRecordVariables, $webp) {
-
-		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-		$frontendController = self::getFrontendController();
-		$css = '';
-		$js = '';
-
-
-		##########################################################################################################
-		#
-		# Offcanvas Navbar
-		#
-		##########################################################################################################
-		// offcanvasNavbar.css
-		if ( $processedRecordVariables['navbar_offcanvas'] ) {
-
-			$cssFile = 'EXT:t3sbootstrap/Resources/Public/Styles/offcanvasNavbar.css';
-			$cssPath = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
-			$style = GeneralUtility::getURL($cssPath);
-
-			switch ($processedRecordVariables['navbar_breakpoint']) {
-				   case 'sm':
-					$css .= '
-/*!
- * offcanvasNavbar.css
- */
-@media (max-width:575px){'.$style.'}';
-						break;
-				   case 'md':
-					$css .= '
-/*!
- * offcanvasNavbar.css
- */
-@media (max-width:767px){'.$style.'}';
-						break;
-				   case 'lg':
-					$css .= '
-/*!
- * offcanvasNavbar.css
- */
-@media (max-width:991px){'.$style.'}';
-						break;
-				   case 'xl':
-					$css .= '
-/*!
- * offcanvasNavbar.css
- */
-@media (max-width:1199px){'.$style.'}';
-						break;
-				   case 'no':
-					$css .= '
-/*!
- * offcanvasNavbar.css
- */'
-.$style;
-						break;
-			}
-		}
-
-		##########################################################################################################
-		#
-		# Sticky Footer
-		#
-		##########################################################################################################
-		if ( $processedRecordVariables['footer_sticky'] ) {
-			$css .= '
-/*!
- * sticky footer
- */
-html{position:relative;min-height:100%}#page-footer{position:absolute;bottom:0;width:100%}
-';
-		}
-
-		##########################################################################################################
-		#
-		# Navbar Slide
-		#
-		##########################################################################################################
-		if ( $this->processedData['config']['navbar']['enable'] == 'slide' ) {
-			$cssFile = 'EXT:t3sbootstrap/Resources/Public/Styles/slideNavbar.css';
-			$cssPath = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
-			$css .= GeneralUtility::getURL($cssPath);
-			$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Scripts/slideNavbar.js';
-			$jsFooterPath = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
-			$js .= GeneralUtility::getURL($jsFooterPath);
-		}
-
-		##########################################################################################################
-		#
-		# Mega Menu
-		#
-		##########################################################################################################
-		if ( $processedRecordVariables['navbar_megamenu'] ) {
-			$cssFile = 'EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css';
-			$cssPath = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
-			$css .= GeneralUtility::getURL($cssPath);
-		}
-
-		##########################################################################################################
-		#
-		# t3sbootstrap default
-		#
-		##########################################################################################################
-		$cssFile = 'EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css';
-		$cssPath = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
-		$css .= GeneralUtility::getURL($cssPath);
-
-		// write required files
-		if ($css) {
-			$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-			$customFileName = 't3sbProject.css';
-			self::writeCustomFile($customPath, $customFileName, $css);
-		}
-		if ($js) {
-			$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-			$customFileName = 't3sbProject.js';
-			self::writeCustomFile($customPath, $customFileName, $js);
-		}
-
-
-		// include required files to fileadmin
-		if ($css) {
-			$projectCSS = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize(
-				'/fileadmin/T3SB/Resources/Public/CSS/t3sbProject.css');
-			$pageRenderer->addCssFile($projectCSS);
-		}
-		if ($js) {
-			$projectJS = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize(
-				'/fileadmin/T3SB/Resources/Public/JS/t3sbProject.js');
-			$pageRenderer->addJsFooterFile($projectJS);
-		}
-		if ( $webp ) {
-			$jsModernizr = 'EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js';
-			$jsModernizr = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsModernizr);
-			$pageRenderer->addJsFooterFile($jsModernizr);
-		}
-	}
-
-
-	/**
-	 * Write a custom css-file
-	 *
-	 * @param string $customPath
-	 * @param string $customFileName
-	 * @param string $customContent
-	 *
-	 * @return void
-	 */
-	private function writeCustomFile($customPath, $customFileName, $customContent ) {
-
-		if ($customContent) {
-
-			$customFile = $customPath.$customFileName;
-
-			if (file_exists($customFile)) {
-
-				$customFileLength = strlen(file_get_contents($customFile));
-				$contentLength = strlen(trim($customContent));
-
-				if ($customFileLength != $contentLength) {
-					unlink($customFile);
-					GeneralUtility::writeFile($customFile, trim($customContent));
-				}
-
-			} else {
-
-				if (!is_dir($customPath)) {
-					mkdir($customPath, 0777, true);
-				}
-
-				GeneralUtility::writeFile($customFile, trim($customContent));
-
-			}
-		}
 	}
 
 

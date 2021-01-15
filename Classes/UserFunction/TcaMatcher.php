@@ -1,25 +1,19 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\UserFunction;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Service\FlexFormService;
-
 use TYPO3\CMS\Core\Resource\FileRepository;
-
 
 /**
  * ConfigController
@@ -30,14 +24,13 @@ class TcaMatcher
 	/**
 	 * autoLayoutParent
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function autoLayoutParent($arguments)
+	public function autoLayoutParent($arguments): bool
 	{
-
 		$parent = false;
-		if ( $arguments['record']['tx_gridelements_container'][0] ) {
-			$uid = (int)$arguments['record']['tx_gridelements_container'][0];
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
 				  ->select('*')
@@ -46,8 +39,9 @@ class TcaMatcher
 					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
 				  )
 				  ->execute();
-			$parent_rec = $result->fetchAll();
-			if ( $parent_rec[0]['tx_gridelements_backend_layout'] == 'autoLayout_row' ) {
+			$parent_rec = $result->fetch();
+
+			if ( $parent_rec['CType'] == 'autoLayout_row' ) {
 				$parent = true;
 			}
 		}
@@ -58,9 +52,9 @@ class TcaMatcher
 	/**
 	 * container_1 ($_EXTCONF['container'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function container_1($arguments)
+	public function container_1($arguments): bool
 	{
 		return true;
 	}
@@ -68,23 +62,19 @@ class TcaMatcher
 	/**
 	 * container_0 ($_EXTCONF['container'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function container_0($arguments)
+	public function container_0($arguments): bool
 	{
-		if ($arguments['record']['tx_gridelements_backend_layout'][0] == 'container') {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	/**
 	 * spacing_1 ($_EXTCONF['spacing'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function spacing_1($arguments)
+	public function spacing_1($arguments): bool
 	{
 		return true;
 	}
@@ -92,9 +82,9 @@ class TcaMatcher
 	/**
 	 * ratio ($_EXTCONF['ratio'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function ratio_0($arguments)
+	public function ratio_0($arguments): bool
 	{
 		return false;
 	}
@@ -103,9 +93,9 @@ class TcaMatcher
 	/**
 	 * ratio ($_EXTCONF['ratio'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function ratio_1($arguments)
+	public function ratio_1($arguments): bool
 	{
 		return true;
 	}
@@ -114,9 +104,9 @@ class TcaMatcher
 	/**
 	 * spacing_0 ($_EXTCONF['spacing'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function spacing_0($arguments)
+	public function spacing_0($arguments): bool
 	{
 		return false;
 	}
@@ -124,27 +114,23 @@ class TcaMatcher
 	/**
 	 * color_1 ($_EXTCONF['color'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function color_1($arguments)
+	public function color_1($arguments): bool
 	{
-
-		if ( $arguments['record']['tx_gridelements_backend_layout'][0] == 'parallax_wrapper' ) {
-
+		if ( $arguments['record']['CType'][0] == 'parallax_wrapper' ) {
 				return false;
 		} else {
-
 				return true;
 		}
-
 	}
 
 	/**
 	 * color_0 ($_EXTCONF['color'] in tt_content.php)
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function color_0($arguments)
+	public function color_0($arguments): bool
 	{
 		return false;
 	}
@@ -152,15 +138,16 @@ class TcaMatcher
 	/**
 	 * is child of flex-container
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function flexContainerParent($arguments)
+	public function flexContainerParent($arguments): bool
 	{
 		$parent = false;
 
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-		if ( $arguments['record']['tx_gridelements_container'][0] ) {
-			$uid = (int)$arguments['record']['tx_gridelements_container'][0];
+
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
 				  ->select('*')
@@ -169,9 +156,10 @@ class TcaMatcher
 					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
 				  )
 				  ->execute();
-			$parent_rec = $result->fetchAll();
-			$flexconf = $flexformService->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
-			if ( $parent_rec[0]['tx_gridelements_backend_layout'] == 'container' && $flexconf['flexContainer'] ) {
+			$parent_rec = $result->fetch();
+			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
+
+			if ( $parent_rec['CType'] == 'container' && $parent_flexconf['flexContainer'] ) {
 				$parent = true;
 			}
 		}
@@ -181,50 +169,20 @@ class TcaMatcher
 
 
 	/**
-	 * is carouselRatioParent
-	 *
-	 * @return void
-	 */
-	public function carouselRatioParent($arguments)
-	{
-		$parent = false;
-		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-
-		if ( $arguments['record']['tx_gridelements_container'][0] ) {
-			$uid = (int)$arguments['record']['tx_gridelements_container'][0];
-			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
-			$result = $queryBuilder
-				  ->select('*')
-				  ->from('tt_content')
-				  ->where(
-					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
-				  )
-				  ->execute();
-			$parent_rec = $result->fetchAll();
-
-			$flexconf = $flexformService->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
-
-			$parent = $flexconf['ratio'] ? true : false;
-		}
-
-		return $parent;
-	}
-
-
-	/**
 	 * isButton
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function isButton($arguments)
+	public function isButton($arguments): bool
 	{
 		$button = false;
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-		if ( $arguments['record']['tx_gridelements_container'][0] ) {
-			$uid = (int)$arguments['record']['tx_gridelements_container'][0];
+
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
-				  ->select('*')
+				  ->select('tx_t3sbootstrap_flexform')
 				  ->from('tt_content')
 				  ->where(
 					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
@@ -243,13 +201,15 @@ class TcaMatcher
 	/**
 	 * isMenu
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function isMenu($arguments)
+	public function isMenu($arguments): bool
 	{
 		$menu = false;
-		if ( substr($arguments['record']['CType'][0], 0, 4) == 'menu' ) {
-			$menu = true;
+		if ($arguments['record']['CType'][0]) {
+			if ( substr($arguments['record']['CType'][0], 0, 4) == 'menu' ) {
+				$menu = true;
+			}
 		}
 
 		return $menu;
@@ -258,18 +218,14 @@ class TcaMatcher
 	/**
 	 * animateCss
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function animateCss($arguments)
+	public function animateCss($arguments): bool
 	{
 		$animateCss = false;
-
 		$extconf = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
-
 		if ( $extconf['animateCss'] ) {
-
 			$animateCss = true;
-
 		}
 
 		return $animateCss;
@@ -278,9 +234,9 @@ class TcaMatcher
 	/**
 	 * isYoutube
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function isYoutube($arguments)
+	public function isYoutube($arguments): bool
 	{
 		$youtube = false;
 
@@ -304,9 +260,9 @@ class TcaMatcher
 	/**
 	 * isLocalVideo
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function isLocalVideo($arguments)
+	public function isLocalVideo($arguments): bool
 	{
 		$video = false;
 
@@ -334,9 +290,9 @@ class TcaMatcher
 	/**
 	 * isNoMedia
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function isNoMedia($arguments)
+	public function isNoMedia($arguments): bool
 	{
 		$media = false;
 
@@ -361,9 +317,9 @@ class TcaMatcher
 	/**
 	 * isImage
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function isImage($arguments)
+	public function isImage($arguments): bool
 	{
 		$image = false;
 
@@ -372,9 +328,6 @@ class TcaMatcher
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
 			$file = $fileObjects[0] ? $fileObjects[0] : FALSE;
-
-
-
 			if ($file) {
 				if ( $file->getType() === 2 && !$file->getProperties()['hidden'] ) {
 					$image = true;

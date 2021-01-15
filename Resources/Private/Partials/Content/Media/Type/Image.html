@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && {file.link} && ({file.description} || {file.title})">
+<f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && ({file.description} || {file.title})">
 	<f:then>
 		<f:render partial="Media/Effects" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio}" />
 	</f:then>
@@ -35,13 +35,16 @@
 				</f:else>
 			</f:if>
 			<f:comment> Copyright notice && !{celink} </f:comment>
-			<f:if condition="{settings.imgCopyright} == 2 && !{celink}">
-				<f:then>
-					<f:render section="CopyrightOnClick" arguments="{_all}" />
-				</f:then>
-				<f:else>
-					<f:render section="Copyright" arguments="{_all}" />
-				</f:else>
+			<f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
+				<f:if condition="{settings.imgCopyright} == 2 && !{celink}">
+					<f:then>
+						<f:render section="ImgcopyrightAssetScripts" arguments="{_all}" />
+						<f:render section="CopyrightOnClick" arguments="{_all}" />
+					</f:then>
+					<f:else>
+						<f:render section="Copyright" arguments="{_all}" />
+					</f:else>
+				</f:if>
 			</f:if>
 			<f:comment> Description </f:comment>
 			<f:if condition="{file.description}">
@@ -79,6 +82,7 @@
 			</f:if>
 		</div>
 	</div>
+
 </f:if>
 </f:section>
 
@@ -88,4 +92,21 @@
 		<span class="copyright">&copy;</span> <span class="copyright-note">{file.properties.tx_t3sbootstrap_copyright}</span>
 	</span>
 </f:if>
+</f:section>
+
+<f:section name="ImgcopyrightAssetScripts">
+<f:asset.script identifier="imgcopyright">
+	// Image copyright on click - Media/Type/Image.html
+	$(".image .toast").removeClass("show").addClass("hide");
+	$(".img-copyright").on("click", function() {
+		$(this).addClass("d-none");
+		var iw = $(this).parent().find("img").width();
+		var th = $(this).parent().find(".toast").outerHeight();
+		$(this).parent().find(".toast").css('max-width', iw+'px').toast('show');
+		$(this).parent().find(".toast").css('margin-top', -th+'px').toast('show');
+	});
+	$(".close").on("click", function() {
+		$(this).parent().parent().prev().removeClass("d-none");
+	});
+</f:asset.script>
 </f:section>

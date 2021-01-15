@@ -9,8 +9,8 @@
 				<el>
 					<shift>
 						<TCEforms>
-							<label>Vertical shift in % ( 0 = center )</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->carouselRatioParent</displayCond>
+							<label>Vertical shift in % ( 0 = center )</label>							
+							<displayCond>FIELD:parentRec.tx_t3sbootstrap_flexform:REQ:true</displayCond>
 							<config>
 								<type>input</type>
 								<size>5</size>

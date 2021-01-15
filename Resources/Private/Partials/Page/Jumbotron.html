@@ -2,6 +2,7 @@
 <f:if condition="{config.jumbotron.enable}">
 	<f:if condition="{bgSlides -> f:count()} > 1">
 		<f:then>
+			<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
 			<f:if condition="{config.jumbotron.containerposition} == 'Outside'">
 				<f:then>
 					<div class="{config.jumbotron.container}">
@@ -30,7 +31,6 @@
 
 <f:section name="Default">
 	<f:render section="Div" arguments="{_all}" />
-		<f:format.raw>{headerslider}</f:format.raw>
 		<f:render section="Content" arguments="{_all}" />
 	</div>
 </f:section>
@@ -38,7 +38,6 @@
 <f:section name="Inside">
 	<f:render section="Div" arguments="{_all}" />
 		<div class="{config.jumbotron.container}">
-			<f:format.raw>{headerslider}</f:format.raw>
 			<f:render section="Content" arguments="{_all}" />
 		</div>
 	</div>
@@ -47,7 +46,6 @@
 <f:section name="Outside">
 	<div class="{config.jumbotron.container}">
 		<f:render section="Div" arguments="{_all}" />
-			<f:format.raw>{headerslider}</f:format.raw>
 			<f:render section="Content" arguments="{_all}" />
 		</div>
 	</div>
@@ -78,21 +76,18 @@
 	</f:if>
 </f:section>
 
-
 <f:section name="JumboBgSlider">
 <div id="background-carousel" class="jumbotron p-0{config.jumbotron.class}" >
-	<div id="carouselJumbotronIndicators" class="carousel slide" data-ride="carousel" data-interval="{settings.carousel.interval}" data-pause="{settings.carousel.pause}" >
+	<div id="carouselJumbotronIndicators" class="carousel slide" data-ride="carousel" data-interval="{settings.config.jumbotronCarouselInterval}" data-pause="{settings.config.jumbotronCarouselPause}" >
 		<div id="content-wrapper" class="d-flex">
 			<f:if condition="{config.jumbotron.containerposition} == 'Inside'">
 				<f:then>
 					<div class="{config.jumbotron.container} align-self-center">
-						<f:format.raw>{headerslider}</f:format.raw>
 						<f:render section="Content" arguments="{_all}" />
 					</div>
 				</f:then>
 				<f:else>
 					<div class="align-self-center">
-						<f:format.raw>{headerslider}</f:format.raw>
 						<f:render section="Content" arguments="{_all}" />
 					</div>
 				</f:else>

@@ -1,27 +1,26 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Helper;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
+
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Page\AssetCollector;
 
 class WrapperHelper implements SingletonInterface
 {
@@ -35,12 +34,13 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null, $webp=FALSE)
+	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null, $webp=FALSE): array
 	{
 		// autoheight
 		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
-
-		$file = self::getFile((int)$processedData['data']['uid']);
+		$processedData['addHeight'] = $flexconf['addHeight'];
+		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 
 		// media
 		if ( $file ) {
@@ -92,20 +92,33 @@ class WrapperHelper implements SingletonInterface
 					}
 
 					if ( $flexconf['bgHeight'] ) {
-					$inlineJS = 'jQuery(function(){
-						jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) { $(\'body\').addClass(\'video-loaded\');}});'.$addFilters.'
-						jQuery(\'.player'.$processedData['data']['uid'].'\').css("padding-bottom", "'.$pH.'%")
-					});';
+					$inlineJS = '
+// Background-video-'.$processedData['data']['uid'].'
+$(document).ready(function(){
+	jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) {
+		$(\'body\').addClass(\'video-loaded\');
+	}});'.$addFilters.'
+	jQuery(\'.player'.$processedData['data']['uid'].'\').css("padding-bottom", "'.$pH.'%")
+});';
 					} else {
 
-					$inlineJS = 'jQuery(function(){
-						jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) { $(\'body\').addClass(\'video-loaded\');}});'.$addFilters.'
-					});';
+					$inlineJS = '
+$(document).ready(function(){
+	jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) {
+		$(\'body\').addClass(\'video-loaded\');
+	}});'.
+	$addFilters.'
+});';
 					}
-					$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-					$pageRenderer->addCssFile($cssFile);
-					$pageRenderer->addJsFooterFile($jsFooterFile);
-					$pageRenderer->addJsFooterInlineCode(' Background-video ',$inlineJS,'FALSE');
+					if ($cssFile)
+					GeneralUtility::makeInstance(AssetCollector::class)
+						->addStyleSheet('ytplayercss', $cssFile,[],['priority' => true]);
+					if ($jsFooterFile)
+					GeneralUtility::makeInstance(AssetCollector::class)
+						->addJavaScript('ytplayerjs', $jsFooterFile);
+					if ($inlineJS)
+					GeneralUtility::makeInstance(AssetCollector::class)
+						->addInlineJavaScript('background-video-'.$processedData['data']['uid'], $inlineJS);
 
 					$events = $flexconf;
 					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
@@ -125,54 +138,60 @@ class WrapperHelper implements SingletonInterface
 						$processedData['alignItem'] = $flexconf['alignVideoItem'] != 'none' ? ' '.$flexconf['alignVideoItem'] :'';
 						// aspect ratio
 						$processedData['aspectRatio'] = $flexconf['aspectRatio'];
-
 						// prepare needed javascript
-						$overlayChild = count($processedData['data']['tx_gridelements_view_children']);
+						$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+						$overlayChild = $queryBuilder
+							 ->count('uid')
+							 ->from('tt_content')
+							 ->where(
+								$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+								 )
+							 ->execute()
+							 ->fetchColumn(0);
 						$autoplay = $file->getProperties()['autoplay'];
 						$controls = $autoplay ? $flexconf['controls'] : true;
 						$loop = $flexconf['loop'];
 						$mute = $autoplay ? true : $flexconf['mute'];
 
-						$inlineJS = 'var videoElement = document.querySelector(\'#video-'.$file->getUid().' video\');
-							videoElement.muted = '.$mute.';
-							videoElement.loop = '.$loop.';
-						';
-
+						$inlineJS = '
+// Background-video-'.$file->getUid().'
+var videoElement = document.querySelector(\'#video-'.$file->getUid().' video\');
+videoElement.muted = '.$mute.';
+videoElement.loop = '.$loop.';';
 						if ( $autoplay ) {
 							$inlineJS .= '
-							videoElement.pause();
-							videoElement.currentTime = 0;
-							videoElement.play();
-							$(\'#video-'.$file->getUid().' video\').attr(\'playsinline\', \'\');
-							';
+videoElement.pause();
+videoElement.currentTime = 0;
+videoElement.play();
+$(\'#video-'.$file->getUid().' video\').attr(\'playsinline\', \'\');';
 						}
 
 						if ( $controls ) {
 							if ( $overlayChild )
-							$inlineJS .= '$(\'#s-'.$processedData['data']['uid'].' .card-img-overlay\').css(\'bottom\', \'20px\').css(\'top\', \'20px\');';
+							$inlineJS .= '
+$(\'#s-'.$processedData['data']['uid'].' .card-img-overlay\').css(\'bottom\', \'20px\').css(\'top\', \'20px\');';
 						} else {
-							$inlineJS .= '$(videoElement).removeAttr("controls");';
+							$inlineJS .= '
+$(videoElement).removeAttr("controls");';
 						}
-
-						$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-						$pageRenderer->addJsFooterInlineCode(' Background-video-'.$file->getUid(),$inlineJS,'FALSE');
+						if($inlineJS)
+						GeneralUtility::makeInstance(AssetCollector::class)
+							 ->addInlineJavaScript('background-video-'.$file->getUid(), $inlineJS);
 					}
 				}
 
-			} else {
+			} elseif ( $file->getType() === 2 ) {
 			// IMAGE
 				// orig. image option in flexform
 				if ($flexconf['origImage']) {
 					$processedData['file'] = $file;
 				} else {
-
 					$processedData['bgImage'] = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp);
 					if ($flexconf['paddingTopBottom']) {
 						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 1rem;';
 					}
 				}
-
 				// align content items
 				$processedData['alignItem'] = $flexconf['alignItem'] ? ' '.$flexconf['alignItem'] :'';
 
@@ -193,6 +212,8 @@ class WrapperHelper implements SingletonInterface
 				if ($filter)
 				$processedData['style'] .= 'filter: '.trim($filter).';';
 
+			} else {
+				// do nothing - audio file
 			}
 
 		} else {
@@ -203,10 +224,8 @@ class WrapperHelper implements SingletonInterface
 			}
 		}
 
-
 		return $processedData;
 	}
-
 
 
 	/**
@@ -217,20 +236,33 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getCardWrapper($processedData, $flexconf)
+	public function getCardWrapper($processedData, $flexconf): array
 	{
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+		$children = $queryBuilder
+			->select('*')
+			->from('tt_content')
+			->where(
+				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+			)
+			->execute()
+			->fetchAll();
 
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 
 		$processedData['cropMaxCharacters'] = $flexconf['cropMaxCharacters'];
 
-		if (is_array($processedData['data']['tx_gridelements_view_children'])) {
+		if (count($children)) {
 
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-			foreach ( $processedData['data']['tx_gridelements_view_children'] as $key=>$child ) {
+			foreach ( $children as $key=>$child ) {
 				$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $child['uid']);
 				$children[$key] = $flexFormService->convertFlexFormContentToArray($child['pi_flexform']);
+				$children[$key]['imgwidth'] = $child['imagewidth'] ?: 576;
 				if ($flexconf['card_wrapper'] == 'flipper'){
 					$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
 					 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' mr-1"></i> ' : '';
@@ -256,7 +288,8 @@ class WrapperHelper implements SingletonInterface
 			$processedData['cards'] = $children;
 
 			if ($flexconf['card_wrapper'] == 'flipper') {
-				switch ( count($processedData['data']['tx_gridelements_view_children']) ) {
+
+				switch ( count($children) ) {
 					 case 1:
 						$processedData['flipper']['class'] = 'col-xs-12 col-sm-12 col-md-12';
 					break;
@@ -292,8 +325,9 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getCarouselContainer($processedData, $flexconf)
+	public function getCarouselContainer($processedData, $flexconf): array
 	{
+
 		if ( $flexconf['multislider'] ) {
 
 			$cssFile = 'EXT:t3sbootstrap/Resources/Public/Contrib/Multislider/multislider.css';
@@ -322,15 +356,22 @@ class WrapperHelper implements SingletonInterface
 			$duration = $flexconf['duration'] ? intval($flexconf['duration']) : 500;
 			$options .= 'duration: '.$duration;
 
-			$inlineJS = 'jQuery(function(){$(\'#multiSlider-'.$processedData['data']['uid'].'\').multislider({'.$options.'});});';
+			$inlineJS = '
+	$(\'#multiSlider-'.$processedData['data']['uid'].'\').multislider({'.$options.'});';
 
 			$block = '#multiSlider-'.$processedData['data']['uid'].' .MS-content .item {width: '.$flexconf['number'].'}';
-
-			$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-			$pageRenderer->addCssFile($cssFile);
-			$pageRenderer->addCssInlineBlock ('multislider-'.$processedData['data']['uid'], $block);
-			$pageRenderer->addJsFooterFile($jsFooterFile);
-			$pageRenderer->addJsFooterInlineCode(' Multislider-'.$processedData['data']['uid'],$inlineJS,'FALSE');
+			if($cssFile)
+			GeneralUtility::makeInstance(AssetCollector::class)
+				->addStyleSheet('multislidercss', $cssFile,[],['priority' => true]);
+			if($block)
+			GeneralUtility::makeInstance(AssetCollector::class)
+				  ->addInlineStyleSheet('multisliderinlinecss-'.$processedData['data']['uid'], $block,[],['priority' => true]);
+			if($jsFooterFile)
+			GeneralUtility::makeInstance(AssetCollector::class)
+				  ->addJavaScript('multisliderjs', $jsFooterFile);
+			if($inlineJS)
+			GeneralUtility::makeInstance(AssetCollector::class)
+				  ->addInlineJavaScript('multisliderinlinejs-'.$processedData['data']['uid'], $inlineJS);
 
 			$processedData['multislider'] = TRUE;
 
@@ -352,17 +393,18 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getParallaxWrapper($processedData, $flexconf, $webp=FALSE)
+	public function getParallaxWrapper($processedData, $flexconf, $webp=FALSE): array
 	{
-		$file = self::getFile((int)$processedData['data']['uid']);
+		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 
 		if ( $file ) {
 			if ( $file->getType() === 4 ) {
 				$processedData['video'] = TRUE;
 			} else {
 				$processedData['parallaxImage'] =
-				 GeneralUtility::makeInstance(BackgroundImageUtility::class)->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, FALSE, $webp);
-
+				 GeneralUtility::makeInstance(BackgroundImageUtility::class)
+				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, FALSE, $webp);
 				$processedData['speedFactor'] = $flexconf['speedFactor'];
 				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : ' ';
 			}
@@ -384,9 +426,10 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getCollapsible($processedData, $flexconf, $parentflexconf)
+	public function getCollapsible($processedData, $flexconf, $parentflexconf): array
 	{
-		$file = self::getFile((int)$processedData['data']['uid']);
+		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 
 		$processedData['appearance'] = $parentflexconf['appearance'];
 		$processedData['show'] = $flexconf['active'] ? ' show' : '';
@@ -397,21 +440,5 @@ class WrapperHelper implements SingletonInterface
 
 		return $processedData;
 	}
-
-	/**
-	 * Returns a file
-	 *
-	 * @param integer $uid
-	 *
-	 * @return TYPO3\CMS\Core\Resource\FileReference
-	 */
-	protected function getFile($uid)
-	{
-		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $uid);
-
-		return $fileObjects[0];
-	}
-
 
 }

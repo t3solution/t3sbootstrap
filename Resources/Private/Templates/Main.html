@@ -5,16 +5,21 @@
 	</f:then>
 	<f:else>
 		<f:spaceless>
+			<f:render section="AssetScripts" arguments="{_all}" />
+			<f:if condition="{settings.gtm}">
+				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={settings.gtm}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+			</f:if>
 			<f:comment> LOADING SPINNER </f:comment>
-			<f:if condition="{settings.loadingSpinner}">
+			<f:if condition="{settings.config.loadingSpinner}">
 				<div id="site-preloader">
-					<div id="site-spinner" class="spinner-{settings.loadingSpinner} text-{settings.loadingSpinnerColor}" style="width: 3rem; height: 3rem;" role="status">
+					<div id="site-spinner" class="spinner-{settings.config.loadingSpinner} text-{settings.config.loadingSpinnerColor}"
+						 style="width: 3rem; height: 3rem;" role="status">
 						<span class="sr-only">Loading...</span>
 					</div>
 				</div>
 			</f:if>
 			<div id="page-wrapper">
-				<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.contentOnlyOnRootpage}">
+				<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.config.contentOnlyOnRootpage}">
 					<f:else>
 						<f:comment> META NAVIGATION </f:comment>
 						<f:if condition="{metaNavigation} || {config.meta.text}">
@@ -64,7 +69,7 @@
 				<f:render partial="Page/Pagebrowser" arguments="{_all}" />
 			</f:if>
 			<f:comment> FOOTER </f:comment>
-			<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.contentOnlyOnRootpage}">
+			<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.config.contentOnlyOnRootpage}">
 				<f:else>
 					<f:if condition="{config.footer.enable}">
 						<f:render partial="Page/Footer" arguments="{_all}" />
@@ -86,7 +91,7 @@
 
 
 <f:section name="PageContent">
-	<div id="page-content"{f:if(condition: '{settings.pageContentExtraClass}',then: ' class="{settings.pageContentExtraClass}"')}>
+	<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')}>
 		<f:if condition="{be_layout} && {be_layout} != 'default'">
 			<f:then>
 				<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
@@ -96,4 +101,137 @@
 			</f:else>
 		</f:if>
 	</div>
+</f:section>
+
+
+<f:section name="AssetScripts">
+<f:comment> Lazyload / Magnifying glass icon </f:comment>
+<f:if condition="{settings.lazyLoad}">
+	<f:then>
+		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+			<f:then>
+				<f:asset.script identifier="lazyloadmagnifying">
+// LazyLoad - Main.html
+new LazyLoad({
+	elements_selector: ".lazy",
+	threshold: {settings.lazyLoadThreshold},
+	callback_loaded: function(img) {
+		var zoomOverlay = $(img).parent().parent().find('div.zoom-overlay');
+		if ( zoomOverlay.length ) {
+			var imgwidth = $(img).outerWidth()+'px';
+			var imgheight = $(img).outerHeight()+'px';
+			if ( $(window).width() < {winWidth} ) {
+				imgwidth = '100%';
+			}
+			zoomOverlay.addClass('card-img-overlay');
+			if ( imgwidth ) {
+				zoomOverlay.css('max-width', imgwidth);
+			}
+			if ( imgheight ) {
+				zoomOverlay.css('max-height', imgheight);
+			}
+		}
+	}
+});
+				</f:asset.script>
+			</f:then>
+			<f:else>
+				<f:asset.script identifier="lazyload">
+// LazyLoad - Main.html
+new LazyLoad({
+	elements_selector: ".lazy",
+	threshold: 0
+});
+				</f:asset.script>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+			<f:asset.script identifier="magnifying">
+	// Magnifying glass icon - Main.html
+	var magnify = $('.zoom-overlay');
+	if ( magnify.length ) {
+		$('figure.image').each(function() {
+			var img = $(this).find('img');
+			var imgwidth = $(img).outerWidth()+'px';
+			var imgheight = $(img).outerHeight()+'px';
+			var zoomOverlay = $(this).find('a div.zoom-overlay');
+			if ( $(window).width() < 576 ) {
+				imgwidth = '100%';
+			}
+			if ( zoomOverlay.length ) {
+				zoomOverlay.addClass('card-img-overlay');
+				if ( imgwidth ) {
+					zoomOverlay.css('max-width', imgwidth);
+				}
+				if ( imgheight ) {
+					zoomOverlay.css('max-height', imgheight);
+				}
+			}
+		});
+	}
+			</f:asset.script>
+		</f:if>
+	</f:else>
+</f:if>
+<f:comment> Default JS </f:comment>
+<f:asset.script identifier="default">
+	// Default - Main.html
+	var bootstrapversion = $.fn.tooltip.Constructor.VERSION;
+	$('.bootstrap-version').replaceWith(bootstrapversion);
+	//console.log('Bootstrap Version:',bootstrapversion);
+	var navbarHeight = $("#main-navbar").outerHeight();
+	var fixedNavbar = false;
+	if ( $("#main-navbar").hasClass("fixed-top") || $("#main-navbar").hasClass("sticky-top") ) {
+		fixedNavbar = true;
+	}
+	// Scroll anchor
+	if (window.location.hash) {
+		var hash = window.location.hash;
+		if ($(hash).length) {
+			var idArr = hash.split('#'),
+				targetElement = document.getElementById(idArr[1]),
+				targetOffset = targetElement.offsetTop,
+				offsetSize = {settings.config.sectionmenuAnchorOffset};
+				if ( fixedNavbar ) {
+					offsetSize += navbarHeight;
+				}
+				var scrollTo = targetOffset-offsetSize;
+			$("html, body").stop().animate({
+				'scrollTop': scrollTo
+			}, 1500, "easeInOutExpo");
+		}
+	}
+</f:asset.script>
+<f:comment> Link to top </f:comment>
+<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
+<f:asset.script identifier="linktotop">
+	// Link to top - Main.html
+	var offset = 220;
+	var duration = 500;
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > offset) {
+			$(".back-to-top").fadeIn(duration);
+		} else {
+			$(".back-to-top").fadeOut(duration);
+		}
+	});
+	$(".back-to-top").click(function(event) {
+		event.preventDefault(event);
+		$("html, body").animate({scrollTop: 0}, duration);
+		return false;
+	});	
+</f:asset.script>
+</f:if>
+<f:comment> Loading spinner </f:comment>
+<f:if condition="{settings.config.loadingSpinner}">
+<f:asset.script identifier="loadingspinner">
+	// Loading spinner - Main.html
+	$(window).bind("load", function() {
+		 $('#status').fadeOut();
+		 $('#site-preloader').delay(350).fadeOut('slow');
+	});	
+</f:asset.script>
+</f:if>
 </f:section>

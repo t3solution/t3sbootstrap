@@ -1,0 +1,102 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+</f:section>
+<f:section name="Main">
+<f:asset.script identifier="tab">
+	// Tabs - TabContainer.html
+	var tab = $( ".tab-content .tab-pane:first-child" );
+	if ( tab.length ) {
+		if ( window.location.hash ) {
+			var tabHashArr = window.location.hash.split('c');
+			$('.nav[role="tablist"] a[href="#tab-content-'+tabHashArr[1]+'"]').tab('show');
+			var tabOffsetSize = 30;
+			if ( fixedNavbar ) {
+				tabOffsetSize = navbarHeight+30;
+			}
+			var tabAnchor = '#tab-'+tabHashArr[1];
+
+			if ($(tabAnchor).length) {
+				$("html, body").stop().animate({
+					scrollTop: $(tabAnchor).offset().top-tabOffsetSize
+				}, 1500, "easeInOutExpo");
+			}
+		} else {
+			tab.addClass( "show active" );
+		}
+	}
+</f:asset.script>
+<f:if condition="{class} || {style}">
+	<div{f:if(condition:'{class}',then:' class="{class}"')}{f:if(condition:'{style}',then:' style="{style}"')}{dataAnimate}>
+</f:if>
+	<f:render partial="Header/All" arguments="{_all}" />
+	<f:switch expression="{tab.displayType}">
+		<f:case value="pills">
+			<f:render section="Pills" arguments="{_all}" />
+		</f:case>
+		<f:case value="verticalpills">
+			<f:render section="Verticalpills" arguments="{_all}" />
+		</f:case>
+		<f:defaultCase>
+			<f:render section="Tabs" arguments="{_all}" />
+		</f:defaultCase>
+	</f:switch>
+<f:if condition="{class} || {style}">
+	</div>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Tabs">
+<nav id="tabContainer-{data.uid}" class="nav nav-tabs mb-3{tab.fill}" role="tablist">
+	<f:for each="{col_280}" as="tab" iteration="i">
+		<a id="tab-{tab.uid}" class="nav-item nav-link{f:if(condition:'{i.isFirst}',then:' active')}" href="#tab-content-{tab.uid}"
+			 data-toggle="tab" role="tab" aria-controls="tab-content-{tab.uid}" aria-selected="{f:if(condition:'{i.isFirst}',then:'true', else: 'false')}">
+			{tab.header -> f:format.raw()}
+		</a>
+	</f:for>
+</nav>
+<f:render section="Content" arguments="{_all}" />
+</f:section>
+
+<f:section name="Pills">
+<ul class="nav nav-pills mb-3{tab.fill}" id="pillContainer-{data.uid}" role="tablist">
+	<f:for each="{col_280}" as="tab" iteration="i">
+		<li class="nav-item">
+			<a id="tab-{tab.uid}" class="nav-link{f:if(condition:'{i.isFirst}',then:' active')}" href="#tab-content-{tab.uid}"
+				 data-toggle="pill" aria-controls="tab-content-{tab.uid}" aria-selected="{f:if(condition:'{i.isFirst}',then:'true', else: 'false')}">
+				{tab.header -> f:format.raw()}
+			</a>
+		</li>
+	</f:for>
+</ul>
+<f:render section="Content" arguments="{_all}" />
+</f:section>
+
+
+<f:section name="Verticalpills">
+<div class="row">
+	<div class="col-{pill.asideWidth}">
+		<div id="vpillContainer-{data.uid}" class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+			<f:for each="{col_280}" as="tab" iteration="i">
+				<a id="tab-{tab.uid}" class="nav-link{f:if(condition:'{i.isFirst}',then:' active')}" href="#tab-content-{tab.uid}"
+					 data-toggle="pill" role="tab" aria-controls="tab-content-{tab.uid}" aria-selected="{f:if(condition:'{i.isFirst}',then:'true', else: 'false')}">
+					{tab.header -> f:format.raw()}
+				</a>
+			</f:for>
+		</div>
+	</div>
+	<div class="col-{pill.mainWidth}">
+		<f:render section="Content" arguments="{_all}" />
+	</div>
+</div>
+</f:section>
+
+<f:section name="Content">
+<div id="tabContent-{data.uid}" class="tab-content">
+	<f:for each="{col_280}" as="row">
+		{row.renderedContent -> f:format.raw()}
+	</f:for>
+</div>
+</f:section>

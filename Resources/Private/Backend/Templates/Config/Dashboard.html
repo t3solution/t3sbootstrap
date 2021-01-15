@@ -1,0 +1,263 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="content">
+<f:flashMessages />
+<div class="card">
+	<div class="card-header" style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: 1rem !important;">
+		<div class="d-flex flex-column flex-md-row t3sb-header">
+				<h2><em class="fa fa-cog" aria-hidden="true"></em> Overview of the settings in the EM Config</h2>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-12 col-md-4">
+				<f:render section="Content" arguments="{_all}" />
+				<f:render section="Pages" arguments="{_all}" />
+				<f:render section="SCSS" arguments="{_all}" />
+			</div>
+			<div class="col-12 col-md-4">
+				<f:render section="T3SB" arguments="{_all}" />
+				<f:render section="Flexform" arguments="{_all}" />
+			  </div>
+			  <div class="col-12 col-md-4">
+				<f:render section="Different" arguments="{_all}" />
+				<f:render section="Advanced" arguments="{_all}" />
+			  </div>
+
+		</div>
+	</div>
+</div>
+</f:section>
+</html>
+
+
+<f:section name="SCSS">
+<div class="card mb-3">
+	<h5 class="card-header text-white">
+		<span="float-left">Custom SCSS</span>
+		<f:link.external uri="https://www.t3sbootstrap.de/dokumentation/snippets/css-scss/custom-scss"
+		 target="_blank" title="More information!" class="float-right" style="margin-top: .1rem;">
+			<i class="fa fa-info text-white"></i>
+		</f:link.external>
+	</h5>
+	<f:if condition="{isLoaded.ws_scss} && {extconf.customScss}">
+		<f:then>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<span class="text-success text-center"><strong>Available!</strong></span>
+				</li>
+				<li class="list-group-item">
+					{f:if(condition: extconf.bootswatch, then: '<i class="fa fa-check text-success mr-1"></i> ',
+					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+					<strong>Bootswatch Themes</strong>
+					{f:if(condition: extconf.bootswatch, then: ' (<small>{extconf.bootswatch}</small>)')}
+				</li>
+				<li class="list-group-item">
+					{f:if(condition: extconf.rollyourown, then: '<i class="fa fa-check text-success mr-1"></i> ',
+					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+					<strong>Roll your own</strong>
+				</li>
+				<li class="list-group-item">
+					{f:if(condition: extconf.editScss, then: '<i class="fa fa-check text-success mr-1"></i> ',
+					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+					<strong>Edit in Backend</strong>
+				</li>
+				<li class="list-group-item">
+					{f:if(condition: extconf.customScssPath, then: '<i class="fa fa-check text-success mr-1"></i> ',
+					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+					<strong>Path to your custom.scss files</strong>
+				</li>
+			</ul>
+		</f:then>
+		<f:else>
+			<div class="text-center">
+				<p class="text-danger mt-3"><strong>Not available!</strong></p>
+				<p>If the EXT:ws_scss is installed and loaded and "Custom Scss" is activated in the EM config,
+					 the bootstrap SCSS variables in the file "custom-variables.scss" can be overwritten.</p>
+			</div>
+		</f:else>
+	</f:if>
+</div>
+</f:section>
+
+<f:section name="Extensions">
+<div class="card">
+	<h5 class="card-header text-white">
+		Loaded Extensions
+	</h5>
+	<div class="card-body" style="padding: 1.5rem;">
+		<table class="table table-striped" style="font-size: 11px;">
+			<thead class="thead-default">
+			</thead>
+			<tbody>
+				<f:for each="{isLoaded}" as="loaded" key="ext">
+					<f:variable name="infouri" value='<f:link.external uri="{loaded.1}" target="_blank" title="More information!"> <i class="fa fa-info text-info ml-2 fa-sm"></i></f:link.external>' />
+					<tr>
+						<th scope="row">
+							{f:if(condition: loaded.0, then: '<i class="fa fa-check text-success"></i>', else: '<i class="fa fa-times text-danger"></i>')}
+						</th>
+						<td>
+							{ext}
+						</td>
+						<td>
+							{f:if(condition: loaded.1, then: ' {infouri -> f:format.raw()}')}
+						</td>
+					</tr>
+				</f:for>
+			</tbody>
+		</table>
+	</div>
+</div>
+</f:section>
+
+<f:section name="Content">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		Content Elements
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.spacing, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Spacing:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.container, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Container:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.color, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Color:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.ratio, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Image ratio:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.sectionOrder, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Custom section order:</strong>
+		</li>
+	</ul>
+</div>
+</f:section>
+
+<f:section name="Pages">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		Pages
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.fontawesome, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Font Awesome Icons:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.fontawesomepagetitle, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>FA Icon in Page Title:</strong>
+		</li>
+	</ul>
+</div>
+</f:section>
+
+<f:section name="T3SB">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		T3SB
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.expandedContent, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Expanded Content:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.cTypeClass, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>CType in class:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.fixedButton, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Fixed button:</strong>
+		</li>
+	</ul>
+</div>
+</f:section>
+
+<f:section name="Flexform">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		Flexform
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.flexformExtend, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Extend with custom fields:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.flexformPath, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Path to your flexforms files:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.flexformModify, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Modify select-fields:</strong>
+		</li>
+	</ul>
+</div>
+</f:section>
+
+<f:section name="Different">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		Different
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.codesnippet, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Codesnippet:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.imgCopyright, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Copyright (Image/FAL):</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.customTranslations, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Custom translations:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.customTranslationsPath, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Path to custom translations:</strong>
+		</li>
+	</ul>
+</div>
+</f:section>
+
+<f:section name="Advanced">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		Advanced
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.fontawesomeCss, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Font Awesome:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.animateCss, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Animate CSS:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.linkHoverEffect, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Link Hover Effect:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.lazyLoad, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Lazy Load:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.cookieconsent, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Cookieconsent:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.extNews, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Extension news:</strong>
+		</li>
+	</ul>
+</div>
+</f:section>

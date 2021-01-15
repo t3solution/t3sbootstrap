@@ -4,6 +4,14 @@
 <f:comment>No header for t3sbs_toast</f:comment>
 </f:section>
 <f:section name="Main">
+<f:asset.script identifier="toast">
+$(document).ready(function(){
+	var toast = $('.toast');
+	if ( toast.length ) {
+		$('.toast').toast('show');
+	}
+});	
+</f:asset.script>
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="position: relative;">
 	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="{autohide}" data-animation="{animation}" data-delay="{delay}" style="{placement}">
 		<div class="toast-header">

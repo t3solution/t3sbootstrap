@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="content">
+<f:flashMessages />
+<f:if condition="{filecontent}">
+	<f:then>
+		<div class="card">
+			<div class="card-header"
+				 style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: 1rem !important;">
+				<div class="d-flex flex-column flex-md-row t3sb-header">
+					<h2><em class="fa fa-bars" aria-hidden="true" style="margin-right: 1rem;"></em> Overview of the provided, outsourced constants</h2>
+				</div>
+			</div>
+			<div class="card-body">
+				<p>You can override the settings if you create a new configuration on another page or in your constants - if you prefer this!
+				<div id="constants"><pre>{filecontent}</pre></div>
+			</div>
+		</div>
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger text-center" role="alert">
+			There are no outsourced constants available - you have to save the configuration again!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
