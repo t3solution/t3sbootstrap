@@ -1,0 +1,47 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>No header for modal</f:comment>
+</f:section>
+<f:section name="Main">
+<f:if condition="{modal.button}">
+	<f:then>
+		<f:if condition="{modal.fixedButton}">
+			<f:then>
+				<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
+				<div class="d-none {modal.fixedClass}">
+					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
+						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+					</button>
+				</div>
+			</f:then>
+			<f:else>
+				<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
+					{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+				</button>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<a class="modal-link{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}" style="cursor:pointer;">
+			{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}</a>
+	</f:else>
+</f:if>
+
+<div class="modal{f:if(condition:'{modal.animation}',then:' fade')}" id="modal-{data.uid}" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog {modal.size}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<f:render partial="Header/All" arguments="{_all}" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+			<f:for each="{col_279}" as="row">
+				{row.renderedContent -> f:format.raw()}
+			</f:for>
+			</div>
+		</div>
+	</div>
+</div>
+</f:section>
+</html>

@@ -1,15 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.dynamicContent', data: {pageUid: '{data.uid}', colPos: '21'})} != '<!--TYPO3SEARCH_begin--><!--TYPO3SEARCH_end-->' ||
-'lib.dynamicContentSlide', data: {pageUid: '{data.uid}', colPos: '21'})} != '<!--TYPO3SEARCH_begin--><!--TYPO3SEARCH_end-->'">
-	<f:then>
-		{f:variable(name: 'expandetcontent', value: 1)}
-	</f:then>
-	<f:else>
-		{f:variable(name: 'expandetcontent', value: 0)}
-	</f:else>
-</f:if>
-
-<f:if condition="{expandetcontent}">
+<f:if condition="{config.expandedcontentBottom.enable}">
 	<f:if condition="{config.expandedcontentBottom.container}">
 		<f:then>
 			<f:render section="{config.expandedcontentBottom.containerposition}" arguments="{_all}" />

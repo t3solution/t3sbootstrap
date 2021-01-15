@@ -11,6 +11,49 @@
 -->
 
 <f:section name="content">
+<f:comment> Lightbox - same in Layout/Default.html </f:comment>
+<f:if condition="{settings.detail.lightbox.enabled} && {settings.detail.lightbox.selection}">
+	<f:comment> Baguette Box </f:comment>
+	<f:if condition="{settings.detail.lightbox.selection} == 1">
+		<f:asset.script identifier="lightbox">
+	// Baguette Box (lightbx) - Layouts/Content/Default.html
+	baguetteBox.run(".gallery, .image-gallery");
+		</f:asset.script>
+	</f:if>
+	<f:comment> Ekko Lightbox </f:comment>
+	<f:if condition="{settings.detail.lightbox.selection} == 2">
+		<f:asset.script identifier="lightbox">
+	// Ekko Lightbox (lightbx) - Layouts/Content/Default.html
+	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+		event.preventDefault();
+		$(this).ekkoLightbox();
+	});
+	if ( $('.MS-content figure a').hasClass('lightbox') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-gallery', 'gallery-'+msId);
+	}
+		</f:asset.script>
+	</f:if>
+	<f:comment> Lightcase </f:comment>
+	<f:if condition="{settings.detail.lightbox.selection} == 3">
+		<f:asset.script identifier="lightbox">
+	// Lightcase (lightbx) - Layouts/Content/Default.html
+	$('.lightcaseGallery').lightcase({
+		showSequenceInfo: false,
+		showCaption: true,
+		maxWidth: 1140,
+		maxHeight: 800
+	});
+	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);
+	}
+		</f:asset.script>
+	</f:if>
+</f:if>
+
+
+
 <f:if condition="{newsItem}">
 	<f:then>
 		<f:if condition="{settings.templateLayout} == 81">

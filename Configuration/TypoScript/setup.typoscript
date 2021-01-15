@@ -6,6 +6,7 @@ module.tx_t3sbootstrap {
 		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
 	}
 	settings {
+		wizardsMarkedUndone = {$bootstrap.wizardsMarkedUndone}
 		customScss = {$bootstrap.extconf.customScss}
 		customScssPath = {$bootstrap.extconf.customScssPath}
 		editScss = {$bootstrap.extconf.editScss}
@@ -15,7 +16,10 @@ module.tx_t3sbootstrap {
 		expandedContent = {$bootstrap.extconf.expandedContent}
 		rollyourown = {$bootstrap.extconf.rollyourown}
 		wsScss = {$bootstrap.ext.wsScss}
+		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
+		gtm = {$bootstrap.gtm}
 		cdn {
+			// Versions
 			bootstrap = {$bootstrap.cdn.bootstrap}
 			popperjs = {$bootstrap.cdn.popperjs}
 			bootswatch = {$bootstrap.cdn.bootswatch}
@@ -35,7 +39,7 @@ module.tx_t3sbootstrap {
 		}
 	}
 
-	# roll your own (experimental - w/Task)
+	# roll your own (experimental)
 	settings.bootstrap {
 		functions = 1
 		variables = 1
@@ -98,10 +102,33 @@ temp.pagelayout {
 	}
 }
 
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/ContentElement/_main.typoscript">
+
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/ContentElement/_main.typoscript'
+
+##########################################################################################################
+#
+# Google Tag Manager
+#
+##########################################################################################################
+
+[request.getCookieParams()['cookieconsent_status'] == 'allow']
+page.jsInline.1 = TEXT
+page.jsInline.1.value (
+
+	// Google Tag Manager
+	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','{$bootstrap.gtm}');
+
+
+)
+page.jsInline.1.if.isTrue = {$bootstrap.gtm}
+[END]
 
 [applicationContext == "Development"]
 config {

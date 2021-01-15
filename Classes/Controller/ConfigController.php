@@ -1,27 +1,29 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Controller;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
+use TYPO3\CMS\Core\Database\QueryGenerator;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Site\Entity\SiteInterface;
+use TYPO3\CMS\Core\Routing\SiteMatcher;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
 
 /**
@@ -29,13 +31,13 @@ use TYPO3\CMS\Backend\View\BackendTemplateView;
  */
 class ConfigController extends ActionController
 {
+
 	/**
 	 * configRepository
 	 *
 	 * @var \T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository
 	 */
 	protected $configRepository;
-
 
 	/**
 	 * Backend Template Container (build the header in the BE)
@@ -45,12 +47,46 @@ class ConfigController extends ActionController
 	protected $defaultViewObjectName = BackendTemplateView::class;
 
 	/**
-	 * TYPO3 version
+	 * is siteroot
+	 *
+	 * @var boolean
+	 */
+	protected $isSiteroot;
+
+	/**
+	 * rootpage Id
 	 *
 	 * @var int
 	 */
-	protected $version;
+	protected $rootPageId;
 
+	/**
+	 * current uid
+	 *
+	 * @var int
+	 */
+	protected $currentUid;
+
+	/**
+	 * columns from TCA tx_t3sbootstrap_domain_model_config
+	 *
+	 * @var array
+	 */
+	protected $tcaColumns;
+
+	/**
+	 * is admin
+	 *
+	 * @var bool
+	 */
+	protected $isAdmin;
+
+	/**
+	 * Root configuration
+	 *
+	 * @var \T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository
+	 */
+	protected $rootConfig;
 
 
 	/**
@@ -66,75 +102,67 @@ class ConfigController extends ActionController
 
 	public function initializeAction()
 	{
-		$typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-		$this->version = (int)$typo3Version->getVersion();
+		$site = self::getCurrentSite();
+		$this->rootPageId = $site->getRootPageId();
+		$this->currentUid = (int) GeneralUtility::_GET('id');
+		$this->isSiteroot = $this->rootPageId === $this->currentUid ? TRUE : FALSE;
+		$this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
+		$this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
+		$this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
 	}
 
 
 	/**
 	 * action list
 	 *
+	 * @param bool $deleted
+	 * @param bool $created
+	 * @param bool $updateSss
 	 * @return void
 	 */
-	public function listAction()
+	public function listAction($deleted = FALSE, $created = FALSE, $updateSss = FALSE): void
 	{
-		$isSiteroot = self::isSiteroot();
+		if ( $this->isSiteroot ) {
+		 	$queryGenerator = GeneralUtility::makeInstance(QueryGenerator::class);
+			$pidList = $queryGenerator->getTreeList($this->rootPageId, 999999, 0, 1);
 
-		if ( $isSiteroot ) {
-
-			if ($this->version == 10) {
-				$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
-			} else {
-				$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
-			}
-
-			$childPages = $pageRepository->getMenu((int)$_GET['id'], 'uid');
-			$childUids = array_keys($childPages);
-			$subChildPages = $pageRepository->getMenu($childUids, 'uid');
-			$allPages = array_merge($childPages, $subChildPages);
-			foreach ( $allPages as $page ) {
-				$pageList .= $page['uid'].',';
-			}
-			$pageList = rtrim($pageList, ',');
-
-			$configRepository = $this->configRepository->findAll();
-
-			foreach ( $configRepository as $key => $config ) {
-
-				if (\TYPO3\CMS\Core\Utility\GeneralUtility::inList($pageList, $config->getPid())) {
-
-					$page = $pageRepository->getPage($config->getPid());
-
+			foreach ( $this->configRepository->findAll() as $config ) {
+				if (GeneralUtility::inList($pidList, $config->getPid())) {
+					$page = BackendUtility::getRecord('pages',$config->getPid(),'uid,title');
+					$allConfig[$page['uid']]['confUid'] = $config->getUid();
 					$allConfig[$page['uid']]['title'] = $page['title'];
 					$allConfig[$page['uid']]['uid'] = $page['uid'];
-
 				}
 			}
 
+			$assignedOptions['isSiteroot'] = TRUE;
 			$assignedOptions['allConfig'] = $allConfig;
 		}
 
-		$rootConfig = $this->configRepository->findOneByPid(self::getRootPageUid());
-
-		$assignedOptions['isSiteroot'] = $isSiteroot;
-		$assignedOptions['rootConfig'] = $rootConfig ? TRUE : FALSE;
-		$assignedOptions['config'] = $this->configRepository->findOneByPid((int)$_GET['id']);
-		$assignedOptions['admin'] = $GLOBALS['BE_USER']->isAdmin();
-
+		$assignedOptions['rootConfig'] = $this->rootConfig ? TRUE : FALSE;
+		$assignedOptions['config'] = $this->configRepository->findOneByPid($this->currentUid);
+		$assignedOptions['admin'] = $this->isAdmin;
 		$assignedOptions['customScss'] = FALSE;
 		$assignedOptions['scss'] = '';
+		$assignedOptions['action'] = 'list';
+		$assignedOptions['updateScss'] = $updateSss;
+		$assignedOptions['deleted'] = $deleted;
+		$assignedOptions['created'] = $created;
 
 		if ( (int)$this->settings['customScss'] === 1 && (int)$this->settings['wsScss'] === 1 ) {
-
 			$customScss = self::getCustomScss('custom-variables');
 			$assignedOptions['custom-variables'] = $customScss['custom-variables'];
-
 			$customScss = self::getCustomScss('custom');
 			$assignedOptions['custom'] = $customScss['custom'];
 			$assignedOptions['customScss'] = $customScss['customScss'];
+			if ( $this->settings['enableUtilityColors'] ) {
+				$assignedOptions['utilColors'] = self::getUtilityColors();
+			}
 		}
 
-		$assignedOptions['version'] = $this->version;
+		if ($this->settings['wizardsMarkedUndone']) {
+			self::wizardsMarkedUndone();
+		}
 
 		$this->view->assignMultiple($assignedOptions);
 	}
@@ -145,69 +173,35 @@ class ConfigController extends ActionController
 	 *
 	 * @return void
 	 */
-	public function newAction()
+	public function newAction(): void
 	{
 		$assignedOptions = self::getFieldsOptions();
+		$assignedOptions['pid'] = $this->currentUid;
+		$assignedOptions['tcaColumns'] = self::getTcaColumns();
 
-		$rootConfig = $this->configRepository->findOneByPid(self::getRootPageUid());
-
-		if ( $rootConfig ) {
+		if ( $this->rootConfig ) {
 			// config from rootline
-			if ( $rootConfig->getGeneralRootline() ) {
-
-				$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
-
+			if ( $this->rootConfig->getGeneralRootline() ) {
+				$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $this->currentUid)->get();
 				// unset current page
 				if (count($rootLineArray) > 1)
 				unset($rootLineArray[count($rootLineArray)-1]);
-
 				foreach ($rootLineArray as $rootline) {
 					$rootlineConfig = $this->configRepository->findOneByPid((int)$rootline['uid']);
 					if ( !empty($rootlineConfig) ) break;
 				}
 				$assignedOptions['newConfig'] = self::getNewConfig($rootlineConfig);
-
 			// config from rootpage
 			} else {
-				$assignedOptions['newConfig'] = self::getNewConfig($rootConfig);
+				$assignedOptions['newConfig'] = self::getNewConfig($this->rootConfig);
 			}
 
 		} else {
 			$newConfig = new \T3SBS\T3sbootstrap\Domain\Model\Config();
 			// some defaults
-			$newConfig->setHomepageUid((int)$_GET['id']);
-			$newConfig->setPageTitle( 'jumbotron' );
-			$newConfig->setPageTitlealign( 'center' );
-			$newConfig->setNavbarImage($this->settings['defaultNavbarImagePath']);
-			$newConfig->setNavbarEnable( 'light' );
-			$newConfig->setNavbarLevels( 4 );
-			$newConfig->setNavbarColor( 'warning' );
-			$newConfig->setNavbarAlignment( 'left' );
-			$newConfig->setNavbarBrand( 'imgText' );
-			$newConfig->setNavbarContainer( 'inside' );
-			$newConfig->setJumbotronEnable( 1 );
-			$newConfig->setJumbotronFluid( 1 );
-			$newConfig->setJumbotronSlide( 0 );
-			$newConfig->setJumbotronPosition( 'below' );
-			$newConfig->setJumbotronContainer( 'container' );
-			$newConfig->setJumbotronContainerposition( 'Inside' );
-			$newConfig->setBreadcrumbEnable( 1 );
-			$newConfig->setBreadcrumbCorner( 1 );
-			$newConfig->setBreadcrumbPosition( 'belowJum' );
-			$newConfig->setBreadcrumbContainer( 'container' );
-			$newConfig->setSidebarLevels( 4 );
-			$newConfig->setFooterEnable( 1 );
-			$newConfig->setFooterFluid( 1 );
-			$newConfig->setFooterSlide( 0 );
-			$newConfig->setFooterContainer( 'container' );
-			$newConfig->setFooterSticky( 1 );
-			$newConfig->setFooterContainerposition( 'inside' );
-			$newConfig->setFooterClass( 'bg-dark text-light' );
+			$newConfig = self::setDefaults($newConfig);
 			$assignedOptions['newConfig'] = $newConfig;
 		}
-
-		$assignedOptions['pid'] = (int)$_GET['id'];
-		$assignedOptions['version'] = $this->version;
 
 		$this->view->assignMultiple($assignedOptions);
 	}
@@ -219,27 +213,14 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
 	 * @return void
 	 */
-	public function createAction(\T3SBS\T3sbootstrap\Domain\Model\Config $newConfig)
+	public function createAction(\T3SBS\T3sbootstrap\Domain\Model\Config $newConfig): void
 	{
-		$this->addFlashMessage('The new configuration was created.', '', FlashMessage::OK);
-
-		if ( self::isSiteroot() ) {
-			$homepageUid = (int)$_GET['id'];
-		} else {
-
-			$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
-
-			$homepageUid = $rootLineArray[0]['uid'];
-		}
-
-		$newConfig->setHomepageUid($homepageUid);
-		$newConfig->setPid((int)$_GET['id']);
+		$newConfig->setHomepageUid($this->rootPageId);
+		$newConfig->setPid($this->currentUid);
 		$this->configRepository->add($newConfig);
-		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
-		$persistenceManager->persistAll();
 		self::writeConstants();
 
-		parent::redirect('list');
+		parent::redirect('list',NULL,Null,array('created' => TRUE));
 	}
 
 
@@ -247,39 +228,23 @@ class ConfigController extends ActionController
 	 * action edit
 	 *
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param bool $updated
 	 * @return void
 	 */
-	public function editAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
+	public function editAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config, $updated = FALSE): void
 	{
 		$assignedOptions = self::getFieldsOptions();
 		$assignedOptions['config'] = $config;
-		$assignedOptions['pid'] = (int)$_GET['id'];
-		$assignedOptions['admin'] = $GLOBALS['BE_USER']->isAdmin();
-
-		$ts = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-
-		if (is_array($ts['page.']['10.']['settings.']['override.'])) {
-			$overrideArr = [];
-			foreach ( $ts['page.']['10.']['settings.']['override.'] as $key=>$tsOverride ) {
-				if ( !empty($tsOverride)) {
-					if ( $tsOverride === 'TRUE' ) {
-						$overrideArr[lcfirst(GeneralUtility::underscoredToUpperCamelCase($key))] = 'enabled';
-					} elseif ( $tsOverride === 'FALSE' ) {
-						$overrideArr[lcfirst(GeneralUtility::underscoredToUpperCamelCase($key))] = 'disabled';
-					} else {
-						$overrideArr[lcfirst(GeneralUtility::underscoredToUpperCamelCase($key))] = $tsOverride ?: 'not set';
-					}
-				}
-			}
-			$assignedOptions['override'] = $overrideArr;
+		$assignedOptions['pid'] = $this->currentUid;
+		$assignedOptions['admin'] = $this->isAdmin;
+		$assignedOptions['isSiteroot'] = $this->isSiteroot;
+		$assignedOptions['updated'] = $updated;
+		$assignedOptions['override'] = self::overrideConfig();
+		$assignedOptions['tcaColumns'] = self::getTcaColumns();
+		$assignedOptions['action'] = 'edit';
+		if ( !$this->isSiteroot ) {
+			$assignedOptions['compare'] = self::compareConfig($config);
 		}
-
-		if ( !self::isSiteroot() ) {
-			$compare = self::compareConfig($config);
-			$assignedOptions['compare'] = $compare;
-		}
-
-		$assignedOptions['version'] = $this->version;
 
 		$this->view->assignMultiple($assignedOptions);
 	}
@@ -291,27 +256,13 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
 	 * @return void
 	 */
-	public function updateAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
+	public function updateAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config): void
 	{
-		$this->addFlashMessage('The configuration was updated.', '', FlashMessage::OK);
-
-		if ( self::isSiteroot() ) {
-			$homepageUid = (int)$_GET['id'];
-		} else {
-
-			$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
-
-			$homepageUid = $rootLineArray[0]['uid'];
-		}
-
-		$config->setHomepageUid($homepageUid);
-
+		$config->setHomepageUid($this->rootPageId);
 		$this->configRepository->update($config);
-		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
-		$persistenceManager->persistAll();
 		self::writeConstants();
 
-		parent::redirect('edit',NULL,Null,array('config' => $config));
+		parent::redirect('edit',NULL,Null,array('config' => $config, 'updated' => TRUE));
 	}
 
 
@@ -321,15 +272,64 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
 	 * @return void
 	 */
-	public function deleteAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config)
+	public function deleteAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config): void
 	{
-		$this->addFlashMessage('The object was deleted.', '', FlashMessage::INFO);
 		$this->configRepository->remove($config);
-		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
-		$persistenceManager->persistAll();
 		self::writeConstants();
 
-		parent::redirect('list');
+		parent::redirect('list',NULL,Null,array('deleted' => TRUE));
+	}
+
+
+	/**
+	 * action dashboard
+	 *
+	 * @return void
+	 */
+	public function dashboardAction(): void
+	{
+		if ( $this->isSiteroot ) {
+			$assignedOptions['extconf'] = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+			$assignedOptions['isLoaded']['ws_scss'] = ExtensionManagementUtility::isLoaded('ws_scss');
+		}
+
+		$assignedOptions['action'] = 'dashboard';
+		$assignedOptions['isSiteroot'] = $this->isSiteroot;
+		$assignedOptions['admin'] = $this->isAdmin;
+
+		$this->view->assignMultiple($assignedOptions);
+	}
+
+
+	/**
+	 * action constants
+	 *
+	 * @return void
+	 */
+	public function constantsAction(): void
+	{
+		if ( $this->isSiteroot ) {
+			$constantPath = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript');
+			if ( file_exists($constantPath) ) {
+				$fileGetContents = file_get_contents(GeneralUtility::getFileAbsFileName($constantPath));
+				$outsourcedConstantsArr = explode('[END]', trim($fileGetContents));
+				$toEnd = count($outsourcedConstantsArr);
+				foreach ($outsourcedConstantsArr as $outsourcedConstants) {
+					if (0 === --$toEnd) {
+						$filecontent .= trim($outsourcedConstants).PHP_EOL.PHP_EOL;
+					} else {
+						$filecontent .= trim($outsourcedConstants).PHP_EOL . '[END]'.PHP_EOL.PHP_EOL;
+					}
+				}
+				$assignedOptions['filecontent'] = $filecontent;
+			}
+		}
+
+		$assignedOptions['action'] = 'constants';
+		$assignedOptions['isSiteroot'] = $this->isSiteroot;
+		$assignedOptions['admin'] = $this->isAdmin;
+
+		$this->view->assignMultiple($assignedOptions);
 	}
 
 
@@ -338,65 +338,24 @@ class ConfigController extends ActionController
 	*
 	* @return array
 	*/
-	public function getFieldsOptions()
+	public function getFieldsOptions(): array
 	{
-
-		$fields = [
-			'pageTitleOptions' => 'page_title',
-			'pageTitlealignOptions' => 'page_titlealign',
-			'pageTitlecontainerOptions' => 'page_titlecontainer',
-			'metaEnableOptions' => 'meta_enable',
-			'metaContainerOptions' => 'meta_container',
-			'navbarEnableOptions' => 'navbar_enable',
-			'navbarBrandOptions' => 'navbar_brand',
-			'navbarColorOptions' => 'navbar_color',
-			'navbarShrinkcolorOptions' => 'navbar_shrinkcolor',
-			'navbarShrinkcolorschemesOptions' => 'navbar_shrinkcolorschemes',
-			'navbarContainerOptions' => 'navbar_container',
-			'navbarPlacementOptions' => 'navbar_placement',
-			'navbarAlignmentOptions' => 'navbar_alignment',
-			'navbarTogglerOptions' => 'navbar_toggler',
-			'navbarSearchboxOptions' => 'navbar_searchbox',
-			'navbarBreakpointOptions' => 'navbar_breakpoint',
-			'jumbotronPositions' => 'jumbotron_position',
-			'jumbotronBgImageOptions' => 'jumbotron_bgimage',
-			'jumbotronContainerOptions' => 'jumbotron_container',
-			'jumbotronContainerpositionOptions' => 'jumbotron_containerposition',
-			'breadcrumbPositions' => 'breadcrumb_position',
-			'breadcrumbContainerOptions' => 'breadcrumb_container',
-			'breadcrumbContainerpositionOptions' => 'breadcrumb_containerposition',
-			'sidebarLeftOptions' => 'sidebar_enable',
-			'sidebarRightOptions' => 'sidebar_rightenable',
-			'footerContainerOptions' => 'footer_container',
-			'footerContainerpositionOptions' => 'footer_containerposition',
-			'expandedcontentContainertopOptions' => 'expandedcontent_containertop',
-			'expandedcontentContainerpositiontopOptions' => 'expandedcontent_containerpositiontop',
-			'expandedcontentContainerbottomOptions' => 'expandedcontent_containerbottom',
-			'expandedcontentContainerpositionbottomOptions' => 'expandedcontent_containerpositionbottom'
-		];
-
-		foreach ($fields as $fieldKey=>$field) {
-
-			$tcaItems[$fieldKey] = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'][$field]['config']['items'];
-
-			foreach ($tcaItems[$fieldKey] as $key=>$value) {
-				$entries[$fieldKey][$value[1]] = $value[0];
+		foreach ( $this->tcaColumns as $field=>$columns ) {
+			// is select-field
+			if ( $columns['config']['type'] == 'select' && $columns['config']['renderType'] == 'selectSingle' ) {
+				$var = str_replace(' ', '_', $field);
+				$var = GeneralUtility::underscoredToLowerCamelCase($field);
+				$var = $var.'Options';
+				foreach ( $columns['config']['items'] as $key=>$entry ) {
+					$option = new \stdClass();
+					$option->key = $entry[1];
+					$option->value = $entry[0];
+					$fieldsOptions[$var][$entry[1]] = $option;
+				}
 			}
-
-				 $options = [];
-
-				 foreach ($entries[$fieldKey] as $key=>$entry) {
-				  $option = new \stdClass();
-				  $option->key = $key;
-				#$option->value = LocalizationUtility::translate('option.' . $entry, 't3sbootstrap');
-				  $option->value = $entry;
-				  $options[$key] = $option;
-				 }
-
-			$fieldsOptions[$fieldKey] = $options;
 		}
 
-		 return $fieldsOptions;
+		return $fieldsOptions;
 	}
 
 
@@ -406,142 +365,19 @@ class ConfigController extends ActionController
 	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $rootConfig
 	* @return \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
 	*/
-	public function getNewConfig(\T3SBS\T3sbootstrap\Domain\Model\Config $rootConfig)
+	public function getNewConfig(\T3SBS\T3sbootstrap\Domain\Model\Config $rootConfig): \T3SBS\T3sbootstrap\Domain\Model\Config
 	{
-
 		$newConfig = new \T3SBS\T3sbootstrap\Domain\Model\Config();
-		$newConfig->setCompany( $rootConfig->getCompany() );
-		$newConfig->setHomepageUid( $rootConfig->getHomepageUid() );
-		$newConfig->setPageTitle( $rootConfig->getPageTitle() );
-		$newConfig->setPageTitlecontainer( $rootConfig->getPageTitlecontainer() );
-		$newConfig->setPageTitleclass( $rootConfig->getPageTitleclass() );
-		$newConfig->setPageTitlealign( $rootConfig->getPageTitlealign() );
-		$newConfig->setMetaEnable( $rootConfig->getMetaEnable() );
-		$newConfig->setMetaValue( $rootConfig->getMetaValue() );
-		$newConfig->setMetaContainer( $rootConfig->getMetaContainer() );
-		$newConfig->setMetaClass( $rootConfig->getMetaClass() );
-		$newConfig->setMetaText( $rootConfig->getMetaText() );
 
-		$newConfig->setNavbarEnable( $rootConfig->getNavbarEnable() );
-		$newConfig->setNavbarLevels( $rootConfig->getNavbarLevels() );
-		$newConfig->setNavbarEntrylevel( $rootConfig->getNavbarEntrylevel() );
-		$newConfig->setNavbarExcludeuiduist( $rootConfig->getNavbarExcludeuiduist() );
-		$newConfig->setNavbarIncludespacer( $rootConfig->getNavbarIncludespacer() );
-		$newConfig->setNavbarJustify( $rootConfig->getNavbarJustify() );
-		$newConfig->setNavbarSectionmenu( $rootConfig->getNavbarSectionmenu() );
-		$newConfig->setNavbarMegamenu( $rootConfig->getNavbarMegamenu() );
-		$newConfig->setNavbarHover( $rootConfig->getNavbarHover() );
-		$newConfig->setNavbarClickableparent( $rootConfig->getNavbarClickableparent() );
-		$newConfig->setNavbarBrand( $rootConfig->getNavbarBrand() );
-		$newConfig->setNavbarImage( $rootConfig->getNavbarImage() );
-		$newConfig->setNavbarColor( $rootConfig->getNavbarColor() );
-		$newConfig->setNavbarShrinkcolor( $rootConfig->getNavbarShrinkcolor() );
-		$newConfig->setNavbarShrinkcolorschemes( $rootConfig->getNavbarShrinkcolorschemes() );
-		$newConfig->setNavbarContainer( $rootConfig->getNavbarContainer() );
-		$newConfig->setNavbarPlacement( $rootConfig->getNavbarPlacement() );
-		$newConfig->setNavbarAlignment( $rootConfig->getNavbarAlignment() );
-		$newConfig->setNavbarToggler( $rootConfig->getNavbarToggler() );
-		$newConfig->setNavbarBreakpoint( $rootConfig->getNavbarBreakpoint() );
-		$newConfig->setNavbarOffcanvas( $rootConfig->getNavbarOffcanvas() );
-		$newConfig->setNavbarBackground( $rootConfig->getNavbarBackground() );
-		$newConfig->setNavbarClass( $rootConfig->getNavbarClass() );
-		$newConfig->setNavbarHeight( $rootConfig->getNavbarHeight() );
-		$newConfig->setNavbarSearchbox( $rootConfig->getNavbarSearchbox() );
-		$newConfig->setNavbarLangmenu( $rootConfig->getNavbarLangmenu() );
-
-		$newConfig->setJumbotronEnable( $rootConfig->getJumbotronEnable() );
-		$newConfig->setJumbotronBgimage( $rootConfig->getJumbotronBgimage() );
-		$newConfig->setJumbotronFluid( $rootConfig->getJumbotronFluid() );
-		$newConfig->setJumbotronSlide( $rootConfig->getJumbotronSlide() );
-		$newConfig->setJumbotronPosition( $rootConfig->getJumbotronPosition() );
-		$newConfig->setJumbotronContainer( $rootConfig->getJumbotronContainer() );
-		$newConfig->setJumbotronContainerposition( $rootConfig->getJumbotronContainerposition() );
-		$newConfig->setJumbotronClass( $rootConfig->getJumbotronClass() );
-
-		$newConfig->setBreadcrumbEnable( $rootConfig->getBreadcrumbEnable() );
-		$newConfig->setBreadcrumbNotonrootpage( $rootConfig->getBreadcrumbNotonrootpage() );
-		$newConfig->setBreadcrumbFaicon( $rootConfig->getBreadcrumbFaicon() );
-		$newConfig->setBreadcrumbCorner( $rootConfig->getBreadcrumbCorner() );
-		$newConfig->setBreadcrumbBottom( $rootConfig->getBreadcrumbBottom() );
-		$newConfig->setBreadcrumbPosition( $rootConfig->getBreadcrumbPosition() );
-		$newConfig->setBreadcrumbContainer( $rootConfig->getBreadcrumbContainer() );
-		$newConfig->setBreadcrumbContainerposition( $rootConfig->getBreadcrumbContainerposition() );
-		$newConfig->setBreadcrumbClass( $rootConfig->getBreadcrumbClass() );
-
-		$newConfig->setSidebarEnable( $rootConfig->getSidebarEnable() );
-		$newConfig->setSidebarRightenable( $rootConfig->getSidebarRightenable() );
-		$newConfig->setSidebarEntrylevel( $rootConfig->getSidebarEntrylevel() );
-		$newConfig->setSidebarLevels( $rootConfig->getSidebarLevels() );
-		$newConfig->setSidebarExcludeuiduist( $rootConfig->getSidebarExcludeuiduist() );
-		$newConfig->setSidebarIncludespacer( $rootConfig->getSidebarIncludespacer() );
-
-		$newConfig->setFooterEnable( $rootConfig->getFooterEnable() );
-		$newConfig->setFooterFluid( $rootConfig->getFooterFluid() );
-		$newConfig->setFooterSlide( $rootConfig->getFooterSlide() );
-		$newConfig->setFooterSticky( $rootConfig->getFooterSticky() );
-		$newConfig->setFooterContainer( $rootConfig->getFooterContainer() );
-		$newConfig->setFooterContainerposition( $rootConfig->getFooterContainerposition() );
-		$newConfig->setFooterClass( $rootConfig->getFooterClass() );
-		$newConfig->setFooterPid( $rootConfig->getFooterPid() );
-
-		$newConfig->setExpandedcontentEnabletop( $rootConfig->getExpandedcontentEnabletop() );
-		$newConfig->setExpandedcontentSlidetop( $rootConfig->getExpandedcontentSlidetop() );
-		$newConfig->setExpandedcontentContainerpositiontop( $rootConfig->getExpandedcontentContainerpositiontop() );
-		$newConfig->setExpandedcontentContainertop( $rootConfig->getExpandedcontentContainertop() );
-		$newConfig->setExpandedcontentClasstop( $rootConfig->getExpandedcontentClasstop() );
-
-		$newConfig->setExpandedcontentEnablebottom( $rootConfig->getExpandedcontentEnablebottom() );
-		$newConfig->setExpandedcontentSlidebottom( $rootConfig->getExpandedcontentSlidebottom() );
-		$newConfig->setExpandedcontentContainerpositionbottom( $rootConfig->getExpandedcontentContainerpositionbottom() );
-		$newConfig->setExpandedcontentContainerbottom( $rootConfig->getExpandedcontentContainerbottom() );
-		$newConfig->setExpandedcontentClassbottom( $rootConfig->getExpandedcontentClassbottom() );
-
-		$newConfig->setGeneralRootline( $rootConfig->getGeneralRootline() );
+		foreach ( $this->tcaColumns as $field=>$columns ) {
+			$var = str_replace(' ', '_', $field);
+			$var = GeneralUtility::underscoredToUpperCamelCase($field);
+			$set = 'set'.$var;
+			$get = 'get'.$var;
+			$newConfig->$set( $rootConfig->$get() );
+		}
 
 		return $newConfig;
-	}
-
-
-	/**
-	 * Returns isSiteroot
-	 *
-	 * @return boolean
-	 */
-	protected function isSiteroot()
-	{
-		if ($this->version == 10) {
-			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
-		} else {
-			$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
-		}
-
-		$page = $pageRepository->getPage((int)$_GET['id']);
-
-		if ( $page['is_siteroot'] ) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-
-	/**
-	 * Returns the RootPageUid
-	 *
-	 * @return array
-	 */
-	protected function getRootPageUid()
-	{
-		if ( self::isSiteroot() ) {
-			$rootPageUid = (int)$_GET['id'];
-		} else {
-
-			$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, (int)$_GET['id'])->get();
-
-			$rootPageUid = $rootLineArray[0]['uid'];
-		}
-
-		return $rootPageUid;
 	}
 
 
@@ -551,31 +387,22 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
 	 * @return array
 	 */
-	protected function compareConfig($config)
+	protected function compareConfig(\T3SBS\T3sbootstrap\Domain\Model\Config $config): array
 	{
 		$compare = [];
-		$rootConfig = $this->configRepository->findOneByPid(self::getRootPageUid());
 
-		$fileds = 'getCompany, getHomepageUid, getPageTitle, getPageTitlealign, getPageTitlecontainer, getPageTitleclass, getMetaEnable, getMetaValue, getMetaContainer, getMetaClass, getMetaText, getNavbarEnable, getNavbarEntrylevel, getNavbarLevels, getNavbarExcludeuiduist, getNavbarIncludespacer, getNavbarJustify, getNavbarSectionmenu, getNavbarMegamenu, getNavbarHover, getNavbarClickableparent, getNavbarBrand, getNavbarImage, getNavbarColor, getNavbarShrinkcolorschemes, getNavbarShrinkcolor, getNavbarBackground, getNavbarContainer, getNavbarPlacement, getNavbarAlignment, getNavbarClass, getNavbarToggler, getNavbarBreakpoint, getNavbarOffcanvas, getNavbarHeight, getNavbarSearchbox, getNavbarLangmenu, getJumbotronEnable, getJumbotronBgimage, getJumbotronFluid, getJumbotronSlide, getJumbotronPosition, getJumbotronContainer, getJumbotronContainerposition, getJumbotronClass, getBreadcrumbEnable, getBreadcrumbNotonrootpage, getBreadcrumbFaicon, getBreadcrumbCorner, getBreadcrumbBottom, getBreadcrumbPosition, getBreadcrumbContainer, getBreadcrumbContainerposition, getBreadcrumbClass, getSidebarEnable, getSidebarRightenable, , getSidebarEntrylevel, getSidebarLevels, getSidebarExcludeuiduist, getSidebarIncludespacer, getFooterEnable, getFooterFluid, getFooterSlide, getFooterSticky, getFooterContainer, getFooterContainerposition, getFooterClass, getFooterPid, getExpandedcontentEnabletop, getExpandedcontentSlidetop, getExpandedcontentContainerpositiontop, getExpandedcontentContainertop, getExpandedcontentClasstop, getExpandedcontentEnablebottom, getExpandedcontentSlidebottom, getExpandedcontentContainerpositionbottom, getExpandedcontentContainerbottom, getExpandedcontentClassbottom, getGeneralRootline';
-
-		$filedsArr = GeneralUtility::trimExplode(',', $fileds, 1);
-
+		foreach ( $this->tcaColumns as $field=>$columns ) {
+			$filedsArr[] = 'get'.GeneralUtility::underscoredToUpperCamelCase($field);
+		}
 		foreach ($filedsArr as $field) {
-			if ( $config->$field() !== $rootConfig->$field() ) {
-
+			if ( $config->$field() !== $this->rootConfig->$field() ) {
 				$key = lcfirst(substr($field,3));
-				$rootConfigField = $rootConfig->$field();
-
+				$rootConfigField = $this->rootConfig->$field();
 				if ( $rootConfigField === TRUE ) {
-
 					$compare[$key] = 'enabled';
-
 				} elseif ( $rootConfigField === FALSE ) {
-
 					$compare[$key] = 'disabled';
-
 				} else {
-
 					$compare[$key] = $rootConfigField ?: 'not set';
 				}
 			}
@@ -586,12 +413,49 @@ class ConfigController extends ActionController
 
 
 	/**
-	 * SCSS in the BE
+	 * override config - info in BE Module
 	 *
 	 * @return array
 	 */
-	public function getCustomScss( $file ) {
+	protected function overrideConfig(): array
+	{
+		$override = [];
+		$ts = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
+		foreach ( $this->tcaColumns as $field=>$columns ) {
+			$filedsArr[$field] = 'get'.GeneralUtility::underscoredToUpperCamelCase($field);
+		}
+
+		foreach ($filedsArr as $fKey=>$field) {
+
+			$fKey = GeneralUtility::underscoredToLowerCamelCase($fKey);
+			$tsField = $ts['page.']['10.']['settings.']['config.'][$fKey];
+
+			if ( $tsField != $this->rootConfig->$field() &&	GeneralUtility::isFirstPartOfStr($tsField, '{$bootstrap.config.') != TRUE ) {
+				if ( $this->rootConfig->$field() === TRUE ) {
+					$override[$fKey] = 'enabled';
+				} elseif ( $this->rootConfig->$field() === FALSE ) {
+					$override[$fKey] = 'disabled';
+				} elseif ($this->rootConfig->$field() == '') {
+					$override[$fKey] = 'not set';
+				} else {
+					$override[$fKey] = $tsField;
+				}
+			}
+		}
+
+		return $override;
+	}
+
+
+	/**
+	 * SCSS in the BE
+	 *
+	 * @param string $file
+	 * @return array
+	 */
+	public function getCustomScss( string $file ): array
+	{
 		$customScssDir = $this->settings['customScssPath'] ? $this->settings['customScssPath'] : 'fileadmin/T3SB/SCSS/';
 		$customScssFilePath = GeneralUtility::getFileAbsFileName($customScssDir);
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
@@ -602,9 +466,10 @@ class ConfigController extends ActionController
 				$queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 			 )
 			 ->execute();
+
 		$siteroots = $result->fetchAll();
 		foreach ($siteroots as $key=>$siteroot) {
-			if ( $siteroot['uid'] == $_GET['id'] ) {
+			if ( $siteroot['uid'] == $this->currentUid ) {
 				if ( $key === 0 ) {
 					$customScssFileName = $file.'.scss';
 				} else {
@@ -661,9 +526,11 @@ class ConfigController extends ActionController
 	/**
 	 * Delete files from directory
 	 *
+	 * @param string $directory
 	 * @return void
 	 */
-	public function deleteFilesFromDirectory($directory){
+	public function deleteFilesFromDirectory(string $directory): void
+	{
 		if (is_dir($directory)) {
 			if ($dh = opendir($directory)) {
 				while (($file = readdir($dh)) !== false) {
@@ -682,7 +549,10 @@ class ConfigController extends ActionController
 	 *
 	 * @return void
 	 */
-	public function writeConstants() {
+	public function writeConstants(): void
+	{
+		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
+		$persistenceManager->persistAll();
 
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
 		$rootTemplates = $queryBuilder
@@ -693,60 +563,52 @@ class ConfigController extends ActionController
 			 )
 			 ->execute()->fetchAll();
 
-
 		if ( count($rootTemplates) ) {
-
-			$configRepository = $this->configRepository->findAll();
-
+			$filecontent = '';
 			foreach ($rootTemplates as $key=>$rootTemplate) {
-
-				$import = "@import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants-".$rootTemplate['pid'].".typoscript'";
-
-				$pos = strpos($rootTemplate['constants'], $import);
-
-				if ($pos === FALSE) {
-
-					$setConstants = "# Please do not delete or comment out the following line".PHP_EOL;
-					$setConstants .= $import.PHP_EOL;
-					$setConstants .= $rootTemplate['constants'];
-
-					$update = $queryBuilder
-						->update('sys_template')
-						->where(
-							$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($rootTemplate['uid'], \PDO::PARAM_INT))
-						)
-						->set('constants', $setConstants)
-						->execute();
-				}
-
-				$filecontent = '';
-
-				foreach ( $configRepository as $config ) {
-
+				foreach ( $this->configRepository->findAll() as $config ) {
+					$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $config->getPid())->get();
 					if ( $config->getPid() == $rootTemplate['pid'] ) {
-						$filecontent .= self::getContents($config).PHP_EOL;
 
-					} else {
-
-						$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $config->getPid())->get();
-
-						if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
-
-							if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
-								$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
-							} else {
-								$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
+						if ( count($rootTemplates) == 1 ) {
+							$filecontent .= self::getConstants($config, TRUE).PHP_EOL;
+						} else {
+							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+								$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds]'.PHP_EOL;
+								$filecontent .= self::getConstants($config, TRUE);
+								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 							}
+						}
+					} else {
+						if ( count($rootTemplates) == 1 ) {
+							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
+									$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
+								} else {
+									$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
+								}
+								$filecontent .= self::getConstants($config, FALSE);
+								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
+							}
+						} else {
 
-							$filecontent .= self::getContents($config);
-							$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
+							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+
+								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
+									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && '.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
+								} else {
+									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && page["uid"] == '.$config->getPid().']'.PHP_EOL;
+								}
+								$filecontent .= self::getConstants($config, FALSE);
+								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
+							}
 						}
 					}
 				}
 
 				$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 't3sbconstants-'.$rootTemplate['pid'].'.typoscript';
+				$customFileName = 't3sbconstants.typoscript';
 				$customFile = $customPath.$customFileName;
 
 				if (file_exists($customFile)) {
@@ -757,10 +619,8 @@ class ConfigController extends ActionController
 				}
 
 				GeneralUtility::writeFile($customFile, $filecontent);
-
 			}
 		}
-
 	}
 
 
@@ -768,101 +628,233 @@ class ConfigController extends ActionController
 	 * Get the data from DB
 	 *
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param bool $isRoot
 	 * @return string
 	 */
-	private function getContents(\T3SBS\T3sbootstrap\Domain\Model\Config $config) {
+	 private function getConstants(\T3SBS\T3sbootstrap\Domain\Model\Config $config, $isRoot): string
+	 {
+		$constants = 'bootstrap.config.uid = '.$config->getUid() .PHP_EOL;
 
-		$constants = 'bootstrap.db.uid = '.$config->getUid() .PHP_EOL;
-		$constants .= 'bootstrap.db.company = '.$config->getCompany() .PHP_EOL;
-		$constants .= 'bootstrap.db.homepage_uid = '.$config->getHomepageUid() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.page_title = '.$config->getPageTitle() .PHP_EOL;
-		$constants .= 'bootstrap.db.page_titlealign = '.$config->getPageTitlealign() .PHP_EOL;
-		$constants .= 'bootstrap.db.page_titlecontainer = '.$config->getPageTitlecontainer() .PHP_EOL;
-		$constants .= 'bootstrap.db.page_titleclass = '.$config->getPageTitleclass() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.meta_enable = '.$config->getMetaEnable() .PHP_EOL;
-		$constants .= 'bootstrap.db.meta_value = '.$config->getMetaValue() .PHP_EOL;
-		$constants .= 'bootstrap.db.meta_container = '.$config->getMetaContainer() .PHP_EOL;
-		$constants .= 'bootstrap.db.meta_class = '.$config->getMetaClass() .PHP_EOL;
-		$constants .= 'bootstrap.db.meta_text = '.$config->getMetaText() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.navbar_enable = '.$config->getNavbarEnable() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_entrylevel = '.$config->getNavbarEntrylevel() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_levels = '.$config->getNavbarLevels() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_excludeuiduist = '.$config->getNavbarExcludeuiduist() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_includespacer = '.$config->getNavbarIncludespacer() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_justify = '.$config->getNavbarJustify() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_sectionmenu = '.$config->getNavbarSectionmenu() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_megamenu = '.$config->getNavbarMegamenu() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_hover = '.$config->getNavbarHover() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_clickableparent = '.$config->getNavbarClickableparent() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_brand = '.$config->getNavbarBrand() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_image = '.$config->getNavbarImage() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_color = '.$config->getNavbarColor() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_background = '.$config->getNavbarBackground() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_container = '.$config->getNavbarContainer() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_placement = '.$config->getNavbarPlacement() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_alignment = '.$config->getNavbarAlignment() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_class = '.$config->getNavbarClass() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_toggler = '.$config->getNavbarToggler() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_breakpoint = '.$config->getNavbarBreakpoint() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_offcanvas = '.$config->getNavbarOffcanvas() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_height = '.$config->getNavbarHeight() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_searchbox = '.$config->getNavbarSearchbox() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_langmenu = '.$config->getNavbarLangmenu() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_shrinkcolorschemes = '.$config->getNavbarShrinkcolorschemes() .PHP_EOL;
-		$constants .= 'bootstrap.db.navbar_shrinkcolor = '.$config->getNavbarShrinkcolor() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.jumbotron_enable = '.$config->getJumbotronEnable() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_bgimage = '.$config->getJumbotronBgimage() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_fluid = '.$config->getJumbotronFluid() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_slide = '.$config->getJumbotronSlide() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_position = '.$config->getJumbotronPosition() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_container = '.$config->getJumbotronContainer() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_containerposition = '.$config->getJumbotronContainerposition() .PHP_EOL;
-		$constants .= 'bootstrap.db.jumbotron_class = '.$config->getJumbotronClass() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.breadcrumb_enable = '.$config->getBreadcrumbEnable() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_notonrootpage = '.$config->getBreadcrumbNotonrootpage() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_faicon = '.$config->getBreadcrumbFaicon() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_corner = '.$config->getBreadcrumbCorner() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_bottom = '.$config->getBreadcrumbBottom() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_position = '.$config->getBreadcrumbPosition() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_container = '.$config->getBreadcrumbContainer() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_containerposition = '.$config->getBreadcrumbContainerposition() .PHP_EOL;
-		$constants .= 'bootstrap.db.breadcrumb_class = '.$config->getBreadcrumbClass() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.sidebar_enable = '.$config->getSidebarEnable() .PHP_EOL;
-		$constants .= 'bootstrap.db.sidebar_rightenable = '.$config->getSidebarRightenable() .PHP_EOL;
-		$constants .= 'bootstrap.db.sidebar_levels = '.$config->getSidebarEntrylevel() .PHP_EOL;
-		$constants .= 'bootstrap.db.sidebar_entrylevel = '.$config->getSidebarEntrylevel() .PHP_EOL;
-		$constants .= 'bootstrap.db.sidebar_excludeuiduist = '.$config->getSidebarExcludeuiduist() .PHP_EOL;
-		$constants .= 'bootstrap.db.sidebar_includespacer = '.$config->getSidebarIncludespacer() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.footer_enable = '.$config->getFooterEnable() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_fluid = '.$config->getFooterFluid() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_slide = '.$config->getFooterSlide() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_sticky = '.$config->getFooterSticky() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_container = '.$config->getFooterContainer() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_containerposition = '.$config->getFooterContainerposition() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_class = '.$config->getFooterClass() .PHP_EOL;
-		$constants .= 'bootstrap.db.footer_pid = '.$config->getFooterPid() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.expandedcontent_enabletop = '.$config->getexpandedcontentEnabletop() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_slidetop = '.$config->getExpandedcontentSlidetop() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_containerpositiontop = '.$config->getExpandedcontentContainerpositiontop() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_containertop = '.$config->getExpandedcontentContainertop() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_classtop = '.$config->getExpandedcontentClasstop() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_enablebottom = '.$config->getExpandedcontentEnablebottom() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_slidebottom = '.$config->getExpandedcontentSlidebottom() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_containerpositionbottom = '.$config->getExpandedcontentContainerpositionbottom() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_containerbottom = '.$config->getExpandedcontentContainerbottom() .PHP_EOL;
-		$constants .= 'bootstrap.db.expandedcontent_classbottom = '.$config->getExpandedcontentClassbottom() .PHP_EOL;
-
-		$constants .= 'bootstrap.db.general_rootline = '.$config->getGeneralRootline() .PHP_EOL;
+		foreach ( $this->tcaColumns as $field=>$columns ) {
+			$field = GeneralUtility::underscoredToLowerCamelCase($field);
+			$var = str_replace(' ', '_', $field);
+			$getField = 'get'.GeneralUtility::underscoredToUpperCamelCase($field);
+			$value = $config->$getField() == '' ? 0 : $config->$getField();
+			if ( $var == 'jumbotronCarouselPause' && $value == 1 ) {
+				$value = 'hover';
+			} elseif ( $var == 'jumbotronCarouselPause' && $value == 0 ) {
+				$value = '';
+			}
+			if ($isRoot){
+				$constants .= 'bootstrap.config.'.$var.' = '.$value .PHP_EOL;
+			} else {
+				if ($config->$getField() != $this->rootConfig->$getField()) {
+					$constants .= 'bootstrap.config.'.$var.' = '.$value .PHP_EOL;
+				}
+			}
+		}
 
 		return $constants;
+	}
+
+
+	/**
+	 * Get the Tca Columns
+	 *
+	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @return array
+	 */
+	 private function getTcaColumns(): array
+	 {
+		foreach ( $this->tcaColumns as $key=>$column ) {
+			if ($column['accordion_id']) {
+				if ( $column['accordion_sub'] ) {
+					$sub = $column['accordion_sub'];
+					$tca[$column['accordion_id']][$sub][$key] = $column;
+					$tca[$column['accordion_id']][$sub][$key]['property'] = GeneralUtility::underscoredToLowerCamelCase($key);
+					$tca[$column['accordion_id']][$sub][$key]['type'] = ucfirst($column['config']['type']);
+					$tca[$column['accordion_id']][$sub][$key]['noSub'] = FALSE;
+				} else {
+					$tca[$column['accordion_id']][$key] = $column;
+					$tca[$column['accordion_id']][$key]['property'] = GeneralUtility::underscoredToLowerCamelCase($key);
+					$tca[$column['accordion_id']][$key]['type'] = ucfirst($column['config']['type']);
+					$tca[$column['accordion_id']][$key]['noSub'] = TRUE;
+				}
+			}
+		}
+
+		return $tca;
+	}
+
+
+	/**
+	 * Get the Utility Colors
+	 *
+	 * @return array
+	 */
+	 private function getUtilityColors(): array
+	 {
+		$defaultUtilColorsList = '$white,$gray-100,$gray-200,$gray-300,$gray-400,$gray-500,$gray-600,$gray-700,$gray-800,$gray-900,$black,$blue,$indigo,$purple,$pink,$red,$orange,$yellow,$green,$teal,$cyan,$primary,$secondary,$success,$info,$warning,$danger,$light,$dark';
+		$utilityColors = [];
+		$colors = [];
+		$customScss = self::getCustomScss('custom-variables');
+		if ($customScss['custom-variables']) {
+			$customScssArr = GeneralUtility::trimExplode(';', $customScss['custom-variables']);
+			foreach( $customScssArr as $customvariables ) {
+				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
+				if ( GeneralUtility::isFirstPartOfStr($scsscolor[1], '$')
+				 && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
+					$utilColors[$scsscolor[0]] = $scsscolor[1];
+				} elseif (GeneralUtility::isFirstPartOfStr($scsscolor[1], '#')) {
+					if (GeneralUtility::isFirstPartOfStr($scsscolor[0], '$')) {
+						$colors[$scsscolor[0]] = $scsscolor[1];
+					}
+				}
+			}
+			if (is_array($utilColors)) {
+				foreach($utilColors as $key=>$utiColor) {
+					if ( GeneralUtility::isFirstPartOfStr($utiColor, '$') ) {
+						$utilityColors[$key] = $colors[$utiColor];
+					}
+				}
+			}
+		}
+
+		$variablesSCSS = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
+		$variablesSCSS = GeneralUtility::getFileAbsFileName($variablesSCSS);
+		$variablesSCSS = GeneralUtility::getURL($variablesSCSS);
+		$defaultUtilityColors = [];
+		$defaultcolors = [];
+
+		foreach ( GeneralUtility::trimExplode(';', $variablesSCSS) as $defaultVariables) {
+
+			$defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
+			if ($defaultScssColor[1] && GeneralUtility::inList($defaultUtilColorsList, trim($defaultScssColor[0]))) {
+				if ( GeneralUtility::isFirstPartOfStr($defaultScssColor[1], '$')) {
+					// variable has variable
+				 	$defaultUtilColors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
+				} elseif (GeneralUtility::isFirstPartOfStr($defaultScssColor[1], '#')) {
+					if (GeneralUtility::isFirstPartOfStr($defaultScssColor[0], '$')) {
+						$defaultcolors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
+					}
+				}
+			}
+		}
+
+		if (is_array($defaultUtilColors)) {
+			foreach($defaultUtilColors as $key=>$defaultUtiColor) {
+				$defaultUtilityColors[$key] = $defaultcolors[$defaultUtiColor];
+			}
+		}
+
+		if ( is_array($utilityColors) && is_array($colors) ) {
+			$colorArr = array_merge($defaultUtilityColors, $defaultcolors, $utilityColors, $colors);
+			ksort($colorArr);
+			return $colorArr;
+		} else {
+			return [];
+		}
+	}
+
+
+	/**
+	 * Mark the Upgrade Wizard as undone
+	 *
+	 * @return void
+	 */
+	protected function wizardsMarkedUndone(): void
+	{
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_domain_model_config');
+		$statements = $queryBuilder
+				 ->select('uid')
+				 ->from('tx_t3sbootstrap_domain_model_config')
+				 ->execute()
+				 ->fetchAll();
+
+		foreach ($statements as $statement) {
+			$recordId = (int)$statement['uid'];
+			$queryBuilder
+				  ->update('tx_t3sbootstrap_domain_model_config')
+				  ->where(
+					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
+				  )
+				  ->set('updated', 0)
+				  ->set('gridupdated', 0)
+
+				  ->execute();
+		}
+	}
+
+
+	/**
+	 * Returns some default settings for new root configuration
+	 *
+	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
+	* @return \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
+	 */
+	protected function setDefaults($newConfig): \T3SBS\T3sbootstrap\Domain\Model\Config
+	{
+		$newConfig->setHomepageUid($this->currentUid);
+		$newConfig->setPageTitle( 'jumbotron' );
+		$newConfig->setPageTitlealign( 'center' );
+		$newConfig->setNavbarImage($this->settings['defaultNavbarImagePath']);
+		$newConfig->setNavbarEnable( 'light' );
+		$newConfig->setNavbarLevels( 4 );
+		$newConfig->setNavbarColor( 'warning' );
+		$newConfig->setNavbarAlignment( 'left' );
+		$newConfig->setNavbarBrand( 'imgText' );
+		$newConfig->setNavbarContainer( 'inside' );
+		$newConfig->setJumbotronEnable( 1 );
+		$newConfig->setJumbotronFluid( 1 );
+		$newConfig->setJumbotronSlide( 0 );
+		$newConfig->setJumbotronPosition( 'below' );
+		$newConfig->setJumbotronContainer( 'container' );
+		$newConfig->setJumbotronContainerposition( 'Inside' );
+		$newConfig->setJumbotronCarouselInterval(5000);
+		$newConfig->setJumbotronCarouselPause(0);
+		$newConfig->setBreadcrumbEnable( 1 );
+		$newConfig->setBreadcrumbCorner( 1 );
+		$newConfig->setBreadcrumbPosition( 'belowJum' );
+		$newConfig->setBreadcrumbContainer( 'container' );
+		$newConfig->setSidebarLevels( 4 );
+		$newConfig->setFooterEnable( 1 );
+		$newConfig->setFooterFluid( 1 );
+		$newConfig->setFooterSlide( 0 );
+		$newConfig->setFooterContainer( 'container' );
+		$newConfig->setFooterSticky( 1 );
+		$newConfig->setFooterContainerposition( 'inside' );
+		$newConfig->setFooterClass( 'bg-dark text-light' );
+		$newConfig->setCompress( 1 );
+		$newConfig->setDisablePrefixComment(1);
+		$newConfig->setGlobalPaddingTop( 'pt-5' );
+		$newConfig->setLoadingSpinnerColor( 'primary' );
+		$newConfig->setLightboxSelection(1);
+		$newConfig->setShrinkingNavPadding( '5' );
+		$newConfig->setSidebarMenuPosition( 'above' );
+		$newConfig->setLangMenuWithFaIcon( 1 );
+		$newConfig->setDateFormat( 'd.m.Y' );
+		$newConfig->setSubheaderColor( 'secondary' );
+		$newConfig->setFaLinkIcons( 1 );
+		$newConfig->setSectionmenuAnchorOffset(29);
+		$newConfig->setSectionmenuScrollspyOffset(130);
+		$newConfig->setUpdated(1);
+		$newConfig->setGridupdated(1);
+		$newConfig->setNavbarLangFlags(1);
+
+		return $newConfig;
+	}
+
+
+	/**
+	 * Returns the currently configured "site" if a site is configured (= resolved) in the current request.
+	 *
+	 * @return SiteInterface
+	 */
+	protected function getCurrentSite(): SiteInterface
+	{
+		$matcher = GeneralUtility::makeInstance(SiteMatcher::class);
+		return $matcher->matchByPageId((int) GeneralUtility::_GET('id'));
 	}
 
 

@@ -4,7 +4,6 @@ page {
 	10 = FLUIDTEMPLATE
 	10 {
 		file = EXT:t3sbootstrap/Resources/Private/Templates/Main.html
-
 		partialRootPaths >
 		partialRootPaths {
 			0 = EXT:fluid_styled_content/Resources/Private/Partials/
@@ -26,139 +25,163 @@ page {
 		variables {
 			be_layout = TEXT
 			be_layout.value < temp.pagelayout
-			headerslider < lib.t3sheaderslider
-			headerslider.if.isTrue = {$bootstrap.ext.headerslider}
 		}
-		settings	{
+		settings {
+			// from EM config
+			expandedContent = {$bootstrap.extconf.expandedContent}
+			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
+			codesnippet = {$bootstrap.extconf.codesnippet}
+			lazyLoad = {$bootstrap.extconf.lazyLoad}
+			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
+			webp = {$bootstrap.extconf.webp}
+			// various not in DB
+			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
+			backToTopTitle = {$bootstrap.backToTopTitle}
+			backToTopClass = {$bootstrap.backToTopClass}
+			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
+			gtm = {$bootstrap.gtm}
 			navbar {
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}
 				image.height = {$bootstrap.navbar.image.height}
 				image.altText = {$bootstrap.navbar.image.altText}
-				extraRow = {$bootstrap.navbar.extraRow}
 				subdropdown.twoColumns = {$bootstrap.navbar.subdropdown.twoColumns}
 				searchboxLink = {$bootstrap.navbar.searchboxLink}
 				feUserName = {$bootstrap.navbar.feUserName}
-				langFlags = {$bootstrap.navbar.langFlags}
-				dropdownAnimate = {$bootstrap.navbar.dropdownAnimate}
+				sm = {$bootstrap.navbar.breakpoint.sm}
+				md = {$bootstrap.navbar.breakpoint.md}
+				lg = {$bootstrap.navbar.breakpoint.lg}
+				xl = {$bootstrap.navbar.breakpoint.xl}
 			}
-			indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
-			configOverride = {$bootstrap.extconf.configOverride}
-			expandedContent = {$bootstrap.extconf.expandedContent}
-			date.format = {$bootstrap.config.dateFormat}
-			lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
-			contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
-			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
-			slideLeftAside = {$bootstrap.config.slideLeftAside}
-			slideRightAside = {$bootstrap.config.slideRightAside}
-			globalPaddingTop = {$bootstrap.config.globalPaddingTop}
-			pageContentExtraClass = {$bootstrap.config.pageContentExtraClass}
-			mainExtraClass = {$bootstrap.config.mainExtraClass}
-			asideExtraClass = {$bootstrap.config.asideExtraClass}
-			sidebarMenuPosition = {$bootstrap.config.sidebarMenuPosition}
 			pages {
 				override {
 					smallColumns = {$pages.override.smallColumns}
 					breakpoint = {$pages.override.breakpoint}
 				}
 			}
-			loadingSpinner = {$bootstrap.config.loadingSpinner}
-			loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
-			shrinkingNavPadding = {$bootstrap.config.shrinkingNavPadding}
-			carousel.interval = {$bootstrap.carousel.interval}
-			carousel.pause = {$bootstrap.carousel.pause}
-			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
-			lightboxSelection = {$bootstrap.config.lightboxSelection}
-			backgroundImageEnable =	{$bootstrap.config.backgroundImage.enable}
-			backgroundImageSlide =  {$bootstrap.config.backgroundImage.slide}
-			backToTopTitle = {$bootstrap.backToTopTitle}
-			backToTopClass = {$bootstrap.backToTopClass}
-			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
-			langMenuWithFaIcon = {$bootstrap.config.langMenuWithFaIcon}
-
-			db {
-				uid = {$bootstrap.db.uid}
-				company = {$bootstrap.db.company}
-				homepage_uid = {$bootstrap.db.homepage_uid}
-				page_title = {$bootstrap.db.page_title}
-				page_titlealign = {$bootstrap.db.page_titlealign}
-				page_titlecontainer = {$bootstrap.db.page_titlecontainer}
-				page_titleclass = {$bootstrap.db.page_titleclass}
-				meta_enable = {$bootstrap.db.meta_enable}
-				meta_value = {$bootstrap.db.meta_value}
-				meta_container = {$bootstrap.db.meta_container}
-				meta_class = {$bootstrap.db.meta_class}
-				meta_text = {$bootstrap.db.meta_text}
-				navbar_enable = {$bootstrap.db.navbar_enable}
-				navbar_entrylevel = {$bootstrap.db.navbar_entrylevel}
-				navbar_levels = {$bootstrap.db.navbar_levels}
-				navbar_excludeuiduist = {$bootstrap.db.navbar_excludeuiduist}
-				navbar_includespacer = {$bootstrap.db.navbar_includespacer}
-				navbar_justify = {$bootstrap.db.navbar_justify}
-				navbar_sectionmenu = {$bootstrap.db.navbar_sectionmenu}
-				navbar_megamenu = {$bootstrap.db.navbar_megamenu}
-				navbar_hover = {$bootstrap.db.navbar_hover}
-				navbar_clickableparent = {$bootstrap.db.navbar_clickableparent}
-				navbar_brand = {$bootstrap.db.navbar_brand}
-				navbar_image = {$bootstrap.db.navbar_image}
-				navbar_color = {$bootstrap.db.navbar_color}
-				navbar_background = {$bootstrap.db.navbar_background}
-				navbar_container = {$bootstrap.db.navbar_container}
-				navbar_placement = {$bootstrap.db.navbar_placement}
-				navbar_alignment = {$bootstrap.db.navbar_alignment}
-				navbar_class = {$bootstrap.db.navbar_class}
-				navbar_toggler = {$bootstrap.db.navbar_toggler}
-				navbar_breakpoint = {$bootstrap.db.navbar_breakpoint}
-				navbar_offcanvas = {$bootstrap.db.navbar_offcanvas}
-				navbar_height = {$bootstrap.db.navbar_height}
-				navbar_searchbox = {$bootstrap.db.navbar_searchbox}
-				navbar_langmenu = {$bootstrap.db.navbar_langmenu}
-				navbar_shrinkcolorschemes = {$bootstrap.db.navbar_shrinkcolorschemes}
-				navbar_shrinkcolor = {$bootstrap.db.navbar_shrinkcolor}
-				jumbotron_enable = {$bootstrap.db.jumbotron_enable}
-				jumbotron_bgimage = {$bootstrap.db.jumbotron_bgimage}
-				jumbotron_fluid = {$bootstrap.db.jumbotron_fluid}
-				jumbotron_slide = {$bootstrap.db.jumbotron_slide}
-				jumbotron_position = {$bootstrap.db.jumbotron_position}
-				jumbotron_container = {$bootstrap.db.jumbotron_container}
-				jumbotron_containerposition = {$bootstrap.db.jumbotron_containerposition}
-				jumbotron_class = {$bootstrap.db.jumbotron_class}
-				breadcrumb_enable = {$bootstrap.db.breadcrumb_enable}
-				breadcrumb_notonrootpage = {$bootstrap.db.breadcrumb_notonrootpage}
-				breadcrumb_faicon = {$bootstrap.db.breadcrumb_faicon}
-				breadcrumb_corner = {$bootstrap.db.breadcrumb_corner}
-				breadcrumb_bottom = {$bootstrap.db.breadcrumb_bottom}
-				breadcrumb_position = {$bootstrap.db.breadcrumb_position}
-				breadcrumb_container = {$bootstrap.db.breadcrumb_container}
-				breadcrumb_containerposition = {$bootstrap.db.breadcrumb_containerposition}
-				breadcrumb_class = {$bootstrap.db.breadcrumb_class}
-				sidebar_enable = {$bootstrap.db.sidebar_enable}
-				sidebar_rightenable = {$bootstrap.db.sidebar_rightenable}
-				sidebar_levels = {$bootstrap.db.sidebar_levels}
-				sidebar_entrylevel = {$bootstrap.db.sidebar_entrylevel}
-				sidebar_excludeuiduist = {$bootstrap.db.sidebar_excludeuiduist}
-				sidebar_includespacer = {$bootstrap.db.sidebar_includespacer}
-				footer_enable = {$bootstrap.db.footer_enable}
-				footer_fluid = {$bootstrap.db.footer_fluid}
-				footer_slide = {$bootstrap.db.footer_slide}
-				footer_sticky = {$bootstrap.db.footer_sticky}
-				footer_container = {$bootstrap.db.footer_container}
-				footer_containerposition = {$bootstrap.db.footer_containerposition}
-				footer_class = {$bootstrap.db.footer_class}
-				footer_pid = {$bootstrap.db.footer_pid}
-				expandedcontent_enabletop = {$bootstrap.db.expandedcontent_enabletop}
-				expandedcontent_slidetop = {$bootstrap.db.expandedcontent_slidetop}
-				expandedcontent_containerpositiontop = {$bootstrap.db.expandedcontent_containerpositiontop}
-				expandedcontent_containertop = {$bootstrap.db.expandedcontent_containertop}
-				expandedcontent_classtop = {$bootstrap.db.expandedcontent_classtop}
-				expandedcontent_enablebottom = {$bootstrap.db.expandedcontent_enablebottom}
-				expandedcontent_slidebottom = {$bootstrap.db.expandedcontent_slidebottom}
-				expandedcontent_containerpositionbottom = {$bootstrap.db.expandedcontent_containerpositionbottom}
-				expandedcontent_containerbottom = {$bootstrap.db.expandedcontent_containerbottom}
-				expandedcontent_classbottom = {$bootstrap.db.expandedcontent_classbottom}
-				general_rootline = {$bootstrap.db.general_rootline}
+			config {
+				// from DB
+				uid = {$bootstrap.config.uid}
+				company = {$bootstrap.config.company}
+				homepageUid = {$bootstrap.config.homepageUid}
+				pageTitle = {$bootstrap.config.pageTitle}
+				pageTitlealign = {$bootstrap.config.pageTitlealign}
+				pageTitlecontainer = {$bootstrap.config.pageTitlecontainer}
+				pageTitleclass = {$bootstrap.config.pageTitleclass}
+				metaEnable = {$bootstrap.config.metaEnable}
+				metaValue = {$bootstrap.config.metaValue}
+				metaContainer = {$bootstrap.config.metaContainer}
+				metaClass = {$bootstrap.config.metaClass}
+				metaText = {$bootstrap.config.metaText}
+				navbarEnable = {$bootstrap.config.navbarEnable}
+				navbarEntrylevel = {$bootstrap.config.navbarEntrylevel}
+				navbarLevels = {$bootstrap.config.navbarLevels}
+				navbarExcludeuiduist = {$bootstrap.config.navbarExcludeuiduist}
+				navbarIncludespacer = {$bootstrap.config.navbarIncludespacer}
+				navbarJustify = {$bootstrap.config.navbarJustify}
+				navbarSectionmenu = {$bootstrap.config.navbarSectionmenu}
+				navbarMegamenu = {$bootstrap.config.navbarMegamenu}
+				navbarHover = {$bootstrap.config.navbarHover}
+				navbarClickableparent = {$bootstrap.config.navbarClickableparent}
+				navbarDropdownAnimate = {$bootstrap.config.navbarDropdownAnimate}
+				navbarBrand = {$bootstrap.config.navbarBrand}
+				navbarImage = {$bootstrap.config.navbarImage}
+				navbarColor = {$bootstrap.config.navbarColor}
+				navbarBackground = {$bootstrap.config.navbarBackground}
+				navbarContainer = {$bootstrap.config.navbarContainer}
+				navbarPlacement = {$bootstrap.config.navbarPlacement}
+				navbarAlignment = {$bootstrap.config.navbarAlignment}
+				navbarClass = {$bootstrap.config.navbarClass}
+				navbarToggler = {$bootstrap.config.navbarToggler}
+				navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
+				navbarOffcanvas = {$bootstrap.config.navbarOffcanvas}
+				navbarHeight = {$bootstrap.config.navbarHeight}
+				navbarSearchbox = {$bootstrap.config.navbarSearchbox}
+				navbarLangmenu = {$bootstrap.config.navbarLangmenu}
+				navbarShrinkcolorschemes = {$bootstrap.config.navbarShrinkcolorschemes}
+				navbarShrinkcolor = {$bootstrap.config.navbarShrinkcolor}
+				navbarRightMenuUidList = {$bootstrap.config.navbarRightMenuUidList}
+				navbarExtraRow = {$bootstrap.config.navbarExtraRow}
+				navbarLangFlags = {$bootstrap.config.navbarLangFlags}
+				jumbotronEnable = {$bootstrap.config.jumbotronEnable}
+				jumbotronBgimage = {$bootstrap.config.jumbotronBgimage}
+				jumbotronFluid = {$bootstrap.config.jumbotronFluid}
+				jumbotronSlide = {$bootstrap.config.jumbotronSlide}
+				jumbotronPosition = {$bootstrap.config.jumbotronPosition}
+				jumbotronContainer = {$bootstrap.config.jumbotronContainer}
+				jumbotronContainerposition = {$bootstrap.config.jumbotronContainerposition}
+				jumbotronClass = {$bootstrap.config.jumbotronClass}
+				jumbotronCarouselInterval = {$bootstrap.config.jumbotronCarouselInterval}
+				jumbotronCarouselPause = {$bootstrap.config.jumbotronCarouselPause}
+				breadcrumbEnable = {$bootstrap.config.breadcrumbEnable}
+				breadcrumbNotonrootpage = {$bootstrap.config.breadcrumbNotonrootpage}
+				breadcrumbFaicon = {$bootstrap.config.breadcrumbFaicon}
+				breadcrumbCorner = {$bootstrap.config.breadcrumbCorner}
+				breadcrumbBottom = {$bootstrap.config.breadcrumbBottom}
+				breadcrumbPosition = {$bootstrap.config.breadcrumbPosition}
+				breadcrumbContainer = {$bootstrap.config.breadcrumbContainer}
+				breadcrumbContainerposition = {$bootstrap.config.breadcrumbContainerposition}
+				breadcrumbClass = {$bootstrap.config.breadcrumbClass}
+				sidebarEnable = {$bootstrap.config.sidebarEnable}
+				sidebarRightenable = {$bootstrap.config.sidebarRightenable}
+				sidebarLevels = {$bootstrap.config.sidebarLevels}
+				sidebarEntrylevel = {$bootstrap.config.sidebarEntrylevel}
+				sidebarExcludeuiduist = {$bootstrap.config.sidebarExcludeuiduist}
+				sidebarIncludespacer = {$bootstrap.config.sidebarIncludespacer}
+				sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
+				footerEnable = {$bootstrap.config.footerEnable}
+				footerFluid = {$bootstrap.config.footerFluid}
+				footerSlide = {$bootstrap.config.footerSlide}
+				footerSticky = {$bootstrap.config.footerSticky}
+				footerContainer = {$bootstrap.config.footerContainer}
+				footerContainerposition = {$bootstrap.config.footerContainerposition}
+				footerClass = {$bootstrap.config.footerClass}
+				footerPid = {$bootstrap.config.footerPid}
+				expandedcontentEnabletop = {$bootstrap.config.expandedcontentEnabletop}
+				expandedcontentSlidetop = {$bootstrap.config.expandedcontentSlidetop}
+				expandedcontentContainerpositiontop = {$bootstrap.config.expandedcontentContainerpositiontop}
+				expandedcontentContainertop = {$bootstrap.config.expandedcontentContainertop}
+				expandedcontentClasstop = {$bootstrap.config.expandedcontentClasstop}
+				expandedcontentEnablebottom = {$bootstrap.config.expandedcontentEnablebottom}
+				expandedcontentSlidebottom = {$bootstrap.config.expandedcontentSlidebottom}
+				expandedcontentContainerpositionbottom = {$bootstrap.config.expandedcontentContainerpositionbottom}
+				expandedcontentContainerbottom = {$bootstrap.config.expandedcontentContainerbottom}
+				expandedcontentClassbottom = {$bootstrap.config.expandedcontentClassbottom}
+				generalRootline = {$bootstrap.config.generalRootline}
+				contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
+				jqueryHeader = {$bootstrap.config.jqueryHeader}
+				compress = {$bootstrap.config.compress}
+				disablePrefixComment = {$bootstrap.config.disablePrefixComment}
+				containerError = {$bootstrap.config.containerError}
+				slideLeftAside = {$bootstrap.config.slideLeftAside}
+				slideRightAside = {$bootstrap.config.slideRightAside}
+				pageContentExtraClass = {$bootstrap.config.pageContentExtraClass}
+				bodyExtraClass = {$bootstrap.config.bodyExtraClass}
+				asideExtraClass = {$bootstrap.config.asideExtraClass}
+				mainExtraClass = {$bootstrap.config.mainExtraClass}
+				globalPaddingTop = {$bootstrap.config.globalPaddingTop}
+				stickyFooterExtraPadding = {$bootstrap.config.stickyFooterExtraPadding}
+				contentMarginTop = {$bootstrap.config.contentMarginTop}
+				loadingSpinner = {$bootstrap.config.loadingSpinner}
+				loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
+				lightboxSelection = {$bootstrap.config.lightboxSelection}
+				magnifying = {$bootstrap.config.magnifying}
+				sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
+				sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
+				sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
+				backgroundImageEnable = {$bootstrap.config.backgroundImageEnable}
+				backgroundImageSlide = {$bootstrap.config.backgroundImageSlide}
+				shrinkingNavPadding = {$bootstrap.config.shrinkingNavPadding}
+				sidebarMenuPosition = {$bootstrap.config.sidebarMenuPosition}
+				langMenuWithFaIcon = {$bootstrap.config.langMenuWithFaIcon}
+				subheaderColor = {$bootstrap.config.subheaderColor}
+				dateFormat = {$bootstrap.config.dateFormat}
+				favicon = {$bootstrap.config.favicon}
+				faLinkIcons = {$bootstrap.config.faLinkIcons}
+				cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
+				lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
+				recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
 			}
-
 		}
 		dataProcessing {
 
@@ -168,28 +191,28 @@ page {
 			10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
 			10 {
 				entryLevel.cObject = TEXT
-				entryLevel.cObject.value = {$bootstrap.db.navbar_entrylevel}
-				entryLevel.cObject.override = {$bootstrap.config.navbar_entrylevel}
-				entryLevel.cObject.override.if.isTrue = {$bootstrap.config.navbar_entrylevel}
+				entryLevel.cObject.value = {$bootstrap.config.navbarEntrylevel}
+				entryLevel.cObject.override = {$bootstrap.config.navbarEntrylevel}
+				entryLevel.cObject.override.if.isTrue = {$bootstrap.config.navbarEntrylevel}
 
 				levels.cObject = TEXT
-				levels.cObject.value = {$bootstrap.db.navbar_levels}				
-				levels.cObject.override = {$bootstrap.config.navbar_levels}
-				levels.cObject.override.if.isTrue = {$bootstrap.config.navbar_levels}
+				levels.cObject.value = {$bootstrap.config.navbarLevels}
+				levels.cObject.override = {$bootstrap.config.navbarLevels}
+				levels.cObject.override.if.isTrue = {$bootstrap.config.navbarLevels}
 
 				excludeUidList.cObject = TEXT
-				excludeUidList.cObject.value = {$bootstrap.db.navbar_excludeuiduist}
-				excludeUidList.cObject.override = {$bootstrap.config.navbar_excludeuiduist}
-				excludeUidList.cObject.override.if.isTrue = {$bootstrap.config.navbar_excludeuiduist}
+				excludeUidList.cObject.value = {$bootstrap.config.navbarExcludeuiduist}
+				excludeUidList.cObject.override = {$bootstrap.config.navbarExcludeuiduist}
+				excludeUidList.cObject.override.if.isTrue = {$bootstrap.config.navbarExcludeuiduist}
 
 				includeSpacer.cObject = TEXT
-				includeSpacer.cObject.value = {$bootstrap.db.navbar_includespacer}
-				includeSpacer.cObject.override = {$bootstrap.config.navbar_includespacer}
-				includeSpacer.cObject.override.if.isTrue = {$bootstrap.config.navbar_includespacer}
+				includeSpacer.cObject.value = {$bootstrap.config.navbarIncludespacer}
+				includeSpacer.cObject.override = {$bootstrap.config.navbarIncludespacer}
+				includeSpacer.cObject.override.if.isTrue = {$bootstrap.config.navbarIncludespacer}
 
 				as = navbarMenu
 			}
-			10.if.isFalse.value = {$bootstrap.db.navbar_sectionmenu}
+			10.if.isFalse.value = {$bootstrap.config.navbarSectionmenu}
 
 			#
 			# NavBar-RIGHT / Main Navigation
@@ -197,10 +220,10 @@ page {
 			11 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
 			11 {
 				special = list
-				special.value = {$bootstrap.navbar.rightMenuUidList}
+				special.value = {$bootstrap.config.navbarRightMenuUidList}
 				as = navbarMenuRight
 			}
-			11.if.isTrue = {$bootstrap.navbar.rightMenuUidList}
+			11.if.isTrue = {$bootstrap.config.navbarRightMenuUidList}
 
 			#
 			# Pagebrowser
@@ -232,25 +255,25 @@ page {
 			20 {
 				entryLevel.cObject = TEXT
 				entryLevel.cObject {
-					value = {$bootstrap.db.sidebar_entrylevel}
+					value = {$bootstrap.config.sidebarEntrylevel}
 					override = -1
 					override.if {
 						equals = 99
-						value = {$bootstrap.db.sidebar_entrylevel}
+						value = {$bootstrap.config.sidebarEntrylevel}
 					}
 				}
 				levels.cObject = TEXT
-				levels.cObject.value = {$bootstrap.db.sidebar_levels}
-				levels.cObject.override = {$bootstrap.config.sidebar_levels}
-				levels.cObject.override.if.isTrue = {$bootstrap.config.sidebar_levels}
+				levels.cObject.value = {$bootstrap.config.sidebarLevels}
+				levels.cObject.override = {$bootstrap.config.sidebarLevels}
+				levels.cObject.override.if.isTrue = {$bootstrap.config.sidebarLevels}
 				excludeUidList.cObject = TEXT
-				excludeUidList.cObject.value = {$bootstrap.db.sidebar_excludeuiduist}
-				excludeUidList.cObject.override = {$bootstrap.config.sidebar_excludeuiduist}
-				excludeUidList.cObject.override.if.isTrue = {$bootstrap.config.sidebar_excludeuiduist}
+				excludeUidList.cObject.value = {$bootstrap.config.sidebarExcludeuiduist}
+				excludeUidList.cObject.override = {$bootstrap.config.sidebarExcludeuiduist}
+				excludeUidList.cObject.override.if.isTrue = {$bootstrap.config.sidebarExcludeuiduist}
 				includeSpacer.cObject = TEXT
-				includeSpacer.cObject.value = {$bootstrap.db.sidebar_includespacer}
-				includeSpacer.cObject.override = {$bootstrap.config.sidebar_includespacer}
-				includeSpacer.cObject.override.if.isTrue = {$bootstrap.config.sidebar_includespacer}
+				includeSpacer.cObject.value = {$bootstrap.config.sidebarIncludespacer}
+				includeSpacer.cObject.override = {$bootstrap.config.sidebarIncludespacer}
+				includeSpacer.cObject.override.if.isTrue = {$bootstrap.config.sidebarIncludespacer}
 				as = subNavigation
 			}
 			20.if {
@@ -260,25 +283,13 @@ page {
 					10.value = 1
 					10.if {
 						equals = Sub
-						value = {$bootstrap.db.sidebar_enable}
+						value = {$bootstrap.config.sidebarEnable}
 					}
 					20 = TEXT
 					20.value = 1
 					20.if {
 						equals = Sub
-						value = {$bootstrap.db.sidebar_rightenable}
-					}
-					30 = TEXT
-					30.value = 1
-					30.if {
-						equals = Sub
-						value = {$bootstrap.config.sidebar_rightenable}
-					}
-					40 = TEXT
-					40.value = 1
-					40.if {
-						equals = Sub
-						value = {$bootstrap.config.sidebar_enable}
+						value = {$bootstrap.config.sidebarRightenable}
 					}
 				}
 			}
@@ -292,8 +303,16 @@ page {
 				special.range = 0|-1
 				as = breadcrumb
 			}
-			30.if.isTrue = {$bootstrap.db.breadcrumb_enable}
-
+			30.if {
+				isTrue.cObject = COA
+				isTrue.cObject {
+					10 = TEXT
+					10.if.isTrue = {$bootstrap.config.breadcrumbEnable}
+					20 = TEXT
+					20.value = 1
+					20.if.isTrue = {$bootstrap.config.bottom}
+				}
+			}
 
  			#
 			# Language Navigation
@@ -304,7 +323,7 @@ page {
 				as = languageNavigation
 
 			}
-			40.if.isTrue = {$bootstrap.db.navbar_langmenu}
+			40.if.isTrue = {$bootstrap.config.navbarLangmenu}
 
 			#
 			# Meta Navigation
@@ -313,24 +332,16 @@ page {
 			50 {
 				special = list
 				special.value.cObject = TEXT
-				special.value.cObject.value = {$bootstrap.db.meta_value}
-				special.value.cObject.override = {$bootstrap.config.meta_value}
-				special.value.cObject.override.if.isTrue = {$bootstrap.config.meta_value}
+				special.value.cObject.value = {$bootstrap.config.metaValue}
+				special.value.cObject.override = {$bootstrap.config.metaValue}
+				special.value.cObject.override.if.isTrue = {$bootstrap.config.metaValue}
 				excludeUidList.cObject = TEXT
-				excludeUidList.cObject.value = {$bootstrap.db.homepage_uid}
+				excludeUidList.cObject.value = {$bootstrap.config.homepageUid}
 				levels = 1
 				as = metaNavigation
 
 			}
-			50.if {
-				isTrue.cObject = COA
-				isTrue.cObject {
-					10 = TEXT
-					10.value = {$bootstrap.db.meta_enable}
-					20 = TEXT
-					20.value = {$bootstrap.config.meta_enable}
-				}
-			}
+			50.if.isTrue = {$bootstrap.config.metaEnable}
 
 			#
 			# Section Menu
@@ -359,62 +370,33 @@ page {
 					20 {
 						table = tt_content
 						pidInList.field = uid
-						where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
-						#where = sectionIndex = 1 AND ( colPos = 0 )
+						where = sectionIndex = 1 AND ( colPos = 0 OR colPos > 199 )
 						orderBy = {$bootstrap.extconf.sectionOrder}
 						as = content
-						dataProcessing {
-							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
-							10 {
-								references.fieldName = image
-							}
-							20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-							20 {
-								table = tt_content
-								pidInList.field = pid
-								#where = sectionIndex = 1 AND ( colPos = 0 OR colPos = -1 )
-								where = sectionIndex = 1 AND ( colPos = -1 )
-								orderBy = sorting
-								as = gridcontent
-							}
-						}
 					}
 				}
-
 			}
 			60.if {
 				isTrue.cObject = COA
 				isTrue.cObject {
 					10 = TEXT
 					10.value = 1
-					10.if.isTrue = {$bootstrap.db.navbar_sectionmenu}
+					10.if.isTrue = {$bootstrap.config.navbarSectionmenu}
 					20 = TEXT
 					20.value = 1
 					20.if {
 						equals = Section
-						value = {$bootstrap.db.sidebar_enable}
+						value = {$bootstrap.config.sidebarEnable}
 					}
 					30 = TEXT
 					30.value = 1
 					30.if {
 						equals = Section
-						value = {$bootstrap.db.sidebar_rightenable}
+						value = {$bootstrap.config.sidebarRightenable}
 					}
 					40 = TEXT
 					40.value = 1
-					40.if.isTrue = {$bootstrap.config.navbar_sectionmenu}
-					50 = TEXT
-					50.value = 1
-					50.if {
-						equals = Section
-						value = {$bootstrap.config.sidebar_rightenable}
-					}
-					60 = TEXT
-					60.value = 1
-					60.if {
-						equals = Section
-						value = {$bootstrap.config.sidebar_enable}
-					}
+					40.if.isTrue = {$bootstrap.config.navbarSectionmenu}
 				}
 			}
 
@@ -435,11 +417,42 @@ page {
 			#
 			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
 			90 {
-				navbarExtraRow = {$bootstrap.navbar.extraRow}
-				rootline = {$bootstrap.db.general_rootline}
 				webp = {$bootstrap.extconf.webp}
-				disableDefaultCss = {$bootstrap.config.disableDefaultCss}
+				breakpoint {
+					sm = {$bootstrap.navbar.breakpoint.sm}
+					md = {$bootstrap.navbar.breakpoint.md}
+					lg = {$bootstrap.navbar.breakpoint.lg}
+					xl = {$bootstrap.navbar.breakpoint.xl}
+					no = 0
+				}
 			}
 		}
 	}
 }
+
+[{$bootstrap.config.navbarBreakpoint} == 'sm']
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.sm}
+
+page.111 = TEXT
+page.111.value = sm
+
+[END]
+[{$bootstrap.config.navbarBreakpoint} == 'md']
+
+page.111 = TEXT
+page.111.value = md
+
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.md}
+[END]
+[{$bootstrap.config.navbarBreakpoint} == 'lg']
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.lg}
+[END]
+[{$bootstrap.config.navbarBreakpoint} == 'xl']
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.xl}
+[END]
+
+[loaded('indexed_search')]
+page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+[ELSE]
+page.10.settings.indexedsearch.targetPid = 0
+[END]

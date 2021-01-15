@@ -4,12 +4,60 @@ page {
 
 		##########################################################################################################
 		#
-		# Link Hover Effect CSS
+		# Default CSS
 		#
 		##########################################################################################################
 
-		hoverEffects = EXT:t3sbootstrap/Resources/Public/Styles/hoverEffects.css
-		hoverEffects.if.isTrue = {$bootstrap.extconf.linkHoverEffect}
+		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
+		t3sbootstrap.if.isFalse = {$bootstrap.config.footerSticky}
+
+		##########################################################################################################
+		#
+		# Default CSS w/ Sticky Footer
+		#
+		##########################################################################################################
+
+		t3sbootstrapStickyFooter = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrapSF.css
+		t3sbootstrapStickyFooter.if.isTrue = {$bootstrap.config.footerSticky}
+
+		##########################################################################################################
+		#
+		# Navbar slide
+		#
+		##########################################################################################################
+
+		navbarSlideCss = EXT:t3sbootstrap/Resources/Public/Styles/slideNavbar.css
+		navbarSlideCss.if {
+			value = slide
+			equals = {$bootstrap.config.navbarEnable}
+		}
+
+	}
+
+	includeJSFooter {
+
+		##########################################################################################################
+		#
+		# Modernizr JS
+		#
+		##########################################################################################################
+
+		modernizr = EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js
+		modernizr.if.isTrue = {$bootstrap.extconf.webp}
+
+
+		##########################################################################################################
+		#
+		# Navbar slide
+		#
+		##########################################################################################################
+
+		navbarSlide = EXT:t3sbootstrap/Resources/Public/Scripts/slideNavbar.js
+		navbarSlide.if {
+			value = slide
+			equals = {$bootstrap.config.navbarEnable}
+		}
+
 
 	}
 
@@ -39,51 +87,9 @@ page {
 	jsInline.5 < temp.jsCookieConsent
 	jsInline.5.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
-	jsFooterInline.3 = TEXT
-	jsFooterInline.3.value (
-
-new LazyLoad({
-	elements_selector: ".lazy",
-	threshold: {$bootstrap.image.lazyLoadThreshold},
-	callback_loaded: function(img) {
-		var zoomOverlay = $(img).parent().parent().find('div.zoom-overlay');
-		if ( zoomOverlay.length ) {
-			var imgwidth = $(img).outerWidth()+'px';
-			var imgheight = $(img).outerHeight()+'px';
-			if ( $(window).width() < 576 ) {
-				imgwidth = '100%';
-			}
-			zoomOverlay.addClass('card-img-overlay');
-			if ( imgwidth ) {
-				zoomOverlay.css('max-width', imgwidth);
-			}
-			if ( imgheight ) {
-				zoomOverlay.css('max-height', imgheight);
-			}
-		}
-	}
-});
-
-
-	)
-	jsFooterInline.3.if.isTrue = {$bootstrap.extconf.lazyLoad}
-
-	jsFooterInline.4 = TEXT
-	jsFooterInline.4.value (
-
-hljs.initHighlightingOnLoad();
-
-
-	)
-	jsFooterInline.4.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-	jsFooterInline.5 < temp.jsFooterInline
-	jsFooterInline.5.wrap = (function($){"use strict";|})(jQuery);
-
 }
 
 temp.jsCookieConsent >
-temp.jsFooterInline >
 
 
 ##########################################################################################################
@@ -109,65 +115,23 @@ plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/
 page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxLazyPagination.js
 [END]
 
-##########################################################################################################
-# LIGHTBOX (Ekko Lightbox)
-##########################################################################################################
-# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
-[{$bootstrap.config.lightboxSelection} == 2]
-page.jsFooterInline.5.5 >
-page.jsFooterInline.5.5 = TEXT
-page.jsFooterInline.5.5.value (
-
-
-	// lightbox - page.jsFooterInline.5.5
-	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-		event.preventDefault();
-		$(this).ekkoLightbox();
-	});
-
-	if ( $('.MS-content figure a').hasClass('lightbox') ) {
-		var msId = $('.MS-content').parent().attr('id');
-		$('.MS-content figure a').attr('data-gallery', 'gallery-'+msId);	
-	}
-
-)
-[END]
-
-##########################################################################################################
-# LIGHTBOX (Lightcase)
-##########################################################################################################
-# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
-[{$bootstrap.config.lightboxSelection} == 3]
-page.jsFooterInline.5.5 >
-page.jsFooterInline.5.5 = TEXT
-page.jsFooterInline.5.5.value (
-
-
-	// lightbox - page.jsFooterInline.5.5
-	$('.lightcaseGallery').lightcase({
-		showSequenceInfo: false,
-		showCaption: true,
-		maxWidth: 1140,
-		maxHeight: 800
-	});
-
-	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
-		var msId = $('.MS-content').parent().attr('id');
-		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);	
-	}
-
-)
-[END]
-
 # Background Image
-[{$bootstrap.config.backgroundImage.enable} == 1]
+[{$bootstrap.config.backgroundImageEnable} == 1]
 page.cssInline {
 	5 = TEXT
 	5.value = body {background-repeat:no-repeat;background-position: center center;background-size: cover;background-attachment: fixed}
 }
 [END]
 
-
+# load jquery into the header
+[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 1]
+page.includeJSFooterlibs.jqueryCDN >
+page.includeJSLibs {
+	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js
+	jqueryCDN.external = 1
+	jqueryCDN.forceOnTop = 1
+}
+[END]
 
 
 ##########################################################################################################
@@ -203,17 +167,6 @@ page.includeJSFooter.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$
 page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.lightcaseIntegrity}
 page.includeJSFooter.t3sblightboxCDN.external = 1
 [END]
-
-# load jquery into the header
-[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 1]
-page.includeJSFooterlibs.jqueryCDN >
-page.includeJSLibs {
-	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js
-	jqueryCDN.external = 1
-	jqueryCDN.forceOnTop = 1
-}
-[END]
-
 
 ##########################################################################################################
 #
@@ -271,7 +224,6 @@ page.includeCSS {
 		value = 2
 		equals = {$bootstrap.extconf.fontawesomeCss}
 	}
-
 	t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
 	t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
 }

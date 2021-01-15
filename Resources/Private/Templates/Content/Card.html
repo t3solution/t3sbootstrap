@@ -5,6 +5,18 @@
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
+<f:if condition="({card.image.overlay} || {card.mobile.overlay})">
+<f:asset.script identifier="card">
+	// Card image overlay on mobile only - Card.html
+	if ( $('.img-overlay').length ) {
+		if ( $(window).width() < {winWidth} ) {
+			$('.card .img-overlay').each(function() {
+				$(this).addClass( "card-img-overlay d-flex align-items-end" );
+			});
+		}
+	}
+</f:asset.script>
+</f:if>
 	<f:comment>Card Header</f:comment>
 	<f:if condition="{card.header.text} && !{card.image.overlay}">
 		<div class="card-header">{card.header.text -> f:format.raw()}</div>

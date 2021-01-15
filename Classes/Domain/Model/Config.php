@@ -2,16 +2,10 @@
 namespace T3SBS\T3sbootstrap\Domain\Model;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
  use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -175,6 +169,15 @@ class Config extends AbstractEntity
 	 */
 	protected $navbarClickableparent = false;
 
+
+	/**
+	 * navbarDropdownAnimate
+	 *
+	 * @var string
+	 */
+	protected $navbarDropdownAnimate = '';
+
+
 	/**
 	 * navbarBrand
 	 *
@@ -291,6 +294,27 @@ class Config extends AbstractEntity
 
 
 	/**
+	 * navbarRightMenuUidList
+	 *
+	 * @var string
+	 */
+	protected $navbarRightMenuUidList = '';
+
+	/**
+	 * navbarExtraRow
+	 *
+	 * @var bool
+	 */
+	protected $navbarExtraRow = false;
+
+	/**
+	 * navbarLangFlags
+	 *
+	 * @var bool
+	 */
+	protected $navbarLangFlags = false;
+
+	/**
 	 * jumbotronEnable
 	 *
 	 * @var bool
@@ -345,6 +369,20 @@ class Config extends AbstractEntity
 	 * @var string
 	 */
 	protected $jumbotronClass = '';
+
+	/**
+	 * jumbotronCarouselInterval
+	 *
+	 * @var int
+	 */
+	protected $jumbotronCarouselInterval = false;
+
+	/**
+	 * jumbotronCarouselPause
+	 *
+	 * @var bool
+	 */
+	protected $jumbotronCarouselPause = false;
 
 	/**
 	 * breadcrumbEnable
@@ -584,6 +622,281 @@ class Config extends AbstractEntity
 	 * @var bool
 	 */
 	protected $generalRootline = false;
+
+	/**
+	 * contentOnlyOnRootpage
+	 *
+	 * @var bool
+	 */
+	protected $contentOnlyOnRootpage = false;
+
+	/**
+	 * jqueryHeader
+	 *
+	 * @var bool
+	 */
+	protected $jqueryHeader = false;
+
+	/**
+	 * compress
+	 *
+	 * @var bool
+	 */
+	protected $compress = false;
+
+	/**
+	 * disablePrefixComment
+	 *
+	 * @var bool
+	 */
+	protected $disablePrefixComment = false;
+
+	/**
+	 * containerError
+	 *
+	 * @var bool
+	 */
+	protected $containerError = false;
+
+	/**
+	 * slideLeftAside
+	 *
+	 * @var bool
+	 */
+	protected $slideLeftAside = false;
+
+	/**
+	 * slideRightAside
+	 *
+	 * @var bool
+	 */
+	protected $slideRightAside = false;
+
+
+	/**
+	 * pageContentExtraClass
+	 *
+	 * @var string
+	 */
+	protected $pageContentExtraClass = '';
+
+	/**
+	 * bodyExtraClass
+	 *
+	 * @var string
+	 */
+	protected $bodyExtraClass = '';
+
+	/**
+	 * asideExtraClass
+	 *
+	 * @var string
+	 */
+	protected $asideExtraClass = '';
+
+	/**
+	 * mainExtraClass
+	 *
+	 * @var string
+	 */
+	protected $mainExtraClass = '';
+
+	/**
+	 * globalPaddingTop
+	 *
+	 * @var string
+	 */
+	protected $globalPaddingTop = '';
+
+	/**
+	 * stickyFooterExtraPadding
+	 *
+	 * @var int
+	 */
+	protected $stickyFooterExtraPadding = 0;
+
+
+	/**
+	 * contentMarginTop
+	 *
+	 * @var string
+	 */
+	protected $contentMarginTop = '';
+
+
+	/**
+	 * loadingSpinner
+	 *
+	 * @var string
+	 */
+	protected $loadingSpinner = '';
+
+
+	/**
+	 * loadingSpinnerColor
+	 *
+	 * @var string
+	 */
+	protected $loadingSpinnerColor = '';
+
+
+	/**
+	 * lightboxSelection
+	 *
+	 * @var string
+	 */
+	protected $lightboxSelection = '';
+
+
+	/**
+	 * magnifying
+	 *
+	 * @var bool
+	 */
+	protected $magnifying = false;
+
+
+	/**
+	 * sectionmenuAnchorOffset
+	 *
+	 * @var int
+	 */
+	protected $sectionmenuAnchorOffset = 0;
+
+
+	/**
+	 * sectionmenuScrollspyOffset
+	 *
+	 * @var int
+	 */
+	protected $sectionmenuScrollspyOffset = 0;
+
+
+	/**
+	 * sectionmenuStickyTop
+	 *
+	 * @var bool
+	 */
+	protected $sectionmenuStickyTop = false;
+
+
+
+	/**
+	 * backgroundImageEnable
+	 *
+	 * @var bool
+	 */
+	protected $backgroundImageEnable = false;
+
+	/**
+	 * backgroundImageSlide
+	 *
+	 * @var bool
+	 */
+	protected $backgroundImageSlide = false;
+
+
+	/**
+	 * shrinkingNavPadding
+	 *
+	 * @var string
+	 */
+	protected $shrinkingNavPadding = '';
+
+	/**
+	 * sidebarMenuPosition
+	 *
+	 * @var string
+	 */
+	protected $sidebarMenuPosition = '';
+
+	/**
+	 * sidebarSectionMobile
+	 *
+	 * @var bool
+	 */
+	protected $sidebarSectionMobile = false;
+
+
+	/**
+	 * langMenuWithFaIcon
+	 *
+	 * @var string
+	 */
+	protected $langMenuWithFaIcon = '';
+
+
+	/**
+	 * subheaderColor
+	 *
+	 * @var string
+	 */
+	protected $subheaderColor = '';
+
+
+	/**
+	 * dateFormat
+	 *
+	 * @var string
+	 */
+	protected $dateFormat = '';
+
+
+	/**
+	 * favicon
+	 *
+	 * @var string
+	 */
+	protected $favicon = '';
+
+
+	/**
+	 * faLinkIcons
+	 *
+	 * @var bool
+	 */
+	protected $faLinkIcons = false;
+
+
+	/**
+	 * cardFlipperOnClick
+	 *
+	 * @var bool
+	 */
+	protected $cardFlipperOnClick = false;
+
+
+	/**
+	 * lastModifiedContentElement
+	 *
+	 * @var bool
+	 */
+	protected $lastModifiedContentElement = false;
+
+
+	/**
+	 * recentlyUpdatedContentElements
+	 *
+	 * @var bool
+	 */
+	protected $recentlyUpdatedContentElements = false;
+
+
+	/**
+	 * updated
+	 *
+	 * @var int
+	 */
+	protected $updated = 0;
+
+
+	/**
+	 * gridupdated
+	 *
+	 * @var int
+	 */
+	protected $gridupdated = 0;
+
 
 
 	/**
@@ -1070,6 +1383,27 @@ class Config extends AbstractEntity
 	}
 
 	/**
+	 * Returns the navbarDropdownAnimate
+	 *
+	 * @return string $navbarDropdownAnimate
+	 */
+	public function getNavbarDropdownAnimate()
+	{
+		return $this->navbarDropdownAnimate;
+	}
+
+	/**
+	 * Sets the navbarDropdownAnimate
+	 *
+	 * @param string $navbarDropdownAnimate
+	 * @return void
+	 */
+	public function setNavbarDropdownAnimate($navbarDropdownAnimate)
+	{
+		$this->navbarDropdownAnimate = $navbarDropdownAnimate;
+	}
+
+	/**
 	 * Returns the boolean state of navbarClickableparent
 	 *
 	 * @return bool
@@ -1469,6 +1803,68 @@ class Config extends AbstractEntity
 		return $this->navbarLangmenu;
 	}
 
+	/**
+	 * Returns the navbarRightMenuUidList
+	 *
+	 * @return string $navbarRightMenuUidList
+	 */
+	public function getNavbarRightMenuUidList()
+	{
+		return $this->navbarRightMenuUidList;
+	}
+
+	/**
+	 * Sets the navbarRightMenuUidList
+	 *
+	 * @param string $navbarRightMenuUidList
+	 * @return void
+	 */
+	public function setNavbarRightMenuUidList($navbarRightMenuUidList)
+	{
+		$this->navbarRightMenuUidList = $navbarRightMenuUidList;
+	}
+
+	/**
+	 * Sets the navbarExtraRow
+	 *
+	 * @param string $navbarExtraRow
+	 * @return void
+	 */
+	public function setNavbarExtraRow($navbarExtraRow)
+	{
+		$this->navbarExtraRow = $navbarExtraRow;
+	}
+
+	/**
+	 * Returns the navbarExtraRow
+	 *
+	 * @return bool $navbarExtraRow
+	 */
+	public function getNavbarExtraRow()
+	{
+		return $this->navbarExtraRow;
+	}
+
+	/**
+	 * Sets the navbarLangFlags
+	 *
+	 * @param string $navbarLangFlags
+	 * @return void
+	 */
+	public function setNavbarLangFlags($navbarLangFlags)
+	{
+		$this->navbarLangFlags = $navbarLangFlags;
+	}
+
+	/**
+	 * Returns the navbarLangFlags
+	 *
+	 * @return bool $navbarLangFlags
+	 */
+	public function getNavbarLangFlags()
+	{
+		return $this->navbarLangFlags;
+	}
 
 
 	/**
@@ -1667,6 +2063,48 @@ class Config extends AbstractEntity
 	public function setJumbotronClass($jumbotronClass)
 	{
 		$this->jumbotronClass = $jumbotronClass;
+	}
+
+	/**
+	 * Returns the jumbotronCarouselInterval
+	 *
+	 * @return int $jumbotronCarouselInterval
+	 */
+	public function getJumbotronCarouselInterval()
+	{
+		return $this->jumbotronCarouselInterval;
+	}
+
+	/**
+	 * Sets the jumbotronCarouselInterval
+	 *
+	 * @param int $jumbotronCarouselInterval
+	 * @return void
+	 */
+	public function setJumbotronCarouselInterval($jumbotronCarouselInterval)
+	{
+		$this->jumbotronCarouselInterval = $jumbotronCarouselInterval;
+	}
+
+	/**
+	 * Returns the jumbotronCarouselPause
+	 *
+	 * @return bool $jumbotronCarouselPause
+	 */
+	public function getJumbotronCarouselPause()
+	{
+		return $this->jumbotronCarouselPause;
+	}
+
+	/**
+	 * Sets the jumbotronCarouselPause
+	 *
+	 * @param bool $jumbotronCarouselPause
+	 * @return void
+	 */
+	public function setJumbotronCarouselPause($jumbotronCarouselPause)
+	{
+		$this->jumbotronCarouselPause = $jumbotronCarouselPause;
 	}
 
 	/**
@@ -2503,6 +2941,7 @@ class Config extends AbstractEntity
 		$this->expandedcontentClassbottom = $expandedcontentClassbottom;
 	}
 
+
 	/**
 	 * Returns the generalRootline
 	 *
@@ -2533,6 +2972,825 @@ class Config extends AbstractEntity
 	{
 		return $this->generalRootline;
 	}
+
+
+	/**
+	 * Returns the contentOnlyOnRootpage
+	 *
+	 * @return bool $contentOnlyOnRootpage
+	 */
+	public function getContentOnlyOnRootpage()
+	{
+		return $this->contentOnlyOnRootpage;
+	}
+
+	/**
+	 * Sets the contentOnlyOnRootpage
+	 *
+	 * @param bool $contentOnlyOnRootpage
+	 * @return void
+	 */
+	public function setContentOnlyOnRootpage($contentOnlyOnRootpage)
+	{
+		$this->contentOnlyOnRootpage = $contentOnlyOnRootpage;
+	}
+
+
+	/**
+	 * Returns the jqueryHeader
+	 *
+	 * @return bool $jqueryHeader
+	 */
+	public function getJqueryHeader()
+	{
+		return $this->jqueryHeader;
+	}
+
+	/**
+	 * Sets the jqueryHeader
+	 *
+	 * @param bool $jqueryHeader
+	 * @return void
+	 */
+	public function setJqueryHeader($jqueryHeader)
+	{
+		$this->jqueryHeader = $jqueryHeader;
+	}
+
+
+	/**
+	 * Returns the compress
+	 *
+	 * @return bool $compress
+	 */
+	public function getCompress()
+	{
+		return $this->compress;
+	}
+
+	/**
+	 * Sets the compress
+	 *
+	 * @param bool $compress
+	 * @return void
+	 */
+	public function setCompress($compress)
+	{
+		$this->compress = $compress;
+	}
+
+
+	/**
+	 * Returns the disablePrefixComment
+	 *
+	 * @return bool $disablePrefixComment
+	 */
+	public function getDisablePrefixComment()
+	{
+		return $this->disablePrefixComment;
+	}
+
+	/**
+	 * Sets the disablePrefixComment
+	 *
+	 * @param bool $disablePrefixComment
+	 * @return void
+	 */
+	public function setDisablePrefixComment($disablePrefixComment)
+	{
+		$this->disablePrefixComment = $disablePrefixComment;
+	}
+
+
+	/**
+	 * Returns the containerError
+	 *
+	 * @return bool $containerError
+	 */
+	public function getContainerError()
+	{
+		return $this->containerError;
+	}
+
+	/**
+	 * Sets the containerError
+	 *
+	 * @param bool $containerError
+	 * @return void
+	 */
+	public function setContainerError($containerError)
+	{
+		$this->containerError = $containerError;
+	}
+
+
+	/**
+	 * Returns the slideLeftAside
+	 *
+	 * @return bool $slideLeftAside
+	 */
+	public function getSlideLeftAside()
+	{
+		return $this->slideLeftAside;
+	}
+
+	/**
+	 * Sets the $slideLeftAside
+	 *
+	 * @param bool $containerError
+	 * @return void
+	 */
+	public function setSlideLeftAside($slideLeftAside)
+	{
+		$this->slideLeftAside = $slideLeftAside;
+	}
+
+	/**
+	 * Returns the slideRightAside
+	 *
+	 * @return bool $slideRightAside
+	 */
+	public function getSlideRightAside()
+	{
+		return $this->slideRightAside;
+	}
+
+	/**
+	 * Sets the slideRightAside
+	 *
+	 * @param bool $slideRightAside
+	 * @return void
+	 */
+	public function setSlideRightAside($slideRightAside)
+	{
+		$this->slideRightAside = $slideRightAside;
+	}
+
+	/**
+	 * Returns the pageContentExtraClass
+	 *
+	 * @return string $pageContentExtraClass
+	 */
+	public function getPageContentExtraClass()
+	{
+		return $this->pageContentExtraClass;
+	}
+
+	/**
+	 * Sets the pageContentExtraClass
+	 *
+	 * @param string $pageContentExtraClass
+	 * @return void
+	 */
+	public function setPageContentExtraClass($pageContentExtraClass)
+	{
+		$this->pageContentExtraClass = $pageContentExtraClass;
+	}
+
+
+	/**
+	 * Returns the bodyExtraClass
+	 *
+	 * @return string $bodyExtraClass
+	 */
+	public function getBodyExtraClass()
+	{
+		return $this->bodyExtraClass;
+	}
+
+	/**
+	 * Sets the bodyExtraClass
+	 *
+	 * @param string $bodyExtraClass
+	 * @return void
+	 */
+	public function setBodyExtraClass($bodyExtraClass)
+	{
+		$this->bodyExtraClass = $bodyExtraClass;
+	}
+
+	/**
+	 * Returns the asideExtraClass
+	 *
+	 * @return string $asideExtraClass
+	 */
+	public function getAsideExtraClass()
+	{
+		return $this->asideExtraClass;
+	}
+
+	/**
+	 * Sets the asideExtraClass
+	 *
+	 * @param string $asideExtraClass
+	 * @return void
+	 */
+	public function setAsideExtraClass($asideExtraClass)
+	{
+		$this->asideExtraClass = $asideExtraClass;
+	}
+
+
+	/**
+	 * Returns the mainExtraClass
+	 *
+	 * @return string $mainExtraClass
+	 */
+	public function getMainExtraClass()
+	{
+		return $this->mainExtraClass;
+	}
+
+	/**
+	 * Sets the mainExtraClass
+	 *
+	 * @param string $mainExtraClass
+	 * @return void
+	 */
+	public function setMainExtraClass($mainExtraClass)
+	{
+		$this->mainExtraClass = $mainExtraClass;
+	}
+
+
+
+	/**
+	 * Returns the globalPaddingTop
+	 *
+	 * @return string $globalPaddingTop
+	 */
+	public function getGlobalPaddingTop()
+	{
+		return $this->globalPaddingTop;
+	}
+
+	/**
+	 * Sets the globalPaddingTop
+	 *
+	 * @param string $globalPaddingTop
+	 * @return void
+	 */
+	public function setGlobalPaddingTop($globalPaddingTop)
+	{
+		$this->globalPaddingTop = $globalPaddingTop;
+	}
+
+
+
+
+
+	/**
+	 * Returns the stickyFooterExtraPadding
+	 *
+	 * @return int $stickyFooterExtraPadding
+	 */
+	public function getStickyFooterExtraPadding()
+	{
+		return $this->stickyFooterExtraPadding;
+	}
+
+	/**
+	 * Sets the stickyFooterExtraPadding
+	 *
+	 * @param int $stickyFooterExtraPadding
+	 * @return void
+	 */
+	public function setStickyFooterExtraPadding($stickyFooterExtraPadding)
+	{
+		$this->stickyFooterExtraPadding = $stickyFooterExtraPadding;
+	}
+
+
+
+
+	/**
+	 * Returns the contentMarginTop
+	 *
+	 * @return string $contentMarginTop
+	 */
+	public function getContentMarginTop()
+	{
+		return $this->contentMarginTop;
+	}
+
+	/**
+	 * Sets the contentMarginTop
+	 *
+	 * @param string $contentMarginTop
+	 * @return void
+	 */
+	public function setContentMarginTop($contentMarginTop)
+	{
+		$this->contentMarginTop = $contentMarginTop;
+	}
+
+
+	/**
+	 * Returns the loadingSpinner
+	 *
+	 * @return string $loadingSpinner
+	 */
+	public function getLoadingSpinner()
+	{
+		return $this->loadingSpinner;
+	}
+
+	/**
+	 * Sets the loadingSpinner
+	 *
+	 * @param string $loadingSpinner
+	 * @return void
+	 */
+	public function setLoadingSpinner($loadingSpinner)
+	{
+		$this->loadingSpinner = $loadingSpinner;
+	}
+
+
+
+	/**
+	 * Returns the loadingSpinnerColor
+	 *
+	 * @return string $loadingSpinnerColor
+	 */
+	public function getLoadingSpinnerColor()
+	{
+		return $this->loadingSpinnerColor;
+	}
+
+	/**
+	 * Sets the loadingSpinnerColor
+	 *
+	 * @param string $loadingSpinnerColor
+	 * @return void
+	 */
+	public function setLoadingSpinnerColor($loadingSpinnerColor)
+	{
+		$this->loadingSpinnerColor = $loadingSpinnerColor;
+	}
+
+
+
+	/**
+	 * Returns the lightboxSelection
+	 *
+	 * @return string $lightboxSelection
+	 */
+	public function getLightboxSelection()
+	{
+		return $this->lightboxSelection;
+	}
+
+	/**
+	 * Sets the lightboxSelection
+	 *
+	 * @param string $lightboxSelection
+	 * @return void
+	 */
+	public function setLightboxSelection($lightboxSelection)
+	{
+		$this->lightboxSelection = $lightboxSelection;
+	}
+
+
+	/**
+	 * Returns the magnifying
+	 *
+	 * @return bool $magnifying
+	 */
+	public function getMagnifying()
+	{
+		return $this->magnifying;
+	}
+
+	/**
+	 * Sets the magnifying
+	 *
+	 * @param bool $magnifying
+	 * @return void
+	 */
+	public function setMagnifying($magnifying)
+	{
+		$this->magnifying = $magnifying;
+	}
+
+
+
+
+
+	/**
+	 * Returns the sectionmenuAnchorOffset
+	 *
+	 * @return int $sectionmenuAnchorOffset
+	 */
+	public function getSectionmenuAnchorOffset()
+	{
+		return $this->sectionmenuAnchorOffset;
+	}
+
+	/**
+	 * Sets the sectionmenuAnchorOffset
+	 *
+	 * @param int $sectionmenuAnchorOffset
+	 * @return void
+	 */
+	public function setSectionmenuAnchorOffset($sectionmenuAnchorOffset)
+	{
+		$this->sectionmenuAnchorOffset = $sectionmenuAnchorOffset;
+	}
+
+
+
+	/**
+	 * Returns the sectionmenuScrollspyOffset
+	 *
+	 * @return int $sectionmenuScrollspyOffset
+	 */
+	public function getSectionmenuScrollspyOffset()
+	{
+		return $this->sectionmenuScrollspyOffset;
+	}
+
+	/**
+	 * Sets the sectionmenuScrollspyOffset
+	 *
+	 * @param int $sectionmenuScrollspyOffset
+	 * @return void
+	 */
+	public function setSectionmenuScrollspyOffset($sectionmenuScrollspyOffset)
+	{
+		$this->sectionmenuScrollspyOffset = $sectionmenuScrollspyOffset;
+	}
+
+
+	/**
+	 * Returns the sectionmenuStickyTop
+	 *
+	 * @return bool $sectionmenuStickyTop
+	 */
+	public function getSectionmenuStickyTop()
+	{
+		return $this->sectionmenuStickyTop;
+	}
+
+	/**
+	 * Sets the sectionmenuStickyTop
+	 *
+	 * @param bool $sectionmenuStickyTop
+	 * @return void
+	 */
+	public function setSectionmenuStickyTop($sectionmenuStickyTop)
+	{
+		$this->sectionmenuStickyTop = $sectionmenuStickyTop;
+	}
+
+
+
+
+	/**
+	 * Returns the backgroundImageEnable
+	 *
+	 * @return bool $backgroundImageEnable
+	 */
+	public function getBackgroundImageEnable()
+	{
+		return $this->backgroundImageEnable;
+	}
+
+	/**
+	 * Sets the backgroundImageEnable
+	 *
+	 * @param bool $backgroundImageEnable
+	 * @return void
+	 */
+	public function setBackgroundImageEnable($backgroundImageEnable)
+	{
+		$this->backgroundImageEnable = $backgroundImageEnable;
+	}
+
+
+
+	/**
+	 * Returns the backgroundImageSlide
+	 *
+	 * @return bool $backgroundImageSlide
+	 */
+	public function getBackgroundImageSlide()
+	{
+		return $this->backgroundImageSlide;
+	}
+
+	/**
+	 * Sets the backgroundImageSlide
+	 *
+	 * @param bool $backgroundImageSlide
+	 * @return void
+	 */
+	public function setBackgroundImageSlide($backgroundImageSlide)
+	{
+		$this->backgroundImageSlide = $backgroundImageSlide;
+	}
+
+
+	/**
+	 * Returns the shrinkingNavPadding
+	 *
+	 * @return string $shrinkingNavPadding
+	 */
+	public function getShrinkingNavPadding()
+	{
+		return $this->shrinkingNavPadding;
+	}
+
+	/**
+	 * Sets the shrinkingNavPadding
+	 *
+	 * @param string $shrinkingNavPadding
+	 * @return void
+	 */
+	public function setShrinkingNavPadding($shrinkingNavPadding)
+	{
+		$this->shrinkingNavPadding = $shrinkingNavPadding;
+	}
+
+
+
+
+	/**
+	 * Returns the sidebarMenuPosition
+	 *
+	 * @return string $sidebarMenuPosition
+	 */
+	public function getSidebarMenuPosition()
+	{
+		return $this->sidebarMenuPosition;
+	}
+
+	/**
+	 * Sets the shrinkingNavPadding
+	 *
+	 * @param string $sidebarMenuPosition
+	 * @return void
+	 */
+	public function setSidebarMenuPosition($sidebarMenuPosition)
+	{
+		$this->sidebarMenuPosition = $sidebarMenuPosition;
+	}
+
+
+	/**
+	 * Returns the langMenuWithFaIcon
+	 *
+	 * @return bool $langMenuWithFaIcon
+	 */
+	public function getLangMenuWithFaIcon()
+	{
+		return $this->langMenuWithFaIcon;
+	}
+
+	/**
+	 * Sets the langMenuWithFaIcon
+	 *
+	 * @param bool $langMenuWithFaIcon
+	 * @return void
+	 */
+	public function setLangMenuWithFaIcon($langMenuWithFaIcon)
+	{
+		$this->langMenuWithFaIcon = $langMenuWithFaIcon;
+	}
+
+
+
+
+
+	/**
+	 * Returns the subheaderColor
+	 *
+	 * @return string $subheaderColor
+	 */
+	public function getSubheaderColor()
+	{
+		return $this->subheaderColor;
+	}
+
+	/**
+	 * Sets the subheaderColor
+	 *
+	 * @param string $subheaderColor
+	 * @return void
+	 */
+	public function setSubheaderColor($subheaderColor)
+	{
+		$this->subheaderColor = $subheaderColor;
+	}
+
+
+
+
+	/**
+	 * Returns the dateFormat
+	 *
+	 * @return string $dateFormat
+	 */
+	public function getDateFormat()
+	{
+		return $this->dateFormat;
+	}
+
+	/**
+	 * Sets the dateFormat
+	 *
+	 * @param string $dateFormat
+	 * @return void
+	 */
+	public function setDateFormat($dateFormat)
+	{
+		$this->dateFormat = $dateFormat;
+	}
+
+
+
+
+	/**
+	 * Returns the favicon
+	 *
+	 * @return string $favicon
+	 */
+	public function getFavicon()
+	{
+		return $this->favicon;
+	}
+
+	/**
+	 * Sets the favicon
+	 *
+	 * @param string $favicon
+	 * @return void
+	 */
+	public function setFavicon($favicon)
+	{
+		$this->favicon = $favicon;
+	}
+
+
+
+	/**
+	 * Returns faLinkIcons
+	 *
+	 * @return bool $faLinkIcons
+	 */
+	public function getFaLinkIcons()
+	{
+		return $this->faLinkIcons;
+	}
+
+	/**
+	 * Sets the faLinkIcons
+	 *
+	 * @param bool $faLinkIcons
+	 * @return void
+	 */
+	public function setFaLinkIcons($faLinkIcons)
+	{
+		$this->faLinkIcons = $faLinkIcons;
+	}
+
+
+
+	/**
+	 * Returns cardFlipperOnClick
+	 *
+	 * @return bool $cardFlipperOnClick
+	 */
+	public function getCardFlipperOnClick()
+	{
+		return $this->cardFlipperOnClick;
+	}
+
+	/**
+	 * Sets the cardFlipperOnClick
+	 *
+	 * @param bool $cardFlipperOnClick
+	 * @return void
+	 */
+	public function setCardFlipperOnClick($cardFlipperOnClick)
+	{
+		$this->cardFlipperOnClick = $cardFlipperOnClick;
+	}
+
+
+
+
+
+	/**
+	 * Returns lastModifiedContentElement
+	 *
+	 * @return bool $lastModifiedContentElement
+	 */
+	public function getLastModifiedContentElement()
+	{
+		return $this->lastModifiedContentElement;
+	}
+
+	/**
+	 * Sets the lastModifiedContentElement
+	 *
+	 * @param bool $lastModifiedContentElement
+	 * @return void
+	 */
+	public function setLastModifiedContentElement($lastModifiedContentElement)
+	{
+		$this->lastModifiedContentElement = $lastModifiedContentElement;
+	}
+
+
+	/**
+	 * Returns recentlyUpdatedContentElements
+	 *
+	 * @return bool $recentlyUpdatedContentElements
+	 */
+	public function getRecentlyUpdatedContentElements()
+	{
+		return $this->recentlyUpdatedContentElements;
+	}
+
+	/**
+	 * Sets the recentlyUpdatedContentElements
+	 *
+	 * @param bool $recentlyUpdatedContentElements
+	 * @return void
+	 */
+	public function setRecentlyUpdatedContentElements($recentlyUpdatedContentElements)
+	{
+		$this->recentlyUpdatedContentElements = $recentlyUpdatedContentElements;
+	}
+
+
+
+	/**
+	 * Returns updated
+	 *
+	 * @return int $updated
+	 */
+	public function getUpdated()
+	{
+		return $this->updated;
+	}
+
+	/**
+	 * Sets the updated
+	 *
+	 * @param int $updated
+	 * @return void
+	 */
+	public function setUpdated($updated)
+	{
+		$this->updated = $updated;
+	}
+
+	/**
+	 * Returns gridupdated
+	 *
+	 * @return int $gridupdated
+	 */
+	public function getGridupdated()
+	{
+		return $this->gridupdated;
+	}
+
+	/**
+	 * Sets the gridupdated
+	 *
+	 * @param int $gridupdated
+	 * @return void
+	 */
+	public function setGridupdated($gridupdated)
+	{
+		$this->gridupdated = $gridupdated;
+	}
+
+
+	/**
+	 * Returns the sidebarSectionMobile
+	 *
+	 * @return bool $sidebarSectionMobile
+	 */
+	public function getSidebarSectionMobile()
+	{
+		return $this->sidebarSectionMobile;
+	}
+
+	/**
+	 * Sets the sidebarSectionMobile
+	 *
+	 * @param bool $sidebarSectionMobile
+	 * @return void
+	 */
+	public function setSidebarSectionMobile($sidebarSectionMobile)
+	{
+		$this->sidebarSectionMobile = $sidebarSectionMobile;
+	}
+
 
 
 }

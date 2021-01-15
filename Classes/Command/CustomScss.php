@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
-/**
- * This file is part of the "tt_address" Extension for TYPO3 CMS.
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
+ * LICENSE file that was distributed with this source code.
  */
+
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -64,7 +65,66 @@ class CustomScss extends Command
 
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
-		if ( $settings['customScss'] && array_key_exists('customScss', $extConf) && $extConf['customScss'] === '1' && ExtensionManagementUtility::isLoaded('ws_scss' ) ) {
+		if ( $settings['customScss'] && array_key_exists('customScss', $extConf)
+			 && $extConf['customScss'] === '1' && ExtensionManagementUtility::isLoaded('ws_scss' ) ) {
+
+			# get the Boostrap SCSS-Files
+			$scssList = '_alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _code.scss, _custom-forms.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _images.scss, _input-group.scss, _jumbotron.scss, _list-group.scss, _media.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _pagination.scss, _popover.scss, _print.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap.scss';
+
+			$mixinsList = '_alert.scss, _background-variant.scss, _badge.scss, _border-radius.scss, _box-shadow.scss, _breakpoints.scss, _buttons.scss, _caret.scss, _clearfix.scss, _deprecate.scss, _float.scss, _forms.scss, _gradients.scss, _grid-framework.scss, _grid.scss, _hover.scss, _image.scss, _list-group.scss, _lists.scss, _nav-divider.scss, _pagination.scss, _reset-text.scss, _resize.scss, _screen-reader.scss, _size.scss, _table-row.scss, _text-emphasis.scss, _text-hide.scss, _text-truncate.scss, _transition.scss, _visibility.scss';
+
+			$utilitiesList = '_align.scss, _background.scss, _borders.scss, _clearfix.scss, _display.scss, _embed.scss, _flex.scss, _float.scss, _interactions.scss, _overflow.scss, _position.scss, _screenreaders.scss, _shadows.scss, _sizing.scss, _spacing.scss, _stretched-link.scss, _text.scss, _visibility.scss';
+
+			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+			$bootstrapVersion = GeneralUtility::isFirstPartOfStr($settings['cdn']['bootstrap'], '4.') ? $settings['cdn']['bootstrap'] : '4.5.3' ;
+
+			foreach (explode(',', $scssList) as $scss ) {
+				$customFileName = trim($scss);
+				$customFile = $customPath.$customFileName;
+				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/'.$customFileName;
+				$customContent = GeneralUtility::getURL($cdnPath);
+				if (file_exists($customFile)) unlink($customFile);
+				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
+				GeneralUtility::writeFile($customFile, $customContent);
+			}
+
+			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/mixins/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+
+			foreach (explode(',', $mixinsList) as $mixins ) {
+				$customFileName = trim($mixins);
+				$customFile = $customPath.$customFileName;
+				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/mixins/'.$customFileName;
+				$customContent = GeneralUtility::getURL($cdnPath);
+				if (file_exists($customFile)) unlink($customFile);
+				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
+				GeneralUtility::writeFile($customFile, $customContent);
+			}
+
+			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/utilities/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+
+			foreach (explode(',', $utilitiesList) as $utils ) {
+				$customFileName = trim($utils);
+				$customFile = $customPath.$customFileName;
+				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/utilities/'.$customFileName;
+				$customContent = GeneralUtility::getURL($cdnPath);
+				if (file_exists($customFile)) unlink($customFile);
+				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
+				GeneralUtility::writeFile($customFile, $customContent);
+			}
+
+			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/vendor/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+
+			$customFileName = '_rfs.scss';
+			$customFile = $customPath.$customFileName;
+			$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/vendor/_rfs.scss';
+			$customContent = GeneralUtility::getURL($cdnPath);
+			if (file_exists($customFile)) unlink($customFile);
+			if (!is_dir($customPath)) mkdir($customPath, 0777, true);
+			GeneralUtility::writeFile($customFile, $customContent);
 
 			# Custom
 			$customDir = $settings['customScssPath'] ? $settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
@@ -140,13 +200,13 @@ if ( $settings['rollyourown'] ) {
 					if ($key === 0) {
 						$includeContent = '
 @import "../../'.$customDir.'custom-variables";
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/bootstrap";
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/bootstrap";
 @import "../../'.$customDir.'custom";
 						';
 					} else {
 						$includeContent = '
 @import "../../'.$customDir.'custom-variables-'.$siteroot['uid'].'";
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/bootstrap";
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/bootstrap";
 @import "../../'.$customDir.'custom-'.$siteroot['uid'].'";
 						';
 					}
@@ -176,7 +236,6 @@ if ( $settings['rollyourown'] ) {
 		}
 
 	}
-
 
 
 	private function writeCustomFile($customPath, $customFileName, $settings, $name) {
@@ -231,161 +290,161 @@ if ( $settings['rollyourown'] ) {
 
 # Bootstrap
 $bootstrapContent = '/*!
- * Bootstrap v4.3 (https://getbootstrap.com/)
+ * Bootstrap v4.x (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
+ * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 ';
 
 if ( $settings['bootstrap']['functions'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/functions";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/functions";';
 }
 if ( $settings['bootstrap']['variables'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/variables";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/variables";';
 }
 
 if ( $settings['bootstrap']['mixins'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/mixins";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/mixins";';
 }
 if ( $settings['bootstrap']['root'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/root";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/root";';
 }
 if ( $settings['bootstrap']['reboot'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/reboot";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/reboot";';
 }
 if ( $settings['bootstrap']['type'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/type";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/type";';
 }
 if ( $settings['bootstrap']['images'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/images";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/images";';
 }
 if ( $settings['bootstrap']['code'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/code";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/code";';
 }
 if ( $settings['bootstrap']['grid'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/grid";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/grid";';
 }
 if ( $settings['bootstrap']['tables'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/tables";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/tables";';
 }
 if ( $settings['bootstrap']['forms'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/forms";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/forms";';
 }
 if ( $settings['bootstrap']['buttons'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/buttons";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/buttons";';
 }
 if ( $settings['bootstrap']['transitions'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/transitions";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/transitions";';
 }
 if ( $settings['bootstrap']['dropdown'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/dropdown";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/dropdown";';
 }
 if ( $settings['bootstrap']['button-group'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/button-group";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/button-group";';
 }
 if ( $settings['bootstrap']['input-group'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/input-group";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/input-group";';
 }
 if ( $settings['bootstrap']['custom-forms'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/custom-forms";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/custom-forms";';
 }
 if ( $settings['bootstrap']['nav'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/nav";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/nav";';
 }
 if ( $settings['bootstrap']['navbar'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/navbar";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/navbar";';
 }
 if ( $settings['bootstrap']['card'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/card";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/card";';
 }
 if ( $settings['bootstrap']['breadcrumb'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/breadcrumb";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/breadcrumb";';
 }
 if ( $settings['bootstrap']['pagination'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/pagination";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/pagination";';
 }
 if ( $settings['bootstrap']['badge'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/badge";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/badge";';
 }
 if ( $settings['bootstrap']['jumbotron'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/jumbotron";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/jumbotron";';
 }
 if ( $settings['bootstrap']['alert'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/alert";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/alert";';
 }
 if ( $settings['bootstrap']['progress'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/progress";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/progress";';
 }
 if ( $settings['bootstrap']['media'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/media";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/media";';
 }
 if ( $settings['bootstrap']['list-group'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/list-group";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/list-group";';
 }
 if ( $settings['bootstrap']['close'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/close";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/close";';
 }
 if ( $settings['bootstrap']['toasts'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/toasts";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/toasts";';
 }
 if ( $settings['bootstrap']['modal'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/modal";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/modal";';
 }
 if ( $settings['bootstrap']['tooltip'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/tooltip";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/tooltip";';
 }
 if ( $settings['bootstrap']['popover'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/popover";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/popover";';
 }
 if ( $settings['bootstrap']['carousel'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/carousel";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/carousel";';
 }
 if ( $settings['bootstrap']['spinners'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/spinners";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/spinners";';
 }
 if ( $settings['bootstrap']['utilities'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/utilities";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/utilities";';
 }
 if ( $settings['bootstrap']['print'] ) {
 $bootstrapContent .= '
-@import "../../typo3conf/ext/t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/print";';
+@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/print";';
 }
 
 			$bootstrapFile = $customPath.$boottstrapFileName;
@@ -393,7 +452,4 @@ $bootstrapContent .= '
 			GeneralUtility::writeFile($bootstrapFile, $bootstrapContent);
 
 	}
-
-
-
 }

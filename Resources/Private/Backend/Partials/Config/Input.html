@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="form-group row">
+	<label for="{field.property}" class="col-sm-3 col-form-label">
+		{field.label}
+		<f:if condition="{compare.{field.property}}">
+			<br/><small class="text-primary">{compare.{field.property}}</small>
+		</f:if>
+		<f:if condition="{override.{field.property}}">
+			<br/>
+			<small class="text-danger"> ({override.{field.property}})</small>
+		</f:if>
+	</label>
+	<div class="col-sm-9">
+		<f:form.textfield
+			id="{field.property}"
+			class="form-control"
+			property="{field.property}"
+		/>	
+		<f:if condition="{field.info}">
+			<small class="form-text text-muted">{field.info -> f:format.raw()}</small>
+		</f:if>
+		<small><code>bootstrap.config.{field.property}</code></small>
+	</div>
+</div>
+</html>

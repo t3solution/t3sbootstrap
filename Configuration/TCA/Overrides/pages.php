@@ -4,11 +4,11 @@ defined('TYPO3_MODE') or die();
 # Extension configuration
 $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
-
 $tempPagesColumns = [
 	'tx_t3sbootstrap_smallColumns' => [
-		'label' => 'Aside columns width (makes no sense for Backend Layout "1 Column")',
+		'label' => 'Aside columns width',
 		'exclude' => 1,
+		'description' => 'makes no sense for Backend Layout "1 Column"',
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
@@ -112,60 +112,36 @@ $tempPagesColumns = [
 		'config' => [
 				'type' => 'check',
 		]
+	],
+	'tx_t3sbootstrap_titlecolor' => [
+		'label' => 'Page Title Color',
+		'exclude' => 1,
+		'description' => 'default if empty',
+		'config' => [
+			'type' => 'input',
+			'renderType' => 'colorpicker',
+			'size' => 20
+		],
+	],
+	'tx_t3sbootstrap_subtitlecolor' => [
+		'label' => 'Subtitle Color',
+		'exclude' => 1,
+		'description' => 'default if empty',
+		'config' => [
+			'type' => 'input',
+			'renderType' => 'colorpicker',
+			'size' => 20
+		],
 	]
 
-
-/*
-
-
-'sectionmenu' => [
-	'exclude' => 1,
-	'label' => 'sectionmenu',
-	'config' => [
-		'type' => 'check',
-		'default' => 1
-	]
-],
-'sidebar_right' => [
-	'exclude' => 1,
-	'label' => 'sidebar_right',
-	'config' => [
-		'type' => 'check',
-		'default' => 1
-	]
-],
-'sidebar' => [
-	'exclude' => 1,
-	'label' => 'sidebar',
-	'config' => [
-		'type' => 'check',
-		'default' => 1
-	]
-],
-'langmenu' => [
-	'exclude' => 1,
-	'label' => 'langmenu',
-	'config' => [
-		'type' => 'check',
-		'default' => 1
-	]
-],
-'metamenu' => [
-	'exclude' => 1,
-	'label' => 'metamenu',
-	'config' => [
-		'type' => 'check',
-		'default' => 1
-	]
-],
-
-*/
 
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages',$tempPagesColumns);
 unset($tempPagesColumns);
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_titlecolor','after:title');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_subtitlecolor','after:subtitle');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_smallColumns','after:backend_layout_next_level');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_mobileOrder','after:tx_t3sbootstrap_smallColumns');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_breakpoint','after:tx_t3sbootstrap_mobileOrder');
@@ -173,7 +149,6 @@ unset($tempPagesColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_container','after:tx_t3sbootstrap_dropdownRight');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_linkToTop','after:tx_t3sbootstrap_container');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_megamenu','after:tx_t3sbootstrap_linkToTop');
-
 
 
 if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1') {
@@ -191,9 +166,6 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 		'after:layout'
 	);
 }
-
-
-
 
 
 $menuheader = 198;

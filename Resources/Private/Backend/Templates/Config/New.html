@@ -5,6 +5,8 @@
 <f:flashMessages />
 <f:render partial="FormErrors" />
 <f:form class="form-horizontal" action="create"	 name="newConfig" object="{newConfig}">
+	<f:form.hidden property="updated" value="1" />
+	<f:form.hidden property="gridupdated" value="1" />
 	<f:render partial="Config/Accordion" arguments="{_all}" />
 	<f:form.submit class="btn btn-success btn-block" value="Create new" />
 </f:form>

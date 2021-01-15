@@ -1,26 +1,21 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/Configuration.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/Register.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/BodyTag.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Configuration.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Register.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/BodyTag.typoscript'
 [{$bootstrap.extconf.cookieconsent} == 1]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/JS/CookieConsent.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/JS/CookieConsent.typoscript'
 [END]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/JS/InlineJS.typoscript">
 [{$bootstrap.ext.wsScss} == 1]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapScss.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapScss.typoscript'
 [ELSE]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapCss.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapCss.typoscript'
 [END]
 [{$bootstrap.cdn.enable} == 1]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeCdn.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeCdn.typoscript'
 [ELSE]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeLocal.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeLocal.typoscript'
 [END]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeDefault.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/Template.typoscript">
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeDefault.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Template.typoscript'
 [{$bootstrap.print.enable} == 1]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/Print.typoscript">
-[END]
-[{$bootstrap.extconf.configOverride} == 1]
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TypoScript/Page/Override.typoscript">
-print.10.settings.override < page.10.settings.override
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Print.typoscript'
 [END]

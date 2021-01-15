@@ -5,7 +5,7 @@ mod.SHARED.colPos_list = 0,1,2
 [END]
 [colPosList('Jumbotron')]
 # Content & Jumbotron
-mod.SHARED.colPos_list = 0,1,2,3
+mod.SHARED.colPos_list = 3,0,1,2
 [END]
 [colPosList('Footer')]
 # Content & Footer
@@ -13,5 +13,5 @@ mod.SHARED.colPos_list = 0,1,2,4
 [END]
 [colPosList('All')]
 # Content & Footer & Jumbotron
-mod.SHARED.colPos_list = 0,1,2,3,4
+mod.SHARED.colPos_list = 3,0,1,2,4
 [END]

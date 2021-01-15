@@ -15,14 +15,14 @@
 	<f:if condition="{config.breadcrumb.position} == 'aboveNav'">
 		<f:then>
 			<f:render section="Breadcrumb" arguments="{_all}" />
-			<f:render partial="Page/Navbar" arguments="{_all}" />
+			<f:render partial="Page/Navbar/Navbar" arguments="{_all}" />
 		</f:then>
 		<f:else if="{config.breadcrumb.position} == 'belowNav'">
-			<f:render partial="Page/Navbar" arguments="{_all}" />
+			<f:render partial="Page/Navbar/Navbar" arguments="{_all}" />
 			<f:render section="Breadcrumb" arguments="{_all}" />
 		</f:else>
 		<f:else>
-			<f:render partial="Page/Navbar" arguments="{_all}" />
+			<f:render partial="Page/Navbar/Navbar" arguments="{_all}" />
 		</f:else>
 	</f:if>
 </f:section>

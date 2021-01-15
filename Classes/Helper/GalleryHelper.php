@@ -1,31 +1,27 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Helper;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
 
 use TYPO3\CMS\Core\SingletonInterface;
 
+
 class GalleryHelper implements SingletonInterface
 {
-
 	/**
 	 * Returns row width
 	 *
 	 * @param array $processedData
 	 * @return array
 	 */
-	public function getGalleryRowWidth( $processedData )
+	public function getGalleryRowWidth( $processedData ): array
 	{
 		// Gallery row with 25, 33, 50, 66, 75 or 100%
 		if ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] == 'auto' ) {
@@ -45,14 +41,14 @@ class GalleryHelper implements SingletonInterface
 						$processedData['restrowwidth'] = ' w-50';
 					}
 
+
 				} else {
 					// above or below
-					if ( $processedData['data']['imageorient'] === 0 || $processedData['data']['imageorient'] === 8 ) {
-						$processedData['rowwidth'] = ' w-100';
+					if ( $processedData['data']['imageorient'] <= 10 ) {
+						$processedData['rowwidth'] = '';
 						$processedData['restrowwidth'] = '';
 
 					} else {
-
 						$processedData['rowwidth'] = ' w-66';
 						$processedData['restrowwidth'] = ' w-33';
 					}
@@ -107,9 +103,10 @@ class GalleryHelper implements SingletonInterface
 	 * Returns gallery classes
 	 *
 	 * @param array $processedData
+	 * @param string $breakpoint
 	 * @return array
 	 */
-	public function getGalleryClasses( $processedData )
+	public function getGalleryClasses( $processedData, $breakpoint): array
 	{
 		$galleryClass = 'gallery imageorient-'.$processedData['data']['imageorient'];
 		$galleryRowClass = '';

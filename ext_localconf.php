@@ -29,9 +29,9 @@ call_user_func(function () {
 	 * TsConfig
 	 */
 	 # Page
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/Page.tsconfig">');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig("@import 'EXT:t3sbootstrap/Configuration/TSConfig/Page.tsconfig'");
 	# CKEditor
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig">');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig("@import 'EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig'");
 
 	/***************
 	 * Default Constants
@@ -39,7 +39,6 @@ call_user_func(function () {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.form.ajax = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.headerslider = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.wsScss = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 0');
@@ -58,7 +57,6 @@ call_user_func(function () {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScssPath = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.editScss = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.expandedContent = 0');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.configOverride = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.rollyourown = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
@@ -70,9 +68,6 @@ call_user_func(function () {
 	 */
 	$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
-	$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-	$version = $typo3Version->getMajorVersion();
-
 	/***************
 	 * Other Extensions
 	 */
@@ -82,40 +77,19 @@ call_user_func(function () {
 		/***************
 		 * plugin content consent
 		 */
-
-		if ($version == 10) {
-
-			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-				'T3sbootstrap',
-				'Pi1',
-				[
-					\T3SBS\T3sbootstrap\Controller\ConsentController::class => 'index, ajax',
-				],
-				// non-cacheable actions
-				[
-					\T3SBS\T3sbootstrap\Controller\ConsentController::class => 'ajax',
-				]
-			);
-
-		} else {
-
-			\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-				'T3SBS.T3sbootstrap',
-				'Pi1',
-				[
-					'Consent' => 'index, ajax',
-				],
-				// non-cacheable actions
-				[
-					'Consent' => 'ajax',
-				]
-			);
-
-		}
-
+		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+			'T3sbootstrap',
+			'Pi1',
+			[
+				\T3SBS\T3sbootstrap\Controller\ConsentController::class => 'index, ajax',
+			],
+			// non-cacheable actions
+			[
+				\T3SBS\T3sbootstrap\Controller\ConsentController::class => 'ajax',
+			]
+		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 1');
 	}
-
 	# if indexed_search is loaded
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('indexed_search') ) {
 		 # Setup
@@ -123,10 +97,6 @@ call_user_func(function () {
 			'setup','<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript">','defaultContentRendering'
 		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 1');
-	}
-	# if t3s_headerslider is loaded
-	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3s_headerslider') ) {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.headerslider = 1');
 	}
 	 # if news is loaded
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('news') && array_key_exists('extNews', $extconf) && $extconf['extNews'] === '1' ) {
@@ -137,7 +107,6 @@ call_user_func(function () {
 		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 1');
 	}
-
 	// Optional flexform extend
 	if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
 		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class]['flexParsing'][]
@@ -255,14 +224,6 @@ call_user_func(function () {
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ws_scss') ) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.wsScss = 1');
 		if (array_key_exists('customScss', $extconf) && $extconf['customScss'] === '1') {
-			if ($version == 9) {
-				# declaring the task to write a custom scss file
-				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['T3SBS\T3sbootstrap\Tasks\Scss'] = [
-						 'extension' => 't3sbootstrap',
-						 'title' => 'T3SB Custom Scss - write a custom scss file',
-						 'description' => 'T3SB Custom Scss - write a custom scss file',
-				];
-			}			
 			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScss = 1');
 			// Optional "bootswatch theme"
 			if (array_key_exists('bootswatch', $extconf) && $extconf['bootswatch'] !== 'none') {
@@ -281,14 +242,10 @@ call_user_func(function () {
 	// Optional "expanded content"
 	if (array_key_exists('expandedContent', $extconf) && $extconf['expandedContent'] === '1') {
 		# expanded content on top and bottom
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/_main.tsconfig">');
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig("@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/_main.tsconfig'");
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.expandedContent = 1');
 	} else {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.tsconfig">');
-	}
-	// Optional "config override"
-	if (array_key_exists('configOverride', $extconf) && $extconf['configOverride'] === '1') {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.configOverride = 1');
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig("@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.tsconfig'");
 	}
 	// Optional "custom section menu order"
 	if (array_key_exists('sectionOrder', $extconf) && $extconf['sectionOrder'] === '1') {
@@ -320,15 +277,13 @@ call_user_func(function () {
 	if($rootlinefields != '') $rootlinefields .= ' , ';
 	$rootlinefields .= 'keywords,description';
 
-	if ($version == 9) {
-		/***************
-		 * declaring the task to write required CSS and JS files to fileadmin/Resources/Private/
-		 */
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['T3SBS\T3sbootstrap\Tasks\CdnToLocal'] = [
-			 'extension' => 't3sbootstrap',
-			 'title' => 'T3SB CDN to local',
-			 'description' => 'write required CSS and JS to fileadmin/Resources/Private/',
-		];
-	}	
+	/***************
+	 * Registering wizards
+	 */
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbConstantsUpdateWizard']
+	= \T3SBS\T3sbootstrap\Updates\t3sbConstantsUpdateWizard::class;
+
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbGridUpdateWizard']
+	= \T3SBS\T3sbootstrap\Updates\t3sbGridUpdateWizard::class;
 
 });

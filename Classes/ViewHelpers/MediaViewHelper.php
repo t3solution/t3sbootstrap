@@ -1,6 +1,15 @@
 <?php
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ *
+ * 	taken from https://extensions.typo3.org/extension/sms_responsive_images/ and modified
+ */
+
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileReference;
@@ -8,9 +17,6 @@ use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/*
-	taken from https://extensions.typo3.org/extension/sms_responsive_images/ and modified
-*/
 
 class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 {
@@ -97,7 +103,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$cropString = self::getCropString($image);
 		}
 
-
 		$cropVariantCollection = CropVariantCollection::create((string) $cropString);
 		$cropVariant = $this->arguments['cropVariant'] ?: 'default';
 
@@ -128,8 +133,8 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		$placeholderSize = 0;
 		$placeholderInline = 0;
 		if ($lazyload) {
-		$placeholderSize = $this->arguments['placeholderSize'] ?: 60;
-		$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
+			$placeholderSize = $this->arguments['placeholderSize'] ?: 60;
+			$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
 		}
 		// Generate picture tag
 		$this->tag = $this->responsiveImagesUtility->createPictureTag(
@@ -199,8 +204,8 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		$placeholderSize = 0;
 		$placeholderInline = 0;
 		if ($lazyload) {
-		$placeholderSize = $this->arguments['placeholderSize'] ? $this->arguments['placeholderSize'] : 60;
-		$placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['placeholderInline'] : 1;
+			$placeholderSize = $this->arguments['placeholderSize'] ? $this->arguments['placeholderSize'] : 60;
+			$placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['placeholderInline'] : 1;
 		}
 		// Generate image tag
 		$this->tag = $this->responsiveImagesUtility->createImageTagWithSrcset(

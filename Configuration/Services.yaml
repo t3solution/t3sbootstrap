@@ -18,3 +18,9 @@ services:
       - name: 'console.command'
         command: 't3sbootstrap:customScss'
         schedulable: true
+
+  T3SBS\T3sbootstrap\EventListener\AssetRenderer\IsInline:
+    tags:
+      - name: event.listener
+        identifier: 't3sbootstrap/AssetPostProcessing'
+        event: TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent

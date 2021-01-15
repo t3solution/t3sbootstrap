@@ -4,26 +4,11 @@ defined('TYPO3_MODE') or die();
  # if typoscript_rendering is loaded
 if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 
-	$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-	$version = (int)$typo3Version->getVersion();
-
-	if ($version == 10) {
-
-		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-			'T3sbootstrap',
-			'Pi1',
-			'Content Consent'
-		);
-
-	} else {
-
-		\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-			'T3SBS.T3sbootstrap',
-			'Pi1',
-			'Content Consent'
-		);
-
-	}
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+		'T3sbootstrap',
+		'Pi1',
+		'Content Consent'
+	);
 
 	$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase('t3sbootstrap');
 	$pluginSignature = strtolower($extensionName) . '_pi1';
@@ -34,6 +19,388 @@ if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_re
 
 # Extension configuration
 $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+
+
+/***************
+ * Add new EXT:container CTypes
+ */
+
+# GRID COLUMNS
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'two_columns',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
+			[
+				[
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 221],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 222]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,T3SFlex;tx_t3sbootstrap_flexform,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+			--palette--;;language,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+			--palette--;;hidden,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
+			categories,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+			rowDescription,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
+';
+
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'three_columns', // CType
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.description',
+			[
+				[
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 231],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 232],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 233]
+				  ]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'four_columns',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
+			[
+				[
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 241],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 242],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 243],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 244]
+				  ]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'six_columns',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
+			[
+				[
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 261],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 262],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 263],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 264],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.4', 'colPos' => 265],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.5', 'colPos' => 266]
+				  ]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+
+# CARD WRAPPER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'card_wrapper',
+			'Card Wrapper',
+			'In addition to styling the content within cards, Bootstrap includes a few options for laying out series of cards.',
+			[
+				[
+					['name' => 'Card Wrapper', 'colPos' => 270, 'allowed' => ['CType' => 't3sbs_card']]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['card_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+
+# BUTTON GROUP
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'button_group',
+			'Button Group',
+			'Group a series of buttons together on a single line with the button group.',
+			[
+				[
+					['name' => 'Button Group', 'colPos' => 271, 'allowed' => ['CType' => 't3sbs_button']]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/bars.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['button_group']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# AUTO LAYOUT
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'autoLayout_row',
+			'Auto-layout',
+			'Options: "Equal-width", "Setting one column width" or "Variable width content".',
+			[
+				[
+					['name' => 'Auto-layout', 'colPos' => 272]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# BACKGROUND WRAPPER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'background_wrapper',
+			'Background Wrapper',
+			'Options: "Full width container with background color -image or -Youtube vido.',
+			[
+				[
+					['name' => 'Background Wrapper', 'colPos' => 273]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-background_wrapper.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
+			assets,
+		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,T3SFlex;tx_t3sbootstrap_flexform,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+			--palette--;;language,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+			--palette--;;hidden,
+			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
+			categories,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+			rowDescription,
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
+';
+
+$GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides'] = [
+	'assets' => [
+		'config' => [
+			'maxitems' => 1
+		],
+	]
+];
+
+# PARALLAX WRAPPER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'parallax_wrapper',
+			'Parallax Wrapper',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.parallaxWrapper.description',
+			[
+				[
+					['name' => 'Parallax Wrapper', 'colPos' => 274]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-parallax_wrapper.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
+
+# CONTAINER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'container',
+			'Container',
+			'Bootstrap .container',
+			[
+				[
+					['name' => 'Container', 'colPos' => 275]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# CAROUSEL CONTAINER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'carousel_container',
+			'Carousel Container',
+			'A container for several Carousel slides (CE:t3sb_carousel)',
+			[
+				[
+					['name' => 'Carousel Container', 'colPos' => 276, 'allowed' => ['CType' => 't3sbs_carousel']]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['carousel_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# COLLAPSIBLE CONTAINER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'collapsible_container',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.description',
+			[
+				[
+					['name' => 'Collapsible Container', 'colPos' => 277, 'allowed' => ['CType' => 'collapsible_accordion']]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Blue.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['collapsible_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# COLLAPSIBLE ELEMENT
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'collapsible_accordion',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.description',
+			[
+				[
+					['name' => 'Collapsible Element', 'colPos' => 278]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-element.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
+
+# MODAL CONTAINER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'modal',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.description',
+			[
+				[
+					['name' => 'Modal Container', 'colPos' => 279]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Blue.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['modal']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# TAB CONTAINER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'tabs_container',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.description',
+			[
+				[
+					['name' => 'Tabs Container', 'colPos' => 280, 'allowed' => ['CType' => 'tabs_tab']]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Blue.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['tabs_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# TAB
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'tabs_tab',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.description',
+			[
+				[
+					['name' => 'Tab', 'colPos' => 281]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+# LIST GROUP WRAPPER
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'listGroup_wrapper',
+			'List Group Wrapper',
+			'Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"',
+			[
+				[
+					['name' => 'List Group Wrapper', 'colPos' => 282]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
+	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
+);
+$GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 
 /***************
@@ -330,31 +697,31 @@ $tempContentColumns = [
 		'label' => ' ',
 		'config' => [
 			'type' => 'flex',
-			'ds_pointerField' => 'tx_gridelements_backend_layout,CType',
+			'ds_pointerField' => 'CType',
 			'ds' => [
 				'default' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Bootstrap.xml',
-				'*,t3sbs_card' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
-				'*,t3sbs_toast' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/ToastSetting.xml',
-				'*,t3sbs_carousel' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Carousel.xml',
-				'*,t3sbs_button' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
-				'*,t3sbs_mediaobject' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
-				'*,table' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Table.xml',
-				'card_wrapper,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/CardWrapper.xml',
-				'autoLayout_row,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/AutoLayoutRow.xml',
-				'button_group,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/Buttongroup.xml',
-				'container,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/Container.xml',
-				'two_columns,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/TwoColumns.xml',
-				'three_columns,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/ThreeColumns.xml',
-				'four_columns,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/FourColumns.xml',
-				'six_columns,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/SixColumns.xml',
-				'background_wrapper,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/BackgroundWrapper.xml',
-				'parallax_wrapper,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/ParallaxWrapper.xml',
-				'carousel_container,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/CarouselContainer.xml',
-				'collapsible_accordion,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/Collapse.xml',
-				'collapsible_container,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/CollapseContainer.xml',
-				'modal,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/Modal.xml',
-				'tabs_container,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/Tabs.xml',
-				'tabs_tab,gridelements_pi1' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Gridelements/TabsTab.xml',
+				't3sbs_card' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
+				't3sbs_toast' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/ToastSetting.xml',
+				't3sbs_carousel' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Carousel.xml',
+				't3sbs_button' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
+				't3sbs_mediaobject' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
+				'table' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Table.xml',
+				'two_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml',
+				'three_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml',
+				'four_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml',
+				'six_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml',
+				'card_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CardWrapper.xml',
+				'button_group' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Buttongroup.xml',
+				'autoLayout_row' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/AutoLayoutRow.xml',
+				'background_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/BackgroundWrapper.xml',
+				'parallax_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ParallaxWrapper.xml',
+				'container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Container.xml',
+				'carousel_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CarouselContainer.xml',
+				'collapsible_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CollapseContainer.xml',
+				'collapsible_accordion' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Collapse.xml',
+				'modal' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Modal.xml',
+				'tabs_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Tabs.xml',
+				'tabs_tab' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml',
 			]
 		]
 	],
@@ -621,11 +988,13 @@ $tempContentColumns = [
 			'size' => 3
 		]
 	],
+
 ];
 
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content',$tempContentColumns);
 unset($tempContentColumns);
+
 
 /***************
  * Button - t3sbs_button
@@ -645,8 +1014,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button'] = [
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
-		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
-		--div--;LLL:EXT:gridelements/Resources/Private/Language/locallang_db.xlf:gridElements, tx_gridelements_container, tx_gridelements_columns
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 	'
 ];
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
@@ -686,8 +1054,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
 			categories,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
 			rowDescription,
-		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
-	--div--;LLL:EXT:gridelements/Resources/Private/Language/locallang_db.xlf:gridElements, tx_gridelements_container, tx_gridelements_columns
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 	',
 	'columnsOverrides' => [
 		'bodytext' => [
@@ -745,8 +1112,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
-		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
-		--div--;LLL:EXT:gridelements/Resources/Private/Language/locallang_db.xlf:gridElements, tx_gridelements_container, tx_gridelements_columns
+		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 	',
 	'columnsOverrides' => [
 		'assets' => [
@@ -764,7 +1130,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
  * Toasts - t3sbs_toast
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast'] = $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject'];
-
 
 
 /***************
@@ -787,8 +1152,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_fluidtemplate']['showitem'] = '
 		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
 	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
 		hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
-		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
-		--div--;LLL:EXT:gridelements/Resources/Private/Language/locallang_db.xlf:gridElements, tx_gridelements_container, tx_gridelements_columns
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access
 ';
 
 
@@ -812,39 +1176,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
 	'
-];
-
-
-/***************
- * Gridelements
- */
-$GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['showitem'] = str_replace('media,', '', $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['showitem']);
-$GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['showitem'] .= ',--div--;Media,assets';
-$GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] = [
-	'assets' => [
-		'config' => [
-			'maxitems' => 1
-		],
-		'displayCond' => [
-			'OR' => [
-				'FIELD:tx_gridelements_backend_layout:=:background_wrapper',
-				'FIELD:tx_gridelements_backend_layout:=:parallax_wrapper',
-				'FIELD:tx_gridelements_backend_layout:=:collapsible_accordion'
-			]
-		]
-	],
-	'header_layout' => [
-		'displayCond' => 'FIELD:tx_gridelements_backend_layout:!=:collapsible_accordion',
-	],
-	'tx_t3sbootstrap_header_display' => [
-		'displayCond' => 'FIELD:tx_gridelements_backend_layout:!=:collapsible_accordion',
-	],
-	'date' => [
-		'displayCond' => 'FIELD:tx_gridelements_backend_layout:!=:collapsible_accordion',
-	],
-	'header_link' => [
-		'displayCond' => 'FIELD:tx_gridelements_backend_layout:!=:collapsible_accordion',
-	]
 ];
 
 
@@ -874,15 +1205,23 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'tx_t3sbootstrap_bordercolor',
 	'after:imageborder'
 );
-
-# add palette bootstrap etc
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
-	'--palette--; ;bsRowWidth',
-	'',
-	'after:mediaAdjustments'
+	'mediaAdjustments',
+	'tx_t3sbootstrap_image_ratio',
+	'after:tx_t3sbootstrap_bordercolor'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'mediaAdjustments',
+	'tx_t3sbootstrap_inTextImgRowWidth',
+	'after:tx_t3sbootstrap_bordercolor'
+);
+
+
+
+# add palette bootstrap etc
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--palette--; ;bsHeaderExtra',
@@ -914,10 +1253,6 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['columnsOverrides'] =
 	'',
 	'after:layout'
 );
-
-$GLOBALS['TCA']['tt_content']['palettes']['bsRowWidth'] = [
-  'showitem' => 'tx_t3sbootstrap_image_ratio, tx_t3sbootstrap_inTextImgRowWidth'
-];
 
 $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
   'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,

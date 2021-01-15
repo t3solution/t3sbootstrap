@@ -5,6 +5,98 @@
 		<body>
 
 
+			<trans-unit id="accordion_1">
+				<source>General Settings</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-1">
+				<source>Various Extra Classes</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-2">
+				<source>Various Margin &amp; Padding</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-3">
+				<source>Loading Spinner</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-4">
+				<source>Lightbox Settings</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-5">
+				<source>Section Menu Settings</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-6">
+				<source>Background Image</source>
+			</trans-unit>
+			<trans-unit id="accordion_1-7">
+				<source>Other Settings</source>
+			</trans-unit>
+
+
+			<trans-unit id="accordion_2">
+				<source>Meta Navigation</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_3">
+				<source>Navbar</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-1">
+				<source>Various Settings</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-2">
+				<source>Brand</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-3">
+				<source>Background Color</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-4">
+				<source>Layout/Placement</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-5">
+				<source>Shrinking Navbar</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-6">
+				<source>Responsive behaviors</source>
+			</trans-unit>
+			<trans-unit id="accordion_3-7">
+				<source>Language Menu</source>
+			</trans-unit>
+
+
+
+			<trans-unit id="accordion_4">
+				<source>Jumbotron</source>
+			</trans-unit>
+			<trans-unit id="accordion_4-1">
+				<source>Background Carousel</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_5">
+				<source>Page Title</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_6">
+				<source>Breadcrumb</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_7">
+				<source>Sidebar</source>
+			</trans-unit>
+
+
+			<trans-unit id="accordion_8">
+				<source>Expanded Content Top</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_9">
+				<source>Expanded Content Bottom</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_10">
+				<source>Footer</source>
+			</trans-unit>
+
+
+
+
 			<!-- New Content Element Wizard -->
 			<trans-unit id="t3sbs_contentelements">
 				<source>T3S Bootstrap</source>
@@ -27,48 +119,48 @@
 			<trans-unit id="default">
 				<source>Default</source>
 			</trans-unit>
-	        <trans-unit id="secondary">
-	            <source>Secondary</source>
-	        </trans-unit>
-	        <trans-unit id="primary">
-	            <source>Primary</source>
-	        </trans-unit>
-	        <trans-unit id="success">
-	            <source>Success</source>
-	        </trans-unit>
-	        <trans-unit id="info">
-	            <source>Info</source>
-	        </trans-unit>
-	        <trans-unit id="warning">
-	            <source>Warning</source>
-	        </trans-unit>
-	        <trans-unit id="danger">
-	            <source>Danger</source>
-	        </trans-unit>
+			 <trans-unit id="secondary">
+				 <source>Secondary</source>
+			 </trans-unit>
+			 <trans-unit id="primary">
+				 <source>Primary</source>
+			 </trans-unit>
+			 <trans-unit id="success">
+				 <source>Success</source>
+			 </trans-unit>
+			 <trans-unit id="info">
+				 <source>Info</source>
+			 </trans-unit>
+			 <trans-unit id="warning">
+				 <source>Warning</source>
+			 </trans-unit>
+			 <trans-unit id="danger">
+				 <source>Danger</source>
+			 </trans-unit>
 			<trans-unit id="above">
 				<source>above</source>
 			</trans-unit>
 			<trans-unit id="below">
 				<source>below</source>
 			</trans-unit>
-	        <trans-unit id="predefined.styles">
-	            <source>Predefined styles</source>
-	        </trans-unit>
-	        <trans-unit id="link">
-	            <source>Link</source>
-	        </trans-unit>
-	        <trans-unit id="large">
-	            <source>Large</source>
-	        </trans-unit>
-	        <trans-unit id="small">
-	            <source>Small</source>
-	        </trans-unit>
-	        <trans-unit id="light">
-	            <source>light</source>
-	        </trans-unit>
-	        <trans-unit id="dark">
-	            <source>dark</source>
-	        </trans-unit>
+			 <trans-unit id="predefined.styles">
+				 <source>Predefined styles</source>
+			 </trans-unit>
+			 <trans-unit id="link">
+				 <source>Link</source>
+			 </trans-unit>
+			 <trans-unit id="large">
+				 <source>Large</source>
+			 </trans-unit>
+			 <trans-unit id="small">
+				 <source>Small</source>
+			 </trans-unit>
+			 <trans-unit id="light">
+				 <source>light</source>
+			 </trans-unit>
+			 <trans-unit id="dark">
+				 <source>dark</source>
+			 </trans-unit>
 
 
 
@@ -97,18 +189,18 @@
 
 
 			<!-- Button.xml -->
-	        <trans-unit id="flexforms.button.size">
-	            <source>Button size</source>
-	        </trans-unit>
-	        <trans-unit id="flexforms.button.block">
-	            <source>Block level button (span the full width)</source>
-	        </trans-unit>
-	        <trans-unit id="flexforms.button.outline">
-	            <source>Outline button</source>
-	        </trans-unit>
+			 <trans-unit id="flexforms.button.size">
+				 <source>Button size</source>
+			 </trans-unit>
+			 <trans-unit id="flexforms.button.block">
+				 <source>Block level button (span the full width)</source>
+			 </trans-unit>
+			 <trans-unit id="flexforms.button.outline">
+				 <source>Outline button</source>
+			 </trans-unit>
 
 
-			<!-- Flexforms in Card.xml -->			
+			<!-- Flexforms in Card.xml -->
 			<trans-unit id="flexforms.card.imageOverlay">
 				<source>Image overlay</source>
 			</trans-unit>
@@ -120,112 +212,113 @@
 			</trans-unit>
 
 
-			<!-- Gridelements -->
-			<trans-unit id="gridelement.anyColumns.colPos.0">
+			<!-- EXT:container -->
+			<trans-unit id="tx_container.anyColumns.colPos.0">
 				<source>Column 1</source>
 			</trans-unit>
-			<trans-unit id="gridelement.anyColumns.colPos.1">
+			<trans-unit id="tx_container.anyColumns.colPos.1">
 				<source>Column 2</source>
 			</trans-unit>
-			<trans-unit id="gridelement.anyColumns.colPos.2">
+			<trans-unit id="tx_container.anyColumns.colPos.2">
 				<source>Column 3</source>
 			</trans-unit>
-			<trans-unit id="gridelement.anyColumns.colPos.3">
+			<trans-unit id="tx_container.anyColumns.colPos.3">
 				<source>Column 4</source>
 			</trans-unit>
-			<trans-unit id="gridelement.anyColumns.colPos.4">
+			<trans-unit id="tx_container.anyColumns.colPos.4">
 				<source>Column 5</source>
 			</trans-unit>
-			<trans-unit id="gridelement.anyColumns.colPos.5">
+			<trans-unit id="tx_container.anyColumns.colPos.5">
 				<source>Column 6</source>
 			</trans-unit>
-			<trans-unit id="gridelement.twoColumns.title">
+			<trans-unit id="tx_container.twoColumns.title">
 				<source>2 Columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.twoColumns.description">
+			<trans-unit id="tx_container.twoColumns.description">
 				<source>Container with 2 columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.threeColumns.title">
+			<trans-unit id="tx_container.threeColumns.title">
 				<source>3 Columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.threeColumns.description">
+			<trans-unit id="tx_container.threeColumns.description">
 				<source>Container with 3 columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.fourColumns.title">
+			<trans-unit id="tx_container.fourColumns.title">
 				<source>4 Columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.fourColumns.description">
+			<trans-unit id="tx_container.fourColumns.description">
 				<source>Container with 4 columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.sixColumns.title">
+			<trans-unit id="tx_container.sixColumns.title">
 				<source>6 Columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.sixColumns.description">
+			<trans-unit id="tx_container.sixColumns.description">
 				<source>Container with 6 columns</source>
 			</trans-unit>
-			<trans-unit id="gridelement.tabContainer.title">
+			<trans-unit id="tx_container.tabContainer.title">
 				<source>Tab Container</source>
 			</trans-unit>
-			<trans-unit id="gridelement.tabContainer.description">
+			<trans-unit id="tx_container.tabContainer.description">
 				<source>A container for several tabs (blue frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.tabElement.title">
+			<trans-unit id="tx_container.tabElement.title">
 				<source>Tab Element</source>
 			</trans-unit>
-			<trans-unit id="gridelement.tabElement.description">
+			<trans-unit id="tx_container.tabElement.description">
 				<source>A Tab for a TabContainer (green frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.collapsibleContainer.title">
+			<trans-unit id="tx_container.collapsibleContainer.title">
 				<source>Collapsible Container</source>
 			</trans-unit>
-			<trans-unit id="gridelement.collapsibleContainer.description">
+			<trans-unit id="tx_container.collapsibleContainer.description">
 				<source>A container for several collapsible elements (blue frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.collapsibleElement.title">
+			<trans-unit id="tx_container.collapsibleElement.title">
 				<source>Collapsible Element</source>
 			</trans-unit>
-			<trans-unit id="gridelement.collapsibleElement.description">
+			<trans-unit id="tx_container.collapsibleElement.description">
 				<source>A collapsible element for a Collapsible Container (green frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.thumbnailsContainer.title">
+			<trans-unit id="tx_container.thumbnailsContainer.title">
 				<source>Thumbnail Container</source>
 			</trans-unit>
-			<trans-unit id="gridelement.thumbnailsContainer.description">
+			<trans-unit id="tx_container.thumbnailsContainer.description">
 				<source>A container for several Thumbnails (CE:t3sbootstrap_thumbnail) (red frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.modal.title">
+			<trans-unit id="tx_container.modal.title">
 				<source>Modal Container</source>
 			</trans-unit>
-			<trans-unit id="gridelement.modal.description">
+			<trans-unit id="tx_container.modal.description">
 				<source>A container for several content elements (green frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.carouselContainer.title">
+			<trans-unit id="tx_container.carouselContainer.title">
 				<source>Carousel Container</source>
 			</trans-unit>
-			<trans-unit id="gridelement.carouselContainer.description">
+			<trans-unit id="tx_container.carouselContainer.description">
 				<source>A container for several Carousel slides (CE:t3sbootstrap_carousel) (red frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.grayscaleSection.title">
+			<trans-unit id="tx_container.grayscaleSection.title">
 				<source>Grayscale Section Container</source>
 			</trans-unit>
-			<trans-unit id="gridelement.grayscaleSection.description">
+			<trans-unit id="tx_container.grayscaleSection.description">
 				<source>A container for several sections, use only with the grayscale theme backend layout (green frame)</source>
 			</trans-unit>
-			<trans-unit id="gridelement.backgroundWrapper.title">
+			<trans-unit id="tx_container.backgroundWrapper.title">
 				<source>Background wrapper</source>
 			</trans-unit>
-			<trans-unit id="gridelement.backgroundWrapper.description">
+			<trans-unit id="tx_container.backgroundWrapper.description">
 				<source>Full width container with background color or - image</source>
 			</trans-unit>
-			<trans-unit id="gridelement.parallaxWrapper.title">
+			<trans-unit id="tx_container.parallaxWrapper.title">
 				<source>Parallax wrapper</source>
 			</trans-unit>
-			<trans-unit id="gridelement.parallaxWrapper.description">
+			<trans-unit id="tx_container.parallaxWrapper.description">
 				<source>Full width container with parallax image scroll(Handys/Tablets: no scrolling)</source>
 			</trans-unit>
 
 
-			<!-- Flexforms in gridelements -->
+
+			<!-- Flexforms -->
 			<trans-unit id="flexforms.settings">
 				<source>Settings</source>
 			</trans-unit>

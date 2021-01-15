@@ -1,5 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Utility;
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Resource\FileInterface;
@@ -314,7 +323,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		FileInterface $originalImage,
 		FileInterface $fallbackImage,
 		Area $focusArea = null
-	) {
+	): void {
 		$focusArea = $focusArea ?: Area::createEmpty();
 
 		// Add focus area to image tag
@@ -519,7 +528,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 *
 	 * @return bool
 	 */
-	public function hasIgnoredFileExtension(FileInterface $image, $ignoreFileExtensions = 'svg')
+	public function hasIgnoredFileExtension(FileInterface $image, $ignoreFileExtensions = 'svg'): bool
 	{
 		$ignoreFileExtensions = (is_array($ignoreFileExtensions))
 			? $ignoreFileExtensions

@@ -30,30 +30,6 @@ page {
 		cookieconsentCssCDN.external = 1
 		cookieconsentCssCDN.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
-		##########################################################################################################
-		#
-		# ANIMATE CSS
-		#
-		##########################################################################################################
-
-		animatecssCDN = https://cdnjs.cloudflare.com/ajax/libs/animate.css/{$bootstrap.cdn.animate}/animate.min.css
-		animatecssCDN.external = 1
-		animatecssCDN.if.isTrue = {$bootstrap.extconf.animateCss}
-
-		##########################################################################################################
-		#
-		# Heighlight used with codesnippet
-		#
-		##########################################################################################################
-
-		codesnippetCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/styles/default.min.css
-		codesnippetCDN.external = 1
-		codesnippetCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		heighlightCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/styles/a11y-light.min.css
-		heighlightCDN.external = 1
-		heighlightCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
-
 	}
 
 	includeJSFooterlibs {
@@ -121,22 +97,6 @@ page {
 
 		##########################################################################################################
 		#
-		# HEIGHLIGHT
-		#
-		##########################################################################################################
-
-		codesnippetCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/highlight.min.js
-		codesnippetCDN.integrity = {$bootstrap.cdn.highlightIntegrity}
-		codesnippetCDN.external = 1
-		codesnippetCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		heighlightCDN = https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{$bootstrap.cdn.highlight}/languages/php.min.js
-		heighlightCDN.integrity = {$bootstrap.cdn.highlightIntegrity}
-		heighlightCDN.external = 1
-		heighlightCDN.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		##########################################################################################################
-		#
 		# LAZYLOAD
 		#
 		##########################################################################################################
@@ -156,17 +116,6 @@ page {
 		picturefillCDN.integrity = {$bootstrap.cdn.picturefillIntegrity}
 		picturefillCDN.external = 1
 		picturefillCDN.if.isTrue = {$bootstrap.image.picturefill}
-
-		##########################################################################################################
-		#
-		# VIEWPORTCHECKER
-		#
-		##########################################################################################################
-
-		viewportcheckerCDN = https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/{$bootstrap.cdn.viewportchecker}/jquery.viewportchecker.min.js
-		viewportcheckerCDN.integrity = {$bootstrap.cdn.viewportcheckerIntegrity}
-		viewportcheckerCDN.external = 1
-		viewportcheckerCDN.if.isTrue = {$bootstrap.extconf.animateCss}
 
 	}
 

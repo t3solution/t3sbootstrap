@@ -23,27 +23,6 @@ page {
 		cookieconsentCss = fileadmin/T3SB/Resources/Public/CSS/cookieconsent.min.css
 		cookieconsentCss.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
-		##########################################################################################################
-		#
-		# ANIMATE CSS
-		#
-		##########################################################################################################
-
-		animatecss = fileadmin/T3SB/Resources/Public/CSS/animate.min.css
-		animatecss.if.isTrue = {$bootstrap.extconf.animateCss}
-
-		##########################################################################################################
-		#
-		# Heighlight used with codesnippet
-		#
-		##########################################################################################################
-
-		codesnippet = fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css
-		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		heighlight = fileadmin/T3SB/Resources/Public/CSS/highlight.a11y-light.min.css
-		heighlight.if.isTrue = {$bootstrap.extconf.codesnippet}
-
 	}
 
 	includeJSFooterlibs {
@@ -97,18 +76,6 @@ page {
 
 		##########################################################################################################
 		#
-		# HEIGHLIGHT
-		#
-		##########################################################################################################
-
-		codesnippet = fileadmin/T3SB/Resources/Public/JS/highlight.min.js
-		codesnippet.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		heighlight = fileadmin/T3SB/Resources/Public/JS/highlight.php.min.js
-		heighlight.if.isTrue = {$bootstrap.extconf.codesnippet}
-
-		##########################################################################################################
-		#
 		# LAZYLOAD
 		#
 		##########################################################################################################
@@ -125,15 +92,6 @@ page {
 		# Local
 		picturefill = fileadmin/T3SB/Resources/Public/JS/picturefill.min.js
 		picturefill.if.isTrue = {$bootstrap.image.picturefill}
-
-		##########################################################################################################
-		#
-		# VIEWPORTCHECKER
-		#
-		##########################################################################################################
-
-		viewportchecker = fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js
-		viewportchecker.if.isTrue = {$bootstrap.extconf.animateCss}
 
 	}
 
@@ -152,3 +110,6 @@ page {
 		}
 	}
 }
+
+
+

@@ -6,7 +6,8 @@
 			<ul class="nav menusectionpages{menudirection}{menupills}{menuHorizontalAlignment}">
 				<f:for each="{menu}" as="page">
 					<li class="nav-item">
-						<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}">
+						<a href="{page.link}"{f:if(condition:'{page.target}',
+							then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}">
 							<f:if condition="{page.nav_title}">
 								<f:then>
 									<span>{page.nav_title}</span>

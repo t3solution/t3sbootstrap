@@ -1,9 +1,8 @@
 #-------------------------------------------------------------------------------
 #	Include
 #-------------------------------------------------------------------------------
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/Gridelements.tsconfig">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig">
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'
 
 #-------------------------------------------------------------------------------
 #	Content
@@ -24,16 +23,34 @@ TCEFORM.pages.crdate.disabled = 1
 TCAdefaults.tt_content.imagecols = 1
 TCAdefaults.tt_content.imageorient = 0
 
+
 TCEFORM.tt_content {
 	linkToTop.disabled = 1
 	table_class.disabled = 1
 	space_before_class.disabled = 1
 	space_after_class.disabled = 1
+
 	tx_t3sbootstrap_header_celink {
 		types {
 			t3sbs_button.disabled = 1
-			gridelements_pi1.disabled = 1
 			t3sbs_toast.disabled = 1
+			two_columns.disabled = 1
+			three_columns.disabled = 1
+			four_columns.disabled = 1
+			six_columns.disabled = 1
+			card_wrapper.disabled = 1
+			button_group.disabled = 1
+			autoLayout_row.disabled = 1
+			background_wrapper.disabled = 1
+			parallax_wrapper.disabled = 1
+			container.disabled = 1
+			carousel_container.disabled = 1
+			collapsible_container.disabled = 1
+			collapsible_accordion.disabled = 1
+			modal.disabled = 1
+			tabs_container.disabled = 1
+			tabs_tab.disabled = 1
+			#listGroup_wrapper.disabled = 1
 		}
 	}
 	date {
@@ -47,7 +64,23 @@ TCEFORM.tt_content {
 	}
 	pi_flexform {
 		types {
-			gridelements_pi1.disabled = 1
+			two_columns.disabled = 1
+			three_columns.disabled = 1
+			four_columns.disabled = 1
+			six_columns.disabled = 1
+			card_wrapper.disabled = 1
+			button_group.disabled = 1
+			autoLayout_row.disabled = 1
+			background_wrapper.disabled = 1
+			parallax_wrapper.disabled = 1
+			container.disabled = 1
+			carousel_container.disabled = 1
+			collapsible_container.disabled = 1
+			collapsible_accordion.disabled = 1
+			modal.disabled = 1
+			tabs_container.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
 		}
 	}
 	header {
@@ -182,7 +215,23 @@ TCEFORM.tt_content {
 		types {
 			t3sbs_toast.disabled = 1
 			t3sbs_mediaobject.disabled = 1
-			gridelements_pi1.disabled = 1
+			two_columns.disabled = 1
+			three_columns.disabled = 1
+			four_columns.disabled = 1
+			six_columns.disabled = 1
+			card_wrapper.disabled = 1
+			button_group.disabled = 1
+			autoLayout_row.disabled = 1
+			background_wrapper.disabled = 1
+			parallax_wrapper.disabled = 1
+			container.disabled = 1
+			carousel_container.disabled = 1
+			collapsible_container.disabled = 1
+			collapsible_accordion.disabled = 1
+			modal.disabled = 1
+			tabs_container.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
 		}
 	}
 	imagewidth {
@@ -308,7 +357,23 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_gallery.disabled = 1
-			gridelements_pi1.disabled = 1
+			two_columns.disabled = 1
+			three_columns.disabled = 1
+			four_columns.disabled = 1
+			six_columns.disabled = 1
+			card_wrapper.disabled = 1
+			button_group.disabled = 1
+			autoLayout_row.disabled = 1
+			background_wrapper.disabled = 1
+			parallax_wrapper.disabled = 1
+			container.disabled = 1
+			carousel_container.disabled = 1
+			collapsible_container.disabled = 1
+			collapsible_accordion.disabled = 1
+			modal.disabled = 1
+			tabs_container.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCss {
@@ -338,4 +403,3 @@ TCEFORM.tt_content {
 	}
 
 }
-

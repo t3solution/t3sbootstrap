@@ -2,11 +2,15 @@
 <f:layout name="Default" />
 <f:section name="Main">
 <f:if condition="{menu}">
+<f:if condition="{settings.config.sectionmenuStickyTop}">
+	<f:render partial="Page/Assets" arguments="{stickytop:'true'}" />
+</f:if>
 <div class="submenu">
 	<ul class="nav menusubpages{menudirection}{menupills}{menuHorizontalAlignment}">
 		<f:for each="{menu}" as="page">
 			<li class="nav-item">
-				<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{page.current}',then:' active')}">
+				<a href="{page.link}"{f:if(condition:'{page.target}',
+					then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{page.current}',then:' active')}">
 					<f:if condition="{page.nav_title}">
 						<f:then>
 							{page.nav_title}

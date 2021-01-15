@@ -5,7 +5,7 @@ mod.wizards {
 	newContentElement {
 		wizardItems {
 			common.elements {
-				textmedia.tt_content_defValues.imageorient = 25
+				textmedia.tt_content_defValues.imageorient = 0
 			}
 			t3sbs {
 				header = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbs_contentelements
