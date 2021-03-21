@@ -24,7 +24,7 @@
 </f:if>
 
 <div class="card">
-	<div class="card-header" style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: 1rem !important;">
+	<div class="card-header" style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: .6rem !important;">
 		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
 			<h2><em class="fa fas fa-cogs" aria-hidden="true"></em> Configuration</h2>
 		</div>
@@ -32,16 +32,17 @@
 	<div class="card-body">
 		<f:if condition="{config}">
 			<f:then>
-				<f:link.action action="edit" arguments="{config : config}" class="btn btn-primary btn-block"
-				 style="margin-bottom:2rem; font-size: 1.3rem;">Edit this configuration</f:link.action>
+				<f:link.action action="edit" arguments="{config : config}" class="btn btn-primary btn-block edit-btn">
+					Edit this configuration
+				</f:link.action>
 				<f:if condition="{isSiteroot}">
 					<f:then>
 						<f:if condition="{utilColors} && {settings.wsScss} && {settings.enableUtilityColors}">
 							<f:render section="UtilityColors" arguments="{_all}" />
 						</f:if>
 						<p>
-							<button class="btn btn-info bg-gradient" type="button" data-toggle="collapse"
-							 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="font-size: 1.3rem; min-width: 200px;">
+							<button class="btn btn-info bg-gradient page-conf-btn" type="button" data-toggle="collapse"
+							 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="width: 250px;">
 								Pages with T3SB Configuration
 							</button>
 						</p>
@@ -187,18 +188,18 @@
 
 <f:section name="UtilityColors">
 	<p>
-		<button class="btn btn-info bg-gradient" type="button" data-toggle="collapse"
-		 data-target="#util-color" aria-expanded="false" aria-controls="util-color" style="font-size: 1.3rem; min-width: 200px;">
+		<button class="btn btn-info bg-gradient util-color-btn" type="button" data-toggle="collapse"
+		 data-target="#util-color" aria-expanded="false" aria-controls="util-color" style="width: 250px;">
 			Utility Colors
 		</button>
 	</p>
 	<div class="collapse" id="util-color">
 		<div class="card card-body mb-0" style="padding: 0 !important">
 			<p>Currently available utility colors:</p>
-			<table class="table">
+			<table class="table table-striped util-table">
 				<f:for each="{utilColors}" as="color" key="colorkey">
 					<tr>
-					  <th style="background-color: {color};"></th>
+					  <th style="background-color: {color} !important;"></th>
 					  <td>{colorkey}</td>
 					  <td>{color}</td>
 					</tr>

@@ -16,6 +16,8 @@ ratio = 0
 imgtag = 0
 	# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a "container". (clear cache).
 sectionOrder = 0
+	# cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache).
+extraStyle = 0
 
 	# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache).
 fontawesome = 1

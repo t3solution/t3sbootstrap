@@ -31,9 +31,9 @@ class LastModifiedProcessor implements DataProcessorInterface
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration,	 array $processedData)
 	{
 		if ($processorConfiguration['lastModifiedContentElement']) {
-
 			$processorConfiguration = [];
 			$processorConfiguration['pidInList'] = self::getFrontendController()->id;
+			$processorConfiguration['pidInList'] = $currentId;
 			$records = $cObj->getRecords('tt_content', $processorConfiguration);
 
 			foreach ( $records as $record ) {
@@ -94,7 +94,6 @@ class LastModifiedProcessor implements DataProcessorInterface
 	{
 		$languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
 		$sysLanguageUid = $languageAspect->getContentId() ?: 0;
-
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
 			 ->select('uid','pid','header', 'tstamp')

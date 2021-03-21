@@ -6,6 +6,7 @@
 	<f:else>
 		<f:spaceless>
 			<f:render section="AssetScripts" arguments="{_all}" />
+			<f:comment> GOOGLE TAG MANAGER </f:comment>
 			<f:if condition="{settings.gtm}">
 				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={settings.gtm}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			</f:if>
@@ -178,9 +179,6 @@ new LazyLoad({
 <f:comment> Default JS </f:comment>
 <f:asset.script identifier="default">
 	// Default - Main.html
-	var bootstrapversion = $.fn.tooltip.Constructor.VERSION;
-	$('.bootstrap-version').replaceWith(bootstrapversion);
-	//console.log('Bootstrap Version:',bootstrapversion);
 	var navbarHeight = $("#main-navbar").outerHeight();
 	var fixedNavbar = false;
 	if ( $("#main-navbar").hasClass("fixed-top") || $("#main-navbar").hasClass("sticky-top") ) {

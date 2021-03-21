@@ -17,14 +17,14 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
-
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\QueryHelper;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
  * ConfigController
@@ -88,6 +88,13 @@ class ConfigController extends ActionController
 	 */
 	protected $rootConfig;
 
+	/**
+	 * TYPO3 version
+	 *
+	 * @var int
+	 */
+	protected $version;
+
 
 	/**
 	 * Inject a configRepository repository to enable DI
@@ -109,6 +116,18 @@ class ConfigController extends ActionController
 		$this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
 		$this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
 		$this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
+ 		$typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
+		$this->version = (int)$typo3Version->getVersion();
+
+		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+		$pageRenderer->loadRequireJsModule(
+			 'TYPO3/CMS/T3sbootstrap/T3sBootstrap',
+			 'function() { console.log("Loaded own module."); }'
+		);
+
+		if ($this->version === 11) {
+			$pageRenderer->addCssFile('/typo3conf/ext/t3sbootstrap/Resources/Public/Backend/bestyles11.css');
+		}
 	}
 
 
@@ -122,9 +141,9 @@ class ConfigController extends ActionController
 	 */
 	public function listAction($deleted = FALSE, $created = FALSE, $updateSss = FALSE): void
 	{
-		if ( $this->isSiteroot ) {
-		 	$queryGenerator = GeneralUtility::makeInstance(QueryGenerator::class);
-			$pidList = $queryGenerator->getTreeList($this->rootPageId, 999999, 0, 1);
+		if ( $this->isSiteroot && $this->rootPageId ) {
+
+			$pidList = $this->getTreeList($this->rootPageId, 999999, 0, '1');
 
 			foreach ( $this->configRepository->findAll() as $config ) {
 				if (GeneralUtility::inList($pidList, $config->getPid())) {
@@ -139,6 +158,7 @@ class ConfigController extends ActionController
 			$assignedOptions['allConfig'] = $allConfig;
 		}
 
+		$assignedOptions['t3version'] = $this->version;
 		$assignedOptions['rootConfig'] = $this->rootConfig ? TRUE : FALSE;
 		$assignedOptions['config'] = $this->configRepository->findOneByPid($this->currentUid);
 		$assignedOptions['admin'] = $this->isAdmin;
@@ -234,6 +254,7 @@ class ConfigController extends ActionController
 	public function editAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config, $updated = FALSE): void
 	{
 		$assignedOptions = self::getFieldsOptions();
+		$assignedOptions['t3version'] = $this->version;
 		$assignedOptions['config'] = $config;
 		$assignedOptions['pid'] = $this->currentUid;
 		$assignedOptions['admin'] = $this->isAdmin;
@@ -293,6 +314,7 @@ class ConfigController extends ActionController
 			$assignedOptions['isLoaded']['ws_scss'] = ExtensionManagementUtility::isLoaded('ws_scss');
 		}
 
+		$assignedOptions['t3version'] = $this->version;
 		$assignedOptions['action'] = 'dashboard';
 		$assignedOptions['isSiteroot'] = $this->isSiteroot;
 		$assignedOptions['admin'] = $this->isAdmin;
@@ -325,6 +347,7 @@ class ConfigController extends ActionController
 			}
 		}
 
+		$assignedOptions['t3version'] = $this->version;
 		$assignedOptions['action'] = 'constants';
 		$assignedOptions['isSiteroot'] = $this->isSiteroot;
 		$assignedOptions['admin'] = $this->isAdmin;
@@ -856,6 +879,51 @@ class ConfigController extends ActionController
 		$matcher = GeneralUtility::makeInstance(SiteMatcher::class);
 		return $matcher->matchByPageId((int) GeneralUtility::_GET('id'));
 	}
+
+
+	protected function getTreeList($id, $depth, $begin = 0, $permsClause = ''): string
+	{
+		$depth = (int)$depth;
+		$begin = (int)$begin;
+		$id = (int)$id;
+		if ($id < 0) {
+			$id = abs($id);
+		}
+		if ($begin == 0) {
+			$theList = $id;
+		} else {
+			$theList = '';
+		}
+		if ($id && $depth > 0) {
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+			$queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+			$statement = $queryBuilder->select('uid')
+				->from('pages')
+				->where(
+					$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)),
+					$queryBuilder->expr()->eq('sys_language_uid', 0),
+					QueryHelper::stripLogicalOperatorPrefix($permsClause)
+				)
+				->execute();
+			while ($row = $statement->fetch()) {
+				if ($begin <= 0) {
+					$theList .= ',' . $row['uid'];
+				}
+				if ($depth > 1) {
+					$theSubList = $this->getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
+					if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {
+						$theList .= ',';
+					}
+					$theList .= $theSubList;
+				}
+			}
+		}
+
+		return (string)$theList;
+	}
+
+
+
 
 
 }
