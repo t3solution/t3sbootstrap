@@ -10,7 +10,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
-
+use TYPO3\CMS\Core\Http\ApplicationType;
 
 /**
  * Class T3sbConditionFunctionsProvider
@@ -74,7 +74,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 
 			$result = FALSE;
 
-			if ( $_GET['id'] && TYPO3_MODE == 'BE' ) {
+			if ( $_GET['id'] && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
 
 				$pid = (int)$_GET['id'];
 				$objectManager = GeneralUtility::makeInstance(ObjectManager::class);

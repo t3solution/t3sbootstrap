@@ -1,6 +1,5 @@
 <?php
-defined('TYPO3_MODE') or die();
-
+defined('TYPO3') || die();
 
 # Extension configuration
 $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');

@@ -13,14 +13,14 @@
 		<div class="form-check">
 			<f:form.checkbox id="{field.property}" class="form-check-input" property="{field.property}" value="1" />
 			<f:if condition="{field.config.items.1.0}">
-				<label class="form-check-label" for="{field.property}" style="display: inline; font-weight: normal; margin-left: 2rem;">
+				<label class="form-check-label" for="{field.property}" style="display: inline; font-weight: normal;">
 					{field.config.items.1.0 -> f:format.raw()}
 				</label>
 			</f:if>
 			<f:if condition="{field.info}">
 				<br /><small class="form-text text-muted">{field.info -> f:format.raw()}</small>
 			</f:if>
-			<br/><small><code>bootstrap.config.{field.property}</code></small>
+			<br/><small class="small-code"><code>bootstrap.config.{field.property}</code></small>
 		</div>
 	</div>
 </div>

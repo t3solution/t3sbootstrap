@@ -63,7 +63,7 @@
 				<f:if condition="{config.navbar.clickableparent} || {iterator.isFirst}">
 					<f:then>
 						<li class="breadcrumb-item">
-							<a class="{f:if(condition:'{breadcrumbItem.current}',then:' active')}" href="{breadcrumbItem.link}">
+							<a class="{f:if(condition:'{breadcrumbItem.current}',then:' active')}" href="{breadcrumbItem.link}" title="{data.title}">
 								<f:render section="Text" arguments="{_all}" />
 							</a>
 						</li>

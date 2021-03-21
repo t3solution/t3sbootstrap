@@ -8,7 +8,7 @@ page {
 		##########################################################################################################
 
 		# Default
-		bootstrapScss = EXT:t3sbootstrap/Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss
+		bootstrapScss = fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss
 		bootstrapScss.forceOnTop = 1
 		bootstrapScss.if.isFalse = {$bootstrap.extconf.customScss}
 

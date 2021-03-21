@@ -3,7 +3,7 @@
 <f:section name="content">
 <f:flashMessages />
 <div class="card">
-	<div class="card-header" style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: 1rem !important;">
+	<div class="card-header" style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: .6rem !important;">
 		<div class="d-flex flex-column flex-md-row t3sb-header">
 				<h2><em class="fa fa-cog" aria-hidden="true"></em> Overview of the settings in the EM Config</h2>
 		</div>
@@ -70,7 +70,7 @@
 			</ul>
 		</f:then>
 		<f:else>
-			<div class="text-center">
+			<div class="text-center p-1">
 				<p class="text-danger mt-3"><strong>Not available!</strong></p>
 				<p>If the EXT:ws_scss is installed and loaded and "Custom Scss" is activated in the EM config,
 					 the bootstrap SCSS variables in the file "custom-variables.scss" can be overwritten.</p>
@@ -127,6 +127,10 @@
 		<li class="list-group-item">
 			{f:if(condition: extconf.color, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>Color:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.extraStyle, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Extra Style:</strong>
 		</li>
 		<li class="list-group-item">
 			{f:if(condition: extconf.ratio, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
