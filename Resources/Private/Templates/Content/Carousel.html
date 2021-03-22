@@ -9,7 +9,7 @@
 			</figure>
 			<f:render partial="Header/All" arguments="{_all}" />
 			<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-			<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
+			<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
 		</div>
 	</f:then>
 	<f:else>
@@ -23,7 +23,7 @@
 								<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
 									<f:render partial="Header/All" arguments="{_all}" />
 									<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-									<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
+									<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
 								</div>
 							</figcaption>
 						</f:if>
@@ -35,7 +35,7 @@
 							<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
 								<f:render partial="Header/All" arguments="{_all}" />
 								<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-								<f:render section="Button" arguments="{data: data, carouselLink: carouselLink}" />
+								<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
 							</div>
 						</div>
 					</f:if>
@@ -82,7 +82,14 @@
 <f:section name="Button">
 	<f:if condition="{data.button_link} && {carouselLink} == 'button'">
 		<f:link.typolink parameter="{data.button_link}" class="btn btn-primary btn-sm">
-			<f:translate id="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:read-more" />
+			<f:if condition="{buttontext}">
+				<f:then>
+					{buttontext -> f:format.raw()}
+				</f:then>
+				<f:else>
+					<f:translate id="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:read-more" />
+				</f:else>
+			</f:if>
 		</f:link.typolink>
 	</f:if>
 </f:section>
