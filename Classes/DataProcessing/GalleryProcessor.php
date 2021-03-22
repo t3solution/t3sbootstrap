@@ -363,11 +363,7 @@ class GalleryProcessor implements DataProcessorInterface
 						}
 					} else {
 						// above or below
-						if ( $this->mediaOrientation === 0 || $this->mediaOrientation === 8 ) {
-							$this->rowWidth = 100;
-						} else {
-							$this->rowWidth = 66;
-						}
+						$this->rowWidth = 66;
 					}
 				} else {
 					$this->rowWidth = 100;
