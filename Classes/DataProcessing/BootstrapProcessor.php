@@ -301,11 +301,11 @@ class BootstrapProcessor implements DataProcessorInterface
 
 			if ($flexconf['bgOverlay'] == 'caption') {
 				$innerCaptionStyle = $processedData['style'].' padding:15px 0';
-				$processedData['style'] .= '';
+				$processedData['style'] = '';
 			} elseif ($flexconf['bgOverlay'] == 'image') {
 				$innerCaptionStyle = '';
 			} else {
-				$processedData['style'] .= '';
+				$processedData['style'] = '';
 			}
 
 			if ($extConf['animateCss'] && $parentflexconf['animate']){
