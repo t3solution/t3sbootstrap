@@ -308,6 +308,9 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['style'] = '';
 			}
 
+			if ($parentflexconf['buttontext'])
+			$processedData['buttontext'] = trim(explode('|', $parentflexconf['buttontext'])[$processedData['data']['sys_language_uid']]);
+
 			if ($extConf['animateCss'] && $parentflexconf['animate']){
 				$processedData['animate'] = $parentflexconf['animate'] ?
 				 ' caption-animated animated align-items-'.$flexconf['captionVAlign'].' '.$parentflexconf['animate'] : '';
