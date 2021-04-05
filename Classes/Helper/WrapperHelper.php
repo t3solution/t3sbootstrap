@@ -309,6 +309,10 @@ $(videoElement).removeAttr("controls");';
 						$processedData['flipper']['class'] = 'col-xs-12 col-sm-6 col-md-4';
 				}
 			}
+			
+			if ($flexconf['card_wrapper'] == 'slider') {
+				$processedData['cards_per_slide'] = $flexconf['card_wrapper_slide_card_count'] ?: 3;
+			}
 		}
 		$processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
 

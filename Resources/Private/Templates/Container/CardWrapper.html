@@ -13,7 +13,7 @@
 			$(sliderId).on("slide.bs.carousel", function(e) {
 				var $e = $(e.relatedTarget);
 				var idx = $e.index();
-				var itemsPerSlide = 3;
+				var itemsPerSlide = {cards_per_slide};
 				var totalItems = $(sliderId + " .carousel-item").length;
 				if (idx >= totalItems - (itemsPerSlide - 1)) {
 					var it = itemsPerSlide - (totalItems - idx);
@@ -33,6 +33,78 @@
 		});
 	}
 </f:asset.script>
+<f:asset.css identifier="cardsliderCss">
+@media (min-width: 768px) {
+
+	<f:variable name="cssClass">.card-slider .carousel-inner .active</f:variable>
+	<t3sb:loop end="{cards_per_slide}" iteration="i">
+		{cssClass}<f:if condition="{cards_per_slide} != {i}">,</f:if><f:variable name="cssClass">{cssClass} + .carousel-item</f:variable>
+	</t3sb:loop>
+	{
+		display: block;
+		margin-right: inherit;
+	}	
+
+	<f:variable name="cssClass">.card-slider .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)</f:variable>
+	<t3sb:loop end="{cards_per_slide}" iteration="i">
+		{cssClass}<f:if condition="{cards_per_slide} != {i}">,</f:if><f:variable name="cssClass">{cssClass} + .carousel-item</f:variable>
+	</t3sb:loop>
+	{
+		transition: none;
+	}
+	
+	.card-slider .carousel-inner .carousel-item-next,
+	.card-slider .carousel-inner .carousel-item-prev {
+		position: relative;
+		transform: translate3d(0, 0, 0);
+	}
+	
+	.card-slider .carousel-inner .active.carousel-item + <t3sb:loop end="4"> + .carousel-item</t3sb:loop> {
+		position: absolute;
+		top: 0;
+		right: calc(-100% / {cards_per_slide});
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	
+	/* left or forward direction */
+	<f:variable name="cssClass">.card-slider .carousel-item-next.carousel-item-left + .carousel-item</f:variable>
+	.active.carousel-item-left + .carousel-item-next.carousel-item-left,
+	<t3sb:loop end="{cards_per_slide - 1}" iteration="i">
+		{cssClass}<f:if condition="{cards_per_slide} != {i-1}">,</f:if><f:variable name="cssClass">{cssClass} + .carousel-item</f:variable>
+	</t3sb:loop>
+	{
+		position: relative;
+		transform: translate3d(-100%, 0, 0);
+		visibility: visible;
+	}
+	
+	/* farthest right hidden item must be absolue position for animations */
+	.card-slider .carousel-inner .carousel-item-prev.carousel-item-right {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	
+	/* right or prev direction */
+	<f:variable name="cssClass">.card-slider .carousel-item-prev.carousel-item-right + .carousel-item</f:variable>
+	.active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+	<t3sb:loop end="{cards_per_slide - 1}" iteration="i">
+		{cssClass}<f:if condition="{cards_per_slide} != {i-1}">,</f:if><f:variable name="cssClass">{cssClass} + .carousel-item</f:variable>
+	</t3sb:loop>
+	{
+		position: relative;
+		transform: translate3d(100%, 0, 0);
+		visibility: visible;
+		display: block;
+		visibility: visible;
+	}
+}	  
+</f:asset.css>
 </f:if>
 <f:if condition="{settings.cardFlipperOnClick}">
 <f:asset.script identifier="cardwrapper">
