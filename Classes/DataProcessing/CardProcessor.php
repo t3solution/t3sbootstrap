@@ -173,7 +173,10 @@ class CardProcessor implements DataProcessorInterface {
 
 		// slider
 		if ( $parentflexconf['card_wrapper'] == 'slider' ) {
-			$processedData['cardSliderPre'] = '<div class="carousel-item col-md-4">';
+		
+			$colSize = floor(12 / $parentflexconf['card_wrapper_slide_card_count']);
+
+			$processedData['cardSliderPre'] = '<div class="carousel-item col-md-'.$colSize.'">';
 			$processedData['cardSliderPost'] = '</div>';
 		}
 
