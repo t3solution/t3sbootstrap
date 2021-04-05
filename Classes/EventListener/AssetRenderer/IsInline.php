@@ -12,6 +12,7 @@ namespace T3SBS\T3sbootstrap\EventListener\AssetRenderer;
 
 use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Http\ApplicationType;
 
 
 class IsInline
@@ -19,8 +20,7 @@ class IsInline
 
 	public function __invoke(BeforeJavaScriptsRenderingEvent $event): void
 	{
-
-		if (TYPO3_MODE === 'BE') {
+		if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
 			return;
 		}
 
@@ -82,7 +82,6 @@ $contentConsentScript ="
 			$assetJsInline = $event->getAssetCollector()->getInlineJavaScripts();
 
 			foreach ($assetJsInline as $library => $source) {
-
 
 				if ($library == 'lazyload' || $library == 'lazyloadmagnifying' || $library == 'codesnippetJsInline' ) {
 					$js .= $source['source'] .PHP_EOL;

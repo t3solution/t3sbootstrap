@@ -151,6 +151,9 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( $processedData['data']['CType'] == 'carousel_container' ) {
 			$processedData = $wrapperHelper->getCarouselContainer($processedData, $flexconf);
 			$processedData['isTxContainer'] = TRUE;
+			if ($flexconf['zoom']) {
+				$processedData['lightBox'] = TRUE;
+			}
 			if ( $processorConfiguration['carouselFiles'] ) {
 				$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 				$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
@@ -210,6 +213,13 @@ class BootstrapProcessor implements DataProcessorInterface
 		}
 
 		/**
+		 * Lightbox avtive
+		 */
+		if ( $processedData['data']['CType'] == 't3sbs_gallery' || $processedData['data']['image_zoom'] ) {
+			$processedData['lightBox'] = TRUE;
+		}
+
+		/**
 		 * Tabs / Pills
 		 */
 		if ( $processedData['data']['CType'] == 'tabs_container'
@@ -230,6 +240,13 @@ class BootstrapProcessor implements DataProcessorInterface
 		 * AutoLayout row
 		 */
 		if ( $processedData['data']['CType'] == 'autoLayout_row' ) {
+			$processedData['isTxContainer'] = TRUE;
+		}
+
+		/**
+		 * Container
+		 */
+		if ( $processedData['data']['CType'] == 'container' ) {
 			$processedData['isTxContainer'] = TRUE;
 		}
 
@@ -284,12 +301,15 @@ class BootstrapProcessor implements DataProcessorInterface
 
 			if ($flexconf['bgOverlay'] == 'caption') {
 				$innerCaptionStyle = $processedData['style'].' padding:15px 0';
-				$processedData['style'] .= '';
+				$processedData['style'] = '';
 			} elseif ($flexconf['bgOverlay'] == 'image') {
 				$innerCaptionStyle = '';
 			} else {
-				$processedData['style'] .= '';
+				$processedData['style'] = '';
 			}
+
+			if ($parentflexconf['buttontext'])
+			$processedData['buttontext'] = trim(explode('|', $parentflexconf['buttontext'])[$processedData['data']['sys_language_uid']]);
 
 			if ($extConf['animateCss'] && $parentflexconf['animate']){
 				$processedData['animate'] = $parentflexconf['animate'] ?
@@ -375,7 +395,7 @@ class BootstrapProcessor implements DataProcessorInterface
 						$processedData['pageLink'] = TRUE;
 					} else {
 						// if current page is selected
-						if ( self::getFrontendController()->id == $processedData['data']['pid'] ) {
+						if ( $GLOBALS['TSFE']->id == $processedData['data']['pid'] ) {
 							$processedData['onlyCurrentPageSelected'] = TRUE;
 						} else {
 							$processedData['pageLink'] = TRUE;
@@ -584,6 +604,8 @@ class BootstrapProcessor implements DataProcessorInterface
 			$containerClass = $classHelper->getTxContainerClass($processedData['data'], $flexconf, $processedData['isVideo'], $extConf);
 			$processedData['class'] .= $containerClass ? ' '.$containerClass : '';
 		}
+
+		$processedData['style'] .= ' '.$processedData['data']['tx_t3sbootstrap_extra_style'];
 
 		$processedData['style'] = trim($processedData['style']);
 		$processedData['class'] = trim($processedData['class']);

@@ -1,5 +1,13 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.navbar.placement} == 'fixed-bottom'">
+	<f:then>
+		<f:variable name="dropupdown" value="dropup" />	
+	</f:then>
+	<f:else>
+		<f:variable name="dropupdown" value="dropdown" />		
+	</f:else>
+</f:if>
 <f:if condition="{settings.config.navbarSectionmenu}">
 	<f:then>
 		<f:asset.script identifier="navbarsection">
@@ -36,7 +44,7 @@
 		}
 		var $subMenu = $(this).next(".dropdown-menu");
 		$subMenu.toggleClass("show");
-		$(this).parents("li.nav-item.dropdown.show").on("hidden.bs.dropdown", function() {
+		$(this).parents("li.nav-item.{dropupdown}.show").on("hidden.bs.dropdown", function() {
 			$(".dropdown-submenu .show").removeClass("show");
 		});
 		return false;
@@ -82,7 +90,7 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 <f:asset.script identifier="navbarhover">
 	// Navbar hover - Navbar/Assets.html
 	function navbarHover() {
-		$("ul.navbar-nav .dropdown, ul.navbar-nav .dropdown-submenu").hover(function() {
+		$("ul.navbar-nav .{dropupdown}, ul.navbar-nav .dropdown-submenu").hover(function() {
 			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeIn();
 			$(this).addClass("show");
 			$(this).next(".dropdown-menu").addClass("show");
@@ -104,7 +112,7 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 <f:if condition="{settings.config.navbarClickableparent}">
 <f:asset.script identifier="navbarclickableparent">
 	// Clickable parent from dropdown menu - Navbar/Assets.html
-	$(".nav-item.dropdown a.nav-link.dropdown-toggle").on("click",function(e){
+	$(".nav-item.{dropupdown} a.nav-link.dropdown-toggle").on("click",function(e){
 		if ($(this).next(".dropdown-menu").is(":visible")) {
 			window.location = $(this).attr("href");
 		}
@@ -154,10 +162,10 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 <f:if condition="{settings.config.navbarDropdownAnimate} == '2'">
 <f:asset.script identifier="navbardropdownanimate">
 	// Dropdown Animate (2) - Navbar/Assets.html
-	$('.dropdown').on('show.bs.dropdown', function(e){
+	$('.{dropupdown}').on('show.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
 	});
-	$('.dropdown').on('hide.bs.dropdown', function(e){
+	$('.{dropupdown}').on('hide.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
 	});
 </f:asset.script>

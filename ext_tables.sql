@@ -168,6 +168,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_animateCssRepeat tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_animateCssDuration varchar(2) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_animateCssDelay varchar(2) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_extra_style varchar(100) DEFAULT '' NOT NULL,
 );
 
 #

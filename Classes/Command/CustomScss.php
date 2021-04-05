@@ -66,7 +66,7 @@ class CustomScss extends Command
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 		if ( $settings['customScss'] && array_key_exists('customScss', $extConf)
-			 && $extConf['customScss'] === '1' && ExtensionManagementUtility::isLoaded('ws_scss' ) ) {
+			 && $extConf['customScss'] === '1' && ExtensionManagementUtility::isLoaded('ws_scss') ) {
 
 			# get the Boostrap SCSS-Files
 			$scssList = '_alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _code.scss, _custom-forms.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _images.scss, _input-group.scss, _jumbotron.scss, _list-group.scss, _media.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _pagination.scss, _popover.scss, _print.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap.scss';

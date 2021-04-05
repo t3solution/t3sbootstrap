@@ -113,6 +113,7 @@
 					<link>
 						<TCEforms>
 							<label>Header link</label>
+							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -130,6 +131,21 @@
 							</config>
 						</TCEforms>
 					</link>
+
+					<buttontext>
+						<TCEforms>
+							<label>Button Text (use pipe for languages and any HTML tags)</label>
+							<displayCond>FIELD:general.link:=:button</displayCond>
+							<config>
+								<type>input</type>
+								<size>69</size>
+								<max>99</max>
+								<default></default>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</buttontext>
+
 					<animate>
 						<TCEforms>
 							<label>Animated Caption</label>

@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3') || die();
 
  # if typoscript_rendering is loaded
 if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
@@ -733,6 +733,14 @@ $tempContentColumns = [
 			'size' => 35
 		]
 	],
+	'tx_t3sbootstrap_extra_style' => [
+		'label'	 => 'Extra Style',
+		'exclude' => 1,
+		'config' => [
+			'type' => 'input',
+			'size' => 35
+		]
+	],
 	'tx_t3sbootstrap_bgcolor' => [
 		'label' => 'Background color',
 		'exclude' => 1,
@@ -1264,11 +1272,20 @@ $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
   tx_t3sbootstrap_margin_sides, tx_t3sbootstrap_margin_size'
 ];
 
+if ($extconf['extraStyle']) {
+$GLOBALS['TCA']['tt_content']['palettes']['bootstrap'] = [
+  'showitem' => 'tx_t3sbootstrap_extra_class,
+  --linebreak--, tx_t3sbootstrap_extra_style,
+  --linebreak--, tx_t3sbootstrap_container,
+  --linebreak--, tx_t3sbootstrap_flexform'
+];
+} else {
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrap'] = [
   'showitem' => 'tx_t3sbootstrap_extra_class,
   --linebreak--, tx_t3sbootstrap_container,
   --linebreak--, tx_t3sbootstrap_flexform'
-];
+];	
+}
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapColor'] = [
   'showitem' => 'tx_t3sbootstrap_contextcolor, tx_t3sbootstrap_bgcolor, --linebreak--, tx_t3sbootstrap_bgopacity, tx_t3sbootstrap_textcolor'

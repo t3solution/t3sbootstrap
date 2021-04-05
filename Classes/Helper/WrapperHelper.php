@@ -21,6 +21,8 @@ use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Core\Page\PageRenderer;
+
 
 class WrapperHelper implements SingletonInterface
 {
@@ -110,16 +112,19 @@ $(document).ready(function(){
 	$addFilters.'
 });';
 					}
-					if ($cssFile)
-					GeneralUtility::makeInstance(AssetCollector::class)
-						->addStyleSheet('ytplayercss', $cssFile,[],['priority' => true]);
+					if ($cssFile) {
+						$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+						$pageRenderer->addCssFile($cssFile);
+					}
+
 					if ($jsFooterFile)
 					GeneralUtility::makeInstance(AssetCollector::class)
 						->addJavaScript('ytplayerjs', $jsFooterFile);
 					if ($inlineJS)
 					GeneralUtility::makeInstance(AssetCollector::class)
 						->addInlineJavaScript('background-video-'.$processedData['data']['uid'], $inlineJS);
-
+					
+					
 					$events = $flexconf;
 					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
 					$events['uid'] = $processedData['data']['uid'];
@@ -364,12 +369,15 @@ $(videoElement).removeAttr("controls");';
 	$(\'#multiSlider-'.$processedData['data']['uid'].'\').multislider({'.$options.'});';
 
 			$block = '#multiSlider-'.$processedData['data']['uid'].' .MS-content .item {width: '.$flexconf['number'].'}';
-			if($cssFile)
-			GeneralUtility::makeInstance(AssetCollector::class)
-				->addStyleSheet('multislidercss', $cssFile,[],['priority' => true]);
-			if($block)
-			GeneralUtility::makeInstance(AssetCollector::class)
-				  ->addInlineStyleSheet('multisliderinlinecss-'.$processedData['data']['uid'], $block,[],['priority' => true]);
+
+			if($cssFile) {
+				$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+				$pageRenderer->addCssFile($cssFile);
+			}
+			if($block) {
+				$pageRenderer->addCssInlineBlock ('multislider-'.$processedData['data']['uid'], $block);
+			}
+
 			if($jsFooterFile)
 			GeneralUtility::makeInstance(AssetCollector::class)
 				  ->addJavaScript('multisliderjs', $jsFooterFile);

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use T3SBS\T3sbootstrap\ExpressionLanguage\T3sbConditionProvider;
 
-defined('TYPO3_MODE') or die ('Access denied.');
+defined('TYPO3') or die ('Access denied.');
 
 /*
  * This file is part of the EXT:t3sbootstrap
