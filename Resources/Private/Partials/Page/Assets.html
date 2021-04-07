@@ -54,7 +54,9 @@
 			//var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row-reverse");
 			var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row");
 			var offsetSize = {settings.config.sectionmenuAnchorOffset};
-
+			if (!offsetSize) {
+				offsetSize = 29;
+			}
 			// If is in sidebar (aside)
 			if ($("#sectionmenu").parent('aside').length) {
 				// do nothing
@@ -80,6 +82,9 @@
 	});
 	// Activate scrollspy to add active class to sectionmenu items on scroll
 	var scrollspyOffset = {settings.config.sectionmenuScrollspyOffset};
+	if (!scrollspyOffset) {
+		scrollspyOffset = 130;
+	}
 	$("body").scrollspy({
 		target: "#sectionmenu",
 		offset: scrollspyOffset
