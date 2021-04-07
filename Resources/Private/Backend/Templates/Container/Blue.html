@@ -3,12 +3,5 @@
     xmlns:container="http://typo3.org/ns/B13/Container/ViewHelpers" 
     data-namespace-typo3-fluid="true"
 >
-<button style="margin-bottom: 5px;" class="btn" type="button" data-toggle="collapse" data-target="#collapse{CType}-{uid}" aria-expanded="true" aria-controls="collapse{CType}-{uid}">
-<i class="fa fa-chevron-up"></i>
-</button>
-<div class="collapse in" id="collapse{CType}-{uid}">
-  <div class="card card-body" style="background-color: #A0BDD5;">
-	<f:format.raw>{tx_container_grid}</f:format.raw>
-  </div>
-</div>
+<f:format.raw>{tx_container_grid}</f:format.raw>
 </html>
