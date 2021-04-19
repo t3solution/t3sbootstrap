@@ -94,7 +94,6 @@ hljs.initHighlightingOnLoad();
 </f:if>
 <f:spaceless>
 {containerPre -> f:format.raw()}
-{cardSliderPre -> f:format.raw()}
 <f:if condition="{containerError} && {settings.containerError}">
 	<div class="alert alert-danger" role="alert">
 		Here is a container expected! <small>... you can disable this error message in the BE Modul!</small>
@@ -123,7 +122,6 @@ hljs.initHighlightingOnLoad();
 <f:if condition="{newLine}">
 	<div class="w-100"></div>
 </f:if>
-{cardSliderPost -> f:format.raw()}
 {containerPost -> f:format.raw()}
 </f:spaceless>
 </html>

@@ -3,36 +3,7 @@
 <f:layout name="Default" />
 <f:section name="Main">
 <f:if condition="{card_wrapper_layout} == 'slider'">
-	<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
-<f:asset.script identifier="cardslider">
-	// Card wrapper layout = slider - CarouselWrapper.html
-	var cardSlider = $( ".carousel.card-slider" );
-	if ( cardSlider.length ) {
-		$( cardSlider ).each(function( index ) {
-			var sliderId = "#" + $( this ).attr("id");
-			$(sliderId).on("slide.bs.carousel", function(e) {
-				var $e = $(e.relatedTarget);
-				var idx = $e.index();
-				var itemsPerSlide = 3;
-				var totalItems = $(sliderId + " .carousel-item").length;
-				if (idx >= totalItems - (itemsPerSlide - 1)) {
-					var it = itemsPerSlide - (totalItems - idx);
-					for (var i = 0; i < it; i++) {
-						if (e.direction == "left") {
-							$(sliderId + " .carousel-item")
-							.eq(i)
-							.appendTo(sliderId + " .carousel-inner");
-						} else {
-							$(sliderId + ".carousel-item")
-							.eq(0)
-							.appendTo(sliderId + " .carousel-inner");
-						}
-					}
-				}
-			});
-		});
-	}
-</f:asset.script>
+	<f:render partial="Content/CardSliderAssets" arguments="{visibleCards:visibleCards, range:range, data:data}" />
 </f:if>
 <f:if condition="{settings.cardFlipperOnClick}">
 <f:asset.script identifier="cardwrapper">
@@ -51,8 +22,10 @@
 	});
 </f:asset.script>
 </f:if>
+
+
 <f:if condition="{card_wrapper_layout} == 'slider' || {card_wrapper_layout} == 'flipper'">
-	<f:then>
+	<f:then>	
 		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
 			<f:if condition="{card_wrapper_layout} == 'slider'">
 				<f:then>
@@ -77,10 +50,12 @@
 
 
 <f:section name="Slider">
-<div id="cs{data.uid}" class="carousel card-slider slide mx-n3" data-ride="carousel">
-	<div class="carousel-inner row w-100 mx-auto">
-		<f:for each="{col_270}" as="card">
+<div id="cs{data.uid}" class="carousel slide multi-item-carousel w-100" data-ride="carousel">
+    <div class="carousel-inner w-100" role="listbox">
+		<f:for each="{col_270}" as="card" iteration="iterator">
+            <div class="carousel-item col-md-{cols}{f:if(condition: iterator.isFirst, then: ' active')}">
 				{card.renderedContent -> f:format.raw()}
+            </div>
 		</f:for>
 	</div>
 	<div class="col-12 lead my-4">

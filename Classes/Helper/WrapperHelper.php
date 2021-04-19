@@ -314,6 +314,12 @@ $(videoElement).removeAttr("controls");';
 						$processedData['flipper']['class'] = 'col-xs-12 col-sm-6 col-md-4';
 				}
 			}
+
+			if ($flexconf['card_wrapper'] == 'slider') {
+				$processedData['class'] .= ' mx-n3';
+				$processedData['visibleCards'] = (int)$flexconf['visibleCards'] ?: 3;
+				$processedData['cols'] = floor(12 / $processedData['visibleCards']);
+			}
 		}
 		$processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
 

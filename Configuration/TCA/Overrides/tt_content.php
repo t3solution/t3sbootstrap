@@ -20,7 +20,6 @@ if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_re
 # Extension configuration
 $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
-
 /***************
  * Add new EXT:container CTypes
  */
