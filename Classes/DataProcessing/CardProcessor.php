@@ -171,12 +171,6 @@ class CardProcessor implements DataProcessorInterface {
 		$processedData['addmedia']['imgclass'] = $cardData['image']['class'];
 		$processedData['addmedia']['figureclass'] = ' text-center';
 
-		// slider
-		if ( $parentflexconf['card_wrapper'] == 'slider' ) {
-			$processedData['cardSliderPre'] = '<div class="carousel-item col-md-4">';
-			$processedData['cardSliderPost'] = '</div>';
-		}
-
 		$processedData['card'] = $cardData;
 
 		return $processedData;
