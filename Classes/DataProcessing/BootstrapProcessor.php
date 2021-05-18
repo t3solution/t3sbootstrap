@@ -308,6 +308,8 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['style'] = '';
 			}
 
+			$processedData['origImage'] = $parentflexconf['origImage'];
+
 			if ($parentflexconf['buttontext'])
 			$processedData['buttontext'] = trim(explode('|', $parentflexconf['buttontext'])[$processedData['data']['sys_language_uid']]);
 
@@ -439,7 +441,9 @@ class BootstrapProcessor implements DataProcessorInterface
 		 || $processedData['data']['CType'] == 'image' ) {
 			// if codesnippet
 			if ($extConf['codesnippet'] && $processedData['data']['bodytext']) {
-				$processedData['codesnippet'] = strpos($processedData['data']['bodytext'], '<pre>') ? TRUE : FALSE;
+				if (strpos($processedData['data']['bodytext'], '<pre>') !== FALSE) {
+					$processedData['codesnippet'] = TRUE;
+				}
 			}
 			// if media
 			if ($processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media']) {
@@ -449,6 +453,8 @@ class BootstrapProcessor implements DataProcessorInterface
 				if (is_array($processedData['files'])) {
 					foreach ($processedData['files'] as $file ) {
 						if ($file->getProperties()['tx_t3sbootstrap_hover_effect'])	$processedData['hoverEffect'] = TRUE;
+
+
 					}
 				}
 				$galleryUtility = GeneralUtility::makeInstance(GalleryHelper::class);
@@ -495,6 +501,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['addmedia']['imagezoom'] = $processedData['data']['image_zoom'];
 			$processedData['addmedia']['CType'] = $processedData['data']['CType'];
 			$processedData['addmedia']['ratio'] = $processedData['data']['tx_t3sbootstrap_image_ratio'];
+			$processedData['addmedia']['origImg'] = $processedData['data']['tx_t3sbootstrap_image_orig'];
 		}
 
 		// container class

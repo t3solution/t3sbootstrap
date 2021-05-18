@@ -87,6 +87,15 @@
 						</TCEforms>
 					</ratio>
 
+					<origImage>
+						<TCEforms>
+							<label>Use Original Image</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</origImage>
+
 					<carouselFade>
 						<TCEforms>
 							<label>Switch carousel from horizontal sliding to crossfade</label>

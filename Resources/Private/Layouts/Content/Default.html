@@ -110,7 +110,7 @@ hljs.initHighlightingOnLoad();
 			</div>
 		</f:then>
 		<f:else>
-			<div id="c{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+			<div id="c{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 				<f:render section="Header" optional="true">
 					<f:render partial="Header/All" arguments="{_all}" />
 				</f:render>

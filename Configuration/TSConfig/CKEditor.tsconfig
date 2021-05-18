@@ -74,7 +74,7 @@ RTE {
 			telephone.properties {
 				class.default =
 			}
-			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark, js-scroll-trigger
+			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark, js-scroll-trigger, text-primary, text-secondary, text-success, text-danger, text-warning, text-info, text-light bg-dark, text-dark, text-muted, text-white bg-dark, stretched-link
 			queryParametersSelector.enabled = 0
 
 		}

@@ -711,6 +711,7 @@ return [
 					['bg-warning [warning]', 'warning'],
 					['bg-info [info]', 'info'],
 					['bg-white [white]', 'white'],
+					['bg-transparent [transparent]', 'transparent'],
 					['bg-color [color]', 'color'],
 				]
 			]
@@ -725,6 +726,22 @@ return [
 				'type' => 'input'
 			]
 		],
+		'navbar_transparent' => [
+			'exclude' => false,
+			'label' => 'Transparent Navbar',
+			'accordion_id' => 3,
+			'accordion_sub' => '3-3',
+			'info' => 'Placement must be "fixed-top"',
+			'config' => [
+				'type' => 'check',
+				'items' => [
+					'1' => [
+						'0' => 'create a transparent navbar which changes its style on scroll'
+					]
+				]
+			]
+		],
+
 		'navbar_container' => [
 			'exclude' => false,
 			'label' => 'Container',
@@ -873,6 +890,20 @@ return [
 				'items' => [
 					['left', 'left'],
 					['right', 'right'],
+				]
+			]
+		],
+		'navbar_animatedtoggler' => [
+			'exclude' => false,
+			'accordion_id' => 3,
+			'accordion_sub' => '3-6',
+			'label' => 'Animated Toggler',
+			'config' => [
+				'type' => 'check',
+					'items' => [
+					'1' => [
+						'0' => 'Doing it with plain HTML and pure CSS - does not work with "Offcanvas"'
+					]
 				]
 			]
 		],

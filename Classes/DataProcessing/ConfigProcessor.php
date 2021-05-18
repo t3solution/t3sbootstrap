@@ -18,6 +18,9 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Database\QueryGenerator;
+
 
 class ConfigProcessor implements DataProcessorInterface
 {
@@ -208,18 +211,28 @@ class ConfigProcessor implements DataProcessorInterface
 
 			$navbarClass .= $processedRecordVariables['navbarClass'] ? ' '.$processedRecordVariables['navbarClass'] : '';
 
-			if ( $processedRecordVariables['navbarColor'] == 'color' ) {
-				if ( $processedRecordVariables['navbarBackground'] ) {
-					$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
-					$processedData['config']['navbar']['style'] = $navbarStyle;
+			if ( $processedRecordVariables['navbarTransparent'] && $processedRecordVariables['navbarPlacement'] == 'fixed-top') {
+				if ( $processedRecordVariables['navbarColor'] == 'color' && $processedRecordVariables['navbarBackground'] ) {
+					$processedData['config']['navbar']['colorschemes'] = $processedRecordVariables['navbarBackground'];
 				} else {
+					$processedData['config']['navbar']['colorschemes'] = 'var(--'.$processedRecordVariables['navbarColor'].')';
+				}
+				$processedData['config']['navbar']['transparent'] = true;
+			} else {
+
+				if ( $processedRecordVariables['navbarColor'] == 'color' ) {
+					if ( $processedRecordVariables['navbarBackground'] ) {
+						$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
+						$processedData['config']['navbar']['style'] = $navbarStyle;
+					} else {
+						$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
+						$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
+					}
+				} else {
+					$navbarClass .= ' bg-'.$processedRecordVariables['navbarColor'];
 					$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
 					$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
 				}
-			} else {
-				$navbarClass .= ' bg-'.$processedRecordVariables['navbarColor'];
-				$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
-				$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
 			}
 
 			if ( ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'])
@@ -253,9 +266,15 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 			$processedData['config']['navbar']['justify'] = $processedRecordVariables['navbarJustify'] ? ' nav-fill w-100' : '';
 			$processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbarOffcanvas'];
+			$processedData['config']['navbar']['animatedToggler'] = $processedRecordVariables['navbarAnimatedtoggler'];
 			if ( $processedRecordVariables['navbarSearchbox'] ) {
 				$processedData['config']['navbar']['searchbox'] = $processedRecordVariables['navbarSearchbox'];
 				$processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbarEnable'] == 'light' ? 'dark' : 'light';
+			}
+
+			$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+			if ( $extConf['navigationColor'] ) {
+				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor();
 			}
 		}
 
@@ -288,11 +307,11 @@ class ConfigProcessor implements DataProcessorInterface
 				if ( count($fileObjects) > 1 ) {
 					// slider
 					$processedData['bgSlides'] =
-					 self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+					 self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0, $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 				} else {
 					// background image
 					$processedData['config']['jumbotron']['bgImage'] =
-					 self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, $processedData['data']['uid'], $webp);
+					 self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, $processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 				}
 
 			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
@@ -300,21 +319,20 @@ class ConfigProcessor implements DataProcessorInterface
 				if ( count($fileObjects) > 1 ) {
 					// slider
 					$processedData['bgSlides'] =
-					 self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+					 self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 				} else {
 					// background image
 				$processedData['config']['jumbotron']['bgImage'] =
-				 self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp);
+				 self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0, $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 				}
 			}
 		}
-
 
 		/**
 		 * Background Image (body)
 		 */
 		if ( $contentObjectConfiguration['settings.']['config.']['backgroundImageEnable'] ) {
-			$bgImage = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp);
+			$bgImage = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0, $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 			if ( empty($bgImage) && $contentObjectConfiguration['settings.']['config.']['backgroundImageSlide'] ) {
 				foreach ($frontendController->rootLine as $page) {
 					$bgImage = self::getBackgroundImageUtility()
@@ -451,5 +469,80 @@ class ConfigProcessor implements DataProcessorInterface
 		return GeneralUtility::makeInstance(BackgroundImageUtility::class);
 	}
 
+
+	/**
+	 * Generate CSS for navigation color
+	 *
+	 * @return string
+	 */
+	protected function getNavigationColor(): string
+	{
+		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+		$result = $queryBuilder
+			 ->select('uid','tx_t3sbootstrap_navigationcolor', 'tx_t3sbootstrap_navigationactivecolor', 'tx_t3sbootstrap_navigationhover','tx_t3sbootstrap_navigationbgcolor')
+			 ->from('pages')
+			 ->where(
+				$queryBuilder->expr()->orX(
+					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationcolor', $queryBuilder->createNamedParameter('')),
+					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationactivecolor', $queryBuilder->createNamedParameter('')),
+					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationhover', $queryBuilder->createNamedParameter('')),
+					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationbgcolor', $queryBuilder->createNamedParameter(''))
+				)
+			 )
+			 ->execute();
+
+		$navbarColors = $result->fetchAll();
+		$navbarColorCSS = '';
+
+		foreach($navbarColors as $navbarColor) {
+
+			$treePages = $this->getTreePids($navbarColor['uid']);
+
+			foreach($treePages as $treepageUid) {
+
+				if ($navbarColor['uid'] == $treepageUid) {
+
+					$item = '#nav-item-'.(int)$treepageUid;
+
+					if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
+						$navbarColorCSS .= $item.'.active .nav-link{color:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
+					}
+
+				} else {
+
+					$item = '.dropdown-item-'.(int)$treepageUid;
+
+					if ($navbarColor['tx_t3sbootstrap_navigationcolor']) {
+						$navbarColorCSS .= $item.'{color:'.$navbarColor['tx_t3sbootstrap_navigationcolor'].' !important}';
+					}
+					if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
+						$navbarColorCSS .= $item.'.active{color:'.$navbarColor['tx_t3sbootstrap_navigationactivecolor'].' !important}';
+					}
+					if ($navbarColor['tx_t3sbootstrap_navigationbgcolor']) {
+						$navbarColorCSS .= $item.'.active{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
+						$navbarColorCSS .= $item.':hover,'.$item.':focus{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
+					}
+					if ($navbarColor['tx_t3sbootstrap_navigationhover']) {
+						$navbarColorCSS .= $item.':hover,'.$item.':focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
+						$navbarColorCSS .= $item.'.active:hover,'.$item.'.active:focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
+					}
+				}
+			}
+
+		}
+
+		return $navbarColorCSS;
+	}
+
+
+	function getTreePids($parent = 0): array
+	{
+		$queryGenerator = GeneralUtility::makeInstance(QueryGenerator::class);
+
+		 $childPids = $queryGenerator->getTreeList($parent, 999999, 0, 1);
+		 $childPids = explode(',',$childPids );
+
+	    return $childPids;
+	}
 
 }

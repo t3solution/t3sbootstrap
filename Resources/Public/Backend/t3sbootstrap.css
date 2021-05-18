@@ -246,6 +246,11 @@ cite {
 }
 
 
+.bg-dark {
+    background-color: #343a40!important;
+}
+
+
 .blockquote {
     margin-bottom: 1rem;
     font-size: 1.25rem;

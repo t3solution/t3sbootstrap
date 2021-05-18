@@ -3,7 +3,7 @@
 <f:section name="Header">
 </f:section>
 <f:section name="Main">
-	<div class="row{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+	<div class="row{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 		<f:if condition="{data.header} || {data.subheader} || {data.date}">
 			<div class="col-12">
 				<f:render partial="Header/All" arguments="{_all}" />

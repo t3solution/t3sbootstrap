@@ -1,9 +1,4 @@
 
-
-.form-check {
-    padding-left: 0;
-}
-
 .btn:focus, .btn:active {
   outline: none !important;
   box-shadow: none !important;
@@ -25,13 +20,11 @@
 	margin-bottom: 0.2rem !important;
 }
 .card-header {
-
 	background-color: #563D7C !important;
 	border-color: #563D7C !important;
 }
 #accordionConstants .card-header,
 #accordionInfo .card-header {
-
 	background-color: white !important;
 	color: black !important;
 }
@@ -207,7 +200,7 @@ border-color: #7952b3 !important;
 }
 
 .t3sb-ext-navigation .navbar-nav .nav-link {
-    color: #000000;
+    color: rgba(0,0,0,.7);
     text-transform: capitalize;
     padding-left: 20px;
     padding: 12px 20px 12px 20px;
@@ -283,8 +276,8 @@ border-color: #7952b3 !important;
 
 .navbar-toggler-icon {
     display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.2em;
+    height: 1.2em;
     vertical-align: middle;
     content: "";
     background: no-repeat center center;
@@ -428,5 +421,74 @@ code {
     color: #fff !important;
     background-color: #28a745 !important;
     border-color: #28a745 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+.card-body, .panel-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	background-color: transparent;
+    border: 1px solid transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    padding: .375rem .75rem;
+    font-size: .75rem;
+    border-radius: .125rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-warning {
+    color: #000;
+    background-color: #e8a33d;
+    border-color: #d88b1a;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+}
+
+
+.form-control {
+    min-width: 120px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fefefe;
+    background-clip: padding-box;
+    border: 1px solid #bbb;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .125rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 

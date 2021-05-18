@@ -40,7 +40,6 @@ $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
@@ -77,7 +76,6 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -98,7 +96,6 @@ $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -121,7 +118,6 @@ $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['T
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -141,7 +137,6 @@ $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TC
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -161,7 +156,6 @@ $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['showitem'] = $GLOBALS['T
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/bars.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['button_group']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -180,7 +174,6 @@ $GLOBALS['TCA']['tt_content']['types']['button_group']['showitem'] = $GLOBALS['T
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -199,7 +192,6 @@ $GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['showitem'] = $GLOBALS[
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-background_wrapper.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
@@ -245,7 +237,6 @@ $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides']
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-parallax_wrapper.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
 
@@ -264,7 +255,6 @@ $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['showitem'] = $GLOBAL
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -283,7 +273,6 @@ $GLOBALS['TCA']['tt_content']['types']['container']['showitem'] = $GLOBALS['TCA'
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['carousel_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -302,7 +291,6 @@ $GLOBALS['TCA']['tt_content']['types']['carousel_container']['showitem'] = $GLOB
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Blue.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -321,7 +309,6 @@ $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['showitem'] = $G
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-element.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
 
@@ -340,7 +327,6 @@ $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['showitem'] = $G
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Blue.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['modal']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -359,7 +345,6 @@ $GLOBALS['TCA']['tt_content']['types']['modal']['showitem'] = $GLOBALS['TCA']['t
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Blue.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['tabs_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -378,7 +363,6 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_container']['showitem'] = $GLOBALS[
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Green.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -397,7 +381,6 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
-	->setBackendTemplate('EXT:t3sbootstrap/Resources/Private/Backend/Templates/Container/Red.html')
 );
 $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -526,7 +509,10 @@ $tempContentColumns = [
 					['text-warning', 'text-warning'],
 					['text-info', 'text-info'],
 					['text-black', 'text-black'],
-					['text-white', 'text-white']
+					['text-white', 'text-white'],
+					['text-uppercase', 'text-uppercase'],
+					['One line left and right', 'h-line-1'],
+					['Two lines left and right', 'h-line-2']
 				],
 			],
 		],
@@ -875,6 +861,19 @@ $tempContentColumns = [
 			'default' => ''
 		]
 	],
+	'tx_t3sbootstrap_image_orig' => [
+		'exclude' => 1,
+		'label' => 'Use Original Image',
+		'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['origimage'],
+		'config' => [
+			'type' => 'check',
+				'items' => [
+				'1' => [
+					'0' => 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:labels.enabled'
+				]
+			]
+		]
+	],
 	'tx_t3sbootstrap_animateCss' => [
 		'exclude' => 1,
 		'l10n_display' => 'hideDiff',
@@ -1219,6 +1218,12 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'tx_t3sbootstrap_image_ratio',
 	'after:tx_t3sbootstrap_bordercolor'
 );
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'mediaAdjustments',
+	'tx_t3sbootstrap_image_orig',
+	'before:tx_t3sbootstrap_image_ratio'
+);
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
@@ -1226,7 +1231,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'tx_t3sbootstrap_inTextImgRowWidth',
 	'after:tx_t3sbootstrap_bordercolor'
 );
-
 
 
 # add palette bootstrap etc
@@ -1254,13 +1258,15 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'',
 	'after:layout'
 );
-# add palette animate
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
-	'tt_content',
-	'--palette--;Animation;animate',
-	'',
-	'after:layout'
-);
+# add palette animate if EXT:content_animations is not loaded
+if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations') ) {	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+		'tt_content',
+		'--palette--;Animation;animate',
+		'',
+		'after:layout'
+	);
+}
 
 $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
   'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
@@ -1284,7 +1290,7 @@ $GLOBALS['TCA']['tt_content']['palettes']['bootstrap'] = [
   'showitem' => 'tx_t3sbootstrap_extra_class,
   --linebreak--, tx_t3sbootstrap_container,
   --linebreak--, tx_t3sbootstrap_flexform'
-];	
+];
 }
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapColor'] = [
@@ -1311,3 +1317,17 @@ if ($extconf['sectionOrder']) {
 
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['t3sbootstrap_pi1'] = 'recursive,select_key,pages';
+
+if ( $extconf['preview'] ) {
+	/***************
+	 * Show preview of tt_content elements in page module
+	 */
+	$GLOBALS['TCA']['tt_content']['ctrl']['previewRenderer'] = T3SBS\T3sbootstrap\Backend\Preview\DefaultPreviewRenderer::class;
+	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
+	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
+	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper'];
+	foreach ($containers as $container) {
+		$GLOBALS['TCA']['tt_content']['types'][trim($container)]['previewRenderer'] = T3SBS\T3sbootstrap\Backend\Preview\T3sbPreviewRenderer::class;
+	}
+}
+

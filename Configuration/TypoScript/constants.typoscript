@@ -32,8 +32,8 @@ bootstrap.cdn {
 	popperjs = 1.16.1
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
 	fontawesome = 5.15.1
-	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library: jQuery 3.5.0 won't work with Bootstrap 4.4.1. Dropdowns and collapse don't work. Reverted to jQuery 3.4.1 to make it work.
-	jquery = 3.5.1
+	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library: Downgrade to version 3.5.1 if you have any problems with this version.
+	jquery = 3.6.0
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
@@ -100,12 +100,14 @@ bootstrap.image {
 	maxWidthToast = 20
 	# cat=bootstrap-image/a-image/70; type=boolean; label=Disable auto row: the default "Gallery row width in % = auto" is set to "none" if activated.
 	disableAutoRow = 0
-	# cat=bootstrap-image/b-image/10; type=small; label=Additional Image Sizes for Desktop min-width 1200px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
+	# cat=bootstrap-image/b-image/10; type=small; label=Additional Image Sizes for Desktop min-width 1200px: comma-separated list of either image widths specified in pixels.
 	srcsetDesktop = 125, 255, 385, 576, 768, 992, 1200, 1440, 1920, 2650
-	# cat=bootstrap-image/b-image/20; type=small; label=Additional Image Sizes for Tablet min-width 576px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
+	# cat=bootstrap-image/b-image/20; type=small; label=Additional Image Sizes for Tablet min-width 576px: comma-separated list of either image widths specified in pixels.
 	srcsetTablet = 125, 255, 385, 576, 768, 992, 1200
-	# cat=bootstrap-image/b-image/30; type=small; label=Additional Image Sizes for Mobile max-width 575px: comma-separated list of either image widths specified in pixels or pixel density descriptors, e. g. "2x".
+	# cat=bootstrap-image/b-image/30; type=small; label=Additional Image Sizes for Mobile max-width 575px: comma-separated list of either image widths specified in pixels.
 	srcsetMobile = 60, 100, 200, 385, 575
+	# cat=bootstrap-image/b-image/35; type=small; label=Additional Image Sizes for Background-Image: comma-separated list of either image widths specified in pixels.
+	bgMediaQueries = 2560, 1920, 1200, 992, 768, 576
 	# cat=bootstrap-image/c-image/010; type=int+; label=Threshold for Lazy load: if "lazyLoad" is activated in the EM config, the distance out of the viewport, expressed in pixel, before which to start loading the images.
 	lazyLoadThreshold = 0
 	# cat=bootstrap-image/c-image/020; type=boolean; label=Lazy load for images in the BG-Wrapper: not the BG-image

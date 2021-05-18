@@ -2,7 +2,17 @@
 # customcategory=t3sb=T3SB
 # customcategory=dif=Different
 # customcategory=flexform=Flexform
+# customcategory=preview=Preview
 # customsubcategory=a-config=Bootstrap SCSS variables - only if EXT:ws_scss is loaded!
+
+	# cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache).
+preview = 1
+	# cat=preview/enable/20; type=boolean; label=Crop bodytext: Crop bodytext by "maxCharacters" (clear cache).
+previewCrop = 1
+	# cat=preview/enable/30; type=string; label=Max Characters: Max Characters for crop bodytext (clear cache).
+previewCropMaxCharacters = 80
+	# cat=preview/enable/40; type=boolean; label=Closed Collapsible: Collapsible container preview always closed (clear cache).
+previewClosedCollapsible = 0
 
 	# cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
 spacing = 1
@@ -14,6 +24,8 @@ color = 1
 ratio = 0
 	# cat=content/enable/41; type=boolean; label=Image Tag: Option in the FAL to output image in <img> - instead in <picture> tag in the FE.
 imgtag = 0
+	# cat=content/enable/45; type=boolean; label=Original Image: Shows an option for "Use Original Image" in the palette "Media Adjustments" if enabled. (clear cache).
+origimage = 0
 	# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a "container". (clear cache).
 sectionOrder = 0
 	# cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache).
@@ -23,6 +35,8 @@ extraStyle = 0
 fontawesome = 1
 	# cat=page/enable/20; type=boolean; label=Font Awesome Icon in Page Title: Enable the fa icon in the page title (clear cache).
 fontawesomepagetitle = 1
+	# cat=page/enable/30; type=boolean; label=Navigation color: Enable various colors for submenu nav-items in dropdown-menus (clear cache).
+navigationColor = 0
 
 	# cat=custom/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
 customScss = 0
@@ -62,7 +76,7 @@ customTranslationsPath = fileadmin/T3SB/Language/
 
 	# cat=advanced/enable/10; type=options[none=0, FA free=1, FA pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2]; label=Font Awesome 5: include Font Awesome SCSS - if deactivated, only some required icons are loaded (clear cache).
 fontawesomeCss = 0
-	# cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS und Viewportchecker (clear cache).
+	# cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS und Viewportchecker if EXT:content_animations is not loaded (clear cache).
 animateCss = 0
 	# cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
 linkHoverEffect = 0
