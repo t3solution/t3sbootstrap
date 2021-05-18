@@ -339,4 +339,22 @@ class TcaMatcher
 	}
 
 
+	/**
+	 * isDropdownMenu
+	 *
+	 * @return bool
+	 */
+	public function isDropdownMenu($arguments): bool
+	{
+		$level = false;
+		$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+		$parentPage = $pageRepository->getPage($arguments['record']['pid']);
+		if ($parentPage['is_siteroot']) {		
+			$level = true;
+		}
+
+		return $level;
+	}
+
+
 }

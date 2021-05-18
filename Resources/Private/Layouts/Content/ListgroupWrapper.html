@@ -53,7 +53,7 @@ hljs.initHighlightingOnLoad();
 	</f:asset.script>
 </f:if>
 <f:comment> Lightbox - same in News/Detail.html </f:comment>
-<f:if condition="({settings.lightboxSelection} && {data.image_zoom}) || ({settings.lightboxSelection} && {data.CType} == 't3sbs_gallery')">
+<f:if condition="{settings.lightboxSelection} && {lightBox}">
 	<f:comment> Baguette Box </f:comment>
 	<f:if condition="{settings.lightboxSelection} == 1">
 		<f:asset.script identifier="lightbox">

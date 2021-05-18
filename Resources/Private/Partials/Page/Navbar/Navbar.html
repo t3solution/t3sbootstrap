@@ -72,12 +72,12 @@
 			<f:render section="Toggler" arguments="{_all}" />
 		</f:else>
 	</f:if>
-	<div class="{f:if(condition:'{config.navbar.offcanvas}',then:'offcanvas-')}collapse navbar-collapse{f:if(condition:'{settings.config.navbarExtraRow}',then:' flex-column')}" id="navbarToggler">
+	<div class="{f:if(condition:'{config.navbar.offcanvas}',then:'offcanvas-')}collapse px-3 navbar-collapse{f:if(condition:'{settings.config.navbarExtraRow}',then:' flex-column')}" id="navbarToggler">
 		<f:if condition="{navbarMenu} || {sectionMenu}">
 			<f:if condition="{settings.config.navbarExtraRow}">
 				<f:render partial="Page/Navbar/NavbarExtraRow" arguments="{_all}" />
 			</f:if>
-			<ul class="navbar-nav{config.navbar.sectionMenu}{config.navbar.justify}{config.navbar.mauto}">
+			<ul class="navbar-nav pt-3 pt-sm-0{config.navbar.sectionMenu}{config.navbar.justify}{config.navbar.mauto}">
 				<f:if condition="{config.navbar.sectionMenu}">
 					<f:then>
 						<f:render section="SectionMenu" arguments="{_all}" />
@@ -112,12 +112,12 @@
 					</li>
 				</f:if>
 				<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
-					<ul id="language_menu" class="navbar-nav{f:if(condition:'{config.navbar.mauto}',then:'{config.navbar.mauto}',else:' ml-auto')}">
+					<ul id="language_menu" class="navbar-nav pt-2 pt-sm-0{f:if(condition:'{config.navbar.mauto}',then:'{config.navbar.mauto}',else:' ml-auto')}">
 						<f:render partial="Page/Navbar/Language" arguments="{_all}" />
 					</ul>
 				</f:if>
 				<f:if condition="{navbarMenuRight.0} && !{config.navbar.justify} && !{config.navbar.mauto}">
-					<ul class="navbar-nav{f:if(condition:'{languageNavigation}',then:'',else:' ml-auto')}">
+					<ul class="navbar-nav pt-2 pt-sm-0{f:if(condition:'{languageNavigation}',then:'',else:' ml-auto')}">
 						<f:if condition="{settings.navbar.searchboxLink}">
 							<li class="nav-item">
 								<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search mx-3"></i></f:link.page>
@@ -203,9 +203,18 @@
 </f:section>
 
 <f:section name="Toggler">
-	<button class="navbar-toggler" type="button" data-toggle="{f:if(condition:'{config.navbar.offcanvas}',then:'offcanvas',else:'collapse')}" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+<f:if condition="{config.navbar.animatedToggler}">
+	<f:then>
+		<button class="navbar-toggler p-0 nav-icon collapsed" type="button" data-toggle="{f:if(condition:'{config.navbar.offcanvas}',then:'offcanvas',else:'collapse')}" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+			<div></div>
+		</button>
+	</f:then>
+	<f:else>
+		<button class="navbar-toggler" type="button" data-toggle="{f:if(condition:'{config.navbar.offcanvas}',then:'offcanvas',else:'collapse')}" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</f:else>
+</f:if>
 </f:section>
 
 <f:section name="Menu">
@@ -258,11 +267,11 @@
 <f:section name="Dropdown">
 	<f:if condition="{navbarItem.data.tx_t3sbootstrap_fontawesome_icon}">
 		<f:then>
-			<a class="nav-link dropdown-toggle" id="dropdown-menu-{navbarItem.data.uid}" href="{f:if(condition: config.navbar.clickableparent, then:'{f:uri.page(pageUid: navbarItem.data.uid)}' , else:'#')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}">
+			<a class="nav-link dropdown-toggle dropdown-item-{navbarItem.data.uid}{f:if(condition: navbarItem.current, then:' active')}" id="dropdown-menu-{navbarItem.data.uid}" href="{f:if(condition: config.navbar.clickableparent, then:'{f:uri.page(pageUid: navbarItem.data.uid)}' , else:'#')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}">
 				<i class="{navbarItem.data.tx_t3sbootstrap_fontawesome_icon}"></i>{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',else:' {navbarItem.title}')}</a>
 		</f:then>
 		<f:else>
-			<a class="nav-link dropdown-toggle" id="dropdown-menu-{navbarItem.data.uid}" href="{f:if(condition: config.navbar.clickableparent, then:'{f:uri.page(pageUid: navbarItem.data.uid)}' , else:'#')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			<a class="nav-link dropdown-toggle dropdown-item-{navbarItem.data.uid}{f:if(condition: navbarItem.current, then:' active')}" id="dropdown-menu-{navbarItem.data.uid}" href="{f:if(condition: config.navbar.clickableparent, then:'{f:uri.page(pageUid: navbarItem.data.uid)}' , else:'#')}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 				{navbarItem.title}
 			</a>
 		</f:else>

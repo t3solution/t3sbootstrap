@@ -220,15 +220,24 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getHeaderClass($data): array
 	{
-		$header['class'] = $data['header_position'] ? ' text-'.$data['header_position'] : '';
+		$header['class'] = $data['header_position'] ? 'text-'.$data['header_position'] : '';
 		$header['hClass'] = '';
-
+		$header['hColorVar'] = '';
+		$header['hLine'] = '';
+	
 		if ( $data['tx_t3sbootstrap_header_class'] ) {
+			if (strpos($data['tx_t3sbootstrap_header_class'], 'h-line-1') !== false) {
+				$header['hLine'] = 'h-line-1';
+			}
+			if (strpos($data['tx_t3sbootstrap_header_class'], 'h-line-2') !== false) {
+				$header['hLine'] = 'h-line-2';
+			}
 			$textColors = explode(',','text-primary,text-secondary,text-danger,text-success,text-warning,
 			text-info,text-light,text-dark,text-body,text-muted,text-white');
 			foreach ($textColors as $textColor) {
 				if (strpos($data['tx_t3sbootstrap_header_class'], $textColor) !== false) {
 					$header['hClass'] .= $textColor;
+					$header['hColorVar'] = 'var(--'.substr($textColor, 5).')';
 					$data['tx_t3sbootstrap_header_class'] = trim(str_replace($textColor, '', $data['tx_t3sbootstrap_header_class']));
 					break;
 				}

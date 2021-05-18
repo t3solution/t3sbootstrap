@@ -33,10 +33,11 @@ class BackgroundImageUtility implements SingletonInterface
 	 * @param	bool	$body
 	 * @param	int		$currentUid
 	 * @param	bool	$webp
+	 * @param	string	$bgMediaQueries
 	 *
 	 * @return array
 	 */
-	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE)
+	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576')
 	{
 		$frontendController = $this->getFrontendController();
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
@@ -56,7 +57,7 @@ class BackgroundImageUtility implements SingletonInterface
 				$image = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 				$bgImages = $this->generateSrcsetImages($file, $image);
 				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
-				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf);
+				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
 				$uid = $frontendController->id;
@@ -65,7 +66,7 @@ class BackgroundImageUtility implements SingletonInterface
 					$image[$fileKey] = $this->imageService()->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
 					$bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
 					$imageUri_mobile[$fileKey] = $webp ? $bgImages[$fileKey][576].'.webp' : $bgImages[$fileKey][576];
-					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf);
+					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf, FALSE, $bgMediaQueries);
 				}
 			}
 		} else {
@@ -79,9 +80,9 @@ class BackgroundImageUtility implements SingletonInterface
 					$uid = $uid . '-' . $flexconf['bgimagePosition'];
 				}
 				if ($jumbotron) {
-					$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
+					$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 				} elseif ($body) {
-					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf, TRUE);
+					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf, TRUE, $bgMediaQueries);
 				} else {
 					if ( $flexconf['enableAutoheight'] ) {
 						if ( $flexconf['addHeight'] ) {
@@ -90,9 +91,9 @@ class BackgroundImageUtility implements SingletonInterface
 							GeneralUtility::makeInstance(AssetCollector::class)
 								  ->addInlineJavaScript('addheight-'.$uid, $inline);
 						}
-						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf);
+						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					} else {
-						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf);
+						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					}
 				}
 
@@ -126,7 +127,7 @@ class BackgroundImageUtility implements SingletonInterface
 	 *
 	 * @return string $css
 	 */
-	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE ): string
+	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE, $bgMediaQueries): string
 	{
 		$imageRaster = $flexconf['imageRaster'] ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
 
@@ -134,9 +135,10 @@ class BackgroundImageUtility implements SingletonInterface
 		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
 
 		$css = '';
+		$mediaQueries = explode(',', $bgMediaQueries);
 
-		$mediaQueries = [2560,1920,1200,992,768,576];
 		foreach ($mediaQueries as $querie) {
+			$querie = (int)$querie;
 			if ($querie == 576) {
 				$cropVariant = 'mobile';
 			} elseif ($querie == 768) {
@@ -153,9 +155,10 @@ class BackgroundImageUtility implements SingletonInterface
 
 			$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
 
+
+
 			$css .= '@media (max-width: '.$querie.'px) {';
 			if ($webp) {
-
 				if ($body) {
 					$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
 					$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
@@ -163,7 +166,6 @@ class BackgroundImageUtility implements SingletonInterface
 					$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
 					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
 				}
-
 			} else {
 				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
 			}

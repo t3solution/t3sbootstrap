@@ -32,6 +32,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_image varchar(255) DEFAULT '' NOT NULL,
 	navbar_color varchar(40) DEFAULT '' NOT NULL,
 	navbar_background varchar(255) DEFAULT '' NOT NULL,
+	navbar_transparent tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_container varchar(12) DEFAULT '' NOT NULL,
 	navbar_placement varchar(12) DEFAULT '' NOT NULL,
 	navbar_alignment varchar(5) DEFAULT '' NOT NULL,
@@ -39,6 +40,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_toggler varchar(20) DEFAULT '' NOT NULL,
 	navbar_breakpoint varchar(2) DEFAULT '' NOT NULL,
 	navbar_offcanvas tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	navbar_animatedtoggler tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_height int(2) DEFAULT '0' NOT NULL,
 	navbar_searchbox varchar(6) DEFAULT '' NOT NULL,
 	navbar_langmenu tinyint(1) unsigned DEFAULT '0' NOT NULL,
@@ -169,6 +171,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_animateCssDuration varchar(2) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_animateCssDelay varchar(2) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_extra_style varchar(100) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_image_orig varchar(4) DEFAULT '' NOT NULL,
 );
 
 #
@@ -201,4 +204,8 @@ CREATE TABLE pages (
 	tx_t3sbootstrap_megamenu tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_titlecolor varchar(30) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_subtitlecolor varchar(30) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_navigationcolor varchar(30) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_navigationactivecolor varchar(30) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_navigationhover varchar(30) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_navigationbgcolor varchar(30) DEFAULT '' NOT NULL,
 );

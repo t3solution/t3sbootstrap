@@ -8,14 +8,15 @@ call_user_func(function () {
 	 */
 
 	if ( ($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof \Psr\Http\Message\ServerRequestInterface
-       && \TYPO3\CMS\Core\Http\ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ||
+	   && \TYPO3\CMS\Core\Http\ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ||
 	 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('frontend_editing')) {
 
 		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 		$icons = ['bs-card', 'bs-button', 'bs-carousel', 'ge-2_col', 'ge-3_col', 'ge-4_col', 'ge-card-container', 'ge-background_wrapper', 'ge-parallax_wrapper', 'ge-carousel-container', 'ge-accordion-container', 'ge-accordion-element', 'ge-modal', 'ge-tab-container', 'ge-tab-element', 'bs-fluidtemplate', 'bs-gallery'];
-		foreach ($icons as $icon) {
+
+		foreach ($icons as $id => $icon) {
 			$iconRegistry->registerIcon(
-				$icon,
+				$id,
 				\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
 				['source' => 'EXT:t3sbootstrap/Resources/Public/Icons/Register/'.$icon.'.svg']
 			);
@@ -268,12 +269,12 @@ call_user_func(function () {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 1');
 	}
 
-	/***************
-	 * Show preview of tt_content elements in page module
-	 */
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['t3sbs_card'] =
-	 \T3SBS\T3sbootstrap\Hooks\PageLayoutView\CardPreviewRenderer::class;
-
+	if ( $extconf['preview'] ) {
+		/***************
+		 * Override preview of tt_content elements in page module
+		 */
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['previewRendererResolver'] = \TYPO3\CMS\Backend\Preview\StandardPreviewRendererResolver::class;
+	}
 	/***************
 	 * Add RootLine Fields: keywords & description
 	 */

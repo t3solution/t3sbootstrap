@@ -258,6 +258,13 @@ class Config extends AbstractEntity
 	protected $navbarToggler = '';
 
 	/**
+	 * navbarAnimatedtoggler
+	 *
+	 * @var bool
+	 */
+	protected $navbarAnimatedtoggler = false;
+
+	/**
 	 * navbarBreakpoint
 	 *
 	 * @var string
@@ -270,6 +277,14 @@ class Config extends AbstractEntity
 	 * @var bool
 	 */
 	protected $navbarOffcanvas = false;
+
+
+	/**
+	 * navbarTransparent
+	 *
+	 * @var bool
+	 */
+	protected $navbarTransparent = false;
 
 	/**
 	 * navbarHeight
@@ -1728,6 +1743,68 @@ class Config extends AbstractEntity
 	public function isNavbarOffcanvas()
 	{
 		return $this->navbarOffcanvas;
+	}
+
+	/**
+	 * Returns the navbarAnimatedtoggler
+	 *
+	 * @return bool $navbarAnimatedtoggler
+	 */
+	public function getNavbarAnimatedtoggler()
+	{
+		return $this->navbarAnimatedtoggler;
+	}
+
+	/**
+	 * Sets the navbarAnimatedtoggler
+	 *
+	 * @param bool $navbarAnimatedtoggler
+	 * @return void
+	 */
+	public function setNavbarAnimatedtoggler($navbarAnimatedtoggler)
+	{
+		$this->navbarAnimatedtoggler = $navbarAnimatedtoggler;
+	}
+
+	/**
+	 * Returns the boolean state of navbarAnimatedtoggler
+	 *
+	 * @return bool
+	 */
+	public function isNavbarAnimatedtoggler()
+	{
+		return $this->navbarAnimatedtoggler;
+	}
+
+	/**
+	 * Returns the navbarTransparent
+	 *
+	 * @return bool $navbarTransparent
+	 */
+	public function getNavbarTransparent()
+	{
+		return $this->navbarTransparent;
+	}
+
+	/**
+	 * Sets the navbarTransparent
+	 *
+	 * @param bool $navbarTransparent
+	 * @return void
+	 */
+	public function setNavbarTransparent($navbarTransparent)
+	{
+		$this->navbarTransparent = $navbarTransparent;
+	}
+
+	/**
+	 * Returns the boolean state of navbarTransparent
+	 *
+	 * @return bool
+	 */
+	public function isNavbarTransparent()
+	{
+		return $this->navbarTransparent;
 	}
 
 	/**

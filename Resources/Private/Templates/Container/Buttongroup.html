@@ -2,7 +2,7 @@
 <f:layout name="Button" />
 <f:section name="Main">
 <f:render partial="Header/All" arguments="{_all}" />
-<div{f:if(condition: '{class}',then: ' class="{class}"')} role="group" aria-label="btn-{data.uid}"{dataAnimate}>
+<div{f:if(condition: '{class}',then: ' class="{class}"')} role="group" aria-label="btn-{data.uid}"{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 	<f:for each="{col_271}" as="button">
 		{button.renderedContent -> f:format.raw()}
 	</f:for>

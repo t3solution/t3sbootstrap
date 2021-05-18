@@ -49,6 +49,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			'(min-width: %1$dpx) %1$dpx, 100vw'
 		);
 		$this->registerArgument('breakpoints', 'array', 'Image breakpoints from responsive design.', false, []);
+		$this->registerArgument('imgtag', 'bool', 'Use rendering suggested by picturefill.js', false, true);
 		$this->registerArgument('picturefill', 'bool', 'Use rendering suggested by picturefill.js', false, true);
 		$this->registerArgument('lazyload', 'int', 'Generate markup that supports lazyloading', false, 0);
 		$this->registerArgument('ratio', 'string', 'Image ratio', false, '');
@@ -76,12 +77,16 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	 */
 	protected function renderImage(FileInterface $image, $width, $height, ?string $fileExtension=null)
 	{
-		if ($this->arguments['breakpoints']) {
-			return $this->renderPicture($image, $width, $height);
-		} elseif ($this->arguments['srcset']) {
-			return $this->renderImageSrcset($image, $width, $height);
+		if ($this->arguments['imgtag']) {
+			return self::renderImageTag($image, $width, $height, $fileExtension);
 		} else {
-			return parent::renderImage($image, $width, $height, $fileExtension);
+			if ($this->arguments['breakpoints']) {
+				return $this->renderPicture($image, $width, $height);
+			} elseif ($this->arguments['srcset']) {
+				return $this->renderImageSrcset($image, $width, $height);
+			} else {
+				return parent::renderImage($image, $width, $height, $fileExtension);
+			}
 		}
 	}
 
@@ -248,7 +253,71 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		return $fallbackImage;
 	}
 
+	/**
+	 * Render image tag
+	 *
+	 * @param	FileInterface $image
+	 * @param	string		 $width
+	 * @param	string		 $height
+	 *
+	 * @return string					Rendered image tag
+	 */
+	protected function renderImageTag(FileInterface $image, $width, $height)
+	{
+		 $cropVariant = 'default';
+		 $cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
 
+		if ( $this->arguments['ratio'] ) {
+			$cropString = self::getCropString($image);
+		}
+
+		 $cropVariantCollection = CropVariantCollection::create((string)$cropString);
+		 $cropArea = $cropVariantCollection->getCropArea($cropVariant);
+
+		if ( $this->arguments['ratio'] ) {
+			$m = $cropArea->getHeight() / $cropArea->getWidth();
+			$height = (int) ceil($height * $m);
+		}
+
+		 $processingInstructions = [
+			 'width' => $width,
+			 'height' => $height,
+			 'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
+		 ];
+
+		 if (!empty($fileExtension)) {
+			 $processingInstructions['fileExtension'] = $fileExtension;
+		 }
+		 $imageService = $this->getImageService();
+		 $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
+		 $imageUri = $imageService->getImageUri($processedImage);
+
+		 if (!$this->tag->hasAttribute('data-focus-area')) {
+			 $focusArea = $cropVariantCollection->getFocusArea($cropVariant);
+			 if (!$focusArea->isEmpty()) {
+				 $this->tag->addAttribute('data-focus-area', $focusArea->makeAbsoluteBasedOnFile($image));
+			 }
+		 }
+		 $this->tag->addAttribute('src', $imageUri);
+		 $this->tag->addAttribute('width', $processedImage->getProperty('width'));
+		 $this->tag->addAttribute('height', $processedImage->getProperty('height'));
+		 if (in_array($this->arguments['loading'] ?? '', ['lazy', 'eager', 'auto'], true)) {
+			 $this->tag->addAttribute('loading', $this->arguments['loading']);
+		 }
+
+		 $alt = $image->getProperty('alternative');
+		 $title = $image->getProperty('title');
+
+		 // The alt-attribute is mandatory to have valid html-code, therefore add it even if it is empty
+		 if (empty($this->arguments['alt'])) {
+			 $this->tag->addAttribute('alt', $alt);
+		 }
+		 if (empty($this->arguments['title']) && $title) {
+			 $this->tag->addAttribute('title', $title);
+		 }
+
+	    return $this->tag->render();
+	}
 
 	/**
 	 * Returns an $cropString

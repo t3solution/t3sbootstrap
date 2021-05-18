@@ -13,7 +13,7 @@ $tempSysFileReferenceColumns = [
 		'label' => 'Extra Class - figure-tag',
 		'config' => [
 			'type' => 'input',
-			'size' => 20,
+			'size' => 40,
 			'eval' => 'trim',
 			'valuePicker' => [
 				'items' => [
@@ -24,6 +24,12 @@ $tempSysFileReferenceColumns = [
 					[ 'mr-3 (margin-right)', 'mr-3', ],
 					[ 'mx-3 (margin-left and -right)', 'mx-3', ],
 					[ 'my-3 (margin-top and -bottom)', 'my-3', ],
+					[ 'Hover zoom (basic)', 'img-hover-zoom', ],
+					[ 'Hover zoom (rotate)', 'img-hover-zoom--zoom-n-rotate', ],
+					[ 'Hover zoom (slowmo)', 'img-hover-zoom--slowmo', ],
+					[ 'Hover zoom (brightness)', 'img-hover-zoom--brightness', ],
+					[ 'Hover zoom (blurzoom)', 'img-hover-zoom--blur', ],
+					[ 'Hover zoom (colorize)', 'img-hover-zoom--colorize', ]	
 				],
 			],
 		],
@@ -33,7 +39,7 @@ $tempSysFileReferenceColumns = [
 		'label' => 'Extra Class - img-tag',
 		'config' => [
 			'type' => 'input',
-			'size' => 20,
+			'size' => 40,
 			'eval' => 'trim',
 			'valuePicker' => [
 				'items' => [

@@ -103,7 +103,7 @@ $tempPagesColumns = [
 		'label'	=> 'e.g.: fab fa-typo3 fa-lg',
 		'config' => [
 			'type' => 'input',
-			'size' => '20',
+			'size' => 20,
 		]
 	],
 	'tx_t3sbootstrap_icon_only' => [
@@ -116,25 +116,127 @@ $tempPagesColumns = [
 	'tx_t3sbootstrap_titlecolor' => [
 		'label' => 'Page Title Color',
 		'exclude' => 1,
-		'description' => 'default if empty',
+		'description' => 'Hex color codes, RGB or CSS variables e.g. var(--primary)',
 		'config' => [
 			'type' => 'input',
-			'renderType' => 'colorpicker',
-			'size' => 20
+			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['var(--primary)', 'var(--primary)'],
+					['var(--secondary)', 'var(--secondary)'],
+					['var(--success)', 'var(--success)'],
+					['var(--danger)', 'var(--danger)'],
+					['var(--warning)', 'var(--warning)'],
+					['var(--info)', 'var(--info)']
+				],
+			],
 		],
 	],
 	'tx_t3sbootstrap_subtitlecolor' => [
 		'label' => 'Subtitle Color',
 		'exclude' => 1,
-		'description' => 'default if empty',
+		'description' => 'Hex color codes, RGB or CSS variables e.g. var(--primary)',
 		'config' => [
 			'type' => 'input',
-			'renderType' => 'colorpicker',
-			'size' => 20
+			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['var(--primary)', 'var(--primary)'],
+					['var(--secondary)', 'var(--secondary)'],
+					['var(--success)', 'var(--success)'],
+					['var(--danger)', 'var(--danger)'],
+					['var(--warning)', 'var(--warning)'],
+					['var(--info)', 'var(--info)']
+				],
+			],
+		],
+	],
+	'tx_t3sbootstrap_navigationcolor' => [
+		'label' => 'Color',
+		'displayCond' => 'USER:T3SBS\\T3sbootstrap\\UserFunction\\TcaMatcher->isDropdownMenu',
+		'exclude' => 1,
+		'description' => 'Hex color codes, RGB or CSS variables e.g. var(--primary)',
+		'config' => [
+			'type' => 'input',
+			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['var(--primary)', 'var(--primary)'],
+					['var(--secondary)', 'var(--secondary)'],
+					['var(--success)', 'var(--success)'],
+					['var(--danger)', 'var(--danger)'],
+					['var(--warning)', 'var(--warning)'],
+					['var(--info)', 'var(--info)']
+				],
+			],
+		],
+	],
+	'tx_t3sbootstrap_navigationactivecolor' => [
+		'label' => 'Active Color',
+		'displayCond' => 'USER:T3SBS\\T3sbootstrap\\UserFunction\\TcaMatcher->isDropdownMenu',
+		'exclude' => 1,
+		'description' => 'Hex color codes, RGB or CSS variables e.g. var(--primary)',
+		'config' => [
+			'type' => 'input',
+			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['var(--primary)', 'var(--primary)'],
+					['var(--secondary)', 'var(--secondary)'],
+					['var(--success)', 'var(--success)'],
+					['var(--danger)', 'var(--danger)'],
+					['var(--warning)', 'var(--warning)'],
+					['var(--info)', 'var(--info)']
+				],
+			],
+		],
+	],
+	'tx_t3sbootstrap_navigationhover' => [
+		'label' => 'Hover Color',
+		'displayCond' => 'USER:T3SBS\\T3sbootstrap\\UserFunction\\TcaMatcher->isDropdownMenu',
+		'exclude' => 1,
+		'description' => 'Hex color codes, RGB or CSS variables e.g. var(--primary)',
+		'config' => [
+			'type' => 'input',
+			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['var(--primary)', 'var(--primary)'],
+					['var(--secondary)', 'var(--secondary)'],
+					['var(--success)', 'var(--success)'],
+					['var(--danger)', 'var(--danger)'],
+					['var(--warning)', 'var(--warning)'],
+					['var(--info)', 'var(--info)']
+				],
+			],
+		],
+	],
+	'tx_t3sbootstrap_navigationbgcolor' => [
+		'label' => 'Background Active & Hover Color',
+		'displayCond' => 'USER:T3SBS\\T3sbootstrap\\UserFunction\\TcaMatcher->isDropdownMenu',
+		'exclude' => 1,
+		'description' => 'Hex color codes, RGB or CSS variables e.g. var(--primary)',
+		'config' => [
+			'type' => 'input',
+			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['var(--primary)', 'var(--primary)'],
+					['var(--secondary)', 'var(--secondary)'],
+					['var(--success)', 'var(--success)'],
+					['var(--danger)', 'var(--danger)'],
+					['var(--warning)', 'var(--warning)'],
+					['var(--info)', 'var(--info)']
+				],
+			],
 		],
 	]
-
-
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages',$tempPagesColumns);
@@ -150,6 +252,28 @@ unset($tempPagesColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_linkToTop','after:tx_t3sbootstrap_container');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_megamenu','after:tx_t3sbootstrap_linkToTop');
 
+if (array_key_exists('navigationColor', $extconf) && $extconf['navigationColor'] === '1') {
+	# add palette Navigation Colors
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+		'pages',
+		'--palette--; Navigation Colors for dropdown items;navColors',
+		'',
+		'after:title'
+	);
+
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationcolor','after:tx_t3sbootstrap_subtitlecolor'
+	);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationactivecolor','after:tx_t3sbootstrap_navigationcolor'
+	);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationhover','after:tx_t3sbootstrap_navigationactivecolor'
+	);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationbgcolor','after:tx_t3sbootstrap_navigationhover'
+	);
+}
 
 if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1') {
 
@@ -222,4 +346,9 @@ $GLOBALS['PAGES_TYPES'][$menuheader] = [
 	't3sbootstrap',
 	'Configuration/TSConfig/Registered/Header.tsconfig',
 	'Remove CType header'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
+	't3sbootstrap',
+	'Configuration/TSConfig/Registered/Callouts.tsconfig',
+	'Add BS-Callouts options in Layout field'
 );

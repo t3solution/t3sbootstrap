@@ -1,0 +1,31 @@
+TCEFORM.tt_content {
+	layout {
+		addItems {
+			94 = ------ T3SB ------
+			95 = Callout primary
+			96 = Callout info
+			97 = Callout success
+			98 = Callout warning
+			99 = Callout danger
+			100 = Callout secondary
+		}
+		altLabels {
+			94 = ------ T3SB ------
+			95 = Callout primary
+			96 = Callout info
+			97 = Callout success
+			98 = Callout warning
+			99 = Callout danger
+			100 = Callout secondary
+		}
+		classes {
+			94 = 
+			95 = bs-callout bs-callout-primary
+			96 = bs-callout bs-callout-info
+			97 = bs-callout bs-callout-success
+			98 = bs-callout bs-callout-warning
+			99 = bs-callout bs-callout-danger
+			100 = bs-callout bs-callout-secondary
+		}
+	}
+}

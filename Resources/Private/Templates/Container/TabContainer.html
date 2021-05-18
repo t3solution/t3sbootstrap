@@ -27,7 +27,7 @@
 	}
 </f:asset.script>
 <f:if condition="{class} || {style}">
-	<div{f:if(condition:'{class}',then:' class="{class}"')}{f:if(condition:'{style}',then:' style="{style}"')}{dataAnimate}>
+	<div{f:if(condition:'{class}',then:' class="{class}"')}{f:if(condition:'{style}',then:' style="{style}"')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 </f:if>
 	<f:render partial="Header/All" arguments="{_all}" />
 	<f:switch expression="{tab.displayType}">

@@ -2,10 +2,10 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.navbar.placement} == 'fixed-bottom'">
 	<f:then>
-		<f:variable name="dropupdown" value="dropup" />	
+		<f:variable name="dropupdown" value="dropup" />
 	</f:then>
 	<f:else>
-		<f:variable name="dropupdown" value="dropdown" />		
+		<f:variable name="dropupdown" value="dropdown" />
 	</f:else>
 </f:if>
 <f:if condition="{settings.config.navbarSectionmenu}">
@@ -198,4 +198,44 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 	});
 </f:asset.script>
 </f:if>
+<f:if condition="{config.navbar.navColorCSS}">
+<f:asset.css identifier="navColorCSS">
+{config.navbar.navColorCSS}
+</f:asset.css>
+</f:if>
+
+<f:if condition="{config.navbar.transparent}">
+<f:asset.script identifier="navbartransparentJS">
+	// Navbar transparent - Navbar/Assets.html
+	if ( $(window).width() > {settings.navbar.{navbarBreakpoint}} ) {
+		$(window).on('scroll', function () {
+			if ( $(window).scrollTop() > 60 ) {
+				$('.navbar').css('background-color', '{config.navbar.colorschemes}');
+				$('.navbar').css('transition', 'background-color 0.5s ease');
+				$('.navbar').css('-webkit-transition', 'background-color 0.5s ease');
+				$('.navbar').css('-moz-transition', 'background-color 0.5s ease');
+<f:comment>
+				// change navbar color
+				$('.navbar').removeClass('navbar-light');			
+				$('.navbar').addClass('navbar-dark');			
+</f:comment>			
+			} else {
+				$('.navbar').css('background-color', 'var(--transparent)');
+				$('.navbar').css('transition', 'background-color 0.5s ease');
+				$('.navbar').css('-webkit-transition', 'background-color 0.5s ease');
+				$('.navbar').css('-moz-transition', 'background-color 0.5s ease');
+<f:comment>
+				// change navbar color
+				$('.navbar').removeClass('navbar-dark');			
+				$('.navbar').addClass('navbar-light');
+</f:comment>
+			}
+		});
+	} else {
+		$('.navbar').css('background-color', '{config.navbar.colorschemes}');
+	}
+</f:asset.script>
+</f:if>
+
+
 </html>

@@ -40,6 +40,7 @@ page {
 			backToTopClass = {$bootstrap.backToTopClass}
 			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
 			gtm = {$bootstrap.gtm}
+			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 			navbar {
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}
@@ -88,11 +89,13 @@ page {
 				navbarImage = {$bootstrap.config.navbarImage}
 				navbarColor = {$bootstrap.config.navbarColor}
 				navbarBackground = {$bootstrap.config.navbarBackground}
+				navbarTransparent = {$bootstrap.config.navbarTransparent}
 				navbarContainer = {$bootstrap.config.navbarContainer}
 				navbarPlacement = {$bootstrap.config.navbarPlacement}
 				navbarAlignment = {$bootstrap.config.navbarAlignment}
 				navbarClass = {$bootstrap.config.navbarClass}
 				navbarToggler = {$bootstrap.config.navbarToggler}
+				navbarAnimatedtoggler = {$bootstrap.config.navbarAnimatedtoggler}
 				navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
 				navbarOffcanvas = {$bootstrap.config.navbarOffcanvas}
 				navbarHeight = {$bootstrap.config.navbarHeight}

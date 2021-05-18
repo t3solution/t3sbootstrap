@@ -1,4 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{header.hLine}">
+	<f:render section="inlineCSS" arguments="{_all}" />
+</f:if>
 <f:if condition="{data.header_layout} != 100">
 	<f:if condition="{data.header} || {data.subheader} || {data.date}">
 		<f:if condition="{data.header_layout} == '101'">
@@ -39,4 +42,20 @@
 		dateColor: settings.subheaderColor,
 		dateformat: settings.dateformat
 		}" />
+</f:section>
+
+<f:section name="inlineCSS">
+<f:if condition="{header.hLine} == 'h-line-1'">
+<f:variable name="hlayout">{f:if(condition: '{data.header_layout}',then: 'h{data.header_layout}', else: 'h{header.default}')}</f:variable>
+<f:asset.css identifier="headerInlineCss-{data.uid}">
+header.header-{data.uid}.h-line-1{overflow:hidden;}header.header-{data.uid}.h-line-1 {hlayout} {display: inline-block;position: relative;}header.header-{data.uid}.h-line-1 {hlayout}::before,header.header-{data.uid}.h-line-1 {hlayout}::after {content: "";position: absolute;border-top: 1px solid {header.hColorVar};top: 50%;width: 2000px;}header.header-{data.uid}.h-line-1 {hlayout}::before {margin-right: 15px;right: 100%;}header.header-{data.uid}.h-line-1 {hlayout}::after {margin-left: 15px;left: 100%;}
+</f:asset.css>
+</f:if>
+
+<f:if condition="{header.hLine} == 'h-line-2'">
+<f:variable name="hlayout">{f:if(condition: '{data.header_layout}',then: 'h{data.header_layout}', else: 'h{header.default}')}</f:variable>
+<f:asset.css identifier="headerInlineCss-{data.uid}">
+header.header-{data.uid}.h-line-2 {overflow:hidden;line-height: 0.5;}header.header-{data.uid}.h-line-2 {hlayout} {display: inline-block;position: relative;}header.header-{data.uid}.h-line-2 {hlayout}:before,header.header-{data.uid}.h-line-2 {hlayout}:after {content: "";position: absolute;height: 5px;border-bottom: 1px solid {header.hColorVar};border-top: 1px solid {header.hColorVar};top: 47%;width: 2000px;}header.header-{data.uid}.h-line-2 {hlayout}:before {right: 100%;margin-right: 15px;}header.header-{data.uid}.h-line-2 {hlayout}:after {left: 100%;margin-left: 15px;}
+</f:asset.css>
+</f:if>
 </f:section>

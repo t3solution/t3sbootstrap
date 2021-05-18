@@ -23,7 +23,6 @@ use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
-use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
@@ -118,16 +117,6 @@ class ConfigController extends ActionController
 		$this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
  		$typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
 		$this->version = (int)$typo3Version->getVersion();
-
-		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-		$pageRenderer->loadRequireJsModule(
-			 'TYPO3/CMS/T3sbootstrap/T3sBootstrap',
-			 'function() { console.log("Loaded own module."); }'
-		);
-
-		if ($this->version === 11) {
-			$pageRenderer->addCssFile('/typo3conf/ext/t3sbootstrap/Resources/Public/Backend/bestyles11.css');
-		}
 	}
 
 
@@ -198,6 +187,7 @@ class ConfigController extends ActionController
 		$assignedOptions = self::getFieldsOptions();
 		$assignedOptions['pid'] = $this->currentUid;
 		$assignedOptions['tcaColumns'] = self::getTcaColumns();
+		$assignedOptions['t3version'] = $this->version;
 
 		if ( $this->rootConfig ) {
 			// config from rootline
@@ -542,7 +532,7 @@ class ConfigController extends ActionController
 			}
 		}
 
-		return $assignedOptions;
+		return (array)$assignedOptions;
 	}
 
 
