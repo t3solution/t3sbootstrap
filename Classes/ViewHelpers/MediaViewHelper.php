@@ -276,7 +276,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 
 		if ( $this->arguments['ratio'] ) {
 			$m = $cropArea->getHeight() / $cropArea->getWidth();
-			$height = (int) ceil($height * $m);
+			$height = ceil((float)$height * (float)$m);
 		}
 
 		 $processingInstructions = [
