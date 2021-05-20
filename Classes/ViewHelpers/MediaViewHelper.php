@@ -49,7 +49,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			'(min-width: %1$dpx) %1$dpx, 100vw'
 		);
 		$this->registerArgument('breakpoints', 'array', 'Image breakpoints from responsive design.', false, []);
-		$this->registerArgument('imgtag', 'bool', 'Use rendering suggested by picturefill.js', false, true);
+		$this->registerArgument('imgtag', 'bool', 'Use rendering suggested by picturefill.js', false, false);
 		$this->registerArgument('picturefill', 'bool', 'Use rendering suggested by picturefill.js', false, true);
 		$this->registerArgument('lazyload', 'int', 'Generate markup that supports lazyloading', false, 0);
 		$this->registerArgument('ratio', 'string', 'Image ratio', false, '');
