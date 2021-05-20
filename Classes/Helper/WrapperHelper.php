@@ -253,6 +253,7 @@ $(videoElement).removeAttr("controls");';
 			->where(
 				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
 			)
+			->orderBy('sorting')
 			->execute()
 			->fetchAll();
 
