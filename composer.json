@@ -22,7 +22,7 @@
     }
   },
   "extra": {
-      "typo3-cms": {
+      "typo3/cms": {
           "extension-key": "t3sbootstrap"
       }
   }
