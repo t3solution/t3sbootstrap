@@ -435,16 +435,8 @@ page {
 
 [{$bootstrap.config.navbarBreakpoint} == 'sm']
 page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.sm}
-
-page.111 = TEXT
-page.111.value = sm
-
 [END]
 [{$bootstrap.config.navbarBreakpoint} == 'md']
-
-page.111 = TEXT
-page.111.value = md
-
 page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.md}
 [END]
 [{$bootstrap.config.navbarBreakpoint} == 'lg']
