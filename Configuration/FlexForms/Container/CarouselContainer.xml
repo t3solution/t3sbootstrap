@@ -90,6 +90,12 @@
 					<origImage>
 						<TCEforms>
 							<label>Use Original Image</label>
+							<displayCond>
+								<and>
+									<value2>FIELD:general.multislider:=:0</value2>
+									<value3>FIELD:general.owlCarousel:=:0</value3>
+								</and>
+							</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -99,7 +105,12 @@
 					<carouselFade>
 						<TCEforms>
 							<label>Switch carousel from horizontal sliding to crossfade</label>
-							<displayCond>FIELD:general.multislider:=:0</displayCond>
+							<displayCond>
+								<and>
+									<value2>FIELD:general.multislider:=:0</value2>
+									<value3>FIELD:general.owlCarousel:=:0</value3>
+								</and>
+							</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -123,6 +134,7 @@
 						<TCEforms>
 							<label>Header link</label>
 							<onChange>reload</onChange>
+							<displayCond>FIELD:general.owlCarousel:=:0</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -162,6 +174,7 @@
 								<and>
 									<value1>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->animateCss</value1>
 									<value2>FIELD:general.multislider:=:0</value2>
+									<value3>FIELD:general.owlCarousel:=:0</value3>
 								</and>
 							</displayCond>
 							<config>
@@ -223,12 +236,269 @@
 					<multislider>
 						<TCEforms>
 							<label>Use Multislider (jQuery Plugin)</label>
+							<displayCond>FIELD:general.owlCarousel:!=:1</displayCond>
 							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</multislider>
+
+					<owlCarousel>
+						<TCEforms>
+							<label>Use Owl Carousel (jQuery Plugin)</label>
+							<displayCond>FIELD:general.multislider:!=:1</displayCond>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</owlCarousel>
+
+					<owlStyle>
+						<TCEforms>
+							<label>OWL Carousel Style</label>
+							<displayCond>FIELD:general.owlCarousel:=:1</displayCond>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Style 1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Style 2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+								</items>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</owlStyle>
+
+					<owlLine>
+						<TCEforms>
+							<label>Owl Carousel with Line</label>
+							<displayCond>
+								<and>
+									<value1>FIELD:general.owlCarousel:=:1</value1>
+									<value2>FIELD:general.owlStyle:=:1</value2>
+								</and>
+							</displayCond>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</owlLine>
+
+					<owlAnimation>
+						<TCEforms>
+							<label>OWL Animation out</label>
+							<displayCond>
+								<and>
+									<value1>FIELD:general.owlCarousel:=:1</value1>
+									<value2>FIELD:general.owlStyle:=:1</value2>
+								</and>
+							</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">bounceOut</numIndex>
+										<numIndex index="1">bounceOut</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">bounceOutDown</numIndex>
+										<numIndex index="1">bounceOutDown</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">bounceOutLeft</numIndex>
+										<numIndex index="1">bounceOutLeft</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">bounceOutRight</numIndex>
+										<numIndex index="1">bounceOutRight</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">bounceOutUp</numIndex>
+										<numIndex index="1">bounceOutUp</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">fadeOut</numIndex>
+										<numIndex index="1">fadeOut</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">fadeOutDown</numIndex>
+										<numIndex index="1">fadeOutDown</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">fadeOutDownBig</numIndex>
+										<numIndex index="1">fadeOutDownBig</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">fadeOutLeft</numIndex>
+										<numIndex index="1">fadeOutLeft</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">fadeOutLeftBig</numIndex>
+										<numIndex index="1">fadeOutLeftBig</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">fadeOutRight</numIndex>
+										<numIndex index="1">fadeOutRight</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">fadeOutRightBig</numIndex>
+										<numIndex index="1">fadeOutRightBig</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">fadeOutUp</numIndex>
+										<numIndex index="1">fadeOutUp</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">fadeOutUpBig</numIndex>
+										<numIndex index="1">fadeOutUpBig</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">flipOutX</numIndex>
+										<numIndex index="1">flipOutX</numIndex>
+									</numIndex>
+									<numIndex index="15" type="array">
+										<numIndex index="0">flipOutY</numIndex>
+										<numIndex index="1">flipOutY</numIndex>
+									</numIndex>
+									<numIndex index="16" type="array">
+										<numIndex index="0">lightSpeedOut</numIndex>
+										<numIndex index="1">lightSpeedOut</numIndex>
+									</numIndex>
+									<numIndex index="17" type="array">
+										<numIndex index="0">rotateOut</numIndex>
+										<numIndex index="1">rotateOut</numIndex>
+									</numIndex>
+									<numIndex index="18" type="array">
+										<numIndex index="0">rotateOutDownLeft</numIndex>
+										<numIndex index="1">rotateOutDownLeft</numIndex>
+									</numIndex>
+									<numIndex index="19" type="array">
+										<numIndex index="0">rotateOutDownRight</numIndex>
+										<numIndex index="1">rotateOutDownRight</numIndex>
+									</numIndex>
+									<numIndex index="20" type="array">
+										<numIndex index="0">rotateOutUpLeft</numIndex>
+										<numIndex index="1">rotateOutUpLeft</numIndex>
+									</numIndex>
+									<numIndex index="21" type="array">
+										<numIndex index="0">rotateOutUpRight</numIndex>
+										<numIndex index="1">rotateOutUpRight</numIndex>
+									</numIndex>
+									<numIndex index="22" type="array">
+										<numIndex index="0">rollOut</numIndex>
+										<numIndex index="1">rollOut</numIndex>
+									</numIndex>
+									<numIndex index="23" type="array">
+										<numIndex index="0">zoomOut</numIndex>
+										<numIndex index="1">zoomOut</numIndex>
+									</numIndex>
+									<numIndex index="24" type="array">
+										<numIndex index="0">zoomOutDown</numIndex>
+										<numIndex index="1">zoomOutDown</numIndex>
+									</numIndex>
+									<numIndex index="25" type="array">
+										<numIndex index="0">zoomOutLeft</numIndex>
+										<numIndex index="1">zoomOutLeft</numIndex>
+									</numIndex>
+									<numIndex index="26" type="array">
+										<numIndex index="0">zoomOutRight</numIndex>
+										<numIndex index="1">zoomOutRight</numIndex>
+									</numIndex>
+									<numIndex index="27" type="array">
+										<numIndex index="0">zoomOutUp</numIndex>
+										<numIndex index="1">zoomOutUp</numIndex>
+									</numIndex>
+									<numIndex index="28" type="array">
+										<numIndex index="0">slideOutDown</numIndex>
+										<numIndex index="1">slideOutDown</numIndex>
+									</numIndex>
+									<numIndex index="29" type="array">
+										<numIndex index="0">slideOutLeft</numIndex>
+										<numIndex index="1">slideOutLeft</numIndex>
+									</numIndex>
+									<numIndex index="30" type="array">
+										<numIndex index="0">slideOutRight</numIndex>
+										<numIndex index="1">slideOutRight</numIndex>
+									</numIndex>
+									<numIndex index="31" type="array">
+										<numIndex index="0">slideOutUp</numIndex>
+										<numIndex index="1">slideOutUp</numIndex>
+									</numIndex>
+								</items>
+								<default>slideOutUp</default>
+							</config>
+						</TCEforms>
+					</owlAnimation>
+					<owlNumber>
+						<TCEforms>
+							<label>Number of items</label>
+							<displayCond>
+								<and>
+									<value1>FIELD:general.owlCarousel:=:1</value1>
+									<value2>FIELD:general.owlStyle:=:1</value2>
+								</and>
+							</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">6</numIndex>
+										<numIndex index="1">6</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">7</numIndex>
+										<numIndex index="1">7</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">8</numIndex>
+										<numIndex index="1">8</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">9</numIndex>
+										<numIndex index="1">9</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">10</numIndex>
+										<numIndex index="1">10</numIndex>
+									</numIndex>
+								</items>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</owlNumber>
+
 					<number>
 						<TCEforms>
 							<label>Number of items</label>
@@ -309,7 +579,6 @@
 						</TCEforms>
 					</sliding>
 
-
 					<duration>
 						<TCEforms>
 							<label>Duration of animation</label>
@@ -328,8 +597,7 @@
 					<zoom>
 						<TCEforms>
 							<label>Enable open in lightbox</label>
-
-
+							<displayCond>FIELD:general.owlCarousel:=:0</displayCond>
 							<config>
 								<type>check</type>
 							</config>

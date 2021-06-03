@@ -18,6 +18,11 @@ module.tx_t3sbootstrap {
 		wsScss = {$bootstrap.ext.wsScss}
 		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
 		gtm = {$bootstrap.gtm}
+		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
+		breakpoint.sm = {$bootstrap.navbar.breakpoint.sm}
+		breakpoint.md = {$bootstrap.navbar.breakpoint.md}
+		breakpoint.lg = {$bootstrap.navbar.breakpoint.lg}
+		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
 		cdn {
 			// Versions
 			bootstrap = {$bootstrap.cdn.bootstrap}
@@ -36,6 +41,7 @@ module.tx_t3sbootstrap {
 			lightcase = {$bootstrap.cdn.lightcase}
 			cookieconsent = {$bootstrap.cdn.cookieconsent}
 			ytPlayer = {$bootstrap.cdn.ytPlayer}
+			owlCarousel = {$bootstrap.cdn.owlCarousel}
 		}
 	}
 

@@ -123,8 +123,8 @@ $(document).ready(function(){
 					if ($inlineJS)
 					GeneralUtility::makeInstance(AssetCollector::class)
 						->addInlineJavaScript('background-video-'.$processedData['data']['uid'], $inlineJS);
-					
-					
+
+
 					$events = $flexconf;
 					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
 					$events['uid'] = $processedData['data']['uid'];
@@ -389,7 +389,13 @@ $(videoElement).removeAttr("controls");';
 				  ->addInlineJavaScript('multisliderinlinejs-'.$processedData['data']['uid'], $inlineJS);
 
 			$processedData['multislider'] = TRUE;
+		}
 
+		if ( $flexconf['owlCarousel'] ) {
+			$processedData['owlCarousel'] = TRUE;
+			$processedData['owlAnimation'] = $flexconf['owlAnimation'];
+			$processedData['owlNumber'] = $flexconf['owlNumber'];
+			$processedData['owlStyle'] = $flexconf['owlStyle'];
 		}
 
 		$processedData['maxWidth'] = $flexconf['width'].'px';

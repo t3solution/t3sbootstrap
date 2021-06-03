@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 
 class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
@@ -290,6 +291,13 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		 }
 		 $imageService = $this->getImageService();
 		 $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
+
+		$webpIsLoaded = ExtensionManagementUtility::isLoaded('webp');
+		if ( $webpIsLoaded ) {
+			$webpIdentifier = $processedImage->getIdentifier().'.webp';
+			$processedImage->setIdentifier($webpIdentifier);
+		}
+
 		 $imageUri = $imageService->getImageUri($processedImage);
 
 		 if (!$this->tag->hasAttribute('data-focus-area')) {

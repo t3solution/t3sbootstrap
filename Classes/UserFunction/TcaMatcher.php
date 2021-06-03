@@ -167,6 +167,71 @@ class TcaMatcher
 		return $parent;
 	}
 
+	/**
+	 * is child of carousel-container and not owl
+	 *
+	 * @return bool
+	 */
+	public function flexCarouselParentNotOwl($arguments): bool
+	{
+		$parent = true;
+
+		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+			$result = $queryBuilder
+				  ->select('*')
+				  ->from('tt_content')
+				  ->where(
+					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+				  )
+				  ->execute();
+			$parent_rec = $result->fetch();
+			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
+
+			if ( $parent_rec['CType'] == 'carousel_container' && ((int) $parent_flexconf['owlCarousel'] == 1 || (int) $parent_flexconf['multislider'] == 1) ) {
+
+#			if ( $parent_rec['CType'] == 'carousel_container' && (int) $parent_flexconf['owlCarousel'] == 1 ) {
+				$parent = false;
+			}
+		}
+
+		return $parent;
+	}
+
+	/**
+	 * is child of carousel-container and is owl style 1
+	 *
+	 * @return bool
+	 */
+	public function flexCarouselParentIsOwl($arguments): bool
+	{
+		$parent = false;
+
+		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+			$result = $queryBuilder
+				  ->select('*')
+				  ->from('tt_content')
+				  ->where(
+					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+				  )
+				  ->execute();
+			$parent_rec = $result->fetch();
+			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
+
+			if ( $parent_rec['CType'] == 'carousel_container' && (int) $parent_flexconf['owlCarousel'] == 1 ) {
+				$parent = true;
+			}
+		}
+
+		return $parent;
+	}
 
 	/**
 	 * isButton

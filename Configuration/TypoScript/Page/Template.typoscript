@@ -1,4 +1,31 @@
 
+["{$bootstrap.config.navbarBreakpoint}" == "sm"]
+page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.sm}
+// deprecated
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.sm}
+[END]
+["{$bootstrap.config.navbarBreakpoint}" == "md"]
+page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.md}
+// deprecated
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.md}
+[END]
+["{$bootstrap.config.navbarBreakpoint}" == "lg"]
+page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.lg}
+// deprecated
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.lg}
+[END]
+["{$bootstrap.config.navbarBreakpoint}" == "xl"]
+page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.xl}
+// deprecated
+page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.xl}
+[END]
+
+[loaded('indexed_search')]
+page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+[ELSE]
+page.10.settings.indexedsearch.targetPid = 0
+[END]
+
 page {
 	# Page template
 	10 = FLUIDTEMPLATE
@@ -84,6 +111,7 @@ page {
 				navbarMegamenu = {$bootstrap.config.navbarMegamenu}
 				navbarHover = {$bootstrap.config.navbarHover}
 				navbarClickableparent = {$bootstrap.config.navbarClickableparent}
+				navbarPlusicon = {$bootstrap.config.navbarPlusicon}
 				navbarDropdownAnimate = {$bootstrap.config.navbarDropdownAnimate}
 				navbarBrand = {$bootstrap.config.navbarBrand}
 				navbarImage = {$bootstrap.config.navbarImage}
@@ -433,21 +461,3 @@ page {
 	}
 }
 
-[{$bootstrap.config.navbarBreakpoint} == 'sm']
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.sm}
-[END]
-[{$bootstrap.config.navbarBreakpoint} == 'md']
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.md}
-[END]
-[{$bootstrap.config.navbarBreakpoint} == 'lg']
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.lg}
-[END]
-[{$bootstrap.config.navbarBreakpoint} == 'xl']
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.xl}
-[END]
-
-[loaded('indexed_search')]
-page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
-[ELSE]
-page.10.settings.indexedsearch.targetPid = 0
-[END]

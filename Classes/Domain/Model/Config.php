@@ -169,7 +169,6 @@ class Config extends AbstractEntity
 	 */
 	protected $navbarClickableparent = false;
 
-
 	/**
 	 * navbarDropdownAnimate
 	 *

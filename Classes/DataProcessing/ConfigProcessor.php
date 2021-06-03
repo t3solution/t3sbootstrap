@@ -180,10 +180,16 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['navbar']['enable'] = $processedRecordVariables['navbarEnable'];
 			$processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbarSectionmenu'] ? ' section-menu' : '';
 			$processedData['config']['navbar']['brand'] = $processedRecordVariables['navbarBrand'];
+
 			if ( $frontendController->rootLine[1]['doktype'] == 4) {
 				$processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
 				$processedData['config']['navbar']['clickableparent'] = $processedRecordVariables['navbarClickableparent'];
+			}
+			if ( $processedData['config']['navbar']['clickableparent'] && $processedRecordVariables['navbarPlusicon']) {
+				$processedData['config']['navbar']['navbarPlusicon'] = 0;	
+			} else {
+				$processedData['config']['navbar']['navbarPlusicon'] = $processedRecordVariables['navbarPlusicon'];	
 			}
 			$processedData['config']['navbar']['image'] = $processedRecordVariables['navbarImage']
 			? $processedRecordVariables['navbarImage']	: $contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
@@ -429,8 +435,11 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['expandedcontentBottom']['class'] = trim($processedRecordVariables['expandedcontentClassbottom']);
 		}
 
-		// used for js-conditions
+		// used for js-conditions - deprecated
 		$processedData['winWidth'] = (int)$processorConfiguration['breakpoint.'][$processedRecordVariables['navbarBreakpoint']];
+		// used for js-conditions
+		$navbarBreakpointWidth = (int)$processorConfiguration['breakpoint.'][$processedRecordVariables['navbarBreakpoint']];
+		$processedData['navbarBreakpointWidth'] = $navbarBreakpointWidth;
 
 		return $processedData;
 	}
@@ -542,7 +551,7 @@ class ConfigProcessor implements DataProcessorInterface
 		 $childPids = $queryGenerator->getTreeList($parent, 999999, 0, 1);
 		 $childPids = explode(',',$childPids );
 
-	    return $childPids;
+		 return $childPids;
 	}
 
 }

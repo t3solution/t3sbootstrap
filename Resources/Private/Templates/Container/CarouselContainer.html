@@ -5,56 +5,82 @@
 </f:section>
 <f:section name="Main">
 <f:if condition="{col_276 -> f:count()}">
-	<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
-	<f:if condition="{multislider}">
+	<f:if condition="{owlCarousel}">
 		<f:then>
-			<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
-				<f:render partial="Header/All" arguments="{_all}" />
-				<div id="multiSlider-{data.uid}" class="blogSlider{f:if(condition: continuous, then: ' continuous')}">
-						<div class="MS-content gallery">
-							<f:for each="{col_276}" as="row">
-								{row.renderedContent -> f:format.raw()}
-							</f:for>
-						</div>
-					<f:if condition="!{continuous}">
-						<div class="MS-controls">
-							<button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-							<button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-						</div>
-					</f:if>
-				</div>
-			</div>
-		</f:then>
-		<f:else>
-			<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
-				<f:render partial="Header/All" arguments="{_all}" />
-				<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-ride="carousel"
-					 data-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>
-					<f:if condition="{col_276 -> f:count()} > 1">
-						<ol class="carousel-indicators d-none d-md-block">
-							<f:for each="{col_276}" as="carousel-indicators" iteration="iteration-indicators">
-								<li data-target="#carousel-{data.uid}" data-slide-to="{iteration-indicators.index}"
-								{f:if(condition:'{iteration-indicators.isFirst}',then:' class="active"')}></li>
-							</f:for>
-						</ol>
-					</f:if>
-					<div class="carousel-inner gallery">
+			<f:comment> OWL SLIDER </f:comment>
+			<f:render partial="Page/Assets" arguments="{_all}" />
+			<f:if condition="{owlStyle} == 1">
+				<f:then>
+					<div id="owl-{data.uid}" class="owl-carousel owl-theme owlStyle-one">
 						<f:for each="{col_276}" as="row">
 							{row.renderedContent -> f:format.raw()}
 						</f:for>
 					</div>
-					<f:if condition="{col_276 -> f:count()} > 1">
-						<a class="carousel-control-prev" href="#carousel-{data.uid}" role="button" data-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="carousel-control-next" href="#carousel-{data.uid}" role="button" data-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
-					</f:if>
-				</div>
-			</div>
+				</f:then>
+				<f:else>
+					<div id="owl-{data.uid}" class="owl-carousel owlStyle-two">
+						<f:for each="{col_276}" as="row">
+							{row.renderedContent -> f:format.raw()}
+						</f:for>
+					</div>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{multislider}">
+				<f:then>
+					<f:comment> MULTISLIDER </f:comment>
+					<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
+						<f:render partial="Header/All" arguments="{_all}" />
+						<div id="multiSlider-{data.uid}" class="blogSlider{f:if(condition: continuous, then: ' continuous')}">
+								<div class="MS-content gallery">
+									<f:for each="{col_276}" as="row">
+										{row.renderedContent -> f:format.raw()}
+									</f:for>
+								</div>
+							<f:if condition="!{continuous}">
+								<div class="MS-controls">
+									<button class="MS-left"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+									<button class="MS-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+								</div>
+							</f:if>
+						</div>
+					</div>
+				</f:then>
+				<f:else>
+					<f:comment> BOOTSTRAP CAROUSEL </f:comment>
+					<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
+					<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
+						<f:render partial="Header/All" arguments="{_all}" />
+						<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-ride="carousel"
+							 data-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>
+							<f:if condition="{col_276 -> f:count()} > 1">
+								<ol class="carousel-indicators d-none d-md-block">
+									<f:for each="{col_276}" as="carousel-indicators" iteration="iteration-indicators">
+										<li data-target="#carousel-{data.uid}" data-slide-to="{iteration-indicators.index}"
+										{f:if(condition:'{iteration-indicators.isFirst}',then:' class="active"')}></li>
+									</f:for>
+								</ol>
+							</f:if>
+							<div class="carousel-inner gallery">
+								<f:for each="{col_276}" as="row">
+									{row.renderedContent -> f:format.raw()}
+								</f:for>
+							</div>
+							<f:if condition="{col_276 -> f:count()} > 1">
+								<a class="carousel-control-prev" href="#carousel-{data.uid}" role="button" data-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carousel-{data.uid}" role="button" data-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</f:if>
+						</div>
+					</div>
+				</f:else>
+			</f:if>
 		</f:else>
 	</f:if>
 </f:if>

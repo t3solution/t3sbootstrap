@@ -1,0 +1,195 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+data-namespace-typo3-fluid="true">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css priority="true" identifier="animateCss"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.min.css" />
+			<f:asset.css identifier="owlmincss"
+				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.animateVersion}/assets/owl.carousel.min.css" />
+			<f:asset.css identifier="owlthemecss"
+				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.animateVersion}/assets/owl.theme.default.css" />
+			<f:asset.script identifier="owljs"
+				src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.animateVersion}/owl.carousel.js" />
+		</f:then>
+		<f:else>
+			<f:asset.css priority="true" identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.min.css" />
+			<f:asset.css identifier="owlmincss" href="fileadmin/T3SB/Resources/Public/CSS/owl.carousel.min.css" />
+			<f:asset.css identifier="owlthemecss" href="fileadmin/T3SB/Resources/Public/CSS/owl.theme.default.css" />
+			<f:asset.script identifier="owljs" src="fileadmin/T3SB/Resources/Public/JS/owl.carousel.js" />
+		</f:else>
+	</f:if>
+	<f:asset.script identifier="newsOwlSliderJs">
+	//  NEWS OWL Carousel - Resources/Private/Extensions/news/Resources/Private/Partials/List/OwlSlider.html
+	$(".owl-carousel").on("initialized.owl.carousel", () => {
+		setTimeout(() => {
+			$(".owl-item.active .owl-slide-animated").addClass("is-transitioned");
+		}, 200);
+	});
+	
+	var $owlCarousel = $(".owl-carousel").owlCarousel({
+		items: 1,
+		loop: true,
+		nav: true,
+		navText: [
+		'<svg width="50" height="50" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg>',
+		'<svg width="50" height="50" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg>' /* icons from https://iconmonstr.com */
+		]
+	});
+	
+	$owlCarousel.on("changed.owl.carousel", e => {
+		$(".owl-slide-animated").removeClass("is-transitioned");
+		var $currentOwlItem = $(".owl-item").eq(e.item.index);
+		$currentOwlItem.find(".owl-slide-animated").addClass("is-transitioned");
+		var $target = $currentOwlItem.find(".owl-slide-text");
+		doDotsCalculations($target);
+	});
+	
+	$owlCarousel.on("resize.owl.carousel", () => {
+	  setTimeout(() => {
+		setOwlDotsPosition();
+	  }, 50);
+	});
+	
+	/*if there isn't content underneath the carousel*/
+	//$owlCarousel.trigger("refresh.owl.carousel");
+	
+	setOwlDotsPosition();
+	
+	function setOwlDotsPosition() {
+		var $target = $(".owl-item.active .owl-slide-text");
+		doDotsCalculations($target);
+	}
+	
+	function doDotsCalculations(el) {
+		var height = el.height();
+		var {top, left} = el.position();
+		var res = height + top + 20;
+	
+		$(".owl-carousel .owl-dots").css({
+			top: `${res}px`,
+			left: `${left}px`
+		});
+	}
+</f:asset.script>
+
+<f:asset.css identifier="newsOwlSliderCss">
+.static {
+	position: static;
+}
+.cover {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.owl-carousel .owl-slide {
+	position: relative;
+/*
+	height: 100vh;
+*/
+	height: 400px;
+	background-color: lightgray;
+}
+.owl-carousel .owl-slide-animated {
+	transform: translateX(20px);
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.05s;
+}
+.owl-carousel .owl-slide-animated.is-transitioned {
+	transform: none;
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.5s;
+}
+
+.owl-carousel .owl-slide-title.is-transitioned {
+	transition-delay: 0.2s;
+}
+
+.owl-carousel .owl-slide-subtitle.is-transitioned {
+	transition-delay: 0.35s;
+}
+
+.owl-carousel .owl-slide-cta.is-transitioned {
+	transition-delay: 0.5s;
+}
+
+.owl-carousel .owl-dots,
+.owl-carousel .owl-nav {
+	position: absolute;
+}
+
+.owl-carousel .owl-dots .owl-dot,
+.owl-carousel .owl-nav [class*="owl-"]:focus {
+	outline: none;
+}
+
+.owl-carousel .owl-dots .owl-dot span {
+	background: transparent;
+	border: 1px solid var(--main-black-color);
+	transition: all 0.2s ease;
+}
+
+.owl-carousel .owl-dots .owl-dot:hover span,
+.owl-carousel .owl-dots .owl-dot.active span {
+	background: var(--main-black-color);
+}
+
+.owl-carousel .owl-nav {
+	left: 50%;
+	top: 10%;
+	transform: translateX(-50%);
+	margin: 0;
+}
+
+.owl-carousel .owl-nav svg {
+	opacity: 0.3;
+	transition: opacity 0.3s;
+}
+
+.owl-carousel .owl-nav button:hover svg {
+	opacity: 1;
+}
+
+.owl-carousel .owl-nav [class*="owl-"]:hover {
+	background: transparent;
+}
+
+@media screen and (max-width: 575px) {
+	.owl-carousel .owl-nav {
+		top: 5%;
+	}
+	.owl-carousel .owl-nav svg {
+		width: 24px;
+		height: 24px;
+	}
+	.owl-carousel .owl-slide {
+		height: 100vh;
+	}
+}
+</f:asset.css>
+
+<n:excludeDisplayedNews newsItem="{newsItem}"/>
+<f:alias map="{mediaElement: '{newsItem.mediaPreviews.0}'}">
+<div class="owl-slide d-flex align-items-center cover" style="background-image: url({mediaElement.originalResource.publicUrl});">
+	<div class="container">
+		<div class="row justify-content-center justify-content-md-start">
+			<div class="col-10 col-md-6 static">
+				<div class="owl-slide-text">
+					<h2 class="owl-slide-animated owl-slide-title">
+					<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}" class="text-white text-shadow">
+					<span itemprop="headline">{newsItem.title}</span>
+					</n:link>
+					</h2>
+					<div class="owl-slide-animated owl-slide-subtitle mb-3 text-white">
+						{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</f:alias>
+
+</html>

@@ -30,73 +30,80 @@
 		</div>
 	</div>
 	<div class="card-body">
-		<f:if condition="{config}">
+		<f:if condition="{template}">
 			<f:then>
-				<f:link.action action="edit" arguments="{config : config}" class="btn btn-primary btn-block edit-btn">
-					Edit this configuration
-				</f:link.action>
-				<f:if condition="{isSiteroot}">
+				<f:if condition="{config}">
 					<f:then>
-						<f:if condition="{utilColors} && {settings.wsScss} && {settings.enableUtilityColors}">
-							<f:render section="UtilityColors" arguments="{_all}" />
-						</f:if>
-						<p>
-							<button class="btn btn-info bg-gradient page-conf-btn" type="button" data-toggle="collapse"
-							 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="width: 250px;">
-								Pages with T3SB Configuration
-							</button>
-						</p>
-						<div class="collapse" id="allPages">
-							<div class="card card-body mb-0" style="padding: 0 !important">
-								<table class="table table-striped">
-									<thead class="thead-default text-white">
-									<tr>
-										<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">uid</th>
-										<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">page uid</th>
-										<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">page title</th>
-									</tr>
-									</thead>
-									<tbody>
-										<f:for each="{allConfig}" as="config" iteration="iterator">
+						<f:link.action action="edit" arguments="{config : config}" class="btn btn-primary btn-block edit-btn">
+							Edit this configuration
+						</f:link.action>
+						<f:if condition="{isSiteroot}">
+							<f:then>
+								<f:if condition="{utilColors} && {settings.wsScss} && {settings.enableUtilityColors}">
+									<f:render section="UtilityColors" arguments="{_all}" />
+								</f:if>
+								<p>
+									<button class="btn btn-info bg-gradient page-conf-btn" type="button" data-toggle="collapse"
+									 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="width: 250px;">
+										Pages with T3SB Configuration
+									</button>
+								</p>
+								<div class="collapse" id="allPages">
+									<div class="card card-body mb-0" style="padding: 0 !important">
+										<table class="table table-striped">
+											<thead class="thead-default text-white">
 											<tr>
-												<th scope="row">{config.confUid}</th>
-												<td>{config.uid}</td>
-												<td>{config.title}</td>
+												<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">uid</th>
+												<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">page uid</th>
+												<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">page title</th>
 											</tr>
-										</f:for>
-									</tbody>
-								</table>
-							</div>
-						</div>
+											</thead>
+											<tbody>
+												<f:for each="{allConfig}" as="config" iteration="iterator">
+													<tr>
+														<th scope="row">{config.confUid}</th>
+														<td>{config.uid}</td>
+														<td>{config.title}</td>
+													</tr>
+												</f:for>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</f:then>
+							<f:else>
+								<f:if condition="{admin}">
+									<f:link.action action="delete" arguments="{config : config}" class="btn btn-danger btn-block"
+									 additionalAttributes="{onclick: 'return confirm(\'Are you sure want to delete this configuration?\')'}">
+										Delete this configuration
+									</f:link.action>
+								</f:if>
+							</f:else>
+						</f:if>
 					</f:then>
 					<f:else>
 						<f:if condition="{admin}">
-							<f:link.action action="delete" arguments="{config : config}" class="btn btn-danger btn-block"
-							 additionalAttributes="{onclick: 'return confirm(\'Are you sure want to delete this configuration?\')'}">
-								Delete this configuration
-							</f:link.action>
+							<f:if condition="{isSiteroot}">
+								<f:then>
+									<f:link.action action="new" class="btn btn-primary btn-block">New main configuration</f:link.action>
+								</f:then>
+								<f:else>
+									<f:if condition="{rootConfig}">
+										<f:then>
+											<f:link.action action="new" class="btn btn-warning btn-block">Override configuration</f:link.action>
+										</f:then>
+										<f:else>
+											<div class="alert alert-danger" role="alert">The main configuration has to be created first on the root page.</div>
+										</f:else>
+									</f:if>
+								</f:else>
+							</f:if>
 						</f:if>
 					</f:else>
 				</f:if>
 			</f:then>
 			<f:else>
-				<f:if condition="{admin}">
-					<f:if condition="{isSiteroot}">
-						<f:then>
-							<f:link.action action="new" class="btn btn-primary btn-block">New main configuration</f:link.action>
-						</f:then>
-						<f:else>
-							<f:if condition="{rootConfig}">
-								<f:then>
-									<f:link.action action="new" class="btn btn-warning btn-block">Override configuration</f:link.action>
-								</f:then>
-								<f:else>
-									<div class="alert alert-danger" role="alert">The main configuration has to be created first on the root page.</div>
-								</f:else>
-							</f:if>
-						</f:else>
-					</f:if>
-				</f:if>
+				<div class="alert alert-danger" role="alert">A template is expected on this side.</div>	
 			</f:else>
 		</f:if>
 	</div>

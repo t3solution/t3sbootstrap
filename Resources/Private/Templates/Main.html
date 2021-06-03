@@ -104,7 +104,6 @@
 	</div>
 </f:section>
 
-
 <f:section name="AssetScripts">
 <f:comment> Lazyload / Magnifying glass icon </f:comment>
 <f:if condition="{settings.lazyLoad}">
@@ -121,7 +120,7 @@ new LazyLoad({
 		if ( zoomOverlay.length ) {
 			var imgwidth = $(img).outerWidth()+'px';
 			var imgheight = $(img).outerHeight()+'px';
-			if ( $(window).width() < {winWidth} ) {
+			if ( $(window).width() < {navbarBreakpointWidth} ) {
 				imgwidth = '100%';
 			}
 			zoomOverlay.addClass('card-img-overlay');
@@ -158,7 +157,7 @@ new LazyLoad({
 			var imgwidth = $(img).outerWidth()+'px';
 			var imgheight = $(img).outerHeight()+'px';
 			var zoomOverlay = $(this).find('a div.zoom-overlay');
-			if ( $(window).width() < 576 ) {
+			if ( $(window).width() < {navbarBreakpointWidth} ) {
 				imgwidth = '100%';
 			}
 			if ( zoomOverlay.length ) {
@@ -180,6 +179,7 @@ new LazyLoad({
 <f:asset.script identifier="default">
 	// Default - Main.html
 	var navbarHeight = $("#main-navbar").outerHeight();
+	var navbarBreakpointWidth = {navbarBreakpointWidth};
 	var fixedNavbar = false;
 	if ( $("#main-navbar").hasClass("fixed-top") || $("#main-navbar").hasClass("sticky-top") ) {
 		fixedNavbar = true;

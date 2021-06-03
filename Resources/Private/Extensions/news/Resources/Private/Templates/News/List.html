@@ -25,7 +25,14 @@
 									<f:render section="Columns" arguments="{_all}" />
 								</f:then>
 								<f:else>
-									<f:render section="Default" arguments="{_all}" />
+									<f:if condition="{settings.templateLayout} == 76">
+										<f:then>
+											<f:render section="OwlSliader" arguments="{_all}" />
+										</f:then>
+										<f:else>
+											<f:render section="Default" arguments="{_all}" />								
+										</f:else>
+									</f:if>
 								</f:else>
 							</f:if>
 						</f:else>
@@ -43,6 +50,14 @@
 </f:section>
 </html>
 
+
+<f:section name="OwlSliader">
+<div class="owl-carousel owl-theme">
+	<f:for each="{news}" as="newsItem" iteration="iterator">
+		<f:render partial="List/OwlSlider" arguments="{newsItem: newsItem,iterator:iterator}" />
+	</f:for>
+</div>
+</f:section>
 
 <f:section name="ListGroup">
 <div class="list-group news-list-view" id="news-container-{contentObjectData.uid}">

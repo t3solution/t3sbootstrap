@@ -4,7 +4,7 @@
 			<ROOT>
 				<type>array</type>
 				<TCEforms>
-					<sheetTitle>General</sheetTitle>
+					<sheetTitle>General</sheetTitle>		                    
 				</TCEforms>
 				<el>
 					<shift>
@@ -32,7 +32,8 @@
 					</shift>
 					<bgOverlay>
 						<TCEforms>
-							<label>Background for caption</label>
+							<label>Background color for caption</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexCarouselParentNotOwl</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -54,9 +55,21 @@
 							</config>
 						</TCEforms>
 					</bgOverlay>
+
+					<bgOverlayOwl>
+						<TCEforms>
+							<label>Background overlay color</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexCarouselParentIsOwl</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</bgOverlayOwl>
+
 					<captionVAlign>
 						<TCEforms>
 							<label>Caption vertical align</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexCarouselParentNotOwl</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
