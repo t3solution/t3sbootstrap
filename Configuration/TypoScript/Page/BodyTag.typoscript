@@ -51,6 +51,10 @@ page {
 		40 = TEXT
 		40.value = {$bootstrap.config.navbarBreakpoint}
 		40.noTrimWrap = | data-navbar-breakpoint="|"|
+		50 = TEXT
+		50.value = {$bootstrap.config.navbarBreakpointWidth}
+		50.noTrimWrap = | data-navbar-breakpointWidth="|"|
+		50.if.isTrue = {$bootstrap.config.navbarBreakpointWidth}
 	}
 }
 

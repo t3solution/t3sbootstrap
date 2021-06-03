@@ -40,6 +40,7 @@ $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
@@ -76,6 +77,7 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -96,6 +98,7 @@ $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -118,6 +121,7 @@ $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['T
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -137,6 +141,7 @@ $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TC
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -156,6 +161,7 @@ $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['showitem'] = $GLOBALS['T
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/bars.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['button_group']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -174,6 +180,7 @@ $GLOBALS['TCA']['tt_content']['types']['button_group']['showitem'] = $GLOBALS['T
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -192,6 +199,7 @@ $GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['showitem'] = $GLOBALS[
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-background_wrapper.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
@@ -237,6 +245,7 @@ $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides']
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-parallax_wrapper.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
 
@@ -255,6 +264,7 @@ $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['showitem'] = $GLOBAL
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -273,6 +283,7 @@ $GLOBALS['TCA']['tt_content']['types']['container']['showitem'] = $GLOBALS['TCA'
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['carousel_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -291,6 +302,7 @@ $GLOBALS['TCA']['tt_content']['types']['carousel_container']['showitem'] = $GLOB
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -309,6 +321,7 @@ $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['showitem'] = $G
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-element.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
 
@@ -327,6 +340,7 @@ $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['showitem'] = $G
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['modal']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -345,6 +359,7 @@ $GLOBALS['TCA']['tt_content']['types']['modal']['showitem'] = $GLOBALS['TCA']['t
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['tabs_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -363,6 +378,7 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_container']['showitem'] = $GLOBALS[
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -381,6 +397,7 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
@@ -394,7 +411,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Bootstrap Media object',
 		't3sbs_mediaobject',
-		'content-textpic'
+		'content-beside-text-img-left'
 	],
 	'textmedia',
 	'after'
@@ -405,7 +422,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Bootstrap Card',
 		't3sbs_card',
-		'bs-card'
+		'content-card'
 	],
 	't3sbs_mediaobject',
 	'after'
@@ -416,7 +433,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Bootstrap Toasts',
 		't3sbs_toast',
-		'content-textpic'
+		'content-widget-calltoaction'
 	],
 	't3sbs_card',
 	'after'
@@ -427,7 +444,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Bootstrap Carousel Item (in carousel container)',
 		't3sbs_carousel',
-		'bs-carousel'
+		'content-carousel-item-textandimage'
 	],
 	't3sbs_toast',
 	'after'
@@ -438,7 +455,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Bootstrap Button',
 		't3sbs_button',
-		'bs-button'
+		'form-radio-button'
 	],
 	't3sbs_carousel',
 	'after'
@@ -449,7 +466,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Fluidtemplate',
 		't3sbs_fluidtemplate',
-		'bs-fluidtemplate'
+		'actions-template-new'
 	],
 	't3sbs_button',
 	'after'
@@ -460,7 +477,7 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 	[
 		'Bootstrap Image Gallery',
 		't3sbs_gallery',
-		'bs-gallery'
+		'apps-filetree-folder-media'
 	],
 	't3sbs_fluidtemplate',
 	'after'

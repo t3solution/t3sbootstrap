@@ -1,0 +1,44 @@
+.owlStyle-two .shadow-effect{
+	background:#fff;
+	padding:20px;
+	border:1px solid #ececec;
+	box-shadow: 0 19px 38px rgba(0,0,0,0.1);
+}
+.owlStyle-two .item{
+	padding:15px 15px 50px 15px;
+	opacity: 0.2;
+	-webkit-transform: scale3d(0.8,0.8,1);
+	transform: scale3d(0.8,0.8,1);
+	-webkit-transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;
+	transition:all 0.3s ease-in-out;
+}
+.owlStyle-two .owl-item.active.center .item{
+	opacity: 1;
+	-webkit-transform: scale3d(1,1,1);
+	transform: scale3d(1,1,1);
+}
+.owlStyle-two.owl-carousel .owl-dots .owl-dot.active span,
+.owlStyle-two.owl-carousel .owl-dots .owl-dot:hover span{
+	background-color:#3190e7;
+	transform:translate3d(0px, -50%, 0px) scale(0.7);
+}
+.owlStyle-two.owl-carousel .owl-dots{
+	display: inline-block;
+	width:100%;
+	text-align:center;
+}
+.owlStyle-two.owl-carousel .owl-dots .owl-dot{
+	display: inline-block;
+}
+
+.owlStyle-two.owl-carousel .owl-dots .owl-dot span{
+	background: var(--primary);
+	display: inline-block;
+	height:20px;
+	margin:0 2px 5px;
+	transform:translate3d(0px, -50%, 0px) scale(0.3);
+	transform-origin: 50% 50% 0;
+	transition: all 250ms ease-out 0s;
+	width:20px;
+}

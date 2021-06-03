@@ -23,6 +23,7 @@ use TYPO3\CMS\Backend\View\BackendLayout\Grid\GridRow;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 {
@@ -99,6 +100,11 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 
 	public function renderPageModulePreviewContent(GridColumnItem $item): string
 	{
+		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+		$pageRenderer->loadRequireJsModule(
+			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
+			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap."); }'
+		);
 
 		$content = parent::renderPageModulePreviewContent($item);
 		$context = $item->getContext();
@@ -158,6 +164,12 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			}
    			if ( $flexconf['link'] ) {
 				$out .= '<br />- Link: '.$flexconf['link'];
+			}
+   			if ( $flexconf['owlCarousel'] ) {
+				$out .= '<br />- OWL Carousel';
+				$out .= '<br />- OWL Style: '.$flexconf['owlStyle'];		
+				if ($flexconf['owlStyle'] == 1)
+				$out .= '<br />- OWL Line: '.$flexconf['owlLine'];
 			}
    			if ( $flexconf['multislider'] ) {
 				$out .= '<br />- Multislider';
@@ -297,7 +309,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 		if ($extconf['previewClosedCollapsible']) {
-			$content = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseExample">
+			$content = '<p><a class="collapsed" style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'">
 				<span class="icon icon-size-small icon-state-default">
 					<span class="icon-markup">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg>
@@ -306,7 +318,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			</a></p>
 			<div class="collapse" id="collapseContainer-'.$record['uid'].'">'.$content . $rendered.'</div>';
 		} else {
-			$content = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseExample">
+			$content = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'">
 				<span class="icon icon-size-small icon-state-default">
 					<span class="icon-markup">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg>

@@ -3,7 +3,7 @@
 <f:section name="Main">
 <f:if condition="{menu}">
 <f:if condition="{settings.config.sectionmenuStickyTop}">
-	<f:render partial="Page/Assets" arguments="{stickytop:'true'}" />
+	<f:render partial="Page/Assets" arguments="{stickytop:'true', navbarBreakpointWidth: navbarBreakpointWidth}" />
 </f:if>
 <div class="submenu">
 	<ul class="nav menusubpages{menudirection}{menupills}{menuHorizontalAlignment}">

@@ -61,6 +61,7 @@ lib.contentElement {
 		fixedButton = {$bootstrap.extconf.fixedButton}
 		animateCss = {$bootstrap.extconf.animateCss}
 		animateVersion = {$bootstrap.cdn.animate}
+		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
 		viewportcheckerVersion = {$bootstrap.cdn.viewportchecker}
 		viewportcheckerIntegrity = {$bootstrap.cdn.viewportcheckerIntegrity}
 		cdn = {$bootstrap.cdn.enable}

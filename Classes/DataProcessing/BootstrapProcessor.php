@@ -60,6 +60,9 @@ class BootstrapProcessor implements DataProcessorInterface
 			$parentContainer = $statement['tx_container_parent'];
 		}
 
+		$processedData['dataAnimate'] = FALSE;
+		$processedData['isAnimateCss'] = FALSE;
+
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 		$defaultHelper = GeneralUtility::makeInstance(DefaultHelper::class);
@@ -67,8 +70,11 @@ class BootstrapProcessor implements DataProcessorInterface
 		$styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
 		$wrapperHelper = GeneralUtility::makeInstance(WrapperHelper::class);
 
-		# used for js-conditions
+		# used for js-conditions - deprecated
 		$processedData['winWidth'] = (int)$processorConfiguration['breakpoint.'][$contentObjectConfiguration['settings.']['breakpoint']];
+		// used for js-conditions
+		$navbarBreakpointWidth = (int)$processorConfiguration['breakpoint.'][$contentObjectConfiguration['settings.']['breakpoint']];
+		$processedData['navbarBreakpointWidth'] = $navbarBreakpointWidth;
 
 		// class
 		$class = $classHelper->getAllClass($processedData['data'], $flexconf, $extConf);
@@ -78,7 +84,6 @@ class BootstrapProcessor implements DataProcessorInterface
 		// style
 		$style = $styleHelper->getBgColor($processedData['data']);
 		$processedData['style'] = $processedData['style'] ? $processedData['style'].' '.$style : $style;
-
 
 		/**
 		 * Grid System
@@ -169,6 +174,7 @@ class BootstrapProcessor implements DataProcessorInterface
 				foreach($statement as $element) {
 					$filesFromRepository[$element['uid']] = $fileRepository->findByRelation('tt_content', 'image', $element['uid']);
 				}
+
 				$processedData['carouselSlides'] = $filesFromRepository;
 			}
 		}
@@ -337,21 +343,31 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['style'] .= ' min-height:'.$noImgHeight.'px;';
 				$processedData['style'] .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
 			}
+			$processedData['zoom'] = $parentflexconf['zoom'];
+
 			if ( $parentflexconf['multislider'] ) {
 				$processedData['multislider'] = TRUE;
 			}
-
-			$processedData['zoom'] = $parentflexconf['zoom'];
-			$carouselRatioArr = explode(':', $parentflexconf['ratio']);
-			if ( !empty($carouselRatioArr[0]) ) {
-				$processedData['ratio'] = $parentflexconf['ratio'];
-				if ($flexconf['shift']){
-					$processedData['shift'] = (int)$flexconf['shift'] / 100;
-				} else {
-					$processedData['shift'] = '';
+			if ( $parentflexconf['owlCarousel'] ) {
+				$processedData['owlCarousel'] = TRUE;
+				$processedData['owlStyle'] = $parentflexconf['owlStyle'];
+				$processedData['style'] = '';
+				if ( (int) $parentflexconf['owlStyle'] == 1 && $flexconf['bgOverlayOwl'] ) {
+					$processedData['style'] = $styleHelper->getBgColor($processedData['data']);
 				}
-			} else {
-				$processedData['ratio'] = '';
+				$processedData['owlLine'] = $parentflexconf['owlLine'];
+				$processedData['zoom'] = '';
+			}
+			$processedData['ratio'] = '';
+			if ($parentflexconf['ratio']) {
+				$carouselRatioArr = explode(':', (string) $parentflexconf['ratio']);
+				if ( !empty($carouselRatioArr[0]) ) {
+					$processedData['ratio'] = $parentflexconf['ratio'];
+				}
+			}
+			$processedData['shift'] = '';
+			if ($flexconf['shift']){
+				$processedData['shift'] = (int)$flexconf['shift'] / 100;
 			}
 		}
 
@@ -383,7 +399,6 @@ class BootstrapProcessor implements DataProcessorInterface
 		 */
 		if ($processedData['data']['CType']) {
 			if ( substr($processedData['data']['CType'], 0, 4) == 'menu' ) {
-
 				$processedData['menudirection'] = ' '.$flexconf['menudirection'];
 				$processedData['menupills'] = $flexconf['menupills'] ? ' nav-pills' :'';
 				$processedData['menuHorizontalAlignment'] = $flexconf['menudirection'] == 'flex-row'
@@ -562,8 +577,6 @@ class BootstrapProcessor implements DataProcessorInterface
 			// disable animateCss (conflict)
 			$processedData['data']['tx_t3sbootstrap_animateCss'] = FALSE;
 		}
-		$processedData['dataAnimate'] = FALSE;
-		$processedData['isAnimateCss'] = FALSE;
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
 			// add to class
 			if( $processedData['data']['tx_t3sbootstrap_animateCssRepeat'] ) {

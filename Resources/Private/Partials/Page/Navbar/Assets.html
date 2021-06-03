@@ -56,7 +56,7 @@
 <f:if condition="{settings.config.navbarOffcanvas}">
 <f:asset.css priority="true" identifier="offcanvasCss">
 /*	Offcanvas - Navbar/Assets.html */
-@media (max-width:{f:if(condition:'{winWidth}',then:'{winWidth}', else:'9999')}px){
+@media (max-width:{f:if(condition:'{navbarBreakpointWidth}',then:'{navbarBreakpointWidth}', else:'9999')}px){
 html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0;width:100%;padding-right:1rem;padding-left:1rem;overflow-y:auto;background-color:var(--gray-dark);transition:-webkit-transform .3s ease-in-out;transition:transform .3s ease-in-out;transition:transform .3s ease-in-out,-webkit-transform .3s ease-in-out;-webkit-transform:translateX(100%);transform:translateX(100%)}.offcanvas-collapse.open{-webkit-transform:translateX(-1rem);transform:translateX(-1rem)}.offcanvas-collapse .navbar-nav .nav-link{color:rgba(255,255,255,.75)}.offcanvas-collapse .navbar-nav .nav-link:hover,.offcanvas-collapse .navbar-nav .nav-link:focus{color:#fff}.dropdown-item.active,.dropdown-item:active{color:#fff}.dropdown-item.active:hover,.dropdown-item:active:hover{color:rgba(0,0,0,.75)}.offcanvas-collapse .navbar-nav .active .nav-link{color:rgba(255,255,255,.75);color:#fff}.navbar > .offcanvas-container{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}
 }
 </f:asset.css>
@@ -65,7 +65,7 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 	$('[data-toggle="offcanvas"]').on('click', function () {
 		$('.offcanvas-collapse').toggleClass('open')
 	})
-	if ( $(window).width() < {f:if(condition:'{winWidth}',then:'{winWidth}', else:'9999')} ) {
+	if ( $(window).width() < navbarBreakpointWidth ) {
 		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
 	}
 </f:asset.script>
@@ -78,7 +78,7 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 	$(document).on("click", ".mega-dropdown", function(event) {
 	  event.stopPropagation();
 	})
-	if ( $(window).width() < {f:if(condition:'{winWidth}',then:'{winWidth}', else:'9999')} ) {
+	if ( $(window).width() < navbarBreakpointWidth ) {
 		$(".remove-{settings.config.navbarBreakpoint}").remove();
 	} else {
 		$(".show-{settings.config.navbarBreakpoint}").remove();
@@ -103,7 +103,7 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 		});
 	}
 
-	if ( $(window).width() > {winWidth} ) {
+	if ( $(window).width() > navbarBreakpointWidth ) {
 		navbarHover();
 	}
 </f:asset.script>
@@ -207,7 +207,7 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 <f:if condition="{config.navbar.transparent}">
 <f:asset.script identifier="navbartransparentJS">
 	// Navbar transparent - Navbar/Assets.html
-	if ( $(window).width() > {settings.navbar.{navbarBreakpoint}} ) {
+	if ( $(window).width() > navbarBreakpointWidth ) {
 		$(window).on('scroll', function () {
 			if ( $(window).scrollTop() > 60 ) {
 				$('.navbar').css('background-color', '{config.navbar.colorschemes}');
@@ -236,6 +236,5 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 	}
 </f:asset.script>
 </f:if>
-
 
 </html>

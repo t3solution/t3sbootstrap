@@ -56,6 +56,8 @@ bootstrap.cdn {
 	lightcase = 2.5.0
 	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
 	ytPlayer = 3.3.8
+	# cat=bootstrap-cdn/b-version/49; type=small; label=Owl Carousel:
+	owlCarousel = 2.3.4
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
 	bootstrapCssIntegrity = sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:

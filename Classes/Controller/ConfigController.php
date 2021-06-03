@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 /**
  * ConfigController
@@ -94,6 +95,12 @@ class ConfigController extends ActionController
 	 */
 	protected $version;
 
+	/**
+	 * rootTemplates
+	 *
+	 * @var array
+	 */
+	protected $rootTemplates;
 
 	/**
 	 * Inject a configRepository repository to enable DI
@@ -117,6 +124,21 @@ class ConfigController extends ActionController
 		$this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
  		$typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
 		$this->version = (int)$typo3Version->getVersion();
+
+		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
+		$this->rootTemplates = $queryBuilder
+			 ->select('uid','pid', 'constants')
+			 ->from('sys_template')
+			 ->where(
+				$queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
+			 )
+			 ->execute()->fetchAll();
+
+		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+		$pageRenderer->loadRequireJsModule(
+			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
+			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
+		);
 	}
 
 
@@ -147,6 +169,10 @@ class ConfigController extends ActionController
 			$assignedOptions['allConfig'] = $allConfig;
 		}
 
+		$assignedOptions['template'] = TRUE;
+		if (count($this->rootTemplates) === 0) {
+			$assignedOptions['template'] = FALSE;
+		}
 		$assignedOptions['t3version'] = $this->version;
 		$assignedOptions['rootConfig'] = $this->rootConfig ? TRUE : FALSE;
 		$assignedOptions['config'] = $this->configRepository->findOneByPid($this->currentUid);
@@ -567,33 +593,30 @@ class ConfigController extends ActionController
 		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
 		$persistenceManager->persistAll();
 
-		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
-		$rootTemplates = $queryBuilder
-			 ->select('uid','pid', 'constants')
-			 ->from('sys_template')
-			 ->where(
-				$queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
-			 )
-			 ->execute()->fetchAll();
+		if ( count($this->rootTemplates) ) {
 
-		if ( count($rootTemplates) ) {
+			$configRepository = $this->configRepository->findOneByPid($this->rootPageId);
+			$navbarBreakpoint = $configRepository->getNavbarBreakpoint();
+			$breakpointWidth = $this->settings['breakpoint'][$navbarBreakpoint];
+
 			$filecontent = '';
-			foreach ($rootTemplates as $key=>$rootTemplate) {
+			foreach ($this->rootTemplates as $key=>$rootTemplate) {
 				foreach ( $this->configRepository->findAll() as $config ) {
 					$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $config->getPid())->get();
 					if ( $config->getPid() == $rootTemplate['pid'] ) {
-
-						if ( count($rootTemplates) == 1 ) {
-							$filecontent .= self::getConstants($config, TRUE).PHP_EOL;
+						if ( count($this->rootTemplates) == 1 ) {
+							$filecontent .= self::getConstants($config, TRUE);
+							$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL.PHP_EOL;
 						} else {
 							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
 								$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds]'.PHP_EOL;
 								$filecontent .= self::getConstants($config, TRUE);
+								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
 								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 							}
 						}
 					} else {
-						if ( count($rootTemplates) == 1 ) {
+						if ( count($this->rootTemplates) == 1 ) {
 							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
 								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
 									$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
@@ -601,6 +624,7 @@ class ConfigController extends ActionController
 									$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
 								}
 								$filecontent .= self::getConstants($config, FALSE);
+								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
 								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 							}
 						} else {
@@ -613,6 +637,7 @@ class ConfigController extends ActionController
 									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && page["uid"] == '.$config->getPid().']'.PHP_EOL;
 								}
 								$filecontent .= self::getConstants($config, FALSE);
+								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
 								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 							}
 						}
@@ -911,9 +936,5 @@ class ConfigController extends ActionController
 
 		return (string)$theList;
 	}
-
-
-
-
 
 }

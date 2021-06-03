@@ -9,7 +9,7 @@
 <f:asset.script identifier="card">
 	// Card image overlay on mobile only - Card.html
 	if ( $('.img-overlay').length ) {
-		if ( $(window).width() < {winWidth} ) {
+		if ( $(window).width() < navbarBreakpointWidth ) {
 			$('.card .img-overlay').each(function() {
 				$(this).addClass( "card-img-overlay d-flex align-items-end" );
 			});

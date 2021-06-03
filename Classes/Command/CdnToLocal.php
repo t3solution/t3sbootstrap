@@ -232,7 +232,23 @@ class CdnToLocal extends Command
 				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/js/lightcase.min.js';
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
+			if ($key == 'owlCarousel') {
+				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'owl.carousel.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/owl.carousel.min.css';
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
+				$customFileName = 'owl.theme.default.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/owl.theme.default.css';
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+
+				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'owl.carousel.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/owl.carousel.js';
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+			}
 
 			if ($key == 'cookieconsent') {
 		 		$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
