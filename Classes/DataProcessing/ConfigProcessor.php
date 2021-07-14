@@ -191,6 +191,7 @@ class ConfigProcessor implements DataProcessorInterface
 			} else {
 				$processedData['config']['navbar']['navbarPlusicon'] = $processedRecordVariables['navbarPlusicon'];	
 			}
+
 			$processedData['config']['navbar']['image'] = $processedRecordVariables['navbarImage']
 			? $processedRecordVariables['navbarImage']	: $contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
 			$processedData['config']['navbar']['toggler'] = $processedRecordVariables['navbarToggler'];
@@ -280,7 +281,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 			$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 			if ( $extConf['navigationColor'] ) {
-				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor();
+				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor($contentObjectConfiguration);
 			}
 		}
 
@@ -482,9 +483,10 @@ class ConfigProcessor implements DataProcessorInterface
 	/**
 	 * Generate CSS for navigation color
 	 *
+ 	 * @param array $contentObjectConfiguration The configuration of Content Object
 	 * @return string
 	 */
-	protected function getNavigationColor(): string
+	protected function getNavigationColor($contentObjectConfiguration): string
 	{
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 		$result = $queryBuilder
@@ -503,43 +505,55 @@ class ConfigProcessor implements DataProcessorInterface
 		$navbarColors = $result->fetchAll();
 		$navbarColorCSS = '';
 
-		foreach($navbarColors as $navbarColor) {
+		if (is_array($navbarColors)) {
 
-			$treePages = $this->getTreePids($navbarColor['uid']);
+			foreach($navbarColors as $navbarColor) {
+					
+				if (is_integer($navbarColor['uid'])) {
+		
+					$treePages = $this->getTreePids($navbarColor['uid']);
+		
+					foreach($treePages as $treepageUid) {
+		
+						if ($navbarColor['uid'] == (int)$treepageUid) {
 
-			foreach($treePages as $treepageUid) {
+							$item = '#nav-item-'.(int)$treepageUid;
 
-				if ($navbarColor['uid'] == $treepageUid) {
+							if (!$contentObjectConfiguration['settings.']['navigationColor.']['nosubpages']) {		
+								if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
+									$navbarColorCSS .= $item.'.active .nav-link{color:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
+								}
+							}
+							if ($navbarColor['tx_t3sbootstrap_navigationcolor']) {
+								$navbarColorCSS .= $item.' .nav-link{color:'.$navbarColor['tx_t3sbootstrap_navigationcolor'].' !important}';
+							}		
 
-					$item = '#nav-item-'.(int)$treepageUid;
+						} else {
+		
+							$item = '.dropdown-item-'.(int)$treepageUid;
 
-					if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
-						$navbarColorCSS .= $item.'.active .nav-link{color:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
-					}
+							if (!$contentObjectConfiguration['settings.']['navigationColor.']['nosubpages']) {		
+								if ($navbarColor['tx_t3sbootstrap_navigationcolor']) {
+									$navbarColorCSS .= $item.'{color:'.$navbarColor['tx_t3sbootstrap_navigationcolor'].' !important}';
+								}
+							}
 
-				} else {
-
-					$item = '.dropdown-item-'.(int)$treepageUid;
-
-					if ($navbarColor['tx_t3sbootstrap_navigationcolor']) {
-						$navbarColorCSS .= $item.'{color:'.$navbarColor['tx_t3sbootstrap_navigationcolor'].' !important}';
-					}
-					if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
-						$navbarColorCSS .= $item.'.active{color:'.$navbarColor['tx_t3sbootstrap_navigationactivecolor'].' !important}';
-					}
-					if ($navbarColor['tx_t3sbootstrap_navigationbgcolor']) {
-						$navbarColorCSS .= $item.'.active{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
-						$navbarColorCSS .= $item.':hover,'.$item.':focus{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
-					}
-					if ($navbarColor['tx_t3sbootstrap_navigationhover']) {
-						$navbarColorCSS .= $item.':hover,'.$item.':focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
-						$navbarColorCSS .= $item.'.active:hover,'.$item.'.active:focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
+							if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
+								$navbarColorCSS .= $item.'.active{color:'.$navbarColor['tx_t3sbootstrap_navigationactivecolor'].' !important}';
+							}
+							if ($navbarColor['tx_t3sbootstrap_navigationbgcolor']) {
+								$navbarColorCSS .= $item.'.active{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
+								$navbarColorCSS .= $item.':hover,'.$item.':focus{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
+							}
+							if ($navbarColor['tx_t3sbootstrap_navigationhover']) {
+								$navbarColorCSS .= $item.':hover,'.$item.':focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
+								$navbarColorCSS .= $item.'.active:hover,'.$item.'.active:focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
+							}
+						}
 					}
 				}
 			}
-
 		}
-
 		return $navbarColorCSS;
 	}
 
