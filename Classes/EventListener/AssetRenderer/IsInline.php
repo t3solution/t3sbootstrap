@@ -83,7 +83,7 @@ $contentConsentScript ="
 
 			foreach ($assetJsInline as $library => $source) {
 
-				if ($library == 'lazyload' || $library == 'lazyloadmagnifying' || $library == 'codesnippetJsInline' ) {
+				if ($library == 'lazyload' || $library == 'lazyloadmagnifying' || $library == 'codesnippetJsInline' || substr($library, 0, 7) == 'vanilla' ) {
 					$js .= $source['source'] .PHP_EOL;
 					$event->getAssetCollector()->removeInlineJavaScript($library);
 				} elseif ( GeneralUtility::isFirstPartOfStr($library, 'background-video-') ) {
