@@ -549,6 +549,8 @@ $tempContentColumns = [
 					['exclamation-circle', 'fas fa-exclamation-circle'],
 					['question-circle', 'fas fa-question-circle'],
 					['check-circle', 'fas fa-check-circle'],
+					['chevron-left', 'fas fa-chevron-left'],
+					['chevron-right', 'fas fa-chevron-right'],
 					['chevron-circle-left', 'fas fa-chevron-circle-left'],
 					['chevron-circle-right', 'fas fa-chevron-circle-right'],
 					['youtube', 'fab fa-youtube'],
