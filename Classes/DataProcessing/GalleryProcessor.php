@@ -400,7 +400,7 @@ class GalleryProcessor implements DataProcessorInterface
 					if ( $p != 25 ) {
 						// 1% = space between
 						$p = $p - 1;
-						$block = '.card-deck .card {-ms-flex: 0 0 '. $p .'%; flex: 0 0 '. $p .'%;}';
+						$block = '#c'.$this->processedData['data']['tx_container_parent'].' .card-deck .card {-ms-flex: 0 0 '. $p .'%; flex: 0 0 '. $p .'%;}';
 						if($block)
 						GeneralUtility::makeInstance(AssetCollector::class)
 							 ->addInlineStyleSheet('cardwrapperinlinecss-'.$this->processedData['data']['tx_container_parent'], $block,[],['priority' => true]);
