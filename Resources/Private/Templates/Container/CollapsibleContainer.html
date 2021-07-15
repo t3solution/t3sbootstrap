@@ -56,7 +56,8 @@
 </f:if>
 <f:switch expression="{appearance}">
 	<f:case value="accordion">
-		<div id="accordion-{data.uid}" class="collapsible-accordion" role="tablist">
+		<div id="accordion-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}"
+		     class="collapsible-accordion" role="tablist">
 			<f:for each="{col_277}" as="row">
 				{row.renderedContent -> f:format.raw()}
 			</f:for>
