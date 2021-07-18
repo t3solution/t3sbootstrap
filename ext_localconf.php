@@ -261,12 +261,14 @@ call_user_func(function () {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 1');
 	}
 
-	if ( $extconf['preview'] ) {
-		/***************
-		 * Override preview of tt_content elements in page module
-		 */
+	/***************
+	 * Override preview of tt_content elements in page module
+	 */
+	if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
+		$GLOBALS['TYPO3_CONF_VARS']['SYS']['features']['fluidBasedPageModule'] = true;
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['previewRendererResolver'] = \TYPO3\CMS\Backend\Preview\StandardPreviewRendererResolver::class;
 	}
+
 	/***************
 	 * Add RootLine Fields: keywords & description
 	 */
