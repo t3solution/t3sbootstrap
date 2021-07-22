@@ -105,6 +105,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		// Use width of fallback image as reference for relative sizes (1x, 2x...)
 		$referenceWidth = $fallbackImage->getProperty('width');
+		$referenceHeight = $fallbackImage->getProperty('height');
 
 		// if lazyload enabled add data- prefix
 		$attributePrefix = $lazyload ? 'data-' : '';
@@ -158,6 +159,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		// Provide image width to be consistent with TYPO3 core behavior
 		$fallbackTag->addAttribute('width', $referenceWidth);
+		$fallbackTag->addAttribute('height', $referenceHeight);
 
 		// Add metadata to fallback image
 		$this->addMetadataToImageTag($fallbackTag, $originalImage, $fallbackImage, $focusArea);
