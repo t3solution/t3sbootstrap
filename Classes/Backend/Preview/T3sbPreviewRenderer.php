@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 {
@@ -167,7 +168,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			}
    			if ( $flexconf['owlCarousel'] ) {
 				$out .= '<br />- OWL Carousel';
-				$out .= '<br />- OWL Style: '.$flexconf['owlStyle'];		
+				$out .= '<br />- OWL Style: '.$flexconf['owlStyle'];
 				if ($flexconf['owlStyle'] == 1)
 				$out .= '<br />- OWL Line: '.$flexconf['owlLine'];
 			}
@@ -297,6 +298,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		$view->assign('newContentTitleShort', $this->getLanguageService()->getLL('content'));
 		$view->assign('allowEditContent', $this->getBackendUser()->check('tables_modify', 'tt_content'));
 		$view->assign('containerGrid', $grid);
+		$view->assign('defaultRecordDirectory', $this->hasDefaultDirectory() ? 'RecordDefault' : 'Record');
 
 		$rendered = $view->render();
 
@@ -348,6 +350,29 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			 }
 
 			 return $content;
+	}
+
+
+	/**
+	 * Check TYPO3 version to see whether the default record templates
+	 * are located in RecordDefault/ instead of Record/.
+	 * See: https://review.typo3.org/c/Packages/TYPO3.CMS/+/69769
+	 *
+	 * @return bool
+	 */
+	protected function hasDefaultDirectory(): bool
+	{
+		$typo3Version = new Typo3Version();
+
+		if ($typo3Version->getMajorVersion() === 10) {
+			return version_compare((new Typo3Version())->getVersion(), '10.4.17', '>');
+		}
+
+		if ($typo3Version->getMajorVersion() === 11) {
+			return version_compare((new Typo3Version())->getVersion(), '11.3.0', '>');
+		}
+
+		return false;
 	}
 
 }
