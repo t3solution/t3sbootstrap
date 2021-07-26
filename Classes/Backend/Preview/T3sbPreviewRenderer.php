@@ -101,11 +101,14 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 
 	public function renderPageModulePreviewContent(GridColumnItem $item): string
 	{
-		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-		$pageRenderer->loadRequireJsModule(
-			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
-			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap."); }'
-		);
+		$typo3Version = new Typo3Version();
+		if ($typo3Version->getMajorVersion() === 11) {
+			$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+			$pageRenderer->loadRequireJsModule(
+				 'TYPO3/CMS/T3sbootstrap/Bootstrap',
+				 'function() { console.log("Loaded bootstrap.js by t3sbootstrap."); }'
+			);
+		}
 
 		$content = parent::renderPageModulePreviewContent($item);
 		$context = $item->getContext();
