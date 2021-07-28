@@ -314,26 +314,26 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 		if ($extconf['previewClosedCollapsible']) {
-			$content = '<p><a class="collapsed" style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'">
+			$newContent = '<p><a class="collapsed" style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'">
 				<span class="icon icon-size-small icon-state-default">
 					<span class="icon-markup">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg>
 					</span>
 				</span>
 			</a></p>
-			<div class="collapse" id="collapseContainer-'.$record['uid'].'">'.$content . $rendered.'</div>';
+			<div class="collapse" id="collapseContainer-'.$record['uid'].'">'.$rendered.'</div>';
 		} else {
-			$content = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'">
+			$newContent = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'">
 				<span class="icon icon-size-small icon-state-default">
 					<span class="icon-markup">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg>
 					</span>
 				</span>
 			</a></p>
-			<div class="collapse in" id="collapseContainer-'.$record['uid'].'">'.$content . $rendered.'</div>';
+			<div class="collapse in" id="collapseContainer-'.$record['uid'].'">'.$rendered.'</div>';
 		}
 
-		return $flexconfOut.$content;
+		return $flexconfOut.$newContent;
 	}
 
 
