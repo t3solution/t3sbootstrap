@@ -115,9 +115,9 @@ class CardProcessor implements DataProcessorInterface {
 			if ( $cardData['header']['text'] && $cardData['footer']['text'] ) {
 				$cardData['image']['class'] = 'img-fluid';
 			} elseif ( $cardData['header']['text'] ) {
-				$cardData['image']['class'] = 'card-img-bottom';
+				$cardData['image']['class'] = 'card-img-bottom img-fluid';
 			} elseif ( $cardData['footer']['text'] ) {
-				$cardData['image']['class'] = 'card-img-top';
+				$cardData['image']['class'] = 'card-img-top img-fluid';
 			} else {
 				$cardData['image']['class'] = 'img-fluid';
 			}
@@ -134,13 +134,13 @@ class CardProcessor implements DataProcessorInterface {
 				if ( $cardData['title']['onTop'] || $cardData['header']['text'] ) {
 					$cardData['image']['class'] = 'img-fluid';
 				} else {
-					$cardData['image']['class'] = 'card-img-top';
+					$cardData['image']['class'] = 'card-img-top img-fluid';
 				}
 			} else {
 				if ( $cardData['footer']['text'] ) {
 					$cardData['image']['class'] = 'img-fluid';
 				} else {
-					$cardData['image']['class'] = 'card-img-bottom';
+					$cardData['image']['class'] = 'card-img-bottom img-fluid';
 				}
 			}
 		}
