@@ -12,8 +12,8 @@
   "license": "GPL-2.0-or-later",
   "type": "typo3-cms-extension",
   "require": {
-      "typo3/cms-core": "^10.4 || ^11",
-      "b13/container": "^1.2.0",
+      "typo3/cms-core": "^10.4.18 || ^11.99.99",
+      "b13/container": "^1.3.1",
       "ichhabrecht/content-defender": "^3.1.0"
   },
   "autoload": {
