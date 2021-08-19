@@ -94,7 +94,7 @@
 </f:section>
 
 <f:section name="Content">
-<div id="tabContent-{data.uid}" class="tab-content">
+<div id="tabContent-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}" class="tab-content">
 	<f:for each="{col_280}" as="row">
 		{row.renderedContent -> f:format.raw()}
 	</f:for>
