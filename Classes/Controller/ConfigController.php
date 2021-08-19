@@ -602,13 +602,12 @@ class ConfigController extends ActionController
 			$filecontent = '';
 			foreach ($this->rootTemplates as $key=>$rootTemplate) {
 				foreach ( $this->configRepository->findAll() as $config ) {
-					$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $config->getPid())->get();
 					if ( $config->getPid() == $rootTemplate['pid'] ) {
 						if ( count($this->rootTemplates) == 1 ) {
 							$filecontent .= self::getConstants($config, TRUE);
 							$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL.PHP_EOL;
 						} else {
-							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+							if ($this->rootPageId == $rootTemplate['pid'] ){
 								$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds]'.PHP_EOL;
 								$filecontent .= self::getConstants($config, TRUE);
 								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
@@ -617,7 +616,7 @@ class ConfigController extends ActionController
 						}
 					} else {
 						if ( count($this->rootTemplates) == 1 ) {
-							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+							if ($this->rootPageId == $rootTemplate['pid'] ){
 								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
 									$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
 								} else {
@@ -629,7 +628,7 @@ class ConfigController extends ActionController
 							}
 						} else {
 
-							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
+							if ($this->rootPageId == $rootTemplate['pid'] ){
 
 								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
 									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && '.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
