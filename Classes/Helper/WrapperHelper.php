@@ -36,7 +36,7 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @return array
 	 */
-	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null, $webp=FALSE): array
+	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576'): array
 	{
 		// autoheight
 		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
@@ -192,7 +192,7 @@ $(videoElement).removeAttr("controls");';
 					$processedData['file'] = $file;
 				} else {
 					$processedData['bgImage'] = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp);
+						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp, $bgMediaQueries);
 					if ($flexconf['paddingTopBottom']) {
 						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 1rem;';
 					}
