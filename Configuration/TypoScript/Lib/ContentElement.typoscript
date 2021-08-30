@@ -75,6 +75,7 @@ lib.contentElement {
 		srcsetDesktop = {$bootstrap.image.srcsetDesktop}
 		srcsetTablet = {$bootstrap.image.srcsetTablet}
 		srcsetMobile = {$bootstrap.image.srcsetMobile}
+		bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 		lazyLoadBgWrapperImage = {$bootstrap.image.lazyLoadBgWrapperImage}
 		lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
 		cdnEnable = {$bootstrap.cdn.enable}
