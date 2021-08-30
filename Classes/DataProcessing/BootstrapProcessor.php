@@ -138,7 +138,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 */
 		if ( $processedData['data']['CType'] == 'background_wrapper') {
 			$processedData = $wrapperHelper->getBackgroundWrapper($processedData, $flexconf,
-				 $contentObjectConfiguration['settings.']['cdnEnable'], $extConf['webp']);
+				 $contentObjectConfiguration['settings.']['cdnEnable'], $extConf['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
 			$processedData['isTxContainer'] = TRUE;
 		}
 
