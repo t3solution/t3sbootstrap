@@ -9,6 +9,7 @@
 		<f:then>
 			<f:comment> OWL SLIDER </f:comment>
 			<f:render partial="Page/Assets" arguments="{_all}" />
+			<f:render partial="Header/All" arguments="{_all}" />
 			<f:if condition="{owlStyle} == 1">
 				<f:then>
 					<div id="owl-{data.uid}" class="owl-carousel owl-theme owlStyle-one">
