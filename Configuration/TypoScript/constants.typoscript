@@ -22,7 +22,7 @@ plugin.tx_t3sbootstrap {
 # customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
 # customsubcategory=c-integrity=CDN Integrity - if set crossorigin is set to anonymous
 bootstrap.cdn {
-	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Private/
+	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Public/
 	enable = 1
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Pulse=pulse, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Yeti=yeti]; label=Bootswatch Themes CDN - works only without EXT ws_scss: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
 	bootswatch = 0
