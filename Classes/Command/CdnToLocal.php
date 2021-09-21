@@ -41,7 +41,7 @@ class CdnToLocal extends Command
 	 */
 	protected function configure()
 	{
-		 $this->setDescription('Write required CSS and JS to fileadmin/Resources/Private/');
+		 $this->setDescription('Write required CSS and JS to fileadmin/Resources/Public/');
 	}
 
 
