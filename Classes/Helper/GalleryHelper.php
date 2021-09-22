@@ -41,7 +41,6 @@ class GalleryHelper implements SingletonInterface
 						$processedData['restrowwidth'] = ' w-50';
 					}
 
-
 				} else {
 					// above or below
 					if ( $processedData['data']['imageorient'] <= 10 ) {
@@ -123,18 +122,19 @@ class GalleryHelper implements SingletonInterface
 			if ( $imageorient == 1 || $imageorient == 9 ) {
 				// right
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $processedData['rowwidth'].' float-md-right';
+				$galleryRowClass .= $processedData['rowwidth'].' float-md-end';
 				$processedData['addmedia']['zoomOverlay'] = ' zoom-right';
 			}
 			if ( $imageorient == 2 || $imageorient == 10 ) {
 				// left
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $processedData['rowwidth'].' float-md-left';
+				$galleryRowClass .= $processedData['rowwidth'].' float-md-start';
 			}
 		}
 		// In Text right or left (17,18)
 		if ( $imageorient == 17 || $imageorient == 18 ) {
-			$galleryClass .= $imageorient == 17 ? ' float-md-right ml-md-3' : ' float-md-left mr-md-3';
+			$galleryClass .= $imageorient == 17 ? ' col-md-'.$processedData['data']['tx_t3sbootstrap_inTextImgColumns'].' float-md-end mb-3 ms-md-3'
+			 : ' col-md-'.$processedData['data']['tx_t3sbootstrap_inTextImgColumns'].' float-md-start mb-3 me-md-3';
 			$galleryClass .= ' '.$processedData['rowwidth'];
 		}
 		// Beside Text right or left (nowrap) (25,26)
@@ -143,7 +143,7 @@ class GalleryHelper implements SingletonInterface
 		}
 		// Beside Text right or left (align-items-center) (66,77)
 		if ( $imageorient == 66 || $imageorient == 77 ) {
-			$processedData['addmedia']['figureclass'] .= $imageorient == 66 ? ' float-md-right' : ' float-md-left' ;
+			$processedData['addmedia']['figureclass'] .= $imageorient == 66 ? ' float-md-end' : ' float-md-start' ;
 		}
 		// gallery class
 		$processedData['gallery']['class'] = trim($galleryClass);

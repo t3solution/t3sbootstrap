@@ -39,7 +39,7 @@
 						</f:link.action>
 						<f:if condition="{isSiteroot}">
 							<f:then>
-								<f:if condition="{utilColors} && {settings.wsScss} && {settings.enableUtilityColors}">
+								<f:if condition="{utilColors} && {settings.enableUtilityColors}">
 									<f:render section="UtilityColors" arguments="{_all}" />
 								</f:if>
 								<p>
@@ -111,7 +111,7 @@
 
 
 <f:if condition="{admin}">
-	<f:if condition="{settings.wsScss} && {settings.customScss}">
+	<f:if condition="{settings.customScss}">
 		<f:then>
 			<f:if condition="{customScss}">
 				<f:then>
@@ -137,7 +137,7 @@
 								</f:if>
 								<f:form.textarea name="t3sbootstrap[custom]" id="pageTitleclass" class="form-control"
 								rows="16" style="padding:1rem;" value="{custom -> f:format.raw()}" />
-								<f:form.submit value="Save custom-variables.scss & clean up temporary files in typo3temp/var/cache/data/ws_scss/"
+								<f:form.submit value="Save custom-variables.scss & clean up temporary files in typo3temp/assets/t3sbootstrap/css/"
 								class="btn btn-success btn-block" style="margin: 3rem 0;" />
 							</f:form>
 						</f:then>
@@ -148,9 +148,9 @@
 								</f:then>
 								<f:else>
 									<p class="text-center text-secondary">
-										You can override default Bootstrap variables in <strong>{settings.customScssPath}custom-variables.scss</strong>
+										You can override default Bootstrap variables in <strong>fileadmin/T3SB/Resources/Public/SCSS/custom-variables.scss</strong>
 										 without modifying source files.<br />
-										 <small>Clean up temporary files in typo3temp/var/cache/data/ws_scss/ after edit this file!</small>
+										 <small>Clean up temporary files in typo3temp/assets/t3sbootstrap/css/ after edit this file!</small>
 									</p>
 								</f:else>
 							</f:if>
@@ -168,22 +168,13 @@
 			<f:if condition="{settings.customScss}">
 				<f:then>
 					<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
-						The EXT:ws_scss is not loaded - Custom SCSS is activated but not available.
+						Custom SCSS is activated.
 					</p>
 				</f:then>
 				<f:else>
-					<f:if condition="{settings.wsScss}">
-						<f:then>
-							<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
-								The EXT:ws_scss is loaded - but Custom SCSS is not activated.
-							</p>
-						</f:then>
-						<f:else>
-							<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
-								The EXT:ws_scss is not loaded - Custom SCSS is not available.
-							</p>
-						</f:else>
-					</f:if>
+					<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
+						Custom SCSS is not activated.
+					</p>
 				</f:else>
 			</f:if>
 		</f:else>

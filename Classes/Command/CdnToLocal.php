@@ -59,7 +59,6 @@ class CdnToLocal extends Command
 			't3sbootstrap',
 			'm1'
 		);
-
 		foreach ($settings['cdn'] as $key=>$version) {
 
 			if ($key == 'jquery') {
@@ -77,17 +76,17 @@ class CdnToLocal extends Command
 
 				if ($settings['cdn']['bootswatch']) {
 					$bootswatchTheme = $settings['cdn']['bootswatch'];
-					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootswatch@'.$settings['cdn']['bootstrap'].'/dist/'.$bootswatchTheme.'/bootstrap.min.css';
+					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootswatch@'.$settings['cdn']['bootstrap'].'/dist/'.$bootswatchTheme.'/'.$customFileName;
 					self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 				} else {
-					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$settings['cdn']['bootstrap'].'/dist/css/bootstrap.min.css';
+					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$settings['cdn']['bootstrap'].'/dist/css/'.$customFileName;
 					self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 				}
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'bootstrap.min.js';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/bootstrap.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -111,7 +110,7 @@ class CdnToLocal extends Command
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'jquery.easing.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/'.$version.'/jquery.easing.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -127,7 +126,7 @@ class CdnToLocal extends Command
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'highlight.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/highlight.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 				$customFileName = 'highlight.php.min.js';
 				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/'.$version.'/languages/php.min.js';
@@ -138,7 +137,7 @@ class CdnToLocal extends Command
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lazyload.min.js';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/lazyload.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -146,7 +145,7 @@ class CdnToLocal extends Command
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'picturefill.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/picturefill/'.$version.'/picturefill.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/picturefill/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -161,8 +160,14 @@ class CdnToLocal extends Command
 			if ($key == 'animate') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'animate.compat.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+				// v3 for OWL Slider Style 1
+				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'animate.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/animate.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -170,83 +175,80 @@ class CdnToLocal extends Command
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'baguetteBox.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/baguetteBox.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'baguetteBox.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/baguetteBox.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
-
-
-			if ($key == 'ekkoLightbox') {
+			if ($key == 'magnificpopup') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'ekko-lightbox.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/'.$version.'/ekko-lightbox.css';
+				$customFileName = 'magnific-popup.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'ekko-lightbox.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/'.$version.'/ekko-lightbox.min.js';
+				$customFileName = 'jquery.magnific-popup.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
-
 			if ($key == 'lightcase') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lightcase.css';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/css/lightcase.css';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/css/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lightcase.eot';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/lightcase.eot';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lightcase.svg';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/lightcase.svg';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lightcase.ttf';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/lightcase.ttf';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lightcase.woff';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/lightcase.woff';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'lightcase.min.js';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/js/lightcase.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/js/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 			if ($key == 'owlCarousel') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'owl.carousel.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/owl.carousel.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customFileName = 'owl.theme.default.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/owl.theme.default.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'owl.carousel.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/owl.carousel.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -254,13 +256,13 @@ class CdnToLocal extends Command
 		 		$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'cookieconsent.min.css';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/cookieconsent@'.$version.'/build/cookieconsent.min.css';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/cookieconsent@'.$version.'/build/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 		 		$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'cookieconsent.min.js';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/cookieconsent@'.$version.'/build/cookieconsent.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/cookieconsent@'.$version.'/build/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
@@ -268,58 +270,73 @@ class CdnToLocal extends Command
 		 		$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'jquery.mb.YTPlayer.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/jquery.mb.YTPlayer.min.css';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/font/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'ytp-regular.eot';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/font/ytp-regular.eot';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/font/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/font/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'ytp-regular.ttf';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/font/ytp-regular.ttf';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/font/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'ytp-regular.woff';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/font/ytp-regular.woff';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'raster.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/raster.png';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'raster@2x.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/raster@2x.png';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'raster_dot.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/raster_dot.png';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'raster_dot@2x.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/raster_dot@2x.png';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'jquery.mb.YTPlayer.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/jquery.mb.YTPlayer.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
+			if ($key == 'masonry') {
+				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'masonry.pkgd.min.js';
+				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/masonry/'.$version.'/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+			}
+
+			if ($key == 'parallaxVanilla') {
+				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'parallax-vanilla.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/parallax-vanilla@'.$version.'/dist/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+			}
 		}
 
 		return 0;
@@ -336,7 +353,7 @@ class CdnToLocal extends Command
 			$customContentArr = explode('/*#' , $customContent);
 			$customContent = $customContentArr[0];
 
-		} elseif (strpos($customContent, '//#') !== false) {
+		} elseif (strpos((string)$customContent, '//#') !== false) {
 
 			$customContentArr = explode('//#' , $customContent);
 			$customContent = $customContentArr[0];

@@ -135,13 +135,6 @@ class Config extends AbstractEntity
 	protected $navbarIncludespacer = false;
 
 	/**
-	 * navbarJustify
-	 *
-	 * @var bool
-	 */
-	protected $navbarJustify = false;
-
-	/**
 	 * navbarSectionmenu
 	 *
 	 * @var bool
@@ -183,6 +176,13 @@ class Config extends AbstractEntity
 	 * @var string
 	 */
 	protected $navbarBrand = '';
+
+	/**
+	 * navbarbrandAlignment
+	 *
+	 * @var string
+	 */
+	protected $navbarbrandAlignment = '';
 
 	/**
 	 * navbarImage
@@ -227,6 +227,13 @@ class Config extends AbstractEntity
 	 * @var string
 	 */
 	protected $navbarContainer = '';
+
+	/**
+	 * navbarInnercontainer
+	 *
+	 * @var string
+	 */
+	protected $navbarInnercontainer = '';
 
 	/**
 	 * navbarPlacement
@@ -277,7 +284,6 @@ class Config extends AbstractEntity
 	 */
 	protected $navbarOffcanvas = false;
 
-
 	/**
 	 * navbarTransparent
 	 *
@@ -305,7 +311,6 @@ class Config extends AbstractEntity
 	 * @var bool
 	 */
 	protected $navbarLangmenu = false;
-
 
 	/**
 	 * navbarRightMenuUidList
@@ -346,8 +351,15 @@ class Config extends AbstractEntity
 	 * jumbotronFluid
 	 *
 	 * @var bool
-	 */
 	protected $jumbotronFluid = false;
+	 */
+
+	/**
+	 * jumbotronRounded
+	 *
+	 * @var string
+	 */
+	protected $jumbotronRounded = '';
 
 	/**
 	 * jumbotronSlide
@@ -411,6 +423,13 @@ class Config extends AbstractEntity
 	 * @var bool
 	 */
 	protected $breadcrumbFaicon = false;
+
+	/**
+	 * breadcrumbFaicononly
+	 *
+	 * @var bool
+	 */
+	protected $breadcrumbFaicononly = false;
 
 	/**
 	 * breadcrumbNotOnRootpage
@@ -729,14 +748,12 @@ class Config extends AbstractEntity
 	 */
 	protected $stickyFooterExtraPadding = 0;
 
-
 	/**
 	 * contentMarginTop
 	 *
 	 * @var string
 	 */
 	protected $contentMarginTop = '';
-
 
 	/**
 	 * loadingSpinner
@@ -745,14 +762,12 @@ class Config extends AbstractEntity
 	 */
 	protected $loadingSpinner = '';
 
-
 	/**
 	 * loadingSpinnerColor
 	 *
 	 * @var string
 	 */
 	protected $loadingSpinnerColor = '';
-
 
 	/**
 	 * lightboxSelection
@@ -761,14 +776,12 @@ class Config extends AbstractEntity
 	 */
 	protected $lightboxSelection = '';
 
-
 	/**
 	 * magnifying
 	 *
 	 * @var bool
 	 */
 	protected $magnifying = false;
-
 
 	/**
 	 * sectionmenuAnchorOffset
@@ -777,7 +790,6 @@ class Config extends AbstractEntity
 	 */
 	protected $sectionmenuAnchorOffset = 0;
 
-
 	/**
 	 * sectionmenuScrollspyOffset
 	 *
@@ -785,15 +797,12 @@ class Config extends AbstractEntity
 	 */
 	protected $sectionmenuScrollspyOffset = 0;
 
-
 	/**
 	 * sectionmenuStickyTop
 	 *
 	 * @var bool
 	 */
 	protected $sectionmenuStickyTop = false;
-
-
 
 	/**
 	 * backgroundImageEnable
@@ -808,7 +817,6 @@ class Config extends AbstractEntity
 	 * @var bool
 	 */
 	protected $backgroundImageSlide = false;
-
 
 	/**
 	 * shrinkingNavPadding
@@ -831,14 +839,12 @@ class Config extends AbstractEntity
 	 */
 	protected $sidebarSectionMobile = false;
 
-
 	/**
 	 * langMenuWithFaIcon
 	 *
 	 * @var string
 	 */
 	protected $langMenuWithFaIcon = '';
-
 
 	/**
 	 * subheaderColor
@@ -847,14 +853,12 @@ class Config extends AbstractEntity
 	 */
 	protected $subheaderColor = '';
 
-
 	/**
 	 * dateFormat
 	 *
 	 * @var string
 	 */
 	protected $dateFormat = '';
-
 
 	/**
 	 * favicon
@@ -863,14 +867,12 @@ class Config extends AbstractEntity
 	 */
 	protected $favicon = '';
 
-
 	/**
 	 * faLinkIcons
 	 *
 	 * @var bool
 	 */
 	protected $faLinkIcons = false;
-
 
 	/**
 	 * cardFlipperOnClick
@@ -879,14 +881,12 @@ class Config extends AbstractEntity
 	 */
 	protected $cardFlipperOnClick = false;
 
-
 	/**
 	 * lastModifiedContentElement
 	 *
 	 * @var bool
 	 */
 	protected $lastModifiedContentElement = false;
-
 
 	/**
 	 * recentlyUpdatedContentElements
@@ -895,7 +895,6 @@ class Config extends AbstractEntity
 	 */
 	protected $recentlyUpdatedContentElements = false;
 
-
 	/**
 	 * updated
 	 *
@@ -903,14 +902,12 @@ class Config extends AbstractEntity
 	 */
 	protected $updated = 0;
 
-
 	/**
 	 * gridupdated
 	 *
 	 * @var int
 	 */
 	protected $gridupdated = 0;
-
 
 
 	/**
@@ -1252,37 +1249,6 @@ class Config extends AbstractEntity
 	}
 
 	/**
-	 * Returns the navbarJustify
-	 *
-	 * @return bool $navbarJustify
-	 */
-	public function getNavbarJustify()
-	{
-		return $this->navbarJustify;
-	}
-
-	/**
-	 * Sets the navbarJustify
-	 *
-	 * @param bool $navbarJustify
-	 * @return void
-	 */
-	public function setNavbarJustify($navbarJustify)
-	{
-		$this->navbarJustify = $navbarJustify;
-	}
-
-	/**
-	 * Returns the boolean state of navbarJustify
-	 *
-	 * @return bool
-	 */
-	public function isNavbarJustify()
-	{
-		return $this->navbarJustify;
-	}
-
-	/**
 	 * Returns the navbarSectionmenu
 	 *
 	 * @return bool $navbarSectionmenu
@@ -1480,6 +1446,27 @@ class Config extends AbstractEntity
 	}
 
 	/**
+	 * Returns the navbarbrandAlignment
+	 *
+	 * @return string $navbarbrandAlignment
+	 */
+	public function getNavbarbrandAlignment()
+	{
+		return $this->navbarbrandAlignment;
+	}
+
+	/**
+	 * Sets the navbarbrandAlignment
+	 *
+	 * @param string $navbarbrandAlignment
+	 * @return void
+	 */
+	public function setNavbarbrandAlignment($navbarbrandAlignment)
+	{
+		$this->navbarbrandAlignment = $navbarbrandAlignment;
+	}
+
+	/**
 	 * Returns the navbarImage
 	 *
 	 * @return string $navbarImage
@@ -1530,9 +1517,6 @@ class Config extends AbstractEntity
 	{
 		return $this->navbarBackground;
 	}
-
-
-
 
 	/**
 	 * Returns the navbarShrinkcolorschemes
@@ -1606,6 +1590,27 @@ class Config extends AbstractEntity
 	public function setNavbarContainer($navbarContainer)
 	{
 		$this->navbarContainer = $navbarContainer;
+	}
+
+	/**
+	 * Returns the navbarInnercontainer
+	 *
+	 * @return string $navbarInnercontainer
+	 */
+	public function getNavbarInnercontainer()
+	{
+		return $this->navbarInnercontainer;
+	}
+
+	/**
+	 * Sets the navbarInnercontainer
+	 *
+	 * @param string $navbarInnercontainer
+	 * @return void
+	 */
+	public function setNavbarInnercontainer($navbarInnercontainer)
+	{
+		$this->navbarInnercontainer = $navbarInnercontainer;
 	}
 
 	/**
@@ -1942,7 +1947,6 @@ class Config extends AbstractEntity
 		return $this->navbarLangFlags;
 	}
 
-
 	/**
 	 * Returns the jumbotronEnable
 	 *
@@ -1951,6 +1955,27 @@ class Config extends AbstractEntity
 	public function getJumbotronEnable()
 	{
 		return $this->jumbotronEnable;
+	}
+
+	/**
+	 * Returns the jumbotronRounded
+	 *
+	 * @return bool $jumbotronRounded
+	 */
+	public function getJumbotronRounded()
+	{
+		return $this->jumbotronRounded;
+	}
+
+	/**
+	 * Sets the jumbotronRounded
+	 *
+	 * @param bool $jumbotronRounded
+	 * @return void
+	 */
+	public function setJumbotronRounded($jumbotronRounded)
+	{
+		$this->jumbotronRounded = $jumbotronRounded;
 	}
 
 	/**
@@ -1993,37 +2018,6 @@ class Config extends AbstractEntity
 	public function setJumbotronBgimage($jumbotronBgimage)
 	{
 		$this->jumbotronBgimage = $jumbotronBgimage;
-	}
-
-	/**
-	 * Returns the jumbotronFluid
-	 *
-	 * @return bool $jumbotronFluid
-	 */
-	public function getJumbotronFluid()
-	{
-		return $this->jumbotronFluid;
-	}
-
-	/**
-	 * Sets the jumbotronFluid
-	 *
-	 * @param bool $jumbotronFluid
-	 * @return void
-	 */
-	public function setJumbotronFluid($jumbotronFluid)
-	{
-		$this->jumbotronFluid = $jumbotronFluid;
-	}
-
-	/**
-	 * Returns the boolean state of jumbotronFluid
-	 *
-	 * @return bool
-	 */
-	public function isJumbotronFluid()
-	{
-		return $this->jumbotronFluid;
 	}
 
 	/**
@@ -2274,6 +2268,37 @@ class Config extends AbstractEntity
 	public function isBreadcrumbFaicon()
 	{
 		return $this->breadcrumbFaicon;
+	}
+
+	/**
+	 * Returns the breadcrumbFaicononly
+	 *
+	 * @return bool $breadcrumbFaicononly
+	 */
+	public function getBreadcrumbFaicononly()
+	{
+		return $this->breadcrumbFaicononly;
+	}
+
+	/**
+	 * Sets the breadcrumbFaicononly
+	 *
+	 * @param bool $breadcrumbFaicononly
+	 * @return void
+	 */
+	public function setBreadcrumbFaicononly($breadcrumbFaicononly)
+	{
+		$this->breadcrumbFaicononly = $breadcrumbFaicononly;
+	}
+
+	/**
+	 * Returns the boolean state of isBreadcrumbFaicononly
+	 *
+	 * @return bool
+	 */
+	public function isBreadcrumbFaicononly()
+	{
+		return $this->breadcrumbFaicononly;
 	}
 
 	/**
@@ -3288,8 +3313,6 @@ class Config extends AbstractEntity
 		$this->mainExtraClass = $mainExtraClass;
 	}
 
-
-
 	/**
 	 * Returns the globalPaddingTop
 	 *
@@ -3310,10 +3333,6 @@ class Config extends AbstractEntity
 	{
 		$this->globalPaddingTop = $globalPaddingTop;
 	}
-
-
-
-
 
 	/**
 	 * Returns the stickyFooterExtraPadding
@@ -3336,9 +3355,6 @@ class Config extends AbstractEntity
 		$this->stickyFooterExtraPadding = $stickyFooterExtraPadding;
 	}
 
-
-
-
 	/**
 	 * Returns the contentMarginTop
 	 *
@@ -3359,7 +3375,6 @@ class Config extends AbstractEntity
 	{
 		$this->contentMarginTop = $contentMarginTop;
 	}
-
 
 	/**
 	 * Returns the loadingSpinner
@@ -3382,8 +3397,6 @@ class Config extends AbstractEntity
 		$this->loadingSpinner = $loadingSpinner;
 	}
 
-
-
 	/**
 	 * Returns the loadingSpinnerColor
 	 *
@@ -3404,8 +3417,6 @@ class Config extends AbstractEntity
 	{
 		$this->loadingSpinnerColor = $loadingSpinnerColor;
 	}
-
-
 
 	/**
 	 * Returns the lightboxSelection
@@ -3428,7 +3439,6 @@ class Config extends AbstractEntity
 		$this->lightboxSelection = $lightboxSelection;
 	}
 
-
 	/**
 	 * Returns the magnifying
 	 *
@@ -3449,10 +3459,6 @@ class Config extends AbstractEntity
 	{
 		$this->magnifying = $magnifying;
 	}
-
-
-
-
 
 	/**
 	 * Returns the sectionmenuAnchorOffset
@@ -3475,8 +3481,6 @@ class Config extends AbstractEntity
 		$this->sectionmenuAnchorOffset = $sectionmenuAnchorOffset;
 	}
 
-
-
 	/**
 	 * Returns the sectionmenuScrollspyOffset
 	 *
@@ -3497,7 +3501,6 @@ class Config extends AbstractEntity
 	{
 		$this->sectionmenuScrollspyOffset = $sectionmenuScrollspyOffset;
 	}
-
 
 	/**
 	 * Returns the sectionmenuStickyTop
@@ -3520,9 +3523,6 @@ class Config extends AbstractEntity
 		$this->sectionmenuStickyTop = $sectionmenuStickyTop;
 	}
 
-
-
-
 	/**
 	 * Returns the backgroundImageEnable
 	 *
@@ -3543,8 +3543,6 @@ class Config extends AbstractEntity
 	{
 		$this->backgroundImageEnable = $backgroundImageEnable;
 	}
-
-
 
 	/**
 	 * Returns the backgroundImageSlide
@@ -3567,7 +3565,6 @@ class Config extends AbstractEntity
 		$this->backgroundImageSlide = $backgroundImageSlide;
 	}
 
-
 	/**
 	 * Returns the shrinkingNavPadding
 	 *
@@ -3588,9 +3585,6 @@ class Config extends AbstractEntity
 	{
 		$this->shrinkingNavPadding = $shrinkingNavPadding;
 	}
-
-
-
 
 	/**
 	 * Returns the sidebarMenuPosition
@@ -3613,7 +3607,6 @@ class Config extends AbstractEntity
 		$this->sidebarMenuPosition = $sidebarMenuPosition;
 	}
 
-
 	/**
 	 * Returns the langMenuWithFaIcon
 	 *
@@ -3634,10 +3627,6 @@ class Config extends AbstractEntity
 	{
 		$this->langMenuWithFaIcon = $langMenuWithFaIcon;
 	}
-
-
-
-
 
 	/**
 	 * Returns the subheaderColor
@@ -3660,9 +3649,6 @@ class Config extends AbstractEntity
 		$this->subheaderColor = $subheaderColor;
 	}
 
-
-
-
 	/**
 	 * Returns the dateFormat
 	 *
@@ -3683,9 +3669,6 @@ class Config extends AbstractEntity
 	{
 		$this->dateFormat = $dateFormat;
 	}
-
-
-
 
 	/**
 	 * Returns the favicon
@@ -3708,8 +3691,6 @@ class Config extends AbstractEntity
 		$this->favicon = $favicon;
 	}
 
-
-
 	/**
 	 * Returns faLinkIcons
 	 *
@@ -3730,8 +3711,6 @@ class Config extends AbstractEntity
 	{
 		$this->faLinkIcons = $faLinkIcons;
 	}
-
-
 
 	/**
 	 * Returns cardFlipperOnClick
@@ -3754,10 +3733,6 @@ class Config extends AbstractEntity
 		$this->cardFlipperOnClick = $cardFlipperOnClick;
 	}
 
-
-
-
-
 	/**
 	 * Returns lastModifiedContentElement
 	 *
@@ -3779,7 +3754,6 @@ class Config extends AbstractEntity
 		$this->lastModifiedContentElement = $lastModifiedContentElement;
 	}
 
-
 	/**
 	 * Returns recentlyUpdatedContentElements
 	 *
@@ -3800,8 +3774,6 @@ class Config extends AbstractEntity
 	{
 		$this->recentlyUpdatedContentElements = $recentlyUpdatedContentElements;
 	}
-
-
 
 	/**
 	 * Returns updated
@@ -3845,7 +3817,6 @@ class Config extends AbstractEntity
 		$this->gridupdated = $gridupdated;
 	}
 
-
 	/**
 	 * Returns the sidebarSectionMobile
 	 *
@@ -3866,7 +3837,5 @@ class Config extends AbstractEntity
 	{
 		$this->sidebarSectionMobile = $sidebarSectionMobile;
 	}
-
-
 
 }

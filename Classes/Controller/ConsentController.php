@@ -54,6 +54,7 @@ class ConsentController extends ActionController
 		var thumbHeight = thumbnail.outerWidth() * '.$this->settings['consent']['autoSize'].';
 		thumbnail.css("min-height", parseInt(thumbHeight)+"px");
 	}';
+
 			if($inlineJS)
 			GeneralUtility::makeInstance(AssetCollector::class)
 				  ->addInlineJavaScript('contentconsentthumbnailautosize-'.$currentRecord, $inlineJS);

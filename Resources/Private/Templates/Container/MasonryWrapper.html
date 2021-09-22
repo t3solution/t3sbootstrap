@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+<f:if condition="{settings.cdn}">
+	<f:then>
+		<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js" 
+		 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
+	</f:then>
+	<f:else>
+		<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
+		 crossorigin="anonymous" async="async" />
+	</f:else>
+</f:if>
+<div id="masonry-{data.uid}" class="row masonry{f:if(condition:'{class}',then:' {class}')}"
+	{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
+	<f:for each="{col_283}" as="ce" iteration="ceIterator">
+		<div class="{f:if(condition:'{masonryClass}',then:'{masonryClass}', else:'col-sm-6 col-lg-4 mb-4')}">		
+			{ce.renderedContent -> f:format.raw()}
+		</div>		
+	</f:for>
+</div>
+</f:section>
+</html>

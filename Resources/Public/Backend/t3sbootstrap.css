@@ -20,18 +20,14 @@ body {
 .h5 {font-size: 1.25rem; }
 .h6 {font-size: 1rem; }
 
-
-
 .card-content, .card-footer, .card-header, .card-image {
     padding: .5rem !important;
 }
-
 
 mark {
     background-color: yellow;
     color: black;
 }
-
 
 .cke_editable {
 	font-size: 13px;
@@ -115,7 +111,6 @@ div.alert-dark {
     border-color: #c6c8ca;
 }
 
-
 div.alert p {
 	margin: 0;
 }
@@ -125,7 +120,6 @@ div.center-block {
     margin-left: auto;
     margin-right: auto;
 }
-
 
 /* Badges */
 span.badge {
@@ -140,40 +134,40 @@ span.badge {
     vertical-align: baseline;
     border-radius: .25rem;
 }
-span.badge-pill {
+span.rounded-pill {
     padding-right: .6em;
     padding-left: .6em;
     border-radius: 10rem;
 }
-span.badge-primary {
+span.bg-primary {
 	color: #fff;
 	background-color: #007bff;
 }
-span.badge-secondary {
+span.bg-secondary {
 	color: #fff;
 	background-color: #868e96;
 }
-span.badge-success {
+span.bg-success {
 	color: #fff;
 	background-color: #28a745;
 }
-span.badge-danger {
+span.bg-danger {
 	color: #fff;
 	background-color: #dc3545;
 }
-span.badge-warning {
+span.bg-warning {
 	color: #111;
 	background-color: #ffc107;
 }
-span.badge-info {
+span.bg-info {
 	color: #fff;
 	background-color: #17a2b8;
 }
-span.badge-light {
+span.bg-light {
 	color: #111;
 	background-color: #f8f9fa;
 }
-span.badge-dark {
+span.bg-dark {
 	color: #fff;
 	background-color: #343a40;
 }
@@ -245,11 +239,9 @@ cite {
     text-transform: capitalize;
 }
 
-
 .bg-dark {
     background-color: #343a40!important;
 }
-
 
 .blockquote {
     margin-bottom: 1rem;
@@ -280,21 +272,18 @@ blockquote p {
     line-height: 1.25;
 }
 
+ul.list-unstyled {
+	padding-left: 0;
+	list-style: none;
+}
 
-	ul.list-unstyled {
-		padding-left: 0;
-		list-style: none;
-	}
-
-	ul.list-inline {
-		padding-left: 0;
-		list-style: none;
-	}
-	ul.list-inline > li.list-inline-item {
-		display: inline-block;
-	}
-
-
+ul.list-inline {
+	padding-left: 0;
+	list-style: none;
+}
+ul.list-inline > li.list-inline-item {
+	display: inline-block;
+}
 
 a.btn {
     display: inline-block;

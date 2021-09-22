@@ -103,7 +103,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Normalize breakpoint configuration
 		$breakpoints = $this->normalizeImageBreakpoints($breakpoints);
 
-		// Use width of fallback image as reference for relative sizes (1x, 2x...)
+		// Use width of fallback image as reference for relative sizes
 		$referenceWidth = $fallbackImage->getProperty('width');
 		$referenceHeight = $fallbackImage->getProperty('height');
 
@@ -176,7 +176,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 			$cropArea = $cropVariantCollection->getCropArea($breakpoint['cropVariant']);
 
 			foreach ( $types as $type ) {
-
 				$sourceTag = $this->createPictureSourceTag(
 					$originalImage,
 					$referenceWidth,
@@ -191,7 +190,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 				);
 
 				$sourceTags[] = $sourceTag->render();
-
 			}
 		}
 

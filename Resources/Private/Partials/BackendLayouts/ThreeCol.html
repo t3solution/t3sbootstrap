@@ -92,7 +92,7 @@
 
 <f:section name="LeftAside">
 	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'above'">
-		<f:render partial="Page/{config.sidebar.left}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
+		<f:render partial="Page/{config.sidebar.left}" arguments="{_all}" />
 	</f:if>
 	<f:if condition="{settings.config.slideLeftAside}">
 		<f:then>
@@ -103,13 +103,13 @@
 		</f:else>
 	</f:if>
 	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'below'">
-		<f:render partial="Page/{config.sidebar.left}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
+		<f:render partial="Page/{config.sidebar.left}" arguments="{_all}" />
 	</f:if>
 </f:section>
 
 <f:section name="RightAside">
 	<f:if condition="{config.sidebar.right} && {settings.config.sidebarMenuPosition} == 'above'">
-		<f:render partial="Page/{config.sidebar.right}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
+		<f:render partial="Page/{config.sidebar.right}" arguments="{_all}" />
 	</f:if>
 	<f:if condition="{settings.config.slideRightAside}">
 		<f:then>
@@ -120,6 +120,6 @@
 		</f:else>
 	</f:if>
 	<f:if condition="{config.sidebar.right} && {settings.config.sidebarMenuPosition} == 'below'">
-		<f:render partial="Page/{config.sidebar.right}" arguments="{subNavigation: subNavigation, sectionMenu: sectionMenu}" />
+		<f:render partial="Page/{config.sidebar.right}" arguments="{_all}" />
 	</f:if>
 </f:section>

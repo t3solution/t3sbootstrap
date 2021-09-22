@@ -15,29 +15,82 @@
 <f:if condition="{settings.detail.lightbox.enabled} && {settings.detail.lightbox.selection}">
 	<f:comment> Baguette Box </f:comment>
 	<f:if condition="{settings.detail.lightbox.selection} == 1">
-		<f:asset.script identifier="lightbox">
-	// Baguette Box (lightbx) - Layouts/Content/Default.html
-	baguetteBox.run(".gallery, .image-gallery");
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
+			</f:then>
+			<f:else>
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="vanilla_lightbox">
+	// Baguette Box (lightbox) - Partials/Layouts/Assets.html
+	baguetteBox.run('.gallery, .image-gallery', {
+    	animation: 'fadeIn',
+		noScrollbars: true
+	});
 		</f:asset.script>
 	</f:if>
-	<f:comment> Ekko Lightbox </f:comment>
-	<f:if condition="{settings.detail.lightbox.selection} == 2">
+	<f:comment> Magnific Popup </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 2">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/magnific-popup.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/jquery.magnific-popup.min.js" />
+			</f:then>
+			<f:else>
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/magnific-popup.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/jquery.magnific-popup.min.js" />
+			</f:else>
+		</f:if>
 		<f:asset.script identifier="lightbox">
-	// Ekko Lightbox (lightbx) - Layouts/Content/Default.html
-	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-		event.preventDefault();
-		$(this).ekkoLightbox();
+	// jQuery Magnific Popup (lightbox) - Partials/Layouts/Assets.html
+	$('.gallery').each(function() {
+		 $(this).magnificPopup({
+			delegate: 'a',
+			type: 'image',
+			removalDelay: 300,
+			mainClass: 'mfp-fade',
+			gallery: {
+				enabled:true,
+				tPrev: 'zurück',
+				tNext: 'weiter',
+				tCounter: '%curr% von %total%'
+			},
+			zoom: {
+				enabled: true,
+				duration: 300,
+				easing: 'ease-in-out',
+				opener: function(openerElement) {
+					return openerElement.is('img') ? openerElement : openerElement.find('img');
+				}
+			}
+		});
 	});
-	if ( $('.MS-content figure a').hasClass('lightbox') ) {
-		var msId = $('.MS-content').parent().attr('id');
-		$('.MS-content figure a').attr('data-gallery', 'gallery-'+msId);
-	}
 		</f:asset.script>
 	</f:if>
 	<f:comment> Lightcase </f:comment>
 	<f:if condition="{settings.detail.lightbox.selection} == 3">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/css/lightcase.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/js/lightcase.min.js" />
+			</f:then>
+			<f:else>
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/lightcase.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/lightcase.min.js" />
+			</f:else>
+		</f:if>
 		<f:asset.script identifier="lightbox">
-	// Lightcase (lightbx) - Layouts/Content/Default.html
+	// jQuery Lightcase (lightbox) - Partials/Layouts/Assets.html
 	$('.lightcaseGallery').lightcase({
 		showSequenceInfo: false,
 		showCaption: true,

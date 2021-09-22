@@ -4,8 +4,8 @@
 page = PAGE
 page {
 	meta {
-		# Required meta tag for Bootstrap 4
-		viewport = width=device-width, initial-scale=1, shrink-to-fit=no
+		# Required meta tag for Bootstrap 5
+		viewport = width=device-width, initial-scale=1
 	}
 
 	shortcutIcon = {$bootstrap.config.favicon}

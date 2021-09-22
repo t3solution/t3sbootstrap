@@ -163,7 +163,7 @@
 									</numIndex>
 									<numIndex index="3" type="array">
 										<numIndex index="0">rounded-right</numIndex>
-										<numIndex index="1">rounded-right</numIndex>
+										<numIndex index="1">rounded-end</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
 										<numIndex index="0">rounded-bottom</numIndex>
@@ -171,7 +171,7 @@
 									</numIndex>
 									<numIndex index="5" type="array">
 										<numIndex index="0">rounded-left</numIndex>
-										<numIndex index="1">rounded-left</numIndex>
+										<numIndex index="1">rounded-start</numIndex>
 									</numIndex>
 									<numIndex index="6" type="array">
 										<numIndex index="0">rounded-circle</numIndex>
@@ -182,7 +182,6 @@
 							</config>
 						</TCEforms>
 					</borderradius>
-
 
 				</el>
 			</ROOT>

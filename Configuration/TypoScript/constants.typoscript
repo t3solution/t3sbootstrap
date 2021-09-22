@@ -24,46 +24,52 @@ plugin.tx_t3sbootstrap {
 bootstrap.cdn {
 	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Public/
 	enable = 1
-	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Pulse=pulse, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Yeti=yeti]; label=Bootswatch Themes CDN - works only without EXT ws_scss: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
+	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
 	bootswatch = 0
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 4.6.0
+	bootstrap = 5.1.1
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 1.16.1
+	popperjs = 2.10.1
+	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
+	masonry = 4.2.2
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
-	fontawesome = 5.15.1
-	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library: Downgrade to version 3.5.1 if you have any problems with this version.
+	fontawesome = 5.15.4
+	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.6.0
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 10.4.0
+	highlight = 11.2.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 17.3.0
+	lazyload = 17.4.0
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/35; type=small; label=Viewportchecker:
 	viewportchecker = 1.8.8
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
-	animate = 3.7.2
+	animate = 4.1.1
 	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
 	baguetteBox = 1.11.1
-	# cat=bootstrap-cdn/b-version/42; type=small; label=Ekko Lightbox:
-	ekkoLightbox = 5.3.0
+	# cat=bootstrap-cdn/b-version/42; type=small; label=Magnific Popup:
+	magnificpopup = 1.1.0
 	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
 	lightcase = 2.5.0
 	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
-	ytPlayer = 3.3.8
+	ytPlayer = 3.3.9
 	# cat=bootstrap-cdn/b-version/49; type=small; label=Owl Carousel:
 	owlCarousel = 2.3.4
+	# cat=bootstrap-cdn/b-version/50; type=small; label=Parallax-vanilla:
+	parallaxVanilla = 1.2.3
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l
+	bootstrapCssIntegrity = sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF
+	bootstrapJsIntegrity = sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
-	popperjsIntegrity = sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN
+	popperjsIntegrity = sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp
+	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Masonry js:
+	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
 	jqueryIntegrity =
 	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
@@ -80,8 +86,8 @@ bootstrap.cdn {
 	viewportcheckerIntegrity =
 	# cat=bootstrap-cdn/c-integrity/37; type=small; label=Baguette Box:
 	baguetteBoxIntegrity =
-	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Ekko Lightbox:
-	ekkoLightboxIntegrity =
+	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Magnific Popup:
+	magnificpopupIntegrity =
 	# cat=bootstrap-cdn/c-integrity/42; type=small; label=Lightcase:
 	lightcaseIntegrity =
 }
@@ -128,7 +134,7 @@ bootstrap.ext {
 	# cat=bootstrap-extensions/b-ext/12; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=More button (list view): Utility class for the more button in list view.
 	news.list.buttonClass = primary
 	# cat=bootstrap-extensions/b-ext/13; type=boolean; label=Image mobile overlay (list view): if < 576px for Card-Templates only.
-	news.list.imageOverlay = 1
+	news.list.imageOverlay = 0
 	# cat=bootstrap-extensions/b-ext/14; type=options[top=top, bottom=bottom]; label=Loading Spinner Position (list view): with ajax pagination.
 	news.list.loadingSpinnerPosition = top
 	# cat=bootstrap-extensions/b-ext/20; type=boolean; label=Info (detail view): shows the info (date, categories, tags, author) in detail view.
@@ -163,8 +169,6 @@ bootstrap.pagebrowser.prevItem = prev|prevsection
 bootstrap.pagebrowser.nextItem = nextsection|next
 bootstrap.pagebrowser.entryLevel = 1
 
-# disable default css & js included in ConfigProcessor->includeRequiredFiles
-bootstrap.config.disableDefaultCss = 0
 # enable the currently available utility colors in the BE Modul
 bootstrap.config.enableUtilityColors = 1
 # get the filereferences from the slides (t3sb_carousel) in the CarouselContainer.html if activated
@@ -180,13 +184,14 @@ bootstrap.backToTopForAllPages = 0
 
 # GTM Account ID - include the Google Tag Manager if entered
 bootstrap.gtm =
-# Mark the upgrade wizard as undone (bool) -  after activated, open the BE-Modul run the upgrade wizard and set constant back to "0"!
-bootstrap.wizardsMarkedUndone = 0
+
+# disable jQuery & jQuer easing if activated
+bootstrap.disable.jquery = 0
 
 bootstrap.navbar {
-	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-solid.svg
+	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
 	image.width = 30
-	image.height = 30
+	image.height = 24
 	image.altText = Company Logo
 	# type=int+; default breakpoints - same like Bootstrap (used as condition for inlineJS e.g. navbar hover)
 	breakpoint {
@@ -194,6 +199,7 @@ bootstrap.navbar {
 		md = 768
 		lg = 992
 		xl = 1200
+		xxl = 1400
 	}
 	# type=int+; subdropdown with two columns if items greater or equal
 	subdropdown.twoColumns = 30
@@ -230,8 +236,8 @@ bootstrap.cookieconsent {
 styles.content.allowTags:= addToList( s, mark)
 
 # in px (preset)
-styles.content.textmedia.maxW = 1440
-styles.content.textmedia.linkWrap.width = 1140m
+styles.content.textmedia.maxW = 1320
+styles.content.textmedia.linkWrap.width = 1320m
 styles.content.textmedia.linkWrap.height = 800m
 
 #disable some not used constants

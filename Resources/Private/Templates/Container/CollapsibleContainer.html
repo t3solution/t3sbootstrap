@@ -5,47 +5,12 @@
 </f:section>
 <f:section name="Main">
 <f:if condition="{appearance} == 'accordion'">
-<f:asset.script identifier="collapsible">
+<f:asset.script identifier="vanilla_collapsible">
 	// Collapsible - CollapsibleContainer.html
-	var collapse = $( ".collapsible-accordion" );
-	if ( collapse.length && window.location.hash ) {
-		collapse.removeClass("show");
-		var hashArr = window.location.hash.split('c'),
-			coll = $('#collapse-'+hashArr[1]);
-		if (coll.length) {
-			$('#collapse-'+hashArr[1]).addClass('show');
-			var offsetSize = 0;
-			if ( fixedNavbar ) {
-				offsetSize = navbarHeight;
-			}
-			var collAnchor = '#collapse-'+hashArr[1];
-			$("html, body").stop().animate({
-				scrollTop: $(collAnchor).offset().top-offsetSize
-			}, 1500, "easeInOutExpo");
-		}
+	var collapse = document.querySelectorAll('.accordion .collapse');
+	if ( collapse.length ) {
+		t3sbCollapsible(fixedNavbar, navbarHeight);
 	}
-	$('.collapse').on('shown.bs.collapse', function(e) {
-		var $card = $(this).closest('.card');
-		if ( $card.find('a.temp-gets-shown').length != 1) {
-			return;
-		}
-		$card.find('a.temp-gets-shown').removeClass('temp-gets-shown');
-		if ( $card.length ) {
-			var offsetSize = $card.find('.card-header').outerHeight()+15;
-			if ( fixedNavbar ) {
-				offsetSize += navbarHeight;
-			}
-			$('html,body').animate({
-				scrollTop: $card.offset().top-offsetSize
-			}, 500);
-		}
-	});
-	$('.card a[data-toggle="collapse"]').on('click', function(e) {
-		if ($(this).attr('aria-expanded') == 'true') {
-			return;
-		}
-		$(this).addClass('temp-gets-shown');
-	});
 </f:asset.script>
 </f:if>
 <f:if condition="{class} || {style}">
@@ -56,8 +21,7 @@
 </f:if>
 <f:switch expression="{appearance}">
 	<f:case value="accordion">
-		<div id="accordion-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}"
-		     class="collapsible-accordion" role="tablist">
+		<div id="accordion-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}" class="accordion{flush}">
 			<f:for each="{col_277}" as="row">
 				{row.renderedContent -> f:format.raw()}
 			</f:for>

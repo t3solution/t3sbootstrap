@@ -8,42 +8,38 @@
 	</f:case>
 </f:switch>
 </html>
+
 <f:section name="Accordion">
-<div class="card"{f:if(condition:'{style}',then:' style="{style}"')}>
-	<a data-toggle="collapse" href="#collapse-{data.uid}" aria-expanded="{expanded}" aria-controls="collapse-{data.uid}" style="display: block;">
-		<div class="card-header{f:if(condition: '{media.originalFile}', then: ' p-0 d-flex')}{f:if(condition:'{class}',then:' {class}')}" id="heading-{data.uid}">
-			<f:if condition="{media.originalFile}">
-				<f:image image="{media.originalFile}" alt="{media.alt}" title="{media.title}" width="60c" height="60c" class="float-left mr-3" />
+<div class="accordion-item"{f:if(condition:'{style}',then:' style="{style}"')}>
+	<h2 class="accordion-header mt-0" id="heading-{data.uid}">
+		<button id="c{data.uid}" class="accordion-button{collapsed}{f:if(condition: '{media.originalFile}', then: ' align-self-center')}{f:if(condition: '{header.class}',then: ' {header.class}')}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{data.uid}" aria-expanded="{expanded}" aria-controls="collapse-{data.uid}">
+			{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} me-1"></i> ')}
+			{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}
+			<f:if condition="{data.subheader}">
+				<br />
+				<small class="m-0 d-block mt-1{f:if(condition: '{settings.subheaderColor}', then: ' text-{settings.subheaderColor}')}">
+					{data.subheader -> f:format.raw()}
+				</small>
 			</f:if>
-			<h5 class="mb-0{f:if(condition: '{media.originalFile}', then: ' align-self-center')}{f:if(condition: '{header.class}',then: ' {header.class}')}">
-				{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
-				{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}
-				<f:if condition="{data.subheader}">
-					<br />
-					<small class="m-0 d-block mt-1{f:if(condition: '{settings.subheaderColor}', then: ' text-{settings.subheaderColor}')}">
-						{data.subheader -> f:format.raw()}
-					</small>
-				</f:if>
-			</h5>
-		</div>
-	</a>
-	<div id="collapse-{data.uid}" class="collapse{show}" role="tabpanel" aria-labelledby="heading-{data.uid}" data-parent="#accordion-{data.tx_container_parent}">
-	  <div class="card-body">
+		</button>
+    </h2>
+    <div id="collapse-{data.uid}" class="accordion-collapse collapse{show}" aria-labelledby="heading-{data.uid}" data-bs-parent="#accordion-{data.tx_container_parent}">
+      <div class="accordion-body">
 			<f:if condition="{collapsibleByPid}">
 				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
 			</f:if>
 			<f:for each="{col_278}" as="row">
 				{row.renderedContent -> f:format.raw()}
 			</f:for>
-	  </div>
-	</div>
+      </div>
+    </div>
 </div>
 </f:section>
 
 <f:section name="Button">
 <p class="collapse-button{f:if(condition: '{data.header_position}',then: ' text-{data.header_position}')}{f:if(condition: '{data.tx_t3sbootstrap_header_class}',then: ' {data.tx_t3sbootstrap_header_class}')}{f:if(condition:'{class}',then:' {class}')}">
-	<a class="btn btn-{buttonstyle}" data-toggle="collapse" href="#collapse-{data.uid}" aria-expanded="{expanded}" aria-controls="collapse-{data.uid}">
-		{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
+	<a class="btn btn-{buttonstyle}" data-bs-toggle="collapse" href="#collapse-{data.uid}" aria-expanded="{expanded}" aria-controls="collapse-{data.uid}">
+		{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} me-1"></i> ')}
 		{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}
 	</a>
 </p>

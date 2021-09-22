@@ -43,7 +43,7 @@
 		file="{file}"
 		title="{file.originalResource.title}"
 		alt="{f:if(condition: file.originalResource.alternative, then: '{file.originalResource.alternative}', else: 'image-{file.originalResource.uid}')}"
-		class="img-fluid mr-3{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_lazy_load} || {settings.lazyLoad} == 1', then:' lazy')}{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}')}"
+		class="img-fluid me-3{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_lazy_load} || {settings.lazyLoad} == 1', then:' lazy')}{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}')}"
 		width="{width}"
 		height="{height}"
 		breakpoints="{

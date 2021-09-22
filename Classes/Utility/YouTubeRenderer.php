@@ -2,17 +2,12 @@
 namespace T3SBS\T3sbootstrap\Utility;
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * LICENSE file that was distributed with this source code.
  */
+
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
@@ -22,8 +17,8 @@ use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperRegistry;
 /**
  * YouTube renderer class
  */
-class YouTubeRenderer implements FileRendererInterface {
-
+class YouTubeRenderer implements FileRendererInterface
+{
 	/**
 	 * @var OnlineMediaHelperInterface
 	 */
@@ -38,7 +33,8 @@ class YouTubeRenderer implements FileRendererInterface {
 	 *
 	 * @return int
 	 */
-	public function getPriority() {
+	public function getPriority()
+	{
 		return 1;
 	}
 
@@ -48,8 +44,9 @@ class YouTubeRenderer implements FileRendererInterface {
 	 * @param FileInterface $file File of FileReference to render
 	 * @return bool
 	 */
-	public function canRender(FileInterface $file) {
-		return ($file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube') && $this->getOnlineMediaHelper($file) !== FALSE;
+	public function canRender(FileInterface $file)
+	{
+		return ($file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube') && $this->getOnlineMediaHelper($file) !== false;
 	}
 
 	/**
@@ -58,8 +55,9 @@ class YouTubeRenderer implements FileRendererInterface {
 	 * @param FileInterface $file
 	 * @return bool|OnlineMediaHelperInterface
 	 */
-	protected function getOnlineMediaHelper(FileInterface $file) {
-		if ($this->onlineMediaHelper === NULL) {
+	protected function getOnlineMediaHelper(FileInterface $file)
+	{
+		if ($this->onlineMediaHelper === null) {
 			$orgFile = $file;
 			if ($orgFile instanceof FileReference) {
 				$orgFile = $orgFile->getOriginalFile();
@@ -67,7 +65,7 @@ class YouTubeRenderer implements FileRendererInterface {
 			if ($orgFile instanceof File) {
 				$this->onlineMediaHelper = OnlineMediaHelperRegistry::getInstance()->getOnlineMediaHelper($orgFile);
 			} else {
-				$this->onlineMediaHelper = FALSE;
+				$this->onlineMediaHelper = false;
 			}
 		}
 		return $this->onlineMediaHelper;
@@ -80,8 +78,8 @@ class YouTubeRenderer implements FileRendererInterface {
 	 * @param array $events
 	 * @return string
 	 */
-	public function render(FileInterface $file, $events) {
-
+	public function render(FileInterface $file, $events)
+	{
 		if ($file instanceof FileReference) {
 			$orgFile = $file->getOriginalFile();
 		} else {
@@ -104,7 +102,5 @@ class YouTubeRenderer implements FileRendererInterface {
 		return "{videoURL:'".$videoId."', containment:'#dom".$events['uid']."', showControls:".$showControls.", ratio:'".$ratio."', quality: '".$quality."', opacity:1, autoPlay:".$autoPlay.", mute:".$mute.", startAt:0".$addEvents."}";
 
 	}
-
-
 
 }

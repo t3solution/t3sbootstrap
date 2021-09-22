@@ -3,7 +3,6 @@
 #-------------------------------------------------------------------------------
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'
-
 #-------------------------------------------------------------------------------
 #	Content
 #-------------------------------------------------------------------------------

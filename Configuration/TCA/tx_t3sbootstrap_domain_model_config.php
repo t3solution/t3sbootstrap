@@ -16,22 +16,6 @@ return [
 	],
 	'columns' => [
 
-		'updated' => [
-			'exclude' => false,
-			'label' => 'updated',
-			'config' => [
-				'type' => 'input'
-			]
-		],
-
-		'gridupdated' => [
-			'exclude' => false,
-			'label' => 'gridupdated',
-			'config' => [
-				'type' => 'input'
-			]
-		],
-
 		'homepage_uid' => [
 			'exclude' => false,
 			'label' => 'Homepage_uid',
@@ -39,8 +23,6 @@ return [
 				'type' => 'input'
 			]
 		],
-
-
 		'general_rootline' => [
 			'exclude' => false,
 			'label' => '"T3SB Config" on subpages',
@@ -237,9 +219,9 @@ return [
 				'renderType' => 'selectSingle',
 				'items' => [
 					['none', 0],
-					['Baguettbox [1]', 1],
-					['Ekkolightbox [2]', 2],
-					['Lightcase [3]', 3],
+					['Baguettbox [1] (Vanilla)', 1],
+					['Magnific Popup [2] (jQuery)', 2],
+					['Lightcase [3] (jQuery)', 3],
 				],
 			]
 		],
@@ -463,13 +445,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
+					['none', 'none'],
 					['container', 'container'],
-					['container-fluid', 'container-fluid'],
-					['container-sm','container-sm'],
-					['container-md','container-md'],
-					['container-lg','container-lg'],
-					['container-xl','container-xl'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
 			]
 		],
@@ -583,20 +566,6 @@ return [
 				]
 			]
 		],
-		'navbar_justify' => [
-			'exclude' => false,
-			'label' => 'Fill and justify',
-			'accordion_id' => 3,
-			'accordion_sub' => '3-1',
-			'config' => [
-				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Force your .nav’s contents to extend the full available width'
-					]
-				]
-			]
-		],
 		'navbar_hover' => [
 			'exclude' => false,
 			'label' => 'Hover',
@@ -636,9 +605,7 @@ return [
 				'items' => [
 					['none [0]', 0],
 					['Slide In [1]', 1],
-					['Slide Down (JS) [2]', 2],
-					['Slide In [3]', 3],
-					['Fade [4]', 4],
+					['Fade [2]', 2],
 				]
 			]
 		],
@@ -673,6 +640,20 @@ return [
 				]
 			]
 		],
+		'navbarbrand_alignment' => [
+			'exclude' => false,
+			'label' => 'Alignment',
+			'accordion_id' => 3,
+			'accordion_sub' => '3-2',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+					['left', 'left'],
+					['right', 'right'],
+				]
+			]
+		],
 		'company' => [
 			'exclude' => false,
 			'label' => 'Text',
@@ -702,17 +683,26 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['bg-light [light]', 'light'],
-					['bg-dark [dark]', 'dark'],
-					['bg-primary [primary]', 'primary'],
-					['bg-secondary [secondary]', 'secondary'],
-					['bg-success [success]', 'success'],
-					['bg-danger [danger]', 'danger'],
-					['bg-warning [warning]', 'warning'],
-					['bg-info [info]', 'info'],
-					['bg-white [white]', 'white'],
-					['bg-transparent [transparent]', 'transparent'],
-					['bg-color [color]', 'color'],
+					['bg-light', 'light'],
+					['bg-light bg-gradient', 'light bg-gradient'],
+					['bg-dark', 'dark'],
+					['bg-dark bg-gradient', 'dark bg-gradient'],
+					['bg-primary', 'primary'],
+					['bg-primary bg-gradient', 'primary bg-gradient'],
+					['bg-secondary', 'secondary'],
+					['bg-secondary bg-gradient', 'secondary bg-gradient'],
+					['bg-success', 'success'],
+					['bg-success bg-gradient', 'success bg-gradient'],
+					['bg-danger', 'danger'],
+					['bg-danger bg-gradient', 'danger bg-gradient'],
+					['bg-warning', 'warning'],
+					['bg-warning bg-gradient', 'warning bg-gradient'],
+					['bg-info', 'info'],
+					['bg-info bg-gradient', 'info'],
+					['bg-white', 'white'],
+					['bg-body', 'body'],
+					['bg-transparent', 'transparent'],
+					['bg-color', 'color'],
 				]
 			]
 		],
@@ -741,7 +731,6 @@ return [
 				]
 			]
 		],
-
 		'navbar_container' => [
 			'exclude' => false,
 			'label' => 'Container',
@@ -751,11 +740,38 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['inside', 'inside'],
-					['outside', 'outside'],
-					['fluid', 'fluid'],
+					['none', ''],
+					['container', 'container'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
+			]
+		],
+		'navbar_innercontainer' => [
+			'exclude' => false,
+			'label' => 'Inner-Container',
+
+					'accordion_id' => 3,
+					'accordion_sub' => '3-4',
+
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+					['container', 'container'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
+				],
+				'size' => 1,
+				'maxitems' => 1
 			]
 		],
 		'navbar_placement' => [
@@ -785,6 +801,8 @@ return [
 				'items' => [
 					['left', 'left'],
 					['right', 'right'],
+					['center', 'center'],
+					['Fill and justify', 'fill'],			
 				]
 			]
 		],
@@ -848,15 +866,25 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['bg-light [light]', 'light'],
-					['bg-dark [dark]', 'dark'],
-					['bg-primary [primary]', 'primary'],
-					['bg-secondary [secondary]', 'secondary'],
-					['bg-success [success]', 'success'],
-					['bg-danger [danger]', 'danger'],
-					['bg-warning [warning]', 'warning'],
-					['bg-info [info]', 'info'],
-					['bg-white [white]', 'white'],
+					['bg-light', 'light'],
+					['bg-light bg-gradient', 'light bg-gradient'],
+					['bg-dark', 'dark'],
+					['bg-dark bg-gradient', 'dark bg-gradient'],
+					['bg-primary', 'primary'],
+					['bg-primary bg-gradient', 'primary bg-gradient'],
+					['bg-secondary', 'secondary'],
+					['bg-secondary bg-gradient', 'secondary bg-gradient'],
+					['bg-success', 'success'],
+					['bg-success bg-gradient', 'success bg-gradient'],
+					['bg-danger', 'danger'],
+					['bg-danger bg-gradient', 'danger bg-gradient'],
+					['bg-warning', 'warning'],
+					['bg-warning bg-gradient', 'warning bg-gradient'],
+					['bg-info', 'info'],
+					['bg-info bg-gradient', 'info'],
+					['bg-white', 'white'],
+					['bg-body', 'body'],
+					['bg-transparent', 'transparent'],
 				]
 			]
 		],
@@ -921,6 +949,7 @@ return [
 					['Medium (<= 768px [md])', 'md'],
 					['Large (<= 992px) [lg]', 'lg'],
 					['Extra large (<= 1200px) [xl]', 'xl'],
+					['Extra extra large (<= 1400px) [xxl]', 'xxl'],
 					['Never expand [no]', 'no'],
 				]
 			]
@@ -982,9 +1011,6 @@ return [
 				]
 			]
 		],
-
-
-
 		'jumbotron_enable' => [
 			'exclude' => false,
 			'label' => 'Enable',
@@ -1013,17 +1039,21 @@ return [
 				]
 			]
 		],
-		'jumbotron_fluid' => [
+		'jumbotron_rounded' => [
 			'exclude' => false,
-			'label' => 'Fluid',
-			'accordion_id' => 4,
+			'label' => 'Rounded corner',
 			'config' => [
-				'type' => 'check',
+				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => [
-					'1' => [
-						'0' => 'To make the jumbotron full width, and without rounded corners'
-					]
-				]
+					['none', '0'],
+					['rounded', 'rounded'],
+					['rounded-top', 'rounded-top'],
+					['rounded-bottom', 'rounded-bottom'],
+					['rounded-pill', 'rounded-pill'],
+				],
+				'size' => 1,
+				'maxitems' => 1
 			]
 		],
 		'jumbotron_slide' => [
@@ -1060,13 +1090,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
+					['none', 'none'],
 					['container', 'container'],
-					['container-fluid', 'container-fluid'],
-					['container-sm','container-sm'],
-					['container-md','container-md'],
-					['container-lg','container-lg'],
-					['container-xl','container-xl'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
 			]
 		],
@@ -1157,13 +1188,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
+					['none', 'none'],
 					['container', 'container'],
-					['container-fluid', 'container-fluid'],
-					['container-sm','container-sm'],
-					['container-md','container-md'],
-					['container-lg','container-lg'],
-					['container-xl','container-xl'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
 			]
 		],
@@ -1266,13 +1298,15 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
+					['none', 'none'],
 					['container', 'container'],
-					['container-fluid', 'container-fluid'],
-					['container-sm','container-sm'],
-					['container-md','container-md'],
-					['container-lg','container-lg'],
-					['container-xl','container-xl'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
+
 				]
 			]
 		],
@@ -1451,13 +1485,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
+					['none', 'none'],
 					['container', 'container'],
-					['container-fluid', 'container-fluid'],
-					['container-sm','container-sm'],
-					['container-md','container-md'],
-					['container-lg','container-lg'],
-					['container-xl','container-xl'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
 			]
 		],
@@ -1517,13 +1552,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
+					['none', 'none'],
 					['container', 'container'],
-					['container-fluid', 'container-fluid'],
-					['container-sm','container-sm'],
-					['container-md','container-md'],
-					['container-lg','container-lg'],
-					['container-xl','container-xl'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
 			]
 		],
@@ -1575,19 +1611,6 @@ return [
 				]
 			]
 		],
-		'footer_fluid' => [
-			'exclude' => false,
-			'label' => 'Fluid',
-			'accordion_id' => 10,
-			'config' => [
-				'type' => 'check',
-				'items' => [
-					'1' => [
-						'0' => 'To make the footer full width, and without rounded corners'
-					]
-				]
-			]
-		],
 		'footer_slide' => [
 			'exclude' => false,
 			'label' => 'Slide',
@@ -1609,13 +1632,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-						['none', ''],
-						['container', 'container'],
-						['container-fluid', 'container-fluid'],
-						['container-sm','container-sm'],
-						['container-md','container-md'],
-						['container-lg','container-lg'],
-						['container-xl','container-xl'],
+					['none', 'none'],
+					['container', 'container'],
+					['container-sm (< 576px)', 'container-sm'],
+					['container-md (≥ 576px)', 'container-md'],
+					['container-lg (≥ 768px)', 'container-lg'],
+					['container-xl (≥ 992px)', 'container-xl'],
+					['container-xxl (≥ 1200px)', 'container-xxl'],
+					['container-fluid (≥ 1400px)', 'container-fluid']
 				]
 			]
 		],

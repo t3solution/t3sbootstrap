@@ -26,7 +26,7 @@
 								alt="{mediaElement.originalResource.alternative}"
 								maxWidth="{f:if(condition: settings.media.maxWidth, then: settings.media.maxWidth, else: settings.detail.image.maxWidth)}"
 								maxHeight="{f:if(condition: settings.media.maxHeight, then: settings.media.maxHeight, else: settings.detail.image.maxHeight)}"
-								class="img-fluid mr-3"
+								class="img-fluid me-3"
 							/>
 						</f:link.typolink>
 					</f:if>
@@ -39,10 +39,10 @@
 
 
 <f:section name="Carousel">
-<div id="carousel-news" class="carousel slide my-3 my-md-0" data-ride="carousel">
+<div id="carousel-news" class="carousel slide my-3 my-md-0" data-bs-ride="carousel">
 	<ol class="carousel-indicators">
 		<f:for each="{media}" as="file" iteration="iterator">
-			<li data-target="#carousel-news" data-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
+			<li data-bs-target="#carousel-news" data-bs-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
 		</f:for>
 	</ol>
 	<div class="carousel-inner text-center">
@@ -80,13 +80,13 @@
 			</div>
 		</f:for>
 	</div>
-	<a class="carousel-control-prev" href="#carousel-news" role="button" data-slide="prev">
+	<a class="carousel-control-prev" href="#carousel-news" role="button" data-bs-slide="prev">
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">zurück</span>
+		<span class="visually-hidden">zurück</span>
 	</a>
-	<a class="carousel-control-next" href="#carousel-news" role="button" data-slide="next">
+	<a class="carousel-control-next" href="#carousel-news" role="button" data-bs-slide="next">
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">weiter</span>
+		<span class="visually-hidden">weiter</span>
 	</a>
 </div>
 </f:section>
@@ -114,7 +114,7 @@
 						<a href="{f:uri.image(image:file,
 							width:'{settings.media.popup.width}',
 							height:'{settings.media.popup.height}')}"
-							data-toggle="lightbox"
+							data-bs-toggle="lightbox"
 							data-title="{file.title}"
 							class="lightbox"
 							data-gallery="gallery-{file.originalResource.properties.uid_foreign}">

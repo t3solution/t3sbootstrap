@@ -34,8 +34,6 @@
 	padding:0 10px
 }
 
-
-
 .blogSlider .MS-content .item .imgTitle
 {
 	position:relative
@@ -99,14 +97,10 @@
 	color:rgba(0,0,0,0.8)
 }
 
-
-
 .blogSlider .MS-controls .MS-left
 {
 	left:0
 }
-
-
 
 .blogSlider .MS-controls .MS-right
 {
@@ -150,7 +144,4 @@
 		right:-10px
 	}
 }
-
-
-
 

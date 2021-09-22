@@ -23,7 +23,7 @@
 						<a href="{f:uri.image(image:mediaElement,
 							width:'{settings.media.popup.width}',
 							height:'{settings.media.popup.height}')}"
-							data-toggle="lightbox"
+							data-bs-toggle="lightbox"
 							data-title="{mediaElement.title}"
 							class="lightbox"
 							data-gallery="gallery-{mediaElement.originalResource.properties.uid_foreign}">
@@ -52,7 +52,7 @@
 	</f:if>
 	<f:render section="SetCopyright" arguments="{file: mediaElement}" />
 	<f:if condition="{mediaElement.description}">
-		<figcaption class="image-caption{f:if(condition: mediaElement.originalResource.properties.tx_t3sbootstrap_description_align, then: ' text-{mediaElement.originalResource.properties.tx_t3sbootstrap_description_align}', else: ' text-left')}">
+		<figcaption class="image-caption{f:if(condition: mediaElement.originalResource.properties.tx_t3sbootstrap_description_align, then: ' text-{mediaElement.originalResource.properties.tx_t3sbootstrap_description_align}', else: ' text-start')}">
 			{mediaElement.description}
 		</figcaption>
 	</f:if>
@@ -116,17 +116,19 @@
 
 <f:section name="CopyrightOnClick">
 <f:if condition="{file.originalResource.properties.tx_t3sbootstrap_copyright}">
+	<f:asset.script identifier="vanilla_imgcopyright">
+		// Image copyright on click - Private/Extensions/news/Resources/Private/Partials/Detail/T3sbMediaImage.html
+		t3sbCopyright();	
+	</f:asset.script>
 	<span class="img-copyright {file.originalResource.properties.tx_t3sbootstrap_copyright_color}">
 		 <i class="far fa-copyright fa-lg"></i>
 	</span>
-	<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+	<div id="toast-{file.properties.uid}" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
 		<div class="toast-header">
-			<strong class="mr-auto">Copyright</strong>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			<strong class="me-auto">Copyright</strong>
+			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 		</div>
-		<div class="toast-body text-left">
+		<div class="toast-body text-start">
 			{file.originalResource.properties.tx_t3sbootstrap_copyright}
 			<f:if condition="{file.originalResource.properties.tx_t3sbootstrap_copyright_source}">
 				<br />

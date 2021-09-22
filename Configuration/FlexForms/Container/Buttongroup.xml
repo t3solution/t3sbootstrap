@@ -108,11 +108,11 @@
 									</numIndex>
 									<numIndex index="2" type="array">
 										<numIndex index="0">Right</numIndex>
-										<numIndex index="1">text-right</numIndex>
+										<numIndex index="1">text-end</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
 										<numIndex index="0">Left</numIndex>
-										<numIndex index="1">text-left</numIndex>
+										<numIndex index="1">text-start</numIndex>
 									</numIndex>
 								</items>
 								<default></default>

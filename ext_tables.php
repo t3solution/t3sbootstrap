@@ -5,9 +5,9 @@ call_user_func(function () {
 
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		'T3sbootstrap',
-		'web', // Make module a submodule of 'web'
-		'm1', // Submodule key
-		'', // Position
+		'web',
+		'm1',
+		'',
 		[
 			\T3SBS\T3sbootstrap\Controller\ConfigController::class => 'list, new, create, edit, update, delete, dashboard, constants ',
 		],

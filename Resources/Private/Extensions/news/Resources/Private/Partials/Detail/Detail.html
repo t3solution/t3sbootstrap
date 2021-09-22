@@ -35,7 +35,7 @@
 						<f:if condition="{paginated.next}">
 							<li class="page-item">
 								<n:link newsItem="{paginated.next}" settings="{settings}" class="page-link">
-									{paginated.next.title} <span aria-hidden="true"><i class="fas fa-chevron-right ml-1"></i></span>
+									{paginated.next.title} <span aria-hidden="true"><i class="fas fa-chevron-right ms-1"></i></span>
 								</n:link>
 							</li>
 						</f:if>
@@ -51,14 +51,14 @@
 		<div class="news-info">
 			<p>
 				<!-- date -->
-				<span class="news-list-date mr-2">
+				<span class="news-list-date me-2">
 				<i class="fas fa-calendar-alt"></i>
 					<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
 						<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
 					</time>
 				</span>
 				<f:if condition="{newsItem.categories}">
-				<span class="news-list-category mr-2">
+				<span class="news-list-category me-2">
 					<i class="fas fa-folder-open"></i>
 					<!-- categories -->
 					<span class="news-list-category">
@@ -80,7 +80,7 @@
 				<f:if condition="{newsItem.tags}">
 					<!-- Tags -->
 					<i class="fas fa-tags"></i>
-					<span class="news-list-tags mr-2" itemprop="keywords">
+					<span class="news-list-tags me-2" itemprop="keywords">
 					<f:for each="{newsItem.tags}" as="tag">
 						{tag.title}
 					</f:for>
@@ -89,7 +89,7 @@
 				<f:if condition="{newsItem.author}">
 					<!-- author -->
 					<i class="fas fa-user"></i>
-					<span class="news-list-author mr-2" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+					<span class="news-list-author me-2" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
 						<f:link.typolink parameter="{newsItem.authorEmail}">
 							<f:translate key="author_simple" />
 							 <span itemprop="name">{newsItem.author}</span>
@@ -180,7 +180,7 @@
 				<ul class="list-unstyled">
 					<f:for each="{newsItem.allRelatedSorted}" as="related">
 						<li>
-							<span class="news-related-news-date mr-3">
+							<span class="news-related-news-date me-3">
 								<f:format.date format="{f:translate(key:'dateFormat')}">{related.datetime}</f:format.date>
 							</span>
 							<n:link newsItem="{related}" settings="{settings}" title="{related.title}">
@@ -224,7 +224,7 @@
 					<f:for each="{newsItem.relatedLinks}" as="relatedLink">
 						<li>
 							<f:link.typolink parameter="{relatedLink.uri}" title="{relatedLink.title}" target="{n:targetLink(link:relatedLink.uri)}">{f:if(condition: relatedLink.title, then: relatedLink.title, else: relatedLink.uri)}</f:link.typolink>
-							<f:if condition="{relatedLink.description}"><span class="ml-3 text-secondary">{relatedLink.description}</span></f:if>
+							<f:if condition="{relatedLink.description}"><span class="ms-3 text-secondary">{relatedLink.description}</span></f:if>
 						</li>
 					</f:for>
 				</ul>

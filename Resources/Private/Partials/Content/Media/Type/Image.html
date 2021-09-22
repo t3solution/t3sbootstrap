@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && ({file.description} || {file.title})">
+<f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && {file.link} && ({file.description} || {file.title})">
 	<f:then>
 		<f:render partial="Media/Effects" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio}" />
 	</f:then>
@@ -38,7 +38,6 @@
 			<f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
 				<f:if condition="{settings.imgCopyright} == 2 && !{celink}">
 					<f:then>
-						<f:render section="ImgcopyrightAssetScripts" arguments="{_all}" />
 						<f:render section="CopyrightOnClick" arguments="{_all}" />
 					</f:then>
 					<f:else>
@@ -60,17 +59,19 @@
 
 <f:section name="CopyrightOnClick">
 <f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
+	<f:asset.script identifier="vanilla_imgcopyright">
+		// Image copyright on click - Media/Type/Image.html
+		t3sbCopyright();	
+	</f:asset.script>
 	<span class="img-copyright {file.properties.tx_t3sbootstrap_copyright_color}">
 		 <i class="far fa-copyright fa-lg"></i>
 	</span>
-	<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+	<div id="toast-{file.properties.uid}" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
 		<div class="toast-header">
-			<strong class="mr-auto">Copyright</strong>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			<strong class="me-auto">Copyright</strong>
+			<button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
 		</div>
-		<div class="toast-body text-left">
+		<div class="toast-body text-start">
 			{file.properties.tx_t3sbootstrap_copyright}
 			<f:if condition="{file.properties.tx_t3sbootstrap_copyright_source}">
 				<br />
@@ -93,19 +94,3 @@
 </f:if>
 </f:section>
 
-<f:section name="ImgcopyrightAssetScripts">
-<f:asset.script identifier="imgcopyright">
-	// Image copyright on click - Media/Type/Image.html
-	$(".image .toast").removeClass("show").addClass("hide");
-	$(".img-copyright").on("click", function() {
-		$(this).addClass("d-none");
-		var iw = $(this).parent().find("img").width();
-		var th = $(this).parent().find(".toast").outerHeight();
-		$(this).parent().find(".toast").css('max-width', iw+'px').toast('show');
-		$(this).parent().find(".toast").css('margin-top', -th+'px').toast('show');
-	});
-	$(".close").on("click", function() {
-		$(this).parent().parent().prev().removeClass("d-none");
-	});
-</f:asset.script>
-</f:section>

@@ -95,7 +95,6 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		return $info.$outHeader;
-
 	}
 
 
@@ -109,7 +108,6 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 				 'function() { console.log("Loaded bootstrap.js by t3sbootstrap."); }'
 			);
 		}
-
 		$content = parent::renderPageModulePreviewContent($item);
 		$context = $item->getContext();
 		$record = $item->getRecord();
@@ -227,11 +225,8 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			if ( $flexconf['speedFactor'] ) {
 				$out .= '<br />- Speed Factor: '.$flexconf['speedFactor'];
 			}
-			if ( $flexconf['paddingTopBottom'] ) {
-				$out .= '<br />- Padding (top and bottom ): '.$flexconf['paddingTopBottom'];
-			}
-			if ( $flexconf['imageRaster'] ) {
-				$out .= '<br />- Image Raster';
+			if ( $flexconf['addHeight'] ) {
+				$out .= '<br />- Surcharge height to parallax view: '.$flexconf['addHeight'].'px';
 			}
 		}
 		if ($record['CType'] === 'modal') {
@@ -266,6 +261,10 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 				$out .= '<br />- Fill and justify: '.$flexconf['fill'];
 			}
 		}
+		if ($record['CType'] == 'masonry_wrapper') {
+			$colclass = $flexconf['colclass'] ? $flexconf['colclass'] : 'col-sm-6 col-lg-4 mb-4';
+			$out .= '<br />- Colclass: '.$colclass;
+		}
 
 		$flexconfOut = '';
 		if ($out)
@@ -275,7 +274,6 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 
 		foreach ($containerGrid as $row => $cols) {
 			$rowObject = GeneralUtility::makeInstance(GridRow::class, $context);
-
 			foreach ($cols as $col) {
 				$columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container);
 				$rowObject->addColumn($columnObject);

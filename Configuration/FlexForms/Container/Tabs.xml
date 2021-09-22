@@ -60,7 +60,6 @@
 						</TCEforms>
 					</hidden>
 
-
 					<display_type>
 						<TCEforms>
 							<onChange>reload</onChange>

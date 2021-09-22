@@ -4,12 +4,12 @@
 			<ROOT>
 				<type>array</type>
 				<TCEforms>
-					<sheetTitle>General</sheetTitle>		                    
+					<sheetTitle>General</sheetTitle>
 				</TCEforms>
 				<el>
 					<shift>
 						<TCEforms>
-							<label>Vertical shift in % ( 0 = center )</label>							
+							<label>Vertical shift in % ( 0 = center )</label>
 							<displayCond>FIELD:parentRec.tx_t3sbootstrap_flexform:REQ:true</displayCond>
 							<config>
 								<type>input</type>

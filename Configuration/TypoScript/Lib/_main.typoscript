@@ -2,11 +2,11 @@
 
 lib.parseFunc_RTE.externalBlocks.table.stdWrap.HTMLparser.tags.table.fixAttrib.class.list >
 
-lib.parseFunc.allowTags := addToList( s, mark)
-lib.parseFunc_RTE.allowTags := addToList( s, mark)
+lib.parseFunc.allowTags := addToList(s, mark)
+lib.parseFunc_RTE.allowTags := addToList(s, mark)
 
-lib.parseFunc.tags := addToList( mark)
-lib.parseFunc_RTE.tags := addToList( mark)
+lib.parseFunc.tags := addToList(mark)
+lib.parseFunc_RTE.tags := addToList(mark)
 
 lib.parseFunc_RTE.externalBlocks.table.stdWrap{
   HTMLparser = 1
@@ -18,6 +18,27 @@ lib.parseFunc_RTE.externalBlocks.table.stdWrap{
 	}
 	keepNonMatchedTags = 1
   }
+}
+
+lib.parseFunc_RTE {
+	externalBlocks {
+		div {
+			stripNL = 1
+			stdWrap.parseFunc = < lib.parseFunc
+		}
+	}
+}
+
+lib.parseFunc_RTE.externalBlocks.pre.stdWrap{
+	HTMLparser = 1
+	HTMLparser {
+		tags.pre.fixAttrib.class {
+			default = rteContentList
+			always = 1
+			list = rteContentList
+		}
+		keepNonMatchedTags = 1
+	}
 }
 
 

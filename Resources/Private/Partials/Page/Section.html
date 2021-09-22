@@ -2,7 +2,7 @@
 <f:if condition="{sectionMenu.0.content.0}">
 	<f:if condition="{settings.config.sectionmenuStickyTop}">
 		<f:then>
-			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true', navbarBreakpointWidth: navbarBreakpointWidth}" />
+			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true'}" />
 		</f:then>
 		<f:else>
 			<f:render partial="Page/Assets" arguments="{scrollspy:'true'}" />		
@@ -16,26 +16,21 @@
 			<f:variable name="breakpoint" value="-{settings.config.navbarBreakpoint}-" />
 		</f:else>
 	</f:if>
-	<div id="sectionmenu" class="collapse d{breakpoint}flex bg-light p-2 mb-3">
-		<ul class="nav section-menu flex-column flex-nowrap nav-pills w-100">
-			<f:for each="{sectionMenu.0.content}" as="element">
-				<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
-					<li class="nav-item">
-						<a class="nav-link scroll-trigger" href="{element.link}#c{element.data.uid}"
-							 target="{f:if(condition: '{element.target}',then: '{element.target}', else: '_self')}">
-							<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
-								<f:then>
-									{element.data.tx_t3sbootstrap_header_sectionMenu}
-								</f:then>
-								<f:else>
-									{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
-								</f:else>
-							</f:if>
-						</a>
-					</li>
-				</f:if>
-			</f:for>
-		</ul>
+	<div id="sectionmenu" class="list-group{config.sidebar.stickTopClass}" style="top:{config.sidebar.stickTopOffset}">
+		<f:for each="{sectionMenu.0.content}" as="element">
+			<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
+				<a class="list-group-item list-group-item-action" href="#c{element.data.uid}">
+					<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
+						<f:then>
+							{element.data.tx_t3sbootstrap_header_sectionMenu}
+						</f:then>
+						<f:else>
+							{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
+						</f:else>
+					</f:if>
+				</a>
+			</f:if>
+		</f:for>	
 	</div>
 </f:if>
 </html>

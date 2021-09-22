@@ -68,7 +68,7 @@
 <f:section name="Div">
 	<f:if condition="{config.jumbotron.bgImage}">
 		<f:then>
-			<div id="s{data.uid}" class="jumbotron background-image bgImageSize{config.jumbotron.class}">
+			<div id="s{data.uid}" class="jumbotron background-image {config.jumbotron.class}">
 		</f:then>
 		<f:else>
 			<div class="jumbotron{config.jumbotron.class}">
@@ -93,19 +93,19 @@
 				</f:else>
 			</f:if>
 		</div>
-		<div class="carousel-inner embed-responsive embed-responsive-21by9" role="listbox">
+		<div class="carousel-inner ratio ratio-21x9" role="listbox">
 			<f:comment>	background-image by css </f:comment>
 			<f:for each="{bgSlides}" as="slide" iteration="iterator">
-				<div id="s{data.uid}-{iterator.cycle}" class="carousel-item embed-responsive-item bgImageSize background-image"></div>
+				<div id="s{data.uid}-{iterator.cycle}" class="carousel-item background-image"></div>
 			</f:for>
 		</div>
 		<a class="carousel-control-prev" href="#carouselJumbotronIndicators" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
+			<span class="visually-hidden">Previous</span>
 		</a>
 		<a class="carousel-control-next" href="#carouselJumbotronIndicators" role="button" data-slide="next">
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
+			<span class="visually-hidden">Next</span>
 		</a>
 	</div>
 </div>

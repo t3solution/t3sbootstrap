@@ -3,18 +3,13 @@ page {
 
 		##########################################################################################################
 		#
-		# BOOTSTRAP SCSS - if EXT:wsScss is loaded
+		# BOOTSTRAP SCSS
 		#
 		##########################################################################################################
-
-		# Default
-		bootstrapScss = fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss
-		bootstrapScss.forceOnTop = 1
-		bootstrapScss.if.isFalse = {$bootstrap.extconf.customScss}
 
 		# CUSTOM
 		bootstrapCustom = uploads/tx_t3sbootstrap/bootstrap.scss
 		bootstrapCustom.forceOnTop = 1
-		bootstrapCustom.if.isTrue = {$bootstrap.extconf.customScss}
+
 	}
 }

@@ -1,6 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:render partial="Layouts/Assets" arguments="{_all}" />
 <f:if condition="{owlCarousel}">
 	<f:then>
 		<f:if condition="{owlStyle} == 1">
@@ -34,7 +35,6 @@
 				</div>
 			</f:else>
 		</f:if>
-
 	</f:then>
 	<f:else>
 		<f:if condition="{multislider}">

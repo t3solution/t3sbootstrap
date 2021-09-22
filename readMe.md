@@ -5,7 +5,7 @@
 [![Monthly Downloads](https://poser.pugx.org/t3sbs/t3sbootstrap/d/monthly)](https://packagist.org/packages/t3sbs/t3sbootstrap)
 [![License](https://poser.pugx.org/t3sbs/t3sbootstrap/license)](https://packagist.org/packages/t3sbs/t3sbootstrap)
 
-> Startup extension to use bootstrap 4 classes, components and more out of the box.
+> Startup extension to use bootstrap 5 classes, components and more out of the box.
 
 ## 1. Usage
 
@@ -19,7 +19,7 @@ The recommended way to install the extension is by using Composer. In your Compo
 #### Installation as extension from TYPO3 Extension Repository (TER)
 
 Download and install the extension with the extension manager module.
-The following extensions must be installed before: container min. v.1.2.0 & content_defender min. v.3.1.0
+The following extensions must be installed before: container min. v.1.3.1 & content_defender min. v.3.1.0
 
 ### 2) Minimal setup
 

@@ -9,19 +9,6 @@ page {
 
 		##########################################################################################################
 		#
-		# LIGHTBOX (Baguette Box)
-		#
-		##########################################################################################################
-
-		t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{$bootstrap.cdn.baguetteBox}/baguetteBox.min.css
-		t3sblightboxCDN.external = 1
-		t3sblightboxCDN.if {
-			value = 1
-			equals = {$bootstrap.config.lightboxSelection}
-		}
-
-		##########################################################################################################
-		#
 		# COOKIECONSENT
 		#
 		##########################################################################################################
@@ -44,6 +31,7 @@ page {
 		jqueryCDN.integrity = {$bootstrap.cdn.jqueryIntegrity}
 		jqueryCDN.external = 1
 		jqueryCDN.forceOnTop = 1
+		jqueryCDN.if.isFalse = {$bootstrap.disable.jquery}
 
 
 		popperCDN = https://cdnjs.cloudflare.com/ajax/libs/popper.js/{$bootstrap.cdn.popperjs}/umd/popper.min.js
@@ -58,20 +46,6 @@ page {
 	}
 
 	includeJSFooter {
-
-		##########################################################################################################
-		#
-		# LIGHTBOX (Baguette Box)
-		#
-		##########################################################################################################
-
-		t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{$bootstrap.cdn.baguetteBox}/baguetteBox.min.js
-		t3sblightboxCDN.integrity = {$bootstrap.cdn.baguetteBoxIntegrity}
-		t3sblightboxCDN.external = 1
-		t3sblightboxCDN.if {
-			value = 1
-			equals = {$bootstrap.config.lightboxSelection}
-		}
 
 		##########################################################################################################
 		#
@@ -94,6 +68,7 @@ page {
 		t3sbjqueryeasingCDN.integrity = {$bootstrap.cdn.jqueryEasingIntegrity}
 		t3sbjqueryeasingCDN.external = 1
 		t3sbjqueryeasingCDN.forceOnTop = 1
+		t3sbjqueryeasingCDN.if.isFalse = {$bootstrap.disable.jquery}
 
 		##########################################################################################################
 		#

@@ -40,7 +40,7 @@
 			<i class="fa fa-info text-white"></i>
 		</f:link.external>
 	</h5>
-	<f:if condition="{isLoaded.ws_scss} && {extconf.customScss}">
+	<f:if condition="{extconf.customScss}">
 		<f:then>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">
@@ -53,26 +53,16 @@
 					{f:if(condition: extconf.bootswatch, then: ' (<small>{extconf.bootswatch}</small>)')}
 				</li>
 				<li class="list-group-item">
-					{f:if(condition: extconf.rollyourown, then: '<i class="fa fa-check text-success mr-1"></i> ',
-					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
-					<strong>Roll your own</strong>
-				</li>
-				<li class="list-group-item">
 					{f:if(condition: extconf.editScss, then: '<i class="fa fa-check text-success mr-1"></i> ',
 					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 					<strong>Edit in Backend</strong>
-				</li>
-				<li class="list-group-item">
-					{f:if(condition: extconf.customScssPath, then: '<i class="fa fa-check text-success mr-1"></i> ',
-					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
-					<strong>Path to your custom.scss files</strong>
 				</li>
 			</ul>
 		</f:then>
 		<f:else>
 			<div class="text-center p-1">
 				<p class="text-danger mt-3"><strong>Not available!</strong></p>
-				<p>If the EXT:ws_scss is installed and loaded and "Custom Scss" is activated in the EM config,
+				<p>If "Custom Scss" is activated in the EM config,
 					 the bootstrap SCSS variables in the file "custom-variables.scss" can be overwritten.</p>
 			</div>
 		</f:else>
@@ -176,10 +166,6 @@
 			{f:if(condition: extconf.cTypeClass, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>CType in class:</strong>
 		</li>
-		<li class="list-group-item">
-			{f:if(condition: extconf.fixedButton, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
-			<strong>Fixed button:</strong>
-		</li>
 	</ul>
 </div>
 </f:section>
@@ -193,10 +179,6 @@
 		<li class="list-group-item">
 			{f:if(condition: extconf.flexformExtend, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>Extend with custom fields:</strong>
-		</li>
-		<li class="list-group-item">
-			{f:if(condition: extconf.flexformPath, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
-			<strong>Path to your flexforms files:</strong>
 		</li>
 		<li class="list-group-item">
 			{f:if(condition: extconf.flexformModify, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
@@ -223,10 +205,6 @@
 		<li class="list-group-item">
 			{f:if(condition: extconf.customTranslations, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>Custom translations:</strong>
-		</li>
-		<li class="list-group-item">
-			{f:if(condition: extconf.customTranslationsPath, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
-			<strong>Path to custom translations:</strong>
 		</li>
 	</ul>
 </div>

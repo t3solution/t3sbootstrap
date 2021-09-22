@@ -4,18 +4,6 @@ page {
 
 		##########################################################################################################
 		#
-		# LIGHTBOX (Baguette Box)
-		#
-		##########################################################################################################
-
-		t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css
-		t3sblightbox.if {
-			value = 1
-			equals = {$bootstrap.config.lightboxSelection}
-		}
-
-		##########################################################################################################
-		#
 		# COOKIECONSENT
 		#
 		##########################################################################################################
@@ -35,6 +23,7 @@ page {
 
 		jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
 		jquery.forceOnTop = 1
+		jquery.if.isFalse = {$bootstrap.disable.jquery}
 
 		popper = fileadmin/T3SB/Resources/Public/JS/popper.js
 
@@ -43,18 +32,6 @@ page {
 	}
 
 	includeJSFooter {
-
-		##########################################################################################################
-		#
-		# LIGHTBOX (Baguette Box)
-		#
-		##########################################################################################################
-
-		t3sblightbox = fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js
-		t3sblightbox.if {
-			value = 1
-			equals = {$bootstrap.config.lightboxSelection}
-		}
 
 		##########################################################################################################
 		#
@@ -73,6 +50,7 @@ page {
 
 		t3sbjqueryeasing = fileadmin/T3SB/Resources/Public/JS/jquery.easing.min.js
 		t3sbjqueryeasing.forceOnTop = 1
+		t3sbjqueryeasing.if.isFalse = {$bootstrap.disable.jquery}
 
 		##########################################################################################################
 		#

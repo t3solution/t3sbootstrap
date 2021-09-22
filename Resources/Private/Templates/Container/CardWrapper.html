@@ -2,68 +2,66 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
-<f:if condition="{card_wrapper_layout} == 'slider'">
-	<f:render partial="Content/CardSliderAssets" arguments="{visibleCards:visibleCards, range:range, data:data}" />
-</f:if>
 <f:if condition="{settings.cardFlipperOnClick}">
-<f:asset.script identifier="cardwrapper">
+<f:asset.script identifier="vanilla_cardwrapper">
 	// Card-flipper rotate on click - CarouselWrapper.html
-	$(".card-flipper").addClass("cardflipper").removeClass("card-flipper");
-	$(".cardflipper .mainflip .fa-plus-square").on("click", function() {
-		$(this).parents(".frontside").css("transform", "rotateY(180deg)");
-		$(this).parents(".mainflip").find(".backside").css("transform", "rotateY(0deg)");
-		$(this).parents(".mainflip").find(".backside .jsfooter").remove();
-		$(this).parents(".mainflip").find(".backside .card-body")
-		.after( "<div class='card-footer jsfooter text-center'><i class='fas fa-minus-square fa-2x mx-auto'></i></div>" );
-		$(".cardflipper .mainflip .fa-minus-square").on("click", function() {
-			$(this).parents(".backside").css("transform", "rotateY(180deg)");
-			$(this).parents(".mainflip").find(".frontside").css("transform", "rotateY(0deg)");
-		});
-	});
+	t3sbCardFlipper()
 </f:asset.script>
 </f:if>
-
-
-<f:if condition="{card_wrapper_layout} == 'slider' || {card_wrapper_layout} == 'flipper'">
-	<f:then>	
+<f:if condition="{card_wrapper_layout} == 'flipper'">
+	<f:then>
 		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
-			<f:if condition="{card_wrapper_layout} == 'slider'">
-				<f:then>
-					<f:render section="Slider" arguments="{_all}" />
-				</f:then>
-				<f:else>
-					<f:render section="Flipper" arguments="{_all}" />
-				</f:else>
-			</f:if>
+			<f:render section="Flipper" arguments="{_all}" />
 		</div>
 	</f:then>
 	<f:else>
-		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
-			<f:for each="{col_270}" as="card" iteration="cardIterator">
-				{card.renderedContent -> f:format.raw()}
-			</f:for>
-		</div>
+		<f:if condition="{card_wrapper_layout} == 'deck'">
+			<f:then>
+				<div class="card-deck gy-4 row row-cols-{visibleCards}{f:if(condition:'{class}',then:' {class}')}"
+					{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+					<f:for each="{col_270}" as="card" iteration="cardIterator">
+						<div class="col">
+							{card.renderedContent -> f:format.raw()}
+						</div>
+					</f:for>
+				</div>
+			</f:then>
+			<f:else>
+				<f:if condition="{card_wrapper_layout} == 'columns'">
+					<f:then>
+						<f:if condition="{settings.cdn}">
+							<f:then>
+								<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
+								 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
+							</f:then>
+							<f:else>
+								<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
+								 crossorigin="anonymous" async="async" />
+							</f:else>
+						</f:if>
+						<div class="row{f:if(condition:'{class}',then:' {class}')}"
+							{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
+							<f:for each="{col_270}" as="card" iteration="cardIterator">
+						<div class="col-sm-6 col-lg-4 mb-4">
+							{card.renderedContent -> f:format.raw()}
+						</div>
+							</f:for>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+							<f:for each="{col_270}" as="card" iteration="cardIterator">
+								{card.renderedContent -> f:format.raw()}
+							</f:for>
+						</div>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>
 </html>
-
-
-<f:section name="Slider">
-<div id="cs{data.uid}" class="carousel slide multi-item-carousel w-100" data-ride="carousel">
-    <div class="carousel-inner w-100" role="listbox">
-		<f:for each="{col_270}" as="card" iteration="iterator">
-            <div class="carousel-item col-md-{cols}{f:if(condition: iterator.isFirst, then: ' active')}">
-				{card.renderedContent -> f:format.raw()}
-            </div>
-		</f:for>
-	</div>
-	<div class="col-12 lead my-4">
-		<a class="btn btn-outline-secondary prev" href="#cs{data.uid}" role="button" data-slide="prev"><i class="fas fa-lg fa-chevron-left"></i></a>
-		<a class="btn btn-outline-secondary next" href="#cs{data.uid}" role="button" data-slide="next"><i class="fas fa-lg fa-chevron-right"></i></a>
-	</div>
-</div>
-</f:section>
 
 
 <f:section name="Flipper">

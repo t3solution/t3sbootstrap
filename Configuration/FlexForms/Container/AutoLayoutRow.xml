@@ -114,6 +114,10 @@
 										<numIndex index="0">xl</numIndex>
 										<numIndex index="1">xl</numIndex>
 									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">xxl</numIndex>
+										<numIndex index="1">xxl</numIndex>
+									</numIndex>
 								</items>
 								<default></default>
 								<size>1</size>
@@ -121,15 +125,80 @@
 						</TCEforms>
 					</responsiveVariations>
 
-					<noGutters>
+					<horizontalGutters>
 						<TCEforms>
-							<label>No gutters</label>
+							<label>Horizontal gutters</label>
 							<config>
-								<type>check</type>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">gx-0</numIndex>
+										<numIndex index="1">gx-0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">gx-1</numIndex>
+										<numIndex index="1">gx-1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">gx-2</numIndex>
+										<numIndex index="1">gx-2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">gx-3</numIndex>
+										<numIndex index="1">gx-3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">gx-4 (default)</numIndex>
+										<numIndex index="1">gx-4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">gx-5</numIndex>
+										<numIndex index="1">gx-5</numIndex>
+									</numIndex>
+								</items>
+								<default>gx-4</default>
 							</config>
 						</TCEforms>
-					</noGutters>
+					</horizontalGutters>
 
+					<verticalGutters>
+						<TCEforms>
+							<label>Vertical gutters</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">gy-0 (default)</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">gy-1</numIndex>
+										<numIndex index="1">gy-1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">gy-2</numIndex>
+										<numIndex index="1">gy-2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">gy-3</numIndex>
+										<numIndex index="1">gy-3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">gy-4</numIndex>
+										<numIndex index="1">gy-4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">gy-5</numIndex>
+										<numIndex index="1">gy-5</numIndex>
+									</numIndex>
+								</items>
+								<default>gy-0</default>
+							</config>
+						</TCEforms>
+					</verticalGutters>
+	
 				</el>
 			</ROOT>
 		</sDEF>

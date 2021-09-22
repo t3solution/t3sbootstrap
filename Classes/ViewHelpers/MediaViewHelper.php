@@ -18,7 +18,6 @@ use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-
 class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 {
 	/**
@@ -33,7 +32,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	{
 		$this->responsiveImagesUtility = $responsiveImagesUtility;
 	}
-
 
 	/**
 	 * Initialize arguments.
@@ -324,7 +322,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			 $this->tag->addAttribute('title', $title);
 		 }
 
-	    return $this->tag->render();
+		 return $this->tag->render();
 	}
 
 	/**
@@ -337,17 +335,10 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		$rArr = explode(':',$this->arguments['ratio']);
 		$l = $rArr[0] / $rArr[1];
 		$p = $rArr[1] / $rArr[0];
-
-		// Image Gallery only
-		if ( $this->arguments['columns'] ) {
-			$width = 1110/$this->arguments['columns'];
-		}
-
 		$w = $image->getProperties()['height']/$image->getProperties()['width'] *$l;
 		$h = 1;
 		$x = $this->arguments['shift'] ? $this->arguments['shift'] : (1 - $w) / 2;
 		$y = 0;
-
 		if ( $w > 1 ) {
 			$h = $image->getProperties()['width']/$image->getProperties()['height'] *$p;
 			$w = 1;
@@ -355,7 +346,30 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$y = $this->arguments['shift'] ? $this->arguments['shift'] : (1 - $h) / 2;
 		}
 
-		return '{"default":{"cropArea":{"x":'.$x.',"y":'.$y.',"width":'.$w.',"height":'.$h.'},"selectedRatio":"'.$this->arguments['ratio'].'","focusArea":null},"tablet":{"cropArea":{"x":'.$x.',"y":'.$y.',"width":'.$w.',"height":'.$h.'},"selectedRatio":"'.$this->arguments['ratio'].'","focusArea":null},"mobile":{"cropArea":{"x":'.$x.',"y":'.$y.',"width":'.$w.',"height":'.$h.'},"selectedRatio":"'.$this->arguments['ratio'].'","focusArea":null}}';
+		$cropArray['default']['cropArea']['x'] = $x;
+		$cropArray['default']['cropArea']['y'] = $y;
+		$cropArray['default']['cropArea']['width'] = $w;
+		$cropArray['default']['cropArea']['height'] = $h;
+		$cropArray['default']['selectedRatio'] = $this->arguments['ratio'];
+		$cropArray['default']['focusArea'] = null;
+
+		$cropArray['tablet']['cropArea']['x'] = $x;
+		$cropArray['tablet']['cropArea']['y'] = $y;
+		$cropArray['tablet']['cropArea']['width'] = $w;
+		$cropArray['tablet']['cropArea']['height'] = $h;
+		$cropArray['tablet']['selectedRatio'] = $this->arguments['ratio'];
+		$cropArray['tablet']['focusArea'] = null;
+
+		$cropArray['mobile']['cropArea']['x'] = $x;
+		$cropArray['mobile']['cropArea']['y'] = $y;
+		$cropArray['mobile']['cropArea']['width'] = $w;
+		$cropArray['mobile']['cropArea']['height'] = $h;
+		$cropArray['mobile']['selectedRatio'] = $this->arguments['ratio'];
+		$cropArray['mobile']['focusArea'] = null;
+
+		$object = (object)$cropArray;
+
+		return json_encode($object);
 
 	}
 

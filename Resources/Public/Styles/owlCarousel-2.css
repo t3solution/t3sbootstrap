@@ -42,3 +42,9 @@
 	transition: all 250ms ease-out 0s;
 	width:20px;
 }
+.owlStyle-two.owl-carousel .owl-dots .owl-dot span {
+    background-color: #3190e7;
+}
+
+
+

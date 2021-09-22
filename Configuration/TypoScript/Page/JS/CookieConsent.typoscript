@@ -73,12 +73,12 @@ temp.jsCookieConsent {
 		console.error(err);
 	  });
 
-		if ( $('#btn-revokeChoice').length ) {
+
+		if ( document.getElementById('btn-revokeChoice') ) {
 			document.getElementById('btn-revokeChoice').onclick = function (e) {
 				p.revokeChoice();
 			};
 		}
-
 
 	});
 

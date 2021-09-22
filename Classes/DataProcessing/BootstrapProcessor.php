@@ -42,6 +42,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 		$flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['tx_t3sbootstrap_flexform']);
 		$parentflexconf = [];
+		$parentCType = '';
 		$parentUid = $processedData['data']['tx_container_parent'];
 		if ($parentUid) {
 			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
@@ -70,21 +71,16 @@ class BootstrapProcessor implements DataProcessorInterface
 		$styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
 		$wrapperHelper = GeneralUtility::makeInstance(WrapperHelper::class);
 
-		# used for js-conditions - deprecated
-		$processedData['winWidth'] = (int)$processorConfiguration['breakpoint.'][$contentObjectConfiguration['settings.']['breakpoint']];
-		// used for js-conditions
-		$navbarBreakpointWidth = (int)$processorConfiguration['breakpoint.'][$contentObjectConfiguration['settings.']['breakpoint']];
-		$processedData['navbarBreakpointWidth'] = $navbarBreakpointWidth;
-
 		// class
 		$class = $classHelper->getAllClass($processedData['data'], $flexconf, $extConf);
 		$processedData['class'] = $processedData['class'] ? $processedData['class'].' '.$class : $class;
 		// header class
 		$processedData['header'] = $classHelper->getHeaderClass($processedData['data']);
 		// style
-		$style = $styleHelper->getBgColor($processedData['data']);
-		$processedData['style'] = $processedData['style'] ? $processedData['style'].' '.$style : $style;
+		$processedData['style'] = $styleHelper->getBgColor($processedData['data']);
 
+		$processedData['isTxContainer'] = FALSE;
+		
 		/**
 		 * Grid System
 		 */
@@ -117,6 +113,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( $processedData['data']['CType'] == 'card_wrapper' ) {
 			$processedData = $wrapperHelper->getCardWrapper($processedData, $flexconf);
 			$processedData['isTxContainer'] = TRUE;
+			$processedData['visibleCards'] = (int)$flexconf['visibleCards'] ?: 4;
 		}
 
 		/**
@@ -124,7 +121,8 @@ class BootstrapProcessor implements DataProcessorInterface
 		 */
 		if ( $processedData['data']['CType'] == 'button_group' ) {
 			$processedData['class'] .= $flexconf['vertical'] ? ' btn-group-vertical' : ' btn-group';
-			$processedData['buttonGroupClass'] = $flexconf['align'] ? ' '.$flexconf['align'] : '';
+			$processedData['class'] .= $flexconf['size'] ? ' '.$flexconf['size']: '';
+			$processedData['buttonGroupClass'] = $flexconf['align'] ?: '';
 			if ( $flexconf['fixedPosition'] ) {
 				$processedData['buttonGroupClass'] .= ' d-none fixedGroupButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
 				$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
@@ -184,6 +182,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 */
 		if ( $processedData['data']['CType'] == 'collapsible_container' ) {
 			$processedData['appearance'] = $flexconf['appearance'];
+			$processedData['flush'] = $flexconf['flush'] ? ' accordion-flush' : '';
 			$processedData['isTxContainer'] = TRUE;
 		}
 
@@ -215,6 +214,13 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 				$processedData['modal']['fixedButton'] = TRUE;
 			}
+			if ($processedData['data']['header_position']) {
+				$headerPosition = $processedData['data']['header_position'];
+				if ( $headerPosition == 'left' ) $headerPosition = 'start';
+				if ( $headerPosition == 'right' ) $headerPosition = 'end';
+				$processedData['class'] .= ' text-'.$headerPosition;
+			}
+
 			$processedData['isTxContainer'] = TRUE;
 		}
 
@@ -264,9 +270,18 @@ class BootstrapProcessor implements DataProcessorInterface
 			$typolinkButtonClass = 'btn btn-'.$outline.$flexconf['style'];
 			if ( $processedData['data']['CType'] != 'button_group' ) {
 				$typolinkButtonClass .= $flexconf['size'] ? ' '.$flexconf['size']:'';
-				$typolinkButtonClass .= $flexconf['block'] ? ' btn-block':'';
+
+				#if (empty($parentflexconf) && $flexconf['block']) {
+				if ($flexconf['block']) {
+					$processedData['btn-block'] = true;
+				} else {
+					$processedData['btn-block'] = false;
+				}
 				if ($processedData['data']['header_position']) {
-					$processedData['class'] .= ' text-'.$processedData['data']['header_position'];
+					$headerPosition = $processedData['data']['header_position'];
+					if ( $headerPosition == 'left' ) $headerPosition = 'start';
+					if ( $headerPosition == 'right' ) $headerPosition = 'end';
+					$processedData['class'] .= ' text-'.$headerPosition;
 				}
 				if ( $flexconf['fixedPosition'] ) {
 					$processedData['class'] .= ' d-none fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
@@ -317,7 +332,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['origImage'] = $parentflexconf['origImage'];
 
 			if ($parentflexconf['buttontext'])
-			$processedData['buttontext'] = trim(explode('|', $parentflexconf['buttontext'])[$processedData['data']['sys_language_uid']]);
+			$processedData['buttontext'] = trim(explode('|', (string) $parentflexconf['buttontext'])[$processedData['data']['sys_language_uid']]);
 
 			if ($extConf['animateCss'] && $parentflexconf['animate']){
 				$processedData['animate'] = $parentflexconf['animate'] ?
@@ -337,7 +352,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
 			if (empty($processedData['files'])) {
 				$ratio = $parentflexconf['ratio'] ? $parentflexconf['ratio'] : '16:9';
-				$noImgHeight = explode(':', $ratio);
+				$noImgHeight = explode(':', (string) $ratio);
 				$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
 				$processedData['animate'] .= ' position-static';
 				$processedData['style'] .= ' min-height:'.$noImgHeight.'px;';
@@ -353,7 +368,7 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['owlStyle'] = $parentflexconf['owlStyle'];
 				$processedData['style'] = '';
 				if ( (int) $parentflexconf['owlStyle'] == 1 && $flexconf['bgOverlayOwl'] ) {
-					$processedData['style'] = $styleHelper->getBgColor($processedData['data']);
+					$processedData['style'] .= $styleHelper->getBgColor($processedData['data']);
 				}
 				$processedData['owlLine'] = $parentflexconf['owlLine'];
 				$processedData['zoom'] = '';
@@ -377,20 +392,20 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( $processedData['data']['CType'] == 't3sbs_mediaobject' ) {
 
 			$processedData['mediaobject']['order'] = $flexconf['order'] == 'right' ? 'right' : 'left';
-			$figureclass = $flexconf['order'] == 'right' ? 'd-flex ml-3' : 'd-flex mr-3';
+			$processedData['mediaObjectBody'] = $flexconf['order'] == 'right' ? ' me-3' : ' ms-3';
 
 			switch ( $processedData['data']['imageorient'] ) {
 				 case 91:
-				 	$figureclass .= ' align-self-center';
+				 	$processedData['addmedia']['figureclass'] .= ' align-self-center';
 				break;
 				 case 92:
-				 	$figureclass .= ' align-self-start';
+				 	$processedData['addmedia']['figureclass'] .= ' align-self-start';
 				break;
 				 case 93:
-				 	$figureclass .= ' align-self-end';
+				 	$processedData['addmedia']['figureclass'] .= ' align-self-end';
 				break;
 				 default:
-				 	$figureclass .= '';
+				 	$processedData['addmedia']['figureclass'] .= '';
 			}
 		}
 
@@ -403,12 +418,10 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['menupills'] = $flexconf['menupills'] ? ' nav-pills' :'';
 				$processedData['menuHorizontalAlignment'] = $flexconf['menudirection'] == 'flex-row'
 				 ? ' '.$flexconf['menuHorizontalAlignment'] :'';
-
 				if ( $processedData['data']['CType'] == 'menu_section' ) {
-
 					$processedData['pageLink'] = FALSE;
 					# if more than 1 page for section-menu
-					if (count(explode( ',' , $processedData['data']['pages'])) > 1) {
+					if (count(explode( ',' , (string) $processedData['data']['pages'])) > 1) {
 						$processedData['pageLink'] = TRUE;
 					} else {
 						// if current page is selected
@@ -419,7 +432,6 @@ class BootstrapProcessor implements DataProcessorInterface
 						}
 					}
 				}
-
 				if ($flexconf['menuHorizontalAlignment'] == 'nav-fill variant') {
 					$processedData['menupills'] = '';
 				}
@@ -430,7 +442,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 * Table
 		 */
 		if ( $processedData['data']['CType'] == 'table' ) {
-			$tableClassArr = explode(',', $flexconf['tableClass']);
+			$tableClassArr = explode(',', (string) $flexconf['tableClass']);
 			if ( count($tableClassArr) > 1 ) {
 				$tableclass = 'table';
 				foreach ($tableClassArr as $tc) {
@@ -444,6 +456,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			$tableclass .= $flexconf['tableInverse'] ? ' table-dark' : '';
 			$tableclass .= $processedData['data']['tx_t3sbootstrap_extra_class'] ? ' '.$processedData['data']['tx_t3sbootstrap_extra_class'] : '';
 			$processedData['tableclass'] = trim($tableclass);
+			$processedData['theadclass'] = $flexconf['theadClass'];
 			$processedData['tableResponsive'] = $flexconf['tableResponsive'] ? TRUE : FALSE;
 		}
 
@@ -468,8 +481,6 @@ class BootstrapProcessor implements DataProcessorInterface
 				if (is_array($processedData['files'])) {
 					foreach ($processedData['files'] as $file ) {
 						if ($file->getProperties()['tx_t3sbootstrap_hover_effect'])	$processedData['hoverEffect'] = TRUE;
-
-
 					}
 				}
 				$galleryUtility = GeneralUtility::makeInstance(GalleryHelper::class);
@@ -501,6 +512,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		// if media
 		if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
+
 			$processedData['addmedia']['imgclass'] = $processedData['addmedia']['imgclass'] ?: 'img-fluid';
 			$processedData['addmedia']['imgclass'] .= $processedData['data']['imageborder'] ? ' border' :'';
 			$processedData['addmedia']['imgclass'] .= $processedData['data']['tx_t3sbootstrap_bordercolor'] && $processedData['data']['imageborder']
@@ -521,18 +533,15 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		// container class
 		$processedData['data']['configuid'] = (int)$processorConfiguration['configuid'];
-
 		$container = $defaultHelper->getContainerClass($processedData['data']);
-		if ($container && $container != 'colPosContainer') {
+		$processedData['containerError'] = FALSE;
+		if ($container) {
 			$processedData['containerPre'] = '<div class="'.$container.'">';
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = $container;
-		}
-
-		if ($processedData['be_layout'] == 'OneCol' && !$container) {
-			$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
-			if (!$pageContainer && !$processedData['data']['tx_container_parent']) {
-				$processedData['containerError'] = TRUE;
+		} else {
+			if ($processedData['be_layout'] === 'OneCol') {
+				$processedData['containerError'] = $defaultHelper->getContainerError($processedData['data']);
 			}
 		}
 
@@ -549,6 +558,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		}
 
 		// content link
+		$flexconf['bgwlink'] = $flexconf['bgwlink'] ?: '';
 		if ( $processedData['data']['tx_t3sbootstrap_header_celink'] && $processedData['data']['header_link']
 			|| $flexconf['bgwlink'] && $processedData['data']['header_link'] ) {
 
@@ -574,7 +584,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			|| $processedData['data']['CType'] == 'modal'
 			|| $processedData['data']['CType'] == 'button_group')
 			&&	$flexconf['fixedPosition'] ) {
-			// disable animateCss (conflict)
+			// disable animateCss
 			$processedData['data']['tx_t3sbootstrap_animateCss'] = FALSE;
 		}
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
@@ -592,9 +602,19 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['style'] .= ' animation-duration: '.$processedData['data']['tx_t3sbootstrap_animateCssDuration'].'s;';
 			}
 			if ($processedData['data']['tx_t3sbootstrap_animateCssDelay'] ) {
-				$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s;';
+
+				$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].';';
+			}
+			$processedData['isViewportChecker'] = FALSE;
+			if ($processedData['data']['tx_t3sbootstrap_animateCssRepeat']) {
+				$processedData['isViewportChecker'] = TRUE;
 			}
 			$processedData['isAnimateCss'] = TRUE;
+		}
+
+		// child of container (masonry_layout)
+		if ( $processedData['data']['CType'] == 'masonry_wrapper' ) {
+			$processedData['masonryClass'] = $flexconf['colclass'];
 		}
 
 		// child of autoLayout_row
@@ -609,6 +629,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		}
 
 		// extend flexforms with custom fields
+		$flexconf['ffExtra'] = $flexconf['ffExtra'] ?: '';
 		if ( is_array($flexconf['ffExtra']) ) {
 			$processedData['ffExtra'] = $flexconf['ffExtra'];
 		}
@@ -622,11 +643,12 @@ class BootstrapProcessor implements DataProcessorInterface
 		# CSS-class for container only
 		if ( $processedData['isTxContainer'] ) {
 			$containerClass = $classHelper->getTxContainerClass($processedData['data'], $flexconf, $processedData['isVideo'], $extConf);
+
+
 			$processedData['class'] .= $containerClass ? ' '.$containerClass : '';
 		}
 
 		$processedData['style'] .= ' '.$processedData['data']['tx_t3sbootstrap_extra_style'];
-
 		$processedData['style'] = trim($processedData['style']);
 		$processedData['class'] = trim($processedData['class']);
 

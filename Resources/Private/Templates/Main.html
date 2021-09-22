@@ -1,4 +1,5 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{noConfig}">
 	<f:then>
 		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
@@ -15,7 +16,7 @@
 				<div id="site-preloader">
 					<div id="site-spinner" class="spinner-{settings.config.loadingSpinner} text-{settings.config.loadingSpinnerColor}"
 						 style="width: 3rem; height: 3rem;" role="status">
-						<span class="sr-only">Loading...</span>
+						<span class="visually-hidden">Loading...</span>
 					</div>
 				</div>
 			</f:if>
@@ -80,7 +81,6 @@
 			<f:comment> BACK TO TOP BUTTON </f:comment>
 			<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
 				<f:link.page class="back-to-top"
-					style="display: none;"
 					title="{settings.backToTopTitle}">
 					<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
 				</f:link.page>
@@ -92,7 +92,7 @@
 
 
 <f:section name="PageContent">
-	<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')}>
+	<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')} >
 		<f:if condition="{be_layout} && {be_layout} != 'default'">
 			<f:then>
 				<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
@@ -103,133 +103,104 @@
 		</f:if>
 	</div>
 </f:section>
-
 <f:section name="AssetScripts">
-<f:comment> Lazyload / Magnifying glass icon </f:comment>
+<f:asset.script identifier="t3sbHelper" src="EXT:t3sbootstrap/Resources/Public/Scripts/t3sbHelper.js" />
+<f:if condition="{config.navbar.enable} == 'slide'">
+	<f:then>
+<f:asset.script identifier="vanilla_default">
+	// Default - Main.html
+	var	  navbarHeight = 0,
+		  navbarBreakpointWidth = 0,
+		  viewportWidth = 0,
+		  onePageLayout = 0,
+		  fixedNavbar = false;
+
+	// Scroll anchor - Main.html
+	if (window.location.hash) {
+		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
+	}
+</f:asset.script>
+	</f:then>
+	<f:else>
+<f:asset.script identifier="vanilla_default">
+	// Default - Main.html
+	const navbar = document.getElementById('main-navbar'),
+		  navbarHeight = navbar.clientHeight,
+		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
+		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+		  onePageLayout = navbar.classList.contains('sectionMenu');
+		  
+	var fixedNavbar = false;
+	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
+		fixedNavbar = true;
+	}
+
+	// Scroll anchor - Main.html
+	if (window.location.hash) {
+		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
+	}
+</f:asset.script>
+	</f:else>
+</f:if>
+<f:comment> Loading spinner </f:comment>
+<f:if condition="{settings.config.loadingSpinner}">
+<f:asset.script identifier="vanilla_loadingspinner">
+	// Loading spinner - Main.html
+	window.onload = function() {
+		let spinner = document.getElementById('site-preloader');
+		t3sbFadeOutEffect(spinner);
+	};
+</f:asset.script>
+</f:if>
+<f:comment> Lazyload </f:comment>
+<f:variable name="customthreshold">{t3sb:intval(number: '{settings.lazyLoadThreshold}')}</f:variable>
 <f:if condition="{settings.lazyLoad}">
 	<f:then>
 		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
 			<f:then>
-				<f:asset.script identifier="lazyloadmagnifying">
-// LazyLoad - Main.html
-new LazyLoad({
-	elements_selector: ".lazy",
-	threshold: {settings.lazyLoadThreshold},
-	callback_loaded: function(img) {
-		var zoomOverlay = $(img).parent().parent().find('div.zoom-overlay');
-		if ( zoomOverlay.length ) {
-			var imgwidth = $(img).outerWidth()+'px';
-			var imgheight = $(img).outerHeight()+'px';
-			if ( $(window).width() < {navbarBreakpointWidth} ) {
-				imgwidth = '100%';
-			}
-			zoomOverlay.addClass('card-img-overlay');
-			if ( imgwidth ) {
-				zoomOverlay.css('max-width', imgwidth);
-			}
-			if ( imgheight ) {
-				zoomOverlay.css('max-height', imgheight);
-			}
+				<f:asset.script identifier="vanilla_lazyload">
+	// LazyLoad & Magnifying glass icon - Main.html
+	var customthreshold = {customthreshold};
+	new LazyLoad({
+		elements_selector: '.lazy',
+		threshold: customthreshold,
+		callback_loaded: function(img) {
+			t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth);
 		}
-	}
-});
+	});
 				</f:asset.script>
 			</f:then>
 			<f:else>
-				<f:asset.script identifier="lazyload">
-// LazyLoad - Main.html
-new LazyLoad({
-	elements_selector: ".lazy",
-	threshold: 0
-});
+				<f:asset.script identifier="vanilla_lazyload">
+	// LazyLoad - Main.html
+	var customthreshold = {customthreshold};
+	new LazyLoad({
+		elements_selector: '.lazy',
+		threshold: customthreshold
+	});
 				</f:asset.script>
 			</f:else>
 		</f:if>
 	</f:then>
 	<f:else>
 		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
-			<f:asset.script identifier="magnifying">
+			<f:asset.script identifier="vanilla_magnifying">
 	// Magnifying glass icon - Main.html
-	var magnify = $('.zoom-overlay');
+	var magnify = document.querySelectorAll('.zoom-overlay');
 	if ( magnify.length ) {
-		$('figure.image').each(function() {
-			var img = $(this).find('img');
-			var imgwidth = $(img).outerWidth()+'px';
-			var imgheight = $(img).outerHeight()+'px';
-			var zoomOverlay = $(this).find('a div.zoom-overlay');
-			if ( $(window).width() < {navbarBreakpointWidth} ) {
-				imgwidth = '100%';
-			}
-			if ( zoomOverlay.length ) {
-				zoomOverlay.addClass('card-img-overlay');
-				if ( imgwidth ) {
-					zoomOverlay.css('max-width', imgwidth);
-				}
-				if ( imgheight ) {
-					zoomOverlay.css('max-height', imgheight);
-				}
-			}
-		});
+		document.querySelectorAll('figure.image').forEach (
+			img => { t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) }
+		)
 	}
-			</f:asset.script>
+			</f:asset.script>	
 		</f:if>
 	</f:else>
 </f:if>
-<f:comment> Default JS </f:comment>
-<f:asset.script identifier="default">
-	// Default - Main.html
-	var navbarHeight = $("#main-navbar").outerHeight();
-	var navbarBreakpointWidth = {navbarBreakpointWidth};
-	var fixedNavbar = false;
-	if ( $("#main-navbar").hasClass("fixed-top") || $("#main-navbar").hasClass("sticky-top") ) {
-		fixedNavbar = true;
-	}
-	// Scroll anchor
-	if (window.location.hash) {
-		var hash = window.location.hash;
-		if ($(hash).length) {
-			var idArr = hash.split('#'),
-				targetElement = document.getElementById(idArr[1]),
-				targetOffset = targetElement.offsetTop,
-				offsetSize = {settings.config.sectionmenuAnchorOffset};
-				if ( fixedNavbar ) {
-					offsetSize += navbarHeight;
-				}
-				var scrollTo = targetOffset-offsetSize;
-			$("html, body").stop().animate({
-				'scrollTop': scrollTo
-			}, 1500, "easeInOutExpo");
-		}
-	}
-</f:asset.script>
 <f:comment> Link to top </f:comment>
 <f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-<f:asset.script identifier="linktotop">
+<f:asset.script identifier="vanilla_linktotop">
 	// Link to top - Main.html
-	var offset = 220;
-	var duration = 500;
-	$(window).scroll(function() {
-		if ($(this).scrollTop() > offset) {
-			$(".back-to-top").fadeIn(duration);
-		} else {
-			$(".back-to-top").fadeOut(duration);
-		}
-	});
-	$(".back-to-top").click(function(event) {
-		event.preventDefault(event);
-		$("html, body").animate({scrollTop: 0}, duration);
-		return false;
-	});	
-</f:asset.script>
-</f:if>
-<f:comment> Loading spinner </f:comment>
-<f:if condition="{settings.config.loadingSpinner}">
-<f:asset.script identifier="loadingspinner">
-	// Loading spinner - Main.html
-	$(window).bind("load", function() {
-		 $('#status').fadeOut();
-		 $('#site-preloader').delay(350).fadeOut('slow');
-	});	
+	t3sbScrollToTop();
 </f:asset.script>
 </f:if>
 </f:section>

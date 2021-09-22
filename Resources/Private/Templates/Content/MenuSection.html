@@ -4,23 +4,20 @@
 <f:if condition="{menu}">
 	<f:if condition="{settings.sectionmenuStickyTop}">
 		<f:then>
-			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true', navbarBreakpointWidth: navbarBreakpointWidth}" />
+			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true', contentElement:'true'}"	/>
 		</f:then>
 		<f:else>
-			<f:render partial="Page/Assets" arguments="{scrollspy:'true'}" />		
+			<f:render partial="Page/Assets" arguments="{scrollspy:'true', contentElement:'true'}" />
 		</f:else>
 	</f:if>
-
-	<div id="sectionmenu">
-		<f:if condition="{onlyCurrentPageSelected}">
-			<f:then>
-				<f:render section="OnlyCurrent" arguments="{_all}" />
-			</f:then>
-			<f:else>
-				<f:render section="Default" arguments="{_all}" />
-			</f:else>
-		</f:if>
-	</div>
+	<f:if condition="{onlyCurrentPageSelected}">
+		<f:then>
+			<f:render section="OnlyCurrent" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="Default" arguments="{_all}" />
+		</f:else>
+	</f:if>
 </f:if>
 
 </f:section>
@@ -35,7 +32,7 @@
 				<f:render section="PageTitle" arguments="{page: page}" />
 			</f:if>
 			<f:if condition="{page.content}">
-				<nav class="nav section-menu{menudirection}{menupills}{menuHorizontalAlignment}">
+				<div id="sectionmenu" class="nav section-menu{menudirection}{menupills}{menuHorizontalAlignment}">
 					<f:for each="{page.content}" as="element">
 						<f:if condition="{element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu}">
 							<a href="{f:if(condition:'{pageLink}',then:'{page.link}')}#c{element.data.uid}"
@@ -45,7 +42,7 @@
 							</a>
 						</f:if>
 					</f:for>
-				</nav>
+				</div>
 			</f:if>
 		</li>
 	</f:for>
@@ -55,7 +52,7 @@
 <f:section name="OnlyCurrent">
 	<f:for each="{menu}" as="page">
 		<f:if condition="{page.content}">
-			<nav class="nav section-menu{menudirection}{menupills}{menuHorizontalAlignment}">
+			<div id="sectionmenu" class="nav section-menu{menudirection}{menupills}{menuHorizontalAlignment} sticky-top">
 				<f:for each="{page.content}" as="element">
 					<f:if condition="{element.data.CType} != 'menu_section'">
 						<f:if condition="{element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu}">
@@ -68,7 +65,7 @@
 						</f:if>
 					</f:if>
 				</f:for>
-			</nav>
+			</div>
 		</f:if>
 	</f:for>
 </f:section>
@@ -86,7 +83,9 @@
 
 <f:section name="PageTitle">
 <a href="{page.link}" target="{page.target}" title="{page.title}">
-	{page.title}
+	{page.title -> f:format.raw()}
 </a>
 </f:section>
+
+
 

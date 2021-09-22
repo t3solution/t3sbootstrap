@@ -20,7 +20,7 @@
 			</trans-unit>
 
 			<trans-unit id="form.submit">
-				<source>Search</source>
+				<source>Suchen</source>
 			</trans-unit>
 
 			<trans-unit id="form.modal.label">
