@@ -44,7 +44,7 @@ editor:
       - { name: "Address", element: "address" }
       - { name: "Text: Zitat", element: "blockquote" ,attributes: { 'class': 'blockquote' }}
       - { name: "Text: Zitat center", element: "blockquote" ,attributes: { 'class': 'blockquote text-center' }}
-      - { name: "Text: Zitat right", element: "blockquote" ,attributes: { 'class': 'blockquote text-right' }}
+      - { name: "Text: Zitat right", element: "blockquote" ,attributes: { 'class': 'blockquote text-end' }}
 
       - { name: "Text: h2-style", element: "span", attributes: { 'class': 'h2' } }
       - { name: "Text: h3-style", element: "span", attributes: { 'class': 'h3' } }
@@ -104,24 +104,24 @@ editor:
       - { name: "Button: Dark", element: "a", attributes: { 'class': 'btn btn-dark' } }
 
       # Badges
-      - { name: "Badge: Primary", element: "span", attributes: { 'class': 'badge badge-primary' } }
-      - { name: "Badge: Secondary", element: "span", attributes: { 'class': 'badge badge-secondary' } }
-      - { name: "Badge: Success", element: "span", attributes: { 'class': 'badge badge-success' } }
-      - { name: "Badge: Danger", element: "span", attributes: { 'class': 'badge badge-danger' } }
-      - { name: "Badge: Warning", element: "span", attributes: { 'class': 'badge badge-warning' } }
-      - { name: "Badge: Info", element: "span", attributes: { 'class': 'badge badge-info' } }
-      - { name: "Badge: Light", element: "span", attributes: { 'class': 'badge badge-light' } }
-      - { name: "Badge: Dark", element: "span", attributes: { 'class': 'badge badge-dark' } }
+      - { name: "Badge: Primary", element: "span", attributes: { 'class': 'badge bg-primary' } }
+      - { name: "Badge: Secondary", element: "span", attributes: { 'class': 'badge bg-secondary' } }
+      - { name: "Badge: Success", element: "span", attributes: { 'class': 'badge bg-success' } }
+      - { name: "Badge: Danger", element: "span", attributes: { 'class': 'badge bg-danger' } }
+      - { name: "Badge: Warning", element: "span", attributes: { 'class': 'badge bg-warning' } }
+      - { name: "Badge: Info", element: "span", attributes: { 'class': 'badge bg-info' } }
+      - { name: "Badge: Light", element: "span", attributes: { 'class': 'badge bg-light' } }
+      - { name: "Badge: Dark", element: "span", attributes: { 'class': 'badge bg-dark' } }
 
       # Pill badges
-      - { name: "Pill badge: Primary", element: "span", attributes: { 'class': 'badge badge-pill badge-primary' } }
-      - { name: "Pill badge: Secondary", element: "span", attributes: { 'class': 'badge badge-pill badge-secondary' } }
-      - { name: "Pill badge: Success", element: "span", attributes: { 'class': 'badge badge-pill badge-success' } }
-      - { name: "Pill badge: Danger", element: "span", attributes: { 'class': 'badge badge-pill badge-danger' } }
-      - { name: "Pill badge: Warning", element: "span", attributes: { 'class': 'badge badge-pill badge-warning' } }
-      - { name: "Pill badge: Info", element: "span", attributes: { 'class': 'badge badge-pill badge-info' } }
-      - { name: "Pill badge: Light", element: "span", attributes: { 'class': 'badge badge-pill badge-light' } }
-      - { name: "Pill badge: Dark", element: "span", attributes: { 'class': 'badge badge-pill badge-dark' } }
+      - { name: "Pill badge: Primary", element: "span", attributes: { 'class': 'badge rounded-pill bg-primary' } }
+      - { name: "Pill badge: Secondary", element: "span", attributes: { 'class': 'badge rounded-pill bg-secondary' } }
+      - { name: "Pill badge: Success", element: "span", attributes: { 'class': 'badge rounded-pill bg-success' } }
+      - { name: "Pill badge: Danger", element: "span", attributes: { 'class': 'badge rounded-pill bg-danger' } }
+      - { name: "Pill badge: Warning", element: "span", attributes: { 'class': 'badge rounded-pill bg-warning' } }
+      - { name: "Pill badge: Info", element: "span", attributes: { 'class': 'badge rounded-pill bg-info' } }
+      - { name: "Pill badge: Light", element: "span", attributes: { 'class': 'badge rounded-pill bg-light' } }
+      - { name: "Pill badge: Dark", element: "span", attributes: { 'class': 'badge rounded-pill bg-dark' } }
 
      # Listen
       - { name: 'List: Unstyled', element: "ul", attributes: { 'class': 'list-unstyled' } }
@@ -151,9 +151,9 @@ editor:
       - { name: styles }
 
     justifyClasses:
-      - text-left
+      - text-start
       - text-center
-      - text-right
+      - text-end
       - text-justify
 
     extraPlugins:

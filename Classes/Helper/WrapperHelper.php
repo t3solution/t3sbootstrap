@@ -14,15 +14,11 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Page\AssetCollector;
-use TYPO3\CMS\Core\Page\PageRenderer;
-
 
 class WrapperHelper implements SingletonInterface
 {
@@ -40,7 +36,7 @@ class WrapperHelper implements SingletonInterface
 	{
 		// autoheight
 		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
-		$processedData['addHeight'] = $flexconf['addHeight'];
+		$processedData['addHeight'] = (int)$flexconf['addHeight'];
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 
@@ -65,19 +61,12 @@ class WrapperHelper implements SingletonInterface
 					$filter .= $flexconf['contrast'] ? 'contrast: '.(int)$flexconf['contrast'].', ' : '';
 					$filter .= $flexconf['blur'] ? 'blur: '.(int)$flexconf['blur'].', ' : '';
 
-					// if youtube filter
+					// if filter
 					if ( $filter ) {
 						$filter = substr(trim($filter), 0, -1);
 						$addFilters = ' var filters = {'.$filter.'}; jQuery(\'.player'.$processedData['data']['uid'].'\').YTPApplyFilters(filters);';
 					} else {
 						$addFilters = '';
-					}
-
-					if ( $cdnEnable ) {
-						$cssFile = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.1/css/jquery.mb.YTPlayer.min.css';
-					} else {
-						$cssFile = 'fileadmin/T3SB/Resources/Public/CSS/jquery.mb.YTPlayer.min.css';
-						$cssFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
 					}
 
 					if ( $flexconf['videoRatio'] == '16/9' || $flexconf['videoRatio'] == 'auto' ) {
@@ -86,49 +75,13 @@ class WrapperHelper implements SingletonInterface
 						$pH = ((int)$flexconf['bgHeight'] / 4) * 3;
 					}
 
-					if ( $cdnEnable ) {
-						$jsFooterFile = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.1/jquery.mb.YTPlayer.min.js';
-					} else {
-						$jsFooterFile = 'fileadmin/T3SB/Resources/Public/JS/jquery.mb.YTPlayer.min.js';
-						$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
-					}
-
-					if ( $flexconf['bgHeight'] ) {
-					$inlineJS = '
-// Background-video-'.$processedData['data']['uid'].'
-$(document).ready(function(){
-	jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) {
-		$(\'body\').addClass(\'video-loaded\');
-	}});'.$addFilters.'
-	jQuery(\'.player'.$processedData['data']['uid'].'\').css("padding-bottom", "'.$pH.'%")
-});';
-					} else {
-
-					$inlineJS = '
-$(document).ready(function(){
-	jQuery(\'.player'.$processedData['data']['uid'].'\').YTPlayer({ realfullscreen: true, onReady: function(event) {
-		$(\'body\').addClass(\'video-loaded\');
-	}});'.
-	$addFilters.'
-});';
-					}
-					if ($cssFile) {
-						$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-						$pageRenderer->addCssFile($cssFile);
-					}
-
-					if ($jsFooterFile)
-					GeneralUtility::makeInstance(AssetCollector::class)
-						->addJavaScript('ytplayerjs', $jsFooterFile);
-					if ($inlineJS)
-					GeneralUtility::makeInstance(AssetCollector::class)
-						->addInlineJavaScript('background-video-'.$processedData['data']['uid'], $inlineJS);
-
+					$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
+					$processedData['ytVideo']['addFilters'] = $addFilters ? $addFilters : '';
+					$processedData['ytVideo']['pH'] = $pH;
 
 					$events = $flexconf;
 					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
 					$events['uid'] = $processedData['data']['uid'];
-
 					$processedData['youtubeProperty'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file, $events);
 
 				} else {
@@ -158,30 +111,11 @@ $(document).ready(function(){
 						$loop = $flexconf['loop'];
 						$mute = $autoplay ? true : $flexconf['mute'];
 
-						$inlineJS = '
-// Background-video-'.$file->getUid().'
-var videoElement = document.querySelector(\'#video-'.$file->getUid().' video\');
-videoElement.muted = '.$mute.';
-videoElement.loop = '.$loop.';';
-						if ( $autoplay ) {
-							$inlineJS .= '
-videoElement.pause();
-videoElement.currentTime = 0;
-videoElement.play();
-$(\'#video-'.$file->getUid().' video\').attr(\'playsinline\', \'\');';
-						}
-
-						if ( $controls ) {
-							if ( $overlayChild )
-							$inlineJS .= '
-$(\'#s-'.$processedData['data']['uid'].' .card-img-overlay\').css(\'bottom\', \'20px\').css(\'top\', \'20px\');';
-						} else {
-							$inlineJS .= '
-$(videoElement).removeAttr("controls");';
-						}
-						if($inlineJS)
-						GeneralUtility::makeInstance(AssetCollector::class)
-							 ->addInlineJavaScript('background-video-'.$file->getUid(), $inlineJS);
+						$processedData['localVideo']['overlayChild'] = $overlayChild;
+						$processedData['localVideo']['autoplay'] = $autoplay;
+						$processedData['localVideo']['controls'] = $controls;
+						$processedData['localVideo']['loop'] = $loop;
+						$processedData['localVideo']['mute'] = $mute;
 					}
 				}
 
@@ -191,8 +125,9 @@ $(videoElement).removeAttr("controls");';
 				if ($flexconf['origImage']) {
 					$processedData['file'] = $file;
 				} else {
-					$processedData['bgImage'] = GeneralUtility::makeInstance(BackgroundImageUtility::class)
+					$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp, $bgMediaQueries);
+					$processedData['bgImage'] = $bgImage;
 					if ($flexconf['paddingTopBottom']) {
 						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 1rem;';
 					}
@@ -201,7 +136,7 @@ $(videoElement).removeAttr("controls");';
 				$processedData['alignItem'] = $flexconf['alignItem'] ? ' '.$flexconf['alignItem'] :'';
 
 				// image raster
-				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : ' ';
+				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : '';
 
 				// Text color - overlay (
 				if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
@@ -271,7 +206,7 @@ $(videoElement).removeAttr("controls");';
 				$children[$key]['imgwidth'] = $child['imagewidth'] ?: 576;
 				if ($flexconf['card_wrapper'] == 'flipper'){
 					$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
-					 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' mr-1"></i> ' : '';
+					 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ' : '';
 					$children[$key]['file'] = $fileObjects;
 					$children[$key]['backheader'] = $children[$key]['header']['text'];
 					$children[$key]['header'] = $child['header'];
@@ -339,14 +274,7 @@ $(videoElement).removeAttr("controls");';
 	 */
 	public function getCarouselContainer($processedData, $flexconf): array
 	{
-
 		if ( $flexconf['multislider'] ) {
-
-			$cssFile = 'EXT:t3sbootstrap/Resources/Public/Contrib/Multislider/multislider.css';
-			$cssFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($cssFile);
-
-			$jsFooterFile = 'EXT:t3sbootstrap/Resources/Public/Contrib/Multislider/multislider.min.js';
-			$jsFooterFile = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($jsFooterFile);
 
 			if ( $flexconf['interval'] ) {
 				$options = 'interval: '.intval($flexconf['interval']).', ';
@@ -368,27 +296,11 @@ $(videoElement).removeAttr("controls");';
 			$duration = $flexconf['duration'] ? intval($flexconf['duration']) : 500;
 			$options .= 'duration: '.$duration;
 
-			$inlineJS = '
-	$(\'#multiSlider-'.$processedData['data']['uid'].'\').multislider({'.$options.'});';
-
 			$block = '#multiSlider-'.$processedData['data']['uid'].' .MS-content .item {width: '.$flexconf['number'].'}';
 
-			if($cssFile) {
-				$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-				$pageRenderer->addCssFile($cssFile);
-			}
-			if($block) {
-				$pageRenderer->addCssInlineBlock ('multislider-'.$processedData['data']['uid'], $block);
-			}
-
-			if($jsFooterFile)
-			GeneralUtility::makeInstance(AssetCollector::class)
-				  ->addJavaScript('multisliderjs', $jsFooterFile);
-			if($inlineJS)
-			GeneralUtility::makeInstance(AssetCollector::class)
-				  ->addInlineJavaScript('multisliderinlinejs-'.$processedData['data']['uid'], $inlineJS);
-
 			$processedData['multislider'] = TRUE;
+			$processedData['jsOptions'] = '{'.$options.'}';					
+			$processedData['cssBlock'] = $block;
 		}
 
 		if ( $flexconf['owlCarousel'] ) {
@@ -400,7 +312,10 @@ $(videoElement).removeAttr("controls");';
 
 		$processedData['maxWidth'] = $flexconf['width'].'px';
 		$processedData['interval'] = $flexconf['interval'];
+		$processedData['darkVariant'] = $flexconf['darkVariant'];
+
 		$processedData['carouselFade'] = $flexconf['carouselFade'] ? ' carousel-fade': '';
+		$processedData['carouselFade'] .= $flexconf['darkVariant'] ? ' carousel-dark': '';
 
 		return $processedData;
 	}
@@ -418,16 +333,19 @@ $(videoElement).removeAttr("controls");';
 	{
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+		$processedData['file'] = $file;
 
 		if ( $file ) {
 			if ( $file->getType() === 4 ) {
 				$processedData['video'] = TRUE;
 			} else {
-				$processedData['parallaxImage'] =
-				 GeneralUtility::makeInstance(BackgroundImageUtility::class)
+				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, FALSE, $webp);
+
+				$processedData['parallaxImageUid'] = $bgImage[0];
+				$processedData['parallaxImage'] = $bgImage[1];
 				$processedData['speedFactor'] = $flexconf['speedFactor'];
-				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : ' ';
+				$processedData['addHeight'] = (int)$flexconf['addHeight'] ?: 0;
 			}
 		}
 
@@ -454,6 +372,8 @@ $(videoElement).removeAttr("controls");';
 
 		$processedData['appearance'] = $parentflexconf['appearance'];
 		$processedData['show'] = $flexconf['active'] ? ' show' : '';
+		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
+		$processedData['collapsed'] = $flexconf['active'] ? '' : ' collapsed';
 		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
 		$processedData['buttonstyle'] = $flexconf['style'] ? $flexconf['style'] : 'primary';
 		$processedData['collapsibleByPid'] = $flexconf['collapsibleByPid'] ?: '';

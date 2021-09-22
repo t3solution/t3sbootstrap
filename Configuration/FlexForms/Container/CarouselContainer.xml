@@ -67,7 +67,7 @@
 								<type>input</type>
 								<size>4</size>
 								<max>4</max>
-								<default>1110</default>
+								<default>1320</default>
 								<eval>int</eval>
 								<checkbox>0</checkbox>
 							</config>
@@ -116,6 +116,15 @@
 							</config>
 						</TCEforms>
 					</carouselFade>
+
+					<darkVariant>
+						<TCEforms>
+							<label>Dark variant</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</darkVariant>
 
 					<interval>
 						<TCEforms>
@@ -232,6 +241,7 @@
 							</config>
 						</TCEforms>
 					</animate>
+
 
 					<multislider>
 						<TCEforms>

@@ -1,74 +1,63 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:comment>Card Template</f:comment>
 <f:layout name="Default" />
 <f:section name="Header">
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
 <f:if condition="({card.image.overlay} || {card.mobile.overlay})">
-<f:asset.script identifier="card">
+<f:asset.script identifier="vanilla_card">
 	// Card image overlay on mobile only - Card.html
-	if ( $('.img-overlay').length ) {
-		if ( $(window).width() < navbarBreakpointWidth ) {
-			$('.card .img-overlay').each(function() {
-				$(this).addClass( "card-img-overlay d-flex align-items-end" );
+	var overlay = document.querySelectorAll('.card .img-overlay');
+	if ( overlay.length ) {
+		if ( viewportWidth < navbarBreakpointWidth ) {
+			overlay.forEach(function(ol) {
+				ol.classList.add('card-img-overlay');
 			});
 		}
 	}
 </f:asset.script>
 </f:if>
-	<f:comment>Card Header</f:comment>
-	<f:if condition="{card.header.text} && !{card.image.overlay}">
-		<div class="card-header">{card.header.text -> f:format.raw()}</div>
-	</f:if>
-	<f:comment>Card Title (top)</f:comment>
-	<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
-		<div class="card-body">
-			<f:render partial="Header/All" arguments="{_all}"/>
-		</div>
-	</f:if>
-	<f:comment>Card Image (top)</f:comment>
-	<f:if condition="{data.imageorient} == 'top'">
-		<f:render partial="Media/RawGallery" arguments="{_all}" />
-	</f:if>
-	<f:comment>Card Text (top)</f:comment>
-	<f:if condition="{card.text.top}">
-		<f:render section="TextTop" arguments="{_all}" />
-	</f:if>
-	<f:comment>Card List</f:comment>
-	<f:if condition="{card.list} && !{card.image.overlay}">
-		<f:render section="ListGroup" arguments="{_all}" />
-	</f:if>
-	<f:comment>Card Text (bottom)</f:comment>
-	<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
-		<f:render section="TextBottom" arguments="{_all}" />
-	</f:if>
-	<f:comment>Card Image (bottom)</f:comment>
-	<f:if condition="{data.imageorient} == 'bottom'">
-		<f:render partial="Media/RawGallery" arguments="{_all}" />
-	</f:if>
-	<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
-		<div class="card-footer">
-			{card.footer.text -> f:format.raw()}
-			<f:if condition="{card.button.footer}">
-				<f:render section="Button" arguments="{_all}" />
-			</f:if>
-		</div>
-	</f:if>
+<f:comment>Card Header</f:comment>
+<f:if condition="{card.header.text} && !{card.image.overlay}">
+	<div class="card-header">{card.header.text -> f:format.raw()}</div>
+</f:if>
+<f:comment>Card Title (top)</f:comment>
+<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
+	<div class="card-body">
+		<f:render partial="Header/All" arguments="{_all}"/>
+	</div>
+</f:if>
+<f:comment>Card Image (top)</f:comment>
+<f:if condition="{data.imageorient} == 'top'">
+	<f:render partial="Media/RawGallery" arguments="{_all}" />
+</f:if>
+<f:comment>Card Text (top)</f:comment>
+<f:if condition="{card.text.top}">
+	<f:render section="TextTop" arguments="{_all}" />
+</f:if>
+<f:comment>Card List</f:comment>
+<f:if condition="{card.list} && !{card.image.overlay}">
+	<f:render section="ListGroup" arguments="{_all}" />
+</f:if>
+<f:comment>Card Text (bottom)</f:comment>
+<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
+	<f:render section="TextBottom" arguments="{_all}" />
+</f:if>
+<f:comment>Card Image (bottom)</f:comment>
+<f:if condition="{data.imageorient} == 'bottom'">
+	<f:render partial="Media/RawGallery" arguments="{_all}" />
+</f:if>
+<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
+	<div class="card-footer">
+		{card.footer.text -> f:format.raw()}
+		<f:if condition="{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+	</div>
+</f:if>
 </f:section>
 </html>
 
-
-<f:section name="CardBlock">
-	<div class="{card.block.class}">
-		<f:if condition="{card.title.position} == 'default'">
-			<f:render partial="Header/All" arguments="{_all}"/>
-		</f:if>
-		<f:if condition="{card.text.top}">
-			<f:render section="TextTop" arguments="{_all}" />
-		</f:if>
-	</div>
-</f:section>
 
 <f:section name="TextTop">
 	<f:if condition="({card.image.overlay} || {card.mobile.overlay})">

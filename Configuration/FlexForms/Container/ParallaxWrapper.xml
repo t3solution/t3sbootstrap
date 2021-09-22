@@ -60,76 +60,30 @@
 						</TCEforms>
 					</hidden>
 
-					<!-- parallax speed factor -->
 					<speedFactor>
 						<TCEforms>
 							<label>Speed Factor</label>
 							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">0.1</numIndex>
-										<numIndex index="1">0.1</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">0.2</numIndex>
-										<numIndex index="1">0.2</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">0.3</numIndex>
-										<numIndex index="1">0.3</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">0.4</numIndex>
-										<numIndex index="1">0.4</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">0.5</numIndex>
-										<numIndex index="1">0.5</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">0.6</numIndex>
-										<numIndex index="1">0.6</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">0.7</numIndex>
-										<numIndex index="1">0.7</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">0.8</numIndex>
-										<numIndex index="1">0.8</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">0.9</numIndex>
-										<numIndex index="1">0.9</numIndex>
-									</numIndex>
-								</items>
-								<default>0.3</default>
+								<type>input</type>
+								<checkbox></checkbox>
+								<size>6</size>
+								<default>3</default>
 							</config>
 						</TCEforms>
 					</speedFactor>
-					<paddingTopBottom>
+					<addHeight>
 						<TCEforms>
-							<label>Padding (top and bottom in rem)</label>
+							<label>Surcharge height to parallax view (in px)</label>
 							<config>
 								<type>input</type>
 								<checkbox></checkbox>
 								<eval>int</eval>
 								<size>6</size>
-								<default>10</default>
+								<default>100</default>
 							</config>
 						</TCEforms>
-					</paddingTopBottom>
-					<imageRaster>
-						<TCEforms>
-							<label>Raster over the image</label>
-							<config>
-								<type>check</type>
-								<default>0</default>
-							</config>
-						</TCEforms>
-					</imageRaster>
+					</addHeight>
+
 				</el>
 			</ROOT>
 		</sDEF>

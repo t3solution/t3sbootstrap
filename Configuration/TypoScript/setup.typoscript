@@ -6,16 +6,12 @@ module.tx_t3sbootstrap {
 		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
 	}
 	settings {
-		wizardsMarkedUndone = {$bootstrap.wizardsMarkedUndone}
 		customScss = {$bootstrap.extconf.customScss}
-		customScssPath = {$bootstrap.extconf.customScssPath}
 		editScss = {$bootstrap.extconf.editScss}
 		bootswatch = {$bootstrap.extconf.bootswatch}
-		bootswatchURL = https://bootswatch.com/4/
+		bootswatchURL = https://bootswatch.com/5/
 		indexedsearch = {$bootstrap.ext.indexedsearch}
 		expandedContent = {$bootstrap.extconf.expandedContent}
-		rollyourown = {$bootstrap.extconf.rollyourown}
-		wsScss = {$bootstrap.ext.wsScss}
 		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
 		gtm = {$bootstrap.gtm}
 		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
@@ -23,6 +19,7 @@ module.tx_t3sbootstrap {
 		breakpoint.md = {$bootstrap.navbar.breakpoint.md}
 		breakpoint.lg = {$bootstrap.navbar.breakpoint.lg}
 		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
+		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		cdn {
 			// Versions
 			bootstrap = {$bootstrap.cdn.bootstrap}
@@ -37,53 +34,14 @@ module.tx_t3sbootstrap {
 			viewportchecker = {$bootstrap.cdn.viewportchecker}
 			animate = {$bootstrap.cdn.animate}
 			baguetteBox = {$bootstrap.cdn.baguetteBox}
-			ekkoLightbox = {$bootstrap.cdn.ekkoLightbox}
+			magnificpopup = {$bootstrap.cdn.magnificpopup}
 			lightcase = {$bootstrap.cdn.lightcase}
 			cookieconsent = {$bootstrap.cdn.cookieconsent}
 			ytPlayer = {$bootstrap.cdn.ytPlayer}
 			owlCarousel = {$bootstrap.cdn.owlCarousel}
+			masonry = {$bootstrap.cdn.masonry}
+			parallaxVanilla = {$bootstrap.cdn.parallaxVanilla}
 		}
-	}
-
-	# roll your own (experimental)
-	settings.bootstrap {
-		functions = 1
-		variables = 1
-		mixins = 1
-		root = 1
-		reboot = 1
-		type = 1
-		images = 1
-		code = 1
-		grid = 1
-		tables = 1
-		forms = 1
-		buttons = 1
-		transitions = 1
-		dropdown = 1
-		button-group = 1
-		input-group = 1
-		custom-forms = 1
-		nav = 1
-		navbar = 1
-		card = 1
-		breadcrumb = 1
-		pagination = 1
-		badge = 1
-		jumbotron = 1
-		alert = 1
-		progress = 1
-		media = 1
-		list-group = 1
-		close = 1
-		toasts = 1
-		modal = 1
-		tooltip = 1
-		popover = 1
-		carousel = 1
-		spinners = 1
-		utilities = 1
-		print = 1
 	}
 }
 

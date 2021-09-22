@@ -1,15 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{settings.config.footerSticky}">
-	<f:asset.script identifier="stickyfooterJs">
+	<f:asset.script identifier="vanilla_stickyfooterJs">
 	// Sticky footer - Page/Footer.html
-	var footerHeight = $("#page-footer").outerHeight()-8,
-		footerExtraHeight = {settings.config.stickyFooterExtraPadding};
-	if ( footerExtraHeight > 0 ) {
-		footerHeight += footerExtraHeight;
-	}
-	if ( $("#page-footer").hasClass("footer-sticky") ) {
-		$("body").css("padding-bottom", footerHeight+"px");
-	}
+	const footerExtraHeight = {settings.config.stickyFooterExtraPadding};
+	t3sbStickyFooter(footerExtraHeight);
 	</f:asset.script>
 </f:if>
 <footer id="page-footer" class="{config.footer.class}">

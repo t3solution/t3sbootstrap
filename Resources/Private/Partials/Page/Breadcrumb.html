@@ -21,7 +21,7 @@
 
 
 <f:section name="Default">
-	<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
+	<nav aria-label="breadcrumb"{f:if(condition:'{config.breadcrumb.class}',then:' class="{config.breadcrumb.class}"')}>
 		<ol class="breadcrumb{config.breadcrumb.ol-class}">
 			<f:render section="Breadcrumb" arguments="{_all}" />
 			<f:cObject typoscriptObjectPath="lib.newsTitle"/>
@@ -30,7 +30,7 @@
 </f:section>
 
 <f:section name="Inside">
-	<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
+	<nav aria-label="breadcrumb"{f:if(condition:'{config.breadcrumb.class}',then:' class="{config.breadcrumb.class}"')}>
 		<div class="{config.breadcrumb.container}">
 			<ol class="breadcrumb{config.breadcrumb.ol-class}">
 				<f:render section="Breadcrumb" arguments="{_all}" />
@@ -42,7 +42,7 @@
 
 <f:section name="Outside">
 	<div class="{config.breadcrumb.container}">
-		<nav class="breadcrumb-nav{config.breadcrumb.class}" aria-label="breadcrumb">
+		<nav aria-label="breadcrumb"{f:if(condition:'{config.breadcrumb.class}',then:' class="{config.breadcrumb.class}"')}>
 			<ol class="breadcrumb{config.breadcrumb.ol-class}">
 				<f:render section="Breadcrumb" arguments="{_all}" />
 				<f:cObject typoscriptObjectPath="lib.newsTitle"/>
@@ -55,7 +55,7 @@
 	<f:for each="{breadcrumb}" as="breadcrumbItem" iteration="iterator">
 		<f:if condition="{breadcrumbItem.current}">
 			<f:then>
-				<li class="breadcrumb-item active">
+				<li class="breadcrumb-item active" aria-current="page">
 					<f:render section="Text" arguments="{_all}" />
 				</li>
 			</f:then>
@@ -63,7 +63,8 @@
 				<f:if condition="{config.navbar.clickableparent} || {iterator.isFirst}">
 					<f:then>
 						<li class="breadcrumb-item">
-							<a class="{f:if(condition:'{breadcrumbItem.current}',then:' active')}" href="{breadcrumbItem.link}" title="{data.title}">
+							<a href="{breadcrumbItem.link}" title="{data.title}"{f:if(condition:'{breadcrumbItem.current}',then:' class="active"')}
+								{f:if(condition:'{breadcrumbItem.current}',then:' aria-current="page"')} >
 								<f:render section="Text" arguments="{_all}" />
 							</a>
 						</li>

@@ -79,7 +79,9 @@ class GridHelper implements SingletonInterface
 					 || $key != 'extraClass_four' || $key != 'extraClass_five' || $key != 'extraClass_six' ) {
 
 						if ($grid != '0') {
+
 							if ( substr($key, 0, 2) == 'xs' ) {
+
 								if ( substr($key, -3) == 'one' ) {
 									$colOne .= ' col-'.$grid;
 								}

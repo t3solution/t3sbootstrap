@@ -68,7 +68,6 @@
 							</config>
 						</TCEforms>
 					</bgwlink>
-
 				</el>
 			</ROOT>
 		</sDEF>
@@ -109,7 +108,7 @@
 
 					<enableAutoheight>
 						<TCEforms>
-							<label>Enable content overlay and autoheight for background-image (JS) - can be faulty with lazyload!</label>
+							<label>Enable content overlay and autoheight for background-image (JS)</label>
 							<onChange>reload</onChange>
 							<displayCond>
 								<AND>
@@ -217,7 +216,7 @@
 								<checkbox></checkbox>
 								<eval>int</eval>
 								<size>6</size>
-								<default>10</default>
+								<default>1</default>
 							</config>
 						</TCEforms>
 					</paddingTopBottom>
@@ -382,22 +381,22 @@
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">21by9</numIndex>
-										<numIndex index="1">21by9</numIndex>
+										<numIndex index="1">21x9</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 										<numIndex index="0">16by9</numIndex>
-										<numIndex index="1">16by9</numIndex>
+										<numIndex index="1">16x9</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
 										<numIndex index="0">4by3</numIndex>
-										<numIndex index="1">4by3</numIndex>
+										<numIndex index="1">4x3</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
 										<numIndex index="0">1by1</numIndex>
-										<numIndex index="1">1by1</numIndex>
+										<numIndex index="1">1x1</numIndex>
 									</numIndex>
 								</items>
-								<default>16by9</default>
+								<default>16x9</default>
 								<size>1</size>
 							</config>
 						</TCEforms>

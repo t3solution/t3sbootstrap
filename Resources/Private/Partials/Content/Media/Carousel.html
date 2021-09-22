@@ -2,10 +2,10 @@
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment>Gallery Template for Carousel used in Textmedia, Mediaobject and/or Card</f:comment>
-<div id="carousel-{data.uid}" class="carousel slide {gallery.rowClass}" data-ride="carousel"{f:if(condition:'{data.imagewidth}',then:' style="max-width: {data.imagewidth}px;"')}>
+<div id="carousel-{data.uid}" class="carousel slide {gallery.rowClass}" data-bs-ride="carousel"{f:if(condition:'{data.imagewidth}',then:' style="max-width: {data.imagewidth}px;"')}>
 	<ol class="carousel-indicators">
 		<f:for each="{files}" as="mediaElement" iteration="iterator">
-			<li data-target="#carousel-{data.uid}" data-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
+			<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
 		</f:for>
 	</ol>
 	<div class="carousel-inner text-center">
@@ -55,13 +55,13 @@
 			</div>
 		</f:for>
 	</div>
-	<a class="carousel-control-prev" href="#carousel-{data.uid}" role="button" data-slide="prev">
+	<a class="carousel-control-prev" href="#carousel-{data.uid}" role="button" data-bs-slide="prev">
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">zurück</span>
+		<span class="visually-hidden">zurück</span>
 	</a>
-	<a class="carousel-control-next" href="#carousel-{data.uid}" role="button" data-slide="next">
+	<a class="carousel-control-next" href="#carousel-{data.uid}" role="button" data-bs-slide="next">
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">weiter</span>
+		<span class="visually-hidden">weiter</span>
 	</a>
 </div>
 </html>

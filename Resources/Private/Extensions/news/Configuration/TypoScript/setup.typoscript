@@ -48,7 +48,13 @@ plugin.tx_news {
 			# utility class for back-button
 			button.class = {$bootstrap.ext.news.detail.buttonClass}
 		}
-
+		
+		cdn = {$bootstrap.cdn.enable}
+		animateVersion = {$bootstrap.cdn.animate}
+		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
+		baguetteBoxVersion = {$bootstrap.cdn.baguetteBox}
+		magnificpopupVersion = {$bootstrap.cdn.magnificpopup}
+		lightcaseVersion = {$bootstrap.cdn.lightcaseVersion}
 		loadingSpinner = {$bootstrap.config.loadingSpinner}
 		loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
 		loadingSpinnerPosition = {$bootstrap.ext.news.list.loadingSpinnerPosition}

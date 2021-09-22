@@ -10,7 +10,6 @@
 				<caption>{data.table_caption}</caption>
 			</f:if>
 			<f:for each="{table}" as="row" iteration="rowIterator">
-
 				<f:if condition="{rowIterator.isFirst}">
 					<f:then>
 						<f:if condition="{data.table_header_position} == 1">
@@ -20,7 +19,7 @@
 										<thead class="{table-row-class.{rowIterator.index}}">
 									</f:then>
 									<f:else>
-										<thead class="thead-dark">
+										<thead class="{theadclass}">
 									</f:else>
 								</f:if>
 							</f:then>

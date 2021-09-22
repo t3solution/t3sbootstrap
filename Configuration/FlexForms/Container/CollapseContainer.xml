@@ -63,6 +63,7 @@
 					<appearance>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.appearance</label>
+							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -80,6 +81,16 @@
 							</config>
 						</TCEforms>
 					</appearance>
+
+					<flush>
+						<TCEforms>
+							<label>Flush (to remove default background-color, borders etc.)</label>
+							<displayCond>FIELD:sDEF.appearance:=:accordion</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</flush>
 
 				</el>
 			</ROOT>

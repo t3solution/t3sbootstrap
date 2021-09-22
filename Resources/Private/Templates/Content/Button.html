@@ -2,30 +2,36 @@
 <f:comment>Button Template</f:comment>
 <f:layout name="Button" />
 <f:section name="Main">
-<f:if condition="{settings.fixedButton} && {fixedButton}">
+<f:if condition="{fixedButton}">
 	<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
 </f:if>
 <f:if condition="{parentCType} == 'button_group'">
 	 <f:then>
-	 	<f:comment> --- if is child of button-group --- </f:comment>
-		<f:link.typolink
-			parameter="{data.header_link}"
-			class="{f:if(condition: '{class}', then: '{class} ')}{typolinkButtonClass}"
-			additionalAttributes="{id: 'btn{data.uid}', role: 'button'}">
-			{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
-			{data.header -> f:format.raw()}
-		</f:link.typolink>
+		<f:render section="Button" arguments="{_all}" />
 	 </f:then>
 	 <f:else>
-	 	<f:comment> --- default button --- </f:comment>
-		<f:link.typolink
-			parameter="{data.header_link}"
-			class="{typolinkButtonClass}"
-			additionalAttributes="{role: 'button'}">
-			{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} mr-1"></i> ')}
-			{data.header -> f:format.raw()}
-		</f:link.typolink>
+		<f:if condition="{btn-block}">
+			<f:then>
+				<div class="d-grid">
+					<f:render section="Button" arguments="{_all}" />
+				</div>
+			</f:then>
+			<f:else>
+				<f:render section="Button" arguments="{_all}" />
+			</f:else>
+		</f:if>
 	 </f:else>
 </f:if>
 </f:section>
 </html>
+
+
+<f:section name="Button">
+<f:link.typolink
+	parameter="{data.header_link}"
+	class="{typolinkButtonClass}"
+	additionalAttributes="{role: 'button'}">
+	{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} me-1"></i> ')}
+	{data.header -> f:format.raw()}
+</f:link.typolink>
+</f:section>

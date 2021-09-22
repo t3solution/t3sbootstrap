@@ -42,13 +42,13 @@
 							<f:then>
 								<f:widget.link useCacheHash="1" addQueryStringMethod="GET" arguments="{currentPage: pagination.previousPage}" class="page-link">
 		<span aria-hidden="true">&laquo;</span>
-		<span class="sr-only"><f:translate key="paginate_previous" /></span>
+		<span class="visually-hidden"><f:translate key="paginate_previous" /></span>
 								</f:widget.link>
 							</f:then>
 							<f:else>
 								<f:widget.link addQueryStringMethod="GET" class="page-link">
 		<span aria-hidden="true">&laquo;</span>
-		<span class="sr-only"><f:translate key="paginate_previous" /></span>
+		<span class="visually-hidden"><f:translate key="paginate_previous" /></span>
 								</f:widget.link>
 							</f:else>
 						</f:if>
@@ -93,7 +93,7 @@
 					<li class="last next page-item">
 						<f:widget.link useCacheHash="1" addQueryStringMethod="GET" arguments="{currentPage: pagination.nextPage}" class="page-link">
 		<span aria-hidden="true">&raquo;</span>
-		<span class="sr-only"><f:translate key="paginate_next" /></span>
+		<span class="visually-hidden"><f:translate key="paginate_next" /></span>
 						</f:widget.link>
 					</li>
 				</f:if>

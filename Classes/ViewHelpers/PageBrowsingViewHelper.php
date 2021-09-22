@@ -1,17 +1,11 @@
 <?php
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
-/*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+/**
+ * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -21,13 +15,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-/**
- * Page browser for indexed search, and only useful here, as the
- * regular pagebrowser
- * so this is a cleaner "pi_browsebox" but not a real page browser
- * functionality
- * @internal
- */
+
 class PageBrowsingViewHelper extends AbstractViewHelper
 {
 	use CompileWithRenderStatic;

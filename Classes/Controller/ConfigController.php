@@ -184,7 +184,7 @@ class ConfigController extends ActionController
 		$assignedOptions['deleted'] = $deleted;
 		$assignedOptions['created'] = $created;
 
-		if ( (int)$this->settings['customScss'] === 1 && (int)$this->settings['wsScss'] === 1 ) {
+		if ( (int)$this->settings['customScss'] === 1 ) {
 			$customScss = self::getCustomScss('custom-variables');
 			$assignedOptions['custom-variables'] = $customScss['custom-variables'];
 			$customScss = self::getCustomScss('custom');
@@ -193,10 +193,6 @@ class ConfigController extends ActionController
 			if ( $this->settings['enableUtilityColors'] ) {
 				$assignedOptions['utilColors'] = self::getUtilityColors();
 			}
-		}
-
-		if ($this->settings['wizardsMarkedUndone']) {
-			self::wizardsMarkedUndone();
 		}
 
 		$this->view->assignMultiple($assignedOptions);
@@ -236,6 +232,8 @@ class ConfigController extends ActionController
 			$newConfig = new \T3SBS\T3sbootstrap\Domain\Model\Config();
 			// some defaults
 			$newConfig = self::setDefaults($newConfig);
+
+			$assignedOptions['pid'] = $this->getCurrentUid;
 			$assignedOptions['newConfig'] = $newConfig;
 		}
 
@@ -327,7 +325,6 @@ class ConfigController extends ActionController
 	{
 		if ( $this->isSiteroot ) {
 			$assignedOptions['extconf'] = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-			$assignedOptions['isLoaded']['ws_scss'] = ExtensionManagementUtility::isLoaded('ws_scss');
 		}
 
 		$assignedOptions['t3version'] = $this->version;
@@ -495,7 +492,7 @@ class ConfigController extends ActionController
 	 */
 	public function getCustomScss( string $file ): array
 	{
-		$customScssDir = $this->settings['customScssPath'] ? $this->settings['customScssPath'] : 'fileadmin/T3SB/SCSS/';
+		$customScssDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
 		$customScssFilePath = GeneralUtility::getFileAbsFileName($customScssDir);
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 		$result = $queryBuilder
@@ -538,13 +535,8 @@ class ConfigController extends ActionController
 				fwrite($handle, $scss);
 				fclose($handle);
 				if ($file == 'custom') {
-					// clean typo3temp/ws_scss/
-					if ( ExtensionManagementUtility::isLoaded('ws_scss') ) {
-						$tempDir = 'typo3temp/var/cache/data/ws_scss/';
-					} else {
-						$tempDir = '';
-					}
-					$tempPath = GeneralUtility::getFileAbsFileName($tempDir);
+					// clean typo3temp/assets/t3sbootstrap/css/
+					$tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
 					self::deleteFilesFromDirectory($tempPath);
 				}
 			} else {
@@ -630,7 +622,6 @@ class ConfigController extends ActionController
 						} else {
 
 							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
-
 								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
 									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && '.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
 								} else {
@@ -796,36 +787,6 @@ class ConfigController extends ActionController
 
 
 	/**
-	 * Mark the Upgrade Wizard as undone
-	 *
-	 * @return void
-	 */
-	protected function wizardsMarkedUndone(): void
-	{
-		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-		$queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_domain_model_config');
-		$statements = $queryBuilder
-				 ->select('uid')
-				 ->from('tx_t3sbootstrap_domain_model_config')
-				 ->execute()
-				 ->fetchAll();
-
-		foreach ($statements as $statement) {
-			$recordId = (int)$statement['uid'];
-			$queryBuilder
-				  ->update('tx_t3sbootstrap_domain_model_config')
-				  ->where(
-					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
-				  )
-				  ->set('updated', 0)
-				  ->set('gridupdated', 0)
-
-				  ->execute();
-		}
-	}
-
-
-	/**
 	 * Returns some default settings for new root configuration
 	 *
 	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
@@ -839,30 +800,32 @@ class ConfigController extends ActionController
 		$newConfig->setNavbarImage($this->settings['defaultNavbarImagePath']);
 		$newConfig->setNavbarEnable( 'light' );
 		$newConfig->setNavbarLevels( 4 );
+		$newConfig->setNavbarbrandAlignment( 'left' );
 		$newConfig->setNavbarColor( 'warning' );
 		$newConfig->setNavbarAlignment( 'left' );
 		$newConfig->setNavbarBrand( 'imgText' );
 		$newConfig->setNavbarContainer( 'inside' );
+		$newConfig->setNavbarClass('bg-gradient');
 		$newConfig->setJumbotronEnable( 1 );
-		$newConfig->setJumbotronFluid( 1 );
 		$newConfig->setJumbotronSlide( 0 );
 		$newConfig->setJumbotronPosition( 'below' );
 		$newConfig->setJumbotronContainer( 'container' );
 		$newConfig->setJumbotronContainerposition( 'Inside' );
 		$newConfig->setJumbotronCarouselInterval(5000);
 		$newConfig->setJumbotronCarouselPause(0);
+		$newConfig->setJumbotronClass( 'p-5 mb-4 bg-light bg-gradient rounded-0' );
 		$newConfig->setBreadcrumbEnable( 1 );
 		$newConfig->setBreadcrumbCorner( 1 );
 		$newConfig->setBreadcrumbPosition( 'belowJum' );
 		$newConfig->setBreadcrumbContainer( 'container' );
 		$newConfig->setSidebarLevels( 4 );
 		$newConfig->setFooterEnable( 1 );
-		$newConfig->setFooterFluid( 1 );
 		$newConfig->setFooterSlide( 0 );
 		$newConfig->setFooterContainer( 'container' );
 		$newConfig->setFooterSticky( 1 );
 		$newConfig->setFooterContainerposition( 'inside' );
-		$newConfig->setFooterClass( 'bg-dark text-light' );
+		$newConfig->setFooterClass( 'bg-dark text-light py-4' );
+		$newConfig->setStickyFooterExtraPadding(100);
 		$newConfig->setCompress( 1 );
 		$newConfig->setDisablePrefixComment(1);
 		$newConfig->setGlobalPaddingTop( 'pt-5' );
@@ -876,8 +839,6 @@ class ConfigController extends ActionController
 		$newConfig->setFaLinkIcons( 1 );
 		$newConfig->setSectionmenuAnchorOffset(29);
 		$newConfig->setSectionmenuScrollspyOffset(130);
-		$newConfig->setUpdated(1);
-		$newConfig->setGridupdated(1);
 		$newConfig->setNavbarLangFlags(1);
 
 		return $newConfig;

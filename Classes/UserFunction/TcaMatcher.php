@@ -14,6 +14,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 
 /**
  * ConfigController
@@ -48,6 +50,7 @@ class TcaMatcher
 
 		return $parent;
 	}
+
 
 	/**
 	 * container_1 ($_EXTCONF['container'] in tt_content.php)
@@ -192,8 +195,6 @@ class TcaMatcher
 			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
 			if ( $parent_rec['CType'] == 'carousel_container' && ((int) $parent_flexconf['owlCarousel'] == 1 || (int) $parent_flexconf['multislider'] == 1) ) {
-
-#			if ( $parent_rec['CType'] == 'carousel_container' && (int) $parent_flexconf['owlCarousel'] == 1 ) {
 				$parent = false;
 			}
 		}
@@ -288,7 +289,7 @@ class TcaMatcher
 	public function animateCss($arguments): bool
 	{
 		$animateCss = false;
-		$extconf = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 		if ( $extconf['animateCss'] ) {
 			$animateCss = true;
 		}
@@ -412,9 +413,9 @@ class TcaMatcher
 	public function isDropdownMenu($arguments): bool
 	{
 		$level = false;
-		$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 		$parentPage = $pageRepository->getPage($arguments['record']['pid']);
-		if ($parentPage['is_siteroot']) {		
+		if ($parentPage['is_siteroot']) {
 			$level = true;
 		}
 

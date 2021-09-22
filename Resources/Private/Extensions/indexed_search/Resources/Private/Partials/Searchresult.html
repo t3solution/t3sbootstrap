@@ -10,9 +10,9 @@
 	<f:if condition="{row.headerOnly} == 0">
 	<p class="tx-indexedsearch-description">{row.description -> f:format.raw()}</p>
 	<ul class="tx-indexedsearch-info list-inline mb-0">
-		<li class="tx-indexedsearch-text-item-size list-inline-item mr-3"><strong><f:translate key="result.size" /></strong> {row.size}</li>
-		<li class="tx-indexedsearch-text-item-crdate list-inline-item mr-3"><strong><f:translate key="result.created" /></strong> <f:format.date>@{row.created}</f:format.date></li>
-		<li class="tx-indexedsearch-text-item-mtime list-inline-item mr-3"><strong><f:translate key="result.modified" /></strong> <f:format.date>@{row.modified}</f:format.date></li>
+		<li class="tx-indexedsearch-text-item-size list-inline-item me-3"><strong><f:translate key="result.size" /></strong> {row.size}</li>
+		<li class="tx-indexedsearch-text-item-crdate list-inline-item me-3"><strong><f:translate key="result.created" /></strong> <f:format.date>@{row.created}</f:format.date></li>
+		<li class="tx-indexedsearch-text-item-mtime list-inline-item me-3"><strong><f:translate key="result.modified" /></strong> <f:format.date>@{row.modified}</f:format.date></li>
 		<li class="tx-indexedsearch-text-item-path list-inline-item"><f:format.html><strong><f:translate key="result.path" /></strong> {row.path}</f:format.html></li>
 	</ul>
 	</f:if>

@@ -9,28 +9,6 @@ page {
 		##########################################################################################################
 
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
-		t3sbootstrap.if.isFalse = {$bootstrap.config.footerSticky}
-
-		##########################################################################################################
-		#
-		# Default CSS w/ Sticky Footer
-		#
-		##########################################################################################################
-
-		t3sbootstrapStickyFooter = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrapSF.css
-		t3sbootstrapStickyFooter.if.isTrue = {$bootstrap.config.footerSticky}
-
-		##########################################################################################################
-		#
-		# Navbar slide
-		#
-		##########################################################################################################
-
-		navbarSlideCss = EXT:t3sbootstrap/Resources/Public/Styles/slideNavbar.css
-		navbarSlideCss.if {
-			value = slide
-			equals = {$bootstrap.config.navbarEnable}
-		}
 
 	}
 
@@ -61,7 +39,6 @@ page {
 
 	}
 
-
 	##########################################################################################################
 	#
 	# FONTAWESOME - using the SVG + JS version
@@ -77,7 +54,6 @@ page {
 		}
 	}
 
-
 	##########################################################################################################
 	#
 	# Inline JS
@@ -92,6 +68,22 @@ page {
 temp.jsCookieConsent >
 
 
+[{$bootstrap.config.footerSticky} == 1]
+page.cssInline.2431 = TEXT
+page.cssInline.2431.value (
+	/* footer-sticky - page.cssInline.2431 */
+	html {
+		position:relative;
+		min-height:100%
+	}
+	#page-footer {
+		position:absolute;
+		bottom:0;width:100%
+	}
+)
+[END]
+
+
 ##########################################################################################################
 #
 # Conditions
@@ -104,7 +96,7 @@ page.cssInline {
 	124 = TEXT
 	124.value = picture img.lazy {opacity:1 !important;}
 }
-[GLOBAL]
+[END]
 
 # Ajax Pagination for EXT:news
 [{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1]
@@ -130,81 +122,18 @@ page.includeJSLibs {
 	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js
 	jqueryCDN.external = 1
 	jqueryCDN.forceOnTop = 1
+	jqueryCDN.if.isFalse = {$bootstrap.disable.jquery}
 }
 [END]
 
-
-##########################################################################################################
-#
-# Lightbox with CDN
-#
-##########################################################################################################
-
-##########################################################################################################
-# LIGHTBOX (Ekko Lightbox)
-##########################################################################################################
-# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
-[{$bootstrap.config.lightboxSelection} == 2 && {$bootstrap.cdn.enable} == 1]
-page.includeCSS.t3sblightboxCDN >
-page.includeCSS.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/{$bootstrap.cdn.ekkoLightbox}/ekko-lightbox.css
-page.includeCSS.t3sblightboxCDN.external = 1
-page.includeJSFooter.t3sblightboxCDN >
-page.includeJSFooter.t3sblightboxCDN = https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/{$bootstrap.cdn.ekkoLightbox}/ekko-lightbox.min.js
-page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.ekkoLightboxIntegrity}
-page.includeJSFooter.t3sblightboxCDN.external = 1
-[END]
-
-##########################################################################################################
-# LIGHTBOX (Lightcase)
-##########################################################################################################
-# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
-[{$bootstrap.config.lightboxSelection} == 3 && {$bootstrap.cdn.enable} == 1]
-page.includeCSS.t3sblightboxCDN >
-page.includeCSS.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$bootstrap.cdn.lightcase}/src/css/lightcase.css
-page.includeCSS.t3sblightboxCDN.external = 1
-page.includeJSFooter.t3sblightboxCDN >
-page.includeJSFooter.t3sblightboxCDN = https://cdn.jsdelivr.net/npm/lightcase@{$bootstrap.cdn.lightcase}/src/js/lightcase.min.js
-page.includeJSFooter.t3sblightboxCDN.integrity = {$bootstrap.cdn.lightcaseIntegrity}
-page.includeJSFooter.t3sblightboxCDN.external = 1
-[END]
-
-##########################################################################################################
-#
-# Lightbox w/o CDN
-#
-##########################################################################################################
-
-##########################################################################################################
-# LIGHTBOX (Ekko Lightbox)
-##########################################################################################################
-# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
-[{$bootstrap.config.lightboxSelection} == 2 && {$bootstrap.cdn.enable} == 0]
-page.includeCSS.t3sblightbox >
-page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/ekko-lightbox.css
-page.includeJSFooter.t3sblightbox >
-page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/ekko-lightbox.min.js
-[END]
-
-##########################################################################################################
-# LIGHTBOX (Lightcase)
-##########################################################################################################
-# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
-[{$bootstrap.config.lightboxSelection} == 3 && {$bootstrap.cdn.enable} == 0]
-page.includeCSS.t3sblightbox >
-page.includeCSS.t3sblightbox = fileadmin/T3SB/Resources/Public/CSS/lightcase.css
-page.includeJSFooter.t3sblightbox >
-page.includeJSFooter.t3sblightbox = fileadmin/T3SB/Resources/Public/JS/lightcase.min.js
-[END]
-
-# load jquery into the header
 [{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
 	jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
 	jquery.forceOnTop = 1
+	jquery.if.isFalse = {$bootstrap.disable.jquery}
 }
 [END]
-
 
 ##########################################################################################################
 #

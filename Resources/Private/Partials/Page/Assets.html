@@ -3,11 +3,13 @@
 <f:comment>For assets used on more than one page</f:comment>
 <f:if condition="{carousel}">
 <f:comment>CardWrapper.html, CarouselContainer.html, Jumbotron.html</f:comment>
-<f:asset.script identifier="carousel">
+<f:asset.script identifier="vanilla_carousel">
 	// Carousel - Page/Assets.html
-	var carousel = $(".carousel .carousel-inner .carousel-item:first-child");
-	if ( carousel.length ) {
-		carousel.addClass( "active" );
+	var carousels = document.querySelectorAll('.carousel .carousel-inner .carousel-item:first-child');
+	if ( carousels.length ) {
+		carousels.forEach( carousel => {
+			carousel.classList.add('active');
+		});
 	}
 </f:asset.script>
 </f:if>
@@ -16,19 +18,21 @@
 	<f:if condition="{settings.cdn}">
 		<f:then>
 			<f:if condition="{owlStyle} == '1'">
-				<f:asset.css priority="true" identifier="animateCss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.min.css" />
+				<f:comment> not working with animate.css v4 </f:comment>
+				<f:asset.css identifier="animateCss"
+				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
 			</f:if>
 			<f:asset.css identifier="owlmincss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.animateVersion}/assets/owl.carousel.min.css" />
+				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.owlCarouselVersion}/assets/owl.carousel.min.css" />
 			<f:asset.css identifier="owlthemecss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.animateVersion}/assets/owl.theme.default.css" />
-			<f:asset.script identifier="owljs" 
-				src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.animateVersion}/owl.carousel.js" />
+				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.owlCarouselVersion}/assets/owl.theme.default.css" />
+			<f:asset.script identifier="owljs"
+				src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.owlCarouselVersion}/owl.carousel.js" />
 		</f:then>
 		<f:else>
 			<f:if condition="{owlStyle} == '1'">
-				<f:asset.css priority="true" identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.min.css" />
+				<f:comment> not working with animate.css v4 </f:comment>
+				<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.min.css" />
 			</f:if>
 			<f:asset.css identifier="owlmincss" href="fileadmin/T3SB/Resources/Public/CSS/owl.carousel.min.css" />
 			<f:asset.css identifier="owlthemecss" href="fileadmin/T3SB/Resources/Public/CSS/owl.theme.default.css" />
@@ -40,7 +44,7 @@
 		<f:then>
 			<f:asset.css identifier="owlcustomcss-1" href="EXT:t3sbootstrap/Resources/Public/Styles/owlCarousel-1.css" />
 			<f:asset.script identifier="owlinlinejs-1-{data.uid}">
-	// OWL Carousel (Style 1 / uid:{data.uid}) - Page/Assets.html
+	// jQuery OWL Carousel (Style 1 / uid:{data.uid}) - Page/Assets.html
 	var animateOut = '{owlAnimation}';
 	var interval = {interval};
 	var number = {owlNumber};
@@ -63,14 +67,14 @@
 				items:number
 			}
 		}
-	});	
+	});
 			</f:asset.script>
 
 		</f:then>
 		<f:else>
 			<f:asset.css identifier="owlcustomcss-2" href="EXT:t3sbootstrap/Resources/Public/Styles/owlCarousel-2.css" />
 			<f:asset.script identifier="owlinlinejs-2-{data.uid}">
-	// OWL Carousel (Style 2 / uid:{data.uid}) - Page/Assets.html
+	// jQuery OWL Carousel (Style 2 / uid:{data.uid}) - Page/Assets.html
 	var interval = {interval};
 	var owlUid = '#owl-{data.uid}';
 	$(owlUid).owlCarousel({
@@ -83,144 +87,67 @@
 		autoplayTimeout:interval,
 		smartSpeed:450,
 		responsive: {
-		0: {
-		  items:1
-		},
-		768: {
-		  items:2
-		},
-		1170: {
-		  items:3
+			0: {
+				items:1
+			},
+			768: {
+				items:2
+			},
+			1170: {
+				items:3
+			}
 		}
-	  }
-  });
+	});
 			</f:asset.script>
 		</f:else>
 	</f:if>
 </f:if>
 <f:if condition="{fixedbutton}">
 	<f:comment>Button.html, Modal.html</f:comment>
-	<f:asset.script identifier="fixedbutton">
+	<f:asset.script identifier="vanilla_fixedbutton">
 	// Fixed button on left or right browser edge - Page/Assets.html
-	var buttonFixedPosition = $('.fixedPosition');
-	if ( buttonFixedPosition.length ) {
-		$( buttonFixedPosition ).each(function() {
-			if ( $(this).hasClass('fixedModalButton') ) {
-				var fixedButton = $(this).find('button');
-			} else {
-				if ( $(this).hasClass('fixedGroupButton') ) {
-					var fixedButton = $(this).find('div');
-				} else {
-					var fixedButton = $(this).find('a');
-				}
-			}
-			$(this).hide().removeClass('d-none').delay(2000).fadeIn(400);
-			if ( fixedButton.hasClass('rotate-minus') || fixedButton.hasClass('rotate-plus') ) {
-				var position = $(this).outerWidth()/2 - $(this).outerHeight()/2;
-				if ( $(this).hasClass('fixedPosition-right') ) {
-					$(this).css('right', '-'+position+'px');
-				} else {
-					$(this).css('left', '-'+position+'px');
-				}
-			}
-		});
+	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
+	if ( buttonsFixedPosition.length ) {
+		t3sbFixedButtons(buttonsFixedPosition);
 	}
 	</f:asset.script>
 </f:if>
 <f:if condition="{scrollspy}">
 	<f:comment>Page/Section.html, Page/MenuSection.html</f:comment>
-	<f:asset.script identifier="scrollspy">
-	// Sectionmenu animated scrolling and scrollspy - Page/Assets.html
-	$("#sectionmenu .section-menu a.scroll-trigger").bind("click", function(event) {
-		event.preventDefault();
-		var anchor = $(this).attr("href");
-		anchor = anchor.split('#');
-		anchor =	"#"+anchor[1];
-		if (anchor.length) {
-			var sectionmenuHeight = 0;
-			//var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row-reverse");
-			var sectionmenuRow = $("#sectionmenu").find("nav").hasClass("flex-row");
-			var offsetSize = {settings.config.sectionmenuAnchorOffset};
-			if (!offsetSize) {
-				offsetSize = 29;
-			}
-			// If is in sidebar (aside)
-			if ($("#sectionmenu").parent('aside').length) {
-				// do nothing
-			} else {
-				if (sectionmenuRow) {
-					// add menu height if flex-row
-					sectionmenuHeight = $("#sectionmenu").outerHeight();
-					offsetSize = sectionmenuHeight+offsetSize;
-				}
-			}
-			if ( fixedNavbar ) {
-				offsetSize = offsetSize + navbarHeight;
-			}
-			if ( $("#sectionmenu").hasClass("position-fixed") === false ) {
-				offsetSize = offsetSize + (sectionmenuHeight * 2) - 30;
-			}
-			if($(anchor).length)
-			$("html, body").stop().animate({
-				scrollTop: $(anchor).offset().top-offsetSize
-			}, 1500, "easeInOutExpo");
-			return false;
-		}
-	});
-	// Activate scrollspy to add active class to sectionmenu items on scroll
-	var scrollspyOffset = {settings.config.sectionmenuScrollspyOffset};
-	if (!scrollspyOffset) {
-		scrollspyOffset = 130;
+	<f:asset.script identifier="vanilla_scrollspy">
+	// Sectionmenu scrollspy - Page/Assets.html
+	document.body.setAttribute('data-bs-spy', 'scroll');
+	document.body.setAttribute('data-bs-target', '#sectionmenu');
+	document.body.setAttribute('data-bs-offset', {settings.config.sectionmenuScrollspyOffset});
+	document.body.setAttribute('tabindex', '0');
+	document.body.style.position = 'relative';
+	if (document.body.style.overflowY) {
+		document.body.style.overflowY = 'unset';
 	}
-	$("body").scrollspy({
-		target: "#sectionmenu",
-		offset: scrollspyOffset
+	var sectionmenu = document.getElementById('sectionmenu');
+	sectionmenu.querySelectorAll('a').forEach( link => {
+		link.addEventListener('click', function(l) {
+			if (document.body.style.overflowY) {
+				document.body.style.overflowY = 'unset';
+			}
+			event.preventDefault();
+			t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'))
+		});
 	});
 	</f:asset.script>
 </f:if>
-
-<f:if condition="{stickytop}">
-	<f:comment>MenuSubpages.html, Section.html, MenuSection.html</f:comment>
-
-	<f:asset.script identifier="stickytop">
-	// Sticky top for section-menu - Page/Assets.html
-	if ( $(window).width() > navbarBreakpointWidth ) {
-		// only one is supported
-		if ($('#sectionmenu').length || $('.submenu').length || $('.make-me-sticky').length) {
-			var offsetSize = 30;
-			var affix = $('.make-me-sticky');
-			if ($('.submenu').length)		affix = $('.submenu');
-			if ($('#sectionmenu').length)	affix = $('#sectionmenu');
-			if ( affix.length ){
-				if ( affix.length > 1 ) {
-					affix = affix.last();
-				}
-				// if is in Sidebar (aside)
-				if ( affix.parent('aside').length ) {
-					offsetSize = 30;
-				}
-				// if Navbar is fixed-top
-				if ( fixedNavbar ) {
-					if ( $("#main-navbar").hasClass("shrink") ) {
-						offsetSize = 60+offsetSize;
-					} else {
-						offsetSize = navbarHeight+offsetSize;
-					}
-				}
-				var affixWidth = affix.outerWidth();
-				var affixOffsetLeft = affix.offset().left;
-				var affixOffsetTop = affix.offset().top;
-				$(window).scroll(function() {
-					if ( (affixOffsetTop  - $(window).scrollTop()) > offsetSize) {
-						affix.removeClass('position-fixed').removeClass('my-0').css({'top' : '','left' : '','width' : '','z-index' : ''});
-					} else {
-						affix.addClass('position-fixed').addClass('my-0').css({'top' : offsetSize,'left' : affixOffsetLeft,'width' : affixWidth,'z-index' : 999});
-					}
-				});
-			}
-		}
-	}
-	</f:asset.script>
+<f:if condition="{contentElement}">
+<f:asset.script identifier="vanilla_stickyTop">
+   window.onscroll = function() {stickyFunction()};
+   let sticky = sectionmenu.offsetTop;
+   function stickyFunction() {
+	  if (window.pageYOffset + navbarHeight >= sticky) {
+		 sectionmenu.classList.add("sticky");
+		 sectionmenu.style.top = navbarHeight+'px';
+	  } else {
+		 sectionmenu.classList.remove("sticky");
+	  }
+   }
+</f:asset.script>
 </f:if>
-
 </html>

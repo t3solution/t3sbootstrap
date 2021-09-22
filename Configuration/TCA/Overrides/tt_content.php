@@ -401,6 +401,25 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']
 );
 $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
+# MASONRY
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	(
+		new \B13\Container\Tca\ContainerConfiguration(
+			'masonry_wrapper',
+			'Masonry Wrapper',
+			'Masonry with the Bootstrap grid system',
+			[
+				[
+					['name' => 'Masonry', 'colPos' => 283]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
+);
+$GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
 
 /***************
  * Add new CTypes
@@ -498,7 +517,9 @@ $tempContentColumns = [
 				['display-1','display-1'],
 				['display-2','display-2'],
 				['display-3','display-3'],
-				['display-4','display-4']
+				['display-4','display-4'],
+		['display-5','display-5'],
+		['display-6','display-6']
 			],
 			'default' => ''
 		]
@@ -515,8 +536,8 @@ $tempContentColumns = [
 					['m-3 (margin)', 'm-3'],
 					['mt-3 (margin-top)', 'mt-3'],
 					['mb-3 (margin-bottom)', 'mb-3'],
-					['ml-3 (margin-left)', 'ml-3'],
-					['mr-3 (margin-right)', 'mr-3'],
+					['ms-3 (margin-left)', 'ms-3'],
+					['me-3 (margin-right)', 'me-3'],
 					['mx-3 (margin-left and -right)', 'mx-3'],
 					['my-3 (margin-top and -bottom)', 'my-3'],
 					['text-primary', 'text-primary'],
@@ -549,8 +570,6 @@ $tempContentColumns = [
 					['exclamation-circle', 'fas fa-exclamation-circle'],
 					['question-circle', 'fas fa-question-circle'],
 					['check-circle', 'fas fa-check-circle'],
-					['chevron-left', 'fas fa-chevron-left'],
-					['chevron-right', 'fas fa-chevron-right'],
 					['chevron-circle-left', 'fas fa-chevron-circle-left'],
 					['chevron-circle-right', 'fas fa-chevron-circle-right'],
 					['youtube', 'fab fa-youtube'],
@@ -611,8 +630,8 @@ $tempContentColumns = [
 				['padding on all 4 sides','blank'],
 				['padding-top','t'],
 				['padding-bottom','b'],
-				['padding-left','l'],
-				['padding-right','r'],
+				['padding-left','s'],
+				['padding-right','e'],
 				['padding-left and -right','x'],
 				['padding-top and -bottom','y']
 			],
@@ -649,8 +668,8 @@ $tempContentColumns = [
 				['margin on all 4 sides','blank'],
 				['margin-top','t'],
 				['margin-bottom','b'],
-				['margin-left','l'],
-				['margin-right','r'],
+				['margin-left','s'],
+				['margin-right','e'],
 				['margin-left and -right','x'],
 				['margin-top and -bottom','y']
 			],
@@ -690,7 +709,8 @@ $tempContentColumns = [
 				['container-sm','container-sm'],
 				['container-md','container-md'],
 				['container-lg','container-lg'],
-				['container-xl','container-xl']
+				['container-xl','container-xl'],
+				['container-xxl','container-xxl']
 			],
 			'default' => ''
 		]
@@ -726,6 +746,7 @@ $tempContentColumns = [
 				'modal' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Modal.xml',
 				'tabs_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Tabs.xml',
 				'tabs_tab' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml',
+				'masonry_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml',
 			]
 		]
 	],
@@ -754,6 +775,45 @@ $tempContentColumns = [
 			'renderType' => 'colorpicker',
 			'size' => 20
 		],
+	],
+	'tx_t3sbootstrap_inTextImgColumns' => [
+		'label' => 'Gallery columns',
+		'exclude' => 1,
+		'config' => [
+			'type' => 'select',
+			'renderType' => 'selectSingle',
+			'items' => [
+				[1,1],
+				[2,2],
+				[3,3],
+				[4,4],
+				[5,5],
+				[6,6],
+				[7,7],
+				[8,8],
+				[9,9],
+				[10,10],
+				[11,11],
+				[12,12]
+			],
+			'default' => 4
+		]
+	],
+	'tx_t3sbootstrap_galleryGutters' => [
+		'label' => 'Gallery gutters',
+		'exclude' => 1,
+		'config' => [
+			'type' => 'select',
+			'renderType' => 'selectSingle',
+			'items' => [
+				[1,1],
+				[2,2],
+				[3,3],
+				[4,4],
+				[5,5]
+			],
+			'default' => 4
+		]
 	],
 	'tx_t3sbootstrap_bgopacity' => [
 		 'label' => 'Opacity for Background color only',
@@ -791,6 +851,8 @@ $tempContentColumns = [
 				['danger','danger'],
 				['light','light'],
 				['dark','dark'],
+				['body','body'],
+				['transparent','transparent'],
 				['custom 1','customOne'],
 				['custom 2','customTwo']
 			],
@@ -816,6 +878,7 @@ $tempContentColumns = [
 				['danger','danger'],
 				['light','light'],
 				['dark','dark'],
+				['body','body'],
 				['custom 1','customOne'],
 				['custom 2','customTwo']
 			],
@@ -856,7 +919,9 @@ $tempContentColumns = [
 				['success','success'],
 				['info','info'],
 				['warning','warning'],
-				['danger','danger']
+				['danger','danger'],
+				['light','light'],
+				['dark','dark']
 			],
 			'default' => ''
 		]
@@ -1205,7 +1270,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 ];
 
 
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'appearanceLinks',
@@ -1278,7 +1342,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'after:layout'
 );
 # add palette animate if EXT:content_animations is not loaded
-if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations') ) {	
+if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations') ) {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 		'tt_content',
 		'--palette--;Animation;animate',
@@ -1286,6 +1350,10 @@ if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_anim
 		'after:layout'
 	);
 }
+
+$GLOBALS['TCA']['tt_content']['palettes']['bsRowWidth'] = [
+  'showitem' => 'tx_t3sbootstrap_image_ratio, tx_t3sbootstrap_inTextImgColumns, tx_t3sbootstrap_galleryGutters'
+];
 
 $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
   'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
@@ -1334,9 +1402,6 @@ if ($extconf['sectionOrder']) {
 	);
 }
 
-
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['t3sbootstrap_pi1'] = 'recursive,select_key,pages';
-
 if ( $extconf['preview'] ) {
 	/***************
 	 * Show preview of tt_content elements in page module
@@ -1344,9 +1409,12 @@ if ( $extconf['preview'] ) {
 	$GLOBALS['TCA']['tt_content']['ctrl']['previewRenderer'] = T3SBS\T3sbootstrap\Backend\Preview\DefaultPreviewRenderer::class;
 	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
-	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper'];
+	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper'];
 	foreach ($containers as $container) {
 		$GLOBALS['TCA']['tt_content']['types'][trim($container)]['previewRenderer'] = T3SBS\T3sbootstrap\Backend\Preview\T3sbPreviewRenderer::class;
 	}
 }
+
+
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['t3sbootstrap_pi1'] = 'recursive,select_key,pages';
 

@@ -37,7 +37,6 @@ call_user_func(function () {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.wsScss = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 0');
@@ -51,13 +50,10 @@ call_user_func(function () {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.color = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.cTypeClass = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScss = 0');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScssPath = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.editScss = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.expandedContent = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = 0');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.rollyourown = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fixedButton = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 0');
 
 	/***************
@@ -108,11 +104,6 @@ call_user_func(function () {
 	if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
 		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class]['flexParsing'][]
 		 = \T3SBS\T3sbootstrap\Hooks\FlexFormHook::class;
-
-		// Optional "flexform path"
-		if (array_key_exists('flexformPath', $extconf)) {
-			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.flexformPath = '.$extconf['flexformPath']);
-		}
 	}
 	// Optional modify flexform fields
 	if (array_key_exists('flexformModify', $extconf) && $extconf['flexformModify'] === '1') {
@@ -128,11 +119,8 @@ call_user_func(function () {
 	// Optional custom translations
 	if (array_key_exists('customTranslations', $extconf) && $extconf['customTranslations'] === '1') {
 		$extPath = 'EXT:t3sbootstrap/Resources/Private/Language/';
-		if (array_key_exists('customTranslationsPath', $extconf)) {
-			$ctPath = $extconf['customTranslationsPath'];
-		} else {
-			$ctPath = 'fileadmin/T3SB/Language/';
-		}
+		$ctPath = 'fileadmin/T3SB/Language/';
+
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang.xlf'][] = \TYPO3\CMS\Core\Core\Environment::getPublicPath() . $ctPath . 'locallang.xlf';
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_m1.xlf'][] = \TYPO3\CMS\Core\Core\Environment::getPublicPath() . $ctPath . 'locallang_m1.xlf';
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_db.xlf'][] = \TYPO3\CMS\Core\Core\Environment::getPublicPath() . $ctPath . 'locallang_db.xlf';
@@ -213,27 +201,16 @@ call_user_func(function () {
 	if (array_key_exists('cTypeClass', $extconf) && $extconf['cTypeClass'] === '1') {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.cTypeClass = 1');
 	}
-	// Optional "rollyourown"
-	if (array_key_exists('rollyourown', $extconf) && $extconf['rollyourown'] === '1') {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.rollyourown = 1');
-	}
-	// Optional "custom scss" if ws_scss is loaded
-	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ws_scss') ) {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.wsScss = 1');
-		if (array_key_exists('customScss', $extconf) && $extconf['customScss'] === '1') {
-			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScss = 1');
-			// Optional "bootswatch theme"
-			if (array_key_exists('bootswatch', $extconf) && $extconf['bootswatch'] !== 'none') {
-				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = '.$extconf['bootswatch']);
-			}
-			// Edit in BE
-			if (array_key_exists('editScss', $extconf) && $extconf['editScss'] === '1') {
-				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.editScss = 1');
-			}
-			// Optional "custom scss path"
-			if (array_key_exists('customScssPath', $extconf)) {
-				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScssPath = '.$extconf['customScssPath']);
-			}
+	// Optional "custom scss"
+	if (array_key_exists('customScss', $extconf) && $extconf['customScss'] === '1') {
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScss = 1');
+		// Optional "bootswatch theme"
+		if (array_key_exists('bootswatch', $extconf) && $extconf['bootswatch'] !== 'none') {
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = '.$extconf['bootswatch']);
+		}
+		// Edit in BE
+		if (array_key_exists('editScss', $extconf) && $extconf['editScss'] === '1') {
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.editScss = 1');
 		}
 	}
 	// Optional "expanded content"
@@ -249,12 +226,6 @@ call_user_func(function () {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sectionOrder = tx_t3sbootstrap_sectionOrder');
 	} else {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sectionOrder = sorting');
-	}
-	// Optional "fixed button on left or right browser edge"
-	if (array_key_exists('fixedButton', $extconf) && $extconf['fixedButton'] === '1') {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fixedButton = 1');
-	} else {
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fixedButton = 0');
 	}
 	# if webp is loaded
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('webp') ) {
@@ -279,10 +250,19 @@ call_user_func(function () {
 	/***************
 	 * Registering wizards
 	 */
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbConstantsUpdateWizard']
-	= \T3SBS\T3sbootstrap\Updates\t3sbConstantsUpdateWizard::class;
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbMigrateUpdateWizard']
+	= \T3SBS\T3sbootstrap\Updates\t3sbMigrateUpdateWizard::class;
 
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbGridUpdateWizard']
-	= \T3SBS\T3sbootstrap\Updates\t3sbGridUpdateWizard::class;
+	/***************
+	 * Parser
+	 */
+	// Register css processing parser
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'][\T3SBS\T3sbootstrap\Parser\ScssParser::class] =
+		 \T3SBS\T3sbootstrap\Parser\ScssParser::class;
+
+	// Register css processing hooks
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][\T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook::class]
+	        = \T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook::class . '->execute';
+
 
 });

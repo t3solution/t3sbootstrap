@@ -58,16 +58,23 @@ lib.contentElement {
 		linkHoverEffect = {$bootstrap.extconf.linkHoverEffect}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
-		fixedButton = {$bootstrap.extconf.fixedButton}
 		animateCss = {$bootstrap.extconf.animateCss}
 		animateVersion = {$bootstrap.cdn.animate}
+		masonryVersion = {$bootstrap.cdn.masonry}
+		masonryIntegrity = {$bootstrap.cdn.masonryIntegrity}
+		parallaxVanillaVersion = {$bootstrap.cdn.parallaxVanilla}
+		baguetteBoxVersion = {$bootstrap.cdn.baguetteBox}
+		lightcaseVersion = {$bootstrap.cdn.lightcase}
+		magnificpopupVersion = {$bootstrap.cdn.magnificpopup}
 		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
+		ytPlayerVersion = {$bootstrap.cdn.ytPlayer}
 		viewportcheckerVersion = {$bootstrap.cdn.viewportchecker}
 		viewportcheckerIntegrity = {$bootstrap.cdn.viewportcheckerIntegrity}
 		cdn = {$bootstrap.cdn.enable}
 		highlightIntegrity = {$bootstrap.cdn.highlightIntegrity}
 		highlightVersion = {$bootstrap.cdn.highlight}
 		dateformat = {$bootstrap.config.dateFormat}
+		subheaderTag = {$bootstrap.config.subheaderTag}
 		subheaderColor = {$bootstrap.config.subheaderColor}
 		sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
 		magnifying = {$bootstrap.config.magnifying}
@@ -86,6 +93,7 @@ lib.contentElement {
 		breakpoint = {$bootstrap.config.navbarBreakpoint}
 		lightboxSelection = {$bootstrap.config.lightboxSelection}
 		cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
+
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
@@ -96,6 +104,7 @@ lib.contentElement {
 			md = {$bootstrap.navbar.breakpoint.md}
 			lg = {$bootstrap.navbar.breakpoint.lg}
 			xl = {$bootstrap.navbar.breakpoint.xl}
+			xxl = {$bootstrap.navbar.breakpoint.xxl}
 		}
 	}
 	variables {
@@ -120,6 +129,7 @@ lib.contentElement {
 				md = {$bootstrap.navbar.breakpoint.md}
 				lg = {$bootstrap.navbar.breakpoint.lg}
 				xl = {$bootstrap.navbar.breakpoint.xl}
+				xxl = {$bootstrap.navbar.breakpoint.xxl}
 				no = 0
 			}
 		}
@@ -131,11 +141,11 @@ lib.contentElement {
 lib.contentElement.settings.srcsetMobile = 575
 [END]
 
-# 2 == ekko-lightbox - http://ashleydw.github.io/lightbox/
+# 2 == Magnific Popup - https://dimsemenov.com/plugins/magnific-popup/
 [{$bootstrap.config.lightboxSelection} == 2]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
-	linkParams.ATagParams.dataWrap = class="lightbox" data-toggle="lightbox" data-gallery="gallery-{file:current:uid_foreign}" data-title="{file:current:title}" data-footer="{file:current:description}
+	linkParams.ATagParams.dataWrap = title="{file:current:description}"
 	directImageLink = 1
 }
 [END]

@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <figure class="image{f:if(condition: mediaElement.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {mediaElement.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
-	<div class="embed-responsive embed-responsive-16by9">
-		<f:media class="embed-responsive-item" file="{mediaElement}" width="auto" height="auto" />
+	<div class="ratio ratio-16x9">
+		<f:media file="{mediaElement}" width="auto" height="auto" />
 	</div>
 	<f:if condition="{mediaElement.description}">
 		<figcaption class="image-caption">

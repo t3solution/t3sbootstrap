@@ -4,7 +4,7 @@
 <f:layout name="Default" />
 <f:section name="Main">
 	<f:if condition="{files}">
-		<div class="wrapper-parent image-gallery">
+		<div class="wrapper-parent image-gallery gallery">
 			<f:for each="{files}" as="row" iteration="fileIterator">
 				<div class="row">
 					<f:for each="{row}" as="file">
@@ -50,9 +50,9 @@
 							</f:if>
 						</f:if>
 						<f:if condition="{file.type} == 4">
-							<div class="embed-responsive embed-responsive-16by9">
+							<div class="ratio ratio-16x9">
 								<f:media
-									class="embed-responsive-item"
+									class=""
 									file="{file}"
 									width="{data.imagewidth}"
 									alt="{file.alternative}"

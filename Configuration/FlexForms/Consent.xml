@@ -1,10 +1,5 @@
 <T3DataStructure>
 	<sheets>
-		<!--
-			################################
-				 SHEET General Settings
-			################################
-		-->
 		<sDEF>
 			<ROOT>
 				<TCEforms>
@@ -108,7 +103,6 @@
 						</TCEforms>
 					</settings.consent.buttonStyle>
 
-
 					<settings.consent.extraClass>
 						<TCEforms>
 							<label>Extra Class</label>
@@ -120,7 +114,6 @@
 							</config>
 						</TCEforms>
 					</settings.consent.extraClass>
-
 
 					<settings.consent.loading>
 						<TCEforms>
@@ -144,8 +137,8 @@
 
 					<previewImage>
 						<TCEforms>
-							  <label>Thumbnail (background-image)</label>
-							  <config>
+								 <label>Thumbnail (background-image)</label>
+								 <config>
 								  <type>inline</type>
 								  <foreign_table>sys_file_reference</foreign_table>
 								  <foreign_field>uid_foreign</foreign_field>
@@ -158,40 +151,40 @@
 								  <foreign_selector>uid_local</foreign_selector>
 								  <overrideChildTca>
 									  <columns>
-										  <uid_local>
-											  <config>
+											<uid_local>
+												 <config>
 												  <appearance>
 													  <elementBrowserType>file</elementBrowserType>
 													  <elementBrowserAllowed>gif,jpg,jpeg,png</elementBrowserAllowed>
 												  </appearance>
-											  </config>
-										  </uid_local>
+												 </config>
+											</uid_local>
 									  </columns>
 								  </overrideChildTca>
 								  <filter>
 									  <userFunc>TYPO3\CMS\Core\Resource\Filter\FileExtensionFilter->filterInlineChildren</userFunc>
 									  <parameters>
-										  <allowedFileExtensions></allowedFileExtensions>
-										  <disallowedFileExtensions></disallowedFileExtensions>
+											<allowedFileExtensions></allowedFileExtensions>
+											<disallowedFileExtensions></disallowedFileExtensions>
 									  </parameters>
 								  </filter>
 								  <appearance>
 									  <useSortable>0</useSortable>
 									  <headerThumbnail>
-										  <field>uid_local</field>
-										  <width>45</width>
-										  <height>45c</height>
+											<field>uid_local</field>
+											<width>45</width>
+											<height>45c</height>
 									  </headerThumbnail>
 									  <enabledControls>
-										  <info>1</info>
-										  <new>0</new>
-										  <dragdrop>1</dragdrop>
-										  <sort>0</sort>
-										  <hide>1</hide>
-										  <delete>1</delete>
+											<info>1</info>
+											<new>0</new>
+											<dragdrop>1</dragdrop>
+											<sort>0</sort>
+											<hide>1</hide>
+											<delete>1</delete>
 									  </enabledControls>
 								  </appearance>
-							  </config>
+								 </config>
 						</TCEforms>
 					</previewImage>
 

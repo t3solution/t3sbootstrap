@@ -17,7 +17,6 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-
 class CardProcessor implements DataProcessorInterface {
 
 	/**
@@ -107,6 +106,12 @@ class CardProcessor implements DataProcessorInterface {
 			$cardData['button']['link'] = $processedData['data']['header_link'];
 			$processedData['data']['header_link'] = '';
 		}
+
+		$cardData['button']['linkClass'] = $flexconf['button']['outline'] ? '-outline': '';
+		$cardData['button']['linkClass'] .= $flexconf['button']['style'] ?: '';
+		$cardData['button']['linkClass'] .= $flexconf['button']['block'] ? ' btn-block': '';
+		$cardData['button']['linkClass'] .= $flexconf['button']['stretchedLink'] ? ' stretched-link': '';
+
 		$cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
 		$cardData['dimensions']['height'] = $processedData['data']['imageheight'];
 
@@ -155,7 +160,10 @@ class CardProcessor implements DataProcessorInterface {
 		$cardClass = 'card';
 		$cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position']:'';
 		if ( $processedData['data']['header_position'] ) {
-			$cardClass .= ' text-'.$processedData['data']['header_position'];
+			$headerPosition = $processedData['data']['header_position'];
+			if ( $headerPosition == 'left' ) $headerPosition = 'start';
+			if ( $headerPosition == 'right' ) $headerPosition = 'end';
+			$cardClass .= ' text-'.$headerPosition;
 		}
 		// effect
 		if ( $cardData['effect'] ) {

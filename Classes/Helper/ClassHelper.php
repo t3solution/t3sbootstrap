@@ -40,7 +40,14 @@ class ClassHelper implements SingletonInterface
 			if ( $data['tx_t3sbootstrap_padding_sides'] == 'blank' ) {
 				$class .= ' p-'.$data['tx_t3sbootstrap_padding_size'];
 			} else {
-				$class .= ' p'.$data['tx_t3sbootstrap_padding_sides'].'-'.$data['tx_t3sbootstrap_padding_size'];
+				if ( $data['tx_t3sbootstrap_padding_sides'] == 'l' ) {
+					$paddingSide = 's';
+				} elseif ( $data['tx_t3sbootstrap_padding_sides'] == 'r' ) {
+					$paddingSide = 'e';
+				} else {
+					$paddingSide = $data['tx_t3sbootstrap_padding_sides'];
+				}
+				$class .= ' p'.$paddingSide.'-'.$data['tx_t3sbootstrap_padding_size'];
 			}
 		}
 		// Spacing: margin
@@ -49,7 +56,15 @@ class ClassHelper implements SingletonInterface
 			if ( $data['tx_t3sbootstrap_margin_sides'] == 'blank' ) {
 				$class .= ' m-'.$data['tx_t3sbootstrap_margin_size'];
 			} else {
-				$class .= ' m'.$data['tx_t3sbootstrap_margin_sides'].'-'.$data['tx_t3sbootstrap_margin_size'];
+
+				if ( $data['tx_t3sbootstrap_margin_sides'] == 'l' ) {
+					$marginSide = 's';
+				} elseif ( $data['tx_t3sbootstrap_margin_sides'] == 'r' ) {
+					$marginSide = 'e';
+				} else {
+					$marginSide = $data['tx_t3sbootstrap_margin_sides'];
+				}
+				$class .= ' m'.$marginSide.'-'.$data['tx_t3sbootstrap_margin_size'];
 			}
 		}
 		// Layout
@@ -148,22 +163,18 @@ class ClassHelper implements SingletonInterface
 		}
 
 		/**
-		 * Button group
-		 */
-		if ( $data['CType'] == 'button_group' ) {
-			$class .= $flexconf['size'] ? ' '.$flexconf['size'] : '';
-			if ( $flexconf['fixedPosition'] ) {
-				$class .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
-			} else {
-				$class .= $flexconf['vertical'] ? ' btn-group-vertical' : ' btn-group';
-			}
-		}
-
-		/**
 		 * Auto-layout row/column
 		 */
 		if ( $data['CType'] == 'autoLayout_row' ) {
-			$class .= $flexconf['noGutters'] ? ' no-gutters' : '';
+
+			if ( is_string($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
+				$class .= $flexconf['horizontalGutters'] ? ' '.$flexconf['horizontalGutters'] : '';
+			}
+
+			if ($flexconf['verticalGutters']) {
+				$class .= $flexconf['verticalGutters'] ? ' '.$flexconf['verticalGutters'] : '';
+			}
+
 			if ($flexconf['responsiveVariations']) {
 				$class .= $flexconf['justify'] ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
 				$class .= $flexconf['alignItem'] ? ' align-items-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignItem'] : '';
@@ -203,8 +214,11 @@ class ClassHelper implements SingletonInterface
 		 || $data['CType'] == 'three_columns'
 		 || $data['CType'] == 'four_columns'
 		 || $data['CType'] == 'six_columns' ) {
-			$class .= $flexconf['noGutters'] ? ' no-gutters' : '';
 			$class .= $flexconf['equalHeight'] ? ' row-eq-height' : '';
+			if ( is_string($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
+				$class .= $flexconf['horizontalGutters'] ? ' '.$flexconf['horizontalGutters'] : '';
+			}
+
 		}
 
 		return trim($class);
@@ -220,11 +234,14 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getHeaderClass($data): array
 	{
-		$header['class'] = $data['header_position'] ? 'text-'.$data['header_position'] : '';
+		$headerPosition = $data['header_position'];
+		if ( $headerPosition == 'left' ) $headerPosition = 'start';
+		if ( $headerPosition == 'right' ) $headerPosition = 'end';
+		$header['class'] = $headerPosition ? 'text-'.$headerPosition : '';
 		$header['hClass'] = '';
 		$header['hColorVar'] = '';
 		$header['hLine'] = '';
-	
+
 		if ( $data['tx_t3sbootstrap_header_class'] ) {
 			if (strpos($data['tx_t3sbootstrap_header_class'], 'h-line-1') !== false) {
 				$header['hLine'] = 'h-line-1';
@@ -237,7 +254,7 @@ class ClassHelper implements SingletonInterface
 			foreach ($textColors as $textColor) {
 				if (strpos($data['tx_t3sbootstrap_header_class'], $textColor) !== false) {
 					$header['hClass'] .= $textColor;
-					$header['hColorVar'] = 'var(--'.substr($textColor, 5).')';
+					$header['hColorVar'] = 'var(--bs-'.substr($textColor, 5).')';
 					$data['tx_t3sbootstrap_header_class'] = trim(str_replace($textColor, '', $data['tx_t3sbootstrap_header_class']));
 					break;
 				}
@@ -257,12 +274,13 @@ class ClassHelper implements SingletonInterface
 		}
 
 		if ( $data['tx_t3sbootstrap_header_fontawesome'] ) {
-			$header['hFa'] = '<i class="mr-1 '.trim($data['tx_t3sbootstrap_header_fontawesome']).'"></i> ';
+			$header['hFa'] = '<i class="me-1 '.trim($data['tx_t3sbootstrap_header_fontawesome']).'"></i> ';
 		}
 
 		return $header;
 
 	}
+
 
 	/**
 	 * Returns processedData if parent auto layout

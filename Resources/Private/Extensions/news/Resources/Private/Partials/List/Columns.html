@@ -31,7 +31,7 @@
 		</f:else>
 	</f:if>
 	<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'true'}" />
-	<n:link newsItem="{newsItem}" settings="{settings}" class="more float-right btn btn-{settings.list.button.class} d-none d-sm-block" title="{newsItem.title}">
+	<n:link newsItem="{newsItem}" settings="{settings}" class="more float-end btn btn-{settings.list.button.class} d-none d-sm-block" title="{newsItem.title}">
 		<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:more-link"/>
 	</n:link>
 </div>

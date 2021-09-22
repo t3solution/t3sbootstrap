@@ -10,20 +10,22 @@
 			<f:then>
 				<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
 				<div class="d-none {modal.fixedClass}">
-					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
+					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
 						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
 					</button>
 				</div>
 			</f:then>
 			<f:else>
-				<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}">
-					{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
-				</button>
+				<div class="d-grid">
+					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
+						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+					</button>
+				</div>
 			</f:else>
 		</f:if>
 	</f:then>
 	<f:else>
-		<a class="modal-link{f:if(condition:'{class}',then:' {class}')}" data-toggle="modal" data-target="#modal-{data.uid}" style="cursor:pointer;">
+		<a class="modal-link{f:if(condition:'{class}',then:' {class}')}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}" style="cursor:pointer;">
 			{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}</a>
 	</f:else>
 </f:if>
@@ -33,7 +35,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<f:render partial="Header/All" arguments="{_all}" />
-				<button type="button" class="close" data-dismiss="modal" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
 			</div>
 			<div class="modal-body">
 			<f:for each="{col_279}" as="row">
@@ -45,3 +47,4 @@
 </div>
 </f:section>
 </html>
+

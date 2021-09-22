@@ -37,6 +37,7 @@ class BackgroundImageUtility implements SingletonInterface
 	 *
 	 * @return array
 	 */
+
 	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576')
 	{
 		$frontendController = $this->getFrontendController();
@@ -155,19 +156,17 @@ class BackgroundImageUtility implements SingletonInterface
 
 			$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
 
-
-
 			$css .= '@media (max-width: '.$querie.'px) {';
 			if ($webp) {
 				if ($body) {
-					$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
-					$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
+					$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+					$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
 				} else {
-					$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
-					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp");}';
+					$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
 				}
 			} else {
-				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'");}';
+				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
 			}
 			$css .= '}';
 

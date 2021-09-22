@@ -1,10 +1,10 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" id="language" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	<a class="nav-link dropdown-toggle" id="language" href="#" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 	  <f:if condition="{settings.config.langMenuWithFaIcon}">
 		<f:then>
-			<i class="fa-navlink fas fa-globe"></i>
+			<i class="fa-navlink fas fa-globe me-1"></i>
 		</f:then>
 		<f:else>
 			<f:for each="{languageNavigation}" as="item">
@@ -16,7 +16,7 @@
 		</f:else>
 	  </f:if>
 	</a>
-	<div class="dropdown-menu dropdown-menu-right mt-0 language-menu">
+	<div class="dropdown-menu{config.navbar.dropdownAnimate} dropdown-menu-end mt-0 language-menu">
 	  <f:for each="{languageNavigation}" as="item">
 		<f:if condition="{item.available}">
 			<f:then>

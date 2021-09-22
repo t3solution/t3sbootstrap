@@ -7,11 +7,11 @@
 			<li class="list-group-item">
 				<f:if condition="{data.uploads_type} == 1">
 					<f:switch expression="{file.extension}">
-						<f:case value="pdf"><i class="far fa-file-pdf mr-2" aria-hidden="true"></i></f:case>
-						<f:case value="jpg"><i class="far fa-file-image mr-2" aria-hidden="true"></i></f:case>
-						<f:case value="png"><i class="far fa-file-image mr-2" aria-hidden="true"></i></f:case>
-						<f:case value="zip"><i class="far fa-file-archive mr-2" aria-hidden="true"></i></f:case>
-						<f:defaultCase><img class="mr-2" src="{f:uri.resource(path: 'Icons/FileIcons/{file.extension}.gif', extensionName: 'frontend')}" alt=""></f:defaultCase>
+						<f:case value="pdf"><i class="far fa-file-pdf me-2" aria-hidden="true"></i></f:case>
+						<f:case value="jpg"><i class="far fa-file-image me-2" aria-hidden="true"></i></f:case>
+						<f:case value="png"><i class="far fa-file-image me-2" aria-hidden="true"></i></f:case>
+						<f:case value="zip"><i class="far fa-file-archive me-2" aria-hidden="true"></i></f:case>
+						<f:defaultCase><img class="me-2" src="{f:uri.resource(path: 'Icons/FileIcons/{file.extension}.gif', extensionName: 'frontend')}" alt=""></f:defaultCase>
 					</f:switch>
 				</f:if>
 				<f:if condition="{data.uploads_type} == 2">
@@ -26,12 +26,12 @@
 						</f:else>
 					</f:if>
 				</f:if>
-				<a class="mr-2" href="{file.publicUrl}" {f:if(condition:data.target,then: ' target="{data.target}"')}>
+				<a class="me-2" href="{file.publicUrl}" {f:if(condition:data.target,then: ' target="{data.target}"')}>
 					<span class="ce-uploads-fileName">{f:if(condition: file.properties.title, then: file.properties.title, else: file.name) -> f:format.htmlspecialchars()}</span>
 				</a>
 				<f:if condition="{file.properties.description}">
 					<f:if condition="{data.uploads_description}">
-						<span class="ce-uploads-description mr-2">{file.properties.description}</span>
+						<span class="ce-uploads-description me-2">{file.properties.description}</span>
 					</f:if>
 				</f:if>
 				<f:if condition="{data.filelink_size}">

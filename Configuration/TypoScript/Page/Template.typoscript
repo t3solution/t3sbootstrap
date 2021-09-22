@@ -1,31 +1,3 @@
-
-["{$bootstrap.config.navbarBreakpoint}" == "sm"]
-page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.sm}
-// deprecated
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.sm}
-[END]
-["{$bootstrap.config.navbarBreakpoint}" == "md"]
-page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.md}
-// deprecated
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.md}
-[END]
-["{$bootstrap.config.navbarBreakpoint}" == "lg"]
-page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.lg}
-// deprecated
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.lg}
-[END]
-["{$bootstrap.config.navbarBreakpoint}" == "xl"]
-page.10.settings.navbarBreakpointWidth = {$bootstrap.navbar.breakpoint.xl}
-// deprecated
-page.10.settings.winwidth = {$bootstrap.navbar.breakpoint.xl}
-[END]
-
-[loaded('indexed_search')]
-page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
-[ELSE]
-page.10.settings.indexedsearch.targetPid = 0
-[END]
-
 page {
 	# Page template
 	10 = FLUIDTEMPLATE
@@ -80,6 +52,7 @@ page {
 				md = {$bootstrap.navbar.breakpoint.md}
 				lg = {$bootstrap.navbar.breakpoint.lg}
 				xl = {$bootstrap.navbar.breakpoint.xl}
+				xxl = {$bootstrap.navbar.breakpoint.xxl}
 			}
 			pages {
 				override {
@@ -106,7 +79,6 @@ page {
 				navbarLevels = {$bootstrap.config.navbarLevels}
 				navbarExcludeuiduist = {$bootstrap.config.navbarExcludeuiduist}
 				navbarIncludespacer = {$bootstrap.config.navbarIncludespacer}
-				navbarJustify = {$bootstrap.config.navbarJustify}
 				navbarSectionmenu = {$bootstrap.config.navbarSectionmenu}
 				navbarMegamenu = {$bootstrap.config.navbarMegamenu}
 				navbarHover = {$bootstrap.config.navbarHover}
@@ -114,11 +86,13 @@ page {
 				navbarPlusicon = {$bootstrap.config.navbarPlusicon}
 				navbarDropdownAnimate = {$bootstrap.config.navbarDropdownAnimate}
 				navbarBrand = {$bootstrap.config.navbarBrand}
+				navbarbrandAlignment = {$bootstrap.config.navbarbrandAlignment}
 				navbarImage = {$bootstrap.config.navbarImage}
 				navbarColor = {$bootstrap.config.navbarColor}
 				navbarBackground = {$bootstrap.config.navbarBackground}
 				navbarTransparent = {$bootstrap.config.navbarTransparent}
 				navbarContainer = {$bootstrap.config.navbarContainer}
+				navbarInnercontainer = {$bootstrap.config.navbarInnercontainer}
 				navbarPlacement = {$bootstrap.config.navbarPlacement}
 				navbarAlignment = {$bootstrap.config.navbarAlignment}
 				navbarClass = {$bootstrap.config.navbarClass}
@@ -136,7 +110,6 @@ page {
 				navbarLangFlags = {$bootstrap.config.navbarLangFlags}
 				jumbotronEnable = {$bootstrap.config.jumbotronEnable}
 				jumbotronBgimage = {$bootstrap.config.jumbotronBgimage}
-				jumbotronFluid = {$bootstrap.config.jumbotronFluid}
 				jumbotronSlide = {$bootstrap.config.jumbotronSlide}
 				jumbotronPosition = {$bootstrap.config.jumbotronPosition}
 				jumbotronContainer = {$bootstrap.config.jumbotronContainer}
@@ -447,17 +420,17 @@ page {
 			# Main Config
 			#
 			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
-			90 {
-				webp = {$bootstrap.extconf.webp}
-				breakpoint {
-					sm = {$bootstrap.navbar.breakpoint.sm}
-					md = {$bootstrap.navbar.breakpoint.md}
-					lg = {$bootstrap.navbar.breakpoint.lg}
-					xl = {$bootstrap.navbar.breakpoint.xl}
-					no = 0
-				}
-			}
+
 		}
 	}
 }
+
+
+
+[loaded('indexed_search')]
+page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+[ELSE]
+page.10.settings.indexedsearch.targetPid = 0
+[END]
+
 

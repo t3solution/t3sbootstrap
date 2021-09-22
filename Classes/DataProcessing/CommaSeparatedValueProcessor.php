@@ -59,35 +59,33 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 			(int)$maximumColumns
 		);
 
+		$tableClass = '';
+		$croppedTable = [];
 
-##t3sb
-$tableClass = '';
-$croppedTable = [];
-
-if (is_array($processedData['table'])) {
-	foreach ($processedData['table'] as $key=>$table) {
-		if ( \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($table[count($table)-1], 'ç') ) {
-			$tableClass = TRUE;
-			break;
-		} else {
-			$tableClass = FALSE;
-		}
-	}
-	if ($tableClass) {
-		foreach ($processedData['table'] as $tKey=>$table) {
-			foreach ($table as $key=>$row) {
-				if ( $key < count($table)-1 ) {
-					$rowClass = trim(str_replace('ç', '', $table[count($table)-1]));
-					$processedData['table-row-class'][$tKey] = $rowClass;
-					$croppedTable[$tKey][$key] = $row;
+		if (is_array($processedData['table'])) {
+			foreach ($processedData['table'] as $key=>$table) {
+				if ( \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($table[count($table)-1], 'ç') ) {
+					$tableClass = TRUE;
+					break;
+				} else {
+					$tableClass = FALSE;
 				}
 			}
+			if ($tableClass) {
+				foreach ($processedData['table'] as $tKey=>$table) {
+					foreach ($table as $key=>$row) {
+						if ( $key < count($table)-1 ) {
+							$rowClass = trim(str_replace('ç', '', $table[count($table)-1]));
+							$processedData['table-row-class'][$tKey] = $rowClass;
+							$croppedTable[$tKey][$key] = $row;
+						}
+					}
+				}
+			}
+			if (!empty($croppedTable)) {
+				$processedData['table'] = $croppedTable;
+			}
 		}
-	}
-	if (!empty($croppedTable)) {
-		$processedData['table'] = $croppedTable;
-	}
-}
 
 		return $processedData;
 	}

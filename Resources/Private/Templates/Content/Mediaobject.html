@@ -10,7 +10,7 @@
 			<f:render partial="Media/RawGallery" arguments="{_all}" />
 		</f:then>
 	</f:if>
-	<div class="media-body">
+	<div class="media-body{f:if(condition: '{mediaobject.order} == \'right\'', then: ' me-3', else: ' ms-3')}">
 		<f:render partial="Header/All" arguments="{_all}" />
 		{data.bodytext -> f:format.html()}
 	</div>

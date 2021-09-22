@@ -1,201 +1,103 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{config.navbar.placement} == 'fixed-bottom'">
-	<f:then>
-		<f:variable name="dropupdown" value="dropup" />
-	</f:then>
-	<f:else>
-		<f:variable name="dropupdown" value="dropdown" />
-	</f:else>
+<f:if condition="{config.navbar.searchbox}">
+<f:asset.script identifier="vanilla_navbarSearchbox">
+	// Searchbox - Navbar/Assets.html
+	t3sbNavbarSearchbox(viewportWidth, navbarBreakpointWidth);
+	window.addEventListener('resize', function(event) {	
+		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
+		t3sbNavbarSearchbox(resizedViewportWidth, navbarBreakpointWidth);
+	}, true);
+</f:asset.script>
 </f:if>
-<f:if condition="{settings.config.navbarSectionmenu}">
-	<f:then>
-		<f:asset.script identifier="navbarsection">
-	// Sectionmenu in navbar (one-page-layout) - Navbar/Assets.html
-	$(".section-menu a.js-scroll-trigger").bind("click", function(event) {
-		var anchor = $(this).attr("href");
-		if (anchor.length) {
-			var offsetSize = {settings.config.sectionmenuAnchorOffset};
-			if ( fixedNavbar ) {
-				offsetSize = navbarHeight+offsetSize;
-			}
-			$("html, body").stop().animate({
-				scrollTop: $(anchor).offset().top-offsetSize+4
-			}, 1500, "easeInOutExpo");
-			return false;
-		}
-	});
-	$("a.js-scroll-trigger").click(function() {
-		$(".navbar-collapse").collapse("hide");
-	});
-	var scrollspyOffset = {settings.config.sectionmenuScrollspyOffset};
-	$("body").scrollspy({
-		target: "#main-navbar",
-		offset: scrollspyOffset
-	});
-		</f:asset.script>
-	</f:then>
-	<f:else>
-		<f:asset.script identifier="navbardefault">
-	// Navbar dropdown menu - Navbar/Assets.html
-	$(".dropdown-menu a.dropdown-toggle").on("click", function() {
-		if (!$(this).next().hasClass("show")) {
-			$(this).parents(".dropdown-menu").first().find(".show").removeClass("show");
-		}
-		var $subMenu = $(this).next(".dropdown-menu");
-		$subMenu.toggleClass("show");
-		$(this).parents("li.nav-item.{dropupdown}.show").on("hidden.bs.dropdown", function() {
-			$(".dropdown-submenu .show").removeClass("show");
-		});
-		return false;
-	});
-		</f:asset.script>
-	</f:else>
+<f:if condition="{settings.config.navbarExtraRow}">
+<f:asset.script identifier="vanilla_navbarExtraRow">
+	// Extra row - Navbar/Assets.html
+	t3sbExtraRow(viewportWidth, navbarBreakpointWidth);
+	window.addEventListener('resize', function(event) {	
+		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
+		t3sbExtraRow(resizedViewportWidth, navbarBreakpointWidth);
+	}, true);
+</f:asset.script>
 </f:if>
-
+<f:if condition="{config.navbar.dropdownAnimate} && {config.navbar.dropdownAnimateValue}">
+<f:asset.script identifier="vanilla_navbarDropdownAnimate">
+	// Dropdown animate - Navbar/Assets.html
+	t3sbDropdownAnimate(viewportWidth, navbarBreakpointWidth, {config.navbar.dropdownAnimateValue});
+	window.addEventListener('resize', function(event) {	
+		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
+		t3sbDropdownAnimate(resizedViewportWidth, navbarBreakpointWidth, {config.navbar.dropdownAnimateValue});
+	}, true);	
+</f:asset.script>
+</f:if>
+<f:if condition="{config.navbar.alignment} == 'fill'">
+<f:asset.script identifier="vanilla_noMobileJustify">
+	// No justify on mobile - Navbar/Assets.html
+	if ( viewportWidth < navbarBreakpointWidth ) {
+		navbar.querySelector('.main-navbarnav').classList.remove('nav-fill', 'w-100');
+	} 
+</f:asset.script>	
+</f:if>
 <f:if condition="{settings.config.navbarOffcanvas}">
-<f:asset.css priority="true" identifier="offcanvasCss">
-/*	Offcanvas - Navbar/Assets.html */
-@media (max-width:{f:if(condition:'{navbarBreakpointWidth}',then:'{navbarBreakpointWidth}', else:'9999')}px){
-html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0;width:100%;padding-right:1rem;padding-left:1rem;overflow-y:auto;background-color:var(--gray-dark);transition:-webkit-transform .3s ease-in-out;transition:transform .3s ease-in-out;transition:transform .3s ease-in-out,-webkit-transform .3s ease-in-out;-webkit-transform:translateX(100%);transform:translateX(100%)}.offcanvas-collapse.open{-webkit-transform:translateX(-1rem);transform:translateX(-1rem)}.offcanvas-collapse .navbar-nav .nav-link{color:rgba(255,255,255,.75)}.offcanvas-collapse .navbar-nav .nav-link:hover,.offcanvas-collapse .navbar-nav .nav-link:focus{color:#fff}.dropdown-item.active,.dropdown-item:active{color:#fff}.dropdown-item.active:hover,.dropdown-item:active:hover{color:rgba(0,0,0,.75)}.offcanvas-collapse .navbar-nav .active .nav-link{color:rgba(255,255,255,.75);color:#fff}.navbar > .offcanvas-container{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}
-}
-</f:asset.css>
-<f:asset.script identifier="offcanvasJs">
+<f:asset.script identifier="vanilla_offcanvasJs">
 	// Offcanvas - Navbar/Assets.html
-	$('[data-toggle="offcanvas"]').on('click', function () {
-		$('.offcanvas-collapse').toggleClass('open')
-	})
-	if ( $(window).width() < navbarBreakpointWidth ) {
-		$( "#main-navbar" ).children( ".container" ).addClass("offcanvas-container").removeClass("container");
+	var navbarBreakpoint = document.body.getAttribute('data-navbar-breakpoint');
+	let navbarBPWidth = navbarBreakpointWidth,
+		utilColor = '{config.navbar.offcanvasBgColorClass}',
+		utilColorArr = utilColor.split(' ');
+	if (navbarBreakpoint == 'no') {
+		navbarBPWidth = 99999;
 	}
+	t3sbOffcanvas(viewportWidth, navbarBPWidth, utilColorArr);
+	window.addEventListener('resize', function(event) {	
+		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
+		t3sbOffcanvas(resizedViewportWidth, navbarBPWidth, utilColorArr);
+	}, true);
 </f:asset.script>
 </f:if>
-
 <f:if condition="{settings.config.navbarMegamenu}">
-<f:asset.css priority="true" identifier="navbarMegamenuCss" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />
-<f:asset.script identifier="navbarmegamenuJs">
+<f:asset.script identifier="vanilla_navbarmegamenuJs">
 	// Navbar mega-menu - Navbar/Assets.html
-	$(document).on("click", ".mega-dropdown", function(event) {
-	  event.stopPropagation();
-	})
-	if ( $(window).width() < navbarBreakpointWidth ) {
-		$(".remove-{settings.config.navbarBreakpoint}").remove();
-	} else {
-		$(".show-{settings.config.navbarBreakpoint}").remove();
-	}
-</f:asset.script>
-</f:if>
-
-<f:if condition="{settings.config.navbarHover}">
-<f:asset.script identifier="navbarhover">
-	// Navbar hover - Navbar/Assets.html
-	function navbarHover() {
-		$("ul.navbar-nav .{dropupdown}, ul.navbar-nav .dropdown-submenu").hover(function() {
-			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeIn();
-			$(this).addClass("show");
-			$(this).next(".dropdown-menu").addClass("show");
-			$(this).next("a").attr("aria-expanded","true");
-		}, function() {
-			$(this).find(" > .dropdown-menu").stop(true, true).delay(200).fadeOut();
-			$(this).removeClass("show");
-			$(this).next(".dropdown-menu").removeClass("show");
-			$(this).next("a").attr("aria-expanded","false");
+	var megaDropdown = document.querySelectorAll('.mega-dropdown'),
+		navbarBreakpointToggler = '';
+	megaDropdown.forEach( md => {
+		md.addEventListener('click', (event) => {
+			event.stopPropagation();
 		});
+	});
+	if ( viewportWidth < navbarBreakpointWidth ) {
+		navbarBreakpointToggler = document.querySelectorAll('.remove-{settings.config.navbarBreakpoint}');	
+		navbarBreakpointToggler.forEach( nbt => {
+			nbt.remove();
+		});
+	} else {
+		navbarBreakpointToggler = document.querySelectorAll('.show-{settings.config.navbarBreakpoint}');	
+		navbarBreakpointToggler.forEach( nbt => {
+			nbt.remove();
+		});	
 	}
-
-	if ( $(window).width() > navbarBreakpointWidth ) {
-		navbarHover();
-	}
-</f:asset.script>
-</f:if>
-
-<f:if condition="{settings.config.navbarClickableparent}">
-<f:asset.script identifier="navbarclickableparent">
-	// Clickable parent from dropdown menu - Navbar/Assets.html
-	$(".nav-item.{dropupdown} a.nav-link.dropdown-toggle").on("click",function(e){
-		if ($(this).next(".dropdown-menu").is(":visible")) {
-			window.location = $(this).attr("href");
-		}
-	});
-	var isHover = {settings.config.navbarHover};
-	$(".dropdown-submenu a.dropdown-item.dropdown-toggle").on("click", function() {
-		if ($(this).next(".dropdown-menu").is(":hidden") || isHover) {
-			window.location = $(this).attr("href");
-		}
-	});
-	$(".submenu a.nav-link").on("click", function(e) {
-		if ($(this).hasClass("active")) {
-			e.preventDefault();
-		} else {
-			if ($(this).next(".collapse").is(":visible")) {
-				$('.submenu').on('hide.bs.collapse', function (e) {
-					e.preventDefault();
-				});
-				window.location = $(this).attr("href");
-			}
-		}
-	});
 </f:asset.script>
 </f:if>
 
 <f:if condition="{settings.config.navbarShrinkcolor}">
-<f:asset.script identifier="navbarshrinkcolor">
+<f:asset.script identifier="vanilla_navbarshrinkcolor">
 	// Shrinking Navbar on scrolling - Navbar/Assets.html
-	var navShrinkColorschemes = $('#main-navbar').data('shrinkcolorschemes'),
-		navShrinkColor = $('#main-navbar').data('shrinkcolor'),
-		navColorschemes = $('#main-navbar').data('colorschemes'),
-		navColor = $('#main-navbar').data('color');
-
-	$(window).scroll(function() {
-		if ($("#main-navbar").offset().top > 100) {
-			$("#main-navbar").removeClass("py-{settings.config.shrinkingNavPadding}").removeClass(navColorschemes).removeClass(navColor)
-			.addClass("navbar-shrink").addClass(navShrinkColor).addClass(navShrinkColorschemes);
-		} else {
-			$("#main-navbar").addClass("py-{settings.config.shrinkingNavPadding}")
-			.removeClass("navbar-shrink").removeClass(navShrinkColor).removeClass(navShrinkColorschemes)
-			.addClass(navColorschemes).addClass(navColor);
-		}
-	});
-	</f:asset.script>
-</f:if>
-
-<f:if condition="{settings.config.navbarDropdownAnimate} == '2'">
-<f:asset.script identifier="navbardropdownanimate">
-	// Dropdown Animate (2) - Navbar/Assets.html
-	$('.{dropupdown}').on('show.bs.dropdown', function(e){
-		$(this).find('.dropdown-menu').first().stop(true, true).slideDown(300);
-	});
-	$('.{dropupdown}').on('hide.bs.dropdown', function(e){
-		$(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
-	});
+	t3sbShrinkingNavbar(navbar, {settings.config.shrinkingNavPadding});
 </f:asset.script>
 </f:if>
 
 <f:if condition="{settings.config.navbarPlacement} == 'sticky-top'">
-<f:asset.script identifier="navbarstickytop">
+<f:asset.script identifier="vanilla_navbarstickytop">
 	// Navbar sticky-top - Navbar/Assets.html
-	var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
-		var stickyHeight = sticky.outerHeight();
-		var stickyTop = stickyWrapper.offset().top;
-		if (scrollElement.scrollTop() >= stickyTop){
-			stickyWrapper.height(stickyHeight);
-			sticky.addClass("is-sticky");
-		} else{
-			sticky.removeClass("is-sticky");
-			stickyWrapper.height('auto');
+	window.onscroll = function() {stickyFunction()};
+	let sticky = navbar.offsetTop;
+	function stickyFunction() {
+		if (window.pageYOffset >= sticky) {
+			navbar.classList.add('sticky');
+		} else {
+			navbar.classList.remove('sticky');
 		}
-	};
-	$('[data-toggle="sticky-onscroll"]').each(function() {
-		var sticky = $(this);
-		var stickyWrapper = $('<div>').addClass('sticky-wrapper');
-		sticky.before(stickyWrapper);
-		sticky.addClass('sticky');
-
-		$(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
-			stickyToggle(sticky, stickyWrapper, $(this));
-		});
-		stickyToggle(sticky, stickyWrapper, $(window));
-	});
+	}
 </f:asset.script>
 </f:if>
 <f:if condition="{config.navbar.navColorCSS}">
@@ -205,34 +107,12 @@ html,body{overflow-x:hidden}.offcanvas-collapse{position:fixed;top:56px;bottom:0
 </f:if>
 
 <f:if condition="{config.navbar.transparent}">
-<f:asset.script identifier="navbartransparentJS">
+<f:asset.script identifier="vanilla_navbartransparentJS">
 	// Navbar transparent - Navbar/Assets.html
-	if ( $(window).width() > navbarBreakpointWidth ) {
-		$(window).on('scroll', function () {
-			if ( $(window).scrollTop() > 60 ) {
-				$('.navbar').css('background-color', '{config.navbar.colorschemes}');
-				$('.navbar').css('transition', 'background-color 0.5s ease');
-				$('.navbar').css('-webkit-transition', 'background-color 0.5s ease');
-				$('.navbar').css('-moz-transition', 'background-color 0.5s ease');
-<f:comment>
-				// change navbar color
-				$('.navbar').removeClass('navbar-light');			
-				$('.navbar').addClass('navbar-dark');			
-</f:comment>			
-			} else {
-				$('.navbar').css('background-color', 'var(--transparent)');
-				$('.navbar').css('transition', 'background-color 0.5s ease');
-				$('.navbar').css('-webkit-transition', 'background-color 0.5s ease');
-				$('.navbar').css('-moz-transition', 'background-color 0.5s ease');
-<f:comment>
-				// change navbar color
-				$('.navbar').removeClass('navbar-dark');			
-				$('.navbar').addClass('navbar-light');
-</f:comment>
-			}
-		});
-	} else {
-		$('.navbar').css('background-color', '{config.navbar.colorschemes}');
+	if ( viewportWidth > navbarBreakpointWidth ) {
+		var colorschemes = '{config.navbar.colorschemes}';
+		var gradient = '{config.navbar.gradient}';
+		t3sbTransparentNavbar(colorschemes, gradient);
 	}
 </f:asset.script>
 </f:if>

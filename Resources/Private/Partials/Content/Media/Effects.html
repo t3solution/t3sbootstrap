@@ -1,6 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment> Effects </f:comment>
+<f:asset.css identifier="hoverEffects" href="EXT:t3sbootstrap/Resources/Public/Styles/hoverEffects.css" />
 <figure class="image {file.properties.tx_t3sbootstrap_hover_effect}{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 	<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio, notitle: 'true'}" />
 	<figcaption class="image-caption">

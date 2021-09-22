@@ -340,4 +340,22 @@ tt_content {
 			}
 		}
 	}
+
+	masonry_wrapper < lib.contentElement
+	masonry_wrapper {
+		templateName = masonryWrapper
+		templateRootPaths {
+			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
+			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+		}
+		dataProcessing {
+
+			283 = B13\Container\DataProcessing\ContainerProcessor
+			283 {
+				colPos = 283
+				as = col_283
+			}
+		}
+	}
+
 }

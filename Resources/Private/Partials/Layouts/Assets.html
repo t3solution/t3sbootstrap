@@ -1,0 +1,153 @@
+<f:comment> Hover Effect </f:comment>
+<f:if condition="{hoverEffect} && {settings.linkHoverEffect}">
+	<f:asset.css identifier="linkHoverEffect" href="EXT:t3sbootstrap/Resources/Public/Styles/hoverEffects.css" />
+</f:if>
+<f:comment> Codesnippet </f:comment>
+<f:if condition="{codesnippet} && {settings.codesnippet}">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css identifier="codesnippetCssPrimary"
+				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/default.min.css" />
+			<f:asset.css identifier="codesnippetCssSecondary"
+				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/a11y-light.min.css" />
+			<f:asset.script identifier="codesnippetJsPrimary"
+				src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/highlight.min.js"
+				integrity="{settings.highlightIntegrity}" />
+			<f:asset.script identifier="codesnippetJsSecondary"
+				src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/languages/php.min.js"
+				integrity="{settings.highlightIntegrity}" />
+		</f:then>
+		<f:else>
+			<f:asset.css identifier="codesnippetCssPrimary" href="fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css" />
+			<f:asset.css identifier="codesnippetCssSecondary" href="fileadmin/T3SB/Resources/Public/CSS/highlight.a11y-light.min.css" />
+			<f:asset.script identifier="codesnippetJsPrimary" src="fileadmin/T3SB/Resources/Public/JS/highlight.min.js" />
+			<f:asset.script identifier="codesnippetJsSecondary" src="fileadmin/T3SB/Resources/Public/JS/highlight.php.min.js" />
+		</f:else>
+	</f:if>
+	<f:asset.script identifier="vanilla_codesnippetJsInline">
+	// Highlighting for codesnippet - Partials/Layouts/Assets.html
+	hljs.highlightAll();
+	</f:asset.script>
+</f:if>
+<f:comment> AnimateCss </f:comment>
+<f:if condition="{isAnimateCss} && {settings.animateCss}">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css identifier="animateCss"
+				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.compat.css" />
+			<f:if condition="{isViewportChecker}">
+				<f:asset.script identifier="animateJs"
+				src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/{settings.viewportcheckerVersion}/jquery.viewportchecker.min.js"
+				integrity="{settings.viewportcheckerIntegrity}" />
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.compat.css" />
+			<f:if condition="{isViewportChecker}">
+				<f:asset.script identifier="animateJs" src="fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js" />
+			</f:if>
+		</f:else>
+	</f:if>
+	<f:if condition="{isViewportChecker}">
+	<f:comment> Viewport Checker v2 w/o jQuery is not working as expected </f:comment>
+	<f:asset.script identifier="animatecssJsInline">
+	// jQuery ViewportChecker for animateCss - Partials/Layouts/Assets.html
+	$( '.animated' ).each(function() {
+		$(this).viewportChecker({classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0});
+	});
+	</f:asset.script>
+	</f:if>
+</f:if>
+<f:comment> Lightbox - same in News/Detail.html </f:comment>
+<f:if condition="{settings.lightboxSelection} && {lightBox}">
+	<f:comment> Baguette Box </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 1">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
+			</f:then>
+			<f:else>
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="vanilla_lightbox">
+	// Baguette Box (lightbox) - Partials/Layouts/Assets.html
+	baguetteBox.run('.gallery, .image-gallery', {
+		animation: 'fadeIn',
+		noScrollbars: true
+	});
+		</f:asset.script>
+	</f:if>
+	<f:comment> Magnific Popup </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 2">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/magnific-popup.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/jquery.magnific-popup.min.js" />
+			</f:then>
+			<f:else>
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/magnific-popup.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/jquery.magnific-popup.min.js" />
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="lightbox">
+	// jQuery Magnific Popup (lightbox) - Partials/Layouts/Assets.html
+	$('.gallery').each(function() {
+		 $(this).magnificPopup({
+			delegate: 'a',
+			type: 'image',
+			removalDelay: 300,
+			mainClass: 'mfp-fade',
+			gallery: {
+				enabled:true,
+				tPrev: 'zurück',
+				tNext: 'weiter',
+				tCounter: '%curr% von %total%'
+			},
+			zoom: {
+				enabled: true,
+				duration: 300,
+				easing: 'ease-in-out',
+				opener: function(openerElement) {
+					return openerElement.is('img') ? openerElement : openerElement.find('img');
+				}
+			}
+		});
+	});
+		</f:asset.script>
+	</f:if>
+	<f:comment> Lightcase </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 3">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/css/lightcase.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/js/lightcase.min.js" />
+			</f:then>
+			<f:else>
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/lightcase.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/lightcase.min.js" />
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="lightbox">
+	// jQuery Lightcase (lightbox) - Partials/Layouts/Assets.html
+	$('.lightcaseGallery').lightcase({
+		showSequenceInfo: false,
+		showCaption: true,
+		maxWidth: 1140,
+		maxHeight: 800
+	});
+	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
+		var msId = $('.MS-content').parent().attr('id');
+		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);
+	}
+		</f:asset.script>
+	</f:if>
+</f:if>

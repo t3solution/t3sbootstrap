@@ -81,7 +81,6 @@ class StyleHelper implements SingletonInterface
 	 */
 	public function getCarouselCaptionStyle( $flexconf, $animate )
 	{
-
 		if ($flexconf['bgOverlay'] == 'caption') {
 
 			$captionStyle = ' top:0; left:15%; right:15%; bottom:0;';

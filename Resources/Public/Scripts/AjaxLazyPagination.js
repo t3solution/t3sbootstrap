@@ -1,2 +1,24 @@
 /* ajax pagination lazy */
-$(document).ready(function(){$(".news").on("click",".page-navigation a",function(e){$("#news-spinner").css("display","block");var n=$(this).attr("href");if(void 0!==n&&""!==n){e.preventDefault();var a="news-container-"+$(this).data("container");$.ajax({url:n,type:"GET",success:function(e){var n=$(e).find("#"+a);$("#"+a).replaceWith(n),new LazyLoad({elements_selector:".lazy",threshold:0}),$("#news-spinner").delay(350).fadeOut("slow")}})}})});
+$(document).ready(function() {
+	$('.news').on("click", '.page-navigation a', function(e) {
+		$('#news-spinner').css('display', 'block');
+		var ajaxUrl = $(this).data('link');
+		if (ajaxUrl !== undefined && ajaxUrl !== '') {
+			e.preventDefault();
+			var container = 'news-container-' + $(this).data('container');
+			$.ajax({
+				url: ajaxUrl,
+				type: "GET",
+				success: function(result) {
+					var ajaxDom = $(result).find('#' + container);
+					$('#' + container).replaceWith(ajaxDom);
+					new LazyLoad({
+						elements_selector: ".lazy",
+						threshold: 0
+					});
+					$("#news-spinner").delay(350).fadeOut("slow");
+				}
+			})
+		}
+	})
+});
