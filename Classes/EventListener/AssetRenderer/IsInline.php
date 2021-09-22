@@ -20,7 +20,12 @@ class IsInline
 
 	public function __invoke(BeforeJavaScriptsRenderingEvent $event): void
 	{
-		if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+		if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+			&& ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+			return;
+		}
+
+		if (defined('TYPO3') && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
 			return;
 		}
 
