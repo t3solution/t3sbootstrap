@@ -30,7 +30,7 @@
 											<f:render section="OwlSliader" arguments="{_all}" />
 										</f:then>
 										<f:else>
-											<f:render section="Default" arguments="{_all}" />								
+											<f:render section="Default" arguments="{_all}" />
 										</f:else>
 									</f:if>
 								</f:else>
@@ -69,7 +69,7 @@
 		</f:then>
 		<f:else>
 			<f:render section="LoadingSpinnerTop" arguments="{_all}" />
-			<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}" 
+			<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
 				initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
 				<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
 					<f:render partial="List/ListGroup" arguments="{newsItem: newsItem,iterator:iterator}" />
@@ -85,11 +85,14 @@
 <f:section name="Cards">
 <f:if condition="{settings.templateLayout} == 72">
 	<f:then>
+		<f:comment> Card Decks -> Grid Cards </f:comment>
 		<f:if condition="{settings.hidePagination}">
 			<f:then>
-				<div class="mb-2 card-deck gy-4 row row-cols-4" id="news-container-{contentObjectData.uid}">
+				<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4" id="news-container-{contentObjectData.uid}">
 					<f:for each="{news}" as="newsItem" iteration="iterator">
-						<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+						<div class="col">
+							<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+						</div>
 					</f:for>
 				</div>
 			</f:then>
@@ -98,9 +101,11 @@
 					<f:render section="LoadingSpinnerTop" arguments="{_all}" />
 					<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
 						 initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
-						<div class="mb-2 card--deck gy-4 row row-cols-4 my-5">
+						<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
 							<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
-								<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+								<div class="col">
+									<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+								</div>
 							</f:for>
 						</div>
 					</n:widget.paginate>
@@ -110,27 +115,90 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<f:if condition="{settings.hidePagination}">
+		<f:if condition="{settings.templateLayout} == 73">
 			<f:then>
-				<div class="mb-2 card-{f:if(condition:'{settings.templateLayout} == 73',then:'group')}{f:if(condition:'{settings.templateLayout} == 74',then:'columns')}" id="news-container-{contentObjectData.uid}">
-					<f:for each="{news}" as="newsItem" iteration="iterator">
-						<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
-					</f:for>
-				</div>
-			</f:then>
-			<f:else>
-				<div id="news-container-{contentObjectData.uid}">
-					<f:render section="LoadingSpinnerTop" arguments="{_all}" />
-					<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
-						 initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
-						<div class="mb-2 card-{f:if(condition:'{settings.templateLayout} == 72',then:'deck')}{f:if(condition:'{settings.templateLayout} == 73',then:'group')}{f:if(condition:'{settings.templateLayout} == 74',then:'columns')}">
-							<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
+				<f:comment> Card Groups </f:comment>
+				<f:if condition="{settings.hidePagination}">
+					<f:then>
+						<div class="mb-2 card-group" id="news-container-{contentObjectData.uid}">
+							<f:for each="{news}" as="newsItem" iteration="iterator">
 								<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
 							</f:for>
 						</div>
-					</n:widget.paginate>
-					<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
-				</div>
+					</f:then>
+					<f:else>
+						<div id="news-container-{contentObjectData.uid}">
+							<f:render section="LoadingSpinnerTop" arguments="{_all}" />
+							<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
+								 initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
+								<div class="mb-2 card-group">
+									<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
+										<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+									</f:for>
+								</div>
+							</n:widget.paginate>
+							<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
+						</div>
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:comment> Masonry </f:comment>
+				<f:if condition="{settings.hidePagination}">
+					<f:then>
+						<f:if condition="{settings.cdn}">
+							<f:then>
+								<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
+								 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
+							</f:then>
+							<f:else>
+								<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
+								 crossorigin="anonymous" async="async" />
+							</f:else>
+						</f:if>
+						<div id="masonry-{contentObjectData.uid}" class="row masonry"
+							{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
+							<f:for each="{news}" as="newsItem" iteration="iterator">
+								<n:excludeDisplayedNews newsItem="{newsItem}"/>
+								<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}" class="col-sm-6 col-lg-3 mb-3" >
+									<div class="card">
+										<f:if condition="{newsItem.mediaPreviews}">
+											<!-- media preview element -->
+											<f:then>
+												<f:alias map="{mediaElement: '{newsItem.mediaPreviews.0}'}">
+													<f:if condition="{mediaElement.originalResource.type} == 2">
+														<f:render partial="List/Media/Image" arguments="{file: mediaElement}" />
+													</f:if>
+													<f:if condition="{mediaElement.originalResource.type} == 3 || {mediaElement.originalResource.type} == 4">
+														<f:render partial="List/Media/Video" arguments="{mediaElement: mediaElement}" />
+													</f:if>
+													<f:if condition="{mediaElement.originalResource.type} == 5">
+														<f:render partial="List/Media/File" arguments="{mediaElement: mediaElement}" />
+													</f:if>
+												</f:alias>
+											</f:then>
+											<f:else>
+												<f:if condition="{settings.displayDummyIfNoMedia}">
+													<f:render partial="List/Media/Dummy" />
+												</f:if>
+											</f:else>
+										</f:if>
+										<div class="overlay{f:if(condition: settings.list.mobile.imageOverlay,then: ' img-overlay')}">
+											<div class="card-body">
+												<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'false'}" />
+											</div>
+										</div>
+									</div>
+								</n:link>
+							</f:for>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="alert alert-danger" role="alert">
+							Pagination did not work with Masonry
+						</div>
+					</f:else>
+				</f:if>
 			</f:else>
 		</f:if>
 	</f:else>
