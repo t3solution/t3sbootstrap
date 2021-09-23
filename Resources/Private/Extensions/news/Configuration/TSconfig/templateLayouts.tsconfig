@@ -4,9 +4,9 @@
 
 tx_news.templateLayouts {
 	71 = BS4: List Group (list view)
-	72 = BS4: Card Decks (list view)
+	72 = BS4: Grid Cards (list view)
 	73 = BS4: Card Groups (list view)
-	74 = BS4: Card Columns (list view)
+	74 = BS4: Masonry (list view)
 	75 = BS4: 2 Columns (list view)
 	76 = BS4: OWL Slider - Fullscreen (list view) - experimental
 	81 = BS4: Detail view
