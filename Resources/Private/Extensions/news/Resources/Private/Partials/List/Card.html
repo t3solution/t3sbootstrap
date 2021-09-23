@@ -2,7 +2,6 @@
 	xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 <n:excludeDisplayedNews newsItem="{newsItem}"/>
-<div class="col">
 <n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}" class="card mb-3">
 	<f:if condition="{newsItem.mediaPreviews}">
 		<!-- media preview element -->
@@ -31,5 +30,4 @@
 		</div>
 	</div>
 </n:link>
-</div>
 </html>
