@@ -26,37 +26,16 @@
 
 	document.querySelectorAll('.dropup [data-bs-toggle="dropdown"]').forEach(function(dd) {
 		dd.addEventListener('click', function(e) {
-
 			var navbar = document.getElementById('main-navbar'),
 				clickableparent = navbar.classList.contains('clickableparent') ? 1 : 0,
 				href = e.currentTarget.getAttribute('href');
-
-			if ( isNav() && !isTouch() && !this.classList.contains('show') && clickableparent ) {
-				e.stopImmediatePropagation();
+			if ( clickableparent ) {
 				if(href != '#') {
 					location.href = href;
 				}
 			}
-			if ( isNav() && !isTouch() && this.classList.contains('dropdown-hover') ) {
-				e.stopImmediatePropagation();
-				if(href != '#') {
-					location.href = href;
-				}
-			 }
 		});
 	});
-
-	function isHidden(el) {
-		return (el.offsetParent === null);
-	}
-
-	function isNav(navbar) {
-		return isHidden(navbar);
-	}
-
-	function isTouch() {
-		return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
-	}
 
 	function getDropdown(element) {
 		return $bs.Dropdown.getInstance(element) || new $bs.Dropdown(element);
@@ -76,4 +55,5 @@
 			}
 		});
 	});
+
 })(bootstrap);
