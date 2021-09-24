@@ -317,6 +317,8 @@ class WrapperHelper implements SingletonInterface
 		$processedData['carouselFade'] = $flexconf['carouselFade'] ? ' carousel-fade': '';
 		$processedData['carouselFade'] .= $flexconf['darkVariant'] ? ' carousel-dark': '';
 
+		$processedData['thumbnails'] = $flexconf['thumbnails'] ? true : false;
+
 		return $processedData;
 	}
 
