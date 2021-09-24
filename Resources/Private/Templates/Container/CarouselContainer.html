@@ -65,19 +65,20 @@
 						<f:render partial="Header/All" arguments="{_all}" />
 						<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-bs-ride="carousel"
 							 data-bs-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>
-							<f:if condition="{col_276 -> f:count()} > 1">
-								<ol class="carousel-indicators d-none d-md-block">
-									<f:comment>
-										# Set in constants: bootstrap.config.carouselFiles = 1
-										# now you can change the following in the carousel indicators to use Bootstrap carousel with thumbnails
-										<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}"
-										 class="me-3{f:if(condition:'{iteration-indicators.isFirst}',then:' active')}" >
-											<f:image class="img-fluid d-block" image="{carouselSlides.{carousel-indicators.uid}.0}" width="100" height="60c" />
-										</li>
-									</f:comment>
+							<f:if condition="{col_276 -> f:count()} > 1"
+								<ol class="carousel-indicators d-none d-md-block"{f:if(condition:'{thumbnails}',then:' style="bottom: -100px;"')}>
 									<f:for each="{col_276}" as="carousel-indicators" iteration="iteration-indicators">
-										<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}"
-										{f:if(condition:'{iteration-indicators.isFirst}',then:' class="active"')}></li>
+										<f:if condition="{thumbnails}">
+											<f:then>
+												<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}" style="width:100px; height: auto;" class="me-2{f:if(condition:'{iteration-indicators.isFirst}',then:' active')}">
+													<f:image class="img-fluid d-block" image="{carouselSlides.{carousel-indicators.uid}.0}" width="100" height="60c" />
+												</li>
+											</f:then>
+											<f:else>
+												<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}"
+												{f:if(condition:'{iteration-indicators.isFirst}',then:' class="active"')}</li>
+											</f:else>
+										</f:if>
 									</f:for>
 								</ol>
 							</f:if>
