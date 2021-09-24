@@ -65,7 +65,7 @@
 						<f:render partial="Header/All" arguments="{_all}" />
 						<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-bs-ride="carousel"
 							 data-bs-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>
-							<f:if condition="{col_276 -> f:count()} > 1"
+							<f:if condition="{col_276 -> f:count()} > 1">
 								<ol class="carousel-indicators d-none d-md-block"{f:if(condition:'{thumbnails}',then:' style="bottom: -100px;"')}>
 									<f:for each="{col_276}" as="carousel-indicators" iteration="iteration-indicators">
 										<f:if condition="{thumbnails}">
