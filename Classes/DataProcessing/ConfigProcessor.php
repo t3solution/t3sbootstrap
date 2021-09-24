@@ -253,6 +253,7 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 
 			$navbarClass .= $processedRecordVariables['navbarClickableparent'] ? ' clickableparent' : '';
+			$navbarClass .= $processedRecordVariables['navbarHover'] ? ' navbarHover' : '';
 
 			if ($processedRecordVariables['navbarPlacement']) {
 				if ( $processedData['config']['navbar']['containerposition'] == 'outside' ) {
