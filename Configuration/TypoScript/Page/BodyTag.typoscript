@@ -61,7 +61,14 @@ page {
 		50.if.isTrue = {$bootstrap.config.navbarBreakpointWidth}
 
 		60 = TEXT
-		60.value = data-bs-spy="scroll" data-bs-target="#main-navbar" data-bs-offset="{$bootstrap.config.sectionmenuScrollspyOffset}" tabindex="0"
+		60.value = {$bootstrap.config.sectionmenuScrollspyOffset}
+		60.noTrimWrap = | data-bs-spy="scroll" data-bs-target="#main-navbar" data-bs-offset="|" tabindex="0"|
 		60.if.isTrue = {$bootstrap.config.navbarSectionmenu}
+
+		70 = TEXT
+		70.value = true
+		70.noTrimWrap = | data-bs-no-jquery="|"|
+		70.if.isTrue = {$bootstrap.disable.jquery}
+
 	}
 }
