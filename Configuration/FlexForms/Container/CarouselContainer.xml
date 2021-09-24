@@ -102,6 +102,22 @@
 						</TCEforms>
 					</origImage>
 
+					<thumbnails>
+						<TCEforms>
+							<label>Use Thumbnails as carousel-indicators</label>
+							<displayCond>
+								<and>
+									<value2>FIELD:general.multislider:=:0</value2>
+									<value3>FIELD:general.owlCarousel:=:0</value3>
+								</and>
+							</displayCond>
+							<description>You have to set the constant "bootstrap.config.carouselFiles = 1"</description>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</thumbnails>
+
 					<carouselFade>
 						<TCEforms>
 							<label>Switch carousel from horizontal sliding to crossfade</label>
