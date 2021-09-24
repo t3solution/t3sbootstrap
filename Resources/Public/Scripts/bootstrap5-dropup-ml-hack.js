@@ -28,8 +28,12 @@
 		dd.addEventListener('click', function(e) {
 			var navbar = document.getElementById('main-navbar'),
 				clickableparent = navbar.classList.contains('clickableparent') ? 1 : 0,
+				isHover = navbar.classList.contains('navbarHover') ? 1 : 0,
 				href = e.currentTarget.getAttribute('href');
 			if ( clickableparent ) {
+				if (isHover) {
+					e.preventDefault();	
+				}
 				if(href != '#') {
 					location.href = href;
 				}
