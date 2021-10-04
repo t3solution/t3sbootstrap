@@ -35,9 +35,9 @@
 						href="EXT:t3sbootstrap/Resources/Public/Contrib/Multislider/multislider.css" />
 					<f:asset.script identifier="multisliderJs"
 						src="EXT:t3sbootstrap/Resources/Public/Contrib/Multislider/multislider.min.js" />
-<f:asset.css identifier="multisliderCss-{data.uid}">
+					<f:asset.css identifier="multisliderCss-{data.uid}">
 {cssBlock}
-</f:asset.css>
+					</f:asset.css>
 					<f:asset.script identifier="multisliderJs-{data.uid}">
 	$('#multiSlider-{data.uid}').multislider({jsOptions});
 					</f:asset.script>
@@ -70,7 +70,8 @@
 									<f:for each="{col_276}" as="carousel-indicators" iteration="iteration-indicators">
 										<f:if condition="{thumbnails}">
 											<f:then>
-												<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}" style="width:100px; height: auto;" class="me-2{f:if(condition:'{iteration-indicators.isFirst}',then:' active')}">
+												<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}"
+												 style="width:100px; height: auto;" class="me-2{f:if(condition:'{iteration-indicators.isFirst}',then:' active')}">
 													<f:image class="img-fluid d-block" image="{carouselSlides.{carousel-indicators.uid}.0}" width="100" height="60c" />
 												</li>
 											</f:then>

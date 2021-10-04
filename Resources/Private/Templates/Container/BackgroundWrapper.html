@@ -13,7 +13,7 @@
 				<f:asset.css identifier="ytPlayercss"
 					href="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/{settings.ytPlayerVersion}/css/jquery.mb.YTPlayer.min.css" />
 				<f:asset.script identifier="ytPlayerjs"
-					src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/{settings.ytPlayerVersion}/jquery.mb.YTPlayer.min.js" />				
+					src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/{settings.ytPlayerVersion}/jquery.mb.YTPlayer.min.js" />
 			</f:then>
 			<f:else>
 				<f:asset.css identifier="ytPlayercss" href="fileadmin/T3SB/Resources/Public/CSS/jquery.mb.YTPlayer.min.css" />
@@ -179,7 +179,7 @@ $(document).ready(function(){
 <f:if condition="{col_273.0}">
 	<div class="card-img-overlay d-flex{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
 		<f:if condition="{container}">
-			<f:then>		
+			<f:then>
 				<div class="{container} d-flex">
 					<div class="card-text w-100{alignItem}">
 						<f:for each="{col_273}" as="row">

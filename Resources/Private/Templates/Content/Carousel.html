@@ -1,83 +1,95 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:render partial="Layouts/Assets" arguments="{_all}" />
-<f:if condition="{owlCarousel}">
+<f:if condition="{swiper}">
 	<f:then>
-		<f:if condition="{owlStyle} == 1">
+		<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then:' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
+			<f:render section="Slide" arguments="{_all}" />
+		</figure>
+		<f:render partial="Header/All" arguments="{_all}" />
+		<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+		<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
+	</f:then>
+	<f:else>
+		<f:render partial="Layouts/Assets" arguments="{_all}" />
+		<f:if condition="{owlCarousel}">
 			<f:then>
-				<div class="item">
-					<figure class="m-0{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' {files.0.properties.tx_t3sbootstrap_extra_class}')}">
-						<f:render section="Slide" arguments="{_all}" />
-					</figure>
-					<div class="cover"{f:if(condition: '{style}',then: ' style="{style}"')}>
-						<div class="container">
-							<div class="header-content">
-								<f:if condition="{owlLine}">
-									<div class="line"></div>
-								</f:if>
+				<f:if condition="{owlStyle} == 1">
+					<f:then>
+						<div class="item">
+							<figure class="m-0{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' {files.0.properties.tx_t3sbootstrap_extra_class}')}">
+								<f:render section="Slide" arguments="{_all}" />
+							</figure>
+							<div class="cover"{f:if(condition: '{style}',then: ' style="{style}"')}>
+								<div class="container">
+									<div class="header-content">
+										<f:if condition="{owlLine}">
+											<div class="line"></div>
+										</f:if>
+										<f:render partial="Header/All" arguments="{_all}" />
+										{data.bodytext -> f:format.html()}
+									</div>
+								</div>
+							 </div>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="item">
+							<div class="shadow-effect">
+								<figure class="{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' {files.0.properties.tx_t3sbootstrap_extra_class}')}">
+									<f:render section="Slide" arguments="{_all}" />
+								</figure>
 								<f:render partial="Header/All" arguments="{_all}" />
 								{data.bodytext -> f:format.html()}
 							</div>
 						</div>
-					 </div>
-				</div>
+					</f:else>
+				</f:if>
 			</f:then>
 			<f:else>
-				<div class="item">
-					<div class="shadow-effect">
-						<figure class="{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' {files.0.properties.tx_t3sbootstrap_extra_class}')}">
-							<f:render section="Slide" arguments="{_all}" />
-						</figure>
-						<f:render partial="Header/All" arguments="{_all}" />
-						{data.bodytext -> f:format.html()}
-					</div>
-				</div>
-			</f:else>
-		</f:if>
-	</f:then>
-	<f:else>
-		<f:if condition="{multislider}">
-			<f:then>
-				<div class="item">
-					<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-						<f:render section="Slide" arguments="{_all}" />
-					</figure>
-					<f:render partial="Header/All" arguments="{_all}" />
-					<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-					<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-				</div>
-			</f:then>
-			<f:else>
-				<div class="carousel-item">
-					<f:if condition="{files.0}">
-						<f:then>
+				<f:if condition="{multislider}">
+					<f:then>
+						<div class="item">
 							<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
 								<f:render section="Slide" arguments="{_all}" />
-								<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-									<figcaption class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-										<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
-											<f:render partial="Header/All" arguments="{_all}" />
-											<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-											<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-										</div>
-									</figcaption>
-								</f:if>
 							</figure>
-						</f:then>
-						<f:else>
-							<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-								<div class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-									<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
-										<f:render partial="Header/All" arguments="{_all}" />
-										<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-										<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-									</div>
-								</div>
+							<f:render partial="Header/All" arguments="{_all}" />
+							<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+							<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
+						</div>
+					</f:then>
+					<f:else>
+						<div class="carousel-item">
+							<f:if condition="{files.0}">
+								<f:then>
+									<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
+										<f:render section="Slide" arguments="{_all}" />
+										<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+											<figcaption class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
+												<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+													<f:render partial="Header/All" arguments="{_all}" />
+													<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+													<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
+												</div>
+											</figcaption>
+										</f:if>
+									</figure>
+								</f:then>
+								<f:else>
+									<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+										<div class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
+											<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+												<f:render partial="Header/All" arguments="{_all}" />
+												<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+												<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
+											</div>
+										</div>
+									</f:if>
+								</f:else>
 							</f:if>
-						</f:else>
-					</f:if>
-				</div>
+						</div>
+					</f:else>
+				</f:if>
 			</f:else>
 		</f:if>
 	</f:else>
@@ -109,9 +121,10 @@
 			<f:variable name="imgLazyLoad" value="{f:if(condition: '{files.0.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}" />
 		</f:else>
 	</f:if>
+	<f:variable name="imgClass" value="{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}" />
 	<t3sb:media file="{files.0}" title="{files.0.title}"
 	alt="{f:if(condition: files.0.alternative, then: '{files.0.alternative}', else: '{t3sb:alternative(title:files.0.title, name:files.0.name)}')}"
-	 class="img-fluid{imgLazyLoad}{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}"
+	 class="img-fluid{imgLazyLoad}{imgClass}"
 	  width="{dimensions.width}"
 	  height=""
 	  breakpoints="{

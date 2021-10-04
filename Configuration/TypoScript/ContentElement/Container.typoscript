@@ -358,4 +358,21 @@ tt_content {
 		}
 	}
 
+	swiper_container < lib.contentElement
+	swiper_container {
+		templateName = SwiperContainer
+		templateRootPaths {
+			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
+			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+		}
+		dataProcessing {
+
+			300 = B13\Container\DataProcessing\ContainerProcessor
+			300 {
+				colPos = 300
+				as = col_300
+			}
+		}
+	}
+	
 }

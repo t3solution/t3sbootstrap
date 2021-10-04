@@ -60,8 +60,11 @@ bootstrap.cdn {
 	ytPlayer = 3.3.9
 	# cat=bootstrap-cdn/b-version/49; type=small; label=Owl Carousel:
 	owlCarousel = 2.3.4
-	# cat=bootstrap-cdn/b-version/50; type=small; label=Parallax-vanilla:
-	parallaxVanilla = 1.2.3
+	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
+	jarallax = 1
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper:
+	swiper = 7
+
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
 	bootstrapCssIntegrity = sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
@@ -185,8 +188,8 @@ bootstrap.backToTopForAllPages = 0
 # GTM Account ID - include the Google Tag Manager if entered
 bootstrap.gtm =
 
-# disable jQuery & jQuer easing if activated
-bootstrap.disable.jquery = 0
+# disable jQuery by default
+bootstrap.disable.jquery = 1
 
 bootstrap.navbar {
 	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg

@@ -1,11 +1,11 @@
 <T3DataStructure>
 	<sheets>
-		<sDEF>
+		<general>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Card Wrapper</sheetTitle>
-				</TCEforms>
 				<type>array</type>
+				<TCEforms>
+					<sheetTitle>General</sheetTitle>
+				</TCEforms>
 				<el>
 					<hidden>
 						<TCEforms>
@@ -60,79 +60,35 @@
 						</TCEforms>
 					</hidden>
 
-					<!-- card wrapper: columns,group or deck  -->
-					<card_wrapper>
+					<sliderStyle>
 						<TCEforms>
-							<label>Groups, Decks, or Columns</label>
+							<label>Slider Style</label>
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">Group</numIndex>
-										<numIndex index="1">group</numIndex>
+										<numIndex index="0">Default</numIndex>
+										<numIndex index="1">Default</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
-										<numIndex index="0">Grid Cards (Deck)</numIndex>
-										<numIndex index="1">deck</numIndex>
+										<numIndex index="0">Custom one</numIndex>
+										<numIndex index="1">CustomOne</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">Masonry (Columns)</numIndex>
-										<numIndex index="1">columns</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Slider (swiper)</numIndex>
-										<numIndex index="1">slider</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Flipper</numIndex>
-										<numIndex index="1">flipper</numIndex>
+										<numIndex index="0">Custom two</numIndex>
+										<numIndex index="1">CustomTwo</numIndex>
 									</numIndex>
 								</items>
-								<default>group</default>
+								<default>Default</default>
 							</config>
 						</TCEforms>
-					</card_wrapper>
-
-					<visibleCards>
-						<TCEforms>
-							<label>Visible Cards</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">1</numIndex>
-										<numIndex index="1">1</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">2</numIndex>
-										<numIndex index="1">2</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">3</numIndex>
-										<numIndex index="1">3</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">4</numIndex>
-										<numIndex index="1">4</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">6</numIndex>
-										<numIndex index="1">6</numIndex>
-									</numIndex>
-								</items>
-								<default>3</default>
-							</config>
-						</TCEforms>
-					</visibleCards>
+					</sliderStyle>
 
 					<width>
 						<TCEforms>
 							<label>max. Image width</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -147,7 +103,6 @@
 					<ratio>
 						<TCEforms>
 							<label>Image ratio - e.g.: 37:9 (overrides image manipulation)</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -161,7 +116,7 @@
 					<slidesPerView>
 						<TCEforms>
 							<label>Slides per view</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -174,7 +129,7 @@
 					<breakpoints576>
 						<TCEforms>
 							<label>Slides per view - breakpoint > 576px</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -186,7 +141,7 @@
 					<breakpoints768>
 						<TCEforms>
 							<label>Slides per view - breakpoint > 768px</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -198,7 +153,7 @@
 					<breakpoints992>
 						<TCEforms>
 							<label>Slides per view - breakpoint > 992px</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -211,7 +166,7 @@
 					<slidesPerGroup>
 						<TCEforms>
 							<label>Slides per group</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -224,7 +179,7 @@
 					<spaceBetween>
 						<TCEforms>
 							<label>Space between</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -237,7 +192,7 @@
 					<loop>
 						<TCEforms>
 							<label>Loop</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -247,7 +202,7 @@
 					<navigation>
 						<TCEforms>
 							<label>Navigation</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -256,31 +211,32 @@
 					<pagination>
 						<TCEforms>
 							<label>Pagination</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</pagination>
 
+
 					<autoplay>
 						<TCEforms>
 							<label>Autoplay</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</autoplay>
-		
+
 					<delay>
 						<TCEforms>
 							<label>Delay between transitions (in ms)</label>
 							<displayCond>
 								<and>
-									<value1>FIELD:sDEF.card_wrapper:=:slider</value1>
-									<value2>FIELD:sDEF.autoplay:=:1</value2>
+									<value1>FIELD:general.sliderStyle:=:Default</value1>
+									<value2>FIELD:general.autoplay:=:1</value2>
 								</and>
 							</displayCond>
 							<config>
@@ -293,18 +249,34 @@
 					</delay>
 
 
-					<cropMaxCharacters>
+					<swiperCss>
 						<TCEforms>
-							<label>Length of card-bodytext (in chars)</label>
+							<label>Swiper Css</label>
+							<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
 							<config>
-								<type>input</type>
-								<size>5</size>
-								<eval>num</eval>
+								<type>text</type>
+								<size>500</size>
+								<max>9999</max>
+								<default></default>
 							</config>
 						</TCEforms>
-					</cropMaxCharacters>
+					</swiperCss>
+
+					<swiperJs>
+						<TCEforms>
+							<label>Swiper JS</label>
+							<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
+							<config>
+								<type>text</type>
+								<size>500</size>
+								<max>9999</max>
+								<default></default>
+							</config>
+						</TCEforms>
+					</swiperJs>
+
 				</el>
 			</ROOT>
-		</sDEF>
+		</general>
 	</sheets>
 </T3DataStructure>

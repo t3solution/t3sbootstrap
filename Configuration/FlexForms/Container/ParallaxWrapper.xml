@@ -60,14 +60,28 @@
 						</TCEforms>
 					</hidden>
 
+					<width>
+						<TCEforms>
+							<label>max. Image width</label>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>4</max>
+								<default>576</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</width>
+				
 					<speedFactor>
 						<TCEforms>
-							<label>Speed Factor</label>
+							<label>Parallax effect speed. Provide numbers from -1.0 to 2.0</label>
 							<config>
 								<type>input</type>
 								<checkbox></checkbox>
 								<size>6</size>
-								<default>3</default>
+								<default>1</default>								
 							</config>
 						</TCEforms>
 					</speedFactor>
@@ -83,6 +97,16 @@
 							</config>
 						</TCEforms>
 					</addHeight>
+
+					<mobile>
+						<TCEforms>
+							<label>Disable on mobile devices</label>
+							<config>
+								<type>check</type>
+								<default>0.5</default>
+							</config>
+						</TCEforms>
+					</mobile>
 
 				</el>
 			</ROOT>

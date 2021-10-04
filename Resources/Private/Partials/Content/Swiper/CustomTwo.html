@@ -1,0 +1,68 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" 
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{swiperCss}">
+	<f:asset.css identifier="swipercss-{data.uid}">
+{swiperCss -> f:format.raw()}		
+	</f:asset.css>
+</f:if>
+<f:if condition="{swiperJs}">
+	<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
+{swiperJs -> f:format.raw()}
+	</f:asset.script>
+</f:if>
+
+
+
+<div class="alert alert-info" role="alert">
+	<h3>BUILD YOUR OWN SLIDER</h3>
+	<p>Folgendes Template auslagern und anpassen: /Partials/Content/Swiper/CustomTwo.html</p>
+	<p><strong>Info:</strong><br />
+	SWIPER Demos: https://swiperjs.com/demos<br />
+	SWIPER API: https://swiperjs.com/swiper-api<br />
+	</p>
+</div>
+
+
+<f:comment>
+Example from Default.html:
+<div class="swiper swiper-{data.uid}{f:if(condition: class, then: ' {class}')}"{f:if(condition: style, then: ' style="{style}"')}>
+	<div class="swiper-wrapper">
+		<f:for each="{swiperSlides}" as="file">
+			<div class="swiper-slide">
+				<f:link.typolink parameter="{file.0.properties.link}" class="swiper-imglink">
+					<f:render section="Slide" arguments="{ratio: '{ratio}', file: '{file.0}', width: '1000'}" />
+				</f:link.typolink>
+			</div>
+		</f:for>
+	</div>
+	<f:if condition="{navigation}">
+		<div class="swiper-button-prev prev-{data.uid}"></div>
+		<div class="swiper-button-next next-{data.uid}"></div>
+	</f:if>
+	<f:if condition="{pagination}">
+		<div class="swiper-pagination" style="position:inherit"></div>
+	</f:if>
+</div>
+</f:comment>
+
+</html>
+
+
+<f:section name="Image">
+<figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+	<t3sb:media file="{file}"
+	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+	 class="img-fluid d-block{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
+	 width="{width}"
+	 height="auto"
+	 breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+	 }"
+	 picturefill="{settings.picturefill}"
+	 lazyload="0"	 
+	 ratio="{ratio}"
+	/>
+</figure>
+</f:section>

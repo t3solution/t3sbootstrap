@@ -19,7 +19,6 @@
 		</f:else>
 	</f:if>
 </f:if>
-
 </f:section>
 </html>
 
@@ -52,20 +51,20 @@
 <f:section name="OnlyCurrent">
 	<f:for each="{menu}" as="page">
 		<f:if condition="{page.content}">
-			<div id="sectionmenu" class="nav section-menu{menudirection}{menupills}{menuHorizontalAlignment} sticky-top">
+			<nav id="sectionmenu" class="nav sticky-top section-menu{menudirection}{menupills}{menuHorizontalAlignment}">
 				<f:for each="{page.content}" as="element">
 					<f:if condition="{element.data.CType} != 'menu_section'">
 						<f:if condition="{element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu}">
 							<a href="{f:if(condition:'{pageLink}',then:'{page.link}')}#c{element.data.uid}"
 								target="{f:if(condition: '{element.target}',then: '{element.target}', else: '_self')}"
 								title="{element.data.header}"
-								class="nav-item nav-link scroll-trigger rounded-0">
+								class="nav-link">
 								<f:render section="NavLink" arguments="{element: element}" />
 							</a>
 						</f:if>
 					</f:if>
 				</f:for>
-			</div>
+			</nav>
 		</f:if>
 	</f:for>
 </f:section>
@@ -73,9 +72,11 @@
 <f:section name="NavLink">
 <f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 	<f:then>
+		{f:if(condition: '{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="me-1{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 		{element.data.tx_t3sbootstrap_header_sectionMenu}
 	</f:then>
 	<f:else>
+		{f:if(condition: '{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="me-1{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 		{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
 	</f:else>
 </f:if>
@@ -86,6 +87,3 @@
 	{page.title -> f:format.raw()}
 </a>
 </f:section>
-
-
-

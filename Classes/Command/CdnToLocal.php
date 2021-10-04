@@ -330,17 +330,32 @@ class CdnToLocal extends Command
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
-			if ($key == 'parallaxVanilla') {
+			if ($key == 'jarallax') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'parallax-vanilla.min.js';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/parallax-vanilla@'.$version.'/dist/'.$customFileName;
+				$customFileName = 'jarallax.min.js';
+				$cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+				$customFileName = 'jarallax-video.min.js';
+				$cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+			}
+
+			if ($key == 'swiper') {
+				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'swiper-bundle.min.css';
+				$cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'swiper-bundle.min.js';
+				$cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 		}
 
 		return 0;
-
 	}
 
 	private function writeCustomFile($customPath, $customFileName, $cdnPath, $extend=false ) {

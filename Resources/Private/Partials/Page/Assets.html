@@ -131,7 +131,7 @@
 				document.body.style.overflowY = 'unset';
 			}
 			event.preventDefault();
-			t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'))
+			t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
 		});
 	});
 	</f:asset.script>
@@ -142,10 +142,7 @@
    let sticky = sectionmenu.offsetTop;
    function stickyFunction() {
 	  if (window.pageYOffset + navbarHeight >= sticky) {
-		 sectionmenu.classList.add("sticky");
 		 sectionmenu.style.top = navbarHeight+'px';
-	  } else {
-		 sectionmenu.classList.remove("sticky");
 	  }
    }
 </f:asset.script>

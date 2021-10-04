@@ -78,7 +78,7 @@ class YouTubeRenderer implements FileRendererInterface
 	 * @param array $events
 	 * @return string
 	 */
-	public function render(FileInterface $file, $events)
+	public function render(FileInterface $file, $events, $idOnly=false)
 	{
 		if ($file instanceof FileReference) {
 			$orgFile = $file->getOriginalFile();
@@ -98,6 +98,10 @@ class YouTubeRenderer implements FileRendererInterface
 		$addEvents .= $events['videoLogo'] ? '' : ', showYTLogo: false';
 		$addEvents .= $events['videoRaster'] ? ', addRaster: true' : '';
 		$addEvents .= $events['videoGaTrack'] ? '' : ', gaTrack: false';
+
+		if ($idOnly) {
+			return 	$videoId;
+		}
 
 		return "{videoURL:'".$videoId."', containment:'#dom".$events['uid']."', showControls:".$showControls.", ratio:'".$ratio."', quality: '".$quality."', opacity:1, autoPlay:".$autoPlay.", mute:".$mute.", startAt:0".$addEvents."}";
 

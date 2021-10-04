@@ -1,0 +1,201 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:asset.css identifier="swipercss-{data.uid}">
+#swiper-{data.uid} {
+	width: 100%;
+	height: auto;
+}
+#swiper-{data.uid} .swiper-wrapper {
+	height: auto;
+}
+#swiper-{data.uid} .swiper-slide {
+	text-align: center;
+	flex-direction: column;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: start;
+	-ms-flex-pack: start;
+	-webkit-justify-content: start;
+	justify-content: start;
+	-webkit-box-align: stretch;
+	-ms-flex-align: stretch;
+	-webkit-align-items: stretch;
+	align-items: stretch;
+}
+#swiper-{data.uid} .swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+#swiper-{data.uid} .swiper-button-next,
+#swiper-{data.uid} .swiper-button-prev {
+	color: white;
+	text-shadow: 1px 1px 2px #000,0 0 25px #000,0 0 5px #000;
+}
+</f:asset.css>
+<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
+	// Swiper Slider - Partials/Content/Swiper/Default.html
+	var spv = {slidesPerView},
+		spb = {spaceBetween},
+		spg = {slidesPerGroup},
+		del = {delay},
+		b576 = {breakpoints576},
+		b768 = {breakpoints768},
+		b992 = {breakpoints992},
+		lop = {loop},
+		uid = {data.uid};
+	var swiper = new Swiper('#swiper-{data.uid}', {
+		slidesPerView: spv,
+		spaceBetween: spb,
+		slidesPerGroup: spg,
+		loop: lop,
+		disableOnInteraction: false,
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+		autoplay: {
+			delay: del,
+		},
+		navigation: {
+			nextEl: '.next-'+uid,
+			prevEl: '.prev-'+uid,
+		},
+		breakpoints: {
+			10: {
+				slidesPerView: 1,
+			},
+			576: {
+				slidesPerView: b576,
+			},
+			768: {
+				slidesPerView: b768,
+			},
+			992: {
+				slidesPerView: b992,
+			},
+		},
+	});
+<f:if condition="{pagination} && {navigation}">
+	var swi = document.getElementById('swiper-{data.uid}'),
+		pag = swi.querySelector('.swiper-pagination'),
+		next = swi.getElementsByClassName('swiper-button-next'),
+		prev = swi.getElementsByClassName('swiper-button-prev'),
+		offset = pag.clientHeight - 5;
+	next[0].style.top = 'calc(50% - '+offset+'px)';
+	prev[0].style.top = 'calc(50% - '+offset+'px)';
+</f:if>
+</f:asset.script>
+<div id="swiper-{data.uid}" class="swiper{f:if(condition: class, then: ' {class}')}"{f:if(condition: style, then: ' style="{style}"')}>
+	<div class="swiper-wrapper">
+		<f:for each="{col_300}" as="card" iteration="iterator">
+			<f:if condition="{card.header} || {card.subheader} || {card.bodytext} || {swiperSlides.{card.uid}.0}">
+				<div class="swiper-slide">
+					<div class="card rounded-0">
+						<f:if condition="{swiperSlides.{card.uid}.0}">
+							<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
+								<f:render section="Image" arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true'}" />
+							</f:link.typolink>
+						</f:if>
+						<f:if condition="{card.header} || {card.subheader} || {card.bodytext}">
+							<div class="card-body{card.header_position}">
+								<f:render section="CardTitle" arguments="{_all}" />
+								{card.bodytext -> f:format.html()}
+							</div>
+						</f:if>
+					</div>
+				</div>
+			</f:if>
+		</f:for>
+	</div>
+	<f:if condition="{navigation}">
+		<div class="swiper-button-prev prev-{data.uid}"></div>
+		<div class="swiper-button-next next-{data.uid}"></div>
+	</f:if>
+	<f:if condition="{pagination}">
+		<div class="swiper-pagination mt-4" style="position:inherit"></div>
+	</f:if>
+</div>
+</html>
+
+
+<f:section name="Image">
+<f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+<figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+	<t3sb:media file="{file}"
+	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+	 class="img-fluid d-block{imgClass}"
+	 width="{width}"
+	 height="auto"
+	 breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+	 }"
+	 picturefill="{settings.picturefill}"
+	 lazyload="0"
+	 ratio="{ratio}"
+	/>
+</figure>
+</f:section>
+
+<f:section name="CardTitle">
+	<f:if condition="{card.settings.button.enable} || !{card.header_link}">
+	<f:then>
+		<f:render section="Title" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:render section="TitleLink" arguments="{_all}" />
+	</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Title">
+	<f:if condition="{card.header} && {card.subheader}">
+		<f:then>
+		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
+			<h4 class="card-title">
+				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
+		</header>
+		</f:then>
+		<f:else if="{card.header}">
+			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
+				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+		</f:else>
+		<f:else if="{card.subheader}">
+			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
+				{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}</h4>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="TitleLink">
+	<f:if condition="{card.header} && {card.subheader}">
+		<f:then>
+		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
+			<h4 class="card-title">
+				<f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
+			</h4>
+			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
+		</header>
+		</f:then>
+		<f:else if="{card.header}">
+			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
+				then: ' {card.tx_t3sbootstrap_header_class}')}">
+				<f:link.typolink parameter='{card.header_link}'>
+					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
+				</f:link.typolink></h4>
+		</f:else>
+		<f:else if="{card.subheader}">
+			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
+				then: ' {card.tx_t3sbootstrap_header_class}')}">
+				<f:link.typolink parameter='{card.header_link}'>
+					{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}
+				</f:link.typolink></h4>
+		</f:else>
+	</f:if>
+</f:section>

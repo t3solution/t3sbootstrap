@@ -833,6 +833,13 @@ class Config extends AbstractEntity
 	protected $sidebarMenuPosition = '';
 
 	/**
+	 * $sectionmenuIcons
+	 *
+	 * @var bool
+	 */
+	protected $sectionmenuIcons = false;
+
+	/**
 	 * sidebarSectionMobile
 	 *
 	 * @var bool
@@ -3837,5 +3844,27 @@ class Config extends AbstractEntity
 	{
 		$this->sidebarSectionMobile = $sidebarSectionMobile;
 	}
+
+	/**
+	 * Returns the sectionmenuIcons
+	 *
+	 * @return bool $sectionmenuIcons
+	 */
+	public function getSectionmenuIcons()
+	{
+		return $this->sectionmenuIcons;
+	}
+
+	/**
+	 * Sets the sectionmenuIcons
+	 *
+	 * @param bool $sectionmenuIcons
+	 * @return void
+	 */
+	public function setSectionmenuIcons($sectionmenuIcons)
+	{
+		$this->sectionmenuIcons = $sectionmenuIcons;
+	}
+
 
 }

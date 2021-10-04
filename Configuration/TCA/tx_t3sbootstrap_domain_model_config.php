@@ -273,6 +273,20 @@ return [
 				]
 			]
 		],
+		'sectionmenu_icons' => [
+			'exclude' => false,
+			'label' => 'FA icons',
+			'accordion_id' => 1,
+			'accordion_sub' => '1-5',
+			'config' => [
+				'type' => 'check',
+				'items' => [
+					'1' => [
+						'0' => 'Shows FA icons in section menu'
+					]
+				]
+			]
+		],
 		'sidebar_section_mobile' => [
 			'exclude' => false,
 			'label' => 'Section mobile',

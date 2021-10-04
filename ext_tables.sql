@@ -115,6 +115,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	sectionmenu_anchor_offset int(11) DEFAULT '0' NOT NULL,
 	sectionmenu_scrollspy_offset int(11) DEFAULT '0' NOT NULL,
 	sectionmenu_sticky_top tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	sectionmenu_icons tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	background_image_enable tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	background_image_slide tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	shrinking_nav_padding varchar(255) DEFAULT '' NOT NULL,

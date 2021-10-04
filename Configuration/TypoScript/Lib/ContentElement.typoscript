@@ -62,11 +62,12 @@ lib.contentElement {
 		animateVersion = {$bootstrap.cdn.animate}
 		masonryVersion = {$bootstrap.cdn.masonry}
 		masonryIntegrity = {$bootstrap.cdn.masonryIntegrity}
-		parallaxVanillaVersion = {$bootstrap.cdn.parallaxVanilla}
+		jarallaxVersion = {$bootstrap.cdn.jarallax}
 		baguetteBoxVersion = {$bootstrap.cdn.baguetteBox}
 		lightcaseVersion = {$bootstrap.cdn.lightcase}
 		magnificpopupVersion = {$bootstrap.cdn.magnificpopup}
 		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
+		swiperVersion = {$bootstrap.cdn.swiper}
 		ytPlayerVersion = {$bootstrap.cdn.ytPlayer}
 		viewportcheckerVersion = {$bootstrap.cdn.viewportchecker}
 		viewportcheckerIntegrity = {$bootstrap.cdn.viewportcheckerIntegrity}
@@ -93,7 +94,7 @@ lib.contentElement {
 		breakpoint = {$bootstrap.config.navbarBreakpoint}
 		lightboxSelection = {$bootstrap.config.lightboxSelection}
 		cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
-
+		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}

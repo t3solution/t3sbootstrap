@@ -1,33 +1,70 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{settings.cdn}">
 	<f:then>
-		<f:asset.script identifier="parallaxJs" src="https://cdn.jsdelivr.net/npm/parallax-vanilla@{settings.parallaxVanillaVersion}/dist/parallax-vanilla.min.js" />
+		<f:asset.script identifier="jarallaxJs" src="https://unpkg.com/jarallax@{settings.jarallaxVersion}/dist/jarallax.min.js" />
+		<f:if condition="{video}">
+			<f:asset.script identifier="jarallaxVideoJs" src="https://unpkg.com/jarallax@{settings.jarallaxVersion}/dist/jarallax-video.min.js" />
+		</f:if>
 	</f:then>
 	<f:else>
-		<f:asset.script identifier="parallaxJs" src="fileadmin/T3SB/Resources/Public/JS/parallax-vanilla.min.js" />
+		<f:asset.script identifier="jarallaxJs" src="fileadmin/T3SB/Resources/Public/JS/jarallax.min.js" />
+		<f:if condition="{video}">
+			<f:asset.script identifier="jarallaxVideoJs" src="fileadmin/T3SB/Resources/Public/JS/jarallax-video.min.js" />
+		</f:if>
 	</f:else>
 </f:if>
-<f:asset.css identifier="parallaxCss" href="EXT:t3sbootstrap/Resources/Public/Contrib/ParallaxVanilla/parallax-vanilla.css" />
-<f:asset.script identifier="vanilla_parallaxJs">
+<f:asset.css identifier="jarallaxCss">
+.jarallax {
+	position: relative;
+	z-index: 0;
+}
+.jarallax .jarallax-img {
+	position: absolute;
+	object-fit: cover;
+	font-family: 'object-fit: cover;';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+</f:asset.css>
+<f:asset.script identifier="vanilla_jarallaxJs-{data.uid}">
 	// Parallax - ParallaxWrapper.html
-	t3sbParallax({addHeight});
+	t3sbParallax({addHeight}, {data.uid});
+	jarallax(document.getElementById('c{data.uid}'));
 </f:asset.script>
-
 <f:if condition="{video}">
 	<f:then>
-		<div class="container"><div class="alert alert-danger my-5" role="alert">Videos are not supported</div></div>
+		<f:if condition="{vimeo}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="https://vimeo.com/{videoId}">
+				   <f:render section="OverlayInner" arguments="{_all}" />
+			</div>
+		</f:if>
+		<f:if condition="{youtube}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="https://www.youtube.com/watch?v={videoId}">
+				   <f:render section="OverlayInner" arguments="{_all}" />
+			</div>
+		</f:if>
+		<f:if condition="{local}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="{mimeType}:fileadmin{file.identifier}">
+				   <f:render section="OverlayInner" arguments="{_all}" />
+			</div>
+		</f:if>
 	</f:then>
 	<f:else>
 		<f:if condition="{parallaxImage}">
 			<f:then>
-				<f:comment>	background-image url is set by CSS (inline) </f:comment>
-				<section id="c{data.uid}" pv-height="1px" class="pv-container{f:if(condition: '{class}', then: ' {class}')}">
-					<div id="s{data.uid}" class='pv-block parallax bgImageSize background-image' pv-speed="{speedFactor}" pv-mediapath="{parallaxImage}"></div>
+				<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-disable-parallax="{no-mobile}">
+					<figure class="jarallax-img">
+						<f:render section="Image" arguments="{_all}" />
+					</figure>
 					<f:render section="OverlayInner" arguments="{_all}" />
-				</section>
+				</div>
 			</f:then>
 			<f:else>
-				<div class="alert alert-danger" role="alert">No background-image is loaded!</div>
+				<div class="alert alert-danger" role="alert">No background-image or video is loaded!</div>
 			</f:else>
 		</f:if>
 	</f:else>
@@ -37,27 +74,40 @@
 
 <f:section name="OverlayInner">
 <f:if condition="{col_274.0}">
-	<div class="text-wrapper">
-		<div class="pv-block{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')} pv-mediatype="none">
-			<f:if condition="{container}">
-				<f:then>
-					<div class="{container}">
-						<div class="parallax-text w-100">
-							<f:for each="{col_274}" as="row">
-								{row.renderedContent -> f:format.raw()}
-							</f:for>
-						</div>
-					</div>
-				</f:then>
-				<f:else>
-					<div class="parallax-text w-100">
-						<f:for each="{col_274}" as="row">
-							{row.renderedContent -> f:format.raw()}
-						</f:for>
-					</div>
-				</f:else>
-			</f:if>
+	<f:if condition="{container}">
+	<f:then>
+		<div class="d-flex {container}">
+			<div id="text-wrapper-{data.uid}" class="align-self-center w-100">
+				<f:for each="{col_274}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
+			</div>
 		</div>
-	</div>
+	</f:then>
+	<f:else>
+		<div class="d-flex">
+			<div id="text-wrapper-{data.uid}" class="align-self-center w-100">
+				<f:for each="{col_274}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
+			</div>
+		</div>
+	</f:else>
 </f:if>
+</f:if>
+</f:section>
+
+<f:section name="Image">
+<t3sb:media file="{file}" width="{width}" height="auto"
+	class="jarallax-img"
+	breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+	}"
+	picturefill="{settings.picturefill}"
+	lazyload="0" 
+	ratio="0"
+	style="{style}"
+	imgtag="0" />
 </f:section>
