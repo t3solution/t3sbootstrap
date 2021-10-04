@@ -65,6 +65,7 @@ plugin.tx_news {
 		picturefill = {$bootstrap.image.picturefill}
 		magnifying = {$bootstrap.config.magnifying}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
+		jqueryDisable = {$bootstrap.disable.jquery}
 	}
 
 	_LOCAL_LANG.de.more-link = mehr
