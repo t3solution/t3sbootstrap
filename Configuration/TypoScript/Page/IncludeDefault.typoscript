@@ -99,12 +99,8 @@ page.cssInline {
 [END]
 
 # Ajax Pagination for EXT:news
-[{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1]
-page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxPagination.js
+[{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 ]
 plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
-[END]
-[{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 && {$bootstrap.extconf.lazyLoad} == 1]
-page.includeJSFooter.ajaxPagination = EXT:t3sbootstrap/Resources/Public/Scripts/AjaxLazyPagination.js
 [END]
 
 # Background Image
