@@ -86,7 +86,7 @@
 			<i class="{breadcrumbItem.data.tx_t3sbootstrap_fontawesome_icon}"></i>
 		</f:then>
 		<f:else>
-			{breadcrumbItem.title}
+			{breadcrumbItem.title -> f:format.raw()}
 		</f:else>
 	</f:if>
 </f:section>
