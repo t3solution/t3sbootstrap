@@ -40,7 +40,8 @@ module.tx_t3sbootstrap {
 			ytPlayer = {$bootstrap.cdn.ytPlayer}
 			owlCarousel = {$bootstrap.cdn.owlCarousel}
 			masonry = {$bootstrap.cdn.masonry}
-			parallaxVanilla = {$bootstrap.cdn.parallaxVanilla}
+			jarallax = {$bootstrap.cdn.jarallax}
+			swiper = {$bootstrap.cdn.swiper}
 		}
 	}
 }

@@ -10,19 +10,19 @@
 							then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}">
 							<f:if condition="{page.nav_title}">
 								<f:then>
-									<span>{page.nav_title}</span>
+									<span>{f:if(condition: '{page.data.tx_t3sbootstrap_fontawesome_icon}', then:'<i class="{page.data.tx_t3sbootstrap_fontawesome_icon} me-1"></i>')}{page.nav_title}</span>
 								</f:then>
 								<f:else>
-									<span>{page.title}</span>
+									<span>{f:if(condition: '{page.data.tx_t3sbootstrap_fontawesome_icon}', then:'<i class="{page.data.tx_t3sbootstrap_fontawesome_icon} me-1"></i>')}{page.title}</span>
 								</f:else>
 							</f:if>
 						</a>
 						<f:if condition="{page.content}">
-							<ul class="nav flex-column">
+							<ul class="nav flex-column ms-5">
 								<f:for each="{page.content}" as="element">
 									<li>
 										<a href="{page.link}#c{element.data.uid}" target="{page.target}" title="{element.data.header}">
-											<span>{element.data.header}</span>
+											<span>{f:if(condition: '{element.data.tx_t3sbootstrap_fontawesome_icon}', then:'<i class="{element.data.tx_t3sbootstrap_fontawesome_icon} me-1"></i>')}{element.data.header}</span>
 										</a>
 									</li>
 								</f:for>

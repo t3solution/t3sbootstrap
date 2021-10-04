@@ -635,11 +635,11 @@ class GalleryProcessor implements DataProcessorInterface
 
 				$bsGridWidth = self::getCalculatedGridWidth($bsGridWidth);
 			} else {
-#				$bsGridWidth = $bsGridWidth - 30;
+				#$bsGridWidth = $bsGridWidth - 30;
 			}
 
 			$galleryWidth = $bsGridWidth / 100 * $rowWidth;
-			$imagePadding = self::getImagePadding();
+			$imagePadding = self::getImagePadding($bsGridWidth);
 
 			$mediaWidth = ($galleryWidth - $imagePadding ) / $this->galleryData['count']['columns'];
 		}
@@ -992,9 +992,11 @@ class GalleryProcessor implements DataProcessorInterface
 	/**
 	 * Returns $imagepadding
 	 *
+	 * @param int $bsGridWidth
+	 *
 	 * @return int $imagepadding
 	 */
-	protected function getImagePadding()
+	protected function getImagePadding($bsGridWidth)
 	{
 
 		if ( $this->cType == 't3sbs_card' && $this->processedData['data']['tx_container_parent']

@@ -8,61 +8,174 @@
 	t3sbCardFlipper()
 </f:asset.script>
 </f:if>
-<f:if condition="{card_wrapper_layout} == 'flipper'">
-	<f:then>
+<f:comment> CARD GROUP </f:comment>
+<f:if condition="{card_wrapper_layout} == 'group'">
 		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
-			<f:render section="Flipper" arguments="{_all}" />
+			<f:for each="{col_270}" as="card" iteration="cardIterator">
+				{card.renderedContent -> f:format.raw()}
+			</f:for>
 		</div>
-	</f:then>
-	<f:else>
-		<f:if condition="{card_wrapper_layout} == 'deck'">
-			<f:then>
-				<div class="card-deck gy-4 row row-cols-{visibleCards}{f:if(condition:'{class}',then:' {class}')}"
-					{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
-					<f:for each="{col_270}" as="card" iteration="cardIterator">
-						<div class="col">
-							{card.renderedContent -> f:format.raw()}
-						</div>
-					</f:for>
+</f:if>
+<f:comment> CARD GRID (DECK) </f:comment>
+<f:if condition="{card_wrapper_layout} == 'deck'">
+		<div class="card-deck gy-4 row row-cols-{visibleCards}{f:if(condition:'{class}',then:' {class}')}"
+			{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+			<f:for each="{col_270}" as="card" iteration="cardIterator">
+				<div class="col">
+					{card.renderedContent -> f:format.raw()}
 				</div>
+			</f:for>
+		</div>
+</f:if>
+<f:comment> CARD COLUMNS (MASONRY) </f:comment>
+<f:if condition="{card_wrapper_layout} == 'columns'">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
+				 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 			</f:then>
 			<f:else>
-				<f:if condition="{card_wrapper_layout} == 'columns'">
-					<f:then>
-						<f:if condition="{settings.cdn}">
-							<f:then>
-								<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
-								 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
-							</f:then>
-							<f:else>
-								<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
-								 crossorigin="anonymous" async="async" />
-							</f:else>
-						</f:if>
-						<div class="row{f:if(condition:'{class}',then:' {class}')}"
-							{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
-							<f:for each="{col_270}" as="card" iteration="cardIterator">
-						<div class="col-sm-6 col-lg-4 mb-4">
-							{card.renderedContent -> f:format.raw()}
-						</div>
-							</f:for>
-						</div>
-					</f:then>
-					<f:else>
-						<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
-							<f:for each="{col_270}" as="card" iteration="cardIterator">
-								{card.renderedContent -> f:format.raw()}
-							</f:for>
-						</div>
-					</f:else>
-				</f:if>
+				<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
+				 crossorigin="anonymous" async="async" />
 			</f:else>
 		</f:if>
-	</f:else>
+		<div class="row{f:if(condition:'{class}',then:' {class}')}"
+			{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
+			<f:for each="{col_270}" as="card" iteration="cardIterator">
+		<div class="col-sm-6 col-lg-4 mb-4">
+			{card.renderedContent -> f:format.raw()}
+		</div>
+			</f:for>
+		</div>
+</f:if>
+<f:comment> CARD SLIDER (SWIPER JS) </f:comment>
+<f:if condition="{card_wrapper_layout} == 'slider'">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css identifier="swipercss"
+				href="https://unpkg.com/swiper@{settings.swipeVersion}/swiper-bundle.min.css" />
+			<f:asset.script identifier="swiperjs"
+				src="https://unpkg.com/swiper@{settings.swipeVersion}/swiper-bundle.min.js" />
+		</f:then>
+		<f:else>
+			<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
+			<f:asset.script identifier="swiperjs" src="fileadmin/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+		</f:else>
+	</f:if>
+	<f:asset.css identifier="swipercss-{data.uid}">
+#swiper-{data.uid} {
+	width: 100%;
+	height: auto;
+}
+#swiper-{data.uid} .card {
+	height: 100% !important;
+	display: block !important;
+}
+#swiper-{data.uid} .swiper-button-next,
+#swiper-{data.uid} .swiper-button-prev {
+	color: white;
+	text-shadow: 1px 1px 2px #000,0 0 25px #000,0 0 5px #000;
+}
+	</f:asset.css>
+	<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
+	// Card Slider (swiper) - Container/CardWrapper.html
+	var spv = {slidesPerView},
+		spb = {spaceBetween},
+		spg = {slidesPerGroup},
+		del = {delay},
+		b576 = {breakpoints576},
+		b768 = {breakpoints768},
+		b992 = {breakpoints992},
+		lop = {loop},
+		uid = {data.uid};
+	var swiper = new Swiper("#swiper-{data.uid}", {
+		slidesPerView: spv,
+		spaceBetween: spb,
+		slidesPerGroup: spg,
+		loop: lop,
+		autoplay: {
+			delay: del,
+		},
+		pagination: {
+			el: ".swiper-paginate",
+			clickable: true,
+		},
+		navigation: {
+			nextEl: '.next-'+uid,
+			prevEl: '.prev-'+uid,
+		},
+		breakpoints: {
+			10: {
+				slidesPerView: 1,
+			},
+			576: {
+				slidesPerView: b576,
+			},
+			768: {
+				slidesPerView: b768,
+			},
+			992: {
+				slidesPerView: b992,
+			},
+		},
+	});
+		<f:if condition="{pagination} && {navigation}">
+	var swi = document.getElementById('swiper-{data.uid}'),
+		pag = swi.querySelector('.swiper-paginate'),
+		next = swi.getElementsByClassName('swiper-button-next'),
+		prev = swi.getElementsByClassName('swiper-button-prev'),
+		offset = pag.clientHeight - 5;
+	next[0].style.top = 'calc(50% - '+offset+'px)';
+	prev[0].style.top = 'calc(50% - '+offset+'px)';
+		</f:if>
+	</f:asset.script>
+<div id="swiper-{data.uid}" class="swiper">	
+	<div class="swiper-wrapper card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+		<f:for each="{cards}" as="card" iteration="iterator">
+			<f:render section="SwiperCard" arguments="{_all}" />
+		</f:for>
+	</div>
+	<f:if condition="{navigation}">
+		<div class="swiper-button-prev prev-{data.uid}"></div>
+		<div class="swiper-button-next next-{data.uid}"></div>
+	</f:if>
+	<f:if condition="{pagination}">
+		<div class="swiper-paginate mt-3 text-center" style="position:inherit"></div>
+	</f:if>
+</div>
+</f:if>
+<f:comment> CARD FLIPPER </f:comment>
+<f:if condition="{card_wrapper_layout} == 'flipper'">
+	<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+		<f:render section="Flipper" arguments="{_all}" />
+	</div>
 </f:if>
 </f:section>
 </html>
 
+
+<f:section name="SwiperCard">
+<div class="swiper-slide">
+	<div class="card">
+		<f:if condition="{card.file}">
+			<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
+				<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file}', width: '{width}', swiper: 'true'}" />
+			</f:link.typolink>
+		</f:if>
+		<div class="card-body{card.header_position}">
+			<f:render section="CardTitle" arguments="{_all}" />
+			<f:if condition="{cropMaxCharacters}">
+				<f:then>
+					{card.text.top -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				</f:then>
+				<f:else>
+					{card.text.top -> f:format.html()}
+				</f:else>
+			</f:if>
+		</div>
+	</div>
+ </div>
+</f:section>
 
 <f:section name="Flipper">
 <div class="row row-eq-height">
@@ -128,12 +241,13 @@
 </div>
 </f:section>
 
-
 <f:section name="Image">
+<f:variable name="lazyload" value="{f:if(condition: swiper, then: '0', else: '{settings.lazyLoad}')}" />
+<f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 	<t3sb:media file="{file}"
 	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
-	 class="card-img-top img-fluid{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
+	 class="card-img-top img-fluid{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {lazyload} == 2 || {lazyload} == 1', then: ' lazy')}{imgClass}"
 	 width="{width}"
 	 height="auto"
 	 breakpoints="{
@@ -142,7 +256,7 @@
 		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 	 }"
 	 picturefill="{settings.picturefill}"
-	 lazyload="{settings.lazyLoad}"
+	 lazyload="{lazyload}"
 	 ratio="{ratio}"
 	/>
 </figure>

@@ -250,11 +250,23 @@ class WrapperHelper implements SingletonInterface
 						$processedData['flipper']['class'] = 'col-xs-12 col-sm-6 col-md-4';
 				}
 			}
-
+			// swiperjs
 			if ($flexconf['card_wrapper'] == 'slider') {
-				$processedData['class'] .= ' mx-n3';
 				$processedData['visibleCards'] = (int)$flexconf['visibleCards'] ?: 3;
 				$processedData['cols'] = floor(12 / $processedData['visibleCards']);
+				$processedData['width'] = $flexconf['width'];
+				$processedData['ratio'] = $flexconf['ratio'];
+				$processedData['slidesPerView'] = (int)$flexconf['slidesPerView'] ?: 4;
+				$processedData['breakpoints576'] = (int)$flexconf['breakpoints576'] ?: 2;
+				$processedData['breakpoints768'] = (int)$flexconf['breakpoints768'] ?: 3;
+				$processedData['breakpoints992'] = (int)$flexconf['breakpoints992'] ?: 4;
+				$processedData['slidesPerGroup'] = (int)$flexconf['slidesPerGroup'];
+				$processedData['spaceBetween'] = (int)$flexconf['spaceBetween'];
+				$processedData['loop'] = (int)$flexconf['loop'];
+				$processedData['navigation'] = (int)$flexconf['navigation'];
+				$processedData['pagination'] = (int)$flexconf['pagination'];
+				$processedData['autoplay'] = (int)$flexconf['autoplay'];
+				$processedData['delay'] = $flexconf['autoplay'] ? (int)$flexconf['delay'] : 99999999;
 			}
 		}
 		$processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
@@ -299,7 +311,7 @@ class WrapperHelper implements SingletonInterface
 			$block = '#multiSlider-'.$processedData['data']['uid'].' .MS-content .item {width: '.$flexconf['number'].'}';
 
 			$processedData['multislider'] = TRUE;
-			$processedData['jsOptions'] = '{'.$options.'}';					
+			$processedData['jsOptions'] = '{'.$options.'}';
 			$processedData['cssBlock'] = $block;
 		}
 
@@ -313,10 +325,8 @@ class WrapperHelper implements SingletonInterface
 		$processedData['maxWidth'] = $flexconf['width'].'px';
 		$processedData['interval'] = $flexconf['interval'];
 		$processedData['darkVariant'] = $flexconf['darkVariant'];
-
 		$processedData['carouselFade'] = $flexconf['carouselFade'] ? ' carousel-fade': '';
 		$processedData['carouselFade'] .= $flexconf['darkVariant'] ? ' carousel-dark': '';
-
 		$processedData['thumbnails'] = $flexconf['thumbnails'] ? true : false;
 
 		return $processedData;
@@ -336,23 +346,44 @@ class WrapperHelper implements SingletonInterface
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 		$processedData['file'] = $file;
-
 		if ( $file ) {
 			if ( $file->getType() === 4 ) {
 				$processedData['video'] = TRUE;
+				if ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' ) {
+				// youtube video
+					$processedData['youtube'] = TRUE;
+					$events = $flexconf;
+					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
+					$events['uid'] = $processedData['data']['uid'];
+					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file, $events, true);
+				} elseif ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
+				// vimeo video
+					$processedData['vimeo'] = TRUE;
+					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file, $events, true);
+				} else {
+				// local video
+					$processedData['local'] = TRUE;
+					if ( $file->getMimeType() == 'video/mp4' ) {
+						$processedData['mimeType'] = 'mp4' ;
+					}
+					if ( $file->getMimeType() == 'video/webm' ) {
+						$processedData['mimeType'] = 'webm' ;
+					}
+					if ( $file->getMimeType() == 'video/ogv' ) {
+						$processedData['mimeType'] = 'ogv' ;
+					}
+					$processedData['file'] = $file;
+				}
 			} else {
 				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, FALSE, $webp);
-
-				$processedData['parallaxImageUid'] = $bgImage[0];
-				$processedData['parallaxImage'] = $bgImage[1];
-				$processedData['speedFactor'] = $flexconf['speedFactor'];
-				$processedData['addHeight'] = (int)$flexconf['addHeight'] ?: 0;
+				$processedData['parallaxImage'] = $bgImage;
 			}
-		}
 
-		if ($flexconf['paddingTopBottom']) {
-			$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 1rem;';
+			$processedData['width'] = $flexconf['width'];
+			$processedData['speedFactor'] = $flexconf['speedFactor'] ?: 1;
+			$processedData['addHeight'] = (int)$flexconf['addHeight'] ?: 0;
+			$processedData['no-mobile'] = $flexconf['mobile'] ? '/iPad|iPhone|iPod|Android/' : '-';
 		}
 
 		return $processedData;
@@ -374,7 +405,6 @@ class WrapperHelper implements SingletonInterface
 
 		$processedData['appearance'] = $parentflexconf['appearance'];
 		$processedData['show'] = $flexconf['active'] ? ' show' : '';
-		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
 		$processedData['collapsed'] = $flexconf['active'] ? '' : ' collapsed';
 		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
 		$processedData['buttonstyle'] = $flexconf['style'] ? $flexconf['style'] : 'primary';

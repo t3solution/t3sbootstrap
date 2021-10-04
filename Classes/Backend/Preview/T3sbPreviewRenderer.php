@@ -126,11 +126,16 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
    			if ( $flexconf['equalWidth'] ) {
 				$out .= '<br />- Equal Width';
 			}
-   			if ( $flexconf['equalHeight'] ) {
-				$out .= '<br />- Equal Height';
+   			if ( $flexconf['horizontalGutters'] ) {
+				$out .= '<br />- Horizontal gutters: '.$flexconf['horizontalGutters'];
 			}
-   			if ( $flexconf['noGutters'] ) {
-				$out .= '<br />- No Gutters';
+		}
+		if ($record['CType'] == 'two_columns') {
+ 			if ($flexconf['bgimages']) {
+				$out .= '<br />- Has Background-image';
+			}
+  			if ( $flexconf['colHeight'] ) {
+				$out .= '<br />- Min.-Height of the Element: '.$flexconf['colHeight'].'px';
 			}
 		}
 		if ($record['CType'] == 'button_group') {
@@ -180,6 +185,20 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 				$out .= '<br />- Zoom';
 			}
 		}
+		if ($record['CType'] == 'swiper_container') {
+			if ( $flexconf['width'] ) {
+				$out .= '<br />- Width: '.$flexconf['width'].'px';
+			}
+			if ( $flexconf['ratio'] ) {
+				$out .= '<br />- Aspect ratio: '.$flexconf['ratio'];
+			}
+			if ( $flexconf['slidesPerView'] ) {
+				$out .= '<br />- Slides per view: '.$flexconf['slidesPerView'];
+			}
+			if ( $flexconf['delay'] ) {
+				$out .= '<br />- Delay between transitions (in ms): '.$flexconf['delay'];
+			}
+		}
 		if ($record['CType'] == 'card_wrapper') {
 			$out .= '<br />- Wrapper: Card '.$flexconf['card_wrapper'];
 			if ( $flexconf['visibleCards'] ) {
@@ -227,6 +246,9 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			}
 			if ( $flexconf['addHeight'] ) {
 				$out .= '<br />- Surcharge height to parallax view: '.$flexconf['addHeight'].'px';
+			}
+			if ( $flexconf['mobile'] ) {
+				$out .= '<br />- Disable on mobile devices!';
 			}
 		}
 		if ($record['CType'] === 'modal') {

@@ -40,6 +40,7 @@ page {
 			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
 			gtm = {$bootstrap.gtm}
 			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
+			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 			navbar {
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}

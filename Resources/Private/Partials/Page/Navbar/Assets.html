@@ -55,7 +55,7 @@
 	}, true);
 </f:asset.script>
 </f:if>
-<f:if condition="{settings.config.navbarMegamenu}">
+<f:if condition="{settings.config.navbarMegamenu} && {data.tx_t3sbootstrap_megamenu}">
 <f:asset.script identifier="vanilla_navbarmegamenuJs">
 	// Navbar mega-menu - Navbar/Assets.html
 	var megaDropdown = document.querySelectorAll('.mega-dropdown'),
@@ -78,7 +78,6 @@
 	}
 </f:asset.script>
 </f:if>
-
 <f:if condition="{settings.config.navbarShrinkcolor}">
 <f:asset.script identifier="vanilla_navbarshrinkcolor">
 	// Shrinking Navbar on scrolling - Navbar/Assets.html
@@ -86,7 +85,6 @@
 	t3sbShrinkingNavbar(navbar, {settings.config.shrinkingNavPadding});
 </f:asset.script>
 </f:if>
-
 <f:if condition="{settings.config.navbarPlacement} == 'sticky-top'">
 <f:asset.script identifier="vanilla_navbarstickytop">
 	// Navbar sticky-top - Navbar/Assets.html
@@ -106,7 +104,6 @@
 {config.navbar.navColorCSS}
 </f:asset.css>
 </f:if>
-
 <f:if condition="{config.navbar.transparent}">
 <f:asset.script identifier="vanilla_navbartransparentJS">
 	// Navbar transparent - Navbar/Assets.html
@@ -117,5 +114,4 @@
 	}
 </f:asset.script>
 </f:if>
-
 </html>

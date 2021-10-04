@@ -8,29 +8,27 @@
 			<f:render partial="Page/Assets" arguments="{scrollspy:'true'}" />		
 		</f:else>
 	</f:if>
-	<f:if condition="{settings.config.sidebarSectionMobile}">
-		<f:then>
-			<f:variable name="breakpoint" value="-" />
-		</f:then>
-		<f:else>
-			<f:variable name="breakpoint" value="-{settings.config.navbarBreakpoint}-" />
-		</f:else>
-	</f:if>
-	<div id="sectionmenu" class="list-group{config.sidebar.stickTopClass}" style="top:{config.sidebar.stickTopOffset}">
+	<nav id="sectionmenu" class="list-group{config.sidebar.stickTopClass}" style="top:{config.sidebar.stickTopOffset}">
 		<f:for each="{sectionMenu.0.content}" as="element">
 			<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
 				<a class="list-group-item list-group-item-action" href="#c{element.data.uid}">
 					<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 						<f:then>
+							<f:render section="HeaderIcon" arguments="{_all}" />
 							{element.data.tx_t3sbootstrap_header_sectionMenu}
 						</f:then>
 						<f:else>
+							<f:render section="HeaderIcon" arguments="{_all}" />
 							{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
 						</f:else>
 					</f:if>
 				</a>
 			</f:if>
 		</f:for>	
-	</div>
+	</nav>
 </f:if>
 </html>
+
+<f:section name="HeaderIcon">
+  {f:if(condition: '{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
+</f:section>
