@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <figure id="video-{file.uid}" class="video{addmedia.figureclass}">
 	<div class="ratio ratio-{f:if(condition: '{aspectRatio}',then: '{aspectRatio}', else: '16x9')}">
-		<f:render partial="Media/Rendering/Video" arguments="{file: file, dimensions: dimensions, settings: settings}" />
+		<f:render partial="Media/Rendering/Video" arguments="{file: file, dimensions: dimensions, settings: settings, class: class}" />
 	</div>
 	<f:if condition="{file.description}">
 		<figcaption class="video-caption">
