@@ -12,7 +12,7 @@
   "license": "GPL-2.0-or-later",
   "type": "typo3-cms-extension",
   "require": {
-      "typo3/cms-core": "^10.4.18 || ^11.99.99",
+      "typo3/cms-core": "^10.4.18 || ^11.5.0",
       "b13/container": "^1.3.1",
       "ichhabrecht/content-defender": "^3.1.0"
   },
