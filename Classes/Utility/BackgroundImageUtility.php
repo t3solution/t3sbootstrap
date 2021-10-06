@@ -137,6 +137,7 @@ class BackgroundImageUtility implements SingletonInterface
 
 		$css = '';
 		$mediaQueries = explode(',', $bgMediaQueries);
+		$minWidth = (int)$mediaQueries[0];
 
 		foreach ($mediaQueries as $querie) {
 			$querie = (int)$querie;
@@ -170,6 +171,22 @@ class BackgroundImageUtility implements SingletonInterface
 			}
 			$css .= '}';
 
+			if ( $minWidth == $querie) {
+				$minQuerie = $querie +1;
+				$css .= '@media (min-width: '.$minQuerie.'px) {';
+				if ($webp) {
+					if ($body) {
+						$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+						$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
+					} else {
+						$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+						$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
+					}
+				} else {
+					$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+				}
+				$css .= '}';
+			}
 		}
 
 		return $css;
