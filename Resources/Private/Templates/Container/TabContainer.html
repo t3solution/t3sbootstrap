@@ -35,7 +35,7 @@
 <f:section name="Tabs">
 <ul id="tabContainer-{data.uid}" class="nav nav-tabs mb-3{tab.fill}" role="tablist">
 	<f:for each="{col_280}" as="tab">
-		<li class="nav-item">
+		<li class="nav-item" role="presentation">
 			<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
 				 data-bs-toggle="tab" role="tab" aria-controls="tab-content-{tab.uid}" aria-selected="false">
 				{tab.header -> f:format.raw()}
@@ -49,9 +49,9 @@
 <f:section name="Pills">
 <ul class="nav nav-pills mb-3{tab.fill}" id="tabContainer-{data.uid}" role="tablist">
 	<f:for each="{col_280}" as="tab">
-		<li class="nav-item">
+		<li class="nav-item" role="presentation">
 			<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
-				 data-bs-toggle="pill" aria-controls="tab-content-{tab.uid}" aria-selected="false">
+				 data-bs-toggle="pill" role="tab" aria-controls="tab-content-{tab.uid}" aria-selected="false">
 				{tab.header -> f:format.raw()}
 			</button>
 		</li>
@@ -65,7 +65,7 @@
 	<div class="col-{pill.asideWidth}">
 		<ul id="tabContainer-{data.uid}" class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
 			<f:for each="{col_280}" as="tab">
-				<li class="nav-item">
+				<li class="nav-item" role="presentation">
 					<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
 						 data-bs-toggle="pill" role="tab" aria-controls="tab-content-{tab.uid}" aria-selected="false">
 						{tab.header -> f:format.raw()}
