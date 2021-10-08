@@ -236,11 +236,12 @@
 								<f:render section="Dropdown" arguments="{_all}" />
 							</f:then>
 							<f:else>
-								<f:link.typolink class="nav-link{f:if(condition: navbarItem.active, then:' active')}" parameter="{navbarItem.link}"
-									 title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}"
-									 target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}">
+								<a class="nav-link{f:if(condition: navbarItem.active, then:' active')}" 
+									href="{navbarItem.link}" 
+										target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}" 
+											title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}">
 									<f:render section="Title" arguments="{item: navbarItem}" />
-								</f:link.typolink>
+								</a>
 							</f:else>
 						</f:if>
 					</f:else>
