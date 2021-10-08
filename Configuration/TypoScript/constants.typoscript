@@ -27,9 +27,9 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
 	bootswatch = 0
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.1.1
+	bootstrap = 5.1.2
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 2.10.1
+	popperjs = 2.10.2
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
@@ -66,11 +66,11 @@ bootstrap.cdn {
 	swiper = 7
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU
+	bootstrapCssIntegrity = sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/
+	bootstrapJsIntegrity = sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
-	popperjsIntegrity = sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN
+	popperjsIntegrity = sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
