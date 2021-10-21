@@ -121,8 +121,10 @@
 	}
 </f:asset.script>
 	</f:then>
-	<f:else>
-<f:asset.script identifier="vanilla_default">
+	<f:else>	
+		<f:if condition="{config.navbar.enable}">
+			<f:then>
+				<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	const navbar = document.getElementById('main-navbar'),
 		  navbarHeight = navbar.clientHeight,
@@ -139,7 +141,26 @@
 	if (window.location.hash) {
 		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
 	}
-</f:asset.script>
+				</f:asset.script>	
+			</f:then>
+			<f:else>
+				<f:asset.script identifier="vanilla_default">
+	// Default - Main.html
+	const navbar = false,
+		  navbarHeight = false,
+		  navbarBreakpointWidth = 99999,
+		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+		  onePageLayout = 0;
+
+	var fixedNavbar = false;
+
+	// Scroll anchor - Main.html
+	if (window.location.hash) {
+		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
+	}
+				</f:asset.script>
+			</f:else>
+		</f:if>		
 	</f:else>
 </f:if>
 <f:comment> Loading spinner </f:comment>
