@@ -149,14 +149,6 @@ class CdnToLocal extends Command
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
-			if ($key == 'viewportchecker') {
-				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'jquery.viewportchecker.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/'.$version.'/jquery.viewportchecker.min.js';
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-			}
-
 			if ($key == 'animate') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);

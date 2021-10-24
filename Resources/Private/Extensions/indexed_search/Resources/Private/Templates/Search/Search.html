@@ -7,18 +7,20 @@
 	<f:if condition="{result.categoryTitle}">
 		<h1 class="tx-indexedsearch-category">{result.categoryTitle}</h1>
 	</f:if>
-	<!-- show the info what was searched for -->
-	<f:for each="{searchWords}" as="searchWord" key="key">
-		<f:if condition="{key} > 0">
-			<f:then>
-				<f:translate key="searchFor.{searchWord.oper}" />&nbsp;{searchWord.sword}
-			</f:then>
-			<f:else>
-				<f:translate key="searchFor" />&nbsp;{searchWord.sword}
-			</f:else>
-		</f:if>
-	</f:for>
-	<!-- show the info in which section was searched for -->
+	<f:if condition="{result.count} > 0">
+		<div class="tx-indexedsearch-info-sword">
+			<f:for each="{searchWords}" as="searchWord" key="key">
+				<f:if condition="{key} > 0">
+					<f:then>
+						<f:translate key="searchFor.{searchWord.oper}" />&nbsp;{searchWord.sword}
+					</f:then>
+					<f:else>
+						<f:translate key="searchFor" />&nbsp;{searchWord.sword}
+					</f:else>
+				</f:if>
+			</f:for>
+		</div>
+	</f:if>
 	{result.searchedInSectionInfo}
 	<f:if condition="{result.count} > 0">
 		<f:then>
@@ -34,7 +36,8 @@
 							<f:for each="{result.affectedSections}" as="sectionData" key="sectionId">
 								<tr>
 									<td width="100%">--&gt;&nbsp;
-										<f:link.page section="anchor_{sectionId}" addQueryString="1" argumentsToBeExcludedFromQueryString="{0: 'id'}">
+										<f:link.page section="anchor_{sectionId}" addQueryString="1"
+                                                                argumentsToBeExcludedFromQueryString="{0: 'id'}">
 											<f:if condition="{sectionData.0}">
 												<f:then>{sectionData.0}</f:then>
 												<f:else><f:translate key="unnamedSection" /></f:else>
@@ -66,7 +69,9 @@
 			</div>
 		</f:then>
 		<f:else>
-			<f:translate key="result.noResult" />
+			<div class="tx-indexedsearch-info-noresult">
+				<f:translate key="result.noResult" />
+			</div>
 		</f:else>
 	</f:if>
 </f:for>

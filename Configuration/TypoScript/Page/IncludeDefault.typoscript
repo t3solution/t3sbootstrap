@@ -125,7 +125,7 @@ page.includeJSLibs {
 [{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
-	jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
+	jquery = /fileadmin/T3SB/Resources/Public/JS/jquery.min.js
 	jquery.forceOnTop = 1
 	jquery.if.isFalse = {$bootstrap.disable.jquery}
 }

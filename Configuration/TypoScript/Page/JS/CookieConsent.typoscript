@@ -1,86 +1,85 @@
 
 temp.jsCookieConsent = COA
 temp.jsCookieConsent {
-
-1 = TEXT
-1.value (
-
-	// Cookieconsent - page.jsInline.5
-	window.addEventListener("load", function(){
-		var p;
-
-		window.cookieconsent.initialise({
-
-			onInitialise: function(status) {
-				var type = this.options.type;
-				console.log("cookieconsent_type:", type);
-				console.log("cookieconsent_status:", status);
-			},
-
-			theme: "{$bootstrap.cookieconsent.theme}",
-			position: "{$bootstrap.cookieconsent.position}",
-			palette: {
-				popup: {
-					background: "{$bootstrap.cookieconsent.popup.background}",
-					text: "{$bootstrap.cookieconsent.popup.text}"
+	1 = TEXT
+	1.value (
+	
+		// Cookieconsent - page.jsInline.5
+		window.addEventListener("load", function(){
+			var p;
+	
+			window.cookieconsent.initialise({
+	
+				onInitialise: function(status) {
+					var type = this.options.type;
+					console.log("cookieconsent_type:", type);
+					console.log("cookieconsent_status:", status);
 				},
-				button: {
-					background: "{$bootstrap.cookieconsent.button.background}",
-					text: "{$bootstrap.cookieconsent.button.text}"
-				}
-			},
-			content: {
-				message: "{$bootstrap.cookieconsent.message}",
-				dismiss: "{$bootstrap.cookieconsent.dismiss}",
-				deny: "{$bootstrap.cookieconsent.deny}",
-				allow: "{$bootstrap.cookieconsent.allow}",
-				link: "{$bootstrap.cookieconsent.link}",
-				href: "{$bootstrap.cookieconsent.href}",
-			},
-
-			elements: {
-				allow: '<a id="t3s-allow" aria-label="allow cookies" tabindex="0" class="cc-btn cc-allow">{{allow}}</a>',
-			},
-
-			type: "{$bootstrap.cookieconsent.type}",
-
-			revokeBtn: "{$bootstrap.cookieconsent.revokeBtn}",
-			// no popup on this pages
-			blacklistPage: ["{$bootstrap.cookieconsent.href}"],
-
-				 onStatusChange: function(status) {
-				console.log(this.hasConsented() ?
-				  'enable cookies' : 'disable cookies');
-
-				var type = this.options.type;
-				if ( type == 'opt-in' && this.hasConsented() ) {
-					location.reload(true);
-				}
-				if ( type == 'opt-out' && !this.hasConsented() ) {
-					location.reload(true);
-				}
-				 },
-
-				 law: {
-				regionalLaw: {$bootstrap.cookieconsent.regionalLaw},
-				 },
-				 location: {$bootstrap.cookieconsent.location},
-
-
-		}, function (popup) {
-		p = popup;
-	  }, function (err) {
-		console.error(err);
-	  });
-
-
-		if ( document.getElementById('btn-revokeChoice') ) {
-			document.getElementById('btn-revokeChoice').onclick = function (e) {
-				p.revokeChoice();
-			};
-		}
-
-	});
-
-)
+	
+				theme: "{$bootstrap.cookieconsent.theme}",
+				position: "{$bootstrap.cookieconsent.position}",
+				palette: {
+					popup: {
+						background: "{$bootstrap.cookieconsent.popup.background}",
+						text: "{$bootstrap.cookieconsent.popup.text}"
+					},
+					button: {
+						background: "{$bootstrap.cookieconsent.button.background}",
+						text: "{$bootstrap.cookieconsent.button.text}"
+					}
+				},
+				content: {
+					message: "{$bootstrap.cookieconsent.message}",
+					dismiss: "{$bootstrap.cookieconsent.dismiss}",
+					deny: "{$bootstrap.cookieconsent.deny}",
+					allow: "{$bootstrap.cookieconsent.allow}",
+					link: "{$bootstrap.cookieconsent.link}",
+					href: "{$bootstrap.cookieconsent.href}",
+				},
+	
+				elements: {
+					allow: '<span id="t3s-allow" aria-label="allow cookies" tabindex="0" class="cc-btn cc-allow">{{allow}}</span>',
+				},
+	
+				type: "{$bootstrap.cookieconsent.type}",
+	
+				revokeBtn: "{$bootstrap.cookieconsent.revokeBtn}",
+				// no popup on this pages
+				blacklistPage: ["{$bootstrap.cookieconsent.href}"],
+	
+					 onStatusChange: function(status) {
+					console.log(this.hasConsented() ?
+					  'enable cookies' : 'disable cookies');
+	
+					var type = this.options.type;
+					if ( type == 'opt-in' && this.hasConsented() ) {
+						location.reload(true);
+					}
+					if ( type == 'opt-out' && !this.hasConsented() ) {
+						location.reload(true);
+					}
+					 },
+	
+					 law: {
+					regionalLaw: {$bootstrap.cookieconsent.regionalLaw},
+					 },
+					 location: {$bootstrap.cookieconsent.location},
+	
+	
+			}, function (popup) {
+			p = popup;
+		  }, function (err) {
+			console.error(err);
+		  });
+	
+	
+			if ( document.getElementById('btn-revokeChoice') ) {
+				document.getElementById('btn-revokeChoice').onclick = function (e) {
+					p.revokeChoice();
+				};
+			}
+	
+		});
+	
+	)
 }

@@ -8,7 +8,7 @@ page {
 		#
 		##########################################################################################################
 
-		cookieconsentCss = fileadmin/T3SB/Resources/Public/CSS/cookieconsent.min.css
+		cookieconsentCss = /fileadmin/T3SB/Resources/Public/CSS/cookieconsent.min.css
 		cookieconsentCss.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
 	}
@@ -21,13 +21,13 @@ page {
 		#
 		##########################################################################################################
 
-		jquery = fileadmin/T3SB/Resources/Public/JS/jquery.min.js
+		jquery = /fileadmin/T3SB/Resources/Public/JS/jquery.min.js
 		jquery.forceOnTop = 1
 		jquery.if.isFalse = {$bootstrap.disable.jquery}
 
-		popper = fileadmin/T3SB/Resources/Public/JS/popper.js
+		popper = /fileadmin/T3SB/Resources/Public/JS/popper.js
 
-		bootstrap = fileadmin/T3SB/Resources/Public/JS/bootstrap.min.js
+		bootstrap = /fileadmin/T3SB/Resources/Public/JS/bootstrap.min.js
 
 	}
 
@@ -39,7 +39,7 @@ page {
 		#
 		##########################################################################################################
 
-		cookieconsentJs = fileadmin/T3SB/Resources/Public/JS/cookieconsent.min.js
+		cookieconsentJs = /fileadmin/T3SB/Resources/Public/JS/cookieconsent.min.js
 		cookieconsentJs.if.isTrue = {$bootstrap.extconf.cookieconsent}
 
 		##########################################################################################################
@@ -48,7 +48,7 @@ page {
 		#
 		##########################################################################################################
 
-		t3sbjqueryeasing = fileadmin/T3SB/Resources/Public/JS/jquery.easing.min.js
+		t3sbjqueryeasing = /fileadmin/T3SB/Resources/Public/JS/jquery.easing.min.js
 		t3sbjqueryeasing.forceOnTop = 1
 		t3sbjqueryeasing.if.isFalse = {$bootstrap.disable.jquery}
 
@@ -58,7 +58,7 @@ page {
 		#
 		##########################################################################################################
 
-		lazyload = fileadmin/T3SB/Resources/Public/JS/lazyload.min.js
+		lazyload = /fileadmin/T3SB/Resources/Public/JS/lazyload.min.js
 		lazyload.if.isTrue = {$bootstrap.extconf.lazyLoad}
 
 		##########################################################################################################
@@ -68,7 +68,7 @@ page {
 		##########################################################################################################
 
 		# Local
-		picturefill = fileadmin/T3SB/Resources/Public/JS/picturefill.min.js
+		picturefill = /fileadmin/T3SB/Resources/Public/JS/picturefill.min.js
 		picturefill.if.isTrue = {$bootstrap.image.picturefill}
 
 	}

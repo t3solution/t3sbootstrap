@@ -18,7 +18,7 @@
 </f:if>
 <f:comment> CARD GRID (DECK) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'deck'">
-		<div class="card-deck gy-4 row row-cols-{visibleCards}{f:if(condition:'{class}',then:' {class}')}"
+		<div class="card-deck gy-4 row row-cols-1 row-cols-md-{visibleCards}{f:if(condition:'{class}',then:' {class}')}"
 			{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
 				<div class="col">

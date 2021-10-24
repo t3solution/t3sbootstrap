@@ -20,6 +20,7 @@ module.tx_t3sbootstrap {
 		breakpoint.lg = {$bootstrap.navbar.breakpoint.lg}
 		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
+		disableJquery = {$bootstrap.disable.jquery}
 		cdn {
 			// Versions
 			bootstrap = {$bootstrap.cdn.bootstrap}
@@ -31,7 +32,6 @@ module.tx_t3sbootstrap {
 			fontawesome = {$bootstrap.cdn.fontawesome}
 			lazyload = {$bootstrap.cdn.lazyload}
 			picturefill = {$bootstrap.cdn.picturefill}
-			viewportchecker = {$bootstrap.cdn.viewportchecker}
 			animate = {$bootstrap.cdn.animate}
 			baguetteBox = {$bootstrap.cdn.baguetteBox}
 			magnificpopup = {$bootstrap.cdn.magnificpopup}

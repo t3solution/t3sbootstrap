@@ -8,6 +8,7 @@ namespace T3SBS\T3sbootstrap\Utility;
  * LICENSE file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
@@ -63,7 +64,7 @@ class YouTubeRenderer implements FileRendererInterface
 				$orgFile = $orgFile->getOriginalFile();
 			}
 			if ($orgFile instanceof File) {
-				$this->onlineMediaHelper = OnlineMediaHelperRegistry::getInstance()->getOnlineMediaHelper($orgFile);
+				$this->onlineMediaHelper = GeneralUtility::makeInstance(OnlineMediaHelperRegistry::class)->getOnlineMediaHelper($orgFile);
 			} else {
 				$this->onlineMediaHelper = false;
 			}

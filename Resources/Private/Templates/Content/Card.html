@@ -1,4 +1,5 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	 xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Header">
 <f:comment>no header here</f:comment>
@@ -17,6 +18,13 @@
 	}
 </f:asset.script>
 </f:if>
+<f:if condition="{card.horizontal}">
+	<div class="row g-0">
+		<div class="col-md-4">
+			<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</div>
+		<div class="col-md-8">
+</f:if>
 <f:comment>Card Header</f:comment>
 <f:if condition="{card.header.text} && !{card.image.overlay}">
 	<div class="card-header">{card.header.text -> f:format.raw()}</div>
@@ -28,7 +36,7 @@
 	</div>
 </f:if>
 <f:comment>Card Image (top)</f:comment>
-<f:if condition="{data.imageorient} == 'top'">
+<f:if condition="{data.imageorient} == 'top' && {card.horizontal} == 0">
 	<f:render partial="Media/RawGallery" arguments="{_all}" />
 </f:if>
 <f:comment>Card Text (top)</f:comment>
@@ -44,7 +52,7 @@
 	<f:render section="TextBottom" arguments="{_all}" />
 </f:if>
 <f:comment>Card Image (bottom)</f:comment>
-<f:if condition="{data.imageorient} == 'bottom'">
+<f:if condition="{data.imageorient} == 'bottom' && {card.horizontal} == 0">
 	<f:render partial="Media/RawGallery" arguments="{_all}" />
 </f:if>
 <f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
@@ -53,6 +61,10 @@
 		<f:if condition="{card.button.footer}">
 			<f:render section="Button" arguments="{_all}" />
 		</f:if>
+	</div>
+</f:if>
+<f:if condition="{card.horizontal}">
+		</div>
 	</div>
 </f:if>
 </f:section>

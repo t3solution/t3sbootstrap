@@ -17,6 +17,7 @@ use TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 {
@@ -34,7 +35,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		$record = $item->getRecord();
 		$itemLabels = $item->getContext()->getItemLabels();
 		$outHeader = '';
-
 		$content = parent::renderPageModulePreviewContent($item);
 		if ( ($content && $record['CType'] === 'list')
 			|| ($content && $record['CType'] === 'bullets')
@@ -71,7 +71,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				. $hiddenHeaderNote . '</strong><br />';
 		}
 
-		$info = '';
 		$contentTypeLabels = $item->getContext()->getContentTypeLabels();
 		$contentType = $contentTypeLabels[$record['CType']];
 		$info = '<div style="padding:5px; border: 1px solid #563d7c; color:#563d7c; margin-bottom:5px" >'.$contentType.'</div>';
@@ -113,7 +112,8 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		$contentType = $contentTypeLabels[$record['CType']];
 		if (isset($contentType)) {
 
-			$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+			$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
 			$maxCharacters = $extconf['previewCropMaxCharacters'];
 			$append = ' ...';
 
@@ -129,6 +129,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				}
 				$out .= parent::linkEditContent(parent::renderText($text), $record);
 			}
+
 			if ($record['CType'] == 't3sbs_gallery') {
 				$out .= 'Columns: '.$record['imagecols'];
 				if ($record['CType'] == 't3sbs_gallery') {
@@ -216,7 +217,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 
 		} else {
 			$message = sprintf(
-				 $languageService->sL('LLL:EXT:lang/locallang_core.xlf:labels.noMatchingValue'),
+				 $languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.noMatchingValue'),
 				 $record['CType']
 			);
 			$out .= '<span class="label label-warning">' . htmlspecialchars($message) . '</span>';

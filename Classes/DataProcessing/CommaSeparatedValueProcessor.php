@@ -64,7 +64,7 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 
 		if (is_array($processedData['table'])) {
 			foreach ($processedData['table'] as $key=>$table) {
-				if ( \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($table[count($table)-1], 'ç') ) {
+				if ( str_starts_with($table[count($table)-1], 'ç') ) {
 					$tableClass = TRUE;
 					break;
 				} else {

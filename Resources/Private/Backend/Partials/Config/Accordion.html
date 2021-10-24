@@ -36,7 +36,16 @@
 						<f:comment> - FORM FIELD - </f:comment>
 						<f:if condition="{isSiteroot}">
 							<f:then>
-								<f:render partial="Config/{field.type}" arguments="{_all}" />
+								<f:if condition="{ckey} == 'jquery_header'">
+									<f:then>
+										<f:if condition="{settings.disableJquery} == '0'">
+											<f:render partial="Config/{field.type}" arguments="{_all}" />		
+										</f:if>
+									</f:then>
+									<f:else>
+										<f:render partial="Config/{field.type}" arguments="{_all}" />
+									</f:else>
+								</f:if>
 							</f:then>
 							<f:else>
 								<f:if condition="{field.property} != 'contentOnlyOnRootpage'">
@@ -46,7 +55,7 @@
 						</f:if>
 					</f:then>
 					<f:else>
-					<f:comment> - NESTED ACCORDION - </f:comment>
+						<f:comment> - NESTED ACCORDION - </f:comment>
 						<div class="accordion accordion-sub" id="accordion-{ckey}">
 							<div class="card">
 								<div class="card-header" id="header-{ckey}" style="background-color: #1aa3b9 !important;padding: 0 !important;">
@@ -77,7 +86,6 @@
 </f:section>
 
 <f:section name="ExtraTop">
-
 </f:section>
 
 <f:section name="ExtraSubTop">

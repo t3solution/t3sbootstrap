@@ -21,6 +21,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\QueryGenerator;
 
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+
 
 class ConfigProcessor implements DataProcessorInterface
 {
@@ -69,7 +71,7 @@ class ConfigProcessor implements DataProcessorInterface
 		// flexible small columns
 		$currentPage = $frontendController->page;
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
-		$pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Domain\Repository\PageRepository::class);
+		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 		$rootlinePage = $pageRepository->getPage($processedRecordVariables['homepageUid']);
 		$smallColumnsRootline = (int)$rootlinePage['tx_t3sbootstrap_smallColumns'];
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;

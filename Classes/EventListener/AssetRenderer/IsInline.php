@@ -91,16 +91,16 @@ $contentConsentScript ="
 				if (substr($library, 0, 7) == 'vanilla' ) {
 					$js .= $source['source'] .PHP_EOL;
 					$event->getAssetCollector()->removeInlineJavaScript($library);
-				} elseif ( GeneralUtility::isFirstPartOfStr($library, 'background-video-') ) {
+				} elseif ( str_starts_with($library, 'background-video-') ) {
 					$video .= $source['source'] .PHP_EOL;
 					$event->getAssetCollector()->removeInlineJavaScript($library);
-				} elseif ( GeneralUtility::isFirstPartOfStr($library, 'addheight-') ) {
+				} elseif ( str_starts_with($library, 'addheight-') ) {
 					$addheight .= $source['source'];
 					$event->getAssetCollector()->removeInlineJavaScript($library);
 				} elseif ( $library == 'contentconsent' ) {
 					$contentconsent .= $source['source'];
 					$event->getAssetCollector()->removeInlineJavaScript($library);
-				} elseif ( GeneralUtility::isFirstPartOfStr($library, 'contentconsentthumbnailautosize-') ) {
+				} elseif ( str_starts_with($library, 'contentconsentthumbnailautosize-') ) {
 					$contentconsentthumbnailautosize .= $source['source'];
 					$event->getAssetCollector()->removeInlineJavaScript($library);
 				} else {

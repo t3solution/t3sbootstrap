@@ -63,6 +63,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		$processedData['dataAnimate'] = FALSE;
 		$processedData['isAnimateCss'] = FALSE;
+		$processedData['animateCssRepeat'] = FALSE;
 
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
@@ -637,28 +638,20 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['data']['tx_t3sbootstrap_animateCss'] = FALSE;
 		}
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
-			// add to class
+			$processedData['isAnimateCss'] = TRUE;
+			$processedData['class'] .= ' animated bt_hidden';
+			$processedData['dataAnimate'] = $processedData['data']['tx_t3sbootstrap_animateCss'];
 			if( $processedData['data']['tx_t3sbootstrap_animateCssRepeat'] ) {
-				$processedData['class'] .= ' animated bt_hidden ';
-				// data-attribute
-				$processedData['dataAnimate'] = ' data-vp-add-class='.$processedData['data']['tx_t3sbootstrap_animateCss'].'';
-				$processedData['dataAnimate'] .= ' data-vp-repeat=true';
-			} else {
-				$processedData['class'] .= ' animated '.$processedData['data']['tx_t3sbootstrap_animateCss'];
+				$processedData['animateCssRepeat'] = TRUE;
 			}
 			// add to style
 			if ($processedData['data']['tx_t3sbootstrap_animateCssDuration'] ) {
 				$processedData['style'] .= ' animation-duration: '.$processedData['data']['tx_t3sbootstrap_animateCssDuration'].'s;';
 			}
 			if ($processedData['data']['tx_t3sbootstrap_animateCssDelay'] ) {
+				$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s;';
+			}
 
-				$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].';';
-			}
-			$processedData['isViewportChecker'] = FALSE;
-			if ($processedData['data']['tx_t3sbootstrap_animateCssRepeat']) {
-				$processedData['isViewportChecker'] = TRUE;
-			}
-			$processedData['isAnimateCss'] = TRUE;
 		}
 
 		// child of container (masonry_layout)
