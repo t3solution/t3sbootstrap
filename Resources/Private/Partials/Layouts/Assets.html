@@ -35,28 +35,18 @@
 		<f:then>
 			<f:asset.css identifier="animateCss"
 				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.compat.css" />
-			<f:if condition="{isViewportChecker}">
-				<f:asset.script identifier="animateJs"
-				src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-viewport-checker/{settings.viewportcheckerVersion}/jquery.viewportchecker.min.js"
-				integrity="{settings.viewportcheckerIntegrity}" />
-			</f:if>
 		</f:then>
 		<f:else>
 			<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.compat.css" />
-			<f:if condition="{isViewportChecker}">
-				<f:asset.script identifier="animateJs" src="fileadmin/T3SB/Resources/Public/JS/jquery.viewportchecker.min.js" />
-			</f:if>
 		</f:else>
 	</f:if>
-	<f:if condition="{isViewportChecker}">
-	<f:comment> Viewport Checker v2 w/o jQuery is not working as expected </f:comment>
-	<f:asset.script identifier="animatecssJsInline">
-	// jQuery ViewportChecker for animateCss - Partials/Layouts/Assets.html
-	$( '.animated' ).each(function() {
-		$(this).viewportChecker({classToAdd: 'bt_visible',classToRemove: 'bt_hidden',offset: 0});
-	});
+	<f:asset.script identifier="vanilla_animatecssJsInline-{data.uid}">
+	// AnimateCss-{data.uid} - Partials/Layouts/Assets.html
+	var animatedElement = document.getElementById('c{data.uid}'),
+		animateRepeat = '{animateCssRepeat}',
+		dataAnimate = '{dataAnimate}';
+	cssAnimate(animatedElement, dataAnimate, animateRepeat);
 	</f:asset.script>
-	</f:if>
 </f:if>
 <f:comment> Lightbox - same in News/Detail.html </f:comment>
 <f:if condition="{settings.lightboxSelection} && {lightBox}">

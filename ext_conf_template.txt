@@ -5,72 +5,72 @@
 # customcategory=preview=Preview
 # customsubcategory=a-config=Bootstrap SCSS variables!
 
-	# cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache).
+# cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache).
 preview = 1
-	# cat=preview/enable/20; type=boolean; label=Crop bodytext: Crop bodytext by "maxCharacters" (clear cache).
+# cat=preview/enable/20; type=boolean; label=Crop bodytext: Crop bodytext by "maxCharacters" (clear cache).
 previewCrop = 1
-	# cat=preview/enable/30; type=string; label=Max Characters: Max Characters for crop bodytext (clear cache).
+# cat=preview/enable/30; type=string; label=Max Characters: Max Characters for crop bodytext (clear cache).
 previewCropMaxCharacters = 80
-	# cat=preview/enable/40; type=boolean; label=Closed Collapsible: Collapsible container preview always closed (clear cache).
+# cat=preview/enable/40; type=boolean; label=Closed Collapsible: Collapsible container preview always closed (clear cache).
 previewClosedCollapsible = 0
 
-	# cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
+# cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
 spacing = 1
-	# cat=content/enable/20; type=boolean; label=Container: Shows a select-field for a .container or .container-fluid class in any content element if enabled (clear cache).
+# cat=content/enable/20; type=boolean; label=Container: Shows a select-field for a .container or .container-fluid class in any content element if enabled (clear cache).
 container = 1
-	# cat=content/enable/30; type=boolean; label=Color: Shows palette "Bootstrap Color" in almost any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
+# cat=content/enable/30; type=boolean; label=Color: Shows palette "Bootstrap Color" in almost any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache).
 color = 1
-	# cat=content/enable/40; type=boolean; label=Image ratio: Shows an option for "Image ratio" in the palette "Media Adjustments" if enabled. (clear cache).
+# cat=content/enable/40; type=boolean; label=Image ratio: Shows an option for "Image ratio" in the palette "Media Adjustments" if enabled. (clear cache).
 ratio = 0
-	# cat=content/enable/41; type=boolean; label=Image Tag: Option in the FAL to output image in <img> - instead in <picture> tag in the FE.
+# cat=content/enable/41; type=boolean; label=Image Tag: Option in the FAL to output image in <img> - instead in <picture> tag in the FE.
 imgtag = 0
-	# cat=content/enable/45; type=boolean; label=Original Image: Shows an option for "Use Original Image" in the palette "Media Adjustments" if enabled. (clear cache).
+# cat=content/enable/45; type=boolean; label=Original Image: Shows an option for "Use Original Image" in the palette "Media Adjustments" if enabled. (clear cache).
 origimage = 0
-	# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a "container". (clear cache).
+# cat=content/enable/50; type=boolean; label=Custom section order: Helpfully if using menu-items in a "container". (clear cache).
 sectionOrder = 0
-	# cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache).
+# cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache).
 extraStyle = 0
 
-	# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache).
+# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache).
 fontawesome = 1
-	# cat=page/enable/20; type=boolean; label=Font Awesome Icon in Page Title: Enable the fa icon in the page title (clear cache).
+# cat=page/enable/20; type=boolean; label=Font Awesome Icon in Page Title: Enable the fa icon in the page title (clear cache).
 fontawesomepagetitle = 1
-	# cat=page/enable/30; type=boolean; label=Navigation color: Enable various colors for submenu nav-items in dropdown-menus (clear cache).
+# cat=page/enable/30; type=boolean; label=Navigation color: Enable various colors for submenu nav-items in dropdown-menus (clear cache).
 navigationColor = 0
 
-	# cat=custom/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
+# cat=custom/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
 customScss = 0
-	# cat=custom/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
+# cat=custom/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
 bootswatch = none
-	# cat=custom/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache).
+# cat=custom/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache).
 editScss = 0
 
-	# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache).
+# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache).
 flexformExtend = 0
-	# cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache).
+# cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache).
 flexformModify = 0
 
-	# cat=t3sb/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
+# cat=t3sb/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
 expandedContent = 0
-	# cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
+# cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
 cTypeClass = 0
 
-	# cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
+# cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0
-	# cat=dif/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache).
+# cat=dif/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache).
 imgCopyright = 0
-	# cat=dif/enable/20; type=boolean; label=Custom translations:(clear cache).
+# cat=dif/enable/20; type=boolean; label=Custom translations:(clear cache).
 customTranslations = 0
 
-	# cat=advanced/enable/10; type=options[none=0, FA free=1, FA pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2]; label=Font Awesome 5: include Font Awesome SCSS - if deactivated, only some required icons are loaded (clear cache).
+# cat=advanced/enable/10; type=options[none=0, FA free=1, FA pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2]; label=Font Awesome 5: include Font Awesome SCSS - if deactivated, only some required icons are loaded (clear cache).
 fontawesomeCss = 0
-	# cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS und Viewportchecker if EXT:content_animations is not loaded (clear cache).
+# cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache).
 animateCss = 0
-	# cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
+# cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
 linkHoverEffect = 0
-	# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2]; label=Lazy Load: for images - include lazyload.min.js (clear cache).
+# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2]; label=Lazy Load: for images - include lazyload.min.js (clear cache).
 lazyLoad = 0
-	# cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
+# cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
 cookieconsent = 0
-	# cat=advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache).
+# cat=advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache).
 extNews = 1

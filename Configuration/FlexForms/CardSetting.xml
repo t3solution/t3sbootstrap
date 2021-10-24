@@ -234,6 +234,16 @@
 							</config>
 						</TCEforms>
 					</cardborderstyle>
+
+					<horizontal>
+						<TCEforms>
+							<label>Horizontal</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</horizontal>
+					
 				</el>
 			</ROOT>
 		</sDEF>

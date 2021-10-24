@@ -83,7 +83,7 @@ class CustomScss extends Command
 			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
 
-			$bootstrapVersion = GeneralUtility::isFirstPartOfStr($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : '5.0.2';
+			$bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : '5.1.1';
 
 			foreach (explode(',', $scssList) as $scss ) {
 				$customFileName = trim($scss);
@@ -261,7 +261,7 @@ class CustomScss extends Command
 			$customContent = $name == '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' :	 '// Your own SCSS';
 
 			if ( $settings['bootswatch'] ) {
-				$customContent = GeneralUtility::getURL($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
+				$customContent = file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');			
 				if ($name == '_variables') {
 					$customContent = str_replace(' !default', '', $customContent);
 				}

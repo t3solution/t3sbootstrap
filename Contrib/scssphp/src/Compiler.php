@@ -731,7 +731,7 @@ class Compiler
      *
      * @return void
      */
-    protected function missingSelectors()
+    public function missingSelectors()
     {
         foreach ($this->extends as $extend) {
             if (isset($extend[3])) {
@@ -749,7 +749,7 @@ class Compiler
             $origin = $this->collapseSelectors($origin);
 
             $this->sourceLine = $block[Parser::SOURCE_LINE];
-            throw $this->error("\"$origin\" failed to @extend \"$target\". The selector \"$target\" was not found.");
+            throw $this->errorMsg("\"$origin\" failed to @extend \"$target\". The selector \"$target\" was not found.");
         }
     }
 
@@ -1970,7 +1970,7 @@ class Compiler
             try {
                 $isValid = $parser->parseSelector($buffer, $newSelectors, true);
             } catch (ParserException $e) {
-                throw $this->error($e->getMessage());
+                throw $this->errorMsg($e->getMessage());
             }
 
             if ($isValid) {
@@ -2258,7 +2258,7 @@ class Compiler
             $msg = $this->callStackMessage(true, 100);
             $msg = 'Infinite calling loop';
 
-            throw $this->error($msg);
+            throw $this->errorMsg($msg);
         }
     }
 
@@ -2328,7 +2328,7 @@ class Compiler
             }
 
             if (isset($ret)) {
-                throw $this->error('@return may only be used within a function');
+                throw $this->errorMsg('@return may only be used within a function');
             }
         }
 
@@ -3054,14 +3054,14 @@ class Compiler
                     $replacedSel = $this->replaceSelfSelector($sel);
 
                     if ($replacedSel !== $sel) {
-                        throw $this->error('Parent selectors aren\'t allowed here.');
+                        throw $this->errorMsg('Parent selectors aren\'t allowed here.');
                     }
 
                     $results = $this->evalSelectors([$sel]);
 
                     foreach ($results as $result) {
                         if (\count($result) !== 1) {
-                            throw $this->error('complex selectors may not be extended.');
+                            throw $this->errorMsg('complex selectors may not be extended.');
                         }
 
                         // only use the first one
@@ -3214,7 +3214,7 @@ EOL;
                 $mixin = $this->get(static::$namespaces['mixin'] . $name, false);
 
                 if (! $mixin) {
-                    throw $this->error("Undefined mixin $name");
+                    throw $this->errorMsg("Undefined mixin $name");
                 }
 
                 $callingScope = $this->getStoreEnv();
@@ -3271,7 +3271,7 @@ EOL;
                 if (! empty($mixin->parentEnv)) {
                     $this->env->declarationScopeParent = $mixin->parentEnv;
                 } else {
-                    throw $this->error("@mixin $name() without parentEnv");
+                    throw $this->errorMsg("@mixin $name() without parentEnv");
                 }
 
                 $this->compileChildrenNoReturn($mixin->children, $out, $selfParent, $this->env->marker . ' ' . $name);
@@ -3338,10 +3338,10 @@ EOL;
                 $line  = $this->sourceLine;
                 $value = $this->compileValue($this->reduce($value, true));
 
-                throw $this->error("File $fname on line $line ERROR: $value\n");
+                throw $this->errorMsg("File $fname on line $line ERROR: $value\n");
 
             default:
-                throw $this->error("unknown child type: $child[0]");
+                throw $this->errorMsg("unknown child type: $child[0]");
         }
     }
 
@@ -4115,7 +4115,7 @@ EOL;
 
                 case '%':
                     if ($rval == 0) {
-                        throw $this->error("color: Can't take modulo by zero");
+                        throw $this->errorMsg("color: Can't take modulo by zero");
                     }
 
                     $out[] = $lval % $rval;
@@ -4123,7 +4123,7 @@ EOL;
 
                 case '/':
                     if ($rval == 0) {
-                        throw $this->error("color: Can't divide by zero");
+                        throw $this->errorMsg("color: Can't divide by zero");
                     }
 
                     $out[] = (int) ($lval / $rval);
@@ -4136,7 +4136,7 @@ EOL;
                     return $this->opNeq($left, $right);
 
                 default:
-                    throw $this->error("color: unknown op $op");
+                    throw $this->errorMsg("color: unknown op $op");
             }
         }
 
@@ -4670,7 +4670,7 @@ EOL;
                 return $this->compileCommentValue($value);
 
             default:
-                throw $this->error('unknown value type: ' . json_encode($value));
+                throw $this->errorMsg('unknown value type: ' . json_encode($value));
         }
     }
 
@@ -5218,7 +5218,7 @@ EOL;
         }
 
         if ($shouldThrow) {
-            throw $this->error("Undefined variable \$$name" . ($maxDepth <= 0 ? ' (infinite recursion)' : ''));
+            throw $this->errorMsg("Undefined variable \$$name" . ($maxDepth <= 0 ? ' (infinite recursion)' : ''));
         }
 
         // found nothing
@@ -5625,7 +5625,7 @@ EOL;
             $this->sourceLine = 1;
             $this->sourceColumn = 1;
 
-            throw $this->error('The Sass indented syntax is not implemented.');
+            throw $this->errorMsg('The Sass indented syntax is not implemented.');
         }
 
         if (isset($this->importCache[$realPath])) {
@@ -5764,7 +5764,7 @@ EOL;
             }
         }
 
-        throw $this->error("`$url` file not found for @import");
+        throw $this->errorMsg("`$url` file not found for @import");
     }
 
     /**
@@ -5813,7 +5813,7 @@ EOL;
             $formattedPrettyPaths[] = '  ' . $this->getPrettyPath($path);
         }
 
-        throw $this->error("It's not clear which file to import. Found:\n" . implode("\n", $formattedPrettyPaths));
+        throw $this->errorMsg("It's not clear which file to import. Found:\n" . implode("\n", $formattedPrettyPaths));
     }
 
     /**
@@ -5973,7 +5973,7 @@ EOL;
             E_USER_DEPRECATED
         );
 
-        throw $this->error(...func_get_args());
+        throw $this->errorMsg(...func_get_args());
     }
 
     /**
@@ -5985,7 +5985,7 @@ EOL;
      *
      * @return CompilerException
      */
-    public function error($msg, ...$args)
+    public function errorMsg($msg, ...$args)
     {
         if ($args) {
             $msg = sprintf($msg, ...$args);
@@ -6038,7 +6038,7 @@ EOL;
         $nbExpected = \count($ExpectedArgs);
 
         if ($nbActual > $nbExpected) {
-            return $this->error(
+            return $this->errorMsg(
                 'Error: Only %d arguments allowed in %s(), but %d were passed.',
                 $nbExpected,
                 $functionName,
@@ -6051,7 +6051,7 @@ EOL;
                 array_unshift($missing, array_pop($ExpectedArgs));
             }
 
-            return $this->error(
+            return $this->errorMsg(
                 'Error: %s() argument%s %s missing.',
                 $functionName,
                 count($missing) > 1 ? 's' : '',
@@ -6115,7 +6115,7 @@ EOL;
             }
 
             if (realpath($file) === $name) {
-                throw $this->error('An @import loop has been found: %s imports %s', $file, basename($file));
+                throw $this->errorMsg('An @import loop has been found: %s imports %s', $file, basename($file));
             }
         }
     }
@@ -6152,7 +6152,7 @@ EOL;
         if (! empty($func->parentEnv)) {
             $this->env->declarationScopeParent = $func->parentEnv;
         } else {
-            throw $this->error("@function $name() without parentEnv");
+            throw $this->errorMsg("@function $name() without parentEnv");
         }
 
         $ret = $this->compileChildren($func->children, $tmp, $this->env->marker . ' ' . $name);
@@ -7152,7 +7152,7 @@ EOL;
                 } elseif ($value->hasUnit('%')) {
                     $num = $max * $value->getDimension() / 100;
                 } else {
-                    throw $this->error('Expected %s to have no units or "%%".', $value);
+                    throw $this->errorMsg('Expected %s to have no units or "%%".', $value);
                 }
 
                 $value = $num;
@@ -7285,7 +7285,7 @@ EOL;
     public function assertList($value)
     {
         if ($value[0] !== Type::T_LIST) {
-            throw $this->error('expecting list, %s received', $value[0]);
+            throw $this->errorMsg('expecting list, %s received', $value[0]);
         }
 
         return $value;
@@ -7617,7 +7617,7 @@ EOL;
         }
 
         if (! in_array($functionReference[0], [Type::T_FUNCTION_REFERENCE, Type::T_FUNCTION])) {
-            throw $this->error('Function reference expected, got ' . $functionReference[0]);
+            throw $this->errorMsg('Function reference expected, got ' . $functionReference[0]);
         }
 
         $callArgs = [
@@ -7813,7 +7813,7 @@ EOL;
 
             if (!$scale && $checkPercent) {
                 if (!$number->hasUnit('%')) {
-                    $warning = $this->error("{$name} Passing a number `$number` without unit % is deprecated.");
+                    $warning = $this->errorMsg("{$name} Passing a number `$number` without unit % is deprecated.");
                     $this->logger->warn($warning->getMessage(), true);
                 }
             }
@@ -7974,7 +7974,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            throw $this->error('Error: argument `$color` of `ie-hex-str($color)` must be a color');
+            throw $this->errorMsg('Error: argument `$color` of `ie-hex-str($color)` must be a color');
         }
 
         $color[4] = isset($color[4]) ? round(255 * $color[4]) : 255;
@@ -7988,7 +7988,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            throw $this->error('Error: argument `$color` of `red($color)` must be a color');
+            throw $this->errorMsg('Error: argument `$color` of `red($color)` must be a color');
         }
 
         return new Number((int) $color[1], '');
@@ -8000,7 +8000,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            throw $this->error('Error: argument `$color` of `green($color)` must be a color');
+            throw $this->errorMsg('Error: argument `$color` of `green($color)` must be a color');
         }
 
         return new Number((int) $color[2], '');
@@ -8012,7 +8012,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            throw $this->error('Error: argument `$color` of `blue($color)` must be a color');
+            throw $this->errorMsg('Error: argument `$color` of `blue($color)` must be a color');
         }
 
         return new Number((int) $color[3], '');
@@ -8212,20 +8212,20 @@ EOL;
 
         if (\count($args) == 1) {
             if ($args[0][0] !== Type::T_LIST) {
-                throw $this->error("Missing elements \$whiteness and \$blackness");
+                throw $this->errorMsg("Missing elements \$whiteness and \$blackness");
             }
 
             if (\trim($args[0][1])) {
-                throw $this->error("\$channels must be a space-separated list.");
+                throw $this->errorMsg("\$channels must be a space-separated list.");
             }
 
             if (! empty($args[0]['enclosing'])) {
-                throw $this->error("\$channels must be an unbracketed list.");
+                throw $this->errorMsg("\$channels must be an unbracketed list.");
             }
 
             $args = $args[0][2];
             if (\count($args) > 3) {
-                throw $this->error("hwb() : Only 3 elements are allowed but ". \count($args) . "were passed");
+                throw $this->errorMsg("hwb() : Only 3 elements are allowed but ". \count($args) . "were passed");
             }
 
             $args_to_check = $this->extractSlashAlphaInColorFunction($kwargs['channels'][2]);
@@ -8235,13 +8235,13 @@ EOL;
         }
 
         if (\count($args_to_check) < 2) {
-            throw $this->error("Missing elements \$whiteness and \$blackness");
+            throw $this->errorMsg("Missing elements \$whiteness and \$blackness");
         }
         if (\count($args_to_check) < 3) {
-            throw $this->error("Missing element \$blackness");
+            throw $this->errorMsg("Missing element \$blackness");
         }
         if (\count($args_to_check) > 4) {
-            throw $this->error("hwb() : Only 4 elements are allowed but ". \count($args) . "were passed");
+            throw $this->errorMsg("hwb() : Only 4 elements are allowed but ". \count($args) . "were passed");
         }
 
         foreach ($kwargs as $k => $arg) {
@@ -8278,7 +8278,7 @@ EOL;
 
             if (! \is_numeric($alpha)) {
                 $val = $this->compileValue($args[3]);
-                throw $this->error("\$alpha: $val is not a number");
+                throw $this->errorMsg("\$alpha: $val is not a number");
             }
         }
 
@@ -8572,7 +8572,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             return $min;
         }
 
-        throw $this->error('At least one argument must be passed.');
+        throw $this->errorMsg('At least one argument must be passed.');
     }
 
     protected static $libMax = ['numbers...'];
@@ -8595,7 +8595,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             return $max;
         }
 
-        throw $this->error('At least one argument must be passed.');
+        throw $this->errorMsg('At least one argument must be passed.');
     }
 
     protected static $libLength = ['list'];
@@ -8654,7 +8654,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         }
 
         if (! isset($list[2][$n])) {
-            throw $this->error('Invalid argument for "n"');
+            throw $this->errorMsg('Invalid argument for "n"');
         }
 
         $list[2][$n] = $args[2];
@@ -9009,7 +9009,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             ! $number1 instanceof Number ||
             ! $number2 instanceof Number
         ) {
-            throw $this->error('Invalid argument(s) for "comparable"');
+            throw $this->errorMsg('Invalid argument(s) for "comparable"');
         }
 
         return $this->toBool($number1->isComparableTo($number2));
@@ -9426,11 +9426,11 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
     {
         // one and only one selector for each arg
         if (! $super) {
-            throw $this->error('Invalid super selector for isSuperSelector()');
+            throw $this->errorMsg('Invalid super selector for isSuperSelector()');
         }
 
         if (! $sub) {
-            throw $this->error('Invalid sub selector for isSuperSelector()');
+            throw $this->errorMsg('Invalid sub selector for isSuperSelector()');
         }
 
         if (count($sub) > 1) {
@@ -9530,7 +9530,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $args = $args[2];
 
         if (\count($args) < 1) {
-            throw $this->error('selector-append() needs at least 1 argument');
+            throw $this->errorMsg('selector-append() needs at least 1 argument');
         }
 
         $selectors = [];
@@ -9555,14 +9555,14 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $lastSelectors = array_pop($selectors);
 
         if (! $lastSelectors) {
-            throw $this->error('Invalid selector list in selector-append()');
+            throw $this->errorMsg('Invalid selector list in selector-append()');
         }
 
         while (\count($selectors)) {
             $previousSelectors = array_pop($selectors);
 
             if (! $previousSelectors) {
-                throw $this->error('Invalid selector list in selector-append()');
+                throw $this->errorMsg('Invalid selector list in selector-append()');
             }
 
             // do the trick, happening $lastSelector to $previousSelector
@@ -9605,7 +9605,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $extender  = $this->getSelectorArg($extender, 'extender');
 
         if (! $selectors || ! $extendee || ! $extender) {
-            throw $this->error('selector-extend() invalid arguments');
+            throw $this->errorMsg('selector-extend() invalid arguments');
         }
 
         $extended = $this->extendOrReplaceSelectors($selectors, $extendee, $extender);
@@ -9626,7 +9626,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $replacement = $this->getSelectorArg($replacement, 'replacement');
 
         if (! $selectors || ! $original || ! $replacement) {
-            throw $this->error('selector-replace() invalid arguments');
+            throw $this->errorMsg('selector-replace() invalid arguments');
         }
 
         $replaced = $this->extendOrReplaceSelectors($selectors, $original, $replacement, true);
@@ -9655,7 +9655,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
 
         foreach ($extendee as $es) {
             if (\count($es) !== 1) {
-                throw $this->error('Can\'t extend complex selector.');
+                throw $this->errorMsg('Can\'t extend complex selector.');
             }
 
             // only use the first one
@@ -9693,7 +9693,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $args = $args[2];
 
         if (\count($args) < 1) {
-            throw $this->error('selector-nest() needs at least 1 argument');
+            throw $this->errorMsg('selector-nest() needs at least 1 argument');
         }
 
         $selectorsMap = [];
@@ -9738,7 +9738,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $selectors2 = $this->getSelectorArg($selectors2, 'selectors2');
 
         if (! $selectors1 || ! $selectors2) {
-            throw $this->error('selector-unify() invalid arguments');
+            throw $this->errorMsg('selector-unify() invalid arguments');
         }
 
         // only consider the first compound of each

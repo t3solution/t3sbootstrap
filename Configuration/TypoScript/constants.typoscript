@@ -27,7 +27,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
 	bootswatch = 0
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.1.2
+	bootstrap = 5.1.3
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
 	popperjs = 2.10.2
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
@@ -43,11 +43,9 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
 	highlight = 11.2.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 17.4.0
+	lazyload = 17.5.0
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
-	# cat=bootstrap-cdn/b-version/35; type=small; label=Viewportchecker:
-	viewportchecker = 1.8.8
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
 	animate = 4.1.1
 	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
@@ -66,9 +64,9 @@ bootstrap.cdn {
 	swiper = 7
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF
+	bootstrapCssIntegrity = sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u
+	bootstrapJsIntegrity = sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
 	popperjsIntegrity = sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Masonry js:
@@ -85,8 +83,6 @@ bootstrap.cdn {
 	lazyloadIntegrity =
 	# cat=bootstrap-cdn/c-integrity/32; type=small; label=Picturefill:
 	picturefillIntegrity =
-	# cat=bootstrap-cdn/c-integrity/35; type=small; label=Viewportchecker:
-	viewportcheckerIntegrity =
 	# cat=bootstrap-cdn/c-integrity/37; type=small; label=Baguette Box:
 	baguetteBoxIntegrity =
 	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Magnific Popup:

@@ -303,6 +303,16 @@
 							</config>
 						</TCEforms>
 					</cropMaxCharacters>
+
+					<equalHeight>
+						<TCEforms>
+							<label>Equal Height</label>
+							<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</equalHeight>
 				</el>
 			</ROOT>
 		</sDEF>

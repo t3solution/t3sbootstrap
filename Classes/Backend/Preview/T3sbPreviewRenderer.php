@@ -25,6 +25,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 {
@@ -331,7 +332,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			$flexconfOut .= '<div style="margin:5px">'. parent::linkEditContent($this->getThumbCodeUnlinked($record, 'tt_content', $field), $record) . '</div>';
 		}
 
-		$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 		if ($extconf['previewClosedCollapsible']) {
 			$newContent = '<p><a class="collapsed" style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'">
@@ -350,7 +351,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 					</span>
 				</span>
 			</a></p>
-			<div class="collapse in" id="collapseContainer-'.$record['uid'].'">'.$rendered.'</div>';
+			<div class="collapse in show" id="collapseContainer-'.$record['uid'].'">'.$rendered.'</div>';
 		}
 
 		return $flexconfOut.$newContent;

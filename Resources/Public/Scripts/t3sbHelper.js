@@ -423,6 +423,42 @@ function t3sbOffcanvas(vw, bp, utilColorArr) {
 }
 
 
+// AnimateCss - Layouts/Assets.html
+function isScrolledIntoView(el) {
+	// check for 5% visible
+	var percentVisible = 0.05;
+	var elemTop = el.getBoundingClientRect().top;
+	var elemBottom = el.getBoundingClientRect().bottom;
+	var elemHeight = el.getBoundingClientRect().height;
+	var overhang = elemHeight * (1 - percentVisible);	
+	var isVisible = (elemTop >= -overhang) && (elemBottom <= window.innerHeight + overhang);
+	return isVisible;
+}
+
+function cssAnimate(ael, dataAnimate, animateRepeat) {
+	if (isScrolledIntoView(ael)) {
+		ael.classList.add('bt_visible', dataAnimate);
+		ael.classList.remove('bt_hidden');
+	} else {
+		if (animateRepeat) {
+			ael.classList.remove('bt_visible', dataAnimate);
+			ael.classList.add('bt_hidden');
+		}
+	}
+	window.addEventListener('scroll', function() {
+		if (isScrolledIntoView(ael)) {
+			ael.classList.add('bt_visible', dataAnimate);
+			ael.classList.remove('bt_hidden');
+		} else {
+			if (animateRepeat) {
+				ael.classList.remove('bt_visible', dataAnimate);
+				ael.classList.add('bt_hidden');
+			}
+		}
+	});	
+}
+
+
 // Searchbox in Navbar - Navbar/Assets.html
 function t3sbNavbarSearchbox(vw, bp) {
 	let	form = document.querySelector('.navbar form');

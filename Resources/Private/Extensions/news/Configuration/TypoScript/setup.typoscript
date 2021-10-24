@@ -18,6 +18,8 @@ plugin.tx_news {
 
 	settings {
 
+		version = {$bootstrap.ext.newsVersion}
+
 		cssFile =
 
 		list {

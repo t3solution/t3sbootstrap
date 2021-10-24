@@ -25,6 +25,9 @@ use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
+use T3SBS\T3sbootstrap\Domain\Model\Config;
 
 /**
  * ConfigController
@@ -107,11 +110,10 @@ class ConfigController extends ActionController
 	 *
 	 * @param \T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository $configRepository
 	 */
-	public function injectConfigRepository(\T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository $configRepository)
+	public function injectConfigRepository(ConfigRepository $configRepository)
 	{
 		$this->configRepository = $configRepository;
 	}
-
 
 	public function initializeAction()
 	{
@@ -229,7 +231,7 @@ class ConfigController extends ActionController
 			}
 
 		} else {
-			$newConfig = new \T3SBS\T3sbootstrap\Domain\Model\Config();
+			$newConfig = new Config();
 			// some defaults
 			$newConfig = self::setDefaults($newConfig);
 
@@ -247,7 +249,7 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
 	 * @return void
 	 */
-	public function createAction(\T3SBS\T3sbootstrap\Domain\Model\Config $newConfig): void
+	public function createAction(Config $newConfig): void
 	{
 		$newConfig->setHomepageUid($this->rootPageId);
 		$newConfig->setPid($this->currentUid);
@@ -265,7 +267,7 @@ class ConfigController extends ActionController
 	 * @param bool $updated
 	 * @return void
 	 */
-	public function editAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config, $updated = FALSE): void
+	public function editAction(Config $config, $updated = FALSE): void
 	{
 		$assignedOptions = self::getFieldsOptions();
 		$assignedOptions['t3version'] = $this->version;
@@ -291,7 +293,7 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
 	 * @return void
 	 */
-	public function updateAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config): void
+	public function updateAction(Config $config): void
 	{
 		$config->setHomepageUid($this->rootPageId);
 		$this->configRepository->update($config);
@@ -307,7 +309,7 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
 	 * @return void
 	 */
-	public function deleteAction(\T3SBS\T3sbootstrap\Domain\Model\Config $config): void
+	public function deleteAction(Config $config): void
 	{
 		$this->configRepository->remove($config);
 		self::writeConstants();
@@ -401,9 +403,9 @@ class ConfigController extends ActionController
 	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $rootConfig
 	* @return \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
 	*/
-	public function getNewConfig(\T3SBS\T3sbootstrap\Domain\Model\Config $rootConfig): \T3SBS\T3sbootstrap\Domain\Model\Config
+	public function getNewConfig(Config $rootConfig): Config
 	{
-		$newConfig = new \T3SBS\T3sbootstrap\Domain\Model\Config();
+		$newConfig = new Config();
 
 		foreach ( $this->tcaColumns as $field=>$columns ) {
 			$var = str_replace(' ', '_', $field);
@@ -423,7 +425,7 @@ class ConfigController extends ActionController
 	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
 	 * @return array
 	 */
-	protected function compareConfig(\T3SBS\T3sbootstrap\Domain\Model\Config $config): array
+	protected function compareConfig(Config $config): array
 	{
 		$compare = [];
 
@@ -467,7 +469,7 @@ class ConfigController extends ActionController
 			$fKey = GeneralUtility::underscoredToLowerCamelCase($fKey);
 			$tsField = $ts['page.']['10.']['settings.']['config.'][$fKey];
 
-			if ( $tsField != $this->rootConfig->$field() &&	GeneralUtility::isFirstPartOfStr($tsField, '{$bootstrap.config.') != TRUE ) {
+			if ( $tsField != $this->rootConfig->$field() &&	str_starts_with($tsField, '{$bootstrap.config.') != TRUE ) {
 				if ( $this->rootConfig->$field() === TRUE ) {
 					$override[$fKey] = 'enabled';
 				} elseif ( $this->rootConfig->$field() === FALSE ) {
@@ -592,63 +594,52 @@ class ConfigController extends ActionController
 			$breakpointWidth = $this->settings['breakpoint'][$navbarBreakpoint];
 
 			$filecontent = '';
-			foreach ($this->rootTemplates as $key=>$rootTemplate) {
-				foreach ( $this->configRepository->findAll() as $config ) {
-					$rootLineArray = GeneralUtility::makeInstance(RootlineUtility::class, $config->getPid())->get();
-					if ( $config->getPid() == $rootTemplate['pid'] ) {
-						if ( count($this->rootTemplates) == 1 ) {
-							$filecontent .= self::getConstants($config, TRUE);
-							$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL.PHP_EOL;
-						} else {
-							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
-								$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds]'.PHP_EOL;
-								$filecontent .= self::getConstants($config, TRUE);
-								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
-								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
-							}
-						}
-					} else {
-						if ( count($this->rootTemplates) == 1 ) {
-							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
-								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
-									$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
-								} else {
-									$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
-								}
-								$filecontent .= self::getConstants($config, FALSE);
-								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
-								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
-							}
-						} else {
 
-							if ($rootLineArray[0]['uid'] == $rootTemplate['pid'] ){
-								if ($config->getGeneralRootline() || $config->getNavbarMegamenu()) {
-									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && '.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
-								} else {
-									$filecontent .= '['.$rootTemplate['pid'].' in tree.rootLineIds && page["uid"] == '.$config->getPid().']'.PHP_EOL;
-								}
-								$filecontent .= self::getConstants($config, FALSE);
-								$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
-								$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
-							}
-						}
-					}
+			foreach( $this->configRepository->findAll() as $config ) {
+				$page = GeneralUtility::makeInstance(PageRepository::class)->getPage($config->getPid());
+				if ( $page['hidden'] === 0 && $page['deleted'] === 0 ) {
+					$pages[$config->getPid()] = $page;
+					$configurations[$config->getPid()] = $config;
 				}
-
-				$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 't3sbconstants.typoscript';
-				$customFile = $customPath.$customFileName;
-
-				if (file_exists($customFile)) {
-					unlink($customFile);
-				}
-				if (!is_dir($customPath)) {
-					mkdir($customPath, 0777, true);
-				}
-
-				GeneralUtility::writeFile($customFile, $filecontent);
 			}
+
+			foreach ( $configurations as $config ) {
+				if ($config->getPid() == $config->getHomepageUid()) {
+					// is root page
+					if ( count($configurations) === 1 ) {
+						$filecontent .= self::getConstants($config, TRUE);
+						$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
+					} else {
+						$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
+						$filecontent .= self::getConstants($config, TRUE);
+						$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
+						$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
+					}
+
+				} else {
+					if ($config->getGeneralRootline()) {
+						$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
+					} else {
+						$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
+					}
+					$filecontent .= self::getConstants($config, FALSE);
+					$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
+				}
+			}
+
+			$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+			$customFileName = 't3sbconstants.typoscript';
+			$customFile = $customPath.$customFileName;
+
+			if (file_exists($customFile)) {
+				unlink($customFile);
+			}
+			if (!is_dir($customPath)) {
+				mkdir($customPath, 0777, true);
+			}
+
+			GeneralUtility::writeFile($customFile, $filecontent);
 		}
 	}
 
@@ -660,7 +651,7 @@ class ConfigController extends ActionController
 	 * @param bool $isRoot
 	 * @return string
 	 */
-	 private function getConstants(\T3SBS\T3sbootstrap\Domain\Model\Config $config, $isRoot): string
+	 private function getConstants(Config $config, $isRoot): string
 	 {
 		$constants = 'bootstrap.config.uid = '.$config->getUid() .PHP_EOL;
 
@@ -731,18 +722,18 @@ class ConfigController extends ActionController
 			$customScssArr = GeneralUtility::trimExplode(';', $customScss['custom-variables']);
 			foreach( $customScssArr as $customvariables ) {
 				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
-				if ( GeneralUtility::isFirstPartOfStr($scsscolor[1], '$')
+				if ( str_starts_with($scsscolor[1], '$')
 				 && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
 					$utilColors[$scsscolor[0]] = $scsscolor[1];
-				} elseif (GeneralUtility::isFirstPartOfStr($scsscolor[1], '#')) {
-					if (GeneralUtility::isFirstPartOfStr($scsscolor[0], '$')) {
+				} elseif (str_starts_with($scsscolor[1], '#')) {
+					if (str_starts_with($scsscolor[0], '$')) {
 						$colors[$scsscolor[0]] = $scsscolor[1];
 					}
 				}
 			}
 			if (is_array($utilColors)) {
 				foreach($utilColors as $key=>$utiColor) {
-					if ( GeneralUtility::isFirstPartOfStr($utiColor, '$') ) {
+					if ( str_starts_with($utiColor, '$') ) {
 						$utilityColors[$key] = $colors[$utiColor];
 					}
 				}
@@ -759,11 +750,11 @@ class ConfigController extends ActionController
 
 			$defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
 			if ($defaultScssColor[1] && GeneralUtility::inList($defaultUtilColorsList, trim($defaultScssColor[0]))) {
-				if ( GeneralUtility::isFirstPartOfStr($defaultScssColor[1], '$')) {
+				if ( str_starts_with($defaultScssColor[1], '$')) {
 					// variable has variable
 				 	$defaultUtilColors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
-				} elseif (GeneralUtility::isFirstPartOfStr($defaultScssColor[1], '#')) {
-					if (GeneralUtility::isFirstPartOfStr($defaultScssColor[0], '$')) {
+				} elseif (str_starts_with($defaultScssColor[1], '#')) {
+					if (str_starts_with($defaultScssColor[0], '$')) {
 						$defaultcolors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
 					}
 				}
@@ -792,7 +783,7 @@ class ConfigController extends ActionController
 	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
 	* @return \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
 	 */
-	protected function setDefaults($newConfig): \T3SBS\T3sbootstrap\Domain\Model\Config
+	protected function setDefaults($newConfig): Config
 	{
 		$newConfig->setHomepageUid($this->currentUid);
 		$newConfig->setPageTitle( 'jumbotron' );

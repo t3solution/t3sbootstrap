@@ -18,6 +18,7 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 
 
 class GifbuilderViewHelper extends AbstractViewHelper
@@ -51,7 +52,7 @@ class GifbuilderViewHelper extends AbstractViewHelper
 		if (defined('TYPO3') && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
 			$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 			$imageService = $objectManager->get(ImageService::class);
-			$resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+			$resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
 			$file = $resourceFactory->getFileObjectFromCombinedIdentifier('0:/'.$path);
 			$width = 800;
 			$height = 450;

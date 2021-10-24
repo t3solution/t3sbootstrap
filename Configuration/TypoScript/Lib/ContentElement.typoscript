@@ -69,8 +69,6 @@ lib.contentElement {
 		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
 		swiperVersion = {$bootstrap.cdn.swiper}
 		ytPlayerVersion = {$bootstrap.cdn.ytPlayer}
-		viewportcheckerVersion = {$bootstrap.cdn.viewportchecker}
-		viewportcheckerIntegrity = {$bootstrap.cdn.viewportcheckerIntegrity}
 		cdn = {$bootstrap.cdn.enable}
 		highlightIntegrity = {$bootstrap.cdn.highlightIntegrity}
 		highlightVersion = {$bootstrap.cdn.highlight}
