@@ -120,7 +120,7 @@ defined('TYPO3') || die();
 				 'setup','<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TypoScript/setup.typoscript">','defaultContentRendering'
 		);
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 1');
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.newsVersion = '.ExtensionManagementUtility::getExtensionVersion('news'));
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.newsVersion = '.(int)ExtensionManagementUtility::getExtensionVersion('news'));
 	}
 	// Optional flexform extend
 	if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
