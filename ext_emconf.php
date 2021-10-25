@@ -22,17 +22,14 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '5.1.3',
     'constraints' => [
         'depends' => [
-        'typo3' => '10.4.13-11.9.99',
+        'typo3' => '10.4.18-11.9.99',
         'container' => '1.3.1-1.99.99',
-
+      	'content_defender' => '3.2.0-3.99.99',
       ],
       'conflicts' => [
         'ws_scss' => '*',
         'dyncss' => '*',
         'gridelements' => '*',
-      ],
-      'suggests' => [
-      	'content_defender' => '3.1.3-3.99.99',
       ],
     ],
     'autoload' => [

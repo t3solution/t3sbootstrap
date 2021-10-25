@@ -305,8 +305,9 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 						 ->execute()
 						 ->fetchAll();
 				foreach ($statements as $statement) {
+					$check = strpos((string)$statement[$field], 'var(--bs-');
 					$pos = strpos((string)$statement[$field], $rename);
-					if ($pos === false) {
+					if ($pos === false || $check === 0) {
 						// do nothing
 					} else {
 						$require = true;
