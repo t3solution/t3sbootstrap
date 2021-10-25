@@ -8,9 +8,9 @@
 	<f:if condition="{settings.cdn}">
 		<f:then>
 			<f:asset.css identifier="swipercss"
-				href="https://unpkg.com/swiper@{settings.swipeVersion}/swiper-bundle.min.css" />
+				href="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.css" />
 			<f:asset.script identifier="swiperjs"
-				src="https://unpkg.com/swiper@{settings.swipeVersion}/swiper-bundle.min.js" />
+				src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 		</f:then>
 		<f:else>
 			<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
