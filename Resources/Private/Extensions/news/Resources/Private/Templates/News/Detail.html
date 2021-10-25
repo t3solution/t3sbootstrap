@@ -30,7 +30,7 @@
 		<f:asset.script identifier="vanilla_lightbox">
 	// Baguette Box (lightbox) - Partials/Layouts/Assets.html
 	baguetteBox.run('.gallery, .image-gallery', {
-    	animation: 'fadeIn',
+		animation: 'fadeIn',
 		noScrollbars: true
 	});
 		</f:asset.script>
@@ -104,23 +104,24 @@
 		</f:asset.script>
 	</f:if>
 </f:if>
-
-
-
 <f:if condition="{newsItem}">
-	<f:then>
-		<f:if condition="{settings.templateLayout} == 81">
-			<f:then>
-				<f:render partial="Detail/Detail" arguments="{_all}" />
-			</f:then>
-			<f:else>
-				<f:render section="Default" arguments="{_all}" />
-			</f:else>
-		</f:if>
-	</f:then>
-	<f:else>
-
-	</f:else>
+	<f:switch expression="{settings.templateLayout}">
+		<!-- t3sbootstrap Templates	-->
+		<f:case value="81">
+			<f:render partial="Detail/Detail" arguments="{_all}" />
+		</f:case>
+		<!-- Custom Templates -->
+		<f:case value="95">
+			<f:render partial="Detail/Custom1" arguments="{_all}" />
+		</f:case>
+		<f:case value="96">
+			<f:render partial="Detail/Custom2" arguments="{_all}" />
+		</f:case>
+		<!-- Default Templates -->
+		<f:defaultCase>
+			<f:render section="Default" arguments="{_all}" />
+		</f:defaultCase>
+	</f:switch>
 </f:if>
 </f:section>
 </html>

@@ -333,6 +333,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
 		$show = $this->hasDefaultDirectory() ? 'in' : 'show';
 
 		if ($extconf['previewClosedCollapsible']) {
@@ -343,7 +344,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 					</span>
 				</span>
 			</a></p>
-			<div class="collapse" id="collapseContainer-'.$record['uid'].'">'.$rendered.'</div>';
+			<div class="collapse" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
 		} else {
 			$newContent = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'">
 				<span class="icon icon-size-small icon-state-default">
@@ -352,7 +353,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 					</span>
 				</span>
 			</a></p>
-			<div class="collapse '.$show.'" id="collapseContainer-'.$record['uid'].'"><div class="card card-body">'.$rendered.'</div></div>';
+			<div class="collapse '.$show.'" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
 		}
 
 		return $flexconfOut.$newContent;
