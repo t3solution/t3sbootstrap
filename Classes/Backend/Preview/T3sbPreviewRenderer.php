@@ -333,26 +333,15 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-		$show = $this->hasDefaultDirectory() ? 'in' : 'show';
+		$typo3Version = new Typo3Version();
+		$show = $typo3Version->getMajorVersion() == 10 ? 'in' : 'show';
 
 		if ($extconf['previewClosedCollapsible']) {
-			$newContent = '<p><a class="collapsed" style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'">
-				<span class="icon icon-size-small icon-state-default">
-					<span class="icon-markup">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg>
-					</span>
-				</span>
-			</a></p>
-			<div class="collapse" id="collapseContainer-'.$record['uid'].'">'.$rendered.'</div>';
+			$newContent = '<p style="margin-top:8px;margin-left:5px"><a data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'"><span class="icon icon-size-small icon-state-default"><span class="icon-markup"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color" style="color:red"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg></span></span></a></p>
+<div class="collapse" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
 		} else {
-			$newContent = '<p><a style="color:#c7254e" data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'">
-				<span class="icon icon-size-small icon-state-default">
-					<span class="icon-markup">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg>
-					</span>
-				</span>
-			</a></p>
-			<div class="collapse '.$show.'" id="collapseContainer-'.$record['uid'].'"><div class="card card-body">'.$rendered.'</div></div>';
+			$newContent = '<p style="margin-top:8px;margin-left:5px"><a data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'"><span class="icon icon-size-small icon-state-default"><span class="icon-markup"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color" style="color:red"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg></span></span></a></p>
+<div class="collapse '.$show.'" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
 		}
 
 		return $flexconfOut.$newContent;
