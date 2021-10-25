@@ -3,11 +3,20 @@
 # **********************************************************
 
 tx_news.templateLayouts {
-	71 = BS4: List Group (list view)
-	72 = BS4: Grid Cards (list view)
-	73 = BS4: Card Groups (list view)
-	74 = BS4: Masonry (list view)
-	75 = BS4: 2 Columns (list view)
-	76 = BS4: OWL Slider - Fullscreen (list view) - experimental
-	81 = BS4: Detail view
+	71 = BS5: List Group (list view)
+	72 = BS5: Grid Cards (list view)
+	73 = BS5: Card Groups (list view)
+	74 = BS5: Masonry (list view)
+	75 = BS5: 2 Columns (list view)
+	76 = BS5: OWL Slider - Fullscreen (list view) - experimental
+	81 = BS5: Detail view
+
+	// Custom List Templates
+	90 = Custom Template1 (list view)
+	91 = Custom Template2 (list view)
+	92 = Custom Template3 (list view)
+
+	// Custom Detail Templates
+	95 = Custom Template1 (detail view)
+	96 = Custom Template2 (detail view)
 }
