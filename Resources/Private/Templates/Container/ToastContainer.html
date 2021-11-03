@@ -5,7 +5,7 @@
 </f:section>
 <f:section name="Main">
 <f:asset.script identifier="vanilla_toast">
-	// // Toast - Content/Toast.html
+	// // Toast - Container/ToastContainer.html
 	var toasts = document.querySelectorAll('.toast.ce-toast');
 	if ( toasts.length ) {
 		toasts.forEach( t => {
@@ -15,7 +15,7 @@
 		});
 	}
 </f:asset.script>
-<div class="toast-container position-absolute p-3 {placement}">
+<div class="toast-container position-absolute p-3 {placement}">	
 	<div id="toast-{data.uid}" class="toast ce-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="{autohide}" data-bs-animation="{animation}" data-bs-delay="{delay}"{f:if(condition: toastwidth, then: ' style="width:{toastwidth}px"')}>
 		<div class="toast-header">
 			<f:if condition="{files.0}">
@@ -30,8 +30,10 @@
 			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
   		</div>
 	  	<div class="toast-body">
-	  		<f:if condition="{data.bodytext}">
-		 		{data.bodytext -> f:format.raw()}
+	  		<f:if condition="{col_310 -> f:count()}">
+				<f:for each="{col_310}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
 			</f:if>
 	  	</div>
 	</div>

@@ -68,9 +68,11 @@ plugin.tx_news {
 		magnifying = {$bootstrap.config.magnifying}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
 		jqueryDisable = {$bootstrap.disable.jquery}
+		dummyImageUid = {$bootstrap.ext.news.list.dummyImageUid}
 	}
 
 	_LOCAL_LANG.de.more-link = mehr
 	_LOCAL_LANG.de.back-link = zurück
 	_LOCAL_LANG.de.dateFormat = {$bootstrap.config.dateFormat}
+	_LOCAL_LANG.de.search-text = Es liegen %1$s Ergebnisse für "%2$s" vor.
 }

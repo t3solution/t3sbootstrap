@@ -343,7 +343,7 @@ tt_content {
 
 	masonry_wrapper < lib.contentElement
 	masonry_wrapper {
-		templateName = masonryWrapper
+		templateName = MasonryWrapper
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
 			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
@@ -374,5 +374,21 @@ tt_content {
 			}
 		}
 	}
-	
+
+	toast_container < lib.contentElement
+	toast_container {
+		templateName = ToastContainer
+		templateRootPaths {
+			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
+			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+		}
+		dataProcessing {
+
+			310 = B13\Container\DataProcessing\ContainerProcessor
+			310 {
+				colPos = 310
+				as = col_310
+			}
+		}
+	}	
 }

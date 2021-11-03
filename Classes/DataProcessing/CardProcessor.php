@@ -159,7 +159,15 @@ class CardProcessor implements DataProcessorInterface {
 		// class
 		$cardClass = 'card';
 		$cardClass .= $parentflexconf['equalHeight'] ? ' h-100' : '';
-		$cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position']:'';
+
+		if ( $flexconf['flipcard'] ) {
+			$cardClass .= ' flip-card border-0';
+			$cardData['flipcard'] = TRUE;
+			$cardData['rotateY'] = $flexconf['rotateY'];
+		} else {
+			$cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position']:'';	
+		}
+
 		if ( $processedData['data']['header_position'] ) {
 			$headerPosition = $processedData['data']['header_position'];
 			if ( $headerPosition == 'left' ) $headerPosition = 'start';

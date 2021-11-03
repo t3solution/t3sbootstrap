@@ -246,7 +246,7 @@ class ConfigController extends ActionController
 	/**
 	 * action create
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
+	 * @param Config $newConfig
 	 * @return void
 	 */
 	public function createAction(Config $newConfig): void
@@ -263,7 +263,7 @@ class ConfigController extends ActionController
 	/**
 	 * action edit
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param Config $config
 	 * @param bool $updated
 	 * @return void
 	 */
@@ -290,7 +290,7 @@ class ConfigController extends ActionController
 	/**
 	 * action update
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param Config $config
 	 * @return void
 	 */
 	public function updateAction(Config $config): void
@@ -306,7 +306,7 @@ class ConfigController extends ActionController
 	/**
 	 * action delete
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param Config $config
 	 * @return void
 	 */
 	public function deleteAction(Config $config): void
@@ -400,8 +400,8 @@ class ConfigController extends ActionController
 	/**
 	* take over $rootConfig settings
 	*
-	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $rootConfig
-	* @return \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
+	* @param Config $rootConfig
+	* @return Config $newConfig
 	*/
 	public function getNewConfig(Config $rootConfig): Config
 	{
@@ -422,7 +422,7 @@ class ConfigController extends ActionController
 	/**
 	 * Compare config with rootconfig
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param Config $config
 	 * @return array
 	 */
 	protected function compareConfig(Config $config): array
@@ -647,7 +647,7 @@ class ConfigController extends ActionController
 	/**
 	 * Get the data from DB
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param Config $config
 	 * @param bool $isRoot
 	 * @return string
 	 */
@@ -681,7 +681,7 @@ class ConfigController extends ActionController
 	/**
 	 * Get the Tca Columns
 	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Model\Config $config
+	 * @param Config $config
 	 * @return array
 	 */
 	 private function getTcaColumns(): array
@@ -780,8 +780,8 @@ class ConfigController extends ActionController
 	/**
 	 * Returns some default settings for new root configuration
 	 *
-	* @param \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
-	* @return \T3SBS\T3sbootstrap\Domain\Model\Config $newConfig
+	* @param Config $newConfig
+	* @return Config $newConfig
 	 */
 	protected function setDefaults($newConfig): Config
 	{

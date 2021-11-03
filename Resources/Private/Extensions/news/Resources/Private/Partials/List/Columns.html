@@ -1,5 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
 	  data-namespace-typo3-fluid="true">
 <div class="mb-4 pb-5 border-bottom">
 	<n:excludeDisplayedNews newsItem="{newsItem}"/>
@@ -25,7 +26,15 @@
 		<f:else>
 			<f:if condition="{settings.displayDummyIfNoMedia}">
 				<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
-					<f:render partial="List/Media/Dummy" />
+					<f:if condition="{settings.dummyImageUid}">
+						<f:then>
+							<f:variable name="dummyImage" value="<t3sb:dummyImage uid='{settings.dummyImageUid}' />" />
+							<f:render partial="List/Media/Image" arguments="{file: dummyImage}" />						
+						</f:then>
+						<f:else>
+							<f:render partial="List/Media/Dummy" />						
+						</f:else>
+					</f:if>
 				</n:link>
 			</f:if>
 		</f:else>

@@ -37,7 +37,7 @@
 		</f:if>
 	</f:else>
 </f:if>
-<figure class="text-center image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
+<figure class="text-center image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}{f:if(condition: '{settings.templateLayout} == 71', then: ' d-none d-sm-block')}">
 	<t3sb:media
 		file="{file}"
 		title="{file.originalResource.title}"

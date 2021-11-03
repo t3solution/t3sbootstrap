@@ -127,8 +127,4 @@ return '<picture>
 		return $bgImages;
 	}
 
-
-
-
-
 }

@@ -55,6 +55,43 @@
 						</TCEforms>
 					</mobile.overlay>
 
+					<flipcard>
+						<TCEforms>
+							<label>Flip Card with Text or Image</label>
+							<description>Frontside with image - Backside with text (if "Text Top" available) or image (second image)</description>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</flipcard>
+
+					<rotateY>
+						<TCEforms>
+							<label>Number of rotations in degree</label>
+							<displayCond>FIELD:flipcard:=:1</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">180deg</numIndex>
+										<numIndex index="1">180deg</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">540deg</numIndex>
+										<numIndex index="1">540deg</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">900deg</numIndex>
+										<numIndex index="1">900deg</numIndex>
+									</numIndex>
+								</items>
+								<default>180deg</default>
+							</config>
+						</TCEforms>
+					</rotateY>
+
 					<title.onTop>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.titleOnTop</label>

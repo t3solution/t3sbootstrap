@@ -448,6 +448,25 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 );
 $GLOBALS['TCA']['tt_content']['types']['swiper_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
+# TOAST CONTAINER
+GeneralUtility::makeInstance(Registry::class)->configureContainer(
+	(
+		new ContainerConfiguration(
+			'toast_container',
+			'Toast Container',
+			'A container for several Toast content',
+			[
+				[
+					['name' => 'Toast Container', 'colPos' => 310, 'disallowed' => ['CType' => 't3sbs_toast, toast_container']]
+				]
+			]
+		)
+	)
+	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
+);
+$GLOBALS['TCA']['tt_content']['types']['toast_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
 
 /***************
  * Add new CTypes
@@ -776,6 +795,7 @@ $tempContentColumns = [
 				'tabs_tab' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml',
 				'masonry_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml',
 				'swiper_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SwiperContainer.xml',
+				'toast_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ToastContainer.xml',
 			]
 		]
 	],
@@ -1438,7 +1458,7 @@ if ( $extconf['preview'] ) {
 	$GLOBALS['TCA']['tt_content']['ctrl']['previewRenderer'] = DefaultPreviewRenderer::class;
 	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
-	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container'];
+	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container', 'toast_container'];
 	foreach ($containers as $container) {
 		$GLOBALS['TCA']['tt_content']['types'][trim($container)]['previewRenderer'] = T3sbPreviewRenderer::class;
 	}

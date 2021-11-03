@@ -87,15 +87,22 @@ $(document).ready(function(){
 					<f:else>
 						<f:if condition="{file}">
 							<f:then>
-								<section id="s-{data.uid}" class="card rounded-0 border-0{f:if(condition: '{class}', then: ' {class}')}">
+								<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{class}', then: ' {class}')}">
 									<f:if condition="{file.type} == 4">
 										<f:then>
-										<f:comment>	Local video </f:comment>
-										<f:asset.script identifier="vanilla_localVideo-{data.uid}">
+											<f:comment>	Local video </f:comment>
+											<f:asset.script identifier="vanilla_localVideo-{data.uid}">
 	// Local video-{data.uid} - BackgroundWrapper.html
-	let videoElement = document.querySelector('#video-{file.uid} video');
+	let videoWrapper = document.querySelector('#video-{file.uid}'),
+		videoElement = document.querySelector('#video-{file.uid} video'),
+		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight) / 2;
+		shift = {shift};
+	videoElement.style.marginTop = '-'+marginTop-shift+'px';
 	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.controls}, {localVideo.loop}, {localVideo.mute}, videoElement );
 											</f:asset.script>
+<f:asset.css identifier="lovalvideocss-{data.uid}">
+#s-{data.uid}{width:100%;height:calc(100vw*{aspectRatio});position: relative}
+</f:asset.css>
 											<f:render partial="Media/Type/Video" arguments="{file: file, aspectRatio: aspectRatio,
 											 dimensions: dimensions, class: class, border: border, addmedia: addmedia, position: position}" />
 										</f:then>

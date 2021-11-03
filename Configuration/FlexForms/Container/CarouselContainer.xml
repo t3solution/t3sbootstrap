@@ -76,7 +76,7 @@
 
 					<ratio>
 						<TCEforms>
-							<label>Image ratio - e.g.: 37:9 (overrides image manipulation)</label>
+							<label>Image aspect ratio - e.g.: 37:9</label>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -86,6 +86,15 @@
 							</config>
 						</TCEforms>
 					</ratio>
+
+					<mobileNoRatio>
+						<TCEforms>
+							<label>Use image manipulation for mobile view (overrides aspect ratio for mobile only)</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</mobileNoRatio>
 
 					<origImage>
 						<TCEforms>
@@ -257,7 +266,6 @@
 							</config>
 						</TCEforms>
 					</animate>
-
 
 					<multislider>
 						<TCEforms>

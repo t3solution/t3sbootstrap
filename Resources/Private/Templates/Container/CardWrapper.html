@@ -183,7 +183,7 @@
 		<div class="{flipper.class}">
 			<div class="image-flip h-100" ontouchstart="this.classList.toggle('hover');">
 				<div class="mainflip">
-					<div class="frontside">
+					<div class="frontside w-100">
 						<div class="card">
 							<f:if condition="{card.file.0}">
 								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}', width: '{card.imgwidth}'}" />
@@ -211,7 +211,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="backside">
+					<div class="backside w-100">
 						<div class="card">
 							<f:if condition="{card.file.1}">
 								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.1}', width: '{card.imgwidth}'}" />

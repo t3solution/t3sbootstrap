@@ -96,6 +96,7 @@ class WrapperHelper implements SingletonInterface
 						$processedData['alignItem'] = $flexconf['alignVideoItem'] != 'none' ? ' '.$flexconf['alignVideoItem'] :'';
 						// aspect ratio
 						$processedData['aspectRatio'] = $flexconf['aspectRatio'];
+						$processedData['shift'] = $flexconf['shift'];
 						// prepare needed javascript
 						$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 						$overlayChild = $queryBuilder
@@ -246,7 +247,7 @@ class WrapperHelper implements SingletonInterface
 					 case 6:
 						$processedData['flipper']['class'] = 'col-xs-12 col-sm-6 col-md-2';
 					break;
-							 default:
+					 default:
 						$processedData['flipper']['class'] = 'col-xs-12 col-sm-6 col-md-4';
 				}
 			}
@@ -407,6 +408,7 @@ class WrapperHelper implements SingletonInterface
 		$processedData['show'] = $flexconf['active'] ? ' show' : '';
 		$processedData['collapsed'] = $flexconf['active'] ? '' : ' collapsed';
 		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
+		$processedData['alwaysOpen'] = $parentflexconf['alwaysOpen'] ? 'true' : 'false';
 		$processedData['buttonstyle'] = $flexconf['style'] ? $flexconf['style'] : 'primary';
 		$processedData['collapsibleByPid'] = $flexconf['collapsibleByPid'] ?: '';
 		$processedData['media'] = $file ? $file : '';

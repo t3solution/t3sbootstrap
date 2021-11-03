@@ -1,5 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
 	  data-namespace-typo3-fluid="true">
 	<!--TYPO3SEARCH_end-->
 	<f:if condition="{news}">
@@ -44,7 +45,9 @@
 		</f:then>
 		<f:else>
 			<div class="no-news-found">
-				<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:list_nonewsfound" />
+				<div class="alert alert-danger" role="alert">
+					<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:list_nonewsfound" />
+				</div>
 			</div>
 		</f:else>
 	</f:if>
@@ -183,7 +186,15 @@
 											</f:then>
 											<f:else>
 												<f:if condition="{settings.displayDummyIfNoMedia}">
-													<f:render partial="List/Media/Dummy" />
+													<f:if condition="{settings.dummyImageUid}">
+														<f:then>
+															<f:variable name="dummyImage" value="<t3sb:dummyImage uid='{settings.dummyImageUid}' />" />
+															<f:render partial="List/Media/Image" arguments="{file: dummyImage}" />						
+														</f:then>
+														<f:else>
+															<f:render partial="List/Media/Dummy" />						
+														</f:else>
+													</f:if>
 												</f:if>
 											</f:else>
 										</f:if>
@@ -298,16 +309,3 @@
 	</f:if>
 </f:section>
 
-
-<f:section name="AjaxPagination">
-	<f:if condition="{settings.jqueryDisable} == 0">
-		<f:if condition="{settings.lazyLoad}">
-			<f:then>
-				<f:asset.script identifier="AjaxPagination" src="EXT:t3sbootstrap/Resources/Public/ScriptsAjaxLazyPagination.js" />
-			</f:then>
-			<f:else>
-				<f:asset.script identifier="AjaxPagination" src="EXT:t3sbootstrap/Resources/Public/Scripts/AjaxPagination.js" />
-			</f:else>
-		</f:if>
-	</f:if>
-</f:section>

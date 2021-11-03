@@ -205,13 +205,12 @@ function t3sbCollapsible(fixedNavbar, navbarHeight) {
 		document.querySelectorAll('.accordion').forEach( acc => {
 			var collapse = document.getElementById(acc.id);
 			collapse.addEventListener('shown.bs.collapse', function (e) {
-				var accordionItem = this.querySelector('.collapse.show');
-				if ( accordionItem) {
-					var offsetSize = accordionItem.parentNode.querySelector('.accordion-button').clientHeight;
+				if ( e.target) {
+					var offsetSize = e.target.parentNode.querySelector('.accordion-button').clientHeight;
 					if ( fixedNavbar ) {
 						offsetSize += navbarHeight;
 					}
-					var scrollTo = Math.round(t3sbOffsetTop(accordionItem.parentNode)-offsetSize);
+					var scrollTo = Math.round(t3sbOffsetTop(e.target.parentNode)-offsetSize);
 					window.scroll({ top: scrollTo, behavior: 'smooth' });
 				}
 			});
@@ -306,6 +305,26 @@ function insertAfter(referenceNode, newNode) {
 }
 
 
+// Flip Card rotate on hover - Card.html
+function t3sbflipCard(viewportWidth) {
+	document.querySelectorAll('.flip-card').forEach( f => {
+		var width = f.firstChild.firstChild.querySelectorAll('img')[0].getAttribute('width'),
+			height = f.firstChild.firstChild.querySelectorAll('img')[0].getAttribute('height'),
+			r = width / height;
+		if ( viewportWidth < width ) {
+			width = viewportWidth-30
+			height = width * r;
+		}
+		f.style.minHeight = height+'px';
+		f.style.width = width+'px';
+		f.firstChild.style.height = height+'px';
+		f.firstChild.style.width = width+'px';
+		f.firstChild.querySelector('.flip-card-back').style.height = height+'px';
+		f.firstChild.querySelector('.flip-card-back').style.width = width+'px';
+	});
+}
+
+
 // Navbar transparent - Navbar/Assets.html
 function t3sbTransparentNavbar(colorschemes, gradient) {
 	window.onscroll = function(){
@@ -391,8 +410,10 @@ function t3sbLocalVideo(uid, overlay, autoplay, controls, loop, mute, videoEleme
 	if (controls) {
 		if (overlay) {
 			var overlayChild = document.querySelector('#s-'+uid+' .card-img-overlay');
-			overlayChild.style.top = '20px';
-			overlayChild.style.bottom = '20px';
+			if (overlayChild !== null && overlayChild !== '') {
+				overlayChild.style.top = '20px';
+				overlayChild.style.bottom = '20px';
+			}
 		}
 	} else {
 		if ( videoElement.hasAttribute('controls') ) {

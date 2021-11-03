@@ -129,7 +129,7 @@ bootstrap.ext {
 	# cat=bootstrap-extensions/b-ext/10; type=boolean; label=Info (list view): shows the info (date, categories) in list view.
 	news.list.info = 0
 	# cat=bootstrap-extensions/b-ext/11; type=small; label=Image ratio (list view): e.g.: 16:9 or 4:3 - disabled if empty.
-	news.list.imageRatio =
+	news.list.imageRatio = 0
 	# cat=bootstrap-extensions/b-ext/12; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=More button (list view): Utility class for the more button in list view.
 	news.list.buttonClass = primary
 	# cat=bootstrap-extensions/b-ext/13; type=boolean; label=Image mobile overlay (list view): if < 576px for Card-Templates only.
@@ -139,7 +139,7 @@ bootstrap.ext {
 	# cat=bootstrap-extensions/b-ext/20; type=boolean; label=Info (detail view): shows the info (date, categories, tags, author) in detail view.
 	news.detail.info = 1
 	# cat=bootstrap-extensions/b-ext/21; type=small; label=Image ratio (detail view): e.g.: 16:9 or 4:3 - disabled if empty.
-	news.detail.imageRatio =
+	news.detail.imageRatio = 0
 	# cat=bootstrap-extensions/b-ext/22; type=boolean; label=Lightbox (detail view): enable the lightbox in detail view.
 	news.detail.enableLightbox = 1
 	# cat=bootstrap-extensions/b-ext/23; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=Back button (detail view): utility class for the back button in detail view.
@@ -150,8 +150,10 @@ bootstrap.ext {
 	news.detail.carousel = 1
 	# cat=bootstrap-extensions/b-ext/26; type=options[6=6, 7=7, 8=8, 9=9]; label=Left column width (detail view):
 	news.detail.leftGrid = 7
-	# cat=bootstrap-extensions/b-ext/27; type=boolean; label=Media on top (detail view): shows images or carousel on top if enabled.
+	# cat=bootstrap-extensions/b-ext/27; type=small; label=Media on top (detail view): shows images or carousel on top if enabled.
 	news.detail.mediaOnTop = 0
+	# cat=bootstrap-extensions/b-ext/28; type=int+; label=UID of content element with custom dummy image (assets or image).	
+	news.list.dummyImageUid = 0
 }
 
 

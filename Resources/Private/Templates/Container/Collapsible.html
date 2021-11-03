@@ -25,7 +25,7 @@
 			</f:if>
 		</button>
 	</h2>
-	<div id="collapse-{data.uid}" class="accordion-collapse collapse{show}" aria-labelledby="heading-{data.uid}" data-bs-parent="#accordion-{data.tx_container_parent}">
+	<div id="collapse-{data.uid}" class="accordion-collapse collapse{show}" aria-labelledby="heading-{data.uid}"{f:if(condition:'{alwaysOpen}',else:' data-bs-parent="#accordion-{data.tx_container_parent}"')}>
 		<div class="accordion-body">
 			<f:if condition="{collapsibleByPid}">
 				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>

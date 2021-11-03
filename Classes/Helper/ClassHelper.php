@@ -12,6 +12,7 @@ namespace T3SBS\T3sbootstrap\Helper;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class ClassHelper implements SingletonInterface
 {
@@ -99,6 +100,15 @@ class ClassHelper implements SingletonInterface
 			$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['alignSelf'] : '';
 		}
 
+		//Flip Card
+		if ( $data['CType'] == 't3sbs_card' && $flexconf['flipcard'] ) {
+			if ( $data['tx_t3sbootstrap_contextcolor'] ) {
+				$data['tx_t3sbootstrap_contextcolor'] = '';
+			}
+			if ( $data['tx_t3sbootstrap_textcolor'] ) {
+				$data['tx_t3sbootstrap_textcolor'] = '';
+			}
+		}
 		$class .= $data['tx_t3sbootstrap_textcolor'] ? ' text-'.$data['tx_t3sbootstrap_textcolor'] : '';
 		$class .= $data['tx_t3sbootstrap_contextcolor'] ? ' bg-'.$data['tx_t3sbootstrap_contextcolor'] : '';
 
@@ -363,7 +373,7 @@ class ClassHelper implements SingletonInterface
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

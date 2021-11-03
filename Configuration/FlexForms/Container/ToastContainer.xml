@@ -106,7 +106,8 @@
 								<eval>int</eval>
 							</config>
 						</TCEforms>
-					</toastwidth>
+					</toastwidth>					
+
 				</el>
 			</ROOT>
 		</general>
