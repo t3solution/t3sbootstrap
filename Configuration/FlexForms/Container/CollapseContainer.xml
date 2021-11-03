@@ -60,6 +60,16 @@
 						</TCEforms>
 					</hidden>
 
+					<alwaysOpen>
+						<TCEforms>
+							<label>Always open</label>
+							<description>stay open when another item is opened</description>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</alwaysOpen>
+
 					<appearance>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.appearance</label>
@@ -84,7 +94,8 @@
 
 					<flush>
 						<TCEforms>
-							<label>Flush (to remove default background-color, borders etc.)</label>
+							<label>Flush</label>
+							<description>to remove default background-color, borders etc.</description>
 							<displayCond>FIELD:sDEF.appearance:=:accordion</displayCond>
 							<config>
 								<type>check</type>

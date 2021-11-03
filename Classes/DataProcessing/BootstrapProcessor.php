@@ -24,6 +24,7 @@ use T3SBS\T3sbootstrap\Helper\GridHelper;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 
 class BootstrapProcessor implements DataProcessorInterface
@@ -353,7 +354,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( $processedData['data']['CType'] == 't3sbs_carousel' ) {
 			$processedData['dimensions']['width'] = $parentflexconf['width'] ?: '';
 			$processedData['carouselLink'] = $parentflexconf['link'];
-
+			$processedData['mobileNoRatio'] = $parentflexconf['mobileNoRatio'];
 			if ($parentflexconf['link'] == 'button' && $processedData['data']['header_link']){
 				$processedData['data']['button_link'] = $processedData['data']['header_link'];
 				$processedData['data']['header_link'] = '';
@@ -547,17 +548,12 @@ class BootstrapProcessor implements DataProcessorInterface
 		/**
 		 * Toasts
 		 */
-		if ( $processedData['data']['CType'] == 't3sbs_toast' ) {
+		if ( $processedData['data']['CType'] == 't3sbs_toast' || $processedData['data']['CType'] == 'toast_container' ) {
 			$processedData['animation'] = $flexconf['animation'] ? 'true' : 'false';
 			$processedData['autohide'] = $flexconf['autohide'] ? 'true' : 'false';
 			$processedData['delay'] = $flexconf['delay'];
-			if ( $flexconf['placement'] == 'left' ) {
-				$processedData['placement'] = 'position: absolute; top: 0; left: 0;';
-			} elseif ( $flexconf['placement'] == 'right' ) {
-				$processedData['placement'] = 'position: absolute; top: 0; right: 0;';
-			} else {
-				$processedData['placement'] = '';
-			}
+			$processedData['toastwidth'] = $flexconf['toastwidth'];
+			$processedData['placement'] = $flexconf['placement'];
 		}
 
 		// if media
@@ -685,9 +681,23 @@ class BootstrapProcessor implements DataProcessorInterface
 		# CSS-class for container only
 		if ( $processedData['isTxContainer'] ) {
 			$containerClass = $classHelper->getTxContainerClass($processedData['data'], $flexconf, $processedData['isVideo'], $extConf);
-
-
 			$processedData['class'] .= $containerClass ? ' '.$containerClass : '';
+		}
+
+		# Flip Card
+		if ( $processedData['data']['CType'] == 't3sbs_card' && $flexconf['flipcard'] ) {
+			if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
+				$backclass = 'text-'.$processedData['data']['tx_t3sbootstrap_textcolor'];
+			}
+			if ( $processedData['data']['tx_t3sbootstrap_bgcolor'] ) {
+				$backstyle = $processedData['data']['tx_t3sbootstrap_bgcolor'];
+			} else {
+				if ( $processedData['data']['tx_t3sbootstrap_contextcolor'] ) {
+					$backclass .= ' bg-'.$processedData['data']['tx_t3sbootstrap_contextcolor'];
+				}
+			}
+			$processedData['backclass'] = trim((string)$backclass);
+			$processedData['backstyle'] = $backstyle;
 		}
 
 		$processedData['style'] .= ' '.$processedData['data']['tx_t3sbootstrap_extra_style'];
@@ -703,7 +713,7 @@ class BootstrapProcessor implements DataProcessorInterface
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

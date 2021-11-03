@@ -190,6 +190,11 @@ class GalleryProcessor implements DataProcessorInterface
 	protected $disableAutoRow;
 
 	/**
+	 * @var string
+	 */
+	protected $parentflexconf;
+
+	/**
 	 * @var array
 	 */
 	protected $processedData;

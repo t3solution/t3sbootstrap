@@ -380,28 +380,42 @@
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">21by9</numIndex>
-										<numIndex index="1">21x9</numIndex>
+										<numIndex index="0">48by9</numIndex>
+										<numIndex index="1">9/48</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
-										<numIndex index="0">16by9</numIndex>
-										<numIndex index="1">16x9</numIndex>
+										<numIndex index="0">37by9</numIndex>
+										<numIndex index="1">9/37</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">4by3</numIndex>
-										<numIndex index="1">4x3</numIndex>
+										<numIndex index="0">21by9</numIndex>
+										<numIndex index="1">9/21</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">1by1</numIndex>
-										<numIndex index="1">1x1</numIndex>
+										<numIndex index="0">16by9</numIndex>
+										<numIndex index="1">9/16</numIndex>
 									</numIndex>
 								</items>
-								<default>16x9</default>
+								<default>9/37</default>
 								<size>1</size>
 							</config>
 						</TCEforms>
 					</aspectRatio>
 
+					<shift>
+						<TCEforms>
+							<label>Extra shift for the video</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<description>e.g.: 100 or -100</description>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>0</default>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</shift>
+					
 					<alignVideoItem>
 						<TCEforms>
 							<label>Align content items</label>

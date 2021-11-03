@@ -146,7 +146,7 @@
 
 					<ratio>
 						<TCEforms>
-							<label>Image ratio - e.g.: 37:9 (overrides image manipulation)</label>
+							<label>Image ratio - e.g.: 37:9</label>
 							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 							<config>
 								<type>input</type>

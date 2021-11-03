@@ -52,6 +52,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		$this->registerArgument('picturefill', 'bool', 'Use rendering suggested by picturefill.js', false, true);
 		$this->registerArgument('lazyload', 'int', 'Generate markup that supports lazyloading', false, 0);
 		$this->registerArgument('ratio', 'string', 'Image ratio', false, '');
+		$this->registerArgument('mobileNoRatio', 'bool', 'no aspect ratio for mobile', false, '');
 		$this->registerArgument('shift', 'string', 'Image shift', false, '');
 		$this->registerArgument('columns', 'int', 'Columns for Image Gallery', false, 0);
 		$this->registerArgument('placeholderSize', 'int', 'Size of the placeholder image for lazyloading (0 = disabled)', false, 0);
@@ -103,8 +104,16 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		// Get crop variants
 		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
 
+		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
+			$mobileImgManipulation = json_decode($cropString)->mobile;
+		}
 		if ( $this->arguments['ratio'] ) {
-			$cropString = self::getCropString($image);
+			$cropString = self::getCropString($image, $cropString);
+			if ( $this->arguments['mobileNoRatio'] ) {
+				$cropObject = json_decode($cropString);
+				$cropObject->mobile = $mobileImgManipulation;
+				$cropString = json_encode($cropObject);
+			}
 		}
 
 		$cropVariantCollection = CropVariantCollection::create((string) $cropString);
@@ -115,7 +124,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 
 		// Generate fallback image
 		$fallbackImage = $this->generateFallbackImage($image, $width, $cropArea);
-
 
 		if ( $GLOBALS['_GET']['type'] == '98' ) {
 			$lazyload = 0;
@@ -157,7 +165,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$placeholderInline
 		);
 
-
 		return $this->tag->render();
 	}
 
@@ -175,8 +182,17 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		// Get crop variants
 		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
 
+		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
+			$mobileImgManipulation = json_decode($cropString)->mobile;
+		}
+
 		if ( $this->arguments['ratio'] ) {
-			$cropString = self::getCropString($image);
+			$cropString = self::getCropString($image, $cropString);
+			if ( $this->arguments['mobileNoRatio'] ) {
+				$cropObject = json_decode($cropString);
+				$cropObject->mobile = $mobileImgManipulation;
+				$cropString = json_encode($cropObject);
+			}
 		}
 
 		$cropVariantCollection = CropVariantCollection::create((string) $cropString);
@@ -266,8 +282,17 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		 $cropVariant = 'default';
 		 $cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
 
+		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
+			$mobileImgManipulation = json_decode($cropString)->mobile;
+		}
+
 		if ( $this->arguments['ratio'] ) {
-			$cropString = self::getCropString($image);
+			$cropString = self::getCropString($image, $cropString);
+			if ( $this->arguments['mobileNoRatio'] ) {
+				$cropObject = json_decode($cropString);
+				$cropObject->mobile = $mobileImgManipulation;
+				$cropString = json_encode($cropObject);
+			}
 		}
 
 		 $cropVariantCollection = CropVariantCollection::create((string)$cropString);
@@ -330,48 +355,43 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	 *
 	 * @return string
 	 */
-	protected function getCropString($image)
+	protected function getCropString($image, $cropString)
 	{
-		$rArr = explode(':',$this->arguments['ratio']);
-		$l = $rArr[0] / $rArr[1];
-		$p = $rArr[1] / $rArr[0];
-		$w = $image->getProperties()['height']/$image->getProperties()['width'] *$l;
-		$h = 1;
-		$x = $this->arguments['shift'] ? $this->arguments['shift'] : (1 - $w) / 2;
-		$y = 0;
-		if ( $w > 1 ) {
-			$h = $image->getProperties()['width']/$image->getProperties()['height'] *$p;
-			$w = 1;
-			$x = 0;
-			$y = $this->arguments['shift'] ? $this->arguments['shift'] : (1 - $h) / 2;
+		$cropObject = json_decode($cropString);
+
+		foreach($this->arguments['breakpoints'] as $cv) {
+			$cropVariant = $cv['cropVariant'];
+			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
+			$cropObject->$cropVariant->cropArea->y = $this->arguments['shift'] ? $this->arguments['shift'] : $cropObject->$cropVariant->cropArea->y;
+			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
+			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
+			$rArr = explode(':',$this->arguments['ratio']);
+
+			if ( $rArr[0] > $rArr[1] ) {
+				// landscape
+				$pxHeight = $cropedWidth / $rArr[0] * $rArr[1];
+				$cHeight = $pxHeight / $image->getProperties()['height'];
+				$cropObject->$cropVariant->cropArea->height = $cHeight;
+			} elseif ($rArr[0] == $rArr[1]) {
+				// square
+				if ( $image->getProperties()['width'] > $image->getProperties()['height'] ) {
+					$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
+					$cWidth = $pxWidth / $image->getProperties()['width'];
+					$cropObject->$cropVariant->cropArea->width = $cWidth;
+				} else {
+					$pxHeight = $cropedWidth / $rArr[0] * $rArr[1];
+					$cHeight = $pxHeight / $image->getProperties()['height'];
+					$cropObject->$cropVariant->cropArea->height = $cHeight;
+				}
+			} else {
+				// portrait
+				$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
+				$cWidth = $pxWidth / $image->getProperties()['width'];
+				$cropObject->$cropVariant->cropArea->width = $cWidth;
+			}
 		}
 
-		$cropArray['default']['cropArea']['x'] = $x;
-		$cropArray['default']['cropArea']['y'] = $y;
-		$cropArray['default']['cropArea']['width'] = $w;
-		$cropArray['default']['cropArea']['height'] = $h;
-		$cropArray['default']['selectedRatio'] = $this->arguments['ratio'];
-		$cropArray['default']['focusArea'] = null;
-
-		$cropArray['tablet']['cropArea']['x'] = $x;
-		$cropArray['tablet']['cropArea']['y'] = $y;
-		$cropArray['tablet']['cropArea']['width'] = $w;
-		$cropArray['tablet']['cropArea']['height'] = $h;
-		$cropArray['tablet']['selectedRatio'] = $this->arguments['ratio'];
-		$cropArray['tablet']['focusArea'] = null;
-
-		$cropArray['mobile']['cropArea']['x'] = $x;
-		$cropArray['mobile']['cropArea']['y'] = $y;
-		$cropArray['mobile']['cropArea']['width'] = $w;
-		$cropArray['mobile']['cropArea']['height'] = $h;
-		$cropArray['mobile']['selectedRatio'] = $this->arguments['ratio'];
-		$cropArray['mobile']['focusArea'] = null;
-
-		$object = (object)$cropArray;
-
-		return json_encode($object);
-
+		return json_encode($cropObject);
 	}
-
 
 }

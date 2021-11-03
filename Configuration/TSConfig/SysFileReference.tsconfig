@@ -8,6 +8,10 @@ TCEFORM.sys_file_reference.crop.config.cropVariants {
 				title = Free
 				value = 0.0
 			}
+			37:9 {
+				title = 37:9
+				value =  4.1111111
+			}
 			21:9 {
 				title = 21:9
 				value = 2.3333333
@@ -66,6 +70,10 @@ TCEFORM.sys_file_reference.crop.config.cropVariants {
 				title = Free
 				value = 0.0
 			}
+			37:9 {
+				title = 37:9
+				value =  4.1111111
+			}
 			21:9 {
 				title = 21:9
 				value = 2.3333333
@@ -123,6 +131,10 @@ TCEFORM.sys_file_reference.crop.config.cropVariants {
 			NaN {
 				title = Free
 				value = 0.0
+			}
+			37:9 {
+				title = 37:9
+				value =  4.1111111
 			}
 			21:9 {
 				title = 21:9

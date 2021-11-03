@@ -102,7 +102,7 @@
 
 					<ratio>
 						<TCEforms>
-							<label>Image ratio - e.g.: 37:9 (overrides image manipulation)</label>
+							<label>Image ratio - e.g.: 37:9</label>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -247,7 +247,6 @@
 							</config>
 						</TCEforms>
 					</delay>
-
 
 					<swiperCss>
 						<TCEforms>
