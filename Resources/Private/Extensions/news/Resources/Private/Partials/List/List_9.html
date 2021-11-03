@@ -2,7 +2,6 @@
 	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
 	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
 	  data-namespace-typo3-fluid="true">
-	<!--TYPO3SEARCH_end-->
 	<f:if condition="{news}">
 		<f:then>
 			<f:switch expression="{settings.templateLayout}">
@@ -51,7 +50,6 @@
 			</div>
 		</f:else>
 	</f:if>
-	<!--TYPO3SEARCH_begin-->
 </html>
 
 
@@ -104,19 +102,21 @@
 					</div>
 				</f:then>
 				<f:else>
-					<div id="news-container-{contentObjectData.uid}">
-						<f:render section="LoadingSpinnerTop" arguments="{_all}" />
-						<f:if condition="{settings.list.paginate.insertAbove}">
-							<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
-						</f:if>
+					<f:render section="LoadingSpinnerTop" arguments="{_all}" />
+					<f:if condition="{settings.list.paginate.insertAbove}">
+						<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+					</f:if>
+					<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4" id="news-container-{contentObjectData.uid}">
 						<f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
-							<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator, templ: 'gridCard'}" />
+							<div class="col">
+								<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator, templ: 'gridCard'}" />
+							</div>
 						</f:for>
-						<f:if condition="{settings.list.paginate.insertBelow}">
-							<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
-						</f:if>
-						<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
 					</div>
+					<f:if condition="{settings.list.paginate.insertBelow}">
+						<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+					</f:if>
+					<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
 				</f:else>
 			</f:if>
 		</f:then>
