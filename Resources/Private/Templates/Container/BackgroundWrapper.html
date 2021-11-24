@@ -5,42 +5,31 @@
 		<f:render partial="Header/All" arguments="{_all}" />
 	{containerPost -> f:format.raw()}
 </f:if>
-<f:if condition="{youtubeProperty}">
+<f:if condition="{videoId}">
 	<f:then>
-		<f:comment>	jQuery - Youtube video </f:comment>
-		<f:if condition="{settings.cdn}">
-			<f:then>
-				<f:asset.css identifier="ytPlayercss"
-					href="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/{settings.ytPlayerVersion}/css/jquery.mb.YTPlayer.min.css" />
-				<f:asset.script identifier="ytPlayerjs"
-					src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/{settings.ytPlayerVersion}/jquery.mb.YTPlayer.min.js" />
-			</f:then>
-			<f:else>
-				<f:asset.css identifier="ytPlayercss" href="fileadmin/T3SB/Resources/Public/CSS/jquery.mb.YTPlayer.min.css" />
-				<f:asset.script identifier="owljs" src="fileadmin/T3SB/Resources/Public/JS/jquery.mb.YTPlayer.min.js" />
-			</f:else>
-		</f:if>
-		<f:asset.script identifier="background-video-{data.uid}">
-// jQuery Youtube Background-video-{data.uid} - BackgroundWrapper.html
-$(document).ready(function(){
-	jQuery('.player{data.uid}').YTPlayer({ realfullscreen: true, onReady: function(event) {
-		$('body').addClass('video-loaded');
-	}});{ytVideo.addFilters}
-	jQuery('.player{data.uid}').css('padding-bottom', '{ytVideo.pH}%')
-});
+		<f:comment>	Youtube video </f:comment>
+		<f:asset.script identifier="vanilla_ytvideo-{data.uid}">
+	// YouTube background embeds (v{data.uid}) - BackgroundWrapper.html
+	var playerElement = document.getElementById('v{data.uid}');
+	var videoId = '{videoId}';
+	var div = document.createElement('div');
+	var params = '{youtubeParams-> f:format.raw()}';
+	div.setAttribute('data-id', videoId);
+	playerElement.appendChild(div);
+	t3sbBackgroundVideo(div, params);
 		</f:asset.script>
-		<div id="control{data.uid}"></div>
-		<div id="dom{data.uid}" class="player{data.uid} player{f:if(condition: '{class}',then: ' {class}')}"
-				  data-property="{youtubeProperty}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-			<f:if condition="{contentCenter}">
-				<f:then>
-					<f:render section="SectionInnerCenter" arguments="{_all}" />
-				</f:then>
-				<f:else>
-					<f:render section="SectionInner" arguments="{_all}" />
-				</f:else>
-			</f:if>
-		 </div>
+		<f:asset.css identifier="ytvideo-{data.uid}">
+#v{data.uid} iframe {
+    top: {ytVideo.ytshift}% !important;
+}
+		</f:asset.css>
+		<div class="w-100 h-100" style="background-color: transparent; z-index: 999">
+			<div class="position-relative overflow-hidden"
+				 style="height:{f:if(condition:'{ytVideo.bgHeight}',then:'{ytVideo.bgHeight}',else:'300')}px;{controlStyle}">
+				<div id="v{data.uid}" class="video-container"></div>
+				<f:render section="SectionInner" arguments="{_all}" />
+			</div>
+		</div>
 	</f:then>
 	<f:else>
 		<f:link.typolink parameter="{celink}" class="ce-link">
@@ -95,16 +84,16 @@ $(document).ready(function(){
 	// Local video-{data.uid} - BackgroundWrapper.html
 	let videoWrapper = document.querySelector('#video-{file.uid}'),
 		videoElement = document.querySelector('#video-{file.uid} video'),
-		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight) / 2;
+		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight)/2;
 		shift = {shift};
 	videoElement.style.marginTop = '-'+marginTop-shift+'px';
-	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.controls}, {localVideo.loop}, {localVideo.mute}, videoElement );
+	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, videoElement );
 											</f:asset.script>
-<f:asset.css identifier="lovalvideocss-{data.uid}">
+											<f:asset.css identifier="lovalvideocss-{data.uid}">
 #s-{data.uid}{width:100%;height:calc(100vw*{aspectRatio});position: relative}
-</f:asset.css>
-											<f:render partial="Media/Type/Video" arguments="{file: file, aspectRatio: aspectRatio,
-											 dimensions: dimensions, class: class, border: border, addmedia: addmedia, position: position}" />
+											</f:asset.css>
+											<f:render partial="Media/Type/Video" arguments="{file: file, dimensions: dimensions,
+											 class: class, border: border, addmedia: addmedia, position: position}" />
 										</f:then>
 										<f:else>
 										<f:comment> Real image </f:comment>
@@ -160,17 +149,7 @@ $(document).ready(function(){
 
 <f:section name="SectionInner">
 	<f:if condition="{col_273.0}">
-		{containerPre -> f:format.raw()}
-			<f:for each="{col_273}" as="row">
-				{row.renderedContent -> f:format.raw()}
-			</f:for>
-		{containerPost -> f:format.raw()}
-	</f:if>
-</f:section>
-
-<f:section name="SectionInnerCenter">
-	<f:if condition="{col_273.0}">
-		<div class="v-row align-items-center h-100 w-100 absolute">
+		<div class="position-absolute {contentPosition}">
 			<div class="col">
 				{containerPre -> f:format.raw()}
 					<f:for each="{col_273}" as="row">
@@ -181,6 +160,7 @@ $(document).ready(function(){
 		</div>
 	</f:if>
 </f:section>
+
 
 <f:section name="SectionOverlayInner">
 <f:if condition="{col_273.0}">

@@ -3,11 +3,11 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment>Gallery Template for Carousel used in Textmedia, Mediaobject and/or Card</f:comment>
 <div id="carousel-{data.uid}" class="carousel slide {gallery.rowClass}" data-bs-ride="carousel"{f:if(condition:'{data.imagewidth}',then:' style="max-width: {data.imagewidth}px;"')}>
-	<ol class="carousel-indicators">
+	<div class="carousel-indicators">
 		<f:for each="{files}" as="mediaElement" iteration="iterator">
-			<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
+			<button type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iterator.index}"{f:if(condition:'{iterator.isFirst}',then:' class="active"')} aria-label="Slide {iterator.cycle}"></button>
 		</f:for>
-	</ol>
+	</div>
 	<div class="carousel-inner text-center">
 		<f:for each="{files}" as="media" iteration="iterator">
 			<div class="carousel-item{f:if(condition:'{iterator.isFirst} == 1',then:' active')}">
@@ -55,14 +55,14 @@
 			</div>
 		</f:for>
 	</div>
-	<a class="carousel-control-prev" href="#carousel-{data.uid}" role="button" data-bs-slide="prev">
+	<button class="carousel-control-prev" type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide="prev">
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">zurück</span>
-	</a>
-	<a class="carousel-control-next" href="#carousel-{data.uid}" role="button" data-bs-slide="next">
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide="next">
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">weiter</span>
-	</a>
+	</button>
 </div>
 </html>
 
@@ -75,7 +75,7 @@
 	<f:else>
 		<t3sb:media file="{file}" title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}"
 		 class="img-fluid{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: '({file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2) || {settings.lazyLoad} == 1', then: ' lazy')}"
-		  width="{dimensions.width}" height="auto" breakpoints="{
+			width="{dimensions.width}" height="auto" breakpoints="{
 			0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
 			1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 			2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}

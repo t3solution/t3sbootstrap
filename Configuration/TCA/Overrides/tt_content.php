@@ -10,13 +10,16 @@ use T3SBS\T3sbootstrap\Backend\Preview\T3sbPreviewRenderer;
 
 defined('TYPO3') || die();
 
- # if typoscript_rendering is loaded
-if ( ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
+
+# Extension configuration
+$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
+if (array_key_exists('contentconsent', $extconf) && $extconf['contentconsent'] === '1') {
 
 	ExtensionUtility::registerPlugin(
 		'T3sbootstrap',
 		'Pi1',
-		'Content Consent'
+		'Content Consent for YouTube'
 	);
 
 	$extensionName = GeneralUtility::underscoredToUpperCamelCase('t3sbootstrap');
@@ -25,9 +28,6 @@ if ( ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 	ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Consent.xml');
 
 }
-
-# Extension configuration
-$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 /***************
  * Add new EXT:container CTypes
@@ -283,7 +283,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		new ContainerConfiguration(
 			'carousel_container',
 			'Carousel Container',
-			'A container for several Carousel slides (CE:t3sb_carousel)',
+			'A container for several Carousel slides (CE:t3sbs_carousel)',
 			[
 				[
 					['name' => 'Carousel Container', 'colPos' => 276, 'allowed' => ['CType' => 't3sbs_carousel']]
@@ -435,7 +435,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		new ContainerConfiguration(
 			'swiper_container',
 			'Swiper Container',
-			'A container for several Swipe slides (CE:t3sb_carousel)',
+			'A container for several Swipe slides (CE:t3sbs_carousel)',
 			[
 				[
 					['name' => 'Swipe Container', 'colPos' => 300, 'allowed' => ['CType' => 't3sbs_carousel']]
@@ -629,12 +629,7 @@ $tempContentColumns = [
 		'exclude' => 1,
 		'label' => 'Link the entire Content Element',
 		'config' => [
-			'type' => 'check',
-				'items' => [
-				'1' => [
-					'0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-				]
-			]
+			'type' => 'check'
 		]
 	],
 	'tx_t3sbootstrap_header_position' => [
@@ -994,19 +989,16 @@ $tempContentColumns = [
 			'default' => ''
 		]
 	],
+
 	'tx_t3sbootstrap_image_orig' => [
 		'exclude' => 1,
 		'label' => 'Use Original Image',
 		'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['origimage'],
 		'config' => [
-			'type' => 'check',
-				'items' => [
-				'1' => [
-					'0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-				]
-			]
+			'type' => 'check'
 		]
 	],
+
 	'tx_t3sbootstrap_animateCss' => [
 		'exclude' => 1,
 		'l10n_display' => 'hideDiff',
@@ -1181,7 +1173,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
 			bodytext;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext_formlabel,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
-			image,
+			assets,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,T3SFlex;tx_t3sbootstrap_flexform,
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
@@ -1202,7 +1194,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
 				'enableRichtext' => true
 			]
 		],
- 		'image' => [
+ 		'assets' => [
 			'config' => [
 				'maxitems' => 1
 			]

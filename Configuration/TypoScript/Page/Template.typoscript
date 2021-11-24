@@ -435,3 +435,10 @@ page.10.settings.indexedsearch.targetPid = 0
 [END]
 
 
+plugin.tx_felogin_login {
+	view {
+		templateRootPaths {
+			10 = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
+		}
+	}
+}

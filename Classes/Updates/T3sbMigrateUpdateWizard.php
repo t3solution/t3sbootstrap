@@ -46,7 +46,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 	 */
 	public function getDescription(): string
 	{
-	  return 'Rename Bootstrap Utility Classes';
+	  return 'Rename Bootstrap Utility Classes and change fieldname for t3sbs_carousel from image to assets';
 	}
 
 	/**
@@ -188,6 +188,56 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 							->set($field, str_replace($rename, $renameTo[$key], $statement[$field]))
 							->execute();
 					}
+				}
+			}
+		}
+
+		/* t3sbs_carousel - move all media from image to asstes */
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$statements = $queryBuilder
+			->select('uid','image')
+			->from('tt_content')
+			->where(
+				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('t3sbs_carousel'))
+			)
+			->execute()
+			->fetchAll();
+
+		foreach ($statements as $statement) {
+			if ( $statement['image'] ) {
+
+				$recordId = (int)$statement['uid'];
+				$imageAmount = (int)$statement['image'];
+
+				$queryBuilder
+					->update('tt_content')
+					->where(
+						$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
+					)
+					->set('assets', $imageAmount)
+					->set('image', 0)
+					->execute();
+
+				$queryBuilderSFR = $connectionPool->getQueryBuilderForTable('sys_file_reference');
+				$fileStatements = $queryBuilderSFR
+					->select('uid','fieldname')
+					->from('sys_file_reference')
+					->where(
+						$queryBuilderSFR->expr()->eq('uid_foreign', $queryBuilderSFR->createNamedParameter($recordId, \PDO::PARAM_INT))
+					)
+					->execute()
+					->fetchAll();
+
+				foreach ($fileStatements as $fileStatement) {
+					$fileId = (int)$fileStatement['uid'];
+					$queryBuilderSFR
+						->update('sys_file_reference')
+						->where(
+							$queryBuilderSFR->expr()->eq('uid', $queryBuilderSFR->createNamedParameter($fileId, \PDO::PARAM_INT))
+						)
+						->set('fieldname', 'assets')
+						->execute();
 				}
 			}
 		}
@@ -338,6 +388,25 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 						$require = true;
 					}
 				}
+			}
+		}
+
+		/* t3sbs_carousel - move all media from image to asstes */
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$statements = $queryBuilder
+			->select('uid','image')
+			->from('tt_content')
+			->where(
+				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('t3sbs_carousel'))
+			)
+			->execute()
+			->fetchAll();
+
+		foreach ($statements as $statement) {
+			if ( $statement['image'] ) {
+
+				$require = true;
 			}
 		}
 

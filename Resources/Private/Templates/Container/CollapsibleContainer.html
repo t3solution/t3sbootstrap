@@ -4,7 +4,7 @@
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
-<f:if condition="{appearance} == 'accordion'">
+<f:if condition="{appearance} == 'accordion' && !{settings.disableAccordionScrollToTop}">
 <f:asset.script identifier="vanilla_collapsible">
 	// Collapsible - CollapsibleContainer.html
 	var collapse = document.querySelectorAll('.accordion .collapse');

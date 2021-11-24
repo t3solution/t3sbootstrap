@@ -43,7 +43,7 @@
 			</div>
 		</f:if>
 		<f:if condition="{youtube}">
-			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="https://www.youtube.com/watch?v={videoId}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="https://youtube-nocookie.com/watch?v={videoId}">
 				   <f:render section="OverlayInner" arguments="{_all}" />
 			</div>
 		</f:if>
@@ -106,7 +106,7 @@
 		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 	}"
 	picturefill="{settings.picturefill}"
-	lazyload="0" 
+	lazyload="0"
 	ratio="0"
 	style="{style}"
 	imgtag="0" />

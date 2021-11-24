@@ -76,9 +76,9 @@
 <div id="navbarToggler" class="offcanvas offcanvas-{config.navbar.offcanvasAlign}{f:if(condition:'{settings.config.navbarExtraRow}',then:' flex-column')}" tabindex="-1" aria-labelledby="offcanvasNavbarLabel">
 	<div class="offcanvas-header pb-0">
 		<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}">
-			<h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color:{config.navbar.offcanvasTitleColor}">
+			<p class="offcanvas-title h5" id="offcanvasNavbarLabel" style="color:{config.navbar.offcanvasTitleColor}">
 				{f:if(condition:'{config.general.company}',then:'{config.general.company}', else: 'Company Name')}
-			</h5>
+			</p>
 		</f:link.typolink>
 		<button type="button" class="btn-close btn-close-{config.navbar.offcanvasCross} text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	</div>
@@ -225,7 +225,7 @@
 <f:section name="Menu">
 	<f:for each="{navbarMenu}" as="navbarItem">
 		<f:if condition="{navbarItem.data.doktype} != 198">
-			<div id="nav-item-{navbarItem.data.uid}" class="nav-item{f:if(condition: navbarItem.children, then:' {config.navbar.dropdown}{config.navbar.hover}')}{f:if(condition:'{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}',then:' mega-dropdown')}">
+			<div id="nav-item-{navbarItem.data.uid}" class="nav-item{f:if(condition: navbarItem.children, then:' {config.navbar.dropdown}{config.navbar.hover}')}{f:if(condition:'{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}',then:' mega-dropdown dropdown-toggle')}">
 				<f:if condition="{navbarItem.spacer}">
 					<f:then>
 						<span class="nav-link">|</span>
@@ -325,12 +325,12 @@
 <f:for each="{navbarItem.children}" as="child">
 	<f:if condition="{child.spacer}">
 		<f:then>
-			<hr class="dropdown-divider"></hr>
+			<hr class="dropdown-divider">
 		</f:then>
 		<f:else>
 			<f:if condition="{child.data.doktype} == 198">
 				<f:then>
-					<h6 class="dropdown-header border-bottom">{child.title}</h6>
+					<p class="dropdown-header border-bottom h6">{child.title}</p>
 				</f:then>
 				<f:else>
 					<f:if condition="{child.children}">
@@ -369,7 +369,7 @@
 					<f:for each="{child.children}" as="grandchild" iteration="iterator">
 						<f:if condition="{grandchild.spacer}">
 							<f:then>
-								<hr class="dropdown-divider"></hr>
+								<hr class="dropdown-divider">
 							</f:then>
 							<f:else>
 								<f:if condition="{grandchild.data.doktype} == 198">

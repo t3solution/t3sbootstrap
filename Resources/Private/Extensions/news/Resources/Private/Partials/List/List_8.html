@@ -105,16 +105,20 @@
 				</f:then>
 				<f:else>
 					<f:render section="LoadingSpinnerTop" arguments="{_all}" />
+
+
+
+						<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4" id="news-container-{contentObjectData.uid}">
 					<n:widget.paginate objects="{news}" as="paginatedNews" configuration="{settings.list.paginate}"
 										 initial="{offset:settings.offset,limit:settings.limit,recordId:contentObjectData.uid}">
-						<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4" id="news-container-{contentObjectData.uid}">
 							<f:for each="{paginatedNews}" as="newsItem" iteration="iterator">
 								<div class="col">
 									<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator, templ: 'gridCard'}" />
 								</div>
 							</f:for>
-						</div>
 					</n:widget.paginate>
+						</div>
+
 					<f:render section="LoadingSpinnerBottom" arguments="{_all}" />
 				</f:else>
 			</f:if>

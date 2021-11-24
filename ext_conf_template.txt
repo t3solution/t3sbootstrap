@@ -54,6 +54,8 @@ flexformModify = 0
 expandedContent = 0
 # cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
 cTypeClass = 0
+# cat=t3sb/enable/60; type=boolean; label=Content Consent Plug-In: Currently only for YouTube videos.
+contentconsent = 0
 
 # cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0

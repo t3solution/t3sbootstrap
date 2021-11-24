@@ -37,11 +37,37 @@ module.tx_t3sbootstrap {
 			magnificpopup = {$bootstrap.cdn.magnificpopup}
 			lightcase = {$bootstrap.cdn.lightcase}
 			cookieconsent = {$bootstrap.cdn.cookieconsent}
-			ytPlayer = {$bootstrap.cdn.ytPlayer}
 			owlCarousel = {$bootstrap.cdn.owlCarousel}
 			masonry = {$bootstrap.cdn.masonry}
 			jarallax = {$bootstrap.cdn.jarallax}
 			swiper = {$bootstrap.cdn.swiper}
+		}
+		optimize {
+			tables = {$bootstrap.optimize.tables}
+			forms = {$bootstrap.optimize.forms}
+			buttons = {$bootstrap.optimize.buttons}
+			transitions = {$bootstrap.optimize.transitions}
+			dropdown = {$bootstrap.optimize.dropdown}
+			button-group = {$bootstrap.optimize.button-group}
+			nav = {$bootstrap.optimize.nav}
+			navbar = {$bootstrap.optimize.navbar}
+			card = {$bootstrap.optimize.card}
+			accordion = {$bootstrap.optimize.accordion}
+			breadcrumb = {$bootstrap.optimize.breadcrumb}
+			pagination = {$bootstrap.optimize.pagination}
+			badge = {$bootstrap.optimize.badge}
+			alert = {$bootstrap.optimize.alert}
+			progress = {$bootstrap.optimize.progress}
+			list-group = {$bootstrap.optimize.list-group}
+			close = {$bootstrap.optimize.close}
+			toasts = {$bootstrap.optimize.toasts}
+			modal = {$bootstrap.optimize.modal}
+			tooltip = {$bootstrap.optimize.tooltip}
+			popover = {$bootstrap.optimize.popover}
+			carousel = {$bootstrap.optimize.carousel}
+			spinners = {$bootstrap.optimize.spinners}
+			offcanvas = {$bootstrap.optimize.offcanvas}
+			placeholders = {$bootstrap.optimize.placeholders}
 		}
 	}
 }
@@ -89,7 +115,6 @@ page.jsInline.1.value (
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 	})(window,document,'script','dataLayer','{$bootstrap.gtm}');
-
 
 )
 page.jsInline.1.if.isTrue = {$bootstrap.gtm}

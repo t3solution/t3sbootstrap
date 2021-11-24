@@ -398,7 +398,7 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 
 
 // Local video - BackgroundWrapper.html
-function t3sbLocalVideo(uid, overlay, autoplay, controls, loop, mute, videoElement) {
+function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, videoElement) {
 	videoElement.muted = mute;
 	videoElement.loop = loop;
 	if (autoplay) {
@@ -407,19 +407,94 @@ function t3sbLocalVideo(uid, overlay, autoplay, controls, loop, mute, videoEleme
 		videoElement.play();
 		videoElement.setAttribute('playsinline', '');
 	}
-	if (controls) {
-		if (overlay) {
-			var overlayChild = document.querySelector('#s-'+uid+' .card-img-overlay');
-			if (overlayChild !== null && overlayChild !== '') {
-				overlayChild.style.top = '20px';
-				overlayChild.style.bottom = '20px';
+}
+
+
+// Local carousel video - CarouselContainer.html
+function t3sbLocalCarouselVideo(videoCarousel) {
+	videoCarousel.addEventListener('slid.bs.carousel', function (el) {
+		let slides = this.getElementsByClassName('carousel-item');
+		slides.forEach( carouselItem => {
+			if ( carouselItem.classList.contains('active') ) {
+				if ( carouselItem.classList.contains('carousel-video') ) {
+					carouselItem.getElementsByTagName('video')[0].play();
+				}
 			}
-		}
+		});
+	})
+	videoCarousel.addEventListener('slide.bs.carousel', function (el) {
+		let slides = this.getElementsByClassName('carousel-item');
+		slides.forEach( carouselItem => {
+			if ( carouselItem.classList.contains('active') ) {
+				if ( carouselItem.classList.contains('carousel-video') ) {
+					carouselItem.getElementsByTagName('video')[0].pause();
+				}
+			}
+		});
+	})
+}
+
+
+// YouTube Background embed - BackgroundWrapper.html
+function t3sbBackgroundVideo(div, params) {
+	var iframe = document.createElement('iframe');
+	iframe.setAttribute('src','https://www.youtube-nocookie.com/embed/' + div.dataset.id + params);
+	iframe.setAttribute('allowfullscreen', '1');
+	iframe.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+	div.replaceWith(iframe);
+}
+
+
+// YouTube embed - Consent/Index.html
+function t3sbVideo(videoId, params, id, consent=false) {
+	var playerElement = document.getElementById('v'+id),
+		div = document.createElement('div'),
+		iframe = document.createElement('iframe');
+	div.setAttribute('data-id', videoId);
+	playerElement.appendChild(div);
+	if (consent) {
+		iframe.setAttribute('src','https://www.youtube-nocookie.com/embed/' + div.dataset.id + params);
 	} else {
-		if ( videoElement.hasAttribute('controls') ) {
-			videoElement.removeAttribute('controls');
-		}
+		iframe.setAttribute('data-src','https://www.youtube-nocookie.com/embed/' + div.dataset.id + params);
 	}
+	iframe.setAttribute('id','iframe-' + id);
+	iframe.setAttribute('class','h-100 w-100');
+	iframe.setAttribute('allowfullscreen', '1');
+	iframe.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+	div.replaceWith(iframe);
+}
+
+function t3sbConsent(cuid, cookieExpire) {
+	document.getElementById(cuid).onclick = function() {
+		let ytvideo = document.getElementById('iframe-'+this.id);
+		ytvideo.src = ytvideo.getAttribute('data-src');
+		ytvideo.parentNode.parentNode.style.backgroundImage = '';
+		ytvideo.parentNode.firstChild.remove();
+		let name = 'contentconsent_' + this.id,
+			value = 'allow',
+			days = cookieExpire;
+		setCookie(name, value, days);
+	};
+}
+
+function setCookie(name, value, days) {
+    var d = new Date;
+    d.setTime(d.getTime() + 24*60*60*1000*days);
+    document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
+}
+
+function t3sbVideoThumbnails(ratio) {
+	document.querySelectorAll('.video-thumbnail').forEach( vthumb => {
+		if (vthumb) {
+			let thumbWidth = vthumb.clientWidth,
+				thumbHeight = vthumb.clientWidth * ratio;
+			if (vthumb.clientHeight > thumbHeight) {
+				vthumb.style.maxHeight = thumbHeight+'px';
+			} else {
+				vthumb.style.minHeight = thumbHeight+'px';
+			}
+		};
+	});
 }
 
 
@@ -451,12 +526,12 @@ function isScrolledIntoView(el) {
 	var elemTop = el.getBoundingClientRect().top;
 	var elemBottom = el.getBoundingClientRect().bottom;
 	var elemHeight = el.getBoundingClientRect().height;
-	var overhang = elemHeight * (1 - percentVisible);	
+	var overhang = elemHeight * (1 - percentVisible);
 	var isVisible = (elemTop >= -overhang) && (elemBottom <= window.innerHeight + overhang);
 	return isVisible;
 }
 
-function cssAnimate(ael, dataAnimate, animateRepeat) {
+function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 	if (isScrolledIntoView(ael)) {
 		ael.classList.add('bt_visible', dataAnimate);
 		ael.classList.remove('bt_hidden');
@@ -476,7 +551,7 @@ function cssAnimate(ael, dataAnimate, animateRepeat) {
 				ael.classList.add('bt_hidden');
 			}
 		}
-	});	
+	});
 }
 
 

@@ -96,7 +96,7 @@ class StyleHelper implements SingletonInterface
 
 			$style = $flexconf['captionVAlign'] == 'top' ? ' top:0;' : '';
 			$style .= $flexconf['captionVAlign'] == 'center' ? ' bottom:0;' : '';
-			$style .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+			#$style .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
 
 		}
 

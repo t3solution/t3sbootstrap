@@ -3,6 +3,7 @@
 <f:alias map="{sword: searchParams.sword}">
 	<f:render partial="Form" arguments="{_all}" />
 </f:alias>
+
 <f:for each="{resultsets}" as="result">
 	<f:if condition="{result.categoryTitle}">
 		<h1 class="tx-indexedsearch-category">{result.categoryTitle}</h1>

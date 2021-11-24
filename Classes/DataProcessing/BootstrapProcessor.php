@@ -116,6 +116,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData = $wrapperHelper->getCardWrapper($processedData, $flexconf);
 			$processedData['isTxContainer'] = TRUE;
 			$processedData['visibleCards'] = (int)$flexconf['visibleCards'] ?: 4;
+			$processedData['gutter'] = (int)$flexconf['gutter'];
 		}
 
 		/**
@@ -138,7 +139,20 @@ class BootstrapProcessor implements DataProcessorInterface
 		 */
 		if ( $processedData['data']['CType'] == 'background_wrapper') {
 			$processedData = $wrapperHelper->getBackgroundWrapper($processedData, $flexconf,
-				 $contentObjectConfiguration['settings.']['cdnEnable'], $extConf['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			 $extConf['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			$mute = $processedData['videoAutoPlay'] ? 1 : $flexconf['videoMute'];
+			if ($flexconf['videoControls']) {
+				$processedData['controlStyle'] = '';
+			} elseif ( !$processedData['videoAutoPlay'] ) {
+				$processedData['controlStyle'] = '';
+			} else {
+				$processedData['controlStyle'] = ' pointer-events:none;';
+			}
+
+			$params = '?autoplay='.$processedData['videoAutoPlay'].'&loop='.$flexconf['videoLoop'].'&playlist='.
+				$processedData['videoId'].'&mute='.$mute.'&rel=0&showinfo=0&controls='.
+				$flexconf['videoControls'].'&modestbranding='.$flexconf['videoControls'];
+			$processedData['youtubeParams'] = $params;
 			$processedData['isTxContainer'] = TRUE;
 		}
 
@@ -159,24 +173,30 @@ class BootstrapProcessor implements DataProcessorInterface
 			if ($flexconf['zoom']) {
 				$processedData['lightBox'] = TRUE;
 			}
-			if ( $processorConfiguration['carouselFiles'] ) {
-				$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-				$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-				$statement = $queryBuilder
-					->select('uid')
-					->from('tt_content')
-					->where(
-						$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
-					)
-					->execute()
-					->fetchAll();
-				$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-				foreach($statement as $element) {
-					$filesFromRepository[$element['uid']] = $fileRepository->findByRelation('tt_content', 'image', $element['uid']);
-				}
 
-				$processedData['carouselSlides'] = $filesFromRepository;
+			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+			$statement = $queryBuilder
+				->select('uid')
+				->from('tt_content')
+				->where(
+					$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+				)
+				->execute()
+				->fetchAll();
+			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+			foreach($statement as $element) {
+				$file = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);
+				if ( empty($file) ) {
+					$filesFromRepository[$element['uid']] = '';
+				} else {
+					$filesFromRepository[$element['uid']] = $file;
+					if ($file[0]->getMimeType() == 'video/mp4' || $file[0]->getMimeType() == 'video/webm') {
+						$processedData['containsVideo'] = TRUE;
+					}
+				}
 			}
+			$processedData['carouselSlides'] = $filesFromRepository;
 		}
 
 
@@ -213,7 +233,7 @@ class BootstrapProcessor implements DataProcessorInterface
 				->fetchAll();
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			foreach($statement as $element) {
-				$filesFromRepository[$element['uid']] = $fileRepository->findByRelation('tt_content', 'image', $element['uid']);
+				$filesFromRepository[$element['uid']] = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);
 			}
 			$processedData['swiperSlides'] = $filesFromRepository;
 		}
@@ -370,16 +390,21 @@ class BootstrapProcessor implements DataProcessorInterface
 			} else {
 				$processedData['style'] = '';
 			}
-
 			$processedData['origImage'] = $parentflexconf['origImage'];
+			$processedData['addmedia']['origImg'] = $parentflexconf['origImage'];
+			$processedData['maxWidth'] = $parentflexconf['width'].'px';
 
 			if ($parentflexconf['buttontext'])
 			$processedData['buttontext'] = trim(explode('|', (string) $parentflexconf['buttontext'])[$processedData['data']['sys_language_uid']]);
 
+			if ($processedData['data']['tx_t3sbootstrap_animateCss']) {
+				$parentflexconf['animate'] = $processedData['data']['tx_t3sbootstrap_animateCss'];
+			}
+
 			if ($extConf['animateCss'] && $parentflexconf['animate']){
 				$processedData['animate'] = $parentflexconf['animate'] ?
 				 ' caption-animated animated align-items-'.$flexconf['captionVAlign'].' '.$parentflexconf['animate'] : '';
-				$processedData['innerStyle'] = $innerCaptionStyle;
+				 $processedData['innerStyle'] = $innerCaptionStyle;
 			} elseif ($processedData['data']['tx_t3sbootstrap_bgcolor']) {
 				$height = $flexconf['captionVAlign'] == 'top' ? '' : 'h-100';
 				$processedData['animate'] = ' '.$height.' d-flex align-items-'.$flexconf['captionVAlign'];
@@ -389,10 +414,30 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData['animate'] = ' '.$height.' d-flex align-items-'.$flexconf['captionVAlign'];
 			}
 
+			if ( $processedData['animate'] ) {
+				$processedData['dataAnimate'] = $processedData['data']['tx_t3sbootstrap_animateCss'];
+				$processedData['animateCssRepeat'] = $processedData['data']['tx_t3sbootstrap_animateCssRepeat'];
+			}
 			$animate = ($extConf['animateCss'] && $parentflexconf['animate']) || $processedData['data']['tx_t3sbootstrap_bgcolor'] ? TRUE : FALSE;
+			if ($animate) $processedData['isAnimateCss'] = TRUE;
 			$processedData['style'] .= $styleHelper->getCarouselCaptionStyle( $flexconf, $animate );
 
-			if (empty($processedData['files'])) {
+			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+			$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+
+			if ($file) {
+				if ($file->getMimeType() == 'video/mp4' || $file->getMimeType() == 'video/webm') {
+					$processedData['localVideoPath'] = $file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
+				}
+			}
+			if ($parentflexconf['ratio']) {
+				$ratioArr = explode(':', $parentflexconf['ratio']);
+				$processedData['ratioCalc'] = $ratioArr[1] / $ratioArr[0];
+			} else {
+				$processedData['ratioCalc'] = 1;
+			}
+
+			if (empty($processedData['files']) && !$processedData['localVideoPath']) {
 				$ratio = $parentflexconf['ratio'] ? $parentflexconf['ratio'] : '16:9';
 				$noImgHeight = explode(':', (string) $ratio);
 				$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
@@ -433,7 +478,6 @@ class BootstrapProcessor implements DataProcessorInterface
 
 			if ( $parentflexconf['swiperJs'] ) {
 				$processedData['swiper'] = TRUE;
-
 			}
 		}
 
@@ -574,6 +618,8 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['addmedia']['imagezoom'] = $processedData['data']['image_zoom'];
 			$processedData['addmedia']['CType'] = $processedData['data']['CType'];
 			$processedData['addmedia']['ratio'] = $processedData['data']['tx_t3sbootstrap_image_ratio'];
+
+			if ($processedData['data']['CType'] != 't3sbs_carousel')
 			$processedData['addmedia']['origImg'] = $processedData['data']['tx_t3sbootstrap_image_orig'];
 		}
 
@@ -633,11 +679,13 @@ class BootstrapProcessor implements DataProcessorInterface
 			// disable animateCss
 			$processedData['data']['tx_t3sbootstrap_animateCss'] = FALSE;
 		}
-		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] ) {
+
+		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] && $processedData['data']['CType'] != 't3sbs_carousel' ) {
 			$processedData['isAnimateCss'] = TRUE;
-			$processedData['class'] .= ' animated bt_hidden';
+			$processedData['class'] .= ' animated';
 			$processedData['dataAnimate'] = $processedData['data']['tx_t3sbootstrap_animateCss'];
 			if( $processedData['data']['tx_t3sbootstrap_animateCssRepeat'] ) {
+				$processedData['class'] .= ' bt_hidden';
 				$processedData['animateCssRepeat'] = TRUE;
 			}
 			// add to style
@@ -647,7 +695,9 @@ class BootstrapProcessor implements DataProcessorInterface
 			if ($processedData['data']['tx_t3sbootstrap_animateCssDelay'] ) {
 				$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s;';
 			}
-
+			if ( !$processedData['data']['CType'] == 't3sbs_carousel' ) {
+				$processedData['animate'] = $processedData['animate'].' '.$processedData['data']['tx_t3sbootstrap_animateCss'];
+			}
 		}
 
 		// child of container (masonry_layout)

@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 
 /**
- * Command for update GRUAN access data
+ * Command for update CDN to LOCAL
  */
 class CdnToLocal extends Command
 {
@@ -255,62 +255,6 @@ class CdnToLocal extends Command
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'cookieconsent.min.js';
 				$cdnPath = 'https://cdn.jsdelivr.net/npm/cookieconsent@'.$version.'/build/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-			}
-
-			if ($key == 'ytPlayer') {
-		 		$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'jquery.mb.YTPlayer.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/font/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'ytp-regular.eot';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/font/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/font/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'ytp-regular.ttf';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/font/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'ytp-regular.woff';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'raster.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'raster@2x.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'raster_dot.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/images/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'raster_dot@2x.png';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/css/images/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'jquery.mb.YTPlayer.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 

@@ -19,7 +19,6 @@ use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard;
 
-
 defined('TYPO3') || die();
 
 (function () {
@@ -82,11 +81,7 @@ defined('TYPO3') || die();
 	 */
 	$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
-	/***************
-	 * Other Extensions
-	 */
-	# if typoscript_rendering is loaded
-	if ( ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
+	if (array_key_exists('contentconsent', $extconf) && $extconf['contentconsent'] === '1') {
 
 		/***************
 		 * plugin content consent
@@ -95,15 +90,23 @@ defined('TYPO3') || die();
 			'T3sbootstrap',
 			'Pi1',
 			[
-				ConsentController::class => 'index, ajax',
+				ConsentController::class => 'index',
 			],
 			// non-cacheable actions
 			[
-				ConsentController::class => 'ajax',
+				ConsentController::class => '',
 			]
 		);
+	}
+
+	/***************
+	 * Other Extensions
+	 */
+	# if typoscript_rendering is loaded
+	if ( ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 1');
 	}
+
 	# if indexed_search is loaded
 	if ( ExtensionManagementUtility::isLoaded('indexed_search') ) {
 		 # Setup
@@ -283,7 +286,7 @@ defined('TYPO3') || die();
 		 ScssParser::class;
 
 	// Register css processing hooks
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class]
-	        = PreProcessHook::class . '->execute';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class]
+			 = PreProcessHook::class . '->execute';
 
 })();

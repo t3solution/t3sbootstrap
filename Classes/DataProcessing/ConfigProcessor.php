@@ -20,9 +20,7 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\QueryGenerator;
-
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-
 
 class ConfigProcessor implements DataProcessorInterface
 {

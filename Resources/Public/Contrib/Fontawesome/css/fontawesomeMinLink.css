@@ -39,7 +39,8 @@
 .external-link::before,
 .download-link::before,
 .email-link::before,
-.phone-link::before {
+.phone-link::before,
+.fax-link::before {
 	margin-right: 0.5em;
 	display: inline-block;
 	font-style: normal;
@@ -63,7 +64,9 @@
 .phone-link::before {
 	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f095";
 }
-
+.fax-link::before {
+	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f1ac";
+}
 
 /*!
  * From Font Awesome Free @fontawesome - https://fontawesome.com

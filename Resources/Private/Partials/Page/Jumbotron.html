@@ -78,7 +78,7 @@
 
 <f:section name="JumboBgSlider">
 <div id="background-carousel" class="jumbotron p-0{config.jumbotron.class}" >
-	<div id="carouselJumbotronIndicators" class="carousel slide" data-ride="carousel" data-interval="{settings.config.jumbotronCarouselInterval}" data-pause="{settings.config.jumbotronCarouselPause}" >
+	<div id="carouselJumbotronIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="{settings.config.jumbotronCarouselInterval}"{f:if(condition: '{settings.config.jumbotronCarouselPause}',then: ' data-bs-pause="hover"')}>
 		<div id="content-wrapper" class="d-flex">
 			<f:if condition="{config.jumbotron.containerposition} == 'Inside'">
 				<f:then>
@@ -99,11 +99,11 @@
 				<div id="s{data.uid}-{iterator.cycle}" class="carousel-item background-image"></div>
 			</f:for>
 		</div>
-		<a class="carousel-control-prev" href="#carouselJumbotronIndicators" role="button" data-slide="prev">
+		<a class="carousel-control-prev" href="#carouselJumbotronIndicators" role="button" data-bs-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Previous</span>
 		</a>
-		<a class="carousel-control-next" href="#carouselJumbotronIndicators" role="button" data-slide="next">
+		<a class="carousel-control-next" href="#carouselJumbotronIndicators" role="button" data-bs-slide="next">
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Next</span>
 		</a>

@@ -171,9 +171,9 @@ class ConfigController extends ActionController
 			$assignedOptions['allConfig'] = $allConfig;
 		}
 
-		$assignedOptions['template'] = TRUE;
+		$assignedOptions['rootTemplate'] = TRUE;
 		if (count($this->rootTemplates) === 0) {
-			$assignedOptions['template'] = FALSE;
+			$assignedOptions['rootTemplate'] = FALSE;
 		}
 		$assignedOptions['t3version'] = $this->version;
 		$assignedOptions['rootConfig'] = $this->rootConfig ? TRUE : FALSE;
@@ -469,7 +469,7 @@ class ConfigController extends ActionController
 			$fKey = GeneralUtility::underscoredToLowerCamelCase($fKey);
 			$tsField = $ts['page.']['10.']['settings.']['config.'][$fKey];
 
-			if ( $tsField != $this->rootConfig->$field() &&	str_starts_with($tsField, '{$bootstrap.config.') != TRUE ) {
+			if ( $tsField != $this->rootConfig->$field() &&	str_starts_with((string)$tsField, '{$bootstrap.config.') != TRUE ) {
 				if ( $this->rootConfig->$field() === TRUE ) {
 					$override[$fKey] = 'enabled';
 				} elseif ( $this->rootConfig->$field() === FALSE ) {
@@ -722,18 +722,18 @@ class ConfigController extends ActionController
 			$customScssArr = GeneralUtility::trimExplode(';', $customScss['custom-variables']);
 			foreach( $customScssArr as $customvariables ) {
 				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
-				if ( str_starts_with($scsscolor[1], '$')
+				if ( str_starts_with((string)$scsscolor[1], '$')
 				 && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
 					$utilColors[$scsscolor[0]] = $scsscolor[1];
-				} elseif (str_starts_with($scsscolor[1], '#')) {
-					if (str_starts_with($scsscolor[0], '$')) {
+				} elseif (str_starts_with((string)$scsscolor[1], '#')) {
+					if (str_starts_with((string)$scsscolor[0], '$')) {
 						$colors[$scsscolor[0]] = $scsscolor[1];
 					}
 				}
 			}
 			if (is_array($utilColors)) {
 				foreach($utilColors as $key=>$utiColor) {
-					if ( str_starts_with($utiColor, '$') ) {
+					if ( str_starts_with((string)$utiColor, '$') ) {
 						$utilityColors[$key] = $colors[$utiColor];
 					}
 				}
@@ -750,11 +750,11 @@ class ConfigController extends ActionController
 
 			$defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
 			if ($defaultScssColor[1] && GeneralUtility::inList($defaultUtilColorsList, trim($defaultScssColor[0]))) {
-				if ( str_starts_with($defaultScssColor[1], '$')) {
+				if ( str_starts_with((string)$defaultScssColor[1], '$')) {
 					// variable has variable
 				 	$defaultUtilColors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
-				} elseif (str_starts_with($defaultScssColor[1], '#')) {
-					if (str_starts_with($defaultScssColor[0], '$')) {
+				} elseif (str_starts_with((string)$defaultScssColor[1], '#')) {
+					if (str_starts_with((string)$defaultScssColor[0], '$')) {
 						$defaultcolors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
 					}
 				}
