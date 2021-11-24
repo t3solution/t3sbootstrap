@@ -103,12 +103,7 @@ $tempSysFileReferenceColumns = [
 			],
 		],
 		'config' => [
-			'type' => 'check',
-				'items' => [
-				'1' => [
-					'0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-				]
-			]
+			'type' => 'check'
 		]
 	],
 	'tx_t3sbootstrap_description_align' => [
@@ -182,12 +177,7 @@ $tempSysFileReferenceColumns = [
 */
 
 		'config' => [
-			'type' => 'check',
-				'items' => [
-				'1' => [
-					'0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-				]
-			]
+			'type' => 'check'
 		]
 	],
 

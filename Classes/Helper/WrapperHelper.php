@@ -18,7 +18,7 @@ use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 
 class WrapperHelper implements SingletonInterface
 {
@@ -28,11 +28,12 @@ class WrapperHelper implements SingletonInterface
 	 *
 	 * @param array $processedData
 	 * @param array	$flexconf
-	 * @param boolean	$cdnEnable
+	 * @param boolean $webp
+	 * @param boolean $bgMediaQueries
 	 *
 	 * @return array
 	 */
-	public function getBackgroundWrapper($processedData, $flexconf, $cdnEnable=null, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576'): array
+	public function getBackgroundWrapper($processedData, $flexconf, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576'): array
 	{
 		// autoheight
 		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
@@ -48,42 +49,11 @@ class WrapperHelper implements SingletonInterface
 				if ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' ) {
 					$processedData['youtube'] = TRUE;
 					$processedData['isVideo'] = TRUE;
-
-					$processedData['contentCenter'] = $flexconf['contentCenter'] ? TRUE : FALSE;
-
-					$filter = $flexconf['grayscale'] ? 'grayscale: '.(int)$flexconf['grayscale'].', ' : '';
-					$filter .= $flexconf['huerotate'] ? 'hue_rotate: '.(int)$flexconf['huerotate'].', ' : '';
-					$filter .= $flexconf['invert'] ? 'invert: '.(int)$flexconf['invert'].', ' : '';
-					$filter .= $flexconf['opacity'] ? 'opacity: '.(int)$flexconf['opacity'].', ' : '';
-					$filter .= $flexconf['saturate'] ? 'saturate: '.(int)$flexconf['saturate'].', ' : '';
-					$filter .= $flexconf['sepia'] ? 'sepia: '.(int)$flexconf['sepia'].', ' : '';
-					$filter .= $flexconf['brightness'] ? 'brightness: '.(int)$flexconf['brightness'].', ' : '';
-					$filter .= $flexconf['contrast'] ? 'contrast: '.(int)$flexconf['contrast'].', ' : '';
-					$filter .= $flexconf['blur'] ? 'blur: '.(int)$flexconf['blur'].', ' : '';
-
-					// if filter
-					if ( $filter ) {
-						$filter = substr(trim($filter), 0, -1);
-						$addFilters = ' var filters = {'.$filter.'}; jQuery(\'.player'.$processedData['data']['uid'].'\').YTPApplyFilters(filters);';
-					} else {
-						$addFilters = '';
-					}
-
-					if ( $flexconf['videoRatio'] == '16/9' || $flexconf['videoRatio'] == 'auto' ) {
-						$pH = ((int)$flexconf['bgHeight'] / 16) * 9;
-					} else {
-						$pH = ((int)$flexconf['bgHeight'] / 4) * 3;
-					}
-
+					$processedData['contentPosition'] = $flexconf['contentPosition'];
 					$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
-					$processedData['ytVideo']['addFilters'] = $addFilters ? $addFilters : '';
-					$processedData['ytVideo']['pH'] = $pH;
-
-					$events = $flexconf;
-					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
-					$events['uid'] = $processedData['data']['uid'];
-					$processedData['youtubeProperty'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file, $events);
-
+					$processedData['ytVideo']['ytshift'] = $flexconf['ytshift'];
+					$processedData['videoAutoPlay'] = $file->getProperties()['autoplay'];
+					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file);
 				} else {
 
 					if ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
@@ -108,13 +78,11 @@ class WrapperHelper implements SingletonInterface
 							 ->execute()
 							 ->fetchColumn(0);
 						$autoplay = $file->getProperties()['autoplay'];
-						$controls = $autoplay ? $flexconf['controls'] : true;
 						$loop = $flexconf['loop'];
 						$mute = $autoplay ? true : $flexconf['mute'];
 
 						$processedData['localVideo']['overlayChild'] = $overlayChild;
 						$processedData['localVideo']['autoplay'] = $autoplay;
-						$processedData['localVideo']['controls'] = $controls;
 						$processedData['localVideo']['loop'] = $loop;
 						$processedData['localVideo']['mute'] = $mute;
 					}
@@ -130,7 +98,7 @@ class WrapperHelper implements SingletonInterface
 						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp, $bgMediaQueries);
 					$processedData['bgImage'] = $bgImage;
 					if ($flexconf['paddingTopBottom']) {
-						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 1rem;';
+						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 0;';
 					}
 				}
 				// align content items
@@ -161,7 +129,7 @@ class WrapperHelper implements SingletonInterface
 		// NO file - background color only
 			// Padding Top & Bottom if no media - add to style
 			if ($flexconf['noMediaPaddingTopBottom']) {
-				$processedData['style'] .= ' padding: '.$flexconf['noMediaPaddingTopBottom'].'rem 1rem;';
+				$processedData['style'] .= ' padding: '.$flexconf['noMediaPaddingTopBottom'].'rem 0;';
 			}
 		}
 
@@ -181,8 +149,7 @@ class WrapperHelper implements SingletonInterface
 	{
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-		$queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-
+		$queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
 		$children = $queryBuilder
 			->select('*')
 			->from('tt_content')
@@ -353,14 +320,11 @@ class WrapperHelper implements SingletonInterface
 				if ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' ) {
 				// youtube video
 					$processedData['youtube'] = TRUE;
-					$events = $flexconf;
-					$events['videoAutoPlay'] = $file->getProperties()['autoplay'];
-					$events['uid'] = $processedData['data']['uid'];
-					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file, $events, true);
+					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file);
 				} elseif ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
 				// vimeo video
 					$processedData['vimeo'] = TRUE;
-					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file, $events, true);
+					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file);
 				} else {
 				// local video
 					$processedData['local'] = TRUE;

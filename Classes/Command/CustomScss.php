@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 
 /**
- * Command for update GRUAN access data
+ * Command for update Custom SCSS
  */
 class CustomScss extends Command
 {
@@ -228,6 +228,27 @@ class CustomScss extends Command
 
 			$tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
 			self::deleteFilesFromDirectory($tempPath);
+
+			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+			$customFileName = 'bootstrap.scss';
+			$customFile = $customPath.$customFileName;
+			$customContent = GeneralUtility::getURL($customFile);
+			$length = strlen($customContent);
+
+			foreach ( $settings['optimize'] as $component=>$import ) {
+				if (!$import) {
+					$find = '@import "'.$component.'";';
+					$replace = '// @import "'.$component.'";';
+					$customContent = str_replace($find, $replace, $customContent);
+				}
+			}
+		
+			if ($length < strlen($customContent)) {
+				if (file_exists($customFile)) unlink($customFile);
+				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
+				GeneralUtility::writeFile($customFile, $customContent);
+			}
 
 			return 0;
 

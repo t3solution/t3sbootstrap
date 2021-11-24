@@ -68,7 +68,6 @@ lib.contentElement {
 		magnificpopupVersion = {$bootstrap.cdn.magnificpopup}
 		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
 		swiperVersion = {$bootstrap.cdn.swiper}
-		ytPlayerVersion = {$bootstrap.cdn.ytPlayer}
 		cdn = {$bootstrap.cdn.enable}
 		highlightIntegrity = {$bootstrap.cdn.highlightIntegrity}
 		highlightVersion = {$bootstrap.cdn.highlight}
@@ -93,6 +92,7 @@ lib.contentElement {
 		lightboxSelection = {$bootstrap.config.lightboxSelection}
 		cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
 		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
+		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
@@ -121,7 +121,6 @@ lib.contentElement {
 			defaultHeaderType = {$styles.content.defaultHeaderType}
 			contentMarginTop = {$bootstrap.config.contentMarginTop}
 			configuid = {$bootstrap.config.uid}
-			carouselFiles = {$bootstrap.config.carouselFiles}
 			disableAutoRow = {$bootstrap.image.disableAutoRow}
 			breakpoint {
 				sm = {$bootstrap.navbar.breakpoint.sm}

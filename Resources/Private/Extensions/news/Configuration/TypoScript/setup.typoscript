@@ -56,7 +56,7 @@ plugin.tx_news {
 		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
 		baguetteBoxVersion = {$bootstrap.cdn.baguetteBox}
 		magnificpopupVersion = {$bootstrap.cdn.magnificpopup}
-		lightcaseVersion = {$bootstrap.cdn.lightcaseVersion}
+		lightcaseVersion = {$bootstrap.cdn.lightcase}
 		loadingSpinner = {$bootstrap.config.loadingSpinner}
 		loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
 		loadingSpinnerPosition = {$bootstrap.ext.news.list.loadingSpinnerPosition}

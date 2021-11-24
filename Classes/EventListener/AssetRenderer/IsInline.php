@@ -45,42 +45,8 @@ class IsInline
 
 			return;
 		} else {
-// content consent w/ typoscript_rendering and jQuery
-$contentConsentScript ="
-	$('.ajaxSubmit').on('click', function(event) {
-		var submit = $(this),
-			uri = submit.data('ajaxuri'),
-			currentRecord = submit.val();
-		if ($('#preloader-'+currentRecord).length > 0) {
-			$('#c'+currentRecord).css('position','relative');
-			$('#preloader-'+currentRecord).css('display','block');
-		}
-		$.ajax(
-			uri,
-			{
-				'type': 'post',
-				'data': {currentRecord: currentRecord}
-			}
-		).done(function(result) {
-			$('#ajax-result-'+currentRecord).removeClass('px-3');
-			$('#ajax-result-'+currentRecord).html(result);
-
-			if ($('#preloader-'+currentRecord).length > 0) {
-				$('#preloader-'+currentRecord).css('display','none');
-				$('#c'+currentRecord).removeAttr('style');
-			}
-			if ( lazyload > 0 ) {
-				new LazyLoad({
-					elements_selector: '.lazy',
-					threshold: 0
-				});
-			}
-		});
-	});
-";
 
 			$assetJsInline = $event->getAssetCollector()->getInlineJavaScripts();
-			$contentconsent ='';
 			$addheight ='';
 			$video ='';
 			$jquery ='';
@@ -91,17 +57,8 @@ $contentConsentScript ="
 				if (substr($library, 0, 7) == 'vanilla' ) {
 					$js .= $source['source'] .PHP_EOL;
 					$event->getAssetCollector()->removeInlineJavaScript($library);
-				} elseif ( str_starts_with($library, 'background-video-') ) {
-					$video .= $source['source'] .PHP_EOL;
-					$event->getAssetCollector()->removeInlineJavaScript($library);
 				} elseif ( str_starts_with($library, 'addheight-') ) {
 					$addheight .= $source['source'];
-					$event->getAssetCollector()->removeInlineJavaScript($library);
-				} elseif ( $library == 'contentconsent' ) {
-					$contentconsent .= $source['source'];
-					$event->getAssetCollector()->removeInlineJavaScript($library);
-				} elseif ( str_starts_with($library, 'contentconsentthumbnailautosize-') ) {
-					$contentconsentthumbnailautosize .= $source['source'];
 					$event->getAssetCollector()->removeInlineJavaScript($library);
 				} else {
 					$jquery .= $source['source'] .PHP_EOL;
@@ -116,26 +73,18 @@ $contentConsentScript ="
 	TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight),",")."}};" .PHP_EOL;
 			}
 
-			if ($contentconsent) {
-				$contentconsent = $contentconsent == 'true' ? 1 : 0;
-				$contentconsent = '	var lazyload = '.$contentconsent.';';
-				$contentconsent = $contentconsent.PHP_EOL.$contentConsentScript.PHP_EOL;
-				if ($contentconsentthumbnailautosize) {
-					$contentconsent = $contentconsent.PHP_EOL.$contentconsentthumbnailautosize.PHP_EOL;
-				}
-			}
 
-			$vanillaOnly = FALSE;
-			if ( strlen((string)$jquery) + strlen((string)$contentconsent) < 1 ) {
-				$vanillaOnly = TRUE;
-			}
+	$vanillaOnly = FALSE;
+	if ( strlen((string)$jquery) < 1 ) {
+		$vanillaOnly = TRUE;
+	}
 
 			if ($vanillaOnly) {
 				$event->getAssetCollector()->addInlineJavaScript("t3sbInlineJS",
 				 $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL);
 			} else {
 				$event->getAssetCollector()->addInlineJavaScript("t3sbInlineJS",
-				 $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL.PHP_EOL."(function($){'use strict';".PHP_EOL. $jquery.$contentconsent .PHP_EOL."})(jQuery);".PHP_EOL);
+				 $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL.PHP_EOL."(function($){'use strict';".PHP_EOL. $jquery .PHP_EOL."})(jQuery);".PHP_EOL);
 			}
 		}
 	}

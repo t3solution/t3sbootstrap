@@ -60,11 +60,6 @@
 	// Navbar mega-menu - Navbar/Assets.html
 	var megaDropdown = document.querySelectorAll('.mega-dropdown'),
 		navbarBreakpointToggler = '';
-	megaDropdown.forEach( md => {
-		md.addEventListener('click', (event) => {
-			event.stopPropagation();
-		});
-	});
 	if ( viewportWidth < navbarBreakpointWidth ) {
 		navbarBreakpointToggler = document.querySelectorAll('.remove-{settings.config.navbarBreakpoint}');	
 		navbarBreakpointToggler.forEach( nbt => {

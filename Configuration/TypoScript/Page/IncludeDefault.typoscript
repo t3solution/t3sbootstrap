@@ -98,7 +98,7 @@ page.cssInline {
 }
 [END]
 
-# Ajax Pagination for EXT:news
+# Ajax Pagination for EXT:news v8
 [{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 ]
 plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
 [END]

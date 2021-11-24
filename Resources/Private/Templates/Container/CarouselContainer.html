@@ -60,28 +60,34 @@
 				</f:then>
 				<f:else>
 					<f:comment> BOOTSTRAP CAROUSEL </f:comment>
+					<f:if condition="{containsVideo}">
+						<f:asset.script identifier="vanilla_localvideojs-{data.uid}">
+	// Local video in Carousel-Container (pause/play) - CarouselContainer.html
+	var videoCarousel = document.getElementById('carousel-{data.uid}');
+	t3sbLocalCarouselVideo(videoCarousel);
+						</f:asset.script>
+					</f:if>
 					<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
-					<div{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
+					<div class="carousel-container{f:if(condition: '{class}',then: ' {class}')}{f:if(condition: '{dataAnimate}',then: ' {dataAnimate}')}">
 						<f:render partial="Header/All" arguments="{_all}" />
 						<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-bs-ride="carousel"
 							 data-bs-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>
 							<f:if condition="{col_276 -> f:count()} > 1">
-								<ol class="carousel-indicators d-none d-md-block"{f:if(condition:'{thumbnails}',then:' style="bottom: -100px;"')}>
-									<f:for each="{col_276}" as="carousel-indicators" iteration="iteration-indicators">
-										<f:if condition="{thumbnails}">
+								<div class="carousel-indicators d-none d-md-block"{f:if(condition:'{thumbnails}',then:' style="bottom: -100px;"')}>
+									<f:for each="{col_276}" as="colSlide" iteration="iterator">
+										<f:if condition="{thumbnails} && {carouselSlides.{colSlide.uid}}">
 											<f:then>
-												<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}"
-												 style="width:100px; height: auto;" class="me-2{f:if(condition:'{iteration-indicators.isFirst}',then:' active')}">
-													<f:image class="img-fluid d-block" image="{carouselSlides.{carousel-indicators.uid}.0}" width="100" height="60c" />
-												</li>
+												<button type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iterator.index}"
+												 style="width:100px; height:56px; background-color:var(--bs-gray-400)" class="me-2{f:if(condition:'{iterator.isFirst}',then:' active')}" aria-label="Slide {iterator.cycle}">
+													<f:image class="img-fluid d-block" image="{carouselSlides.{colSlide.uid}.0}" width="100" height="60c" />
+												</button>
 											</f:then>
 											<f:else>
-												<li data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iteration-indicators.index}"
-												{f:if(condition:'{iteration-indicators.isFirst}',then:' class="active"')}</li>
+												<button type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide-to="{iterator.index}"{f:if(condition:'{iterator.isFirst}',then:' class="active"')} aria-label="Slide {iterator.cycle}"></button>
 											</f:else>
 										</f:if>
 									</f:for>
-								</ol>
+								</div>
 							</f:if>
 							<div class="carousel-inner gallery">
 								<f:for each="{col_276}" as="row">
@@ -89,14 +95,14 @@
 								</f:for>
 							</div>
 							<f:if condition="{col_276 -> f:count()} > 1">
-								<a class="carousel-control-prev" href="#carousel-{data.uid}" role="button" data-bs-slide="prev">
+								<button class="carousel-control-prev" type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide="prev">
 									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Previous</span>
-								</a>
-								<a class="carousel-control-next" href="#carousel-{data.uid}" role="button" data-bs-slide="next">
+									<span class="visually-hidden">zurück</span>
+								</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide="next">
 									<span class="carousel-control-next-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Next</span>
-								</a>
+									<span class="visually-hidden">weiter</span>
+								</button>
 							</f:if>
 						</div>
 					</div>

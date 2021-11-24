@@ -34,6 +34,7 @@
 <f:section name="GalleryRows">
 <f:if condition="{data.imagecols} == 88 && {gallery.count.files} > 1">
 	<f:then>
+		<f:comment> Bootstrap Carousel </f:comment>
 		<f:render partial="Media/Carousel" arguments="{_all}" />
 	</f:then>
 	<f:else>

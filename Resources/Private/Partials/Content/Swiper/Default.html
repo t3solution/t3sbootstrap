@@ -89,6 +89,7 @@
 	prev[0].style.top = 'calc(50% - '+offset+'px)';
 </f:if>
 </f:asset.script>
+
 <div id="swiper-{data.uid}" class="swiper{f:if(condition: class, then: ' {class}')}"{f:if(condition: style, then: ' style="{style}"')}>
 	<div class="swiper-wrapper">
 		<f:for each="{col_300}" as="card" iteration="iterator">

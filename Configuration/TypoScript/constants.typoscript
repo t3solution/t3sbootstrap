@@ -54,8 +54,6 @@ bootstrap.cdn {
 	magnificpopup = 1.1.0
 	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
 	lightcase = 2.5.0
-	# cat=bootstrap-cdn/b-version/47; type=small; label=YouTube player - jquery.mb.YTPlayer:
-	ytPlayer = 3.3.9
 	# cat=bootstrap-cdn/b-version/49; type=small; label=Owl Carousel:
 	owlCarousel = 2.3.4
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
@@ -156,6 +154,60 @@ bootstrap.ext {
 	news.list.dummyImageUid = 0
 }
 
+# customcategory=bootstrap-optimize=* T3SB::OPTIMIZE-Bootstrap 
+# customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports<br /><small>When using <strong>"Custom SCSS"</strong>, make sure you optimize Bootstrap by only @importing the components you need.<br /> For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below.<br / ><strong>Hint:</strong> <code>progress</code>, <code>tooltip</code>, <code>popover</code> and <code>placeholders</code> are not used by t3sbootstrap!<br /><br /> After that execute the <strong>scheduler task</strong> "<code>t3sbootstrap:customScss</code>".</small>
+bootstrap.optimize {
+	# cat=bootstrap-optimize/c-enable/10; type=boolean; label=tables
+	tables = 1
+	# cat=bootstrap-optimize/c-enable/11; type=boolean; label=forms
+	forms = 1
+	# cat=bootstrap-optimize/c-enable/12; type=boolean; label=buttons
+	buttons = 1
+	# cat=bootstrap-optimize/c-enable/13; type=boolean; label=transitions
+	transitions = 1
+	# cat=bootstrap-optimize/c-enable/14; type=boolean; label=dropdown
+	dropdown = 1
+	# cat=bootstrap-optimize/c-enable/15; type=boolean; label=button-group
+	button-group = 1
+	# cat=bootstrap-optimize/c-enable/16; type=boolean; label=nav
+	nav = 1
+	# cat=bootstrap-optimize/c-enable/17; type=boolean; label=navbar
+	navbar = 1
+	# cat=bootstrap-optimize/c-enable/18; type=boolean; label=card
+	card = 1
+	# cat=bootstrap-optimize/c-enable/19; type=boolean; label=accordion
+	accordion = 1
+	# cat=bootstrap-optimize/c-enable/20; type=boolean; label=breadcrumb
+	breadcrumb = 1
+	# cat=bootstrap-optimize/c-enable/21; type=boolean; label=pagination
+	pagination = 1
+	# cat=bootstrap-optimize/c-enable/22; type=boolean; label=badge
+	badge = 1
+	# cat=bootstrap-optimize/c-enable/23; type=boolean; label=alert
+	alert = 1
+	# cat=bootstrap-optimize/c-enable/24; type=boolean; label=progress
+	progress = 1
+	# cat=bootstrap-optimize/c-enable/25; type=boolean; label=list-group
+	list-group = 1
+	# cat=bootstrap-optimize/c-enable/26; type=boolean; label=close
+	close = 1
+	# cat=bootstrap-optimize/c-enable/27; type=boolean; label=toasts
+	toasts = 1
+	# cat=bootstrap-optimize/c-enable/28; type=boolean; label=modal
+	modal = 1
+	# cat=bootstrap-optimize/c-enable/29; type=boolean; label=tooltip
+	tooltip = 1
+	# cat=bootstrap-optimize/c-enable/30; type=boolean; label=popover
+	popover = 1
+	# cat=bootstrap-optimize/c-enable/31; type=boolean; label=carousel
+	carousel = 1
+	# cat=bootstrap-optimize/c-enable/32; type=boolean; label=spinners
+	spinners = 1
+	# cat=bootstrap-optimize/c-enable/33; type=boolean; label=offcanvas
+	offcanvas = 1
+	# cat=bootstrap-optimize/c-enable/34; type=boolean; label=placeholders
+	placeholders = 1
+}
 
 #-------------------------------------------------------------------------------
 #	NOT in Constant Editor
@@ -172,8 +224,6 @@ bootstrap.pagebrowser.entryLevel = 1
 
 # enable the currently available utility colors in the BE Modul
 bootstrap.config.enableUtilityColors = 1
-# get the filereferences from the slides (t3sb_carousel) in the CarouselContainer.html if activated
-bootstrap.config.carouselFiles = 0
 
 # include print template
 bootstrap.print.enable = 0
@@ -188,6 +238,9 @@ bootstrap.gtm =
 
 # disable jQuery by default
 bootstrap.disable.jquery = 1
+
+# disable scroll to top for accordions
+bootstrap.disable.accordion.scrollToTop = 0
 
 bootstrap.navbar {
 	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
@@ -249,6 +302,8 @@ styles.content.textmedia.textMargin =
 styles.content.textmedia.borderColor =
 styles.content.textmedia.borderWidth =
 styles.content.textmedia.borderPadding =
+
+#styles.content.loginform.templateFile = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/Login/Login.html
 
 # pages override
 pages.override {

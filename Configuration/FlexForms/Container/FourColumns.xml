@@ -24,36 +24,48 @@
 										<numIndex index="1">d-none d-sm-block</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
+										<numIndex index="0">Hidden only on sm</numIndex>
+										<numIndex index="1">d-sm-none d-md-block</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
+										<numIndex index="0">Hidden only on md</numIndex>
+										<numIndex index="1">d-md-none d-lg-block</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
+										<numIndex index="0">Hidden only on lg</numIndex>
+										<numIndex index="1">d-lg-none d-xl-block</numIndex>
 									</numIndex>
 									<numIndex index="5" type="array">
 										<numIndex index="0">Hidden only on xl</numIndex>
 										<numIndex index="1">d-xl-none</numIndex>
 									</numIndex>
 									<numIndex index="6" type="array">
+										<numIndex index="0">Hidden only on xxl</numIndex>
+										<numIndex index="1">d-xxl-none</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
 										<numIndex index="0">Visible only on xs</numIndex>
 										<numIndex index="1">d-block d-sm-none</numIndex>
 									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
 									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
+										<numIndex index="0">Visible only on sm</numIndex>
+										<numIndex index="1">d-none d-sm-block d-md-none</numIndex>
 									</numIndex>
 									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
+										<numIndex index="0">Visible only on md</numIndex>
+										<numIndex index="1">d-none d-md-block d-lg-none</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">Visible only on lg</numIndex>
+										<numIndex index="1">d-none d-lg-block d-xl-none</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">Visible only on xl</numIndex>
+										<numIndex index="1">d-none d-xl-block d-xxl-none</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">Visible only on xxl</numIndex>
+										<numIndex index="1">d-none d-xxl-block</numIndex>
 									</numIndex>
 								</items>
 								<default>0</default>
@@ -71,22 +83,43 @@
 							</config>
 						</TCEforms>
 					</equalWidth>
-					<equalHeight>
+					<horizontalGutters>
 						<TCEforms>
-							<label>Equal height</label>
+							<label>Horizontal gutters</label>
 							<config>
-								<type>check</type>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">gx-0 (no gutters)</numIndex>
+										<numIndex index="1">gx-0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">gx-1</numIndex>
+										<numIndex index="1">gx-1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">gx-2</numIndex>
+										<numIndex index="1">gx-2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">gx-3</numIndex>
+										<numIndex index="1">gx-3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">gx-4 (default)</numIndex>
+										<numIndex index="1">gx-4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">gx-5</numIndex>
+										<numIndex index="1">gx-5</numIndex>
+									</numIndex>
+								</items>
+								<default>gx-4</default>
 							</config>
 						</TCEforms>
-					</equalHeight>
-					<noGutters>
-						<TCEforms>
-							<label>No gutters</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
-					</noGutters>
+					</horizontalGutters>
+					
 				</el>
 			</ROOT>
 		</sDEF>

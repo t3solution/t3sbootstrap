@@ -1,38 +1,65 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t="http://typo3.org/ns/Helhum/TyposcriptRendering/ViewHelpers" data-namespace-typo3-fluid="true">
-<div class="content-consent-wrapper" style="position: relative;">
-<f:if condition="{settings.consent.loading}">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{isYouTube}">
 	<f:then>
-		<div class="d-flex justify-content-center preloader">
-			<div id="preloader-{currentRecord}" class="spinner-border text-white" style="width: 3rem; height: 3rem; display:none;" role="status">
-				<span class="visually-hidden">Loading...</span>
-			</div>
-		</div>
-	</f:then>
-</f:if>
-<f:if condition="{contentConsent}">
-	<f:then>
-		<f:cObject typoscriptObjectPath="lib.contentByUid" data="{settings.consent.contentByUid}" />
-	</f:then>
-	<f:else>
-		<div id="ajax-result-{currentRecord}" class="px-3">
-			<f:if condition="{thumbnail}">
+		<f:if condition="{thumbnail}">
+			<f:asset.script identifier="vanilla_youTube-{ratio}">
+	// YouTube embeds thumbnails {ratio} - Consent/Index.html
+	t3sbVideoThumbnails('{settings.consent.autoSize}');
+			</f:asset.script>
+		</f:if>
+		<f:if condition="{contentConsent}">
+			<f:then>
+				<f:asset.script identifier="vanilla_youTube-{settings.consent.contentByUid}">
+	// YouTube embed (v{settings.consent.contentByUid}) - Consent/Index.html
+	t3sbVideo('{ytuid}', '{params-> f:format.raw()}', {settings.consent.contentByUid}, true);
+				</f:asset.script>
+			</f:then>
+			<f:else>
+				<f:asset.script identifier="vanilla_youTube-{settings.consent.contentByUid}">
+	// YouTube embed (v{settings.consent.contentByUid}) - Consent/Index.html
+	t3sbVideo('{ytuid}', '{params-> f:format.raw()}', {settings.consent.contentByUid});
+	t3sbConsent({settings.consent.contentByUid}, {settings.cookieExpire});
+				</f:asset.script>
+			</f:else>
+		</f:if>
+		<div class="content-consent-wrapper">
+			<f:if condition="{contentConsent}">
 				<f:then>
-						<div class="row content-consent background-image align-items-center{f:if(condition: settings.consent.extraClass, then: ' {settings.consent.extraClass}')}" style="background-image: url({f:uri.image(image: '{thumbnail}')});">
+					<div class="ratio ratio-{ratio}">
+						<div id="v{settings.consent.contentByUid}" class="video-content"></div>
+					</div>
 				</f:then>
 				<f:else>
-						<div class="row content-consent align-items-center{f:if(condition: settings.consent.extraClass, then: ' {settings.consent.extraClass}')}">
+					<f:if condition="{thumbnail}">
+						<f:then>
+							<div id="thumbail-{settings.consent.contentByUid}" class="video-thumbnail background-image{f:if(condition: settings.consent.extraClass, then: ' {settings.consent.extraClass}')}" style="background-image: url({f:uri.image(image: '{thumbnail}')});">
+						</f:then>
+						<f:else>
+							<div class="align-items-center{f:if(condition: settings.consent.extraClass, then: ' {settings.consent.extraClass}')}">
+						</f:else>
+					</f:if>
+						<div class="ratio ratio-{ratio}">
+							<div id="v{settings.consent.contentByUid}" class="video-content">
+								<div class="video-overlay position-absolute top-50 start-50 translate-middle">
+									<div class="text-center">
+										{settings.consent.text -> f:format.html()}
+										<f:form.button id="{settings.consent.contentByUid}" name="{settings.consent.button -> f:format.raw()}" class="btn btn-{settings.consent.buttonStyle}" value="{settings.consent.contentByUid}">{settings.consent.button -> f:format.raw()}</f:form.button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</f:else>
 			</f:if>
-				<div class="col-sm-12">
-					<div class="text-center">
-						{settings.consent.text -> f:format.html()}
-						<f:form.button name="{settings.consent.button -> f:format.raw()}" class="btn btn-{settings.consent.buttonStyle} ajaxSubmit" value="{currentRecord}" additionalAttributes="{data-ajaxuri: '{t:uri.ajaxAction(action: \'ajax\')}'}">{settings.consent.button -> f:format.raw()}</f:form.button>
-					</div>
-				</div>
-			</div>
 		</div>
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger" role="alert">
+			A YouTube video is expected here!
+		</div>	
 	</f:else>
-</f:if>
-</div>
+</f:if>	
+
+
+
 </html>

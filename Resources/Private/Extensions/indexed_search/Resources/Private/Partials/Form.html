@@ -19,13 +19,37 @@
 		<fieldset>
 			<legend class="mt-4"><f:translate key="form.legend" /></legend>
 			<div class="tx-indexedsearch-form form-group">
-				<label for="tx-indexedsearch-searchbox-sword"><f:translate key="form.searchFor" />:</label>
+				<label for="tx-indexedsearch-searchbox-sword" class="form-label"><f:translate key="form.searchFor" />:</label>
 				<f:form.textfield name="search[sword]" value="{sword}" id="tx-indexedsearch-searchbox-sword" class="tx-indexedsearch-searchbox-sword form-control" />
 			</div>
+            <f:if condition="{searchParams.extendedSearch}">
+                <f:if condition="{showTypeSearch}">
+                    <div class="tx-indexedsearch-search-for mt-3">
+                        <label for="tx-indexedsearch-selectbox-searchtype" class="form-label"><f:translate key="form.match" />:</label>
+                        <f:if condition="{allSearchTypes}">
+                            <f:form.select name="search[searchType]" options="{allSearchTypes}" value="{searchParams.searchType}" id="tx-indexedsearch-selectbox-searchtype" class="tx-indexedsearch-selectbox-searchtype form-select" />
+                        </f:if>
+                    </div>
+                </f:if>
+            </f:if>
 			<div class="tx-indexedsearch-search-submit">
 				<f:form.submit name="search[submitButton]" value="{f:translate(key: 'form.submit')}" id="tx-indexedsearch-searchbox-button-submit" class="tx-indexedsearch-searchbox-button btn btn-primary mt-3" />
 			</div>
 		</fieldset>
+
+        <f:if condition="{settings.displayAdvancedSearchLink}">
+            <p class="mt-3">
+            <f:if condition="{searchParams.extendedSearch}">
+                <f:then>
+                    <f:link.action action="form" arguments="{search: {extendedSearch: 0}}"><f:translate key="form.linkToRegularSearch" /></f:link.action>
+                </f:then>
+                <f:else>
+                    <f:link.action action="form" arguments="{search: {extendedSearch: 1}}"><f:translate key="form.linkToAdvancedSearch" /></f:link.action>
+                </f:else>
+            </f:if>
+            </p>
+        </f:if>
+
 	</f:form>
 </div>
 <f:render partial="Rules" />
