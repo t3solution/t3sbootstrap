@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<div id="tab-content-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}" class="tab-pane{f:if(condition: '{tab.switchEffect}',then: ' {tab.switchEffect}')}{f:if(condition:'{class}',then:' {class}')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}" role="tabpanel" aria-labelledby="tab-{data.uid}">
+<div id="tab-content-{data.uid}" class="tab-pane{f:if(condition: '{tab.switchEffect}',then: ' {tab.switchEffect}')}{f:if(condition:'{class}',then:' {class}')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}" role="tabpanel" aria-labelledby="tab-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}">
 	<f:if condition="{tab.contentByPid}">
 		<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{tab.contentByPid}', colPos: '0'}"/>
 	</f:if>
@@ -8,4 +8,3 @@
 	</f:for>
 </div>
 </html>
-
