@@ -241,6 +241,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Create source tag for this breakpoint
 		$sourceTag = GeneralUtility::makeInstance(TagBuilder::class, 'source');
 		$sourceTag->addAttribute($attributePrefix . 'srcset', $this->generateSrcsetAttribute($srcsetImages));
+		if ($lazyload) {
+			$sourceTag->addAttribute('srcset', $this->generateSrcsetAttribute($srcsetImages));
+		}
 		if ($mediaQuery) {
 			$sourceTag->addAttribute('media', $mediaQuery);
 		}
