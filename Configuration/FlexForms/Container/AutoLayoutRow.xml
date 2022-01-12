@@ -170,8 +170,8 @@
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">gy-0 (default)</numIndex>
-										<numIndex index="1">0</numIndex>
+										<numIndex index="0">gy-0</numIndex>
+										<numIndex index="1">gy-0</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 										<numIndex index="0">gy-1</numIndex>
@@ -186,7 +186,7 @@
 										<numIndex index="1">gy-3</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
-										<numIndex index="0">gy-4</numIndex>
+										<numIndex index="0">gy-4 (default)</numIndex>
 										<numIndex index="1">gy-4</numIndex>
 									</numIndex>
 									<numIndex index="5" type="array">
@@ -194,11 +194,11 @@
 										<numIndex index="1">gy-5</numIndex>
 									</numIndex>
 								</items>
-								<default>gy-0</default>
+								<default>gy-4</default>
 							</config>
 						</TCEforms>
 					</verticalGutters>
-	
+
 				</el>
 			</ROOT>
 		</sDEF>

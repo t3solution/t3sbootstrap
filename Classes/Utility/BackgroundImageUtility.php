@@ -24,21 +24,20 @@ class BackgroundImageUtility implements SingletonInterface
 
 	/**
 	 * Writes a css file with the background images
-	 *
-	 * @param	string	$uid
-	 * @param	string	$table
-	 * @param	bool	$jumbotron
-	 * @param	bool	$bgColorOnly
-	 * @param	array	$flexconf
-	 * @param	bool	$body
-	 * @param	int		$currentUid
-	 * @param	bool	$webp
-	 * @param	string	$bgMediaQueries
-	 *
-	 * @return array
 	 */
 
-	public function getBgImage($uid, $table='tt_content', $jumbotron=FALSE, $bgColorOnly=FALSE, $flexconf=[], $body=FALSE, $currentUid=0, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576')
+	public function getBgImage(
+		int $uid,
+		string $table='tt_content',
+		bool $jumbotron=FALSE,
+		bool $bgColorOnly=FALSE,
+		array $flexconf=[],
+		bool $body=FALSE,
+		int $currentUid=0,
+		bool $webp=FALSE,
+		string $bgMediaQueries='2560,1920,1200,992,768,576',
+		int $divideBy=1
+	): string
 	{
 		$frontendController = $this->getFrontendController();
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
@@ -94,7 +93,7 @@ class BackgroundImageUtility implements SingletonInterface
 						}
 						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					} else {
-						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
+						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries, $divideBy);
 					}
 				}
 
@@ -128,7 +127,7 @@ class BackgroundImageUtility implements SingletonInterface
 	 *
 	 * @return string $css
 	 */
-	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE, $bgMediaQueries): string
+	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE, $bgMediaQueries, $divideBy=1): string
 	{
 		$imageRaster = $flexconf['imageRaster'] ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
 
@@ -149,9 +148,8 @@ class BackgroundImageUtility implements SingletonInterface
 				$cropVariant = 'default';
 			}
 			$cropArea = $cropVariantCollection->getCropArea($cropVariant);
-
 			$processingInstructions = [
-				'width' => $querie,
+				'width' => (int)$querie/$divideBy,
 				'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 			];
 

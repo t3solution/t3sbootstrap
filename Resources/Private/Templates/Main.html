@@ -107,7 +107,7 @@
 <f:asset.script identifier="t3sbHelper" src="EXT:t3sbootstrap/Resources/Public/Scripts/t3sbHelper.js" />
 <f:if condition="{config.navbar.enable} == 'slide'">
 	<f:then>
-<f:asset.script identifier="vanilla_default">
+	<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	var	  navbarHeight = 0,
 		  navbarBreakpointWidth = 0,
@@ -119,7 +119,7 @@
 	if (window.location.hash) {
 		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
 	}
-</f:asset.script>
+	</f:asset.script>
 	</f:then>
 	<f:else>
 		<f:if condition="{config.navbar.enable}">
@@ -171,6 +171,12 @@
 		let spinner = document.getElementById('site-preloader');
 		t3sbFadeOutEffect(spinner);
 	};
+</f:asset.script>
+</f:if>
+<f:if condition="{settings.config.darkMode}">
+<f:asset.script identifier="vanilla_darkMode">
+	// Dark mode - Main.html
+	t3sbDarkMode();    
 </f:asset.script>
 </f:if>
 <f:comment> Lazyload </f:comment>

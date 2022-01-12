@@ -112,6 +112,9 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		$contentType = $contentTypeLabels[$record['CType']];
 		if (isset($contentType)) {
 
+			$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+			$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
+
 			$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 			$maxCharacters = $extconf['previewCropMaxCharacters'];
@@ -159,8 +162,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				}
 			}
 			if ($record['CType'] === 't3sbs_carousel') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
 	  			if ( $flexconf['shift'] ) {
 					$flexconfOut .= '<br />- Shift: '.$flexconf['shift'];
 				}
@@ -172,9 +173,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				}
 			}
 			if ($record['CType'] === 't3sbs_button') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
-
 				if ( $flexconf['style'] ) {
 					$flexconfOut .= '<br />- Style: '.$flexconf['style'];
 				}
@@ -189,9 +187,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				}
 			}
 			if ($record['CType'] === 't3sbs_toast') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
-
 				if ( $flexconf['animation'] ) {
 					$flexconfOut .= '<br />- Animation';
 				}
@@ -203,6 +198,9 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				}
 				if ( $flexconf['placement'] ) {
 					$flexconfOut .= '<br />- Placement: '.$flexconf['placement'];
+				}
+				if ( $flexconf['cookie'] ) {
+					$flexconfOut .= '<br />- Cookie is set (expires: '.$flexconf['expires'].')';
 				}
 			}
 

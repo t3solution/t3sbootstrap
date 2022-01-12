@@ -126,6 +126,17 @@ editor:
      # Listen
       - { name: 'List: Unstyled', element: "ul", attributes: { 'class': 'list-unstyled' } }
       - { name: 'List: Inline', element: "ul", attributes: { 'class': 'list-inline' } }
+      - { name: 'List: Disc', element: "ul", attributes: { 'style': 'list-style-type:disc' } }
+      - { name: 'List: Circle', element: "ul", attributes: { 'style': 'list-style-type:circle' } }
+      - { name: 'List: Square', element: "ul", attributes: { 'style': 'list-style-type:square' } }
+
+      - { name: 'List: Decimal', element: "ol", attributes: { 'style': 'list-style-type:decimal' } }
+      - { name: 'List: Decimal leading zero', element: "ol", attributes: { 'style': 'list-style-type:decimal-leading-zero' } }
+      - { name: 'List: Latin lower', element: "ol", attributes: { 'style': 'list-style-type:lower-latin' } }
+      - { name: 'List: Latin upper', element: "ol", attributes: { 'style': 'list-style-type:upper-latin' } }
+      - { name: 'List: Roman lower', element: "ol", attributes: { 'style': 'list-style-type:lower-roman' } }
+      - { name: 'List: Roman upper', element: "ol", attributes: { 'style': 'list-style-type:upper-roman' } }
+      - { name: 'List: Greek lower', element: "ol", attributes: { 'style': 'list-style-type:lower-greek' } }
 
       - { name: 'List: Definition', element: "dl", attributes: { 'class': 'row' } }
       - { name: 'List: Definition Terms', element: "dt", attributes: { 'class': 'col-sm-3' } }
@@ -154,7 +165,6 @@ editor:
       - text-start
       - text-center
       - text-end
-      - text-justify
 
     extraPlugins:
       - justify
@@ -168,6 +178,7 @@ editor:
 
     removeButtons:
       - Anchor
+      - JustifyBlock
 
     forcePasteAsPlainText: true
 

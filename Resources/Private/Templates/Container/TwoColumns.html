@@ -3,64 +3,78 @@
 <f:section name="Header">
 </f:section>
 <f:section name="Main">
-	<div class="row col-image{f:if(condition: '{class}',then: ' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
+	<f:if condition="{extraWrapperClass}">
+		<f:then>
+			<div class="{extraWrapperClass}">
+				<f:render section="Default" arguments="{_all}" />
+			</div>
+		</f:then>
+		<f:else>
+			<f:render section="Default" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
+<div class="row{gutters}{f:if(condition: '{class}',then: ' {class}')}{f:if(condition: '{dataAnimate}',then: ' {dataAnimate}')}"{f:if(condition: '{style}',then: ' style="{style}"')}>
 		<f:if condition="{data.header} || {data.subheader} || {data.date}">
-			<div class="col-12">
+			<div class="col-12 w-100">
 				<f:render partial="Header/All" arguments="{_all}" />
 			</div>
 		</f:if>
 		<f:if condition="{bgimages}">
 			<f:then>
 				<f:if condition="{bgimagePosition} == 1">
-					<div id="s{data.uid}-1" class="{columnOne} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+					<div id="s{data.uid}-1" class="{columnOne} background-image{verticalAlign}"{colHeight}>
 						<f:render section="LeftColumn" arguments="{_all}" />
 					</div>
-					<div id="s{data.uid}-2" class="{columnTwo}{verticalAlign}"{colHeight -> f:format.raw()}>
+					<div id="s{data.uid}-2" class="{columnTwo}{verticalAlign}"{colHeight}>
 						<f:render section="RightColumn" arguments="{_all}" />
 					</div>
 				</f:if>
 				<f:if condition="{bgimagePosition} == 2">
-					<div id="s{data.uid}-1" class="{columnOne}{verticalAlign}"{colHeight -> f:format.raw()}>
+					<div id="s{data.uid}-1" class="{columnOne}{verticalAlign}"{colHeight}>
 						<f:render section="LeftColumn" arguments="{_all}" />
 					</div>
-					<div id="s{data.uid}-2" class="{columnTwo} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+					<div id="s{data.uid}-2" class="{columnTwo} background-image{verticalAlign}"{colHeight}>
 						<f:render section="RightColumn" arguments="{_all}" />
 					</div>
 				</f:if>
 				<f:if condition="{bgimagePosition} == 3">
-					<div id="s{data.uid}-1" class="{columnOne} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+					<div id="s{data.uid}-1" class="{columnOne} background-image{verticalAlign}"{colHeight}>
 						<f:render section="LeftColumn" arguments="{_all}" />
 					</div>
-					<div id="s{data.uid}-2" class="{columnTwo} background-image{verticalAlign}"{colHeight -> f:format.raw()}>
+					<div id="s{data.uid}-2" class="{columnTwo} background-image{verticalAlign}"{colHeight}>
 						<f:render section="RightColumn" arguments="{_all}" />
 					</div>
 				</f:if>
 			</f:then>
 			<f:else>
-				<div id="s{data.uid}-1" class="{columnOne}{verticalAlign}"{colHeight -> f:format.raw()}>
+				<div id="s{data.uid}-1" class="{columnOne}{verticalAlign}"{colHeight}>
 					<f:render section="LeftColumn" arguments="{_all}" />
 				</div>
-				<div id="s{data.uid}-2" class="{columnTwo}{verticalAlign}"{colHeight -> f:format.raw()}>
+				<div id="s{data.uid}-2" class="{columnTwo}{verticalAlign}"{colHeight}>
 					<f:render section="RightColumn" arguments="{_all}" />
 				</div>
 			</f:else>
 		</f:if>
 	</div>
 </f:section>
-</html>
 
 <f:section name="LeftColumn">
 	<f:if condition="{col_221}">
-	    <f:for each="{col_221}" as="child">
+		 <f:for each="{col_221}" as="child">
 			<f:cObject typoscriptObjectPath="lib.contentByUid" data="{child.uid}" />
-	    </f:for>
+		 </f:for>
 	</f:if>
 </f:section>
 
 <f:section name="RightColumn">
 	<f:if condition="{col_222}">
-	    <f:for each="{col_222}" as="child">
+		 <f:for each="{col_222}" as="child">
 			<f:cObject typoscriptObjectPath="lib.contentByUid" data="{child.uid}" />
-	    </f:for>
+		 </f:for>
 	</f:if>
 </f:section>

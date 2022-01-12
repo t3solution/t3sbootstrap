@@ -68,7 +68,7 @@
 								<size>4</size>
 								<max>4</max>
 								<default>1320</default>
-								<eval>int</eval>
+								<eval>int+,required</eval>
 								<checkbox>0</checkbox>
 							</config>
 						</TCEforms>

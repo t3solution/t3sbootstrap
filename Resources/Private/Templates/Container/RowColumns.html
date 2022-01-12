@@ -19,31 +19,18 @@
 
 <f:section name="Default">
 <div class="row{gutters}{f:if(condition: '{class}',then: ' {class}')}{f:if(condition: '{dataAnimate}',then: ' {dataAnimate}')}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-		<f:if condition="{data.header} || {data.subheader} || {data.date}">
-			<div class="col-12 w-100">
-				<f:render partial="Header/All" arguments="{_all}" />
-			</div>
+	<f:if condition="{data.header} || {data.subheader} || {data.date}">
+		<div id="s{data.uid}-h" class="col-12 w-100">
+			<f:render partial="Header/All" arguments="{_all}" />
+		</div>
+	</f:if>
+		<f:if condition="{col_290}">
+			<f:for each="{col_290}" as="child" key="key">
+				<div id="s{data.uid}-{key}" class="col{extraClassCols.{key}}">
+					{child.renderedContent -> f:format.raw()}
+				</div>
+			</f:for>
 		</f:if>
-		<div class="{columnOne}">
-			<f:if condition="{col_231}">
-				<f:for each="{col_231}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="{columnTwo}">
-			<f:if condition="{col_232}">
-				<f:for each="{col_232}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="{columnThree}">
-			<f:if condition="{col_233}">
-				<f:for each="{col_233}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
 	</div>
+</div>
 </f:section>

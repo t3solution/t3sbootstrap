@@ -29,6 +29,7 @@
 	hljs.highlightAll();
 	</f:asset.script>
 </f:if>
+<f:comment> AnimateCss </f:comment>
 <f:if condition="{isAnimateCss} && {settings.animateCss}">
 	<f:if condition="{settings.cdn}">
 		<f:then>
@@ -39,6 +40,24 @@
 			<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.compat.css" />
 		</f:else>
 	</f:if>
+	<f:if condition="{animateCssRepeat}">
+		<f:if condition="{isTxContainer}">
+			<f:then>
+	<f:asset.script identifier="vanilla_animatecssJsInline-{data.uid}">
+	// AnimateCss-{data.uid} - Partials/Layouts/Assets.html
+	var animatedElement = document.getElementById('c{data.uid}'),
+		animateRepeat = '{animateCssRepeat}',
+		dataAnimate = '{dataAnimate}',
+		child = animatedElement.firstChild;
+	if (child.classList.contains('overflow-hidden')) {
+		child = child.firstChild;
+	}
+	if (child) {
+		t3sbCssAnimate(child, dataAnimate, animateRepeat);
+	}
+	</f:asset.script>
+			</f:then>
+			<f:else>
 	<f:asset.script identifier="vanilla_animatecssJsInline-{data.uid}">
 	// AnimateCss-{data.uid} - Partials/Layouts/Assets.html
 	var animatedElement = document.getElementById('c{data.uid}'),
@@ -48,6 +67,9 @@
 		t3sbCssAnimate(animatedElement, dataAnimate, animateRepeat);
 	}
 	</f:asset.script>
+			</f:else>
+		</f:if>
+	</f:if>
 </f:if>
 <f:comment> Lightbox - same in News/Detail.html </f:comment>
 <f:if condition="{settings.lightboxSelection} && {lightBox}">

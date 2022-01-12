@@ -31,7 +31,7 @@ class ConsentController extends ActionController
 		$consentRecordUid = (int)$this->settings['consent']['contentByUid'];
 		$fileRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\FileRepository::class);
 		$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $consentRecordUid);
-		if ( $fileObjects[0]->getProperties()['mime_type'] == 'video/youtube') {
+		if ( !empty($fileObjects[0]) && $fileObjects[0]->getProperties()['mime_type'] == 'video/youtube') {
 
 			if ( $this->settings['consent']['cookie'] && isset($_COOKIE['contentconsent_'.$consentRecordUid])
 			 && $_COOKIE['contentconsent_'.$consentRecordUid] == 'allow' ) {

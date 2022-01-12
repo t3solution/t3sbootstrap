@@ -41,7 +41,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 11.2.0
+	highlight = 11.3.1
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
 	lazyload = 17.5.0
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
@@ -155,7 +155,7 @@ bootstrap.ext {
 }
 
 # customcategory=bootstrap-optimize=* T3SB::OPTIMIZE-Bootstrap 
-# customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports<br /><small>When using <strong>"Custom SCSS"</strong>, make sure you optimize Bootstrap by only @importing the components you need.<br /> For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below.<br / ><strong>Hint:</strong> <code>progress</code>, <code>tooltip</code>, <code>popover</code> and <code>placeholders</code> are not used by t3sbootstrap!<br /><br /> After that execute the <strong>scheduler task</strong> "<code>t3sbootstrap:customScss</code>".</small>
+# customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports When using "Custom SCSS", make sure you optimize Bootstrap by only @importing the components you need. For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below. progress, tooltip, popover and placeholders are not used by t3sbootstrap! After that execute the scheduler task "t3sbootstrap:customScss".
 bootstrap.optimize {
 	# cat=bootstrap-optimize/c-enable/10; type=boolean; label=tables
 	tables = 1
@@ -224,6 +224,8 @@ bootstrap.pagebrowser.entryLevel = 1
 
 # enable the currently available utility colors in the BE Modul
 bootstrap.config.enableUtilityColors = 1
+# enable the Dark Mode - if "prefers-color-scheme" (iOS and Android) is "dark" -> the body tag gets the class "dark-mode" 
+bootstrap.config.darkMode = 0
 
 # include print template
 bootstrap.print.enable = 0

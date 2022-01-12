@@ -186,6 +186,7 @@ page {
 				cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
 				lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
 				recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
+				darkMode = {$bootstrap.config.darkMode}
 			}
 		}
 		dataProcessing {
@@ -426,6 +427,12 @@ page {
 	}
 }
 
+# Language in Toast
+lib.t3sbs.close = TEXT
+lib.t3sbs.close.value = Schließen
+
+lib.t3sbs.dispose = TEXT
+lib.t3sbs.dispose.value = Nicht mehr anzeigen
 
 
 [loaded('indexed_search')]

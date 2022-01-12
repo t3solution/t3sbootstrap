@@ -119,6 +119,22 @@ tt_content {
 			}
 		}
 	}
+	row_columns < lib.contentElement
+	row_columns {
+		templateName = RowColumns
+		templateRootPaths {
+			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
+			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+		}
+		dataProcessing {
+
+			290 = B13\Container\DataProcessing\ContainerProcessor
+			290 {
+				colPos = 290
+				as = col_290
+			}
+		}
+	}
 
 	card_wrapper < lib.contentElement
 	card_wrapper {
@@ -390,5 +406,5 @@ tt_content {
 				as = col_310
 			}
 		}
-	}	
+	}
 }

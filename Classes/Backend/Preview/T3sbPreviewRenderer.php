@@ -123,9 +123,30 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 		$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
 
-		if ($record['CType'] == 'two_columns' || $record['CType'] == 'three_columns' || $record['CType'] == 'four_columns' || $record['CType'] == 'six_columns') {
-   			if ( $flexconf['equalWidth'] ) {
-				$out .= '<br />- Equal Width';
+		if ($record['CType'] == 'two_columns' || $record['CType'] == 'three_columns' || $record['CType'] == 'four_columns' || $record['CType'] == 'six_columns' || $record['CType'] == 'row_columns') {
+			if ($record['CType'] == 'row_columns') {
+				if (!empty($flexconf['xs_rowclass'])) {
+					$out .= '<br />- row-cols-*: '.$flexconf['xs_rowclass'];
+				}
+				if (!empty($flexconf['sm_rowclass'])) {
+					$out .= '<br />- row-cols-sm: '.$flexconf['sm_rowclass'];
+				}
+				if (!empty($flexconf['md_rowclass'])) {
+					$out .= '<br />- row-cols-md: '.$flexconf['md_rowclass'];
+				}
+				if (!empty($flexconf['lg_rowclass'])) {
+					$out .= '<br />- row-cols-lg: '.$flexconf['lg_rowclass'];
+				}
+				if (!empty($flexconf['xl_rowclass'])) {
+					$out .= '<br />- row-cols-xl: '.$flexconf['xl_rowclass'];
+				}
+				if (!empty($flexconf['xxl_rowclass'])) {
+					$out .= '<br />- row-cols-xxl: '.$flexconf['xxl_rowclass'];
+				}
+			} else {
+	   			if ( !empty($flexconf['equalWidth']) ) {
+					$out .= '<br />- Equal Width';
+				}
 			}
    			if ( $flexconf['horizontalGutters'] ) {
 				$out .= '<br />- Horizontal gutters: '.$flexconf['horizontalGutters'];
@@ -287,6 +308,33 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		if ($record['CType'] == 'masonry_wrapper') {
 			$colclass = $flexconf['colclass'] ? $flexconf['colclass'] : 'col-sm-6 col-lg-4 mb-4';
 			$out .= '<br />- Colclass: '.$colclass;
+		}
+
+
+		if ($record['CType'] === 'toast_container') {
+			if ($flexconf['multipleToast']) {
+				$out .= '<br />- Multiple Toasts';
+				if ( $flexconf['placement'] ) {
+					$out .= '<br />- Placement: '.$flexconf['placement'];
+				}
+			} else {
+				$out .= '<br />- Multiple Content Elements';
+				if ( $flexconf['animation'] ) {
+					$out .= '<br />- Animation';
+				}
+				if ( $flexconf['autohide'] ) {
+					$out .= '<br />- Autohide';
+				}
+				if ( $flexconf['delay'] ) {
+					$out .= '<br />- Delay: '.$flexconf['delay'];
+				}
+				if ( $flexconf['placement'] ) {
+					$out .= '<br />- Placement: '.$flexconf['placement'];
+				}
+				if ( $flexconf['cookie'] ) {
+					$out .= '<br />- Cookie is set (expires: '.$flexconf['expires'].')';
+				}
+			}
 		}
 
 		$flexconfOut = '';

@@ -51,6 +51,33 @@ class TcaMatcher
 		return $parent;
 	}
 
+	/**
+	 * toastContainerParent
+	 *
+	 * @return bool
+	 */
+	public function toastContainerParent($arguments): bool
+	{
+		$parent = true;
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+			$result = $queryBuilder
+				  ->select('*')
+				  ->from('tt_content')
+				  ->where(
+					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+				  )
+				  ->execute();
+			$parent_rec = $result->fetch();
+			if ( $parent_rec['CType'] == 'toast_container' ) {
+				$parent = false;
+			}
+		}
+
+		return $parent;
+	}
+
 
 	/**
 	 * container_1 ($_EXTCONF['container'] in tt_content.php)
