@@ -361,8 +361,10 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 
 		foreach($this->arguments['breakpoints'] as $cv) {
 			$cropVariant = $cv['cropVariant'];
-			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
-			$cropObject->$cropVariant->cropArea->y = $this->arguments['shift'] ? $this->arguments['shift'] : $cropObject->$cropVariant->cropArea->y;
+			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];	
+			if ($this->arguments['shift']) {
+				$cropObject->$cropVariant->cropArea->y = $this->arguments['shift'];
+			}
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
 			$rArr = explode(':',$this->arguments['ratio']);

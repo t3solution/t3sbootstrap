@@ -72,7 +72,6 @@ lib.contentElement {
 		highlightIntegrity = {$bootstrap.cdn.highlightIntegrity}
 		highlightVersion = {$bootstrap.cdn.highlight}
 		dateformat = {$bootstrap.config.dateFormat}
-		subheaderTag = {$bootstrap.config.subheaderTag}
 		subheaderColor = {$bootstrap.config.subheaderColor}
 		sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
 		magnifying = {$bootstrap.config.magnifying}
@@ -93,11 +92,13 @@ lib.contentElement {
 		cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
 		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
+		webp = {$bootstrap.extconf.webp}
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 			sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
 		}
+		navbarEnable = {$bootstrap.config.navbarEnable}
 		navbar {
 			sm = {$bootstrap.navbar.breakpoint.sm}
 			md = {$bootstrap.navbar.breakpoint.md}

@@ -341,7 +341,7 @@ class WrapperHelper implements SingletonInterface
 				}
 			} else {
 				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, FALSE, $webp);
+				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0, (bool)$webp);
 				$processedData['parallaxImage'] = $bgImage;
 			}
 

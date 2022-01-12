@@ -7,7 +7,6 @@
 					<sheetTitle>General</sheetTitle>
 				</TCEforms>
 				<el>
-
 					<animation>
 						<TCEforms>
 							<label>Animation (apply a CSS fade transition to the toast)</label>
@@ -17,20 +16,20 @@
 							</config>
 						</TCEforms>
 					</animation>
-
 					<autohide>
 						<TCEforms>
 							<label>Autohide (auto hide the toast)</label>
+							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
 								<default>1</default>
 							</config>
 						</TCEforms>
 					</autohide>
-
 					<delay>
 						<TCEforms>
 							<label>Delay in ms (delay hiding the toast)</label>
+							<displayCond>FIELD:general.autohide:=:1</displayCond>
 							<config>
 								<type>input</type>
 								<size>5</size>
@@ -39,10 +38,10 @@
 							</config>
 						</TCEforms>
 					</delay>
-
 					<placement>
 						<TCEforms>
 							<label>Placement</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->toastContainerParent</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -95,7 +94,6 @@
 							</config>
 						</TCEforms>
 					</placement>
-
 					<toastwidth>
 						<TCEforms>
 							<label>Width of the toast in (px)</label>
@@ -107,6 +105,29 @@
 							</config>
 						</TCEforms>
 					</toastwidth>
+					<cookie>
+						<TCEforms>
+							<label>Set cookie</label>
+							<description>Option to do not display the toast again until the expiration date or the "toast-body" content is changed.</description>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</cookie>
+					<expires>
+						<TCEforms>
+							<label>Cookie expiration in days</label>
+							<displayCond>FIELD:general.cookie:=:1</displayCond>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>30</default>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</expires>
 				</el>
 			</ROOT>
 		</general>

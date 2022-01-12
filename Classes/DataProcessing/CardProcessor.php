@@ -161,7 +161,7 @@ class CardProcessor implements DataProcessorInterface {
 		$cardClass .= $parentflexconf['equalHeight'] ? ' h-100' : '';
 
 		if ( $flexconf['flipcard'] ) {
-			$cardClass .= ' flip-card border-0';
+			$cardClass .= ' flip-card border-0 bg-transparent';
 			$cardData['flipcard'] = TRUE;
 			$cardData['rotateY'] = $flexconf['rotateY'];
 		} else {

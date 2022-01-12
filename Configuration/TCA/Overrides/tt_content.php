@@ -134,6 +134,25 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 );
 $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
+# ROW CONTAINER
+GeneralUtility::makeInstance(Registry::class)->configureContainer(
+	(
+		new ContainerConfiguration(
+			'row_columns',
+			'Row Columns',
+			'Use these row columns classes to quickly create basic grid layouts.',
+			[
+				[
+					['name' => 'Row Column', 'colPos' => 290]
+				  ]
+			]
+		)
+	)
+	->setIcon('EXT:container/Resources/Public/Icons/container-4col.svg')
+	->setSaveAndCloseInNewContentElementWizard(false)
+);
+$GLOBALS['TCA']['tt_content']['types']['row_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
 
 # CARD WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -457,7 +476,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'A container for several Toast content',
 			[
 				[
-					['name' => 'Toast Container', 'colPos' => 310, 'disallowed' => ['CType' => 't3sbs_toast, toast_container']]
+					['name' => 'Toast Container', 'colPos' => 310]
 				]
 			]
 		)
@@ -791,6 +810,7 @@ $tempContentColumns = [
 				'masonry_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml',
 				'swiper_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SwiperContainer.xml',
 				'toast_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ToastContainer.xml',
+				'row_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/RowColumns.xml',
 			]
 		]
 	],
@@ -1448,7 +1468,7 @@ if ( $extconf['preview'] ) {
 	 * Show preview of tt_content elements in page module
 	 */
 	$GLOBALS['TCA']['tt_content']['ctrl']['previewRenderer'] = DefaultPreviewRenderer::class;
-	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
+	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'row_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
 	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container', 'toast_container'];
 	foreach ($containers as $container) {

@@ -39,7 +39,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 		$settings = $contentObjectConfiguration['settings.'];
 		$frontendController = self::getFrontendController();
-		$webp = $settings['webp'];
+		$webp = (bool)$settings['webp'];
 
 		if ( is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
 			$processedRecordVariables = $contentObjectConfiguration['settings.']['config.'];

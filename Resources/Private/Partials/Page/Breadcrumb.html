@@ -63,7 +63,7 @@
 				<f:if condition="{config.navbar.clickableparent} || {iterator.isFirst}">
 					<f:then>
 						<li class="breadcrumb-item">
-							<a href="{breadcrumbItem.link}" title="{data.title}"{f:if(condition:'{breadcrumbItem.current}',then:' class="active"')}
+							<a href="{breadcrumbItem.link}" title="{breadcrumbItem.title}"{f:if(condition:'{breadcrumbItem.current}',then:' class="active"')}
 								{f:if(condition:'{breadcrumbItem.current}',then:' aria-current="page"')} >
 								<f:render section="Text" arguments="{_all}" />
 							</a>

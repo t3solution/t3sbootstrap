@@ -473,15 +473,10 @@ function t3sbConsent(cuid, cookieExpire) {
 		let name = 'contentconsent_' + this.id,
 			value = 'allow',
 			days = cookieExpire;
-		setCookie(name, value, days);
+		t3sbSetCookie(name, value, days);
 	};
 }
 
-function setCookie(name, value, days) {
-    var d = new Date;
-    d.setTime(d.getTime() + 24*60*60*1000*days);
-    document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
-}
 
 function t3sbVideoThumbnails(ratio) {
 	document.querySelectorAll('.video-thumbnail').forEach( vthumb => {
@@ -587,6 +582,43 @@ function t3sbParallax(addHeight, uid) {
 }
 
 
+// Dark mode - Main.html
+function t3sbDarkMode() {
+	let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	let body = document.querySelector('body');
+	if (dark) {
+		body.classList.add('dark-mode');
+	} else {
+		body.classList.remove('dark-mode');
+	}
+}
+
+
+function t3sbSetCookie(cname,cvalue,exdays) {
+	const d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	let expires = 'expires=' + d.toGMTString();
+	document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+}
+
+
+function t3sbGetCookie(cname) {
+	let name = cname + '=';
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return '';
+}
+
+
 // Autoheight for backgroundimages - BackgroundWrapper.html
 function t3sbAddHeight(TYPO3, objKey) {
 	var overlay = document.getElementById(objKey).nextElementSibling;
@@ -605,7 +637,7 @@ function t3sbAddHeight(TYPO3, objKey) {
 			totalHeight = totalHeight + addHeight;
 			document.getElementById(objKey).style.minHeight = totalHeight+'px';
 		} else {
-			totalHeight = overlay.childNodes[0].clientHeight;
+			totalHeight = overlay.childNodes[0].childNodes[0].clientHeight;
 			totalHeight = totalHeight + addHeight;
 			document.getElementById(objKey).style.minHeight = totalHeight+'px';
 		}

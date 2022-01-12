@@ -5,17 +5,48 @@
 </f:section>
 <f:section name="Main">
 <f:asset.script identifier="vanilla_toast">
-	// // Toast - Content/Toast.html
+	// Toast - Content/Toast.html
 	var toasts = document.querySelectorAll('.toast.ce-toast');
 	if ( toasts.length ) {
 		toasts.forEach( t => {
 			var toast = document.getElementById(t.id);
 			var newToast = new bootstrap.Toast(toast);
-			newToast.show();
+			var toastBody = toast.getElementsByClassName('toast-body');
+			var toastBodyLength = toastBody[0].innerText.length;
+			if (t3sbGetCookie(t.id) != null ) {
+				if ( t3sbGetCookie(t.id) != toastBodyLength ) {
+					newToast.show();
+				}
+			} else {
+				newToast.show();
+			}
+			if( toast.querySelector('.setCookie') != null  ) {
+				toast.querySelector('.setCookie').checked = false;
+				toast.addEventListener('hidden.bs.toast', function () {
+					let dismiss = toast.querySelector('.setCookie').checked;
+					if (dismiss) {
+						t3sbSetCookie(t.id,toastBodyLength,1);
+					}
+				});
+			}
 		});
 	}
 </f:asset.script>
-<div class="toast-container position-absolute p-3 {placement}">
+<f:if condition="{parentCType} == 'toast_container'">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="toast-container position-absolute p-3 {placement}">
+			<f:render section="Default" arguments="{_all}" />
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
 	<div id="toast-{data.uid}" class="toast ce-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="{autohide}" data-bs-animation="{animation}" data-bs-delay="{delay}"{f:if(condition: toastwidth, then: ' style="width:{toastwidth}px"')}>
 		<div class="toast-header">
 			<f:if condition="{files.0}">
@@ -27,14 +58,27 @@
 			<f:if condition="{data.subheader}">
 				<small>{data.subheader -> f:format.raw()}</small>
 			</f:if>
-			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			<f:if condition="!{cookie}">
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</f:if>
   		</div>
 	  	<div class="toast-body">
 	  		<f:if condition="{data.bodytext}">
 		 		{data.bodytext -> f:format.raw()}
 			</f:if>
+			<f:if condition="{cookie}">
+				<div class="mt-2 pt-2 border-top cookie-dismiss">
+					<div class="form-check">
+						<input class="form-check-input setCookie" type="checkbox" value="" id="dismiss-{data.uid}">
+						<label class="form-check-label" for="dismiss-{data.uid}">
+							{f:cObject(typoscriptObjectPath: 'lib.t3sbs.dispose')}
+						</label>
+					</div>
+					<button type="button" class="btn btn-secondary btn-sm mx-auto d-block" data-bs-dismiss="toast">
+						{f:cObject(typoscriptObjectPath: 'lib.t3sbs.close')}
+					</button>
+				</div>
+			</f:if>
 	  	</div>
 	</div>
-</div>
 </f:section>
-</html>

@@ -93,7 +93,6 @@ temp.pagelayout {
 	}
 }
 
-
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript'

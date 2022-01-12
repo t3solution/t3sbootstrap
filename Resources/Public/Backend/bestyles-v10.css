@@ -129,6 +129,13 @@ h4.panel-title a {
 	text-align: left !important;
 }
 
+.text-start {
+    text-align: left !important;
+}
+.text-end {
+    text-align: right !important;
+}
+
 .btn-success {
     color: #fff;
     background-color: #28a745;

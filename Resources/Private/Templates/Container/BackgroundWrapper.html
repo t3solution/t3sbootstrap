@@ -147,17 +147,33 @@
 </f:if>
 </html>
 
+
 <f:section name="SectionInner">
-	<f:if condition="{col_273.0}">
-		<div class="position-absolute {contentPosition}">
-			<div class="col">
-				{containerPre -> f:format.raw()}
-					<f:for each="{col_273}" as="row">
-						{row.renderedContent -> f:format.raw()}
-					</f:for>
-				{containerPost -> f:format.raw()}
-			</div>
-		</div>
+	<f:if condition="{contentPosition}">
+		<f:then>
+			<f:if condition="{col_273.0}">
+				<div class="position-absolute {contentPosition}">
+					<div class="col">
+						{containerPre -> f:format.raw()}
+							<f:for each="{col_273}" as="row">
+								{row.renderedContent -> f:format.raw()}
+							</f:for>
+						{containerPost -> f:format.raw()}
+					</div>
+				</div>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{col_273.0}">
+				<div class="col">
+					{containerPre -> f:format.raw()}
+						<f:for each="{col_273}" as="row">
+							{row.renderedContent -> f:format.raw()}
+						</f:for>
+					{containerPost -> f:format.raw()}
+				</div>
+			</f:if>
+		</f:else>
 	</f:if>
 </f:section>
 

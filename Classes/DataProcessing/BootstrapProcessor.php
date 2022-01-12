@@ -89,8 +89,20 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( $processedData['data']['CType'] == 'two_columns'
 		 || $processedData['data']['CType'] == 'three_columns'
 		 || $processedData['data']['CType'] == 'four_columns'
-		 || $processedData['data']['CType'] == 'six_columns' ) {
+		 || $processedData['data']['CType'] == 'six_columns'
+		 || $processedData['data']['CType'] == 'row_columns' ) {
 
+			$processedData['isTxContainer'] = TRUE;
+			$horizontalGutters = !empty($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4' ? trim((string)$flexconf['horizontalGutters']) : '';
+			$verticalGutters = !empty($flexconf['verticalGutters']) && $flexconf['verticalGutters'] != 'gy-4' ? trim((string)$flexconf['verticalGutters']) : '';
+			$extraWrapperClass = '';
+			if ( $verticalGutters ) {
+				#  The vertical gutters can cause some overflow below the .row at the end of a page.
+				# If this occurs, you add a wrapper around .row with the .overflow-hidden class
+				$extraWrapperClass = 'overflow-hidden';
+			}
+			$processedData['gutters'] = $horizontalGutters || $verticalGutters ? ' '.$horizontalGutters.' '.$verticalGutters : '';
+			$processedData['extraWrapperClass'] = $extraWrapperClass;
 			$gridHelper = GeneralUtility::makeInstance(GridHelper::class);
 			$processedData = $gridHelper->getGrid($processedData, $flexconf);
 			$processedData['style'] .= $flexconf['colHeight'] ? ' min-height: '.$flexconf['colHeight'].'px;' : '';
@@ -100,13 +112,27 @@ class BootstrapProcessor implements DataProcessorInterface
 			if ( $processedData['data']['CType'] == 'two_columns' && $flexconf['bgimages']) {
 				$bgimages = $this->getBackgroundImageUtility()
 					->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
-					 $flexconf, FALSE, $processedData['data']['uid'], $extConf['webp']);
+					 $flexconf, FALSE, $processedData['data']['uid'], (bool)$contentObjectConfiguration['settings.']['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries'], 2);
 				if ($bgimages) {
 					$processedData['bgimages'] = $bgimages;
 					$processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
 				}
 			}
-			$processedData['isTxContainer'] = TRUE;
+			$rowClass = [];
+			if ( $processedData['data']['CType'] == 'row_columns' ) {
+				if ($flexconf['cols_extraClass'] ?? '') {
+					foreach (explode(',',$flexconf['cols_extraClass']) as $key=>$cec ) {
+						$colsClass[$key] = ' '.trim($cec);
+					}
+					$processedData['extraClassCols'] = $colsClass;
+				}
+				foreach (array_reverse($flexconf) as $key=>$grid) {
+					if ( str_ends_with($key, 'rowclass') ) {
+						$rowClass[$key] = $grid;
+					}
+				}
+				$processedData['class'] .= ' '.trim(implode(' ',$rowClass));
+			}
 		}
 
 		/**
@@ -139,7 +165,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 */
 		if ( $processedData['data']['CType'] == 'background_wrapper') {
 			$processedData = $wrapperHelper->getBackgroundWrapper($processedData, $flexconf,
-			 $extConf['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			 (bool)$contentObjectConfiguration['settings.']['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
 			$mute = $processedData['videoAutoPlay'] ? 1 : $flexconf['videoMute'];
 			if ($flexconf['videoControls']) {
 				$processedData['controlStyle'] = '';
@@ -160,7 +186,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 * Parallax Wrapper
 		 */
 		if ( $processedData['data']['CType'] == 'parallax_wrapper' && $processedData['data']['assets'] ) {
-			$processedData = $wrapperHelper->getParallaxWrapper($processedData, $flexconf, $extConf['webp']);
+			$processedData = $wrapperHelper->getParallaxWrapper($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp']);
 			$processedData['isTxContainer'] = TRUE;
 		}
 
@@ -553,6 +579,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['tableclass'] = trim($tableclass);
 			$processedData['theadclass'] = $flexconf['theadClass'];
 			$processedData['tableResponsive'] = $flexconf['tableResponsive'] ? TRUE : FALSE;
+			$processedData['tableResponsiveVariant'] = $flexconf['tableResponsiveVariant'] ? TRUE : FALSE;
 		}
 
 		/**
@@ -592,12 +619,32 @@ class BootstrapProcessor implements DataProcessorInterface
 		/**
 		 * Toasts
 		 */
-		if ( $processedData['data']['CType'] == 't3sbs_toast' || $processedData['data']['CType'] == 'toast_container' ) {
+		if ( $processedData['data']['CType'] == 't3sbs_toast'
+		 || $processedData['data']['CType'] == 'toast_container' && !$flexconf['multipleToast'] ) {
+
 			$processedData['animation'] = $flexconf['animation'] ? 'true' : 'false';
 			$processedData['autohide'] = $flexconf['autohide'] ? 'true' : 'false';
 			$processedData['delay'] = $flexconf['delay'];
 			$processedData['toastwidth'] = $flexconf['toastwidth'];
 			$processedData['placement'] = $flexconf['placement'];
+			$processedData['cookie'] = $flexconf['cookie'];
+			$processedData['expires'] = !empty($flexconf['expires']) ? $flexconf['expires'] : '';
+			$processedData['parentCType'] = $parentCType;
+		}
+
+		/**
+		 * Toast-Container
+		 */
+		if ( $processedData['data']['CType'] == 'toast_container' ) {
+			$processedData['multipleToast'] = $flexconf['multipleToast'];
+
+			if ( $contentObjectConfiguration['settings.']['navbarEnable'] ) {
+				if (str_starts_with($flexconf['placement'], 'top-0')) {
+					$processedData['placement'] = str_replace('top-0', 'top-70', $flexconf['placement']);
+				} else {
+					$processedData['placement'] = $flexconf['placement'];
+				}
+			}
 		}
 
 		// if media
@@ -700,7 +747,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			}
 		}
 
-		// child of container (masonry_layout)
+		// masonry_layout
 		if ( $processedData['data']['CType'] == 'masonry_wrapper' ) {
 			$processedData['masonryClass'] = $flexconf['colclass'];
 		}
