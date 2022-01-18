@@ -729,7 +729,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		if ($processedData['data']['tx_t3sbootstrap_animateCss'] && $extConf['animateCss'] && $processedData['data']['CType'] != 't3sbs_carousel' ) {
 			$processedData['isAnimateCss'] = TRUE;
-			$processedData['class'] .= ' animated';
+			$processedData['class'] .= ' animated '.$processedData['data']['tx_t3sbootstrap_animateCss'];
 			$processedData['dataAnimate'] = $processedData['data']['tx_t3sbootstrap_animateCss'];
 			if( $processedData['data']['tx_t3sbootstrap_animateCssRepeat'] ) {
 				$processedData['class'] .= ' bt_hidden';
