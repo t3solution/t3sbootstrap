@@ -1,9 +1,22 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:variable name="imgTitle" value="{f:if(condition: '{file.title}', then: '{file.title}', else: '{file.description}')}" />
+<f:variable name="extraImgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}', else: '')}" />
+<f:variable name="altText" value="{f:if(condition: file.alternative, then: '{file.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}" />
+<f:variable name="lazyClass" value="{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2', then: ' lazy')}" />
+<f:variable name="ratio" value="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}" />
+
+
+<f:comment>
+
+ test lazyload variant here!!!
+
+</f:comment>
+
+
 <f:if condition="{addmedia.origImg}">
 	<f:then>
-		<f:image class="img-fluid{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" src="fileadmin/{file.identifier}" />
+		<f:image class="img-fluid{extraImgClass}" src="fileadmin/{file.identifier}" />
 	</f:then>
 	<f:else>
 		<f:if condition="{file.properties.tx_t3sbootstrap_imgtag}">
@@ -11,23 +24,23 @@
 				<t3sb:media
 					file="{file}"
 					title="{f:if(condition: notitle, then: '', else: '{imgTitle}')}"
-					alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}"
-					class="{addmedia.imgclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2', then: ' lazy')}"
+					alt="{altText}"
+					class="{addmedia.imgclass}{extraImgClass}{lazyClass}"
 					width="{dimensions.width}"
 					height="{dimensions.height}"
 					breakpoints=""
 					imgtag="true"
 					picturefill="{settings.picturefill}"
 					lazyload="{settings.lazyLoad}"
-					ratio="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}"
+					ratio="{ratio}"
 				/>
 			</f:then>
 			<f:else>
 				<t3sb:media
 					file="{file}"
 					title="{f:if(condition: notitle, then: '', else: '{imgTitle}')}"
-					alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}"
-					class="{addmedia.imgclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2', then: ' lazy')}"
+					alt="{altText}"
+					class="{addmedia.imgclass}{extraImgClass}{lazyClass}"
 					width="{dimensions.width}"
 					height="{dimensions.height}"
 					breakpoints="{
@@ -38,7 +51,7 @@
 					imgtag="false"
 					picturefill="{settings.picturefill}"
 					lazyload="{settings.lazyLoad}"
-					ratio="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}"
+					ratio="{ratio}"
 				/>
 			</f:else>
 		</f:if>

@@ -5,6 +5,20 @@
 </f:section>
 <f:section name="Main">
 <f:if condition="{col_300 -> f:count()}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Swiper Container (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
 	<f:if condition="{settings.cdn}">
 		<f:then>
 			<f:asset.css identifier="swipercss"
@@ -18,6 +32,4 @@
 		</f:else>
 	</f:if>
 	<f:render partial="Swiper/{sliderStyle}" arguments="{_all}" />
-</f:if>
 </f:section>
-</html>

@@ -4,7 +4,7 @@
 <f:comment>No header for t3sbs_mediaobject</f:comment>
 </f:section>
 <f:section name="Main">
-<div class="media">
+
 	<f:if condition="{mediaobject.order} == 'left'">
 		<f:then>
 			<f:render partial="Media/RawGallery" arguments="{_all}" />
@@ -19,6 +19,6 @@
 			<f:render partial="Media/RawGallery" arguments="{_all}" />
 		</f:then>
 	</f:if>
-</div>
+
 </f:section>
 </html>

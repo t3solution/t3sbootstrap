@@ -10,7 +10,7 @@
 			<f:for each="{media}" as="mediaElement">
 				<div class="outer">
 					<f:if condition="{mediaElement.originalResource.type} == 2">
-						<f:render partial="Detail/T3sbMediaImage" arguments="{mediaElement: mediaElement}"/>
+						<f:render partial="Detail/T3sbMediaImage" arguments="{mediaElement: mediaElement, contentObjectData: contentObjectData}"/>
 					</f:if>
 					<f:if condition="{mediaElement.originalResource.type} == 3">
 						<f:render partial="Detail/T3sMediaVideo" arguments="{mediaElement: mediaElement}"/>
@@ -105,8 +105,7 @@
 					<f:if condition="{settings.detail.lightbox.selection} == 1">
 							<a href="{f:uri.image(image:file.originalResource,
 			 					width:'{settings.media.popup.width}',
-				  				height:'{settings.media.popup.height}')}"
-				   			data-caption="{file.description}">
+				  				height:'{settings.media.popup.height}')}">
 							<f:render section="Slide" arguments="{file: file}" />
 						</a>
 					</f:if>
@@ -114,21 +113,21 @@
 						<a href="{f:uri.image(image:file,
 							width:'{settings.media.popup.width}',
 							height:'{settings.media.popup.height}')}"
-							data-bs-toggle="lightbox"
-							data-title="{file.title}"
-							class="lightbox"
-							data-gallery="gallery-{file.originalResource.properties.uid_foreign}">
+							data-title="{file.description}"
+							class="gallery-{contentObjectData.uid}"
 							<f:render section="Slide" arguments="{file: file}" />
 						</a>
-					</f:if>
+					</f:if>						
 					<f:if condition="{settings.detail.lightbox.selection} == 3">
 						<a href="{f:uri.image(image:file,
 							width:'{settings.media.popup.width}',
 							height:'{settings.media.popup.height}')}"
 							id="ex-{file.uid}"
 							title="{file.title}"
-							class="lightcaseGallery"
-							data-rel="lightcase:collection{file.originalResource.properties.uid_foreign}:slideshow">
+							class="glightbox"
+							data-gallery="gallery-{file.originalResource.properties.uid_foreign}"
+							data-glightbox="{file.description}"
+							data-effect="fade">
 							<f:render section="Slide" arguments="{file: file}" />
 						</a>
 					</f:if>
@@ -144,7 +143,7 @@
 
 <f:section name="Slide">
 	<f:comment> lazyload didn't work with Bootstrap carousel -> lazyload="0" </f:comment>
-<figure class="image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
+<figure class="image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then:' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
 	<t3sb:media file="{file}" title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
 		class="img-fluid{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
 		width="{f:if(condition: settings.media.maxWidth, then: settings.media.maxWidth, else: settings.detail.image.maxWidth)}"

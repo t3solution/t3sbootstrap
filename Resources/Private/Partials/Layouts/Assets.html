@@ -49,11 +49,16 @@
 		animateRepeat = '{animateCssRepeat}',
 		dataAnimate = '{dataAnimate}',
 		child = animatedElement.firstChild;
-	if (child.classList.contains('overflow-hidden')) {
-		child = child.firstChild;
-	}
-	if (child) {
-		t3sbCssAnimate(child, dataAnimate, animateRepeat);
+	if ( animatedElement.nodeType == 1 && animatedElement.classList.contains('animated') ) {
+		t3sbCssAnimate(animatedElement, dataAnimate, animateRepeat);
+	} else {
+		if ( child.nodeType == 1 && child.classList.contains('animated') ) {
+			t3sbCssAnimate(child, dataAnimate, animateRepeat);
+		} else {
+			if (child.nodeName == 'HEADER') {
+				t3sbCssAnimate(child.nextSibling, dataAnimate, animateRepeat);
+			}
+		}
 	}
 	</f:asset.script>
 			</f:then>
@@ -71,6 +76,8 @@
 		</f:if>
 	</f:if>
 </f:if>
+
+
 <f:comment> Lightbox - same in News/Detail.html </f:comment>
 <f:if condition="{settings.lightboxSelection} && {lightBox}">
 	<f:comment> Baguette Box </f:comment>
@@ -95,72 +102,43 @@
 	});
 		</f:asset.script>
 	</f:if>
-	<f:comment> Magnific Popup </f:comment>
+	<f:comment> Halkabox </f:comment>
 	<f:if condition="{settings.lightboxSelection} == 2">
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/magnific-popup.min.css" />
+					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.css" />
 				<f:asset.script identifier="t3sblightboxJS"
-					src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/jquery.magnific-popup.min.js" />
+					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.js" />			
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/magnific-popup.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/jquery.magnific-popup.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/halkaBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/halkaBox.min.js" />
 			</f:else>
 		</f:if>
-		<f:asset.script identifier="lightbox">
-	// jQuery Magnific Popup (lightbox) - Partials/Layouts/Assets.html
-	$('.gallery').each(function() {
-		 $(this).magnificPopup({
-			delegate: 'a',
-			type: 'image',
-			removalDelay: 300,
-			mainClass: 'mfp-fade',
-			gallery: {
-				enabled:true,
-				tPrev: 'zurück',
-				tNext: 'weiter',
-				tCounter: '%curr% von %total%'
-			},
-			zoom: {
-				enabled: true,
-				duration: 300,
-				easing: 'ease-in-out',
-				opener: function(openerElement) {
-					return openerElement.is('img') ? openerElement : openerElement.find('img');
-				}
-			}
-		});
-	});
+		<f:asset.script identifier="vanilla_lightbox-{data.uid}">
+	// halkabox-{data.uid} (lightbox) - Partials/Layouts/Assets.html
+	halkaBox.options({animation: 'fade',theme: 'dark'});
+	halkaBox.run('gallery-{data.uid}');
 		</f:asset.script>
 	</f:if>
-	<f:comment> Lightcase </f:comment>
+	<f:comment> G Lightbox </f:comment>
 	<f:if condition="{settings.lightboxSelection} == 3">
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/css/lightcase.css" />
+					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 				<f:asset.script identifier="t3sblightboxJS"
-					src="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/js/lightcase.min.js" />
+					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/lightcase.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/lightcase.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/glightbox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/glightbox.min.js" />
 			</f:else>
 		</f:if>
-		<f:asset.script identifier="lightbox">
-	// jQuery Lightcase (lightbox) - Partials/Layouts/Assets.html
-	$('.lightcaseGallery').lightcase({
-		showSequenceInfo: false,
-		showCaption: true,
-		maxWidth: 1140,
-		maxHeight: 800
-	});
-	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
-		var msId = $('.MS-content').parent().attr('id');
-		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);
-	}
+		<f:asset.script identifier="vanilla_lightbox">
+	// GLightbox (lightbox) - Partials/Layouts/Assets.html
+	const lightbox = GLightbox({loop: true});
 		</f:asset.script>
 	</f:if>
 </f:if>

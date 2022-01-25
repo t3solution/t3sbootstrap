@@ -214,22 +214,17 @@ cite {
 }
 
 
-.text-start {
-    text-align: left !important;
+/* justify */
+.text-left {
+    text-align: left;
 }
-.text-end {
-    text-align: right !important;
+.text-right {
+    text-align: right;
+}
+.text-justify {
+    text-align: justify;
 }
 .text-center {
-    text-align: center;
-}
-p.text-start {
-    text-align: left !important;
-}
-p.text-end {
-    text-align: right !important;
-}
-p.text-center {
     text-align: center;
 }
 

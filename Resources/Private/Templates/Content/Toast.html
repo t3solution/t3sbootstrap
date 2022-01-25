@@ -8,28 +8,7 @@
 	// Toast - Content/Toast.html
 	var toasts = document.querySelectorAll('.toast.ce-toast');
 	if ( toasts.length ) {
-		toasts.forEach( t => {
-			var toast = document.getElementById(t.id);
-			var newToast = new bootstrap.Toast(toast);
-			var toastBody = toast.getElementsByClassName('toast-body');
-			var toastBodyLength = toastBody[0].innerText.length;
-			if (t3sbGetCookie(t.id) != null ) {
-				if ( t3sbGetCookie(t.id) != toastBodyLength ) {
-					newToast.show();
-				}
-			} else {
-				newToast.show();
-			}
-			if( toast.querySelector('.setCookie') != null  ) {
-				toast.querySelector('.setCookie').checked = false;
-				toast.addEventListener('hidden.bs.toast', function () {
-					let dismiss = toast.querySelector('.setCookie').checked;
-					if (dismiss) {
-						t3sbSetCookie(t.id,toastBodyLength,1);
-					}
-				});
-			}
-		});
+		t3sbToastContainer(toasts);
 	}
 </f:asset.script>
 <f:if condition="{parentCType} == 'toast_container'">
@@ -47,7 +26,7 @@
 
 
 <f:section name="Default">
-	<div id="toast-{data.uid}" class="toast ce-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="{autohide}" data-bs-animation="{animation}" data-bs-delay="{delay}"{f:if(condition: toastwidth, then: ' style="width:{toastwidth}px"')}>
+	<div id="toast-{data.uid}" class="toast ce-toast position-relative{class}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="{autohide}" data-bs-animation="{animation}" data-bs-delay="{delay}"{styleAttr -> f:format.raw()}>
 		<div class="toast-header">
 			<f:if condition="{files.0}">
 				<f:image class="rounded me-2" image="{files.0}" alt="" width="{gallery.width}" height="" />

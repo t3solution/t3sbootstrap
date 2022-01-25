@@ -32,7 +32,7 @@
 	</f:if>
 	<div class="media-body">
 		<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'true'}" />
-		<n:link newsItem="{newsItem}" settings="{settings}" class="more float-end btn btn-{settings.list.button.class} d-none d-sm-block" title="{newsItem.title}" style="margin-top: -.8rem;">
+		<n:link newsItem="{newsItem}" settings="{settings}" class="more float-end btn btn-{settings.button.class} d-none d-sm-block" title="{newsItem.title}" style="margin-top: -.8rem;">
 			<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:more-link"/>
 		</n:link>
 	</div>

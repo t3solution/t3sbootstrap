@@ -286,7 +286,7 @@
 							</config>
 						</TCEforms>
 					</hidden>
-
+<!--
 					<float>
 						<TCEforms>
 							<label>Float</label>
@@ -343,6 +343,7 @@
 							</config>
 						</TCEforms>
 					</float>
+-->
 
 					<border>
 						<TCEforms>
@@ -415,15 +416,15 @@
 										<numIndex index="1">danger</numIndex>
 									</numIndex>
 									<numIndex index="6" type="array">
-										<numIndex index="0">light</numIndex>
+										<numIndex index="0">Light</numIndex>
 										<numIndex index="1">light</numIndex>
 									</numIndex>
 									<numIndex index="7" type="array">
-										<numIndex index="0">dark</numIndex>
+										<numIndex index="0">Dark</numIndex>
 										<numIndex index="1">dark</numIndex>
 									</numIndex>
 									<numIndex index="8" type="array">
-										<numIndex index="0">white</numIndex>
+										<numIndex index="0">White</numIndex>
 										<numIndex index="1">white</numIndex>
 									</numIndex>
 								</items>
@@ -527,18 +528,15 @@
 										<numIndex index="0">Left</numIndex>
 										<numIndex index="1">justify-content-start</numIndex>
 									</numIndex>
-
 									<numIndex index="3" type="array">
 										<numIndex index="0">Fill and justify</numIndex>
 										<numIndex index="1">nav-fill</numIndex>
 									</numIndex>
-
 									<numIndex index="4" type="array">
 										<numIndex index="0">Fill and justify (variant w/ arrow)</numIndex>
 										<numIndex index="1">nav-fill variant</numIndex>
 									</numIndex>
 								</items>
-
 								<default>justify-content-end</default>
 							</config>
 						</TCEforms>
@@ -568,15 +566,15 @@
 					<xsColumns>
 						<TCEforms>
 							<label>Columns</label>
-								 <displayCond>
-								   <and>
-										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
-								   <or>
-										<numIndex index="0">FIELD:sDEF.gridSystem:=:column</numIndex>
-										<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
-								   </or>
-								   </and>
-								 </displayCond>
+							 <displayCond>
+							   <and>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+							   <or>
+									<numIndex index="0">FIELD:sDEF.gridSystem:=:column</numIndex>
+									<numIndex index="1">FIELD:sDEF.gridSystem:=:variable</numIndex>
+							   </or>
+							   </and>
+							 </displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>

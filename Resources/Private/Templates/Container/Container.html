@@ -2,19 +2,28 @@
 <f:comment>Container Template</f:comment>
 <f:layout name="Default" />
 <f:section name="Main">
-	<f:if condition="{class} || {style}">
-		<f:then>
-			<div{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}>
+<f:if condition="{col_275 -> f:count()}">
+	<f:then>
+		<f:if condition="{class} || {style}">
+			<f:then>
+				<div{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
+					<f:for each="{col_275}" as="row">
+						{row.renderedContent -> f:format.raw()}
+					</f:for>
+				</div>
+			</f:then>
+			<f:else>
 				<f:for each="{col_275}" as="row">
 					{row.renderedContent -> f:format.raw()}
 				</f:for>
-			</div>
-		</f:then>
-		<f:else>
-			<f:for each="{col_275}" as="row">
-				{row.renderedContent -> f:format.raw()}
-			</f:for>
-		</f:else>
-	</f:if>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Container (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
 </f:section>
 </html>

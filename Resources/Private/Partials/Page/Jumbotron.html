@@ -2,12 +2,42 @@
 <f:if condition="{config.jumbotron.enable}">
 	<f:if condition="{bgSlides -> f:count()} > 1">
 		<f:then>
+			<f:comment> SLIDER </f:comment>
 			<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
 			<f:if condition="{config.jumbotron.containerposition} == 'Outside'">
 				<f:then>
-					<div class="{config.jumbotron.container}">
-						<f:render section="JumboBgSlider" arguments="{_all}" />
-					</div>
+					<f:if condition="{config.jumbotron.alignItem}">
+						<f:then>
+							<div class="{config.jumbotron.alignItem}">
+								<f:if condition="{config.jumbotron.container}">
+									<f:then>
+										<div class="{config.jumbotron.alignItem}">
+											<div class="{config.jumbotron.container}">
+												<f:render section="JumboBgSlider" arguments="{_all}" />
+											</div>
+										</div>
+									</f:then>
+									<f:else>
+										<div class="{config.jumbotron.alignItem}">
+											<f:render section="JumboBgSlider" arguments="{_all}" />
+										</div>
+									</f:else>
+								</f:if>
+							</div>
+						</f:then>
+						<f:else>
+							<f:if condition="{config.jumbotron.container}">
+								<f:then>
+									<div class="{config.jumbotron.alignItem}">
+										<f:render section="JumboBgSlider" arguments="{_all}" />
+									</div>
+								</f:then>
+								<f:else>
+									<f:render section="JumboBgSlider" arguments="{_all}" />
+								</f:else>
+							</f:if>
+						</f:else>
+					</f:if>
 				</f:then>
 				<f:else>
 					<f:render section="JumboBgSlider" arguments="{_all}" />
@@ -15,7 +45,7 @@
 			</f:if>
 		</f:then>
 		<f:else>
-			<f:if condition="{config.jumbotron.container}">
+			<f:if condition="{config.jumbotron.container} && {config.jumbotron.container} !== 'none'">
 				<f:then>
 					<f:render section="{config.jumbotron.containerposition}" arguments="{_all}" />
 				</f:then>
@@ -37,9 +67,34 @@
 
 <f:section name="Inside">
 	<f:render section="Div" arguments="{_all}" />
-		<div class="{config.jumbotron.container}">
-			<f:render section="Content" arguments="{_all}" />
-		</div>
+		<f:if condition="{config.jumbotron.alignItem}">
+			<f:then>
+				<div class="{config.jumbotron.alignItem}">
+					<f:if condition="{config.jumbotron.container}">
+						<f:then>
+							<div class="{config.jumbotron.container}">
+								<f:render section="Content" arguments="{_all}" />
+							</div>
+						</f:then>
+						<f:else>
+							<f:render section="Content" arguments="{_all}" />
+						</f:else>
+					</f:if>
+				</div>
+			</f:then>
+			<f:else>
+				<f:if condition="{config.jumbotron.container}">
+					<f:then>
+						<div class="{config.jumbotron.container}">
+							<f:render section="Content" arguments="{_all}" />
+						</div>
+					</f:then>
+					<f:else>
+						<f:render section="Content" arguments="{_all}" />
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
 	</div>
 </f:section>
 
@@ -52,15 +107,39 @@
 </f:section>
 
 <f:section name="Content">
-	<f:if condition="{config.general.pageTitle} == 'jumbotron'">
-		<f:render partial="Page/Title" arguments="{_all}" />
-	</f:if>
-	<f:if condition="{config.jumbotron.slide}">
+	<f:if condition="({config.jumbotron.alignItem} && !{config.jumbotron.container})
+	 || ({config.jumbotron.alignItem} && {config.jumbotron.container} && {config.jumbotron.containerposition} == 'Outside')">
 		<f:then>
-			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+			<div class="{config.jumbotron.alignItem}">
+				<div class="jumbotron-content w-100">
+					<f:if condition="{config.general.pageTitle} == 'jumbotron'">
+						<f:render partial="Page/Title" arguments="{_all}" />
+					</f:if>
+					<f:if condition="{config.jumbotron.slide}">
+						<f:then>
+							<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+						</f:then>
+						<f:else>
+							<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+						</f:else>
+					</f:if>
+				</div>
+			</div>
 		</f:then>
 		<f:else>
-			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+			<div class="jumbotron-content w-100">
+				<f:if condition="{config.general.pageTitle} == 'jumbotron'">
+					<f:render partial="Page/Title" arguments="{_all}" />
+				</f:if>
+				<f:if condition="{config.jumbotron.slide}">
+					<f:then>
+						<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+					</f:then>
+					<f:else>
+						<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+					</f:else>
+				</f:if>
+			</div>
 		</f:else>
 	</f:if>
 </f:section>
@@ -68,7 +147,7 @@
 <f:section name="Div">
 	<f:if condition="{config.jumbotron.bgImage}">
 		<f:then>
-			<div id="s{data.uid}" class="jumbotron background-image {config.jumbotron.class}">
+			<div id="s{data.uid}" class="jumbotron background-image{config.jumbotron.class}">
 		</f:then>
 		<f:else>
 			<div class="jumbotron{config.jumbotron.class}">
@@ -77,36 +156,54 @@
 </f:section>
 
 <f:section name="JumboBgSlider">
-<div id="background-carousel" class="jumbotron p-0{config.jumbotron.class}" >
-	<div id="carouselJumbotronIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="{settings.config.jumbotronCarouselInterval}"{f:if(condition: '{settings.config.jumbotronCarouselPause}',then: ' data-bs-pause="hover"')}>
-		<div id="content-wrapper" class="d-flex">
-			<f:if condition="{config.jumbotron.containerposition} == 'Inside'">
-				<f:then>
-					<div class="{config.jumbotron.container} align-self-center">
-						<f:render section="Content" arguments="{_all}" />
-					</div>
-				</f:then>
-				<f:else>
-					<div class="align-self-center">
-						<f:render section="Content" arguments="{_all}" />
-					</div>
-				</f:else>
-			</f:if>
+	<f:if condition="{config.jumbotron.noBgRatio}">
+		<f:asset.script identifier="vanilla_jumbotronCarousel">
+	// Carousel - Page/Jumbotron.html
+	var jumbotronContent = document.querySelectorAll('#jumbotron-content-wrapper .jumbotron-content')[0];
+	var jumbotronCarousels = document.querySelectorAll('#carouselJumbotron.carousel .carousel-inner')[0];
+	if( jumbotronCarousels.clientHeight < jumbotronContent.clientHeight ) {
+		let slideHeight = jumbotronContent.clientHeight + 30;
+		jumbotronCarousels.style.minHeight = slideHeight+'px';
+	}
+		</f:asset.script>
+	</f:if>
+	<div id="jumbotron-background-carousel" class="jumbotron{config.jumbotron.class}" >
+		<div id="carouselJumbotron" class="carousel slide" data-bs-ride="carousel" data-bs-interval="{settings.config.jumbotronCarouselInterval}"
+			{f:if(condition: '{settings.config.jumbotronCarouselPause}',then: ' data-bs-pause="hover"')}>
+			<div class="carousel-indicators">
+				<f:for each="{bgSlides}" as="slide" iteration="iterator">
+					<button type="button" data-bs-target="#carouselJumbotron" data-bs-slide-to="{iterator.index}" aria-label="Slide {iterator.cycle}"
+					{f:if(condition:'{iterator.isFirst}',then:' class="active"')}{f:if(condition:'{iterator.isFirst}',then:' aria-label="Slide {iterator.cycle}"')}></button>
+				</f:for>
+			</div>
+			<div id="jumbotron-content-wrapper" class="d-flex card-img-overlay" style="z-index: 1">
+				<f:if condition="{config.jumbotron.containerposition} == 'Inside'">
+					<f:then>
+						<div class="{config.jumbotron.container} align-self-{config.jumbotron.alignment} w-100">
+							<f:render section="Content" arguments="{_all}" />
+						</div>
+					</f:then>
+					<f:else>
+						<div class="align-self-{config.jumbotron.alignment} w-100">
+							<f:render section="Content" arguments="{_all}" />
+						</div>
+					</f:else>
+				</f:if>
+			</div>
+			<div class="carousel-inner h-100" role="listbox">
+				<f:comment>	background-image by css </f:comment>
+				<f:for each="{bgSlides}" as="slide" iteration="iterator">
+					<div id="s{data.uid}-{iterator.cycle}" class="carousel-item background-image h-100 position-absolute"></div>
+				</f:for>
+			</div>
+			<button class="carousel-control-prev" data-bs-target="#carouselJumbotron" type="button" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" data-bs-target="#carouselJumbotron" type="button" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
 		</div>
-		<div class="carousel-inner ratio ratio-21x9" role="listbox">
-			<f:comment>	background-image by css </f:comment>
-			<f:for each="{bgSlides}" as="slide" iteration="iterator">
-				<div id="s{data.uid}-{iterator.cycle}" class="carousel-item background-image"></div>
-			</f:for>
-		</div>
-		<a class="carousel-control-prev" href="#carouselJumbotronIndicators" role="button" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#carouselJumbotronIndicators" role="button" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</a>
 	</div>
-</div>
 </f:section>

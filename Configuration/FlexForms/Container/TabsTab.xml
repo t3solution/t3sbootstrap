@@ -1,6 +1,6 @@
 <T3DataStructure>
 	<sheets>
-		<general>
+		<sDEF>
 			<ROOT>
 				<type>array</type>
 				<TCEforms>
@@ -84,6 +84,6 @@
 					</contentByPid>
 				</el>
 			</ROOT>
-		</general>
+		</sDEF>
 	</sheets>
 </T3DataStructure>

@@ -3,13 +3,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
@@ -19,11 +12,20 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\QueryHelper;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 class ConfigProcessor implements DataProcessorInterface
 {
+
 	/**
 	 * Fetches records from the database as an array
 	 *
@@ -36,7 +38,6 @@ class ConfigProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
 	{
-
 		$settings = $contentObjectConfiguration['settings.'];
 		$frontendController = self::getFrontendController();
 		$webp = (bool)$settings['webp'];
@@ -129,6 +130,7 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Language Navigation
 		 */
 		$site = self::getCurrentSite();
+		$langUid = [];
 
 		foreach ($site->getLanguages() as $lang ) {
 			$langUid[$lang->getLanguageId()] = $lang->getLanguageId();
@@ -147,11 +149,9 @@ class ConfigProcessor implements DataProcessorInterface
 		 */
 		if ( $processedRecordVariables['metaEnable'] ) {
 			$processedData['config']['meta']['align'] = $processedRecordVariables['metaEnable'];
-			$processedData['config']['meta']['container'] = $processedRecordVariables['metaContainer']
-			 ? ' '.$processedRecordVariables['metaContainer'] : '';
-			$metaClass = $processedRecordVariables['metaClass'] ?: '';
-			$processedData['config']['meta']['class'] = ' '.trim($metaClass);
-			$processedData['config']['meta']['text'] = trim($processedRecordVariables['metaText']);
+			$processedData['config']['meta']['container'] = $processedRecordVariables['metaContainer'];
+			$processedData['config']['meta']['class'] = ' '.trim($processedRecordVariables['metaClass']);
+			$processedData['config']['meta']['text'] = $processedRecordVariables['metaText'] ? trim($processedRecordVariables['metaText']) : '';
 		}
 
 		/**
@@ -176,12 +176,12 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['navbar']['brandAlignment'] = $processedRecordVariables['navbarbrandAlignment'];
 			$processedData['config']['navbar']['hover'] = $processedRecordVariables['navbarHover'] ? ' dropdown-hover' : '';
 
-			if ( $frontendController->rootLine[1]['doktype'] == 4) {
+			if (!empty($frontendController->rootLine[1]) && $frontendController->rootLine[1]['doktype'] == 4) {
 				$processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
 				$processedData['config']['navbar']['clickableparent'] = $processedRecordVariables['navbarClickableparent'];
 			}
-			if ( $processedData['config']['navbar']['clickableparent'] && $processedRecordVariables['navbarPlusicon']) {
+			if ( !empty($processedData['config']['navbar']['clickableparent']) && $processedRecordVariables['navbarPlusicon']) {
 				$processedData['config']['navbar']['navbarPlusicon'] = 0;
 			} else {
 				$processedData['config']['navbar']['navbarPlusicon'] = $processedRecordVariables['navbarPlusicon'];
@@ -246,8 +246,7 @@ class ConfigProcessor implements DataProcessorInterface
 				}
 			}
 
-			if ( ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'])
-			 && ($processedRecordVariables['navbarEnable'] == 'light' || $processedRecordVariables['navbarEnable'] == 'dark') ) {
+			if ( $processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
 				$processedData['config']['navbar']['shrinkColor'] = 'navbar-'.$processedRecordVariables['navbarShrinkcolor'];
 				$processedData['config']['navbar']['color'] = 'navbar-'.$processedRecordVariables['navbarEnable'];
 			}
@@ -256,7 +255,8 @@ class ConfigProcessor implements DataProcessorInterface
 			$navbarClass .= $processedRecordVariables['navbarHover'] ? ' navbarHover' : '';
 
 			if ($processedRecordVariables['navbarPlacement']) {
-				if ( $processedData['config']['navbar']['containerposition'] == 'outside' ) {
+				if ( !empty($processedData['config']['navbar']['containerposition']) && $processedData['config']['navbar']['containerposition'] == 'outside' ) 
+				{
 					$processedData['config']['navbar']['container'] =
 					trim($processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbarPlacement']);
 				} else {
@@ -276,13 +276,13 @@ class ConfigProcessor implements DataProcessorInterface
 
 			if ($processedRecordVariables['navbarAlignment'] == 'fill') {
 				$processedData['config']['navbar']['mauto'] = ' nav-fill w-100';
-			} else {
-				$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] == 'right') ? ' ms-auto': ' me-auto';
-			}
-
-			if ($processedRecordVariables['navbarAlignment'] == 'center') {
+			} elseif ($processedRecordVariables['navbarAlignment'] == 'justified') {
+				$processedData['config']['navbar']['mauto'] = ' nav-justified w-100';
+			} elseif ($processedRecordVariables['navbarAlignment'] == 'center') {
 				$processedData['config']['navbar']['navbarCenter'] = ' justify-content-center';
 				$processedData['config']['navbar']['mauto'] = '';
+			} else {
+				$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] == 'right') ? ' ms-auto': ' me-auto';
 			}
 
 			$processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbarOffcanvas'];
@@ -305,10 +305,7 @@ class ConfigProcessor implements DataProcessorInterface
 				} else {
 					$processedData['config']['navbar']['navbarAlignment'] = 'center';
 				}
-
-
 				if ($processedRecordVariables['navbarToggler'] == 'left') {
-
 					$processedData['config']['navbar']['offcanvasAlign'] = 'start';
 				} else {
 					$processedData['config']['navbar']['offcanvasAlign'] = 'end';
@@ -320,7 +317,9 @@ class ConfigProcessor implements DataProcessorInterface
 			if ( $processedRecordVariables['navbarSearchbox'] ) {
 				$processedData['config']['navbar']['searchbox'] = $processedRecordVariables['navbarSearchbox'];
 				$processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbarEnable'] == 'light' ? 'dark' : 'light';
+
 				if ( $processedData['config']['navbar']['mauto'] == ' me-auto' ) {
+
 					$processedData['config']['navbar']['sbmauto'] = ' ms-auto';
 				}
 				if ( $processedData['config']['navbar']['mauto'] == ' ms-auto' ) {
@@ -331,9 +330,13 @@ class ConfigProcessor implements DataProcessorInterface
 				}
 			}
 
+			if ( ($processedRecordVariables['homepageUid'] == $frontendController->id) && $processedRecordVariables['contentOnlyOnRootpage'] ) {
+				$processedData['config']['navbar']['enable'] = FALSE;
+			}
+
 			$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 			if ( $extConf['navigationColor'] ) {
-				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor();
+				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor((int)$processedData['data']['sys_language_uid']);
 			}
 		}
 
@@ -346,12 +349,21 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['jumbotron']['position'] = $processedRecordVariables['jumbotronPosition'];
 			$processedData['config']['jumbotron']['container'] = $processedRecordVariables['jumbotronContainer'];
 			$processedData['config']['jumbotron']['containerposition'] = $processedRecordVariables['jumbotronContainerposition'];
-			$jumbotronClass = $processedRecordVariables['jumbotronClass'] ?: '';
-			$processedData['config']['jumbotron']['class'] = ' '.trim($jumbotronClass);
+			$processedData['config']['jumbotron']['class'] = ' '.trim($processedRecordVariables['jumbotronClass']);
+
+			$processedData['config']['jumbotron']['noBgRatio'] = TRUE;
+			if (!empty($processedRecordVariables['jumbotronBgimageratio'])) {
+				$processedData['config']['jumbotron']['noBgRatio'] = FALSE;
+				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
+
+			}
 
 			# Image from pages media
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = [];
+
+			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
+			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
 
 			if ( $processedRecordVariables['jumbotronBgimage'] == 'root' ) {
 				// slide in rootline
@@ -362,23 +374,25 @@ class ConfigProcessor implements DataProcessorInterface
 				}
 				if ( count($fileObjects) > 1 ) {
 					// slider
+					$processedData['config']['jumbotron']['alignItem'] = '';
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0,
 					  $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
-					  $processedData['bgSlides'] = $bgSlides;
+					$processedData['bgSlides'] = $bgSlides;
 				} else {
 					// background image
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
 					  $processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
-					  $processedData['config']['jumbotron']['bgImage'] = $bgSlides;
+					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 				}
 
 			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				if ( count($fileObjects) > 1 ) {
 					// slider
+					$processedData['config']['jumbotron']['alignItem'] = '';
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0,
 					  $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
-					  $processedData['bgSlides'] = $bgSlides;
+					$processedData['bgSlides'] = $bgSlides;
 				} else {
 					// background image
 				$bgSlides = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0,
@@ -395,12 +409,11 @@ class ConfigProcessor implements DataProcessorInterface
 
 			$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0,
 			 $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
-			 $bgImage = $BodyBgImage[1];
-			if ( empty($bgImage) && $contentObjectConfiguration['settings.']['config.']['backgroundImageSlide'] ) {
+			 $bgImage = is_array($BodyBgImage) ? $BodyBgImage[1] : '';
+			if ( empty($BodyBgImage) && $contentObjectConfiguration['settings.']['config.']['backgroundImageSlide'] ) {
 				foreach ($frontendController->rootLine as $page) {
 					$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id, $webp);
-					$bgImage = $BodyBgImage[1];
-					if ($bgImage) break;
+					if ($BodyBgImage) break;
 				}
 			}
 		}
@@ -437,9 +450,11 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['sidebar']['stickTopOffset'] = $topOffset ? $topOffset.'px' : 0;
 				$processedData['config']['sidebar']['scrollspyOffset'] = $processedRecordVariables['sectionmenuScrollspyOffset'];
 			}
+			$processedData['config']['sidebar']['sticky'] = $processedRecordVariables['submenuSticky'];
 		}
 		if ( $processedRecordVariables['sidebarRightenable'] ) {
 			$processedData['config']['sidebar']['right'] = $processedRecordVariables['sidebarRightenable'];
+			$processedData['config']['sidebar']['sticky'] = $processedRecordVariables['submenuSticky'];
 		}
 
 		/**
@@ -449,11 +464,9 @@ class ConfigProcessor implements DataProcessorInterface
 
 			$processedData['config']['footer']['enable'] = $processedRecordVariables['footerEnable'];
 			$processedData['config']['footer']['sticky'] = $processedRecordVariables['footerSticky'];
-			$processedData['config']['footer']['fluid'] = $processedRecordVariables['footerFluid'];
 			$processedData['config']['footer']['slide'] = $processedRecordVariables['footerSlide'];
 			$processedData['config']['footer']['container'] = $processedRecordVariables['footerContainer'];
 			$processedData['config']['footer']['containerposition'] = $processedRecordVariables['footerContainerposition'];
-
 			$footerClass = $processedRecordVariables['footerClass'] ?: '';
 			$footerClass .= $processedRecordVariables['footerSticky'] ? ' footer-sticky' : '';
 			$processedData['config']['footer']['class'] = trim($footerClass);
@@ -469,6 +482,7 @@ class ConfigProcessor implements DataProcessorInterface
 				->count('uid')
 				->from('tt_content')
 				->where(
+					$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($processedData['data']['sys_language_uid'], \PDO::PARAM_INT)),
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, \PDO::PARAM_INT))
 				)
 			->execute()
@@ -486,6 +500,7 @@ class ConfigProcessor implements DataProcessorInterface
 				->count('uid')
 				->from('tt_content')
 				->where(
+					$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($processedData['data']['sys_language_uid'], \PDO::PARAM_INT)),
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, \PDO::PARAM_INT))
 				)
 			->execute()
@@ -503,8 +518,6 @@ class ConfigProcessor implements DataProcessorInterface
 
 	/**
 	 * Returns the currently configured "site" if a site is configured (= resolved) in the current request.
-	 *
-	 * @return SiteInterface
 	 */
 	protected function getCurrentSite(): SiteInterface
 	{
@@ -512,13 +525,10 @@ class ConfigProcessor implements DataProcessorInterface
 		return $matcher->matchByPageId((int)self::getFrontendController()->id);
 	}
 
-
 	/**
-	 * Returns $typoScriptFrontendController \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 *
-	 * @return TypoScriptFrontendController
+	 * Returns the frontend controller
 	 */
-	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}
@@ -526,8 +536,6 @@ class ConfigProcessor implements DataProcessorInterface
 
 	/**
 	 * Returns an instance of the rbackground image utility
-	 *
-	 * @return BackgroundImageUtility
 	 */
 	protected function getBackgroundImageUtility(): BackgroundImageUtility
 	{
@@ -537,10 +545,8 @@ class ConfigProcessor implements DataProcessorInterface
 
 	/**
 	 * Generate CSS for navigation color
-	 *
-	 * @return string
 	 */
-	protected function getNavigationColor(): string
+	protected function getNavigationColor(int $languageUid): string
 	{
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 		$result = $queryBuilder
@@ -554,6 +560,9 @@ class ConfigProcessor implements DataProcessorInterface
 					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationbgcolor', $queryBuilder->createNamedParameter(''))
 				)
 			 )
+	->andWhere(
+		$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, \PDO::PARAM_INT)),
+	)
 			 ->execute();
 
 		$navbarColors = $result->fetchAll();
@@ -565,7 +574,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 				if (is_integer($navbarColor['uid'])) {
 
-					$treePages = $this->getTreePids($navbarColor['uid']);
+					$treePages = explode(',', self::getTreeList((int)$navbarColor['uid'], 99));
 
 					foreach($treePages as $treepageUid) {
 
@@ -604,14 +613,42 @@ class ConfigProcessor implements DataProcessorInterface
 	}
 
 
-	function getTreePids($parent = 0): array
+	protected function getTreeList(int $id, int $depth, int $begin = 0, string $permsClause = ''): string
 	{
-		$queryGenerator = GeneralUtility::makeInstance(QueryGenerator::class);
+		if ($id < 0) {
+			$id = abs($id);
+		}
+		if ($begin == 0) {
+			$theList = $id;
+		} else {
+			$theList = '';
+		}
+		if ($id && $depth > 0) {
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+			$queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+			$statement = $queryBuilder->select('uid')
+				->from('pages')
+				->where(
+					$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)),
+					$queryBuilder->expr()->eq('sys_language_uid', 0),
+					QueryHelper::stripLogicalOperatorPrefix($permsClause)
+				)
+				->execute();
+			while ($row = $statement->fetch()) {
+				if ($begin <= 0) {
+					$theList .= ',' . $row['uid'];
+				}
+				if ($depth > 1) {
+					$theSubList = $this->getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
+					if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {
+						$theList .= ',';
+					}
+					$theList .= $theSubList;
+				}
+			}
+		}
 
-		 $childPids = $queryGenerator->getTreeList($parent, 999999, 0, 1);
-		 $childPids = explode(',',(string) $childPids );
-
-		 return $childPids;
+		return (string)$theList;
 	}
 
 }

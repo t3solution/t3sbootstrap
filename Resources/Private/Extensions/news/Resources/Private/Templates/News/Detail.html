@@ -28,79 +28,51 @@
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">
-	// Baguette Box (lightbox) - Partials/Layouts/Assets.html
+	// Baguette Box (lightbox) -news/Detail.html
 	baguetteBox.run('.gallery, .image-gallery', {
 		animation: 'fadeIn',
 		noScrollbars: true
 	});
 		</f:asset.script>
 	</f:if>
-	<f:comment> Magnific Popup </f:comment>
-	<f:if condition="{settings.lightboxSelection} == 2">
+	<f:comment> halkabox </f:comment>
+	<f:if condition="{settings.detail.lightbox.selection} == 2">
 		<f:if condition="{settings.cdn}">
-			<f:then>
+			<f:then>		
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/magnific-popup.min.css" />
+					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.css" />
 				<f:asset.script identifier="t3sblightboxJS"
-					src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/{settings.magnificpopupVersion}/jquery.magnific-popup.min.js" />
+					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/magnific-popup.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/jquery.magnific-popup.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/halkaBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/halkaBox.min.js" />
 			</f:else>
 		</f:if>
-		<f:asset.script identifier="lightbox">
-	// jQuery Magnific Popup (lightbox) - Partials/Layouts/Assets.html
-	$('.gallery').each(function() {
-		 $(this).magnificPopup({
-			delegate: 'a',
-			type: 'image',
-			removalDelay: 300,
-			mainClass: 'mfp-fade',
-			gallery: {
-				enabled:true,
-				tPrev: 'zurück',
-				tNext: 'weiter',
-				tCounter: '%curr% von %total%'
-			},
-			zoom: {
-				enabled: true,
-				duration: 300,
-				easing: 'ease-in-out',
-				opener: function(openerElement) {
-					return openerElement.is('img') ? openerElement : openerElement.find('img');
-				}
-			}
-		});
-	});
+		<f:asset.script identifier="vanilla_lightbox-{contentObjectData.uid}">
+	// Halkabox-{contentObjectData.uid} (lightbox) -news/Detail.html
+	halkaBox.options({animation: 'fade',theme: 'dark'});
+	halkaBox.run('gallery-{contentObjectData.uid}');
 		</f:asset.script>
 	</f:if>
-	<f:comment> Lightcase </f:comment>
+	<f:comment> G Lightbox </f:comment>
 	<f:if condition="{settings.detail.lightbox.selection} == 3">
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/css/lightcase.css" />
+					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />			
+			
 				<f:asset.script identifier="t3sblightboxJS"
-					src="https://cdn.jsdelivr.net/npm/lightcase@{settings.lightcaseVersion}/src/js/lightcase.min.js" />
+					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/lightcase.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/lightcase.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/glightbox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/glightbox.min.js" />
 			</f:else>
 		</f:if>
-		<f:asset.script identifier="lightbox">
-	// jQuery Lightcase (lightbox) - Partials/Layouts/Assets.html
-	$('.lightcaseGallery').lightcase({
-		showSequenceInfo: false,
-		showCaption: true,
-		maxWidth: 1140,
-		maxHeight: 800
-	});
-	if ( $('.MS-content figure a').hasClass('lightcaseGallery') ) {
-		var msId = $('.MS-content').parent().attr('id');
-		$('.MS-content figure a').attr('data-rel', 'lightcase:collection:'+msId);
-	}
+		<f:asset.script identifier="vanilla_lightbox">
+	// GLightbox (lightbox) - news/Detail.html
+	const lightbox = GLightbox({loop: true});
 		</f:asset.script>
 	</f:if>
 </f:if>
@@ -196,7 +168,6 @@
 				</f:for>
 			</span>
 		</f:if>
-
 		<f:if condition="{newsItem.tags}">
 			<!-- Tags -->
 			<span class="news-list-tags" itemprop="keywords">
@@ -205,7 +176,6 @@
 			</f:for>
 			</span>
 		</f:if>
-
 		<f:if condition="{newsItem.author}">
 			<!-- author -->
 			<span class="news-list-author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
@@ -214,27 +184,23 @@
 		</f:if>
 	</p>
 </div>
-<n:renderMedia news="{newsItem}" imgClass="img-responsive" videoClass="video-wrapper" audioClass="audio-wrapper">
+<n:renderMedia news="{newsItem}" imgClass="img-fluid" videoClass="video-wrapper" audioClass="audio-wrapper">
 	<f:if condition="{newsItem.teaser}">
 		<!-- teaser -->
 		<div class="teaser-text" itemprop="description">
 			<f:format.html>{newsItem.teaser}</f:format.html>
 		</div>
 	</f:if>
-
 	<f:if condition="{newsItem.contentElements}">
 		<!-- content elements -->
 		<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering">{newsItem.contentElementIdList}</f:cObject>
 	</f:if>
-
 	<f:render partial="Detail/MediaContainer" arguments="{media: newsItem.mediaNonPreviews}" />
-
 	<!-- main text -->
 	<div class="news-text-wrap" itemprop="articleBody">
 		<f:format.html>{newsItem.bodytext}</f:format.html>
 	</div>
 </n:renderMedia>
-
 <f:if condition="{settings.backPid}">
 	<!-- Link Back -->
 	<div class="news-backlink-wrap">
@@ -243,7 +209,6 @@
 		</f:link.page>
 	</div>
 </f:if>
-
 <f:if condition="{settings.detail.showSocialShareButtons}">
 	<f:comment>
 		Care about the privacy of your readers?
@@ -254,7 +219,6 @@
 		<f:render partial="Detail/Shariff" />
 	</n:extensionLoaded>
 </f:if>
-
 <!-- related things -->
 <div class="news-related-wrap">
 	<f:comment>
@@ -285,7 +249,6 @@
 			</ul>
 		</div>
 	</f:if>
-
 	<f:if condition="{newsItem.relatedFiles}">
 		<!-- related files -->
 		<div class="news-related news-related-files">
@@ -318,7 +281,8 @@
 			<ul>
 				<f:for each="{newsItem.relatedLinks}" as="relatedLink">
 					<li>
-						<f:link.typolink parameter="{relatedLink.uri}" title="{relatedLink.title}" target="{n:targetLink(link:relatedLink.uri)}">{f:if(condition: relatedLink.title, then: relatedLink.title, else: relatedLink.uri)}</f:link.typolink>
+						<f:link.typolink parameter="{relatedLink.uri}" title="{relatedLink.title}"
+						 target="{n:targetLink(link:relatedLink.uri)}">{f:if(condition: relatedLink.title, then: relatedLink.title, else: relatedLink.uri)}</f:link.typolink>
 						<f:if condition="{relatedLink.description}"><span>{relatedLink.description}</span></f:if>
 					</li>
 				</f:for>

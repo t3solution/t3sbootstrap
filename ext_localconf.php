@@ -18,6 +18,8 @@ use T3SBS\T3sbootstrap\Controller\ConsentController;
 use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard;
+use T3SBS\T3sbootstrap\Hooks\PageLayoutView;
+use T3SBS\T3sbootstrap\Hooks\NewsFlexFormHook;
 
 defined('TYPO3') || die();
 
@@ -111,19 +113,21 @@ defined('TYPO3') || die();
 	if ( ExtensionManagementUtility::isLoaded('indexed_search') ) {
 		 # Setup
 		ExtensionManagementUtility::addTypoScript('t3sbootstrap',
-			'setup','<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript">','defaultContentRendering'
+			'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript"','defaultContentRendering'
 		);
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 1');
 	}
 	 # if news is loaded
 	if ( ExtensionManagementUtility::isLoaded('news') && array_key_exists('extNews', $extconf) && $extconf['extNews'] === '1' ) {
 	 	# TsConfig
-	 	ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig">');
+	 	ExtensionManagementUtility::addPageTSConfig('@import "EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig"');
 		ExtensionManagementUtility::addTypoScript('t3sbootstrap',
-				 'setup','<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TypoScript/setup.typoscript">','defaultContentRendering'
+				 'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TypoScript/setup.typoscript"','defaultContentRendering'
 		);
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 1');
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.newsVersion = '.(int)ExtensionManagementUtility::getExtensionVersion('news'));
+		# Flexform Hook
+		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][FlexFormTools::class]['flexParsing'][] = NewsFlexFormHook::class;
 	}
 	// Optional flexform extend
 	if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
@@ -275,18 +279,16 @@ defined('TYPO3') || die();
 	/***************
 	 * Registering wizards
 	 */
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbMigrateUpdateWizard']
-	= T3sbMigrateUpdateWizard::class;
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbMigrateUpdateWizard'] = T3sbMigrateUpdateWizard::class;
 
 	/***************
 	 * Parser
 	 */
 	// Register css processing parser
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'][ScssParser::class] =
-		 ScssParser::class;
-
-	// Register css processing hooks
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class]
-			 = PreProcessHook::class . '->execute';
-
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'][ScssParser::class] = ScssParser::class;
+	if (array_key_exists('customScss', $extconf) && $extconf['customScss'] === '1') {
+		// Register css processing hooks
+		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class]
+		 = PreProcessHook::class . '->execute';
+	}
 })();

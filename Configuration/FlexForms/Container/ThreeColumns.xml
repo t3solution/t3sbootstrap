@@ -130,7 +130,7 @@
 		<xxl>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>Col-xxl-*</sheetTitle>
+					<sheetTitle>Col-xl-*</sheetTitle>
 				</TCEforms>
 				<el>
 					<xxl_one>

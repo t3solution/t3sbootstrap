@@ -160,7 +160,6 @@ print {
 				sidebarIncludespacer = {$bootstrap.config.sidebarIncludespacer}
 				sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
 				footerEnable = {$bootstrap.config.footerEnable}
-				footerFluid = {$bootstrap.config.footerFluid}
 				footerSlide = {$bootstrap.config.footerSlide}
 				footerSticky = {$bootstrap.config.footerSticky}
 				footerContainer = {$bootstrap.config.footerContainer}

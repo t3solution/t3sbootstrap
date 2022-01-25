@@ -3,13 +3,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Backend\Preview;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem;
@@ -19,6 +12,12 @@ use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 {
 
@@ -26,9 +25,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 	* Dedicated method for rendering preview header HTML for
 	* the page module only. Receives $item which is an instance of
 	* GridColumnItem which has a getter method to return the record.
-	*
-	* @param GridColumnItem
-	* @return string
 	*/
 	public function renderPageModulePreviewHeader(GridColumnItem $item): string
 	{
@@ -36,6 +32,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		$itemLabels = $item->getContext()->getItemLabels();
 		$outHeader = '';
 		$content = parent::renderPageModulePreviewContent($item);
+
 		if ( ($content && $record['CType'] === 'list')
 			|| ($content && $record['CType'] === 'bullets')
 			|| ($content && $record['CType'] === 'table')
@@ -51,18 +48,20 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		if ($record['CType'] === 't3sbs_card') {
 			$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 			$flexconf = $flexformService->convertFlexFormContentToArray($record['pi_flexform']);
-			if ( $flexconf['header']['text'] ) {
+
+			if ( !empty($flexconf['header']['text']) ) {
 				 $outHeader .= parent::linkEditContent(parent::renderText($flexconf['header']['text']), $record) . '<br />';
 			}
 		}
 
-		if ($record['header']) {
+		if (!empty($record['header'])) {
 			$infoArr = [];
 			parent::getProcessedValue($item, 'header_position,header_layout,header_link', $infoArr);
 			$hiddenHeaderNote = '';
 			// If header layout is set to 'hidden', display an accordant note:
 			if ($record['header_layout'] == 100) {
-				$hiddenHeaderNote = ' <em>[' . htmlspecialchars(parent::getLanguageService()->sL('LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_layout.I.6')) . ']</em>';
+				$hiddenHeaderNote = ' <em>[' . htmlspecialchars(parent::getLanguageService()
+				->sL('LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_layout.I.6')) . ']</em>';
 			}
 			$outHeader .= $record['date']
 				? htmlspecialchars($itemLabels['date'] . ' ' . BackendUtility::date($record['date'])) . '<br />'
@@ -83,9 +82,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 	/**
 	* Dedicated method for rendering preview body HTML for
 	* the page module only.
-	*
-	* @param GridColumnItem $item
-	* @return string
 	*/
 	public function renderPageModulePreviewContent(GridColumnItem $item): string
 	{
@@ -94,7 +90,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		$content = parent::renderPageModulePreviewContent($item);
 
 		if ( ($content && $record['CType'] === 'list')
-			|| ($content && substr($record['CType'], 0, 4) === 'menu')
+			|| ($content && str_starts_with($record['CType'], 'menu'))
 			|| ($content && $record['CType'] === 'bullets')
 			|| ($content && $record['CType'] === 'table')
 			|| ($content && $record['CType'] === 'uploads')
@@ -110,21 +106,19 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		$languageService = parent::getLanguageService();
 
 		$contentType = $contentTypeLabels[$record['CType']];
-		if (isset($contentType)) {
-
-			$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-			$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
+		if (!empty($contentType)) {
 
 			$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 			$maxCharacters = $extconf['previewCropMaxCharacters'];
 			$append = ' ...';
+			$flexconfOut = '';
 
-			if ($record['subheader']) {
+			if (!empty($record['subheader'])) {
 				$out .= parent::linkEditContent(parent::renderText($record['subheader']), $record) . '<br />';
 			}
-			if ($record['bodytext']) {
-				if ($extconf['previewCrop']) {
+			if (!empty($record['bodytext'])) {
+				if (!empty($extconf['previewCrop'])) {
 					$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 					$text = $contentObject->cropHTML($record['bodytext'], $maxCharacters . '|' . $append . '|' . true);
 				} else {
@@ -142,7 +136,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 			if ($record['CType'] === 't3sbs_card') {
 				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 				$flexconf = $flexformService->convertFlexFormContentToArray($record['pi_flexform']);
-				if ( $flexconf['text']['top'] ) {
+				if ( !empty($flexconf['text']['top']) ) {
 					if ($extconf['previewCrop']) {
 						$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 						$text = $contentObject->cropHTML($flexconf['text']['top'], $maxCharacters . '|' . $append . '|' . true);
@@ -151,7 +145,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 					}
 					$out .= parent::linkEditContent(parent::renderText($text), $record) . '<br />';
 				}
-				if ( $flexconf['text']['bottom'] ) {
+				if ( !empty($flexconf['text']['bottom']) ) {
 					if ($extconf['previewCrop']) {
 						$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 						$text = $contentObject->cropHTML($flexconf['text']['bottom'], $maxCharacters . '|' . $append . '|' . true);
@@ -162,54 +156,59 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				}
 			}
 			if ($record['CType'] === 't3sbs_carousel') {
-	  			if ( $flexconf['shift'] ) {
+				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
+	  			if ( !empty($flexconf['shift']) ) {
 					$flexconfOut .= '<br />- Shift: '.$flexconf['shift'];
 				}
-	  			if ( $flexconf['bgOverlay'] ) {
+	  			if ( !empty($flexconf['bgOverlay']) ) {
 					$flexconfOut .= '<br />- Background-Overlay';
-				}
-	  			if ( $flexconf['shift'] ) {
-					$flexconfOut .= '<br />- Shift: '.$flexconf['shift'];
 				}
 			}
 			if ($record['CType'] === 't3sbs_button') {
-				if ( $flexconf['style'] ) {
+				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
+
+				if ( !empty($flexconf['style']) ) {
 					$flexconfOut .= '<br />- Style: '.$flexconf['style'];
 				}
-				if ( $flexconf['size'] ) {
+				if ( !empty($flexconf['size']) ) {
 					$flexconfOut .= '<br />- Size: '.$flexconf['size'];
 				}
-				if ( $flexconf['block'] ) {
+				if ( !empty($flexconf['block']) ) {
 					$flexconfOut .= '<br />- Block: '.$flexconf['block'];
 				}
-				if ( $flexconf['outline'] ) {
+				if ( !empty($flexconf['outline']) ) {
 					$flexconfOut .= '<br />- Outline';
 				}
 			}
 			if ($record['CType'] === 't3sbs_toast') {
-				if ( $flexconf['animation'] ) {
+				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
+
+				if ( !empty($flexconf['animation']) ) {
 					$flexconfOut .= '<br />- Animation';
 				}
-				if ( $flexconf['autohide'] ) {
+				if ( !empty($flexconf['autohide']) ) {
 					$flexconfOut .= '<br />- Autohide';
 				}
-				if ( $flexconf['delay'] ) {
+				if ( !empty($flexconf['delay']) ) {
 					$flexconfOut .= '<br />- Delay: '.$flexconf['delay'];
 				}
-				if ( $flexconf['placement'] ) {
+				if ( !empty($flexconf['placement']) ) {
 					$flexconfOut .= '<br />- Placement: '.$flexconf['placement'];
 				}
-				if ( $flexconf['cookie'] ) {
-					$flexconfOut .= '<br />- Cookie is set (expires: '.$flexconf['expires'].')';
+				if ( !empty($flexconf['cookie']) ) {
+					$flexconfOut .= '<br />- Cookie is set ('.$flexconf['expires'].') days';
 				}
 			}
 
-			if ($flexconfOut)
+			if (!empty($flexconfOut))
 			$out = $out.substr($flexconfOut, 6);
 
-			$media = $record['assets'] ?: $record['image'];
+			$media = !empty($record['assets']) ?: $record['image'];
 			if ($media) {
-				$field = $record['assets'] ? 'assets' : 'image';
+				$field = !empty($record['assets']) ? 'assets' : 'image';
 				$out .= '<div style="margin:5px 5px 5px 0">'. parent::linkEditContent($this->getThumbCodeUnlinked($record, 'tt_content', $field), $record) . '</div>';
 			}
 
@@ -227,21 +226,14 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 
 	/**
 	* Dedicated method for wrapping a preview header and body HTML.
-	*
-	* @param string $previewHeader
-	* @param string $previewContent
-	* @param GridColumnItem $item
-	* @return string
 	*/
-	public function wrapPageModulePreview($previewHeader, $previewContent, GridColumnItem $item): string
+	public function wrapPageModulePreview(string $previewHeader, string $previewContent, GridColumnItem $item): string
 	{
 			$content = '<span class="exampleContent">' . $previewHeader . $previewContent . '</span>';
-			if ($item->isDisabled()) {
+			if (!empty($item->isDisabled())) {
 				return '<span class="text-muted">' . $content . '</span>';
 			}
 
 			return $content;
 	}
-
-
 }

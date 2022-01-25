@@ -26,7 +26,7 @@
 		<f:else>
 			<f:if condition="{settings.displayDummyIfNoMedia}">
 				<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
-					<f:if condition="{settings.dummyImageUid}">
+					<f:if condition="{settings.dummyImageUid} && <t3sb:dummyImage uid='{settings.dummyImageUid}' />">
 						<f:then>
 							<f:variable name="dummyImage" value="<t3sb:dummyImage uid='{settings.dummyImageUid}' />" />
 							<f:render partial="List/Media/Image" arguments="{file: dummyImage}" />						

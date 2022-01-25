@@ -3,33 +3,26 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
 
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-
 class ClassHelper implements SingletonInterface
 {
 
 	/**
-	 * Returns the CSS-class for all elements
-	 *
-	 * @param array $data
-	 * @param array	$flexconf
-	 * @param array	$extConf
-	 *
-	 * @return string
+	 * Returns the CSS-class for default elements
 	 */
-	public function getAllClass($data, $flexconf, $extConf): string
+	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass): string
 	{
 	 	// class
-		if ( $extConf['cTypeClass']) {
+		if ( $cTypeClass ) {
 			$class = 'fsc-default ce-'. $data['CType'];
 		} else {
 			$class = '';
@@ -72,13 +65,19 @@ class ClassHelper implements SingletonInterface
 		if ($data['layout']) {
 			$pagesTSconfig = self::getFrontendController()->getPagesTSconfig();
 			$layout = $data['layout'];
-			$layoutAddItems = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'];
-			$layoutClasses = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'];
-			$layoutAltLabels = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'];
 
-			if (isset($layoutAddItems) && key($layoutAddItems) === $layout) {
+			$layoutAddItems = '';
+			$layoutClasses = '';
+			$layoutAltLabels = '';
+			
+			if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.'])) {
+				$layoutAddItems = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'];
+				$layoutClasses = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'];
+				$layoutAltLabels = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'];
+			}
+			if (isset($layoutAddItems) && isset($layoutAddItems) === $layout) {
 				$class .= ' layout-'.$layout;
-			} elseif (isset($layoutAltLabels) && $layoutAltLabels[$layout]) {
+			} elseif (isset($layoutAltLabels) && !empty($layoutAltLabels[$layout])) {
 				if (isset($layoutClasses) && $layoutClasses[$layout]) {
 					$class .= ' '.strtolower($layoutClasses[$layout]);
 				} else {
@@ -94,14 +93,14 @@ class ClassHelper implements SingletonInterface
 		}
 
 		// Align self
-		if ($flexconf['responsiveVariations']) {
+		if (!empty($flexconf['responsiveVariations']) && !empty($flexconf['alignSelf'])) {
 			$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignSelf'] : '';
 		} else {
-			$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['alignSelf'] : '';
+			$class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['alignSelf'] : '';
 		}
 
 		//Flip Card
-		if ( $data['CType'] == 't3sbs_card' && $flexconf['flipcard'] ) {
+		if ( $data['CType'] == 't3sbs_card' && !empty($flexconf['flipcard']) ) {
 			if ( $data['tx_t3sbootstrap_contextcolor'] ) {
 				$data['tx_t3sbootstrap_contextcolor'] = '';
 			}
@@ -115,26 +114,25 @@ class ClassHelper implements SingletonInterface
 		// Extra class
 		$class .= $data['tx_t3sbootstrap_extra_class'] ? ' '.$data['tx_t3sbootstrap_extra_class'] : '';
 		// Border
-		if ( $flexconf['border'] && $data['CType'] != 't3sbs_card' ) {
+		if ( !empty($flexconf['border']) ) {
 			if ( $flexconf['border'] == 'border' ) {
 				$border = 'border';
 			} else {
 				$border = 'border '.$flexconf['border'];
 			}
-			if ( $flexconf['borderstyle'] ) {
+			if ( !empty($flexconf['borderstyle']) ) {
 				$class .= ' '.$border.' border-'.$flexconf['borderstyle'];
 			} else {
 				$class .= ' '.$border;
 			}
-			$class .= $flexconf['borderradius'] ? ' '.$flexconf['borderradius'] : '';
+			$class .= !empty($flexconf['borderradius']) ? ' '.$flexconf['borderradius'] : '';
 		}
 
+
 		// Hiding / Display Elements
-		$class .= $flexconf['hidden'] ? ' '.$flexconf['hidden'] : '';
-
+		$class .= !empty($flexconf['hidden']) ? ' '.$flexconf['hidden'] : '';
 		// Float
-		$class .= $flexconf['float'] ? ' '.$flexconf['float'] : '';
-
+		$class .= !empty($flexconf['float']) ? ' '.$flexconf['float'] : '';
 		// if media
 		if ($data['assets'] || $data['image'] || $data['media']) {
 			$imageorient = $data['imageorient'];
@@ -149,15 +147,8 @@ class ClassHelper implements SingletonInterface
 
 	/**
 	 * Returns the CSS-class for tx_container
-	 *
-	 * @param array $data
-	 * @param array	$flexconf
-	 * @param boolean $isVideo
-	 * @param array	$extConf
-	 *
-	 * @return string
 	 */
-	public function getTxContainerClass($data, $flexconf, $isVideo, $extConf): string
+	public function getTxContainerClass(array $data, array $flexconf, bool $isVideo): string
 	{
 
 		$class = '';
@@ -166,8 +157,8 @@ class ClassHelper implements SingletonInterface
 		 * Background Wrapper
 		 */
 		if ( $data['CType'] == 'background_wrapper' && $isVideo == FALSE ) {
-			$class .= $flexconf['bgAttachmentFixed'] ? ' background-fixed' : '';
-			if ((!$data['assets'] && $flexconf['imageRaster']) || ($flexconf['origImage'] && $flexconf['imageRaster'])) {
+			$class .= !empty($flexconf['bgAttachmentFixed']) ? ' background-fixed' : '';
+			if ((!$data['assets'] && !empty($flexconf['imageRaster'])) || (!empty($flexconf['origImage']) && !empty($flexconf['imageRaster']))) {
 				$class .= ' bg-raster';
 			}
 		}
@@ -177,20 +168,23 @@ class ClassHelper implements SingletonInterface
 		 */
 		if ( $data['CType'] == 'autoLayout_row' ) {
 
+			if ($flexconf['verticalGutters'] == 'gy-0') $flexconf['verticalGutters'] = 0;
+
 			if ( is_string($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
 				$class .= $flexconf['horizontalGutters'] ? ' '.$flexconf['horizontalGutters'] : '';
 			}
 
-			if ($flexconf['verticalGutters']) {
-				$class .= $flexconf['verticalGutters'] ? ' '.$flexconf['verticalGutters'] : '';
+
+			if (!empty($flexconf['verticalGutters'])) {
+				$class .= !empty($flexconf['verticalGutters']) ? ' '.$flexconf['verticalGutters'] : '';
 			}
 
-			if ($flexconf['responsiveVariations']) {
-				$class .= $flexconf['justify'] ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
-				$class .= $flexconf['alignItem'] ? ' align-items-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignItem'] : '';
+			if (!empty($flexconf['responsiveVariations'])) {
+				$class .= !empty($flexconf['justify']) ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
+				$class .= !empty($flexconf['alignItem']) ? ' align-items-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignItem'] : '';
 			} else {
-				$class .= $flexconf['alignItem'] ? ' align-items-'.$flexconf['alignItem'] : '';
-				$class .= $flexconf['justify'] ? ' justify-content-'.$flexconf['justify'] : '';
+				$class .= !empty($flexconf['alignItem']) ? ' align-items-'.$flexconf['alignItem'] : '';
+				$class .= !empty($flexconf['justify']) ? ' justify-content-'.$flexconf['justify'] : '';
 			}
 		}
 
@@ -198,37 +192,23 @@ class ClassHelper implements SingletonInterface
 		 * Container
 		 */
 		if ( $data['CType'] == 'container' ) {
-			if ($flexconf['flexContainer']) {
-				if ($flexconf['responsiveVariations']) {
-					$class .= $flexconf['flexContainer'] ? ' d-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
-					$class .= $flexconf['direction'] ? ' flex-'.$flexconf['responsiveVariations'].'-'.$flexconf['direction'] : '';
-					$class .= $flexconf['justify'] ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
-					$class .= $flexconf['alignItem'] ? ' align-items-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignItem'] : '';
-					$class .= $flexconf['wrap'] ? ' flex-'.$flexconf['responsiveVariations'].'-'.$flexconf['wrap'] : '';
-					$class .= $flexconf['alignContent'] ? ' align-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignContent'] : '';
+			if (!empty($flexconf['flexContainer'])) {
+				if (!empty($flexconf['responsiveVariations'])) {
+					$class .= !empty($flexconf['flexContainer']) ? ' d-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
+					$class .= !empty($flexconf['direction']) ? ' flex-'.$flexconf['responsiveVariations'].'-'.$flexconf['direction'] : '';
+					$class .= !empty($flexconf['justify']) ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
+					$class .= !empty($flexconf['alignItem']) ? ' align-items-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignItem'] : '';
+					$class .= !empty($flexconf['wrap']) ? ' flex-'.$flexconf['responsiveVariations'].'-'.$flexconf['wrap'] : '';
+					$class .= !empty($flexconf['alignContent']) ? ' align-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignContent'] : '';
 				} else {
-					$class .= $flexconf['flexContainer'] ? ' d-'.$flexconf['flexContainer'] : '';
-					$class .= $flexconf['direction'] ? ' flex-'.$flexconf['direction'] : '';
-					$class .= $flexconf['justify'] ? ' justify-content-'.$flexconf['justify'] : '';
-					$class .= $flexconf['alignItem'] ? ' align-items-'.$flexconf['alignItem'] : '';
-					$class .= $flexconf['wrap'] ? ' flex-'.$flexconf['wrap'] : '';
-					$class .= $flexconf['alignContent'] ? ' align-content-'.$flexconf['alignContent'] : '';
+					$class .= !empty($flexconf['flexContainer']) ? ' d-'.$flexconf['flexContainer'] : '';
+					$class .= !empty($flexconf['direction']) ? ' flex-'.$flexconf['direction'] : '';
+					$class .= !empty($flexconf['justify']) ? ' justify-content-'.$flexconf['justify'] : '';
+					$class .= !empty($flexconf['alignItem']) ? ' align-items-'.$flexconf['alignItem'] : '';
+					$class .= !empty($flexconf['wrap']) ? ' flex-'.$flexconf['wrap'] : '';
+					$class .= !empty($flexconf['alignContent']) ? ' align-content-'.$flexconf['alignContent'] : '';
 				}
 			}
-		}
-
-		/**
-		 * Grid
-		 */
-		if ( $data['CType'] == 'two_columns'
-		 || $data['CType'] == 'three_columns'
-		 || $data['CType'] == 'four_columns'
-		 || $data['CType'] == 'six_columns' ) {
-			$class .= $flexconf['equalHeight'] ? ' row-eq-height' : '';
-			if ( is_string($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
-				$class .= $flexconf['horizontalGutters'] ? ' '.$flexconf['horizontalGutters'] : '';
-			}
-
 		}
 
 		return trim($class);
@@ -237,12 +217,8 @@ class ClassHelper implements SingletonInterface
 
 	/**
 	 * Returns processedData header class
-	 *
-	 * @param array $data
-	 *
-	 * @return array
 	 */
-	public function getHeaderClass($data): array
+	public function getHeaderClass(array $data): array
 	{
 		$headerPosition = $data['header_position'];
 		if ( $headerPosition == 'left' ) $headerPosition = 'start';
@@ -253,19 +229,18 @@ class ClassHelper implements SingletonInterface
 		$header['hLine'] = '';
 
 		if ( $data['tx_t3sbootstrap_header_class'] ) {
-			if (strpos($data['tx_t3sbootstrap_header_class'], 'h-line-1') !== false) {
+			if (str_contains($data['tx_t3sbootstrap_header_class'], 'h-line-1')) {
 				$header['hLine'] = 'h-line-1';
 			}
-			if (strpos($data['tx_t3sbootstrap_header_class'], 'h-line-2') !== false) {
+			if (str_contains($data['tx_t3sbootstrap_header_class'], 'h-line-2')) {
 				$header['hLine'] = 'h-line-2';
 			}
 			$textColors = explode(',','text-primary,text-secondary,text-danger,text-success,text-warning,
 			text-info,text-light,text-dark,text-body,text-muted,text-white');
 			foreach ($textColors as $textColor) {
-				if (strpos($data['tx_t3sbootstrap_header_class'], $textColor) !== false) {
+				if (str_contains($data['tx_t3sbootstrap_header_class'], $textColor)) {
 					$header['hClass'] .= $textColor;
 					$header['hColorVar'] = 'var(--bs-'.substr($textColor, 5).')';
-					$data['tx_t3sbootstrap_header_class'] = trim(str_replace($textColor, '', $data['tx_t3sbootstrap_header_class']));
 					break;
 				}
 			}
@@ -294,22 +269,18 @@ class ClassHelper implements SingletonInterface
 
 	/**
 	 * Returns processedData if parent auto layout
-	 *
-	 * @param array $flexconf
-	 *
-	 * @return string
 	 */
-	public function getAutoLayoutClass($flexconf): string
+	public function getAutoLayoutClass(array $flexconf): string
 	{
 		$class = '';
 
-		if ( $flexconf['gridSystem'] ) {
+		if ( !empty($flexconf['gridSystem']) ) {
 			switch ( $flexconf['gridSystem'] ) {
 				 case 'equal':
 					$class .= ' col';
 				break;
 				 case 'column':
-					$class .= $flexconf['xsColumns'] ? ' col-'.$flexconf['xsColumns'] : '';
+					$class .= !empty($flexconf['xsColumns']) ? ' col-'.$flexconf['xsColumns'] : '';
 				break;
 				 case 'variable':
 
@@ -319,19 +290,19 @@ class ClassHelper implements SingletonInterface
 					|| $flexconf['lgColumns'] == 'equal'
 					|| $flexconf['xlColumns'] == 'equal' ) {
 
-					$class .= $flexconf['xsColumns'] ? ' col-xs' : '';
-					$class .= $flexconf['smColumns'] ? ' col-sm' : '';
-					$class .= $flexconf['mdColumns'] ? ' col-md' : '';
-					$class .= $flexconf['lgColumns'] ? ' col-lg' : '';
-					$class .= $flexconf['xlColumns'] ? ' col-xl': '';
+					$class .= !empty($flexconf['xsColumns']) ? ' col-xs' : '';
+					$class .= !empty($flexconf['smColumns']) ? ' col-sm' : '';
+					$class .= !empty($flexconf['mdColumns']) ? ' col-md' : '';
+					$class .= !empty($flexconf['lgColumns']) ? ' col-lg' : '';
+					$class .= !empty($flexconf['xlColumns']) ? ' col-xl': '';
 
 				} else {
 
-					$class .= $flexconf['xsColumns'] ? ' col-'.$flexconf['xsColumns'] : '';
-					$class .= $flexconf['smColumns'] ? ' col-sm-'.$flexconf['smColumns'] : '';
-					$class .= $flexconf['mdColumns'] ? ' col-md-'.$flexconf['mdColumns'] : '';
-					$class .= $flexconf['lgColumns'] ? ' col-lg-'.$flexconf['lgColumns'] : '';
-					$class .= $flexconf['xlColumns'] ? ' col-xl-'.$flexconf['xlColumns'] : '';
+					$class .= !empty($flexconf['xsColumns']) ? ' col-'.$flexconf['xsColumns'] : '';
+					$class .= !empty($flexconf['smColumns']) ? ' col-sm-'.$flexconf['smColumns'] : '';
+					$class .= !empty($flexconf['mdColumns']) ? ' col-md-'.$flexconf['mdColumns'] : '';
+					$class .= !empty($flexconf['lgColumns']) ? ' col-lg-'.$flexconf['lgColumns'] : '';
+					$class .= !empty($flexconf['xlColumns']) ? ' col-xl-'.$flexconf['xlColumns'] : '';
 				}
 				break;
 			}
@@ -343,25 +314,20 @@ class ClassHelper implements SingletonInterface
 
 	/**
 	 * Returns processedData if parent container
-	 *
-	 * @param array $parentflexconf
-	 * @param array $flexconf
-	 *
-	 * @return string
 	 */
-	public function getContainerClass($parentflexconf, $flexconf): string
+	public function getContainerClass(array $parentflexconf, array $flexconf): string
 	{
 		$class = '';
-
-		if ( $parentflexconf['flexContainer'] ) {
-			if ($flexconf['responsiveVariations']) {
-				$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
+	
+		if ( !empty($parentflexconf['flexContainer']) && !empty($parentflexconf['responsiveVariations']) ) {
+			if (!empty($flexconf['responsiveVariations'])) {
+				$class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
 			} else {
-				$class .= $flexconf['alignSelf'] ? ' align-self-'.$flexconf['alignSelf'] : '';
+				$class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['alignSelf'] : '';
 			}
 
-			$class .= $flexconf['autoMargins'] ? ' '.$flexconf['autoMargins'].'-auto' : '';
-			$class .= $flexconf['order'] ? ' order-'.$flexconf['order'] : '';
+			$class .= !empty($flexconf['autoMargins']) ? ' '.$flexconf['autoMargins'].'-auto' : '';
+			$class .= !empty($flexconf['order']) ? ' order-'.$flexconf['order'] : '';
 		}
 
 		return $class;
@@ -370,14 +336,10 @@ class ClassHelper implements SingletonInterface
 
 	/**
 	 * Returns the frontend controller
-	 *
-	 * @return TypoScriptFrontendController
 	 */
 	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}
-
-
 
 }

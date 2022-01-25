@@ -9,15 +9,15 @@
 				<el>
 					<shift>
 						<TCEforms>
-							<label>Vertical shift in % ( 0 = center )</label>
-							<displayCond>FIELD:parentRec.tx_t3sbootstrap_flexform:REQ:true</displayCond>
+							<label>Vertical shift in % ( 0 = center, range: -60 to 60 )</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 							<config>
 								<type>input</type>
 								<size>5</size>
 								<default>0</default>
 								<eval>int</eval>
 								<range>
-									<lower>0</lower>
+									<lower>-60</lower>
 									<upper>60</upper>
 								</range>
 								<wizards>
@@ -33,7 +33,6 @@
 					<bgOverlay>
 						<TCEforms>
 							<label>Background color for caption</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexCarouselParentNotOwl</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -55,21 +54,9 @@
 							</config>
 						</TCEforms>
 					</bgOverlay>
-
-					<bgOverlayOwl>
-						<TCEforms>
-							<label>Background overlay color</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexCarouselParentIsOwl</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
-					</bgOverlayOwl>
-
 					<captionVAlign>
 						<TCEforms>
 							<label>Caption vertical align</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexCarouselParentNotOwl</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>

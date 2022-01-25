@@ -7,7 +7,6 @@
 					<sheetTitle>General</sheetTitle>
 				</TCEforms>
 				<el>
-
 					<multipleToast>
 						<TCEforms>
 							<label>Several "Toasts" instead of other Content Elements.</label>
@@ -19,7 +18,6 @@
 							</config>
 						</TCEforms>
 					</multipleToast>
-
 					<animation>
 						<TCEforms>
 							<label>Animation (apply a CSS fade transition to the toast)</label>
@@ -30,7 +28,6 @@
 							</config>
 						</TCEforms>
 					</animation>
-
 					<autohide>
 						<TCEforms>
 							<label>Autohide (auto hide the toast)</label>
@@ -42,7 +39,6 @@
 							</config>
 						</TCEforms>
 					</autohide>
-
 					<delay>
 						<TCEforms>
 							<label>Delay in ms (delay hiding the toast)</label>
@@ -62,7 +58,6 @@
 							</config>
 						</TCEforms>
 					</delay>
-
 					<placement>
 						<TCEforms>
 							<label>Placement</label>
@@ -118,7 +113,6 @@
 							</config>
 						</TCEforms>
 					</placement>
-
 					<toastwidth>
 						<TCEforms>
 							<label>Width of the toast in (px)</label>

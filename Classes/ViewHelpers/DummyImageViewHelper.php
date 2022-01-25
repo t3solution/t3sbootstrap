@@ -18,31 +18,23 @@ class DummyImageViewHelper extends AbstractViewHelper
 {
 	use CompileWithRenderStatic;
 
-	/**
-	 */
 	public function initializeArguments()
 	{
 		$this->registerArgument('uid', 'string', 'Uid of tt_content with custom dummy image for EXT:news', false);
 	}
 
-	/**
-	 * @param array $arguments
-	 * @param \Closure $renderChildrenClosure
-	 * @param RenderingContextInterface $renderingContext
-	 */
 	public static function renderStatic(
 		array $arguments,
 		\Closure $renderChildrenClosure,
 		RenderingContextInterface $renderingContext
 	) {
-
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$fileObjects = $fileRepository->findByRelation('tt_content', 'image', (int)$arguments['uid']);
 		if (empty($fileObjects)) {
-			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', (int)$arguments['uid']);		
+			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', (int)$arguments['uid']);
 		}
 
-		return $fileObjects[0];
+		return !empty($fileObjects) ? $fileObjects[0] : '';
 	}
-	
+
 }

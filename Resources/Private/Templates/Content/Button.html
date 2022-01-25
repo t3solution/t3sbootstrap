@@ -2,22 +2,34 @@
 <f:comment>Button Template</f:comment>
 <f:layout name="Button" />
 <f:section name="Main">
-<f:if condition="{fixedButton}">
-	<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
+<f:if condition="{fixedButton} && !{parentCType}">
+	<f:render partial="Page/Assets" arguments="{fixedbutton:'true', visiblePart:'0', btnGroup:'0'}" />
+</f:if>
+<f:if condition="{styleInline}">
+<f:asset.css identifier="t3sbs_button-{data.uid}">
+{styleInline -> f:format.raw()}
+</f:asset.css>
 </f:if>
 <f:if condition="{parentCType} == 'button_group'">
 	 <f:then>
-		<f:render section="Button" arguments="{_all}" />
+		<f:if condition="{slideInButton}">
+			<f:then>
+				<f:render section="ButtonGroup" arguments="{_all}" />
+			</f:then>
+			<f:else>
+				<f:render section="Default" arguments="{_all}" />
+			</f:else>
+		</f:if>
 	 </f:then>
 	 <f:else>
 		<f:if condition="{btn-block}">
 			<f:then>
 				<div class="d-grid">
-					<f:render section="Button" arguments="{_all}" />
+					<f:render section="Default" arguments="{_all}" />
 				</div>
 			</f:then>
 			<f:else>
-				<f:render section="Button" arguments="{_all}" />
+				<f:render section="Default" arguments="{_all}" />
 			</f:else>
 		</f:if>
 	 </f:else>
@@ -26,12 +38,63 @@
 </html>
 
 
+<f:section name="Default">
+<f:if condition="{headerPosition}">
+	<f:then>
+		<div class="{headerPosition}">
+			<f:render section="Button" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<f:render section="Button" arguments="{_all}" />
+	</f:else>
+</f:if>
+</f:section>
+
 <f:section name="Button">
 <f:link.typolink
 	parameter="{data.header_link}"
-	class="{typolinkButtonClass}"
-	additionalAttributes="{role: 'button'}">
-	{f:if(condition: '{data.tx_t3sbootstrap_header_fontawesome}', then: '<i class="{data.tx_t3sbootstrap_header_fontawesome} me-1"></i> ')}
-	{data.header -> f:format.raw()}
+	class="{trimClass}"
+	title="{linkTitle}"
+	additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
+	{headerFontawesome -> f:format.raw()} {data.header -> f:format.raw()}
 </f:link.typolink>
+</f:section>
+
+<f:section name="ButtonGroup">
+<f:if condition="{headerPosition}">
+	<f:then>
+		<div class="{headerPosition}">
+			<f:render section="ButtonInGroup" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<div class="position-relative">
+			<f:render section="ButtonInGroup" arguments="{_all}" />
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="ButtonInGroup">
+<f:if condition="{slideInButtonFaIcon}">
+	<f:then>
+		<f:link.typolink
+			parameter="{data.header_link}"
+			class="m-0 rounded-0{class}"
+			title="{linkTitle}"
+			additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
+			{headerFontawesome -> f:format.raw()} {data.header -> f:format.raw()}
+		</f:link.typolink>
+	</f:then>
+	<f:else>
+		<f:link.typolink
+			parameter="{data.header_link}"
+			class="m-0 rounded-0{class}"
+			title="{linkTitle}"
+			additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
+			<i class="fas fa-ban text-danger me-1"></i> {data.header -> f:format.raw()}
+		</f:link.typolink>
+	</f:else>
+</f:if>
 </f:section>

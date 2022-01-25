@@ -29,7 +29,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
 	bootstrap = 5.1.3
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 2.10.2
+	popperjs = 2.11.0
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
@@ -50,12 +50,10 @@ bootstrap.cdn {
 	animate = 4.1.1
 	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
 	baguetteBox = 1.11.1
-	# cat=bootstrap-cdn/b-version/42; type=small; label=Magnific Popup:
-	magnificpopup = 1.1.0
-	# cat=bootstrap-cdn/b-version/45; type=small; label=Lightcase:
-	lightcase = 2.5.0
-	# cat=bootstrap-cdn/b-version/49; type=small; label=Owl Carousel:
-	owlCarousel = 2.3.4
+	# cat=bootstrap-cdn/b-version/42; type=small; label=Halkabox:
+	halkabox = 1.6.0
+	# cat=bootstrap-cdn/b-version/45; type=small; label=G Lightbox:
+	glightbox = 3.1.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
 	jarallax = 1
 	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper:
@@ -83,10 +81,10 @@ bootstrap.cdn {
 	picturefillIntegrity =
 	# cat=bootstrap-cdn/c-integrity/37; type=small; label=Baguette Box:
 	baguetteBoxIntegrity =
-	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Magnific Popup:
-	magnificpopupIntegrity =
-	# cat=bootstrap-cdn/c-integrity/42; type=small; label=Lightcase:
-	lightcaseIntegrity =
+	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Halkabox:
+	halkaboxIntegrity =
+	# cat=bootstrap-cdn/c-integrity/42; type=small; label=G Lightbox:
+	glightboxIntegrity =
 }
 
 # customcategory=bootstrap-image=* T3SB::Image settings
@@ -121,38 +119,6 @@ bootstrap.image {
 	picturefill = 0
 }
 
-# customcategory=bootstrap-extensions=* T3SB::Extensions
-# customsubcategory=b-ext=EXT:news
-bootstrap.ext {
-	# cat=bootstrap-extensions/b-ext/10; type=boolean; label=Info (list view): shows the info (date, categories) in list view.
-	news.list.info = 0
-	# cat=bootstrap-extensions/b-ext/11; type=small; label=Image ratio (list view): e.g.: 16:9 or 4:3 - disabled if empty.
-	news.list.imageRatio = 0
-	# cat=bootstrap-extensions/b-ext/12; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=More button (list view): Utility class for the more button in list view.
-	news.list.buttonClass = primary
-	# cat=bootstrap-extensions/b-ext/13; type=boolean; label=Image mobile overlay (list view): if < 576px for Card-Templates only.
-	news.list.imageOverlay = 0
-	# cat=bootstrap-extensions/b-ext/14; type=options[top=top, bottom=bottom]; label=Loading Spinner Position (list view): with ajax pagination.
-	news.list.loadingSpinnerPosition = top
-	# cat=bootstrap-extensions/b-ext/20; type=boolean; label=Info (detail view): shows the info (date, categories, tags, author) in detail view.
-	news.detail.info = 1
-	# cat=bootstrap-extensions/b-ext/21; type=small; label=Image ratio (detail view): e.g.: 16:9 or 4:3 - disabled if empty.
-	news.detail.imageRatio = 0
-	# cat=bootstrap-extensions/b-ext/22; type=boolean; label=Lightbox (detail view): enable the lightbox in detail view.
-	news.detail.enableLightbox = 1
-	# cat=bootstrap-extensions/b-ext/23; type=options[primary=primary, secondary=secondary, success=success, danger=danger, warning=warning, info=info, light=light, dark=dark]; label=Back button (detail view): utility class for the back button in detail view.
-	news.detail.buttonClass = primary
-	# cat=bootstrap-extensions/b-ext/24; type=small; label=Teaser class (detail view): e.g.: "lead" or any other class.
-	news.detail.teaserClass = lead
-	# cat=bootstrap-extensions/b-ext/25; type=boolean; label=Carousel (detail view): shows images in carousel if enabled and more than one image.
-	news.detail.carousel = 1
-	# cat=bootstrap-extensions/b-ext/26; type=options[6=6, 7=7, 8=8, 9=9]; label=Left column width (detail view):
-	news.detail.leftGrid = 7
-	# cat=bootstrap-extensions/b-ext/27; type=small; label=Media on top (detail view): shows images or carousel on top if enabled.
-	news.detail.mediaOnTop = 0
-	# cat=bootstrap-extensions/b-ext/28; type=int+; label=UID of content element with custom dummy image (assets or image).	
-	news.list.dummyImageUid = 0
-}
 
 # customcategory=bootstrap-optimize=* T3SB::OPTIMIZE-Bootstrap 
 # customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports When using "Custom SCSS", make sure you optimize Bootstrap by only @importing the components you need. For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below. progress, tooltip, popover and placeholders are not used by t3sbootstrap! After that execute the scheduler task "t3sbootstrap:customScss".
@@ -230,6 +196,9 @@ bootstrap.config.darkMode = 0
 # include print template
 bootstrap.print.enable = 0
 
+# disable default CSS - t3sbootstrap.css
+bootstrap.config.disableDefaultCss = 0
+
 # back to top button
 bootstrap.backToTopTitle = to top
 bootstrap.backToTopClass = fa fa-chevron-circle-up fa-4x
@@ -240,6 +209,8 @@ bootstrap.gtm =
 
 # disable jQuery by default
 bootstrap.disable.jquery = 1
+# load jquery into the header if activated 
+bootstrap.config.jqueryHeader = 0
 
 # disable scroll to top for accordions
 bootstrap.disable.accordion.scrollToTop = 0
@@ -249,7 +220,7 @@ bootstrap.navbar {
 	image.width = 30
 	image.height = 24
 	image.altText = Company Logo
-	# type=int+; default breakpoints - same like Bootstrap (used as condition for inlineJS e.g. navbar hover)
+	# (int+) default breakpoints - same like Bootstrap (used as condition for inlineJS e.g. navbar hover)
 	breakpoint {
 		sm = 576
 		md = 768
@@ -257,13 +228,15 @@ bootstrap.navbar {
 		xl = 1200
 		xxl = 1400
 	}
-	# type=int+; subdropdown with two columns if items greater or equal
+	# (int+) subdropdown with two columns if items greater or equal
 	subdropdown.twoColumns = 30
-	# type=boolean; page uid with search plugin - link to your search plugin
+	# (boolean) page uid with search plugin - link to your search plugin
 	searchboxLink = 0
-	# type=boolean; fe user name in navbar - if logged in
+	# (boolean) fe user name in navbar - if logged in
 	feUserName = 0
 }
+# extra style for navbar items
+bootstrap.config.navbarPlusicon = 0
 
 
 # enable in EM config (info: https://github.com/insites/cookieconsent)
@@ -305,15 +278,18 @@ styles.content.textmedia.borderColor =
 styles.content.textmedia.borderWidth =
 styles.content.textmedia.borderPadding =
 
-#styles.content.loginform.templateFile = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/Login/Login.html
-
 # pages override
 pages.override {
 	# 1,2,3,4 or 6 (only)
 	smallColumns =
 	# sm,md,lg or xl (only)
 	breakpoint =
+	# boolean	
+	dropdownRight = 
 }
+
+bootstrap.config.uid = 1
+
 
 // import outsourced constants from DB
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript'

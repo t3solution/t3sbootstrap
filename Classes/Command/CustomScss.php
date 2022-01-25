@@ -3,34 +3,29 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-
-
 /**
  * Command for update Custom SCSS
  */
 class CustomScss extends Command
 {
 
-	/**
-	 * @param ConfigurationManagerInterface $configurationManager
-	 */
 	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
 	{
 		$this->configurationManager = $configurationManager;
@@ -89,7 +84,6 @@ class CustomScss extends Command
 				$customFileName = trim($scss);
 				$customFile = $customPath.$customFileName;
 				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/'.$customFileName;
-
 				$customContent = GeneralUtility::getURL($cdnPath);
 				if (file_exists($customFile)) unlink($customFile);
 				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
@@ -169,6 +163,7 @@ class CustomScss extends Command
 				  ->select('*')
 				  ->from('pages')
 				  ->where(
+				  	 $queryBuilder->expr()->eq('sys_language_uid', 0),
 					 $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 				  )
 				  ->execute();
@@ -243,7 +238,7 @@ class CustomScss extends Command
 					$customContent = str_replace($find, $replace, $customContent);
 				}
 			}
-		
+
 			if ($length < strlen($customContent)) {
 				if (file_exists($customFile)) unlink($customFile);
 				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
@@ -253,6 +248,17 @@ class CustomScss extends Command
 			return 0;
 
 		} else {
+
+			$message = GeneralUtility::makeInstance(FlashMessage::class,
+				'You have to activate SCSS in the EM config!',
+				'T3S Bootstrap - Custom SCSS',
+				FlashMessage::ERROR,
+				true
+			);
+
+			$flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+			$messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+			$messageQueue->addMessage($message);
 
 			return 1;
 
@@ -282,7 +288,7 @@ class CustomScss extends Command
 			$customContent = $name == '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' :	 '// Your own SCSS';
 
 			if ( $settings['bootswatch'] ) {
-				$customContent = file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');			
+				$customContent = file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
 				if ($name == '_variables') {
 					$customContent = str_replace(' !default', '', $customContent);
 				}
@@ -312,9 +318,6 @@ class CustomScss extends Command
 
 	/**
 	* remove dirs
-	* @param string $path
-	*
-	* @return int
 	*/
 	private function rmDir(string $path) : int
 	{

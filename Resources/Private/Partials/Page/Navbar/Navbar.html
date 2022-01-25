@@ -1,23 +1,15 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.navbar.enable}">
-	<f:if condition="{config.navbar.enable} == 'slide'">
+	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
+	<f:if condition="{config.navbar.container}">
 		<f:then>
-			<f:comment>	SLIDE MENU	</f:comment>
-			<f:render partial="Page/Navbar/SlideMenu" arguments="{_all}" />
+			<div class="{config.navbar.container}">
+				<f:render section="NavbarInner" arguments="{_all}" />
+			</div>
 		</f:then>
 		<f:else>
-			<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
-			<f:if condition="{config.navbar.container}">
-				<f:then>
-					<div class="{config.navbar.container}">
-						<f:render section="NavbarInner" arguments="{_all}" />
-					</div>
-				</f:then>
-				<f:else>
-					<f:render section="NavbarInner" arguments="{_all}" />
-				</f:else>
-			</f:if>
+			<f:render section="NavbarInner" arguments="{_all}" />
 		</f:else>
 	</f:if>
 </f:if>
@@ -55,7 +47,7 @@
 			<f:if condition="{settings.config.navbarExtraRow}">
 				<f:render partial="Page/Navbar/NavbarExtraRow" arguments="{_all}" />
 			</f:if>
-			<div class="navbar-nav main-navbarnav mb-2 mb-lg-0{config.navbar.sectionMenu}{config.navbar.justify}{config.navbar.mauto}">
+			<div class="navbar-nav main-navbarnav mb-2 mb-lg-0{config.navbar.sectionMenu}{config.navbar.mauto}">
 				<f:render section="NavbarNav" arguments="{_all}" />
 				<f:if condition="{settings.config.navbarExtraRow}">
 					<f:then>
@@ -86,10 +78,10 @@
 		<f:render partial="Page/Navbar/NavbarExtraRow" arguments="{_all}" />
 	</f:if>
 	<div class="offcanvas-body">
-		<div class="navbar-nav main-navbarnav justify-content-{f:if(condition:'{config.navbar.justify}',then:' {config.navbar.justify}', else:'{config.navbar.navbarAlignment}')} flex-grow-1">
+		<div class="navbar-nav main-navbarnav{config.navbar.mauto}">
 			<f:if condition="{navbarMenu} || {sectionMenu}">
 				<f:render section="NavbarNav" arguments="{_all}" />
-			</f:if>		
+			</f:if>
 		</div>
 		<f:render section="RightMenu" arguments="{_all}" />
 	</div>
@@ -118,15 +110,15 @@
 			<f:render partial="Page/Searchbox" arguments="{_all}" />
 		</f:then>
 		<f:else>
-			<f:if condition="{settings.navbar.searchboxLink} && !{navbarMenuRight.0}">
+			<f:if condition="{settings.navbar.searchboxLink} && !{navbarMenuRight -> f:count()}">
 				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search me-3"></i></f:link.page>
-			</f:if>		
-		</f:else>	
+			</f:if>
+		</f:else>
 	</f:if>
 	<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
 		<f:render partial="Page/Navbar/Language" arguments="{_all}" />
 	</f:if>
-	<f:if condition="{navbarMenuRight.0}">
+	<f:if condition="{navbarMenuRight -> f:count()}">
 		<div class="navbar-nav mb-2 mb-lg-0">
 			<f:if condition="{settings.navbar.searchboxLink}">
 				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search mx-3"></i></f:link.page>
@@ -236,9 +228,31 @@
 								<f:render section="Dropdown" arguments="{_all}" />
 							</f:then>
 							<f:else>
-								<a class="nav-link{f:if(condition: navbarItem.active, then:' active')}" 
-									href="{navbarItem.link}" 
-										target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}" 
+								<f:if condition="{navbarItem.active}">
+									<f:then>
+										<f:if condition="{navbarItem.data.shortcut} && {navbarItem.link} == '/'">
+											<f:then>
+												<f:if condition="{data.pid} == 0">
+													<f:then>
+														<f:variable name="activeItem" value=" active" />
+													</f:then>
+													<f:else>
+														<f:variable name="activeItem" value=" " />
+													</f:else>
+												</f:if>
+											</f:then>
+											<f:else>
+												<f:variable name="activeItem" value=" active" />
+											</f:else>
+										</f:if>
+									</f:then>
+									<f:else>
+										<f:variable name="activeItem" value="" />
+									</f:else>
+								</f:if>
+								<a class="nav-link{activeItem}"
+									href="{navbarItem.link}"
+										target="{f:if(condition: '{navbarItem.target}',then: '{navbarItem.target}', else: '_self')}"
 											title="{f:if(condition:'{navbarItem.data.tx_t3sbootstrap_icon_only}',then:'{navbarItem.title}',else:'')}">
 									<f:render section="Title" arguments="{item: navbarItem}" />
 								</a>
@@ -283,6 +297,14 @@
 			<f:asset.script identifier="bootstrap5-dropdown-ml-hack" src="EXT:t3sbootstrap/Resources/Public/Scripts/bootstrap5-dropdown-ml-hack.js" />
 		</f:else>
 	</f:if>
+	<f:if condition="{settings.pages.override.dropdownRight}">
+		<f:then>
+			<f:variable name="dropdownRight" value="1" />
+		</f:then>
+		<f:else>
+			<f:variable name="dropdownRight" value="{navbarItem.data.tx_t3sbootstrap_dropdownRight}" />
+		</f:else>
+	</f:if>
 	<a class="nav-link dropdown-toggle dropdown-item-{navbarItem.data.uid}{f:if(condition: navbarItem.active, then:' active')}"
 		id="dropdown-menu-{navbarItem.data.uid}"
 		href="{f:if(condition: config.navbar.clickableparent, then:'{f:uri.page(pageUid: navbarItem.data.uid)}', else:'#')}"
@@ -302,19 +324,19 @@
 		</f:if>
 	</a>
 	<f:if condition="{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}">
-		<f:then>	 
+		<f:then>
 			<f:asset.css identifier="megaNavbar" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />
 			<f:comment> removed by JS if narrower than navbarBreakpoint :: don't remove remove-{navbarBreakpoint} </f:comment>
 			<div class="dropdown-menu mega-dropdown-menu remove-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{navbarItem.data.uid}', colPos: '0'}"/>
 			</div>
 			<f:comment> removed by JS if wider than navbarBreakpoint :: don't remove show-{navbarBreakpoint} </f:comment>
-			<div class="dropdown-menu{f:if(condition: navbarItem.data.tx_t3sbootstrap_dropdownRight, then:' dropdown-menu-end')} show-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
+			<div class="dropdown-menu{f:if(condition: dropdownRight, then:' dropdown-menu-end')} show-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 			 	<f:render section="DropdownItem" arguments="{_all}" />
 			</div>
 		</f:then>
 		<f:else>
-			<div class="dropdown-menu{config.navbar.dropdownAnimate}{f:if(condition: navbarItem.data.tx_t3sbootstrap_dropdownRight, then:' dropdown-menu-end')}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
+			<div class="dropdown-menu{config.navbar.dropdownAnimate}{f:if(condition: dropdownRight, then:' dropdown-menu-end')}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 				<f:render section="DropdownItem" arguments="{_all}" />
 			</div>
 		</f:else>

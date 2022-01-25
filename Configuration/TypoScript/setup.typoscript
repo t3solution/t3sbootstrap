@@ -34,10 +34,9 @@ module.tx_t3sbootstrap {
 			picturefill = {$bootstrap.cdn.picturefill}
 			animate = {$bootstrap.cdn.animate}
 			baguetteBox = {$bootstrap.cdn.baguetteBox}
-			magnificpopup = {$bootstrap.cdn.magnificpopup}
-			lightcase = {$bootstrap.cdn.lightcase}
+			halkabox = {$bootstrap.cdn.halkabox}
+			glightbox = {$bootstrap.cdn.glightbox}
 			cookieconsent = {$bootstrap.cdn.cookieconsent}
-			owlCarousel = {$bootstrap.cdn.owlCarousel}
 			masonry = {$bootstrap.cdn.masonry}
 			jarallax = {$bootstrap.cdn.jarallax}
 			swiper = {$bootstrap.cdn.swiper}
@@ -92,6 +91,7 @@ temp.pagelayout {
 		1.current = 1
 	}
 }
+
 
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript'

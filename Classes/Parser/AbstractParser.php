@@ -1,11 +1,5 @@
-<?php declare(strict_types=1);
-
- /*
- * This file is part of the TYPO3 extension t3sbootstrap and taken from the package bk2k/bootstrap-package.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
+<?php 
+declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Parser;
 
@@ -13,35 +7,29 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 /**
  * AbstractParser
  */
 abstract class AbstractParser implements ParserInterface
 {
-	/**
-	 * @param string $extension
-	 * @return bool
-	 */
+
 	public function supports(string $extension): bool
 	{
 		return false;
 	}
 
-	/**
-	 * @param string $file
-	 * @param array $settings
-	 * @return string
-	 */
 	public function compile(string $file, array $settings): string
 	{
 		return $file;
 	}
 
-	/**
-	 * @param string $file
-	 * @param array $settings
-	 * @return bool
-	 */
 	protected function isCached(string $file, array $settings): bool
 	{
 		$cacheIdentifier = $this->getCacheIdentifier($file, $settings);
@@ -51,12 +39,6 @@ abstract class AbstractParser implements ParserInterface
 		return file_exists($cacheFile) && file_exists($cacheFileMeta);
 	}
 
-	/**
-	 * @param string $cacheFile
-	 * @param string $cacheFileMeta
-	 * @param array $settings
-	 * @return bool
-	 */
 	protected function needsCompile(string $cacheFile, string $cacheFileMeta, array $settings): bool
 	{
 		$needCompilation = false;
@@ -81,30 +63,16 @@ abstract class AbstractParser implements ParserInterface
 		return $needCompilation;
 	}
 
-	/**
-	 * @param string $cacheIdentifier
-	 * @param string $tempDirectory
-	 * @return string
-	 */
 	protected function getCacheFile(string $cacheIdentifier, string $tempDirectory): string
 	{
 		return $tempDirectory . $cacheIdentifier . '.css';
 	}
 
-	/**
-	 * @param string $filename
-	 * @return string
-	 */
-	protected function getCacheFileMeta(string $filename)
+	protected function getCacheFileMeta(string $filename): string
 	{
 		return $filename . '.meta';
 	}
 
-	/**
-	 * @param string $file
-	 * @param array $settings
-	 * @return string
-	 */
 	protected function getCacheIdentifier(string $file, array $settings): string
 	{
 		$filehash = md5($file);
@@ -114,9 +82,6 @@ abstract class AbstractParser implements ParserInterface
 		return basename($file, '.' . $extension) . '-' . $hash;
 	}
 
-	/**
-	 * @return string
-	 */
 	protected function getPathSite(): string
 	{
 		return Environment::getPublicPath() . '/';

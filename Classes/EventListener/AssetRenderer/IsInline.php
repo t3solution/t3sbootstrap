@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\EventListener\AssetRenderer;
 
+use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use Psr\Http\Message\ServerRequestInterface;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Http\ApplicationType;
-
-
 class IsInline
 {
 
@@ -73,11 +72,10 @@ class IsInline
 	TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight),",")."}};" .PHP_EOL;
 			}
 
-
-	$vanillaOnly = FALSE;
-	if ( strlen((string)$jquery) < 1 ) {
-		$vanillaOnly = TRUE;
-	}
+			$vanillaOnly = FALSE;
+			if ( strlen((string)$jquery) < 1 ) {
+				$vanillaOnly = TRUE;
+			}
 
 			if ($vanillaOnly) {
 				$event->getAssetCollector()->addInlineJavaScript("t3sbInlineJS",

@@ -59,7 +59,6 @@
 							</config>
 						</TCEforms>
 					</hidden>
-
 					<sliderStyle>
 						<TCEforms>
 							<label>Slider Style</label>
@@ -85,7 +84,6 @@
 							</config>
 						</TCEforms>
 					</sliderStyle>
-
 					<width>
 						<TCEforms>
 							<label>max. Image width</label>
@@ -99,7 +97,6 @@
 							</config>
 						</TCEforms>
 					</width>
-
 					<ratio>
 						<TCEforms>
 							<label>Image ratio - e.g.: 37:9</label>
@@ -112,11 +109,10 @@
 							</config>
 						</TCEforms>
 					</ratio>
-
 					<slidesPerView>
 						<TCEforms>
 							<label>Slides per view</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -125,11 +121,10 @@
 							</config>
 						</TCEforms>
 					</slidesPerView>
-
 					<breakpoints576>
 						<TCEforms>
 							<label>Slides per view - breakpoint > 576px</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -141,7 +136,7 @@
 					<breakpoints768>
 						<TCEforms>
 							<label>Slides per view - breakpoint > 768px</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -153,7 +148,7 @@
 					<breakpoints992>
 						<TCEforms>
 							<label>Slides per view - breakpoint > 992px</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -162,11 +157,10 @@
 							</config>
 						</TCEforms>
 					</breakpoints992>
-
 					<slidesPerGroup>
 						<TCEforms>
 							<label>Slides per group</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -175,11 +169,10 @@
 							</config>
 						</TCEforms>
 					</slidesPerGroup>
-
 					<spaceBetween>
 						<TCEforms>
 							<label>Space between</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>input</type>
 								<size>4</size>
@@ -188,21 +181,19 @@
 							</config>
 						</TCEforms>
 					</spaceBetween>
-
 					<loop>
 						<TCEforms>
 							<label>Loop</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</loop>
-
 					<navigation>
 						<TCEforms>
 							<label>Navigation</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -211,32 +202,29 @@
 					<pagination>
 						<TCEforms>
 							<label>Pagination</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</pagination>
-
-
 					<autoplay>
 						<TCEforms>
 							<label>Autoplay</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:=:Default</displayCond>
 							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</autoplay>
-
 					<delay>
 						<TCEforms>
 							<label>Delay between transitions (in ms)</label>
 							<displayCond>
 								<and>
-									<value1>FIELD:general.sliderStyle:=:Default</value1>
-									<value2>FIELD:general.autoplay:=:1</value2>
+									<value1>FIELD:sDEF.sliderStyle:=:Default</value1>
+									<value2>FIELD:sDEF.autoplay:=:1</value2>
 								</and>
 							</displayCond>
 							<config>
@@ -247,11 +235,10 @@
 							</config>
 						</TCEforms>
 					</delay>
-
 					<swiperCss>
 						<TCEforms>
 							<label>Swiper Css</label>
-							<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:!=:Default</displayCond>
 							<config>
 								<type>text</type>
 								<size>500</size>
@@ -260,11 +247,10 @@
 							</config>
 						</TCEforms>
 					</swiperCss>
-
 					<swiperJs>
 						<TCEforms>
 							<label>Swiper JS</label>
-							<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
+							<displayCond>FIELD:sDEF.sliderStyle:!=:Default</displayCond>
 							<config>
 								<type>text</type>
 								<size>500</size>
@@ -273,7 +259,6 @@
 							</config>
 						</TCEforms>
 					</swiperJs>
-
 				</el>
 			</ROOT>
 		</general>

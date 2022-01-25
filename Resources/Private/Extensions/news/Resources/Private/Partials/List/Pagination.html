@@ -4,13 +4,15 @@
         <f:then>
             <f:comment>
                 <li class="first page-item">
-                    <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: 1},addQueryString:1)}" title="{f:translate(key:'pagination.first')}">
+                    <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: 1},addQueryString:1)}"
+	                     title="{f:translate(key:'pagination.first')}">
                         <i class="material-icons">first_page</i>
                     </a>
                 </li>
             </f:comment>
             <li class="previous page-item">
-                <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.previousPageNumber},addQueryString:1)}" title="{f:translate(key:'pagination.previous')}" aria-label="Previous">
+                <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.previousPageNumber},addQueryString:1)}"
+	                 title="{f:translate(key:'pagination.previous')}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -36,13 +38,15 @@
     <f:if condition="{pagination.nextPageNumber} && {pagination.nextPageNumber} <= {pagination.lastPageNumber}">
         <f:then>
             <li class="page-item next">
-                <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.nextPageNumber},addQueryString:1)}" title="{f:translate(key:'pagination.next')}" aria-label="Next">
+                <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.nextPageNumber},addQueryString:1)}"
+	                 title="{f:translate(key:'pagination.next')}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
             <f:comment>
                 <li class="page-item last">
-                    <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.lastPageNumber},addQueryString:1)}" title="{f:translate(key:'pagination.last')}">
+                    <a class="page-link" href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.lastPageNumber},addQueryString:1)}"
+	                    aria-dropeffect="" title="{f:translate(key:'pagination.last')}">
                         last
                     </a>
                 </li>

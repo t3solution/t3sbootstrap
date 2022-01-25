@@ -33,6 +33,7 @@ TCEFORM.tt_content {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
+t3sbs_carousel.disabled = 1
 			two_columns.disabled = 1
 			three_columns.disabled = 1
 			four_columns.disabled = 1
@@ -59,8 +60,16 @@ TCEFORM.tt_content {
 			t3sbs_card.disabled = 1
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 		}
 	}
+	frame_class {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_toast.disabled = 1
+		}		
+	}
+	
 	pi_flexform {
 		types {
 			two_columns.disabled = 1
@@ -105,12 +114,14 @@ TCEFORM.tt_content {
 				label.de = Link (neuer Button)
 			}
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 		}
 	}
 	header_layout {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 		}
 		altLabels {
 			 1 = H1
@@ -128,6 +139,7 @@ TCEFORM.tt_content {
 			#t3sbs_card.disabled = 1
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 		}
 	}
 	header_position {
@@ -143,6 +155,7 @@ TCEFORM.tt_content {
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 
 		}
 	}
@@ -151,10 +164,19 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
-			t3sbs_toast.disabled = 1
+#			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 			t3sbs_card {
 				label.default = Card subtitle
 				label.de = Card Untertitel
+			}
+		}
+	}
+	assets {
+		types {
+			collapsible_accordion {
+				label.default = Image for accordions only
+				label.de = Image for accordions only
 			}
 		}
 	}
@@ -262,10 +284,17 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 		}
 	}
-	sectionIndex {
+#	sectionIndex {
+#		types {
+#			t3sbs_toast.disabled = 1
+#			collapsible_accordion.disabled = 1
+#		}
+#	}
+	tx_t3sbootstrap_sectionOrder {
 		types {
 			t3sbs_toast.disabled = 1
-		}
+			collapsible_accordion.disabled = 1
+		}		
 	}
 	tx_t3sbootstrap_header_class {
 		types {
@@ -320,33 +349,42 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_padding_sides {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
+			toast_container.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_padding_size {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
+			toast_container.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_margin_sides {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
+			toast_container.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_margin_size {
 		types {
 			t3sbs_carousel.disabled = 1
+			t3sbs_toast.disabled = 1
+			toast_container.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_container {
 		types {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_extra_class {
 		types {
-			t3sbs_carousel.disabled = 1
-			t3sbs_toast.disabled = 1
+#			t3sbs_carousel.disabled = 1
+#			t3sbs_toast.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_inTextImgRowWidth {
@@ -377,27 +415,38 @@ TCEFORM.tt_content {
 	}
 	tx_t3sbootstrap_animateCss {
 		types {
-			t3sbs_toast.disabled = 1
+#			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
+#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssDuration {
 		types {
-			t3sbs_toast.disabled = 1
+#			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
+#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssDelay {
 		types {
-			t3sbs_toast.disabled = 1
+#			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
+#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssRepeat {
 		types {
-			t3sbs_toast.disabled = 1
+#			t3sbs_toast.disabled = 1
+#			toast_container.disabled = 1
+			collapsible_accordion.disabled = 1
+#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_header_sectionMenu {
 		types {
 			t3sbs_toast.disabled = 1
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
 		}
 	}
 

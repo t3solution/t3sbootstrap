@@ -2,6 +2,21 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
+<f:if condition="{col_270 -> f:count()}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Card Wrapper (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
 <f:if condition="{settings.cardFlipperOnClick}">
 <f:asset.script identifier="vanilla_cardwrapper">
 	// Card-flipper rotate on click - CarouselWrapper.html
@@ -10,7 +25,7 @@
 </f:if>
 <f:comment> CARD GROUP </f:comment>
 <f:if condition="{card_wrapper_layout} == 'group'">
-		<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+		<div class="card-group gallery{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
 				{card.renderedContent -> f:format.raw()}
 			</f:for>
@@ -18,8 +33,10 @@
 </f:if>
 <f:comment> CARD GRID (DECK) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'deck'">
-		<div class="card-deck g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{f:if(condition:'{class}',then:' {class}')}"
-			{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+
+
+		<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
+			{styleAttr -> f:format.raw()}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
 				<div class="col">
 					{card.renderedContent -> f:format.raw()}
@@ -39,8 +56,8 @@
 				 crossorigin="anonymous" async="async" />
 			</f:else>
 		</f:if>
-		<div class="row{f:if(condition:'{class}',then:' {class}')}"
-			{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
+		<div class="row{class}"
+			{styleAttr -> f:format.raw()}{dataAnimate} data-masonry='{"percentPosition": true }'>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
 		<div class="col-sm-6 col-lg-4 mb-4">
 			{card.renderedContent -> f:format.raw()}
@@ -130,14 +147,14 @@
 		</f:if>
 	</f:asset.script>
 <div id="swiper-{data.uid}" class="swiper">	
-	<div class="swiper-wrapper card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+	<div class="swiper-wrapper card-{card_wrapper_layout}{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
 		<f:for each="{cards}" as="card" iteration="iterator">
 			<f:render section="SwiperCard" arguments="{_all}" />
 		</f:for>
 	</div>
 	<f:if condition="{navigation}">
-		<div class="swiper-button-prev prev-{data.uid}"></div>
-		<div class="swiper-button-next next-{data.uid}"></div>
+		<div class="swiper-button-prev prev-{data.uid} d-none d-md-block"></div>
+		<div class="swiper-button-next next-{data.uid} d-none d-md-block"></div>
 	</f:if>
 	<f:if condition="{pagination}">
 		<div class="swiper-paginate mt-3 text-center" style="position:inherit"></div>
@@ -146,13 +163,11 @@
 </f:if>
 <f:comment> CARD FLIPPER </f:comment>
 <f:if condition="{card_wrapper_layout} == 'flipper'">
-	<div class="card-{card_wrapper_layout}{f:if(condition:'{class}',then:' {class}')}"{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate}>
+	<div class="card-{card_wrapper_layout}{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
 		<f:render section="Flipper" arguments="{_all}" />
 	</div>
 </f:if>
 </f:section>
-</html>
-
 
 <f:section name="SwiperCard">
 <div class="swiper-slide">
@@ -185,7 +200,7 @@
 				<div class="mainflip">
 					<div class="frontside w-100">
 						<div class="card">
-							<f:if condition="{card.file.0}">
+							<f:if condition="{card.file -> f:count()}">
 								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}', width: '{card.imgwidth}'}" />
 							</f:if>
 							<div class="card-body{card.header_position}">

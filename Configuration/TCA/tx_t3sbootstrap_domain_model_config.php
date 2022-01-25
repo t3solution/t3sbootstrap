@@ -50,19 +50,6 @@ return [
 				]
 			]
 		],
-		'jquery_header' => [
-			'exclude' => false,
-			'label' => 'jQuery in header',
-			'accordion_id' => 1,
-			'config' => [
-				'type' => 'check',
-				'items' => [
-					'1' => [
-						'0' => 'load jquery into the header if activated'
-					]
-				]
-			]
-		],
 		'compress' => [
 			'exclude' => false,
 			'label' => 'Compress',
@@ -141,7 +128,7 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-				['Default', 'pt-5'],
+#				['Default', 'pt-5'],
 				'items' => [
 					['none', ''],
 					['pt-1', 'pt-1'],
@@ -219,9 +206,9 @@ return [
 				'renderType' => 'selectSingle',
 				'items' => [
 					['none', 0],
-					['Baguettbox [1] (Vanilla)', 1],
-					['Magnific Popup [2] (jQuery)', 2],
-					['Lightcase [3] (jQuery)', 3],
+					['Baguettbox [1]', 1],
+					['Halkabox [2]', 2],
+					['GLightbox [3]', 3],
 				],
 			]
 		],
@@ -474,7 +461,7 @@ return [
 			'exclude' => false,
 			'label' => 'Extra class',
 			'accordion_id' => 2,
-			'info' => 'e.g. "mb-0" for margin-bottom: 0',
+			'info' => 'e.g. text-white text-shadow bg-primary',
 			'config' => [
 				'type' => 'input'
 			]
@@ -500,7 +487,6 @@ return [
 					['none', ''],
 					['navbar-dark [dark]', 'dark'],
 					['navbar-light [light]', 'light'],
-					['navbar-slide (no dropdown) [slide]', 'slide'],
 				]
 			]
 		],
@@ -816,7 +802,8 @@ return [
 					['left', 'left'],
 					['right', 'right'],
 					['center', 'center'],
-					['Fill and justify', 'fill'],			
+					['fill (every nav item will be the same width)', 'fill'],
+					['justified (all horizontal space will be occupied by nav links)', 'justified'],
 				]
 			]
 		],
@@ -1042,7 +1029,7 @@ return [
 			'exclude' => false,
 			'label' => 'Background image',
 			'accordion_id' => 4,
-			'info' => 'Enable background image from pages media OR slider if more than 1 images',
+			'info' => 'Enable background image from pages media OR slider if more than 1 image.',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -1050,6 +1037,42 @@ return [
 					['none', ''],
 					['only on this page [page]', 'page'],
 					['on this and all child pages (slide) [root]', 'root'],
+				]
+			]
+		],
+		'jumbotron_bgimageratio' => [
+			'exclude' => false,
+			'label' => 'Background image ratio',
+			'accordion_id' => 4,
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+					['none', ''],
+					['67:9', '67x9'],
+					['56:9', '56x9'],
+					['46:9', '46x9'],
+					['37:9', '37x9'],
+					['29:9', '29x9'],
+					['21:9', '21x9'],
+				]
+			]
+		],
+		'jumbotron_alignitem' => [
+			'exclude' => false,
+			'label' => 'Align content items',
+			'accordion_id' => 4,
+			'info' => 'Vertical align for the content',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+					['none', ''],
+					['start', 'start'],
+					['end', 'end'],
+					['center', 'center'],
+					['baseline', 'baseline'],
+					['stretch', 'stretch'],
 				]
 			]
 		],
@@ -1462,6 +1485,20 @@ return [
 					['above', 'above'],
 					['below', 'below']
 				],
+			]
+		],
+		'submenu_sticky' => [
+			'exclude' => false,
+			'label' => 'Sticky top',
+			'accordion_id' => 7,
+			'info' => 'If using sectionmenu check settings under "General Settings"',
+			'config' => [
+				'type' => 'check',
+				'items' => [
+					'1' => [
+						'0' => 'position the submenu at the top of the viewport'
+					]
+				]
 			]
 		],
 

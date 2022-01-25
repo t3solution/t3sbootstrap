@@ -3,13 +3,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,6 +11,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /**
  * Command for update CDN to LOCAL
@@ -25,9 +24,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class CdnToLocal extends Command
 {
 
-	/**
-	 * @param ConfigurationManagerInterface $configurationManager
-	 */
 	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
 	{
 		$this->configurationManager = $configurationManager;
@@ -155,12 +151,6 @@ class CdnToLocal extends Command
 				$customFileName = 'animate.compat.css';
 				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-				// v3 for OWL Slider Style 1
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'animate.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
 			if ($key == 'baguetteBox') {
@@ -176,72 +166,32 @@ class CdnToLocal extends Command
 				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
-			if ($key == 'magnificpopup') {
+			if ($key == 'halkabox') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'magnific-popup.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/'.$version.'/'.$customFileName;
+				$customFileName = 'halkaBox.min.css';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
-
+				
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'jquery.magnific-popup.min.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/'.$version.'/'.$customFileName;
+				$customFileName = 'halkaBox.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
-			if ($key == 'lightcase') {
+
+			if ($key == 'glightbox') {
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'lightcase.css';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/css/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'lightcase.eot';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'lightcase.svg';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'lightcase.ttf';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/fonts/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'lightcase.woff';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/fonts/'.$customFileName;
+				$customFileName = 'glightbox.min.css';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/css/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'lightcase.min.js';
-				$cdnPath = 'https://cdn.jsdelivr.net/npm/lightcase@'.$version.'/src/js/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-			}
-			if ($key == 'owlCarousel') {
-				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'owl.carousel.min.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customFileName = 'owl.theme.default.css';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/assets/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
-				$customPath = GeneralUtility::getFileAbsFileName($customDir);
-				$customFileName = 'owl.carousel.js';
-				$cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/'.$version.'/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+				$customFileName = 'glightbox.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/js/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);			
 			}
 
 			if ($key == 'cookieconsent') {
@@ -299,12 +249,12 @@ class CdnToLocal extends Command
 		$customFile = $customPath.$customFileName;
 		$customContent = GeneralUtility::getURL($cdnPath);
 
-		if ($extend && strpos($customContent, '/*#') !== false) {
+		if ($extend && str_contains($customContent, '/*#')) {
 
 			$customContentArr = explode('/*#' , $customContent);
 			$customContent = $customContentArr[0];
 
-		} elseif (strpos((string)$customContent, '//#') !== false) {
+		} elseif (str_contains((string)$customContent, '//#')) {
 
 			$customContentArr = explode('//#' , $customContent);
 			$customContent = $customContentArr[0];

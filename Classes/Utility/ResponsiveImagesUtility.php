@@ -3,13 +3,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Utility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
@@ -19,6 +12,12 @@ use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 class ResponsiveImagesUtility implements SingletonInterface
 {
 	/**
@@ -88,6 +87,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		$webpIsLoaded = ExtensionManagementUtility::isLoaded('webp');
 
+
+
 		// Deal with file formats that can't be cropped separately
 		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
 			return $this->createSimpleImageTag(
@@ -112,6 +113,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		// Use last breakpoint as fallback image if it doesn't define a media query
 		$lastBreakpoint = array_pop($breakpoints);
+
+		$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
+
 		if ($lastBreakpoint && !$lastBreakpoint['media'] && $picturefillMarkup) {
 			// Generate different image sizes for last breakpoint
 			$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
@@ -145,6 +149,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 				$fallbackTag->addAttribute($attributePrefix . 'src', $fallbackImageUri);
 			}
 		}
+
+		$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
 
 		// Create placeholder image for lazyloading
 		if ($lazyload && $placeholderSize) {
@@ -231,19 +237,19 @@ class ResponsiveImagesUtility implements SingletonInterface
 	): TagBuilder {
 		$cropArea = $cropArea ?: Area::createEmpty();
 
-		// if lazyload enabled add data- prefix
-		$attributePrefix = $lazyload ? 'data-' : '';
-
 		// Generate different image sizes for srcset attribute
 		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $webpIsLoaded, $type);
 		$srcsetMode = substr(key($srcsetImages), -1); // x or w
 
 		// Create source tag for this breakpoint
 		$sourceTag = GeneralUtility::makeInstance(TagBuilder::class, 'source');
-		$sourceTag->addAttribute($attributePrefix . 'srcset', $this->generateSrcsetAttribute($srcsetImages));
+
 		if ($lazyload) {
-			$sourceTag->addAttribute('srcset', $this->generateSrcsetAttribute($srcsetImages));
+			$sourceTag->addAttribute('data-srcset', $this->generateSrcsetAttribute($srcsetImages));
 		}
+
+		$sourceTag->addAttribute('srcset', $this->generateSrcsetAttribute($srcsetImages));
+
 		if ($mediaQuery) {
 			$sourceTag->addAttribute('media', $mediaQuery);
 		}
