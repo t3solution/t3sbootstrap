@@ -24,8 +24,9 @@ class BackgroundImageUtility implements SingletonInterface
 
 	/**
 	 * Writes a css file with the background images
+	 *
+	 * return mixed
 	 */
-
 	public function getBgImage(
 		int $uid,
 		string $table='tt_content',
@@ -37,7 +38,7 @@ class BackgroundImageUtility implements SingletonInterface
 		bool $webp=FALSE,
 		string $bgMediaQueries='2560,1920,1200,992,768,576',
 		int $divideBy=1
-	): string
+	)
 	{
 		$frontendController = $this->getFrontendController();
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
