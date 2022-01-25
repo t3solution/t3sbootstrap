@@ -3,19 +3,18 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Context\Context;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 class LastModifiedProcessor implements DataProcessorInterface
 {
 	/**
@@ -30,10 +29,9 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration,	 array $processedData)
 	{
-		if ($processorConfiguration['lastModifiedContentElement']) {
+		if (!empty($processorConfiguration['lastModifiedContentElement'])) {
 			$processorConfiguration = [];
 			$processorConfiguration['pidInList'] = self::getFrontendController()->id;
-			$processorConfiguration['pidInList'] = $currentId;
 			$records = $cObj->getRecords('tt_content', $processorConfiguration);
 
 			foreach ( $records as $record ) {
@@ -49,7 +47,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 			$processedData['lastModifiedContentElement'] = $lmc[0];
 		}
 
-		if ($processorConfiguration['recentlyUpdatedContentElements']) {
+		if (!empty($processorConfiguration['recentlyUpdatedContentElements'])) {
 
 			$setMaxResults = $processorConfiguration['setMaxResults'] ?: 10;
 
@@ -69,11 +67,14 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 */
 	protected function isMenuRecentlyUpdatedOnPage(): bool
 	{
+		$languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+		$sysLanguageUid = $languageAspect->getContentId() ?: 0;
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
 			 ->select('uid')
 			 ->from('tt_content')
 			 ->where(
+				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)),
 				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getFrontendController()->id, \PDO::PARAM_INT)),
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('menu_recently_updated'))
 			 )

@@ -9,6 +9,7 @@ page {
 		##########################################################################################################
 
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
+		t3sbootstrap.if.isFalse = {$bootstrap.config.disableDefaultCss}
 
 	}
 
@@ -22,20 +23,6 @@ page {
 
 		modernizr = EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js
 		modernizr.if.isTrue = {$bootstrap.extconf.webp}
-
-
-		##########################################################################################################
-		#
-		# Navbar slide
-		#
-		##########################################################################################################
-
-		navbarSlide = EXT:t3sbootstrap/Resources/Public/Scripts/slideNavbar.js
-		navbarSlide.if {
-			value = slide
-			equals = {$bootstrap.config.navbarEnable}
-		}
-
 
 	}
 
@@ -96,11 +83,6 @@ page.cssInline {
 	124 = TEXT
 	124.value = picture img.lazy {opacity:1 !important;}
 }
-[END]
-
-# Ajax Pagination for EXT:news v8
-[{$bootstrap.ext.news} == 1 && {$bootstrap.ext.typoscriptRendering} == 1 ]
-plugin.tx_news.settings.list.paginate.templatePath = EXT:t3sbootstrap/Resources/Private/Extensions/news/Resources/Private/Templates/ViewHelpers/Widget/Paginate/IndexAjax.html
 [END]
 
 # Background Image

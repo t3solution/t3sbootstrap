@@ -1,30 +1,43 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{settings.config.metaEnable}">
-<f:if condition="{config.meta.align} == 'scroller'">
-	<f:then>
-		<div class="nav-meta-wrapper">
-			<div class="nav-scroller{config.meta.container}{config.meta.class}">
-				<nav class="nav nav-underline">
-					<f:render section="Meta" arguments="{_all}" />
-				</nav>
+	<f:if condition="{config.meta.align} == 'scroller'">
+		<f:then>
+			<div class="nav-meta-wrapper">
+				<div class="nav-scroller{config.meta.class}">
+					<nav class="nav nav-underline">
+						<f:render section="Meta" arguments="{_all}" />
+					</nav>
+				</div>
 			</div>
-		</div>
-	</f:then>
-	<f:else>
-		<div class="nav-meta-wrapper">
-			<div class="nav-meta{config.meta.container}{config.meta.class}">
-				<nav class="nav nav-underline justify-content-{config.meta.align}">
-					<f:render section="Meta" arguments="{_all}" />
-				</nav>
+		</f:then>
+		<f:else>
+			<div class="nav-meta-wrapper">
+				<div class="nav-meta{config.meta.class}">
+					<nav class="nav nav-underline{f:if(condition: '{config.meta.container} == none', then:' justify-content-{config.meta.align}')}">
+						<f:render section="Meta" arguments="{_all}" />
+					</nav>
+				</div>
 			</div>
-		</div>
-	</f:else>
-</f:if>
+		</f:else>
+	</f:if>
 </f:if>
 </html>
 
 
 <f:section name="Meta">
+<f:if condition="{config.meta.container} != 'none'">
+	<f:then>
+		<div class="{config.meta.container} d-flex justify-content-{config.meta.align}">
+			<f:render section="Default" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<f:render section="Default" arguments="{_all}" />
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="Default">
 <f:if condition="{config.meta.text}">
 	<f:then>
 		<span class="nav-link meta-text">

@@ -60,16 +60,6 @@
 						</TCEforms>
 					</hidden>
 
-					<alwaysOpen>
-						<TCEforms>
-							<label>Always open</label>
-							<description>stay open when another item is opened</description>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
-					</alwaysOpen>
-
 					<appearance>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.appearance</label>
@@ -91,6 +81,17 @@
 							</config>
 						</TCEforms>
 					</appearance>
+
+					<alwaysOpen>
+						<TCEforms>
+							<label>Always open</label>
+							<description>stay open when another item is opened</description>
+							<displayCond>FIELD:sDEF.appearance:=:accordion</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</alwaysOpen>
 
 					<flush>
 						<TCEforms>

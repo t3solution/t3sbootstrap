@@ -1,13 +1,6 @@
 <?php
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
-/**
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -15,7 +8,12 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-
+/**
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 class PageBrowsingViewHelper extends AbstractViewHelper
 {
 	use CompileWithRenderStatic;
@@ -45,14 +43,8 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 		$this->registerArgument('freeIndexUid', 'int', '');
 	}
 
-	/**
-	 * @param array $arguments
-	 * @param \Closure $renderChildrenClosure
-	 * @param RenderingContextInterface $renderingContext
-	 *
-	 * @return string
-	 */
-	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+
+	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
 	{
 		$maximumNumberOfResultPages = $arguments['maximumNumberOfResultPages'];
 		$numberOfResults = $arguments['numberOfResults'];
@@ -114,12 +106,11 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 	 * Used to make the link for the result-browser.
 	 * Notice how the links must resubmit the form after setting the new currentPage-value in a hidden formfield.
 	 *
-	 * @param string $str String to wrap in <a> tag
-	 * @param int $p currentPage value
-	 * @param string $freeIndexUid List of integers pointing to free indexing configurations to search. -1 represents no filtering, 0 represents TYPO3 pages only, any number above zero is a uid of an indexing configuration!
-	 * @return string Input string wrapped in <a> tag with onclick event attribute set.
+	 * $str String to wrap in <a> tag
+	 * $p currentPage value
+	 * $freeIndexUid List of integers pointing to free indexing configurations to search. -1 represents no filtering, 0 represents TYPO3 pages only, any number above zero is a uid of an indexing configuration!
 	 */
-	protected static function makecurrentPageSelector_link($str, $p, $freeIndexUid)
+	protected static function makecurrentPageSelector_link(string $str, int $p, string $freeIndexUid): string
 	{
 		$onclick = 'document.getElementById(' . GeneralUtility::quoteJSvalue(self::$prefixId . '_pointer') . ').value=' . GeneralUtility::quoteJSvalue($p) . ';';
 		if ($freeIndexUid !== null) {

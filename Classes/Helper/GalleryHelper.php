@@ -3,44 +3,34 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
 
+use TYPO3\CMS\Core\SingletonInterface;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\SingletonInterface;
-
-
 class GalleryHelper implements SingletonInterface
 {
 	/**
 	 * Returns row width
-	 *
-	 * @param array $processedData
-	 * @return array
 	 */
-	public function getGalleryRowWidth( $processedData ): array
+	public function getGalleryRowWidth(array $processedData): array
 	{
 		// Gallery row with 25, 33, 50, 66, 75 or 100%
 		if ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] == 'auto' ) {
 
 			if ($processedData['data']['bodytext']) {
 
-				if ( $processedData['gallery']['position']['vertical'] == 'intext' ) {
-
+				if ( !empty($processedData['gallery']['position']['vertical']) && $processedData['gallery']['position']['vertical'] == 'intext' ) {
 					if ( $processedData['gallery']['count']['columns'] == 1) {
-
 						$processedData['rowwidth'] = ' w-33';
 						$processedData['restrowwidth'] = ' w-66';
-
 					} else {
-
 						$processedData['rowwidth'] = ' w-50';
 						$processedData['restrowwidth'] = ' w-50';
 					}
-
 				} else {
 					// above or below
 					if ( $processedData['data']['imageorient'] <= 10 ) {
@@ -55,6 +45,7 @@ class GalleryHelper implements SingletonInterface
 
 			} else {
 				// image only
+				$processedData['gallery']['position']['vertical'] = [];
 				if ( $processedData['gallery']['position']['vertical'] === 'intext' ) {
 					$processedData['rowwidth'] = ' w-100';
 					$processedData['restrowwidth'] = '';
@@ -100,12 +91,8 @@ class GalleryHelper implements SingletonInterface
 
 	/**
 	 * Returns gallery classes
-	 *
-	 * @param array $processedData
-	 * @param string $breakpoint
-	 * @return array
 	 */
-	public function getGalleryClasses( $processedData, $breakpoint): array
+	public function getGalleryClasses(array $processedData, string $breakpoint): array
 	{
 		$galleryClass = 'gallery imageorient-'.$processedData['data']['imageorient'];
 		$galleryRowClass = '';
@@ -116,7 +103,7 @@ class GalleryHelper implements SingletonInterface
 			if ( $imageorient == 0 || $imageorient == 8 ) {
 				// center
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $processedData['rowwidth'].' text-center mx-auto';
+				$galleryRowClass .= !empty($processedData['rowwidth']) ? $processedData['rowwidth'].' text-center mx-auto' : '';
 				$processedData['addmedia']['zoomOverlay'] = ' d-flex mx-auto';
 			}
 			if ( $imageorient == 1 || $imageorient == 9 ) {

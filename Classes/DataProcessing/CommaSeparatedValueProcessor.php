@@ -3,18 +3,16 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
+use TYPO3\CMS\Core\Utility\CsvUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\Utility\CsvUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
-
-
 class CommaSeparatedValueProcessor implements DataProcessorInterface
 {
 	/**
@@ -28,7 +26,7 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
 	{
-		if (isset($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
+		if (!empty($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
 			return $processedData;
 		}
 

@@ -1,6 +1,10 @@
 <?php
 namespace T3SBS\T3sbootstrap\Domain\Repository;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
@@ -8,17 +12,15 @@ namespace T3SBS\T3sbootstrap\Domain\Repository;
  * LICENSE file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
-
 /**
  * The repository for Configs
  */
 class ConfigRepository extends Repository
 {
 	public function initializeObject() {
-		 $querySettings = $this->objectManager->get(Typo3QuerySettings::class);
-		 $querySettings->setRespectStoragePage(false);
-		 $this->setDefaultQuerySettings($querySettings);
+		/** @var Typo3QuerySettings $querySettings */
+		$querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+		$querySettings->setRespectStoragePage(false);
+		$this->setDefaultQuerySettings($querySettings);
 	}
 }

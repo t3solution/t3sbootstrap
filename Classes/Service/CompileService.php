@@ -1,18 +1,18 @@
-<?php declare(strict_types=1);
-
- /*
- * This file is part of the TYPO3 extension t3sbootstrap and taken from the package bk2k/bootstrap-package.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
+<?php
+declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Service;
 
 use T3SBS\T3sbootstrap\Parser\ParserInterface;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /**
  * This service handles the parsing of css files for the frontend.
@@ -30,8 +30,6 @@ class CompileService
 	protected $tempDirectoryRelativeToRoot = '../../../../';
 
 	/**
-	 * @param string $file
-	 * @return string|null
 	 * @throws \Exception
 	 */
 	public function getCompiledFile(string $file): ?string
@@ -57,24 +55,24 @@ class CompileService
 				'tempDirectoryRelativeToRoot' => $this->tempDirectoryRelativeToRoot,
 			],
 			'options' => [
-				'override' => $configuration['overrideParserVariables'] ? true: false,
-				'sourceMap' => $configuration['cssSourceMapping'] ? true : false,
+				'override' => !empty($configuration['overrideParserVariables']) ? true: false,
+				'sourceMap' => !empty($configuration['cssSourceMapping']) ? true : false,
 				'compress' => true
 			],
 			'variables' => []
 		];
 
 		// Parser
-		if (isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'])
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'])
 			&& is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'])
 		) {
 			foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'] as $className) {
 				$parser = GeneralUtility::makeInstance($className);
 				if ($parser instanceof ParserInterface
-					&& isset($settings['file']['info']['extension'])
+					&& !empty($settings['file']['info']['extension'])
 					&& $parser->supports($settings['file']['info']['extension'])
 				) {
-					if ($configuration['overrideParserVariables']) {
+					if (!empty($configuration['overrideParserVariables'])) {
 						$settings['variables'] = $this->getVariablesFromConstants($settings['file']['info']['extension']);
 					}
 					try {
@@ -90,10 +88,6 @@ class CompileService
 		return null;
 	}
 
-	/**
-	 * @param string $extension
-	 * @return array
-	 */
 	protected function getVariablesFromConstants(string $extension): array
 	{
 		$constants = $this->getConstants();
@@ -102,9 +96,9 @@ class CompileService
 
 		// Fetch Google Font
 		$variables['google-webfont'] = 'sans-serif';
-		if (isset($constants['page.theme.googleFont.enable'])
+		if (!empty($constants['page.theme.googleFont.enable'])
 			&& (bool) $constants['page.theme.googleFont.enable']
-			&& isset($constants['page.theme.googleFont.font'])
+			&& !empty($constants['page.theme.googleFont.font'])
 			&& $constants['page.theme.googleFont.font'] !== ''
 		) {
 			$variables['google-webfont'] = $constants['page.theme.googleFont.font'];
@@ -121,9 +115,6 @@ class CompileService
 		return $variables;
 	}
 
-	/**
-	 * @return array
-	 */
 	protected function getConstants(): array
 	{
 		if ($GLOBALS['TSFE']->tmpl->flatSetup === null

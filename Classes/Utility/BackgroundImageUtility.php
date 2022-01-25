@@ -3,24 +3,35 @@ declare(strict_types=0);
 
 namespace T3SBS\T3sbootstrap\Utility;
 
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
+use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
-use TYPO3\CMS\Core\Resource\FileReference;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Resource\FileRepository;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Service\ImageService;
-use TYPO3\CMS\Core\Page\AssetCollector;
-
 class BackgroundImageUtility implements SingletonInterface
 {
+
+
+    protected $imageService;
+
+    public function __construct(
+		ImageService $imageService
+	)
+	{
+		$this->imageService = $imageService;
+	}
+
 
 	/**
 	 * Writes a css file with the background images
@@ -46,16 +57,14 @@ class BackgroundImageUtility implements SingletonInterface
 		if ( empty($filesFromRepository) ) {
 			$filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
 		}
-		#if ( empty($filesFromRepository) ) {
-		#	$filesFromRepository = $fileRepository->findByRelation($table, 'consentpreviewimage', $uid);
-		#}
 
+		$css = '';
 		if ( count($filesFromRepository) > 1 && $body == FALSE ) {
-			if ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) {
+			if ( !empty($flexconf['bgimagePosition']) && ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) ) {
 				// bg-images in two-columns
 				// in the case if two images available but only one is selected in the flexform
 				$file = $filesFromRepository[0];
-				$image = $this->imageService()->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+				$image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 				$bgImages = $this->generateSrcsetImages($file, $image);
 				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
 				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
@@ -64,7 +73,7 @@ class BackgroundImageUtility implements SingletonInterface
 				$uid = $frontendController->id;
 				foreach($filesFromRepository as $fileKey=>$file) {
 					$fileKey = $fileKey+1;
-					$image[$fileKey] = $this->imageService()->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
+					$image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
 					$bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
 					$imageUri_mobile[$fileKey] = $webp ? $bgImages[$fileKey][576].'.webp' : $bgImages[$fileKey][576];
 					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf, FALSE, $bgMediaQueries);
@@ -74,10 +83,9 @@ class BackgroundImageUtility implements SingletonInterface
 			// background-image
 			if (!empty($filesFromRepository) ) {
 				$file = $filesFromRepository[0];
-				$image = $this->imageService()->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
+				$image = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
 				$uid = $currentUid ?: $uid;
-
-				if ( $flexconf['bgimagePosition'] ) {
+				if ( !empty($flexconf['bgimagePosition']) ) {
 					$uid = $uid . '-' . $flexconf['bgimagePosition'];
 				}
 				if ($jumbotron) {
@@ -97,7 +105,6 @@ class BackgroundImageUtility implements SingletonInterface
 						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries, $divideBy);
 					}
 				}
-
 				$bgImages = $this->generateSrcsetImages($file, $image);
 				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
 
@@ -125,13 +132,19 @@ class BackgroundImageUtility implements SingletonInterface
 
 	/**
 	 * generate CSS
-	 *
-	 * @return string $css
 	 */
-	private function generateCss( $uid, $file, $image, $webp, $flexconf=[], $body=FALSE, $bgMediaQueries, $divideBy=1): string
+	private function generateCss(
+		string $uid,
+		FileReference $file,
+		File $image,
+		bool $webp,
+		array $flexconf=[],
+		bool $body=FALSE,
+		string $bgMediaQueries='2560,1920,1200,992,768,576',
+		int $divideBy=1
+	): string
 	{
-		$imageRaster = $flexconf['imageRaster'] ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
-
+		$imageRaster = !empty($flexconf['imageRaster']) ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
 		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
 		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
 
@@ -149,24 +162,23 @@ class BackgroundImageUtility implements SingletonInterface
 				$cropVariant = 'default';
 			}
 			$cropArea = $cropVariantCollection->getCropArea($cropVariant);
+
 			$processingInstructions = [
 				'width' => (int)$querie/$divideBy,
 				'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 			];
-
-			$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
-
+			$processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
 			$css .= '@media (max-width: '.$querie.'px) {';
 			if ($webp) {
 				if ($body) {
-					$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
-					$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
+					$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
+					$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
 				} else {
-					$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
-					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
+					$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
+					$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
 				}
 			} else {
-				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+				$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
 			}
 			$css .= '}';
 
@@ -175,14 +187,14 @@ class BackgroundImageUtility implements SingletonInterface
 				$css .= '@media (min-width: '.$minQuerie.'px) {';
 				if ($webp) {
 					if ($body) {
-						$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
-						$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
+						$css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
+						$css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
 					} else {
-						$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
-						$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'.webp") !important;}';
+						$css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
+						$css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
 					}
 				} else {
-					$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService()->getImageUri($processedImage).'") !important;}';
+					$css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
 				}
 				$css .= '}';
 			}
@@ -194,8 +206,6 @@ class BackgroundImageUtility implements SingletonInterface
 
 	/**
 	 * generateSrcsetImages
-	 *
-	 * @return array $bgImages
 	 */
 	private function generateSrcsetImages( $file, $image ): array
 	{
@@ -207,32 +217,17 @@ class BackgroundImageUtility implements SingletonInterface
 			'width' => 576,
 			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 		];
-		$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
-		$bgImages[576] = $this->imageService()->getImageUri($processedImage);
+		$processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
+		$bgImages[576] = $this->imageService->getImageUri($processedImage);
 
 		return $bgImages;
 	}
 
 
 	/**
-	 * Returns the ImageService
-	 *
-	 * @return \TYPO3\CMS\Extbase\Service\ImageService
+	 * Returns the frontend controller
 	 */
-	protected function imageService(): ImageService
-	{
-		$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
-		return $objectManager->get(ImageService::class);
-	}
-
-
-	/**
-	 * Returns $typoScriptFrontendController \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 *
-	 * @return TypoScriptFrontendController
-	 */
-	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

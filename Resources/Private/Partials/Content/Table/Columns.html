@@ -3,22 +3,22 @@
 	<f:then>
 		<f:if condition="{data.table_header_position} == 1">
 			<f:then>
-				<th scope="col">
+				<th>
 			</f:then>
 			<f:else>
 				<f:if condition="{columnIterator.isFirst}">
 					<f:then>
 						<f:if condition="{data.table_header_position} == 2">
 							<f:then>
-								<th scope="col">
+								<th>
 							</f:then>
 							<f:else>
-								<td data-label="{label.{columnIterator.index}}">
+								<td>
 							</f:else>
 						</f:if>
 					</f:then>
 					<f:else>
-						<td data-label="{label.{columnIterator.index}}">
+						<td>
 					</f:else>
 				</f:if>
 			</f:else>
@@ -29,15 +29,15 @@
 			<f:then>
 				<f:if condition="{data.table_header_position} == 2">
 					<f:then>
-						<th scope="col">
+						<th>
 					</f:then>
 					<f:else>
-						<td data-label="{label.{columnIterator.index}}">
+						<td>
 					</f:else>
 				</f:if>
 			</f:then>
 			<f:else>
-				<td data-label="{label.{columnIterator.index}}">
+				<td>
 			</f:else>
 		</f:if>
 	</f:else>

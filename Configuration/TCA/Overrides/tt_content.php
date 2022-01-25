@@ -73,7 +73,7 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
-			'three_columns', // CType
+			'three_columns',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.description',
 			[
@@ -133,6 +133,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	->setSaveAndCloseInNewContentElementWizard(false)
 );
 $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
 
 # ROW CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -1467,7 +1468,11 @@ if ( $extconf['preview'] ) {
 	/***************
 	 * Show preview of tt_content elements in page module
 	 */
-	$GLOBALS['TCA']['tt_content']['ctrl']['previewRenderer'] = DefaultPreviewRenderer::class;
+	$t3sbsContent = ['t3sbs_button', 't3sbs_card', 't3sbs_carousel', 't3sbs_fluidtemplate', 't3sbs_gallery', 't3sbs_mediaobject', 't3sbs_toast'];
+	foreach ($t3sbsContent as $t3sb) {
+		$GLOBALS['TCA']['tt_content']['types'][trim($t3sb)]['previewRenderer'] = DefaultPreviewRenderer::class;
+	}
+	
 	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'row_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
 	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container', 'toast_container'];

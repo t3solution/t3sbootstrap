@@ -1,0 +1,9 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+<div class="news news-single{contentObjectData.class}"{contentObjectData.styleAttr -> f:format.raw()}>
+	<div class="article" itemscope="itemscope" itemtype="http://schema.org/Article">
+		<f:render section="content" />
+	</div>
+</div>
+</html>

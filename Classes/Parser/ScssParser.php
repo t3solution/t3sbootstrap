@@ -1,11 +1,5 @@
-<?php declare(strict_types=1);
-
- /*
- * This file is part of the TYPO3 extension t3sbootstrap and taken from the package bk2k/bootstrap-package.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
+<?php
+declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Parser;
 
@@ -16,6 +10,13 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /**
  * ScssParser
@@ -32,20 +33,11 @@ class ScssParser extends AbstractParser
 		}
 	}
 
-	/**
-	 * @param string $extension
-	 * @return bool
-	 */
 	public function supports(string $extension): bool
 	{
 		return $extension === 'scss';
 	}
 
-	/**
-	 * @param string $file
-	 * @param array $settings
-	 * @return string
-	 */
 	public function compile(string $file, array $settings): string
 	{
 		$cacheIdentifier = $this->getCacheIdentifier($file, $settings);
@@ -68,11 +60,6 @@ class ScssParser extends AbstractParser
 		return $cacheFile;
 	}
 
-	/**
-	 * @param string $file
-	 * @param array $settings
-	 * @return array
-	 */
 	protected function parseFile(string $file, array $settings): array
 	{
 		$scss = new Compiler();
@@ -133,7 +120,7 @@ class ScssParser extends AbstractParser
 					if (is_file(PathUtility::getCanonicalPath($absoluteFilePath . '/' . $result))) {
 						$result = PathUtility::getCanonicalPath($relativeFilePath . '/' . $result);
 					}
-					$result = substr($result, 0, 1) === '/' ? substr($result, 1) : $result;
+					$result = str_starts_with($result, '/') ? substr($result, 1) : $result;
 				}
 				return 'url(' . $marker . $result . $marker . ')';
 			}

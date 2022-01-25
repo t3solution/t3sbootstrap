@@ -59,6 +59,7 @@ page {
 				override {
 					smallColumns = {$pages.override.smallColumns}
 					breakpoint = {$pages.override.breakpoint}
+					dropdownRight = {$pages.override.dropdownRight}
 				}
 			}
 			config {
@@ -111,6 +112,8 @@ page {
 				navbarLangFlags = {$bootstrap.config.navbarLangFlags}
 				jumbotronEnable = {$bootstrap.config.jumbotronEnable}
 				jumbotronBgimage = {$bootstrap.config.jumbotronBgimage}
+				jumbotronBgimageratio = {$bootstrap.config.jumbotronBgimageratio}
+				jumbotronAlignitem = {$bootstrap.config.jumbotronAlignitem}
 				jumbotronSlide = {$bootstrap.config.jumbotronSlide}
 				jumbotronPosition = {$bootstrap.config.jumbotronPosition}
 				jumbotronContainer = {$bootstrap.config.jumbotronContainer}
@@ -134,8 +137,8 @@ page {
 				sidebarExcludeuiduist = {$bootstrap.config.sidebarExcludeuiduist}
 				sidebarIncludespacer = {$bootstrap.config.sidebarIncludespacer}
 				sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
+				submenuSticky = {$bootstrap.config.submenuSticky}
 				footerEnable = {$bootstrap.config.footerEnable}
-				footerFluid = {$bootstrap.config.footerFluid}
 				footerSlide = {$bootstrap.config.footerSlide}
 				footerSticky = {$bootstrap.config.footerSticky}
 				footerContainer = {$bootstrap.config.footerContainer}
@@ -316,7 +319,7 @@ page {
 					10.if.isTrue = {$bootstrap.config.breadcrumbEnable}
 					20 = TEXT
 					20.value = 1
-					20.if.isTrue = {$bootstrap.config.bottom}
+					20.if.isTrue = {$bootstrap.config.breadcrumbBottom}
 				}
 			}
 
@@ -422,7 +425,6 @@ page {
 			# Main Config
 			#
 			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
-
 		}
 	}
 }

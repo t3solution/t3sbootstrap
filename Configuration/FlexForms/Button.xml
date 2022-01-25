@@ -103,16 +103,17 @@
 							</config>
 						</TCEforms>
 					</style>
-					<size>
+					<btnsize>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-										<numIndex index="1"></numIndex>
+										<numIndex index="1">default</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</numIndex>
@@ -123,13 +124,14 @@
 										<numIndex index="1">btn-lg</numIndex>
 									</numIndex>
 								</items>
-								<default></default>
+								<default>default</default>
 							</config>
 						</TCEforms>
-					</size>
+					</btnsize>
 					<block>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.block</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -146,7 +148,7 @@
 					<fixedPosition>
 						<TCEforms>
 							<label>Fixed position (activate required javascript in extConf)</label>
-							<onChange>reload</onChange>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -171,7 +173,6 @@
 					<rotate>
 						<TCEforms>
 							<label>Rotate the Button</label>
-							<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -193,6 +194,16 @@
 							</config>
 						</TCEforms>
 					</rotate>
+					<linkTitle>
+						<TCEforms>
+							<label>Link title</label>
+							<config>
+								<type>input</type>
+								<eval>trim</eval>
+								<size>20</size>
+							</config>
+						</TCEforms>
+					</linkTitle>
 				</el>
 			</ROOT>
 		</sDEF>

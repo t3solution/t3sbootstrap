@@ -31,6 +31,7 @@
 					<maxwidth>
 						<TCEforms>
 							<label>Card max-width == image width</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -40,6 +41,7 @@
 					<image.overlay>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.imageOverlay</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -49,6 +51,7 @@
 					<mobile.overlay>
 						<TCEforms>
 							<label>Image overlay - mobile view only</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -59,6 +62,7 @@
 						<TCEforms>
 							<label>Flip Card with Text or Image</label>
 							<description>Frontside with image - Backside with text (if "Text Top" available) or image (second image)</description>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
 							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
@@ -275,6 +279,7 @@
 					<horizontal>
 						<TCEforms>
 							<label>Horizontal</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
 							<config>
 								<type>check</type>
 							</config>
@@ -984,7 +989,12 @@
 				<type>array</type>
 				<el>
 
-					<xlColumns>
+<!--
+	xxlColumns is issing in PHP
+-->
+
+
+					<xxlColumns>
 						<TCEforms>
 							<label>Columns</label>
 								 <displayCond>
@@ -1062,7 +1072,7 @@
 								<size>1</size>
 							</config>
 						</TCEforms>
-					</xlColumns>
+					</xxlColumns>
 
 				</el>
 			</ROOT>

@@ -36,16 +36,7 @@
 						<f:comment> - FORM FIELD - </f:comment>
 						<f:if condition="{isSiteroot}">
 							<f:then>
-								<f:if condition="{ckey} == 'jquery_header'">
-									<f:then>
-										<f:if condition="{settings.disableJquery} == '0'">
-											<f:render partial="Config/{field.type}" arguments="{_all}" />		
-										</f:if>
-									</f:then>
-									<f:else>
-										<f:render partial="Config/{field.type}" arguments="{_all}" />
-									</f:else>
-								</f:if>
+								<f:render partial="Config/{field.type}" arguments="{_all}" />
 							</f:then>
 							<f:else>
 								<f:if condition="{field.property} != 'contentOnlyOnRootpage'">

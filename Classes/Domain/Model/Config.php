@@ -1,14 +1,14 @@
 <?php
 namespace T3SBS\T3sbootstrap\Domain\Model;
 
+ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
- use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Config
@@ -348,11 +348,18 @@ class Config extends AbstractEntity
 	protected $jumbotronBgimage = '';
 
 	/**
-	 * jumbotronFluid
+	 * jumbotronAlignitem
 	 *
-	 * @var bool
-	protected $jumbotronFluid = false;
+	 * @var string
 	 */
+	protected $jumbotronAlignitem = '';
+
+	/**
+	 * jumbotronBgimageratio
+	 *
+	 * @var string
+	 */
+	protected $jumbotronBgimageratio = '';
 
 	/**
 	 * jumbotronRounded
@@ -533,8 +540,8 @@ class Config extends AbstractEntity
 	 * footerFluid
 	 *
 	 * @var bool
-	 */
 	protected $footerFluid = false;
+	 */
 
 	/**
 	 * footerSlide
@@ -664,13 +671,6 @@ class Config extends AbstractEntity
 	protected $contentOnlyOnRootpage = false;
 
 	/**
-	 * jqueryHeader
-	 *
-	 * @var bool
-	 */
-	protected $jqueryHeader = false;
-
-	/**
 	 * compress
 	 *
 	 * @var bool
@@ -704,6 +704,13 @@ class Config extends AbstractEntity
 	 * @var bool
 	 */
 	protected $slideRightAside = false;
+
+	/**
+	 * submenuSticky
+	 *
+	 * @var bool
+	 */
+	protected $submenuSticky = false;
 
 
 	/**
@@ -2028,6 +2035,48 @@ class Config extends AbstractEntity
 	}
 
 	/**
+	 * Returns the jumbotronBgimageratio
+	 *
+	 * @return string $jumbotronBgimageratio
+	 */
+	public function getJumbotronBgimageratio()
+	{
+		return $this->jumbotronBgimageratio;
+	}
+
+	/**
+	 * Sets the jumbotronBgimageratio
+	 *
+	 * @param string $jumbotronBgimageratio
+	 * @return void
+	 */
+	public function setJumbotronBgimageratio($jumbotronBgimageratio)
+	{
+		$this->jumbotronBgimageratio = $jumbotronBgimageratio;
+	}
+
+	/**
+	 * Returns the jumbotronAlignitem
+	 *
+	 * @return string $jumbotronAlignItem
+	 */
+	public function getJumbotronAlignItem()
+	{
+		return $this->jumbotronAlignitem;
+	}
+
+	/**
+	 * Sets the jumbotronAlignitem
+	 *
+	 * @param string $jumbotronAlignitem
+	 * @return void
+	 */
+	public function setJumbotronAlignitem($jumbotronAlignitem)
+	{
+		$this->jumbotronAlignitem = $jumbotronAlignitem;
+	}
+
+	/**
 	 * Returns the jumbotronSlide
 	 *
 	 * @return bool $jumbotronSlide
@@ -2625,32 +2674,32 @@ class Config extends AbstractEntity
 	 * Returns the footerFluid
 	 *
 	 * @return bool $footerFluid
-	 */
 	public function getFooterFluid()
 	{
 		return $this->footerFluid;
 	}
+	 */
 
 	/**
 	 * Sets the footerFluid
 	 *
 	 * @param bool $footerFluid
 	 * @return void
-	 */
 	public function setFooterFluid($footerFluid)
 	{
 		$this->footerFluid = $footerFluid;
 	}
+	 */
 
 	/**
 	 * Returns the boolean state of footerFluid
 	 *
 	 * @return bool
-	 */
 	public function isFooterFluid()
 	{
 		return $this->footerFluid;
 	}
+	 */
 
 	/**
 	 * Returns the footerSlide
@@ -3103,29 +3152,6 @@ class Config extends AbstractEntity
 		$this->contentOnlyOnRootpage = $contentOnlyOnRootpage;
 	}
 
-
-	/**
-	 * Returns the jqueryHeader
-	 *
-	 * @return bool $jqueryHeader
-	 */
-	public function getJqueryHeader()
-	{
-		return $this->jqueryHeader;
-	}
-
-	/**
-	 * Sets the jqueryHeader
-	 *
-	 * @param bool $jqueryHeader
-	 * @return void
-	 */
-	public function setJqueryHeader($jqueryHeader)
-	{
-		$this->jqueryHeader = $jqueryHeader;
-	}
-
-
 	/**
 	 * Returns the compress
 	 *
@@ -3232,6 +3258,27 @@ class Config extends AbstractEntity
 	public function setSlideRightAside($slideRightAside)
 	{
 		$this->slideRightAside = $slideRightAside;
+	}
+
+	/**
+	 * Returns the submenuSticky
+	 *
+	 * @return bool $submenuSticky
+	 */
+	public function getsubmenuSticky()
+	{
+		return $this->submenuSticky;
+	}
+
+	/**
+	 * Sets the submenuSticky
+	 *
+	 * @param bool $submenuSticky
+	 * @return void
+	 */
+	public function setsubmenuSticky($submenuSticky)
+	{
+		$this->submenuSticky = $submenuSticky;
 	}
 
 	/**

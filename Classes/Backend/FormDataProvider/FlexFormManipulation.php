@@ -23,10 +23,8 @@ class FlexFormManipulation implements FormDataProviderInterface
 	/**
 	 * Add or remove options to select-fields in flexforms
 	 *
-	 * @param array $result
-	 * @return array
 	 */
-	public function addData(array $result)
+	public function addData(array $result): array
 	{
 		$configurationManager =GeneralUtility::makeInstance(BackendConfigurationManager::class);
 		$configurationManager->getDefaultBackendStoragePid();
@@ -35,7 +33,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 		$flexforms = $setup['plugin.']['tx_t3sbootstrap.']['flexform.'];
 
 		# if FlexFormManipulation
-		if ( is_array($flexforms) ) {
+		if ( !empty($flexforms) ) {
 
 			$cType = $result['databaseRow']['CType'];
 
@@ -112,13 +110,13 @@ class FlexFormManipulation implements FormDataProviderInterface
 			foreach ($flexforms as $file=>$fields) {
 				if ( $file == $flexformFile ) {
 					foreach ($fields as $field=>$mod) {
-						if ($mod['add']) {
+						if ( !empty($mod['add']) ) {
 							foreach (explode(',',$mod['add']) as $add) {
-								if (is_array($dataStructure['sheets'])) {
+								if (!empty($dataStructure['sheets'])) {
 									foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
 										foreach ($fieldsInSheet as $fieldArr) {
 											foreach ($fieldArr as $fieldName) {
-												if (is_array($fieldName)) {
+												if (!empty($fieldName)) {
 													foreach ($fieldName as $key=>$name) {
 														if ($name['config']['type'] == 'select') {
 															if (substr($field, 0, -1) == $key) {
@@ -136,11 +134,11 @@ class FlexFormManipulation implements FormDataProviderInterface
 						}
 						if ($mod['reduce']) {
 							foreach( explode(',',$mod['reduce']) as $reduce ) {
-								if (is_array($dataStructure['sheets'])) {
+								if (!empty($dataStructure['sheets'])) {
 									foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
 										foreach ($fieldsInSheet as $fieldArr) {
 											foreach ($fieldArr as $fieldName) {
-												if (is_array($fieldName)) {
+												if (!empty($fieldName)) {
 													foreach ($fieldName as $key=>$name) {
 														if ($name['config']['type'] == 'select') {
 															if (substr($field, 0, -1) == $key) {
@@ -164,11 +162,8 @@ class FlexFormManipulation implements FormDataProviderInterface
 			}
 
 			$result['processedTca']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] = $dataStructure;
-
 		}
 
 		return $result;
 	}
-
-
 }

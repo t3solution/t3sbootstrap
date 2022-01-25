@@ -1,56 +1,17 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
-<f:if condition="{tableResponsiveVariant}">
-<f:asset.css identifier="codesnippetCssPrimary">
-@media screen and (max-width: 576px) {
-    table.tableResponsiveVariant thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-    table.tableResponsiveVariant tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: 0.625em;
-    }
-    table.tableResponsiveVariant td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: 0.8em;
-        text-align: right;
-    }
-    table.tableResponsiveVariant td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: 700;
-        text-transform: uppercase;
-    }
-    table.tableResponsiveVariant td:last-child {
-        border-bottom: 0;
-    }
-}
-
-
-</f:asset.css>
-</f:if>
-	<f:if condition="{tableResponsive} && !{tableResponsiveVariant}">
+	<f:if condition="{tableResponsive}">
 		<div class="table-responsive">
 	</f:if>
 	<f:if condition="{table}">
-		<table class="{tableclass}{f:if(condition: tableResponsiveVariant, then: ' tableResponsiveVariant')}">
+		<table class="{tableclass}">
 			<f:if condition="{data.table_caption}">
 				<caption>{data.table_caption}</caption>
 			</f:if>
 			<f:for each="{table}" as="row" iteration="rowIterator">
 				<f:if condition="{rowIterator.isFirst}">
 					<f:then>
-						<f:variable name="label">{row}</f:variable>
 						<f:if condition="{data.table_header_position} == 1">
 							<f:then>
 								<f:if condition="{table-row-class.{rowIterator.index}}">
@@ -111,7 +72,7 @@
 			</f:for>
 		</table>
 	</f:if>
-	<f:if condition="{tableResponsive} && !{tableResponsiveVariant}">
+	<f:if condition="{tableResponsive}">
 		</div>
 	</f:if>
 </f:section>

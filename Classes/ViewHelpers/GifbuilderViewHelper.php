@@ -1,13 +1,6 @@
 <?php
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
-/**
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -16,17 +9,19 @@ use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Extbase\Service\ImageService;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 
-
+/**
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 class GifbuilderViewHelper extends AbstractViewHelper
 {
 	use CompileWithRenderStatic;
 
-	/**
-	 */
 	public function initializeArguments()
 	{
 		$this->registerArgument('uid', 'int', 'Uid of page with media', false);
@@ -34,11 +29,6 @@ class GifbuilderViewHelper extends AbstractViewHelper
 		$this->registerArgument('substr', 'string', 'substr the path', false);
 	}
 
-	/**
-	 * @param array $arguments
-	 * @param \Closure $renderChildrenClosure
-	 * @param RenderingContextInterface $renderingContext
-	 */
 	public static function renderStatic(
 		array $arguments,
 		\Closure $renderChildrenClosure,
@@ -50,8 +40,7 @@ class GifbuilderViewHelper extends AbstractViewHelper
 		$substr = $arguments['substr'];
 
 		if (defined('TYPO3') && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
-			$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-			$imageService = $objectManager->get(ImageService::class);
+			$imageService = GeneralUtility::makeInstance(ImageService::class);
 			$resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
 			$file = $resourceFactory->getFileObjectFromCombinedIdentifier('0:/'.$path);
 			$width = 800;
@@ -105,26 +94,5 @@ return '<picture>
 		}
 	}
 
-
-	/**
-	 * generateSrcsetImages
-	 *
-	 * @return string $css
-	 */
-	private function generateSrcsetImages( $file, $image ) {
-
-		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
-		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
-		$cropVariant = 'mobile';
-		$cropArea = $cropVariantCollection->getCropArea($cropVariant);
-		$processingInstructions = [
-			'width' => 576,
-			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
-		];
-		$processedImage = $this->imageService()->applyProcessingInstructions($image, $processingInstructions);
-		$bgImages[576] = $this->imageService()->getImageUri($processedImage);
-
-		return $bgImages;
-	}
 
 }

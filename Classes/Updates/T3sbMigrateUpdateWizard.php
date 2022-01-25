@@ -3,26 +3,21 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Updates;
 
+use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-
 class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 {
 	/**
 	 * Return the identifier for this wizard
 	 * This should be the same string as used in the ext_localconf class registration
-	 *
-	 * @return string
 	 */
 	public function getIdentifier(): string
 	{
@@ -31,8 +26,6 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 
 	/**
 	 * Return the speaking name of this wizard
-	 *
-	 * @return string
 	 */
 	public function getTitle(): string
 	{
@@ -41,8 +34,6 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 
 	/**
 	 * Return the description for this wizard
-	 *
-	 * @return string
 	 */
 	public function getDescription(): string
 	{
@@ -53,8 +44,6 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 	 * Execute the update
 	 *
 	 * Called when a wizard reports that an update is necessary
-	 *
-	 * @return bool
 	 */
 	public function executeUpdate(): bool
 	{
@@ -65,8 +54,6 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 
 	/**
 	 * Migrate Bootstrap Utility Classes from v4 to v5
-	 *
-	 * @return void
 	 */
 	protected function upgradeColumns(): void
 	{
@@ -249,8 +236,6 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 	 *
 	 * Is used to determine whether a wizard needs to be run.
 	 * Check if data for migration exists.
-	 *
-	 * @return bool
 	 */
 	public function updateNecessary(): bool
 	{
@@ -281,7 +266,6 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 	/**
 	 * Check for old Bootstrap Utility Classes
 	 *
-	 * @return bool
 	 * @throws \InvalidArgumentException
 	 */
 	protected function checkIfWizardIsRequired(): bool

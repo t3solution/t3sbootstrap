@@ -23,12 +23,11 @@
 						<a href="{f:uri.image(image:mediaElement,
 							width:'{settings.media.popup.width}',
 							height:'{settings.media.popup.height}')}"
-							data-bs-toggle="lightbox"
-							data-title="{mediaElement.title}"
-							class="lightbox"
-							data-gallery="gallery-{mediaElement.originalResource.properties.uid_foreign}">
+							data-title="{f:if(condition:file.description,then:'{file.description}',
+							 else:'img-{mediaElement.originalResource.properties.uid_foreign}')}"
+							class="gallery-{contentObjectData.uid}"
 							<f:render section="Image" arguments="{file: mediaElement}" />
-						</a>
+						</a>			
 					</f:if>
 					<f:if condition="{settings.detail.lightbox.selection} == 3">
 						<a href="{f:uri.image(image:mediaElement,
@@ -36,10 +35,12 @@
 							height:'{settings.media.popup.height}')}"
 							id="ex-{mediaElement.uid}"
 							title="{mediaElement.title}"
-							class="lightcaseGallery"
-							data-rel="lightcase:collection{mediaElement.originalResource.properties.uid_foreign}:slideshow"
+							class="glightbox"
+							data-gallery="glightbox-{mediaElement.originalResource.properties.uid_foreign}"
+							data-glightbox="gallery-{mediaElement.originalResource.properties.uid_foreign}"
 							maxWidth="{settings.media.popup.width}"
-							maxHeight="{settings.media.popup.height}">
+							maxHeight="{settings.media.popup.height}"
+							data-effect="fade">
 							<f:render section="Image" arguments="{file: mediaElement}" />
 						</a>
 					</f:if>
@@ -91,9 +92,15 @@
 			</f:if>
 		</f:else>
 	</f:if>
+
+
+	<f:variable name="extraImgClass" value="{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_imgclass,
+	 then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+	<f:variable name="altText" value="{f:if(condition: file.originalResource.alternative, then: '{file.originalResource.alternative}',
+	 else: 'image-{file.originalResource.uid}')}" />
 	<t3sb:media
-		file="{file}" title="{file.originalResource.title}" alt="{f:if(condition: file.originalResource.alternative, then: '{file.originalResource.alternative}', else: 'image-{file.originalResource.uid}')}"
-		class="img-fluid{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_lazy_load, then: ' lazy')}{f:if(condition:'{settings.lazyLoad} == 1',then:' lazy')}{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}')}"
+		file="{file}" title="{file.originalResource.title}" alt="{altText}"
+		class="img-fluid{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_lazy_load, then: ' lazy')}{f:if(condition:'{settings.lazyLoad} == 1',then:' lazy')}{extraImgClass}"
 		width="{width}"
 		height="{height}"
 		breakpoints="{

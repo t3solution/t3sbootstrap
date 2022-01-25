@@ -7,6 +7,7 @@
 					<sheetTitle>Settings</sheetTitle>
 				</TCEforms>
 				<el>
+<!--
 					<hidden>
 						<TCEforms>
 							<label>Hiding / Display Elements</label>
@@ -59,7 +60,7 @@
 							</config>
 						</TCEforms>
 					</hidden>
-
+-->
 					<active>
 						<TCEforms>
 							<label>Active</label>

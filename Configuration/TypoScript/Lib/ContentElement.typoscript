@@ -37,6 +37,7 @@ lib.contentElement {
 				width = {$styles.content.textmedia.linkWrap.width}
 				height = {$styles.content.textmedia.linkWrap.height}
 				JSwindow = 0
+				crop =
 				directImageLink = 1
 				linkParams.ATagParams.dataWrap >
 				linkParams.ATagParams.stdWrap.cObject = COA
@@ -64,9 +65,8 @@ lib.contentElement {
 		masonryIntegrity = {$bootstrap.cdn.masonryIntegrity}
 		jarallaxVersion = {$bootstrap.cdn.jarallax}
 		baguetteBoxVersion = {$bootstrap.cdn.baguetteBox}
-		lightcaseVersion = {$bootstrap.cdn.lightcase}
-		magnificpopupVersion = {$bootstrap.cdn.magnificpopup}
-		owlCarouselVersion = {$bootstrap.cdn.owlCarousel}
+		glightboxVersion = {$bootstrap.cdn.glightbox}
+		halkaboxVersion = {$bootstrap.cdn.halkabox}
 		swiperVersion = {$bootstrap.cdn.swiper}
 		cdn = {$bootstrap.cdn.enable}
 		highlightIntegrity = {$bootstrap.cdn.highlightIntegrity}
@@ -140,20 +140,20 @@ lib.contentElement {
 lib.contentElement.settings.srcsetMobile = 575
 [END]
 
-# 2 == Magnific Popup - https://dimsemenov.com/plugins/magnific-popup/
+# 2 == halkabox - https://github.com/ahmednooor/halkaBox.js
 [{$bootstrap.config.lightboxSelection} == 2]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
-	linkParams.ATagParams.dataWrap = title="{file:current:description}"
+	linkParams.ATagParams.dataWrap = class="gallery-{file:current:uid_foreign}"  data-title="{file:current:description}"
 	directImageLink = 1
 }
 [END]
 
-# 3 == Versatile Responsive jQuery LightBox Plugin - lightcase.js - https://cornel.bopp-art.com/lightcase/
+# 3 == LightBox Plugin - glightbox.js - https://github.com/biati-digital/glightbox
 [{$bootstrap.config.lightboxSelection} == 3]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
-	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="lightcaseGallery" data-rel="lightcase:collection{file:current:uid_foreign}:slideshow" title="{file:current:title}"
+	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="glightbox" data-glightbox="title:{file:current:description}" data-gallery="gallery-{file:current:uid_foreign}" data-effect="fade"
 	directImageLink = 1
 }
 [END]

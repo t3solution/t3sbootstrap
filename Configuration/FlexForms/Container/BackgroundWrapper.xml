@@ -90,7 +90,6 @@
 							</config>
 						</TCEforms>
 					</origImage>
-
 					<bgAttachmentFixed>
 						<TCEforms>
 							<label>Background-attachment - fixed</label>
@@ -105,7 +104,6 @@
 							</config>
 						</TCEforms>
 					</bgAttachmentFixed>
-
 					<enableAutoheight>
 						<TCEforms>
 							<label>Enable content overlay and autoheight for background-image (JS)</label>
@@ -122,7 +120,6 @@
 							</config>
 						</TCEforms>
 					</enableAutoheight>
-
 					<addHeight>
 						<TCEforms>
 							<label>Surcharge height to background-image (in px)</label>
@@ -147,11 +144,9 @@
 							</config>
 						</TCEforms>
 					</addHeight>
-
 					<alignItem>
 						<TCEforms>
 							<label>Align content items</label>
-
 							<displayCond>
 								<AND>
 									<numIndex index="2">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</numIndex>
@@ -161,7 +156,6 @@
 									</OR>
 								</AND>
 							</displayCond>
-
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -195,7 +189,6 @@
 							</config>
 						</TCEforms>
 					</alignItem>
-
 					<paddingTopBottom>
 						<TCEforms>
 							<label>Padding (top and bottom in rem)</label>
@@ -220,7 +213,6 @@
 							</config>
 						</TCEforms>
 					</paddingTopBottom>
-
 					<imgGrayscale>
 						<TCEforms>
 							<label>Grayscale</label>
@@ -300,7 +292,6 @@
 							</config>
 						</TCEforms>
 					</imageRaster>
-
 				</el>
 			</ROOT>
 		</images>
@@ -312,7 +303,6 @@
 					<sheetTitle>No Media</sheetTitle>
 				</TCEforms>
 				<el>
-
 					<noMediaPaddingTopBottom>
 						<TCEforms>
 							<label>Padding (top and bottom in rem)</label>
@@ -326,7 +316,6 @@
 							</config>
 						</TCEforms>
 					</noMediaPaddingTopBottom>
-
 				</el>
 			</ROOT>
 		</background>
@@ -348,7 +337,6 @@
 							</config>
 						</TCEforms>
 					</loop>
-
 					<mute>
 						<TCEforms>
 							<label>Mute</label>
@@ -359,7 +347,6 @@
 							</config>
 						</TCEforms>
 					</mute>
-
 					<aspectRatio>
 						<TCEforms>
 							<label>Aspect ratios</label>
@@ -398,7 +385,6 @@
 							</config>
 						</TCEforms>
 					</aspectRatio>
-
 					<shift>
 						<TCEforms>
 							<label>Extra shift for the video</label>
@@ -412,7 +398,6 @@
 							</config>
 						</TCEforms>
 					</shift>
-
 					<alignVideoItem>
 						<TCEforms>
 							<label>Align content items</label>
@@ -450,7 +435,6 @@
 							</config>
 						</TCEforms>
 					</alignVideoItem>
-
 				</el>
 			</ROOT>
 		</localvideo>
@@ -462,7 +446,6 @@
 					<sheetTitle>Youtube Video</sheetTitle>
 				</TCEforms>
 				<el>
-
 					<contentPosition>
 						<TCEforms>
 							<label>Content Position</label>
@@ -513,13 +496,11 @@
 										<numIndex index="0">Bottom right</numIndex>
 										<numIndex index="1">bottom-0 end-0</numIndex>
 									</numIndex>
-
 								</items>
 								<default>top-50 start-50 translate-middle</default>
 							</config>
 						</TCEforms>
 					</contentPosition>
-
 					<bgHeight>
 						<TCEforms>
 							<label>Height in px</label>
@@ -532,7 +513,6 @@
 							</config>
 						</TCEforms>
 					</bgHeight>
-
 					<ytshift>
 						<TCEforms>
 							<label>Extra shift for the video</label>
@@ -555,7 +535,6 @@
 							</config>
 						</TCEforms>
 					</ytshift>
-
 					<videoMute>
 						<TCEforms>
 							<label>Mute</label>
@@ -590,6 +569,5 @@
 				</el>
 			</ROOT>
 		</videoevents>
-
 	</sheets>
 </T3DataStructure>

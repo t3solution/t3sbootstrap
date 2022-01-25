@@ -3,68 +3,77 @@
 <f:section name="Header">
 </f:section>
 <f:section name="Main">
-	<f:if condition="{extraWrapperClass}">
-		<f:then>
-			<div class="{extraWrapperClass}">
+<f:if condition="{col_261} || {col_262} || {col_263} || {col_264} || {col_265} || {col_266}">
+	<f:then>
+		<f:if condition="{extraWrapperClass}">
+			<f:then>
+				<div class="{extraWrapperClass}">
+					<f:render section="Default" arguments="{_all}" />
+				</div>
+			</f:then>
+			<f:else>
 				<f:render section="Default" arguments="{_all}" />
-			</div>
-		</f:then>
-		<f:else>
-			<f:render section="Default" arguments="{_all}" />
-		</f:else>
-	</f:if>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Six Columns (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
 </f:section>
 </html>
 
 
 <f:section name="Default">
-<div class="row{gutters}{f:if(condition: '{class}',then: ' {class}')}{f:if(condition: '{dataAnimate}',then: ' {dataAnimate}')}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-		<f:if condition="{data.header} || {data.subheader} || {data.date}">
-			<div class="col-12 w-100">
-				<f:render partial="Header/All" arguments="{_all}" />
-			</div>
+<div class="row{class}"{styleAttr -> f:format.raw()}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
+	<f:if condition="{data.header} || {data.subheader} || {data.date}">
+		<div class="col-12 w-100">
+			<f:render partial="Header/All" arguments="{_all}" />
+		</div>
+	</f:if>
+	<div class="column {columnOne}">
+		<f:if condition="{col_261}">
+			<f:for each="{col_261}" as="child">
+				{child.renderedContent -> f:format.raw()}
+			</f:for>
 		</f:if>
-		<div class="column {columnOne}">
-			<f:if condition="{col_261}">
-				<f:for each="{col_261}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="column {columnTwo}">
-			<f:if condition="{col_262}">
-				<f:for each="{col_262}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="column {columnThree}">
-			<f:if condition="{col_263}">
-				<f:for each="{col_263}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="column {columnFour}">
-			<f:if condition="{col_264}">
-				<f:for each="{col_264}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="column {columnFive}">
-			<f:if condition="{col_265}">
-				<f:for each="{col_265}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
-		<div class="column {columnSix}">
-			<f:if condition="{col_266}">
-				<f:for each="{col_266}" as="child">
-					{child.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:if>
-		</div>
 	</div>
+	<div class="column {columnTwo}">
+		<f:if condition="{col_262}">
+			<f:for each="{col_262}" as="child">
+				{child.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:if>
+	</div>
+	<div class="column {columnThree}">
+		<f:if condition="{col_263}">
+			<f:for each="{col_263}" as="child">
+				{child.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:if>
+	</div>
+	<div class="column {columnFour}">
+		<f:if condition="{col_264}">
+			<f:for each="{col_264}" as="child">
+				{child.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:if>
+	</div>
+	<div class="column {columnFive}">
+		<f:if condition="{col_265}">
+			<f:for each="{col_265}" as="child">
+				{child.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:if>
+	</div>
+	<div class="column {columnSix}">
+		<f:if condition="{col_266}">
+			<f:for each="{col_266}" as="child">
+				{child.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:if>
+	</div>
+</div>
 </f:section>

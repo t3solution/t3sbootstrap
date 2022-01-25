@@ -120,6 +120,10 @@
 										<numIndex index="1">4</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
 										<numIndex index="0">6</numIndex>
 										<numIndex index="1">6</numIndex>
 									</numIndex>
@@ -156,6 +160,10 @@
 									<numIndex index="4" type="array">
 										<numIndex index="0">4</numIndex>
 										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">5</numIndex>
 									</numIndex>
 								</items>
 								<default>4</default>

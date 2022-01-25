@@ -15,11 +15,11 @@
 			id="{field.property}"
 			class="form-control"
 			property="{field.property}"
-		/>	
+		/>
 		<f:if condition="{field.info}">
-			<small class="form-text text-muted">{field.info -> f:format.raw()}</small>			
+			<small class="form-text text-muted d-block">{field.info -> f:format.raw()}</small>
 		</f:if>
-		<small class="input-code"><code>bootstrap.config.{field.property}</code></small>
+		<small class="input-code d-block"><code>bootstrap.config.{field.property}</code></small>
 	</div>
 </div>
 </html>

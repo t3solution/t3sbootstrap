@@ -6,15 +6,15 @@
 <f:section name="Main">
 <f:if condition="{gallery.count.files}">
 	<f:then>
-		<f:if condition="{data.bodytext} || {data.header}">
+		<f:if condition="{data.bodytext} || {data.header} || {data.subheader}">
 			<f:then>
 				<f:if condition="!{gallery.headerBeside}">
 					<f:render partial="Header/All" arguments="{_all}" />
 				</f:if>
-				<f:render partial="TextWithImage" arguments="{_all}" />
+				<f:render partial="Content/TextWithImage" arguments="{_all}" />
 			</f:then>
 			<f:else>
-				<f:render partial="Media/Gallery" arguments="{_all}" />
+				<f:render partial="Content/Media/Gallery" arguments="{_all}" />
 			</f:else>
 		</f:if>
 	</f:then>
@@ -24,9 +24,7 @@
 				<f:render partial="Content/Text" arguments="{_all}" />
 			</f:then>
 			<f:else>
-				<f:if condition="{data.header}">
-					<f:render partial="Header/All" arguments="{_all}" />
-				</f:if>
+				<f:render partial="Header/All" arguments="{_all}" />
 			</f:else>
 		</f:if>
 	</f:else>

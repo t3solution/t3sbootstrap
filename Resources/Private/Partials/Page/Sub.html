@@ -17,7 +17,20 @@
 	});
 </f:asset.script>
 </f:if>
-<div class="d-md-flex mb-3 submenu">
+<f:if condition="{config.sidebar.sticky}">
+<f:asset.script identifier="vanilla_submenuSticky">
+	// Sticky submenu - Page/Sub.html
+	var submenuPadding = document.querySelectorAll('.submenu');
+	submenuPadding.forEach( smp => {
+		if (fixedNavbar) {
+			smp.style.top = navbarHeight + 15 +'px';
+		} else {
+			smp.style.top = '15px';
+		}
+	});
+</f:asset.script>
+</f:if>
+<div class="d-md-flex mb-3 submenu{f:if(condition: config.sidebar.sticky, then:' sticky-top')}">
 	<ul class="nav flex-column flex-nowrap nav-pills w-100">
 		<f:for each="{subNavigation}" as="item">
 			<li class="nav-item{f:if(condition: item.active, then:' active')}">

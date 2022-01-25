@@ -13,104 +13,29 @@
 	}
 </f:asset.script>
 </f:if>
-<f:if condition="{owlCarousel}">
-<f:comment>OWL Carousel</f:comment>
-	<f:if condition="{settings.cdn}">
-		<f:then>
-			<f:if condition="{owlStyle} == '1'">
-				<f:comment> not working with animate.css v4 </f:comment>
-				<f:asset.css identifier="animateCss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
-			</f:if>
-			<f:asset.css identifier="owlmincss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.owlCarouselVersion}/assets/owl.carousel.min.css" />
-			<f:asset.css identifier="owlthemecss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.owlCarouselVersion}/assets/owl.theme.default.css" />
-			<f:asset.script identifier="owljs"
-				src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/{settings.owlCarouselVersion}/owl.carousel.js" />
-		</f:then>
-		<f:else>
-			<f:if condition="{owlStyle} == '1'">
-				<f:comment> not working with animate.css v4 </f:comment>
-				<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.min.css" />
-			</f:if>
-			<f:asset.css identifier="owlmincss" href="fileadmin/T3SB/Resources/Public/CSS/owl.carousel.min.css" />
-			<f:asset.css identifier="owlthemecss" href="fileadmin/T3SB/Resources/Public/CSS/owl.theme.default.css" />
-			<f:asset.script identifier="owljs" src="fileadmin/T3SB/Resources/Public/JS/owl.carousel.js" />
-		</f:else>
-	</f:if>
-
-	<f:if condition="{owlStyle} == '1'">
-		<f:then>
-			<f:asset.css identifier="owlcustomcss-1" href="EXT:t3sbootstrap/Resources/Public/Styles/owlCarousel-1.css" />
-			<f:asset.script identifier="owlinlinejs-1-{data.uid}">
-	// jQuery OWL Carousel (Style 1 / uid:{data.uid}) - Page/Assets.html
-	var animateOut = '{owlAnimation}';
-	var interval = {interval};
-	var number = {owlNumber};
-	var owlUid = '#owl-{data.uid}';
-	if (!number) number = 1;
-	$(owlUid).owlCarousel({
-		loop:true,
-		margin:15,
-		dots:false,
-		nav:true,
-		mouseDrag:false,
-		autoplay:true,
-		autoplayTimeout:interval,
-		animateOut:animateOut,
-		responsive:{
-			0:{
-				items:1
-			},
-			992:{
-				items:number
-			}
-		}
-	});
-			</f:asset.script>
-
-		</f:then>
-		<f:else>
-			<f:asset.css identifier="owlcustomcss-2" href="EXT:t3sbootstrap/Resources/Public/Styles/owlCarousel-2.css" />
-			<f:asset.script identifier="owlinlinejs-2-{data.uid}">
-	// jQuery OWL Carousel (Style 2 / uid:{data.uid}) - Page/Assets.html
-	var interval = {interval};
-	var owlUid = '#owl-{data.uid}';
-	$(owlUid).owlCarousel({
-		loop:true,
-		center:true,
-		items:3,
-		margin:0,
-		autoplay:true,
-		dots:true,
-		autoplayTimeout:interval,
-		smartSpeed:450,
-		responsive: {
-			0: {
-				items:1
-			},
-			768: {
-				items:2
-			},
-			1170: {
-				items:3
-			}
-		}
-	});
-			</f:asset.script>
-		</f:else>
-	</f:if>
-</f:if>
 <f:if condition="{fixedbutton}">
-	<f:comment>Button.html, Modal.html</f:comment>
+	<f:comment>Button.html, Page/Assets.html</f:comment>
+	<f:if condition="{btnGroup} && {visiblePart}">
+		<f:then>
+	<f:asset.script identifier="vanilla_fixedbuttonGroup">
+	// Fixed button group on left or right browser edge - Page/Assets.html
+	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
+	var visiblePart = {visiblePart};
+	if ( buttonsFixedPosition.length ) {				
+		t3sbFixedButtons(buttonsFixedPosition, visiblePart);
+	}
+	</f:asset.script>	
+		</f:then>
+		<f:else>
 	<f:asset.script identifier="vanilla_fixedbutton">
 	// Fixed button on left or right browser edge - Page/Assets.html
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
-	if ( buttonsFixedPosition.length ) {
-		t3sbFixedButtons(buttonsFixedPosition);
+	if ( buttonsFixedPosition.length ) {				
+		t3sbFixedButtons(buttonsFixedPosition, 0);
 	}
 	</f:asset.script>
+		</f:else>
+	</f:if>
 </f:if>
 <f:if condition="{scrollspy}">
 	<f:comment>Page/Section.html, Page/MenuSection.html</f:comment>

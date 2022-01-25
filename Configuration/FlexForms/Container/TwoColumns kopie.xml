@@ -1,0 +1,553 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Settings</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<hidden>
+						<TCEforms>
+							<label>Hiding / Display Elements</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Hidden only on xs</numIndex>
+										<numIndex index="1">d-none d-sm-block</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Hidden only on sm</numIndex>
+										<numIndex index="1">d-sm-none d-md-block</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">Hidden only on md</numIndex>
+										<numIndex index="1">d-md-none d-lg-block</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">Hidden only on lg</numIndex>
+										<numIndex index="1">d-lg-none d-xl-block</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">Hidden only on xl</numIndex>
+										<numIndex index="1">d-xl-none</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">Hidden only on xxl</numIndex>
+										<numIndex index="1">d-xxl-none</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">Visible only on xs</numIndex>
+										<numIndex index="1">d-block d-sm-none</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">Visible only on sm</numIndex>
+										<numIndex index="1">d-none d-sm-block d-md-none</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">Visible only on md</numIndex>
+										<numIndex index="1">d-none d-md-block d-lg-none</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">Visible only on lg</numIndex>
+										<numIndex index="1">d-none d-lg-block d-xl-none</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">Visible only on xl</numIndex>
+										<numIndex index="1">d-none d-xl-block d-xxl-none</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">Visible only on xxl</numIndex>
+										<numIndex index="1">d-none d-xxl-block</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</hidden>
+					<equalWidth>
+						<TCEforms>
+							<label>Equal width</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</equalWidth>
+
+					<horizontalGutters>
+						<TCEforms>
+							<label>Horizontal gutters</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">gx-0 (no gutters)</numIndex>
+										<numIndex index="1">gx-0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">gx-1</numIndex>
+										<numIndex index="1">gx-1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">gx-2</numIndex>
+										<numIndex index="1">gx-2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">gx-3</numIndex>
+										<numIndex index="1">gx-3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">gx-4 (default)</numIndex>
+										<numIndex index="1">gx-4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">gx-5</numIndex>
+										<numIndex index="1">gx-5</numIndex>
+									</numIndex>
+								</items>
+								<default>gx-4</default>
+							</config>
+						</TCEforms>
+					</horizontalGutters>
+
+					<colHeight>
+						<TCEforms>
+							<label>Min.-Height of the Element</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>input</type>
+								<checkbox></checkbox>
+								<eval>int</eval>
+								<size>3</size>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</colHeight>
+					<verticalAlign>
+						<TCEforms>
+							<label>Vertical Align for Content</label>
+							<displayCond>FIELD:sDEF.colHeight:>:0</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">top</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">center</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">bottom</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+								</items>
+								<default>start</default>
+							</config>
+						</TCEforms>
+					</verticalAlign>
+				</el>
+			</ROOT>
+		</sDEF>
+		<bgimage>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Background Images</sheetTitle>
+				</TCEforms>
+				<el>
+					<bgimages>
+						<TCEforms>
+							  <label>Background-Images</label>
+							<onChange>reload</onChange>
+							  <config>
+								  <type>inline</type>
+								  <foreign_table>sys_file_reference</foreign_table>
+								  <foreign_field>uid_foreign</foreign_field>
+								  <foreign_sortby>sorting_foreign</foreign_sortby>
+								  <foreign_table_field>tablenames</foreign_table_field>
+								  <foreign_match_fields>
+									  <fieldname>assets</fieldname>
+								  </foreign_match_fields>
+								  <foreign_label>uid_local</foreign_label>
+								  <foreign_selector>uid_local</foreign_selector>
+								  <overrideChildTca>
+									   <types type="array">
+										   <numIndex index="0" type="array">
+											   <showitem>
+												   --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												   --palette--;;filePalette
+											   </showitem>
+										   </numIndex>
+										   <numIndex index="1" type="array">
+											   <showitem>
+												   --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												   --palette--;;filePalette
+											   </showitem>
+										   </numIndex>
+										   <numIndex index="2" type="array">
+											   <showitem>
+												   --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												   --palette--;;filePalette
+											   </showitem>
+										   </numIndex>
+										   <numIndex index="3" type="array">
+											   <showitem>
+												   --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.audioOverlayPalette;audioOverlayPalette,
+												   --palette--;;filePalette
+											   </showitem>
+										   </numIndex>
+										   <numIndex index="4" type="array">
+											   <showitem>
+												   --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.videoOverlayPalette;videoOverlayPalette,
+												   --palette--;;filePalette
+											   </showitem>
+										   </numIndex>
+										   <numIndex index="5" type="array">
+											   <showitem>
+												   --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												   --palette--;;filePalette
+											   </showitem>
+										   </numIndex>
+									  </types>
+									 <columns>
+										 <uid_local>
+											 <config>
+												 <appearance>
+													 <elementBrowserType>file</elementBrowserType>
+													 <elementBrowserAllowed>jpg,jpeg,png</elementBrowserAllowed>
+												 </appearance>
+											 </config>
+										 </uid_local>
+									 </columns>
+								 </overrideChildTca>
+								 <filter>
+									 <userFunc>TYPO3\CMS\Core\Resource\Filter\FileExtensionFilter->filterInlineChildren</userFunc>
+									 <parameters>
+										 <allowedFileExtensions></allowedFileExtensions>
+										 <disallowedFileExtensions></disallowedFileExtensions>
+									 </parameters>
+								 </filter>
+								 <appearance>
+									 <useSortable>1</useSortable>
+									 <headerThumbnail>
+										 <field>uid_local</field>
+										 <width>45</width>
+										 <height>45c</height>
+									 </headerThumbnail>
+									 <enabledControls>
+										 <info>1</info>
+										 <new>0</new>
+										 <dragdrop>1</dragdrop>
+										 <sort>0</sort>
+										 <hide>1</hide>
+										 <delete>1</delete>
+									 </enabledControls>
+								 </appearance>
+									<maxitems>2</maxitems>
+							  </config>
+						 </TCEforms>
+					</bgimages>
+					<bgimagePosition>
+						<TCEforms>
+							<label>Background Image Position (left or right column)</label>
+							<displayCond>FIELD:bgimage.bgimages:>:0</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">left</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">right</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">both</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+								</items>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</bgimagePosition>
+				</el>
+			</ROOT>
+		</bgimage>
+		<extraClass>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Extra Class</sheetTitle>
+				</TCEforms>
+				<el>
+					<extraClass_one>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<config>
+								<type>input</type>
+								<size>30</size>
+								<max>100</max>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</extraClass_one>
+					<extraClass_two>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<config>
+								<type>input</type>
+								<size>30</size>
+								<max>100</max>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</extraClass_two>
+				</el>
+			</ROOT>
+		</extraClass>
+
+		<xxl>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Col-xxl-*</sheetTitle>
+				</TCEforms>
+				<el>
+					<xxl_one>
+						<TCEforms type="array">
+							<label>Column 1</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</xxl_one>
+					<xxl_two>
+						<TCEforms type="array">
+							<label>Column 2</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</xxl_two>
+				</el>
+			</ROOT>
+		</xxl>
+		<xl>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Col-xl-*</sheetTitle>
+				</TCEforms>
+				<el>
+					<xl_one>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</xl_one>
+					<xl_two>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</xl_two>
+				</el>
+			</ROOT>
+		</xl>
+		<lg>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Col-lg-*</sheetTitle>
+				</TCEforms>
+				<el>
+					<lg_one>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</lg_one>
+					<lg_two>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</lg_two>
+				</el>
+			</ROOT>
+		</lg>
+		<md>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Col-md-*</sheetTitle>
+				</TCEforms>
+				<el>
+					<md_one>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>6</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</md_one>
+					<md_two>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>6</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</md_two>
+				</el>
+			</ROOT>
+		</md>
+		<sm>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Col-sm-*</sheetTitle>
+				</TCEforms>
+				<el>
+					<sm_one>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</sm_one>
+					<sm_two>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>0</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</sm_two>
+				</el>
+			</ROOT>
+		</sm>
+		<xs>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Col-xs-*</sheetTitle>
+				</TCEforms>
+				<el>
+					<xs_one>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>12</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</xs_one>
+					<xs_two>
+						<TCEforms type="array">
+							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>2</max>
+								<default>12</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</xs_two>
+				</el>
+			</ROOT>
+		</xs>
+	</sheets>
+</T3DataStructure>

@@ -10,19 +10,12 @@
 </f:if>
 <f:if condition="{data.CType} == 't3sbs_button'">
 	<f:then>
-		<f:if condition="{parentCType} == 'button_group'">
-			<f:then>
-				<f:render section="Main" arguments="{_all}" />
-			</f:then>
-			<f:else>
-				<div id="c{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{dataAnimate}>
-					<f:render section="Main" arguments="{_all}" />
-				</div>
-			</f:else>
-		</f:if>
+		<f:comment> BUTTON </f:comment>
+		<f:render section="Main" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<div id="c{data.uid}"{f:if(condition: '{buttonGroupClass}',then: ' class="{buttonGroupClass}"')} role="group" aria-label="btn-{data.uid}"{dataAnimate}>
+		<f:comment> BUTTON GROUP </f:comment>
+		<div id="c{data.uid}"{f:if(condition: '{buttonGroupClass}',then: ' class="{buttonGroupClass}"')} role="group" aria-label="btn-{data.uid}">
 			<f:render section="Main" arguments="{_all}" />
 		</div>
 	</f:else>

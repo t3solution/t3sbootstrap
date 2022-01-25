@@ -1,170 +1,120 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{owlStyle}">
+
+<f:if condition="{files.0.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1">
 	<f:then>
-		<f:variable name="imgLazyLoad" value="" />
+		<f:variable name="imgLazyLoad" value=" lazy" />	
 	</f:then>
 	<f:else>
-		<f:variable name="imgLazyLoad"
-		 value="{f:if(condition: '{files.0.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}" />
+		<f:variable name="imgLazyLoad" value="" />	
 	</f:else>
 </f:if>
 
-<f:if condition="{swiper}">
-	<f:then>
-		<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then:' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-			<f:render section="Slide" arguments="{_all}" />
-		</figure>
-		<f:render partial="Header/All" arguments="{_all}" />
-		<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-		<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-	</f:then>
-	<f:else>
+		<f:comment> load lightbox CSS if needed </f:comment>
 		<f:render partial="Layouts/Assets" arguments="{_all}" />
-		<f:if condition="{owlCarousel}">
+		<f:if condition="{localVideoPath}">
 			<f:then>
-				<f:comment> OWL-SLIDER </f:comment>
-				<f:if condition="{owlStyle} == 1">
-					<f:then>
-						<div class="item">
-							<figure class="m-0{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' {files.0.properties.tx_t3sbootstrap_extra_class}')}">
-								<f:render section="Slide" arguments="{_all}" />
-							</figure>
-							<div class="cover"{f:if(condition: '{style}',then: ' style="{style}"')}>
-								<div class="container">
-									<div class="header-content">
-										<f:if condition="{owlLine}">
-											<div class="line"></div>
-										</f:if>
-										<f:render partial="Header/All" arguments="{_all}" />
-										{data.bodytext -> f:format.html()}
-									</div>
+
+				<f:comment> Local Video </f:comment>
+				<f:asset.css identifier="localvideocss-{data.uid}">
+@media(min-width: 576px){.carousel-item-{data.uid}{width:100%;height:calc(100vw*{ratioCalc});position:relative}}
+<f:if condition="{videoShift}">{videoShift}</f:if>
+				</f:asset.css>
+
+
+
+
+				<div class="carousel-item carousel-item-{data.uid} carousel-video">
+					<figure class="d-flex">
+							<video class="ratio ratio-16x9 img-fluid{imgLazyLoad}" autoplay loop muted>
+								<source src="{localVideoPath}" />
+							</video>
+
+<f:comment>
+
+ratio 4x3 also???
+
+
+{animate} {dataAnimate}
+
+
+
+
+</f:comment>
+
+
+						<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+							<div id="c{data.uid}" class="carousel-caption{class}{animate}"{styleAttr -> f:format.raw()}>
+								<div class="w-100"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+									<f:render partial="Header/All" arguments="{_all}" />
+									<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+									<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
 								</div>
-							 </div>
-						</div>
-					</f:then>
-					<f:else>
-						<div class="item">
-							<div class="shadow-effect">
-								<figure class="{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then: ' {files.0.properties.tx_t3sbootstrap_extra_class}')}">
-									<f:render section="Slide" arguments="{_all}" />
-								</figure>
-								<f:render partial="Header/All" arguments="{_all}" />
-								{data.bodytext -> f:format.html()}
 							</div>
-						</div>
-					</f:else>
-				</f:if>
+						</f:if>
+					</figure>
+				</div>
 			</f:then>
 			<f:else>
-				<f:comment> MULTISLIDER </f:comment>
-				<f:if condition="{multislider}">
-					<f:then>
-						<div class="item">
-							<f:if condition="{localVideoPath}">
-								<f:then>
-									<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then:
-									 ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-										<div class="ratio ratio-16x9">
-											<video class="img-fluid{imgLazyLoad}" autoplay loop muted>
-												<source src="{localVideoPath}" />
-											</video>
+				<f:comment> Image </f:comment>
+				<div class="carousel-item carousel-item-{data.uid} carousel-image">
+
+					<f:if condition="{files -> f:count()}">
+						<f:then>
+
+
+
+							<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class,
+							 then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
+								<f:render section="Slide" arguments="{_all}" />
+								<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+
+
+
+									<div id="c{data.uid}" class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
+										<div class="w-100{class}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+											<f:render partial="Header/All" arguments="{_all}" />
+											<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+											<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext: buttontext}" />
 										</div>
-									</figure>
-								</f:then>
-								<f:else>
-									<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class,
-									 then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-										<f:render section="Slide" arguments="{_all}" />
-									</figure>
-								</f:else>
+									</div>
+
+								</f:if>
+							</figure>
+						</f:then>
+						<f:else>
+							<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+								<div class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
+									<div class="w-100{class}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+										<f:render partial="Header/All" arguments="{_all}" />
+										<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+										<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext: buttontext}" />
+									</div>
+								</div>
 							</f:if>
-							<f:render partial="Header/All" arguments="{_all}" />
-							<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-							<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-						</div>
-					</f:then>
-					<f:else>
-						<f:comment> BOOTSTRAP CAROUSEL </f:comment>
-						<f:if condition="{localVideoPath}">
-							<f:then>
-								<f:comment> Local Video </f:comment>
-								<f:asset.css identifier="localvideocss-{data.uid}">
-.carousel-item-{data.uid}{width:100%;height:calc(100vw*{ratioCalc});position: relative}
-								</f:asset.css>
-								<div class="carousel-item carousel-item-{data.uid} carousel-video">
-									<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class, then:
-									 ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-										<div class="ratio ratio-16x9">
-											<video class="img-fluid{imgLazyLoad}" autoplay loop muted>
-												<source src="{localVideoPath}" />
-											</video>
-										</div>
-										<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-											<div id="c{data.uid}" class="carousel-caption{animate} {dataAnimate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-												<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"
-													{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
-													<f:render partial="Header/All" arguments="{_all}" />
-													<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-													<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-												</div>
-											</div>
-										</f:if>
-									</figure>
-								</div>
-							</f:then>
-							<f:else>
-								<f:comment> Image </f:comment>
-								<div class="carousel-item carousel-item-{data.uid} carousel-image">
-									<f:if condition="{files.0}">
-										<f:then>
-											<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class,
-											 then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-												<f:render section="Slide" arguments="{_all}" />
-												<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-													<div id="c{data.uid}" class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-														<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"
-															{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
-															<f:render partial="Header/All" arguments="{_all}" />
-															<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-															<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-														</div>
-													</div>
-												</f:if>
-											</figure>
-										</f:then>
-										<f:else>
-											<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-												<div class="carousel-caption{animate}"{f:if(condition: '{style}',then: ' style="{style}"')}>
-													<div class="w-100{f:if(condition: '{class}',then: ' {class}')}"
-														{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
-														<f:render partial="Header/All" arguments="{_all}" />
-														<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-														<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext:buttontext}" />
-													</div>
-												</div>
-											</f:if>
-										</f:else>
-									</f:if>
-								</div>
-							</f:else>
-						</f:if>
-					</f:else>
-				</f:if>
+						</f:else>
+					</f:if>
+				</div>
 			</f:else>
 		</f:if>
-	</f:else>
-</f:if>
+
+
+
 </html>
 
 
 <f:section name="Slide">
 	<f:if condition="{zoom}">
 		<f:then>
-			<ce:link.clickEnlarge image="{files.0}" configuration="{settings.media.popup}">
+		
+
+
+<ce:link.clickEnlarge image="{files.0}" configuration="{settings.media.popup}">
+
 				<f:render section="Image" arguments="{_all}" />
-			</ce:link.clickEnlarge>
+</ce:link.clickEnlarge>
+
 		</f:then>
 		<f:else>
 			<f:link.typolink parameter="{files.0.properties.link}" class="carousel-imglink">
@@ -195,13 +145,23 @@
 			 picturefill="{settings.picturefill}"
 			 lazyload="{f:if(condition: owlStyle, then: '', else: settings.lazyLoad)}"
 			 ratio="{ratio}"
-			 shift="{shift}"
+			 shift="0"
 			 mobileNoRatio="{mobileNoRatio}" />
 	</f:else>
 </f:if>
 </f:section>
 
 <f:section name="Button">
+
+<!--
+	link & zoom for button - z-index
+-->
+<f:comment>
+ additionalAttributes="{style: 'z-index:1'}"
+</f:comment>
+
+
+
 	<f:if condition="{data.button_link} && {carouselLink} == 'button'">
 		<f:link.typolink parameter="{data.button_link}" class="btn btn-primary btn-sm">
 			<f:if condition="{buttontext}">

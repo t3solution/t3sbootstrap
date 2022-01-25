@@ -3,13 +3,6 @@ declare(strict_types=0);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileInterface;
@@ -19,8 +12,14 @@ use TYPO3\CMS\Frontend\ContentObject\Exception\ContentRenderingException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 class GalleryProcessor implements DataProcessorInterface
 {
 	/**
@@ -235,7 +234,7 @@ class GalleryProcessor implements DataProcessorInterface
 		$this->processorConfiguration = $processorConfiguration;
 		$this->processedData = $processedData;
 		$this->contentObjectConfiguration = $contentObjectConfiguration;
-		$this->processedParentData = self::getContentRecord($processedData['data']['tx_container_parent']);
+		$this->processedParentData = !empty($processedData['data']['tx_container_parent']) ? self::getContentRecord($processedData['data']['tx_container_parent']) : [];
 
 		$filesProcessedDataKey = (string)$cObj->stdWrapValue(
 			'filesProcessedDataKey',
@@ -244,17 +243,14 @@ class GalleryProcessor implements DataProcessorInterface
 		);
 		if (isset($processedData[$filesProcessedDataKey]) && is_array($processedData[$filesProcessedDataKey])) {
 			$this->fileObjects = $processedData[$filesProcessedDataKey];
-
-			if ( is_array($this->fileObjects[0]) ) {
+			if ( !empty($this->fileObjects[0]) ) {
+				$fileObjects = [];
 				// image gallery
-				foreach ( $this->fileObjects as $rows ) {
-					foreach ( $rows as $fileObject ) {
-						$fileObjects[] = $fileObject;
-					}
+				foreach ( $this->fileObjects as $fileObject ) {
+					$fileObjects[] = $fileObject;
 				}
-					$this->fileObjects = $fileObjects;
+				$this->fileObjects = $fileObjects;
 			}
-
 			$this->galleryData['count']['files'] = count($this->fileObjects);
 		} else {
 			throw new ContentRenderingException('No files found for key ' . $filesProcessedDataKey . ' in $processedData.', 1436809789);
@@ -282,7 +278,9 @@ class GalleryProcessor implements DataProcessorInterface
 		$this->disableAutoRow = $this->getConfigurationValue('disableAutoRow');
 
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-		$this->parentflexconf = $flexFormService->convertFlexFormContentToArray($this->processedParentData['tx_t3sbootstrap_flexform']);
+
+		$this->parentflexconf = !empty($this->processedParentData['tx_t3sbootstrap_flexform'])
+		 ? $flexFormService->convertFlexFormContentToArray($this->processedParentData['tx_t3sbootstrap_flexform']) : [];
 
 		$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'];
 		$contentContainer = $processedData['data']['tx_t3sbootstrap_container'];
@@ -298,7 +296,6 @@ class GalleryProcessor implements DataProcessorInterface
 		$this->calculateRowsAndColumns();
 		$this->determineMaximumGalleryWidth();
 		$this->calculateMediaWidthsAndHeights();
-
 		$this->prepareGalleryData();
 
 		$targetFieldName = (string)$cObj->stdWrapValue(
@@ -483,29 +480,23 @@ class GalleryProcessor implements DataProcessorInterface
 
 			$pageContainer = self::getPageContainer($this->pageContainer);
 			// if a cookie with the name 'windowWidth' has a value
-			$windowWidth = (int) $_COOKIE['windowWidth'];
+			$windowWidth = !empty($_COOKIE['windowWidth']) ? (int)$_COOKIE['windowWidth'] : '';
 
 			$correction = FALSE;
-
 			// nested container
 			if ($this->colPos > 199 && $this->processedParentData['colPos'] > 199 ) {
-
 				$grandParent = [];
 				$greatGrandParent = [];
-
 				if ( $this->processedParentData['tx_container_parent'] ) {
 					$grandParent = self::getContentRecord($this->processedParentData['tx_container_parent']);
 					if ( $grandParent['tx_container_parent'] ) {
 						$greatGrandParent = self::getContentRecord($grandParent['tx_container_parent']);
 					}
 				}
-
 				if ( $this->processedParentData['colPos'] < 200 ) {
-
 					$this->colPos = $this->processedParentData['colPos'];
 
 				} elseif ( $grandParent['colPos'] < 200 ) {
-
 					$this->colPos = $grandParent['colPos'];
 					if ( $grandParent['CType'] == 'collapsible_container' ) $correction = 'collapsible_container';
 					if ( $grandParent['CType'] == 'tabs_container' ) $correction = 'tabs_container';
@@ -525,7 +516,6 @@ class GalleryProcessor implements DataProcessorInterface
 				}
 			}
 
-
 			if ( $pageContainer == 'container-fluid' ) {
 				$bsMaxGridWidth = $windowWidth ?: $this->maxGalleryWidth;
 			} elseif ( $pageContainer == 'container-fluid px-0' ) {
@@ -535,9 +525,12 @@ class GalleryProcessor implements DataProcessorInterface
 			}
 
 			if ( is_int($this->rowWidth) ) {
+
 				$rowWidth = $this->rowWidth;
+
 			} elseif ( $this->rowWidth != 'none' && is_string($this->rowWidth) ) {
 				$rowWidth = (int) end(explode('-', $this->rowWidth));
+
 			} else {
 				$rowWidth = 100;
 			}
@@ -601,7 +594,7 @@ class GalleryProcessor implements DataProcessorInterface
 				|| $this->colPos == 4
 				|| $this->colPos == 20
 				|| $this->colPos == 21
-				|| ($this->colPos > 199 && $this->processedParentData['colPos'] > 2)
+				|| (($this->colPos > 199) && ($this->processedParentData['colPos'] > 2))
 			)
 			{
 				$bsGridWidth = $bsMaxGridWidth;
@@ -633,10 +626,10 @@ class GalleryProcessor implements DataProcessorInterface
 			}
 
 			// Child of grid container
-			if ( $this->processedParentData['CType'] == 'two_columns'
+			if ( !empty($this->processedParentData['CType']) && ($this->processedParentData['CType'] == 'two_columns'
 			 || $this->processedParentData['CType'] == 'three_columns'
 			 || $this->processedParentData['CType'] == 'four_columns'
-			 || $this->processedParentData['CType'] == 'six_columns' ) {
+			 || $this->processedParentData['CType'] == 'six_columns') ) {
 
 				$bsGridWidth = self::getCalculatedGridWidth($bsGridWidth);
 			} else {
@@ -657,6 +650,8 @@ class GalleryProcessor implements DataProcessorInterface
 
 			// User entered a predefined width & height
 			if ( $this->equalMediaHeight ) {
+
+
 
 				// Set the corrected dimensions for each media element
 				foreach ($this->fileObjects as $key => $fileObject) {
@@ -679,9 +674,13 @@ class GalleryProcessor implements DataProcessorInterface
 				}
 
 			} else {
-
 				// Set the corrected dimensions for each media element
 				foreach ($this->fileObjects as $key => $fileObject) {
+					if ( is_array($fileObject)){
+						foreach($fileObject as $fO) {
+							$fileObject = $fO;
+						}
+					}
 					$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
 					 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
 
@@ -698,7 +697,6 @@ class GalleryProcessor implements DataProcessorInterface
 
 			// Set the corrected dimensions for each media element
 			foreach ($this->fileObjects as $key => $fileObject) {
-
 				  $mediaHeight = $this->equalMediaHeight;
 				  $mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
 				   * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
@@ -716,7 +714,9 @@ class GalleryProcessor implements DataProcessorInterface
 			$mediaWidth = self::checkMediaWidth($mediaWidth);
 			// Set the corrected dimensions for each media element
 			foreach ($this->fileObjects as $key => $fileObject) {
-
+				if (is_array($fileObject)) {
+					$fileObject = $fileObject[0];
+				}
 				$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
 				 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
 
@@ -735,13 +735,8 @@ class GalleryProcessor implements DataProcessorInterface
 	/**
 	 * When retrieving the height or width for a media file
 	 * a possible cropping needs to be taken into account.
-	 *
-	 * @param FileInterface $fileObject
-	 * @param string $dimensionalProperty 'width' or 'height'
-	 *
-	 * @return int $cropVariantCollection
 	 */
-	protected function getCroppedDimensionalProperty(FileInterface $fileObject, $dimensionalProperty)
+	protected function getCroppedDimensionalProperty(FileInterface $fileObject, string $dimensionalProperty): int
 	{
 		if (!$fileObject->hasProperty('crop') || empty($fileObject->getProperty('crop'))) {
 			return $fileObject->getProperty($dimensionalProperty);
@@ -1013,7 +1008,7 @@ class GalleryProcessor implements DataProcessorInterface
 			}
 		} else {
 
-			if ( $this->galleryData['position']['noWrap'] ) {
+			if ( !empty($this->galleryData['position']['noWrap']) ) {
 				// beside the text
 				if ( $this->galleryData['count']['columns'] == 1 ) {
 					$imagePadding = 22;
@@ -1024,7 +1019,7 @@ class GalleryProcessor implements DataProcessorInterface
 
 				if ( $this->galleryData['position']['vertical'] === 'intext' ) {
 
-					if ( $this->galleryData['position']['alignCenter'] ) {
+					if ( !empty($this->galleryData['position']['alignCenter']) ) {
 
 						if ( $this->galleryData['count']['columns'] == 1 ) {
 							$imagePadding = 20 * ($this->galleryData['count']['columns']);
@@ -1094,7 +1089,7 @@ class GalleryProcessor implements DataProcessorInterface
 			$mediaWidth = $this->maxWidthToast;
 		}
 
-		if ( $this->processedParentData['CType'] == 'masonry_wrapper' ) {
+		if ( !empty($this->processedParentData['CType']) && $this->processedParentData['CType'] == 'masonry_wrapper' ) {
 
 			$classPrefix = 'col-lg-';
 			$mediaWidth = $this->getMansoryColumns($classPrefix);
@@ -1162,11 +1157,9 @@ class GalleryProcessor implements DataProcessorInterface
 
 
 	/**
-	 * Returns $typoScriptFrontendController \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 *
-	 * @return TypoScriptFrontendController
+	 * Returns the frontend controller
 	 */
-	protected function getFrontendController()
+	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

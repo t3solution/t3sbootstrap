@@ -42,11 +42,13 @@
 			</div>
 		</f:if>
 		<f:comment>Card Image (top)</f:comment>
-		<f:if condition="{data.imageorient} == 'top' && {card.horizontal} == 0">
+
+
+		<f:if condition="{data.imageorient} == 'top' && !{card.horizontal}">
 			<f:render partial="Media/RawGallery" arguments="{_all}" />
 		</f:if>
 		<f:comment>Card Text (top)</f:comment>
-		<f:if condition="{card.text.top}">
+		<f:if condition="{card.text.top} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
 			<f:render section="TextTop" arguments="{_all}" />
 		</f:if>
 		<f:comment>Card List</f:comment>
@@ -58,7 +60,7 @@
 			<f:render section="TextBottom" arguments="{_all}" />
 		</f:if>
 		<f:comment>Card Image (bottom)</f:comment>
-		<f:if condition="{data.imageorient} == 'bottom' && {card.horizontal} == 0">
+		<f:if condition="{data.imageorient} == 'bottom' && !{card.horizontal}">
 			<f:render partial="Media/RawGallery" arguments="{_all}" />
 		</f:if>
 		<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
@@ -80,12 +82,17 @@
 
 
 <f:section name="TextTop">
+
+
+
+  
+
 	<f:if condition="({card.image.overlay} || {card.mobile.overlay})">
-		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: '{card.mobile.overlay}')}">
+		<div class="align-items-center{f:if(condition: card.image.overlay,then: ' {card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: ' {card.mobile.overlay}')}">
 	</f:if>
 	<div class="card-body">
 		<f:comment>Card Title (default)</f:comment>
-		<f:if condition="({card.title.position} == 'default') && ({data.header} || {data.subheader}) ">
+		<f:if condition="({card.title.position} == 'default') && ({data.header} || {data.subheader})">
 			<f:render partial="Header/All" arguments="{_all}"/>
 		</f:if>
 		<div class="card-text">
@@ -155,8 +162,11 @@
 </f:section>
 
 <f:section name="Button">
+
+
+
 	<f:if condition="{card.button.enable} && {card.button.link}">
-		<f:link.typolink parameter="{card.button.link}" class="btn btn{f:if(condition:'{card.button.outline}',then: '-outline')}-{card.button.style}{f:if(condition:'{card.button.block}',then: ' btn-block')}">
+		<f:link.typolink parameter="{card.button.link}" class="btn btn{card.button.linkClass} mt-2" additionalAttributes="{role: 'button'}">
 			<f:if condition="{card.button.text}">
 				<f:then>
 					{card.button.text -> f:format.raw()}
@@ -183,7 +193,7 @@
 </f:asset.script>
 <div class="flip-card-inner">
 	<div class="flip-card-front position-absolute">
-		<f:if condition="{files.0}">
+		<f:if condition="{files -> f:count()}">
 			<f:render section="Image" arguments="{ratio: '{data.tx_t3sbootstrap_image_ratio}', file: '{files.0}', width: '{gallery.width}', height: '{gallery.height}'}" />
 		</f:if>
 	</div>

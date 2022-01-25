@@ -3,13 +3,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Service\FlexFormService;
@@ -20,26 +13,25 @@ use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 class WrapperHelper implements SingletonInterface
 {
-
 	/**
 	 * Returns the $processedData
-	 *
-	 * @param array $processedData
-	 * @param array	$flexconf
-	 * @param boolean $webp
-	 * @param boolean $bgMediaQueries
-	 *
-	 * @return array
 	 */
-	public function getBackgroundWrapper($processedData, $flexconf, $webp=FALSE, $bgMediaQueries='2560,1920,1200,992,768,576'): array
+	public function getBackgroundWrapper(array $processedData, array $flexconf, bool $webp=FALSE, string $bgMediaQueries='2560,1920,1200,992,768,576'): array
 	{
 		// autoheight
-		$processedData['enableAutoheight'] = $flexconf['enableAutoheight'] ? TRUE : FALSE;
-		$processedData['addHeight'] = (int)$flexconf['addHeight'];
+		$processedData['enableAutoheight'] = !empty($flexconf['enableAutoheight']) ? TRUE : FALSE;
+		$processedData['addHeight'] = !empty($flexconf['addHeight']) ? (int)$flexconf['addHeight'] : 0;
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+		$files = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']);
+		$file = !empty($files) && is_array($files) ? $files[0] : '';
 
 		// media
 		if ( $file ) {
@@ -53,7 +45,8 @@ class WrapperHelper implements SingletonInterface
 					$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
 					$processedData['ytVideo']['ytshift'] = $flexconf['ytshift'];
 					$processedData['videoAutoPlay'] = $file->getProperties()['autoplay'];
-					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file);
+					$youTubeRenderer = GeneralUtility::makeInstance(YouTubeRenderer::class);
+					$processedData['videoId'] = $youTubeRenderer->render($file);
 				} else {
 
 					if ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
@@ -105,7 +98,7 @@ class WrapperHelper implements SingletonInterface
 				$processedData['alignItem'] = $flexconf['alignItem'] ? ' '.$flexconf['alignItem'] :'';
 
 				// image raster
-				$processedData['imageRaster'] = $flexconf['imageRaster'] ? ' multiple-' : '';
+				$processedData['imageRaster'] = $flexconf['imageRaster'] ? 'multiple-' : '';
 
 				// Text color - overlay (
 				if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
@@ -117,7 +110,8 @@ class WrapperHelper implements SingletonInterface
 
 				$filter = $flexconf['imgGrayscale'] ? ' grayscale('.$flexconf['imgGrayscale'].'%) ' : '';
 				$filter .= $flexconf['imgSepia'] ? ' sepia('.$flexconf['imgSepia'].'%) ' : '';
-				$filter .= $flexconf['imgOpacity'] ? ' opacity('.$flexconf['imgOpacity'].'%) ' : '';
+				$filter .= $flexconf['imgOpacity'] && $flexconf['imgOpacity'] != 100 ? ' opacity('.$flexconf['imgOpacity'].'%) ' : '';
+
 				if ($filter)
 				$processedData['style'] .= 'filter: '.trim($filter).';';
 
@@ -128,7 +122,7 @@ class WrapperHelper implements SingletonInterface
 		} else {
 		// NO file - background color only
 			// Padding Top & Bottom if no media - add to style
-			if ($flexconf['noMediaPaddingTopBottom']) {
+			if (!empty($flexconf['noMediaPaddingTopBottom'])) {
 				$processedData['style'] .= ' padding: '.$flexconf['noMediaPaddingTopBottom'].'rem 0;';
 			}
 		}
@@ -139,13 +133,8 @@ class WrapperHelper implements SingletonInterface
 
 	/**
 	 * Returns the $processedData
-	 *
-	 * @param array $processedData
-	 * @param array	$flexconf
-	 *
-	 * @return array
 	 */
-	public function getCardWrapper($processedData, $flexconf): array
+	public function getCardWrapper(array $processedData, array $flexconf): array
 	{
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
@@ -246,56 +235,40 @@ class WrapperHelper implements SingletonInterface
 
 	/**
 	 * Returns the $processedData
-	 *
-	 * @param array $processedData
-	 * @param array	$flexconf
-	 *
-	 * @return array
 	 */
-	public function getCarouselContainer($processedData, $flexconf): array
+	public function getCarouselContainer(array $processedData, array $flexconf): array
 	{
-		if ( $flexconf['multislider'] ) {
-
-			if ( $flexconf['interval'] ) {
-				$options = 'interval: '.intval($flexconf['interval']).', ';
-			} else {
-				$options = 'interval: 2000, ';
-			}
-			if ( $flexconf['sliding'] == 'all' ) {
-				$options .= 'slideAll: true, ';
-			} else {
-				if ( $flexconf['sliding'] == 'continuous' ) {
-					// disable interval
-					$options = 'continuous: true, ';
-					$processedData['continuous'] = TRUE;
-				} else {
-					$options .= '';
-				}
-			}
-
-			$duration = $flexconf['duration'] ? intval($flexconf['duration']) : 500;
-			$options .= 'duration: '.$duration;
-
-			$block = '#multiSlider-'.$processedData['data']['uid'].' .MS-content .item {width: '.$flexconf['number'].'}';
-
-			$processedData['multislider'] = TRUE;
-			$processedData['jsOptions'] = '{'.$options.'}';
-			$processedData['cssBlock'] = $block;
-		}
-
-		if ( $flexconf['owlCarousel'] ) {
-			$processedData['owlCarousel'] = TRUE;
-			$processedData['owlAnimation'] = $flexconf['owlAnimation'];
-			$processedData['owlNumber'] = $flexconf['owlNumber'];
-			$processedData['owlStyle'] = $flexconf['owlStyle'];
-		}
-
-		$processedData['maxWidth'] = $flexconf['width'].'px';
+		$processedData['maxWidth'] = $flexconf['width'] ? $flexconf['width'].'px' : '1440px';
 		$processedData['interval'] = $flexconf['interval'];
 		$processedData['darkVariant'] = $flexconf['darkVariant'];
-		$processedData['carouselFade'] = $flexconf['carouselFade'] ? ' carousel-fade': '';
-		$processedData['carouselFade'] .= $flexconf['darkVariant'] ? ' carousel-dark': '';
-		$processedData['thumbnails'] = $flexconf['thumbnails'] ? true : false;
+		$processedData['carouselFade'] = !empty($flexconf['carouselFade']) ? ' carousel-fade': '';
+		$processedData['carouselFade'] .= !empty($flexconf['darkVariant']) ? ' carousel-dark': '';
+		$processedData['thumbnails'] = !empty($flexconf['thumbnails']) ? true : false;
+
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$statement = $queryBuilder
+			->select('uid')
+			->from('tt_content')
+			->where(
+				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+			)
+			->execute()
+			->fetchAll();
+
+		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+		foreach($statement as $element) {
+			$file = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);
+			if ( !empty($file) ) {
+				if ($file[0]->getMimeType() == 'video/mp4' || $file[0]->getMimeType() == 'video/webm' || $file[0]->getMimeType() == 'video/wav'
+				 || $file[0]->getMimeType() == 'video/ogg' || $file[0]->getMimeType() == 'video/flac' || $file[0]->getMimeType() == 'video/opus') {
+					$processedData['containsVideo'] = TRUE;
+				}
+			}
+			$carouselSlides[$element['uid']] = $file[0];
+		}
+
+		$processedData['carouselSlides'] = !empty($carouselSlides) ? $carouselSlides : '';
 
 		return $processedData;
 	}
@@ -303,13 +276,8 @@ class WrapperHelper implements SingletonInterface
 
 	/**
 	 * Returns the $processedData
-	 *
-	 * @param array $processedData
-	 * @param array	$flexconf
-	 *
-	 * @return array
 	 */
-	public function getParallaxWrapper($processedData, $flexconf, $webp=FALSE): array
+	public function getParallaxWrapper(array $processedData, array $flexconf, bool $webp=FALSE): array
 	{
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
@@ -341,7 +309,7 @@ class WrapperHelper implements SingletonInterface
 				}
 			} else {
 				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0, (bool)$webp);
+				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0, $webp);
 				$processedData['parallaxImage'] = $bgImage;
 			}
 
@@ -357,23 +325,19 @@ class WrapperHelper implements SingletonInterface
 
 	/**
 	 * Returns the $processedData
-	 *
-	 * @param array $processedData
-	 * @param array	$flexconf
-	 *
-	 * @return array
 	 */
-	public function getCollapsible($processedData, $flexconf, $parentflexconf): array
+	public function getCollapsible(array $processedData, array $flexconf, array $parentflexconf): array
 	{
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 
+		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']);
+		if (!empty($file)) {$file = $file[0];}
 		$processedData['appearance'] = $parentflexconf['appearance'];
 		$processedData['show'] = $flexconf['active'] ? ' show' : '';
 		$processedData['collapsed'] = $flexconf['active'] ? '' : ' collapsed';
 		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
 		$processedData['alwaysOpen'] = $parentflexconf['alwaysOpen'] ? 'true' : 'false';
-		$processedData['buttonstyle'] = $flexconf['style'] ? $flexconf['style'] : 'primary';
+		$processedData['buttonstyle'] = !empty($flexconf['style']) ? $flexconf['style'] : 'primary';
 		$processedData['collapsibleByPid'] = $flexconf['collapsibleByPid'] ?: '';
 		$processedData['media'] = $file ? $file : '';
 

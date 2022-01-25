@@ -20,16 +20,14 @@
 		</f:asset.script>
 		<f:asset.css identifier="ytvideo-{data.uid}">
 #v{data.uid} iframe {
-    top: {ytVideo.ytshift}% !important;
+	top: {ytVideo.ytshift}% !important;
 }
 		</f:asset.css>
-		<div class="w-100 h-100" style="background-color: transparent; z-index: 999">
 			<div class="position-relative overflow-hidden"
 				 style="height:{f:if(condition:'{ytVideo.bgHeight}',then:'{ytVideo.bgHeight}',else:'300')}px;{controlStyle}">
 				<div id="v{data.uid}" class="video-container"></div>
 				<f:render section="SectionInner" arguments="{_all}" />
 			</div>
-		</div>
 	</f:then>
 	<f:else>
 		<f:link.typolink parameter="{celink}" class="ce-link">
@@ -47,8 +45,7 @@
 						<section id="s-{data.uid}" class="card rounded-0 border-0">
 							<f:comment>	background-image by css </f:comment>
 							<div id="bg-img-{data.uid}"
-								 class="{imageRaster}background-image enableAutoheight{f:if(condition: '{class}', then: ' {class}')}"
-									  style="{f:if(condition: '{style}', then: ' {style}')}">
+								 class="{imageRaster}background-image enableAutoheight{class}"{styleAttr -> f:format.raw()}">
 							</div>
 							<f:render section="SectionOverlayInner" arguments="{_all}" />
 						</section>
@@ -57,8 +54,7 @@
 					<f:comment>	BG-Image : default </f:comment>
 						<f:comment>	background-image by css </f:comment>
 						<section id="s{data.uid}"
-							 class="{imageRaster}background-image{f:if(condition: '{class}', then: ' {class}')}"
-								  style="{f:if(condition: '{style}', then: ' {style}')}">
+							 class="{imageRaster}background-image{class}"{styleAttr -> f:format.raw()}">
 							<f:render section="SectionInner" arguments="{_all}" />
 						</section>
 					</f:else>
@@ -127,7 +123,7 @@
 							</f:then>
 							<f:else>
 								<f:comment> No media </f:comment>
-								<section id="s-{data.uid}"{f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}>
+								<section id="s-{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
 									<f:if condition="{col_273.0}">
 										{containerPre -> f:format.raw()}
 											<f:for each="{col_273}" as="row">
@@ -149,37 +145,21 @@
 
 
 <f:section name="SectionInner">
-	<f:if condition="{contentPosition}">
-		<f:then>
-			<f:if condition="{col_273.0}">
-				<div class="position-absolute {contentPosition}">
-					<div class="col">
-						{containerPre -> f:format.raw()}
-							<f:for each="{col_273}" as="row">
-								{row.renderedContent -> f:format.raw()}
-							</f:for>
-						{containerPost -> f:format.raw()}
-					</div>
-				</div>
-			</f:if>
-		</f:then>
-		<f:else>
-			<f:if condition="{col_273.0}">
-				<div class="col">
-					{containerPre -> f:format.raw()}
-						<f:for each="{col_273}" as="row">
-							{row.renderedContent -> f:format.raw()}
-						</f:for>
-					{containerPost -> f:format.raw()}
-				</div>
-			</f:if>
-		</f:else>
+	<f:if condition="{col_273 -> f:count()}">
+		<div class="position-absolute w-100{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
+			<div class="col">
+				{containerPre -> f:format.raw()}
+					<f:for each="{col_273}" as="row">
+						{row.renderedContent -> f:format.raw()}
+					</f:for>
+				{containerPost -> f:format.raw()}
+			</div>
+		</div>
 	</f:if>
 </f:section>
 
-
 <f:section name="SectionOverlayInner">
-<f:if condition="{col_273.0}">
+<f:if condition="{col_273 -> f:count()}">
 	<div class="card-img-overlay d-flex{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
 		<f:if condition="{container}">
 			<f:then>

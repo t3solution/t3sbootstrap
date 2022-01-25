@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\UserFunction;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /**
  * ConfigController
@@ -25,10 +25,8 @@ class TcaMatcher
 
 	/**
 	 * autoLayoutParent
-	 *
-	 * @return bool
 	 */
-	public function autoLayoutParent($arguments): bool
+	public function autoLayoutParent(array $arguments): bool
 	{
 		$parent = false;
 		if ( $arguments['record']['tx_container_parent'][0] ) {
@@ -52,11 +50,9 @@ class TcaMatcher
 	}
 
 	/**
-	 * toastContainerParent
-	 *
-	 * @return bool
+	 * buttonParent
 	 */
-	public function toastContainerParent($arguments): bool
+	public function buttonParent(array $arguments): bool
 	{
 		$parent = true;
 		if ( $arguments['record']['tx_container_parent'][0] ) {
@@ -70,7 +66,8 @@ class TcaMatcher
 				  )
 				  ->execute();
 			$parent_rec = $result->fetch();
-			if ( $parent_rec['CType'] == 'toast_container' ) {
+
+			if ( $parent_rec['CType'] == 'button_group' ) {
 				$parent = false;
 			}
 		}
@@ -78,43 +75,60 @@ class TcaMatcher
 		return $parent;
 	}
 
+	/**
+	 * cardWrapperParent
+	 */
+	public function cardWrapperParent(array $arguments): bool
+	{
+		$parent = true;
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+			$result = $queryBuilder
+				  ->select('*')
+				  ->from('tt_content')
+				  ->where(
+					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+				  )
+				  ->execute();
+			$parent_rec = $result->fetch();
+
+			if ( $parent_rec['CType'] == 'card_wrapper' ) {
+				$parent = false;
+			}
+		}
+
+		return $parent;
+	}
 
 	/**
 	 * container_1 ($_EXTCONF['container'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function container_1($arguments): bool
+	public function container_1(array $arguments): bool
 	{
 		return true;
 	}
 
 	/**
 	 * container_0 ($_EXTCONF['container'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function container_0($arguments): bool
+	public function container_0(array $arguments): bool
 	{
 		return false;
 	}
 
 	/**
 	 * spacing_1 ($_EXTCONF['spacing'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function spacing_1($arguments): bool
+	public function spacing_1(array $arguments): bool
 	{
 		return true;
 	}
 
 	/**
 	 * ratio ($_EXTCONF['ratio'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function ratio_0($arguments): bool
+	public function ratio_0(array $arguments): bool
 	{
 		return false;
 	}
@@ -122,10 +136,8 @@ class TcaMatcher
 
 	/**
 	 * ratio ($_EXTCONF['ratio'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function ratio_1($arguments): bool
+	public function ratio_1(array $arguments): bool
 	{
 		return true;
 	}
@@ -133,20 +145,16 @@ class TcaMatcher
 
 	/**
 	 * spacing_0 ($_EXTCONF['spacing'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function spacing_0($arguments): bool
+	public function spacing_0(array $arguments): bool
 	{
 		return false;
 	}
 
 	/**
 	 * color_1 ($_EXTCONF['color'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function color_1($arguments): bool
+	public function color_1(array $arguments): bool
 	{
 		if ( $arguments['record']['CType'][0] == 'parallax_wrapper' ) {
 				return false;
@@ -157,20 +165,16 @@ class TcaMatcher
 
 	/**
 	 * color_0 ($_EXTCONF['color'] in tt_content.php)
-	 *
-	 * @return bool
 	 */
-	public function color_0($arguments): bool
+	public function color_0(array $arguments): bool
 	{
 		return false;
 	}
 
 	/**
 	 * is child of flex-container
-	 *
-	 * @return bool
 	 */
-	public function flexContainerParent($arguments): bool
+	public function flexContainerParent(array $arguments): bool
 	{
 		$parent = false;
 
@@ -198,75 +202,9 @@ class TcaMatcher
 	}
 
 	/**
-	 * is child of carousel-container and not owl
-	 *
-	 * @return bool
-	 */
-	public function flexCarouselParentNotOwl($arguments): bool
-	{
-		$parent = true;
-
-		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-
-		if ( $arguments['record']['tx_container_parent'][0] ) {
-			$uid = (int)$arguments['record']['tx_container_parent'][0];
-			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
-			$result = $queryBuilder
-				  ->select('*')
-				  ->from('tt_content')
-				  ->where(
-					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
-				  )
-				  ->execute();
-			$parent_rec = $result->fetch();
-			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
-
-			if ( $parent_rec['CType'] == 'carousel_container' && ((int) $parent_flexconf['owlCarousel'] == 1 || (int) $parent_flexconf['multislider'] == 1) ) {
-				$parent = false;
-			}
-		}
-
-		return $parent;
-	}
-
-	/**
-	 * is child of carousel-container and is owl style 1
-	 *
-	 * @return bool
-	 */
-	public function flexCarouselParentIsOwl($arguments): bool
-	{
-		$parent = false;
-
-		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-
-		if ( $arguments['record']['tx_container_parent'][0] ) {
-			$uid = (int)$arguments['record']['tx_container_parent'][0];
-			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
-			$result = $queryBuilder
-				  ->select('*')
-				  ->from('tt_content')
-				  ->where(
-					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
-				  )
-				  ->execute();
-			$parent_rec = $result->fetch();
-			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
-
-			if ( $parent_rec['CType'] == 'carousel_container' && (int) $parent_flexconf['owlCarousel'] == 1 ) {
-				$parent = true;
-			}
-		}
-
-		return $parent;
-	}
-
-	/**
 	 * isButton
-	 *
-	 * @return bool
 	 */
-	public function isButton($arguments): bool
+	public function isButton(array $arguments): bool
 	{
 		$button = false;
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
@@ -293,10 +231,8 @@ class TcaMatcher
 
 	/**
 	 * isMenu
-	 *
-	 * @return bool
 	 */
-	public function isMenu($arguments): bool
+	public function isMenu(array $arguments): bool
 	{
 		$menu = false;
 		if ($arguments['record']['CType'][0]) {
@@ -310,10 +246,8 @@ class TcaMatcher
 
 	/**
 	 * animateCss
-	 *
-	 * @return bool
 	 */
-	public function animateCss($arguments): bool
+	public function animateCss(array $arguments): bool
 	{
 		$animateCss = false;
 		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
@@ -326,10 +260,8 @@ class TcaMatcher
 
 	/**
 	 * isYoutube
-	 *
-	 * @return bool
 	 */
-	public function isYoutube($arguments): bool
+	public function isYoutube(array $arguments): bool
 	{
 		$youtube = false;
 
@@ -337,9 +269,9 @@ class TcaMatcher
 
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
-			$file = $fileObjects[0] ? $fileObjects[0] : FALSE;
+			$file = !empty($fileObjects[0]) ? $fileObjects[0] : FALSE;
 
-			if ($file) {
+			if (!empty($file)) {
 				if ( $file->getType() === 4 && ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' ) ) {
 					$youtube = true;
 				}
@@ -352,10 +284,8 @@ class TcaMatcher
 
 	/**
 	 * isLocalVideo
-	 *
-	 * @return bool
 	 */
-	public function isLocalVideo($arguments): bool
+	public function isLocalVideo(array $arguments): bool
 	{
 		$video = false;
 
@@ -363,9 +293,9 @@ class TcaMatcher
 
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
-			$file = $fileObjects[0] ? $fileObjects[0] : FALSE;
+			$file = !empty($fileObjects[0]) ? $fileObjects[0] : FALSE;
 
-			if ($file) {
+			if (!empty($file)) {
 				if ( $file->getType() === 4 ) {
 					if ( ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' )
 					 || $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
@@ -382,10 +312,8 @@ class TcaMatcher
 
 	/**
 	 * isNoMedia
-	 *
-	 * @return bool
 	 */
-	public function isNoMedia($arguments): bool
+	public function isNoMedia(array $arguments): bool
 	{
 		$media = false;
 
@@ -409,10 +337,8 @@ class TcaMatcher
 
 	/**
 	 * isImage
-	 *
-	 * @return bool
 	 */
-	public function isImage($arguments): bool
+	public function isImage(array $arguments): bool
 	{
 		$image = false;
 
@@ -420,7 +346,7 @@ class TcaMatcher
 
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
-			$file = $fileObjects[0] ? $fileObjects[0] : FALSE;
+			$file = !empty($fileObjects[0]) ? $fileObjects[0] : FALSE;
 			if ($file) {
 				if ( $file->getType() === 2 && !$file->getProperties()['hidden'] ) {
 					$image = true;
@@ -434,10 +360,8 @@ class TcaMatcher
 
 	/**
 	 * isDropdownMenu
-	 *
-	 * @return bool
 	 */
-	public function isDropdownMenu($arguments): bool
+	public function isDropdownMenu(array $arguments): bool
 	{
 		$level = false;
 		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
@@ -447,6 +371,31 @@ class TcaMatcher
 		}
 
 		return $level;
+	}
+
+	/**
+	 * toastContainerParent
+	 */
+	public function toastContainerParent($arguments): bool
+	{
+		$parent = true;
+		if ( $arguments['record']['tx_container_parent'][0] ) {
+			$uid = (int)$arguments['record']['tx_container_parent'][0];
+			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+			$result = $queryBuilder
+				  ->select('*')
+				  ->from('tt_content')
+				  ->where(
+					 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+				  )
+				  ->execute();
+			$parent_rec = $result->fetch();
+			if ( $parent_rec['CType'] == 'toast_container' ) {
+				$parent = false;
+			}
+		}
+
+		return $parent;
 	}
 
 

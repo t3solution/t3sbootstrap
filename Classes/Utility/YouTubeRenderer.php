@@ -1,21 +1,20 @@
 <?php
 namespace T3SBS\T3sbootstrap\Utility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperInterface;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperRegistry;
-
 use TYPO3\CMS\Core\SingletonInterface;
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /**
  * YouTube renderer class
@@ -31,7 +30,6 @@ class YouTubeRenderer implements SingletonInterface
 	/**
 	 * Get online media helper
 	 *
-	 * @param FileInterface $file
 	 * @return bool|OnlineMediaHelperInterface
 	 */
 	protected function getOnlineMediaHelper(FileInterface $file)
@@ -41,6 +39,7 @@ class YouTubeRenderer implements SingletonInterface
 			if ($origFile instanceof FileReference) {
 				$origFile = $origFile->getOriginalFile();
 			}
+
 			if ($origFile instanceof File) {
 				$this->onlineMediaHelper = GeneralUtility::makeInstance(OnlineMediaHelperRegistry::class)->getOnlineMediaHelper($origFile);
 			} else {
@@ -52,11 +51,8 @@ class YouTubeRenderer implements SingletonInterface
 
 	/**
 	 * Render for given File(Reference) html output
-	 *
-	 * @param FileInterface $file
-	 * @return string
 	 */
-	public function render(FileInterface $file)
+	public function render(FileInterface $file): string
 	{
 		if ($file instanceof FileReference) {
 			$origFile = $file->getOriginalFile();

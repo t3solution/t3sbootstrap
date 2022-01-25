@@ -3,6 +3,21 @@
 <f:section name="Header">
 </f:section>
 <f:section name="Main">
+<f:if condition="{col_280 -> f:count()}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Tab Container (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
 <f:asset.script identifier="vanilla_tabs">
 	// Tabs - TabContainer.html
 	var tabs = document.querySelectorAll('.nav.nav-tabs, .nav.nav-pills');
@@ -12,7 +27,7 @@
 </f:asset.script>
 <f:variable name="currentUid" value="{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}" />
 <f:if condition="{class} || {style}">
-	<div{f:if(condition:'{class}',then:' class="{class}"')}{f:if(condition:'{style}',then:' style="{style}"')}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
+	<div{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 </f:if>
 	<f:render partial="Header/All" arguments="{_all}" />
 	<f:switch expression="{tab.displayType}">
@@ -30,11 +45,9 @@
 	</div>
 </f:if>
 </f:section>
-</html>
-
 
 <f:section name="Tabs">
-<ul id="tabContainer-{currentUid}" class="nav nav-tabs mb-3{tab.fill}" role="tablist">
+<ul id="tabContainer-{currentUid}" class="nav nav-tabs tabcontainer mb-3{tab.fill}" role="tablist">
 	<f:for each="{col_280}" as="tab">
 		<li class="nav-item" role="presentation">
 			<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
@@ -48,7 +61,7 @@
 </f:section>
 
 <f:section name="Pills">
-<ul class="nav nav-pills mb-3{tab.fill}" id="tabContainer-{currentUid}" role="tablist">
+<ul class="nav nav-pills tabcontainer mb-3{tab.fill}" id="tabContainer-{currentUid}" role="tablist">
 	<f:for each="{col_280}" as="tab">
 		<li class="nav-item" role="presentation">
 			<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
@@ -64,7 +77,7 @@
 <f:section name="Verticalpills">
 <div class="row">
 	<div class="col-{pill.asideWidth}">
-		<ul id="tabContainer-{currentUid}" class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+		<ul id="tabContainer-{currentUid}" class="nav flex-column nav-pills tabcontainer" role="tablist" aria-orientation="vertical">
 			<f:for each="{col_280}" as="tab">
 				<li class="nav-item" role="presentation">
 					<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"

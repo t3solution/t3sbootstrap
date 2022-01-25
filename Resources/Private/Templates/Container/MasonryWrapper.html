@@ -1,6 +1,21 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
+<f:if condition="{col_283 -> f:count()}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Masonry Wrapper (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
 <f:if condition="{settings.cdn}">
 	<f:then>
 		<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js" 
@@ -11,8 +26,8 @@
 		 crossorigin="anonymous" async="async" />
 	</f:else>
 </f:if>
-<div id="masonry-{data.uid}" class="row masonry{f:if(condition:'{class}',then:' {class}')}"
-	{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate} data-masonry='{"percentPosition": true }'>
+<div id="masonry-{data.uid}" class="row masonry{class}"
+	{styleAttr -> f:format.raw()}{dataAnimate} data-masonry='{"percentPosition": true }'>
 	<f:for each="{col_283}" as="ce" iteration="ceIterator">
 		<div class="{f:if(condition:'{masonryClass}',then:'{masonryClass}', else:'col-sm-6 col-lg-4 mb-4')}">		
 			{ce.renderedContent -> f:format.raw()}
@@ -20,4 +35,3 @@
 	</f:for>
 </div>
 </f:section>
-</html>

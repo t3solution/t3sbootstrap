@@ -32,4 +32,3 @@
 [{$bootstrap.print.enable} == 1]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Print.typoscript'
 [END]
-

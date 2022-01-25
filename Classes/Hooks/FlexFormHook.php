@@ -1,25 +1,19 @@
 <?php
 namespace T3SBS\T3sbootstrap\Hooks;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Core\Environment;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Core\Environment;
-
 class FlexFormHook
 {
 
-	/**
-	* @param array $dataStructure
-	* @param array $identifier
-	* @return array
-	*/
 	public function parseDataStructureByIdentifierPostProcess(array $dataStructure, array $identifier): array
 	{
 		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');

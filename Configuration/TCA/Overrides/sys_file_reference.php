@@ -61,18 +61,14 @@ $tempSysFileReferenceColumns = [
 	'tx_t3sbootstrap_hover_effect' => [
 		'label' => 'Link Hover Effect (title and/or description)',
 		'exclude' => 1,
-/*
-		'displayCond' => [
-			 'AND' => [
-				'FIELD:tablenames:=:tt_content',
-				'OR' => [
-						'FIELD:CType:=:textmedia',
-						'FIELD:CType:=:textpic',
-						'FIELD:CType:=:image',
-				]
-			 ]
-		],
-*/
+
+'displayCond' => [
+	 'AND' => [
+		'FIELD:tablenames:=:tt_content',
+		'FIELD:fieldname:=:assets',
+	 ]
+],
+
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
@@ -98,6 +94,7 @@ $tempSysFileReferenceColumns = [
 		'displayCond' => [
 			'OR' => [
 				'FIELD:tablenames:=:tt_content',
+				'FIELD:tablenames:=:tx_news_domain_model_news',
 				'FIELD:fieldname:=:assets',
 				'FIELD:fieldname:=:image',
 			],
@@ -162,19 +159,16 @@ $tempSysFileReferenceColumns = [
 	],
 	'tx_t3sbootstrap_imgtag' => [
 		'label' => 'Output image in <img> - instead in <picture> tag',
+		'description' => 'Did not work with any CType!',
 		'exclude' => 1,
-/*
-		'displayCond' => [
-			 'AND' => [
-				'FIELD:tablenames:=:tt_content',
-				'OR' => [
-						'FIELD:CType:=:textmedia',
-						'FIELD:CType:=:textpic',
-						'FIELD:CType:=:image',
-				]
-			 ]
-		],
-*/
+
+'displayCond' => [
+	 'AND' => [
+		'FIELD:tablenames:=:tt_content',
+		'FIELD:fieldname:=:assets',
+	 ]
+],
+
 
 		'config' => [
 			'type' => 'check'

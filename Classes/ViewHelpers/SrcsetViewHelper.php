@@ -1,22 +1,19 @@
 <?php
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+
 /**
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Extbase\Service\ImageService;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
-
-
 class SrcsetViewHelper extends AbstractViewHelper
 {
 	use CompileWithRenderStatic;
@@ -31,11 +28,6 @@ class SrcsetViewHelper extends AbstractViewHelper
 		$this->registerArgument('storageUid', 'int', 'storage uid', false, 0);
 	}
 
-	/**
-	 * @param array $arguments
-	 * @param \Closure $renderChildrenClosure
-	 * @param RenderingContextInterface $renderingContext
-	 */
 	public static function renderStatic(
 		array $arguments,
 		\Closure $renderChildrenClosure,
@@ -48,8 +40,7 @@ class SrcsetViewHelper extends AbstractViewHelper
 
 			$storageUid = $arguments['storageUid'] ?: 0;
 			$webp = $arguments['webp'];
-			$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-			$imageService = $objectManager->get(ImageService::class);
+			$imageService = GeneralUtility::makeInstance(ImageService::class);
 			$resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
 			$file = $resourceFactory->getFileObjectFromCombinedIdentifier($storageUid.':/'.$imgPath);
 
@@ -57,9 +48,9 @@ class SrcsetViewHelper extends AbstractViewHelper
 			$height = 623;
 
 			$processingInstructions = array(
-							   'width' => $width,
-							   'height' => $height . 'c+100',
-					   );
+								  'width' => $width,
+								  'height' => $height . 'c+100',
+						);
 			$processedImage = $imageService->applyProcessingInstructions($file, $processingInstructions);
 			$largeImageUri = $imageService->getImageUri($processedImage);
 
@@ -68,9 +59,9 @@ class SrcsetViewHelper extends AbstractViewHelper
 			$height = 350;
 
 			$processingInstructions = array(
-							   'width' => $width,
-							   'height' => $height . 'c+100',
-					   );
+								  'width' => $width,
+								  'height' => $height . 'c+100',
+						);
 			$processedImage = $imageService->applyProcessingInstructions($file, $processingInstructions);
 			$mediumImageUri = $imageService->getImageUri($processedImage);
 
@@ -79,9 +70,9 @@ class SrcsetViewHelper extends AbstractViewHelper
 			$height = 242;
 
 			$processingInstructions = array(
-							   'width' => $width,
-							   'height' => $height . 'c+100',
-					   );
+								  'width' => $width,
+								  'height' => $height . 'c+100',
+						);
 			$processedImage = $imageService->applyProcessingInstructions($file, $processingInstructions);
 			$smallImageUri = $imageService->getImageUri($processedImage);
 
@@ -89,10 +80,10 @@ class SrcsetViewHelper extends AbstractViewHelper
 			$height = 141;
 
 			$processingInstructions = array(
-							   'width' => $width,
-							   'height' => $height . 'c+100',
+								  'width' => $width,
+								  'height' => $height . 'c+100',
 
-					   );
+						);
 			$processedImage = $imageService->applyProcessingInstructions($file, $processingInstructions);
 			$mobileImageUri = $imageService->getImageUri($processedImage);
 

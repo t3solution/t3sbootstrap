@@ -2,7 +2,7 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{settings.list.imageRatio}">
 	<f:then>
-		<f:variable name="width" value="{f:if(condition: settings.media.maxWidth, then: settings.media.maxWidth, else: settings.list.media.image.maxWidth)}" />
+		<f:variable name="width" value="{f:if(condition: '{settings.media.maxWidth}', then: '{settings.media.maxWidth}', else: '{settings.list.media.image.maxWidth}')}" />
 		<f:variable name="height" value="" />
 		<f:variable name="ratio" value="{settings.list.imageRatio}" />
 	</f:then>
@@ -37,12 +37,49 @@
 		</f:if>
 	</f:else>
 </f:if>
-<figure class="text-center image{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}')}{f:if(condition: '{settings.templateLayout} == 71', then: ' d-none d-sm-block')}">
+
+<f:if condition="{file.originalResource}">
+	<f:then>
+		<f:variable name="fileUid" value="{file.originalResource.uid}" />
+		<f:variable name="titleText" value="{file.originalResource.title}" />
+		<f:variable name="altText" value="{f:if(condition: '{file.originalResource.alternative}', then: '{file.originalResource.alternative}', else: 'Image-{fileUid}')}" />
+		<f:variable name="imgExtraClass" value="{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}', then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}', else:'')}" />
+		<f:variable name="extraClass" value="{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_extra_class}', then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_class}', else:'')}" />
+		<f:variable name="lazyImg" value="{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_lazy_load}', then: '1', else:'0')}" />
+	</f:then>
+	<f:else>
+		<f:comment> DUMMY IMAGE </f:comment>
+		<f:variable name="fileUid" value="{file.uid}" />
+		<f:variable name="titleText" value="{file.title}" />
+		<f:variable name="altText" value="{f:if(condition: '{file.alternative}', then: '{file.alternative}', else: 'Image-{fileUid}')}" />
+		<f:variable name="imgExtraClass" value="{f:if(condition: '{file.tx_t3sbootstrap_extra_imgclass}', then: ' {file.tx_t3sbootstrap_extra_imgclass}', else:'')}" />
+		<f:variable name="extraClass" value="{f:if(condition: file.tx_t3sbootstrap_extra_class, then: ' {file.tx_t3sbootstrap_extra_class}', else:'')}" />
+		<f:variable name="lazyImg" value="{f:if(condition: '{file.tx_t3sbootstrap_lazy_load}', then: '1', else:'0')}" />
+	</f:else>
+</f:if>
+<f:if condition="{settings.lazyLoad} == 1">
+	<f:then>
+		<f:variable name="lazyClass" value=" lazy" />
+	</f:then>
+	<f:else>	
+		<f:if condition="{lazyImg} && {settings.lazyLoad} == 2">
+			<f:then>
+				<f:variable name="lazyClass" value=" lazy" />
+			</f:then>
+			<f:else>
+				<f:variable name="lazyClass" value="" />			
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+
+<figure class="text-center image{extraClass}{f:if(condition: '{settings.templateLayout} == 71', then: ' d-none d-sm-block')}">
 	<t3sb:media
 		file="{file}"
-		title="{file.originalResource.title}"
-		alt="{f:if(condition: file.originalResource.alternative, then: '{file.originalResource.alternative}', else: 'image-{file.originalResource.uid}')}"
-		class="img-fluid{f:if(condition: '{settings.templateLayout} == 71', then: ' me-3')}{f:if(condition: '{file.originalResource.properties.tx_t3sbootstrap_lazy_load} || {settings.lazyLoad} == 1', then:' lazy')}{f:if(condition: file.originalResource.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.originalResource.properties.tx_t3sbootstrap_extra_imgclass}')}"
+		title="{titleText}"
+		alt="{altText}"
+		class="img-fluid{lazyClass}{imgExtraClass}{f:if(condition: '{settings.templateLayout} == 71', then:' me-3')}"
+		
 		width="{width}"
 		height="{height}"
 		breakpoints="{

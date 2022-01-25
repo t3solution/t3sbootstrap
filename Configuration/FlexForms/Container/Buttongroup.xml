@@ -67,7 +67,7 @@
 							</config>
 						</TCEforms>
 					</vertical>
-					<size>
+					<btnsize>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
 							<config>
@@ -76,7 +76,7 @@
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-										<numIndex index="1"></numIndex>
+										<numIndex index="1">null</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</numIndex>
@@ -87,10 +87,10 @@
 										<numIndex index="1">btn-group-lg</numIndex>
 									</numIndex>
 								</items>
-								<default></default>
+								<default>null</default>
 							</config>
 						</TCEforms>
-					</size>
+					</btnsize>
 					<align>
 						<TCEforms>
 							<label>Button Group Alignment</label>
@@ -121,7 +121,7 @@
 					</align>
 					<fixedPosition>
 						<TCEforms>
-							<label>Fixed position (activate required javascript in extConf)</label>
+							<label>Fixed position</label>
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
@@ -169,6 +169,32 @@
 							</config>
 						</TCEforms>
 					</rotate>
+					<slideIn>
+						<TCEforms>
+							<label>Slide In / Slide Out</label>
+							<onChange>reload</onChange>
+							<description>With "Fixed position = Right browser edge", Vertical variation &amp; FA icon in t3sbs_button</description>
+							<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</slideIn>
+					<visiblePart>
+						<TCEforms>
+							<label>Visible part of the button</label>
+							<description>offset to the left specified in px</description>
+							<displayCond>FIELD:sDEF.slideIn:=:1</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>4</max>
+								<default>33</default>
+								<checkbox>0</checkbox>
+								<eval>required,int</eval>
+							</config>
+						</TCEforms>
+					</visiblePart>
 				</el>
 			</ROOT>
 		</sDEF>

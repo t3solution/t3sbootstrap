@@ -4,20 +4,37 @@
 <f:comment>No header for modal</f:comment>
 </f:section>
 <f:section name="Main">
+
+
+<f:if condition="{col_279 -> f:count()}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Modal (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
 <f:if condition="{modal.button}">
 	<f:then>
 		<f:if condition="{modal.fixedButton}">
 			<f:then>
 				<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
 				<div class="d-none {modal.fixedClass}">
-					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
+					<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
 						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
 					</button>
 				</div>
 			</f:then>
 			<f:else>
 				<div class="d-grid">
-					<button type="button" class="btn btn-{modal.style}{f:if(condition:'{class}',then:' {class}')}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
+					<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
 						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
 					</button>
 				</div>
@@ -25,7 +42,7 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<a class="modal-link{f:if(condition:'{class}',then:' {class}')}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}" style="cursor:pointer;">
+		<a class="modal-link{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}" style="cursor:pointer;">
 			{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}</a>
 	</f:else>
 </f:if>
@@ -46,5 +63,3 @@
 	</div>
 </div>
 </f:section>
-</html>
-

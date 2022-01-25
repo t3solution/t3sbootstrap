@@ -1,6 +1,15 @@
 <?php
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
+use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
+use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
+use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
@@ -9,15 +18,6 @@ namespace T3SBS\T3sbootstrap\ViewHelpers;
  *
  * 	taken from https://extensions.typo3.org/extension/sms_responsive_images/ and modified
  */
-
-use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
-use TYPO3\CMS\Core\Resource\FileReference;
-use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
-use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 {
 	/**
@@ -77,12 +77,12 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	 */
 	protected function renderImage(FileInterface $image, $width, $height, ?string $fileExtension=null)
 	{
-		if ($this->arguments['imgtag']) {
+		if (!empty($this->arguments['imgtag'])) {
 			return self::renderImageTag($image, $width, $height, $fileExtension);
 		} else {
-			if ($this->arguments['breakpoints']) {
+			if (!empty($this->arguments['breakpoints'])) {
 				return $this->renderPicture($image, $width, $height);
-			} elseif ($this->arguments['srcset']) {
+			} elseif (!empty($this->arguments['srcset'])) {
 				return $this->renderImageSrcset($image, $width, $height);
 			} else {
 				return parent::renderImage($image, $width, $height, $fileExtension);
@@ -104,6 +104,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		// Get crop variants
 		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
 
+
 		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
 			$mobileImgManipulation = json_decode($cropString)->mobile;
 		}
@@ -118,14 +119,14 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 
 		$cropVariantCollection = CropVariantCollection::create((string) $cropString);
 		$cropVariant = $this->arguments['cropVariant'] ?: 'default';
-
 		$cropArea = $cropVariantCollection->getCropArea($cropVariant);
 		$focusArea = $cropVariantCollection->getFocusArea($cropVariant);
 
 		// Generate fallback image
 		$fallbackImage = $this->generateFallbackImage($image, $width, $cropArea);
 
-		if ( $GLOBALS['_GET']['type'] == '98' ) {
+
+		if ( !empty($GLOBALS['_GET']['type']) && $GLOBALS['_GET']['type'] == '98' ) {
 			$lazyload = 0;
 		} else {
 			if ($this->arguments['lazyload']) {
@@ -133,7 +134,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 					$lazyload = $this->arguments['lazyload'];
 				} else {
 					if ($this->arguments['lazyload'] == 2 && $image->getProperty('tx_t3sbootstrap_lazy_load')) {
-						$lazyload = $this->arguments['lazyload'];
+						$lazyload = (int)$this->arguments['lazyload'];
 					} else {
 						$lazyload = 0;
 					}
@@ -148,6 +149,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$placeholderSize = $this->arguments['placeholderSize'] ?: 60;
 			$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
 		}
+
 		// Generate picture tag
 		$this->tag = $this->responsiveImagesUtility->createPictureTag(
 			$image,
@@ -277,7 +279,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	 *
 	 * @return string					Rendered image tag
 	 */
-	protected function renderImageTag(FileInterface $image, $width, $height)
+	protected function renderImageTag(FileInterface $image, $width, $height, $fileExtension)
 	{
 		 $cropVariant = 'default';
 		 $cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
@@ -358,22 +360,37 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	protected function getCropString($image, $cropString)
 	{
 		$cropObject = json_decode($cropString);
-
 		foreach($this->arguments['breakpoints'] as $cv) {
 			$cropVariant = $cv['cropVariant'];
-			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];	
-			if ($this->arguments['shift']) {
-				$cropObject->$cropVariant->cropArea->y = $this->arguments['shift'];
-			}
+			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
 			$rArr = explode(':',$this->arguments['ratio']);
 
+			if ($cropVariant == 'mobile') {
+				$rArr[0] = '16';
+				$rArr[1] = '9';
+			} else {
+				if ( $this->arguments['shift'] ) {
+					$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
+					 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
+					$cropObject->$cropVariant->cropArea->y = $shift;
+				}
+			}
+
 			if ( $rArr[0] > $rArr[1] ) {
 				// landscape
-				$pxHeight = $cropedWidth / $rArr[0] * $rArr[1];
-				$cHeight = $pxHeight / $image->getProperties()['height'];
-				$cropObject->$cropVariant->cropArea->height = $cHeight;
+				$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];
+				if ( $image->getProperties()['height'] > $pxHeight ) {
+					$cHeight = $pxHeight / $image->getProperties()['height'];
+					$cropObject->$cropVariant->cropArea->height = $cHeight;
+				} else {
+					$cHeight = $image->getProperties()['height'] / $pxHeight;
+
+					$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
+					$cWidth = $pxWidth / $image->getProperties()['width'];
+					$cropObject->$cropVariant->cropArea->width = $cWidth;
+				}
 			} elseif ($rArr[0] == $rArr[1]) {
 				// square
 				if ( $image->getProperties()['width'] > $image->getProperties()['height'] ) {
@@ -388,12 +405,18 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			} else {
 				// portrait
 				$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-				$cWidth = $pxWidth / $image->getProperties()['width'];
-				$cropObject->$cropVariant->cropArea->width = $cWidth;
+				if ( $image->getProperties()['width'] > $pxWidth ) {
+					$cWidth = $pxWidth / $image->getProperties()['width'];
+					$cropObject->$cropVariant->cropArea->width = $cWidth;
+				} else {
+					$cWidth = $image->getProperties()['width'] / $pxWidth;
+					$pxHeight = $cropedWidth / $rArr[1] * $rArr[0];
+					$cHeight = $pxHeight / $image->getProperties()['height'];
+					$cropObject->$cropVariant->cropArea->height = $cHeight;
+				}
 			}
 		}
 
 		return json_encode($cropObject);
 	}
-
 }

@@ -3,17 +3,9 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Controller;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
@@ -28,6 +20,14 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /**
  * ConfigController
@@ -38,7 +38,7 @@ class ConfigController extends ActionController
 	/**
 	 * configRepository
 	 *
-	 * @var \T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository
+	 * @var ConfigRepository
 	 */
 	protected $configRepository;
 
@@ -87,7 +87,7 @@ class ConfigController extends ActionController
 	/**
 	 * Root configuration
 	 *
-	 * @var \T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository
+	 * @var ConfigRepository
 	 */
 	protected $rootConfig;
 
@@ -105,14 +105,17 @@ class ConfigController extends ActionController
 	 */
 	protected $rootTemplates;
 
-	/**
-	 * Inject a configRepository repository to enable DI
-	 *
-	 * @param \T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository $configRepository
-	 */
-	public function injectConfigRepository(ConfigRepository $configRepository)
+
+    protected $persistenceManager;
+
+
+    public function __construct(
+		ConfigRepository $configRepository,
+		PersistenceManager $persistenceManager
+	)
 	{
-		$this->configRepository = $configRepository;
+		$this->configRepository = $configRepository ?? GeneralUtility::makeInstance(ConfigRepository::class);
+		$this->persistenceManager = $persistenceManager ?? GeneralUtility::makeInstance(PersistenceManager::class);
 	}
 
 	public function initializeAction()
@@ -146,13 +149,8 @@ class ConfigController extends ActionController
 
 	/**
 	 * action list
-	 *
-	 * @param bool $deleted
-	 * @param bool $created
-	 * @param bool $updateSss
-	 * @return void
 	 */
-	public function listAction($deleted = FALSE, $created = FALSE, $updateSss = FALSE): void
+	public function listAction(bool $deleted = FALSE, bool $created = FALSE, bool $updateSss = FALSE): void
 	{
 		if ( $this->isSiteroot && $this->rootPageId ) {
 
@@ -188,11 +186,11 @@ class ConfigController extends ActionController
 
 		if ( (int)$this->settings['customScss'] === 1 ) {
 			$customScss = self::getCustomScss('custom-variables');
-			$assignedOptions['custom-variables'] = $customScss['custom-variables'];
+			$assignedOptions['custom-variables'] = !empty($customScss['custom-variables']) ? $customScss['custom-variables'] : '';
 			$customScss = self::getCustomScss('custom');
-			$assignedOptions['custom'] = $customScss['custom'];
-			$assignedOptions['customScss'] = $customScss['customScss'];
-			if ( $this->settings['enableUtilityColors'] ) {
+			$assignedOptions['custom'] = !empty($customScss['custom']) ? $customScss['custom'] : '';
+			$assignedOptions['customScss'] = !empty($customScss['customScss']) ? $customScss['customScss'] : '';
+			if ( !empty($this->settings['enableUtilityColors']) ) {
 				$assignedOptions['utilColors'] = self::getUtilityColors();
 			}
 		}
@@ -245,9 +243,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * action create
-	 *
-	 * @param Config $newConfig
-	 * @return void
 	 */
 	public function createAction(Config $newConfig): void
 	{
@@ -262,12 +257,8 @@ class ConfigController extends ActionController
 
 	/**
 	 * action edit
-	 *
-	 * @param Config $config
-	 * @param bool $updated
-	 * @return void
 	 */
-	public function editAction(Config $config, $updated = FALSE): void
+	public function editAction(Config $config, bool $updated = FALSE): void
 	{
 		$assignedOptions = self::getFieldsOptions();
 		$assignedOptions['t3version'] = $this->version;
@@ -289,9 +280,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * action update
-	 *
-	 * @param Config $config
-	 * @return void
 	 */
 	public function updateAction(Config $config): void
 	{
@@ -305,9 +293,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * action delete
-	 *
-	 * @param Config $config
-	 * @return void
 	 */
 	public function deleteAction(Config $config): void
 	{
@@ -320,8 +305,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * action dashboard
-	 *
-	 * @return void
 	 */
 	public function dashboardAction(): void
 	{
@@ -340,8 +323,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * action constants
-	 *
-	 * @return void
 	 */
 	public function constantsAction(): void
 	{
@@ -351,6 +332,7 @@ class ConfigController extends ActionController
 				$fileGetContents = file_get_contents(GeneralUtility::getFileAbsFileName($constantPath));
 				$outsourcedConstantsArr = explode('[END]', trim($fileGetContents));
 				$toEnd = count($outsourcedConstantsArr);
+				$filecontent = '';
 				foreach ($outsourcedConstantsArr as $outsourcedConstants) {
 					if (0 === --$toEnd) {
 						$filecontent .= trim($outsourcedConstants).PHP_EOL.PHP_EOL;
@@ -373,17 +355,13 @@ class ConfigController extends ActionController
 
 	/**
 	* prepare options for select fields
-	*
-	* @return array
 	*/
 	public function getFieldsOptions(): array
 	{
 		foreach ( $this->tcaColumns as $field=>$columns ) {
 			// is select-field
 			if ( $columns['config']['type'] == 'select' && $columns['config']['renderType'] == 'selectSingle' ) {
-				$var = str_replace(' ', '_', $field);
-				$var = GeneralUtility::underscoredToLowerCamelCase($field);
-				$var = $var.'Options';
+				$var = GeneralUtility::underscoredToLowerCamelCase($field).'Options';
 				foreach ( $columns['config']['items'] as $key=>$entry ) {
 					$option = new \stdClass();
 					$option->key = $entry[1];
@@ -399,16 +377,12 @@ class ConfigController extends ActionController
 
 	/**
 	* take over $rootConfig settings
-	*
-	* @param Config $rootConfig
-	* @return Config $newConfig
 	*/
 	public function getNewConfig(Config $rootConfig): Config
 	{
 		$newConfig = new Config();
 
 		foreach ( $this->tcaColumns as $field=>$columns ) {
-			$var = str_replace(' ', '_', $field);
 			$var = GeneralUtility::underscoredToUpperCamelCase($field);
 			$set = 'set'.$var;
 			$get = 'get'.$var;
@@ -421,9 +395,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * Compare config with rootconfig
-	 *
-	 * @param Config $config
-	 * @return array
 	 */
 	protected function compareConfig(Config $config): array
 	{
@@ -452,8 +423,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * override config - info in BE Module
-	 *
-	 * @return array
 	 */
 	protected function overrideConfig(): array
 	{
@@ -467,19 +436,24 @@ class ConfigController extends ActionController
 		foreach ($filedsArr as $fKey=>$field) {
 
 			$fKey = GeneralUtility::underscoredToLowerCamelCase($fKey);
-			$tsField = $ts['page.']['10.']['settings.']['config.'][$fKey];
 
-			if ( $tsField != $this->rootConfig->$field() &&	str_starts_with((string)$tsField, '{$bootstrap.config.') != TRUE ) {
-				if ( $this->rootConfig->$field() === TRUE ) {
-					$override[$fKey] = 'enabled';
-				} elseif ( $this->rootConfig->$field() === FALSE ) {
-					$override[$fKey] = 'disabled';
-				} elseif ($this->rootConfig->$field() == '') {
-					$override[$fKey] = 'not set';
-				} else {
-					$override[$fKey] = $tsField;
+			if ( !empty($ts['page.']['10.']['settings.']['config.'][$fKey]) ) {
+
+				$tsField = $ts['page.']['10.']['settings.']['config.'][$fKey];
+
+				if ( $tsField != $this->rootConfig->$field() &&	str_starts_with((string)$tsField, '{$bootstrap.config.') != TRUE ) {
+					if ( $this->rootConfig->$field() === TRUE ) {
+						$override[$fKey] = 'enabled';
+					} elseif ( $this->rootConfig->$field() === FALSE ) {
+						$override[$fKey] = 'disabled';
+					} elseif ($this->rootConfig->$field() == '') {
+						$override[$fKey] = 'not set';
+					} else {
+						$override[$fKey] = $tsField;
+					}
 				}
 			}
+
 		}
 
 		return $override;
@@ -488,12 +462,10 @@ class ConfigController extends ActionController
 
 	/**
 	 * SCSS in the BE
-	 *
-	 * @param string $file
-	 * @return array
 	 */
 	public function getCustomScss( string $file ): array
 	{
+		$assignedOptions = [];
 		$customScssDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
 		$customScssFilePath = GeneralUtility::getFileAbsFileName($customScssDir);
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
@@ -501,11 +473,15 @@ class ConfigController extends ActionController
 			 ->select('*')
 			 ->from('pages')
 			 ->where(
+			 	$queryBuilder->expr()->eq('sys_language_uid', 0),
 				$queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 			 )
 			 ->execute();
 
 		$siteroots = $result->fetchAll();
+
+		$customScssFileName = '';
+
 		foreach ($siteroots as $key=>$siteroot) {
 			if ( $siteroot['uid'] == $this->currentUid ) {
 				if ( $key === 0 ) {
@@ -520,15 +496,17 @@ class ConfigController extends ActionController
 
 		if ( file_exists($customScssFile) ) {
 
+			$customScssFile = $customScssFilePath.$customScssFileName;
+
 			if ($file == 'custom') {
 				$assignedOptions['customScss'] = TRUE;
 			}
 			$arguments = $this->request->getArguments();
 
-			if ( $arguments['t3sbootstrap'][$file] ) {
+			if ( !empty($arguments['t3sbootstrap'][$file]) ) {
 				$scss = $arguments['t3sbootstrap'][$file];
 			} else {
-				$scss = $arguments[$file] ? $arguments[$file] : '';
+				$scss = !empty($arguments[$file]) ? $arguments[$file] : '';
 			}
 
 			if ($scss) {
@@ -558,9 +536,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * Delete files from directory
-	 *
-	 * @param string $directory
-	 * @return void
 	 */
 	public function deleteFilesFromDirectory(string $directory): void
 	{
@@ -579,13 +554,10 @@ class ConfigController extends ActionController
 
 	/**
 	 * Write data from DB to constant file and import in sys_template
-	 *
-	 * @return void
 	 */
 	public function writeConstants(): void
 	{
-		$persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
-		$persistenceManager->persistAll();
+		$this->persistenceManager->persistAll();
 
 		if ( count($this->rootTemplates) ) {
 
@@ -646,12 +618,8 @@ class ConfigController extends ActionController
 
 	/**
 	 * Get the data from DB
-	 *
-	 * @param Config $config
-	 * @param bool $isRoot
-	 * @return string
 	 */
-	 private function getConstants(Config $config, $isRoot): string
+	 private function getConstants(Config $config, bool $isRoot): string
 	 {
 		$constants = 'bootstrap.config.uid = '.$config->getUid() .PHP_EOL;
 
@@ -680,15 +648,12 @@ class ConfigController extends ActionController
 
 	/**
 	 * Get the Tca Columns
-	 *
-	 * @param Config $config
-	 * @return array
 	 */
 	 private function getTcaColumns(): array
 	 {
 		foreach ( $this->tcaColumns as $key=>$column ) {
-			if ($column['accordion_id']) {
-				if ( $column['accordion_sub'] ) {
+			if (!empty($column['accordion_id'])) {
+				if ( !empty($column['accordion_sub']) ) {
 					$sub = $column['accordion_sub'];
 					$tca[$column['accordion_id']][$sub][$key] = $column;
 					$tca[$column['accordion_id']][$sub][$key]['property'] = GeneralUtility::underscoredToLowerCamelCase($key);
@@ -709,23 +674,23 @@ class ConfigController extends ActionController
 
 	/**
 	 * Get the Utility Colors
-	 *
-	 * @return array
 	 */
 	 private function getUtilityColors(): array
 	 {
 		$defaultUtilColorsList = '$white,$gray-100,$gray-200,$gray-300,$gray-400,$gray-500,$gray-600,$gray-700,$gray-800,$gray-900,$black,$blue,$indigo,$purple,$pink,$red,$orange,$yellow,$green,$teal,$cyan,$primary,$secondary,$success,$info,$warning,$danger,$light,$dark';
+#		$defaultUtilColorsList = '$gray-100,$gray-200,$gray-300,$gray-400,$gray-500,$gray-600,$gray-700,$gray-800,$gray-900,$black,$blue,$indigo,$purple,$pink,$red,$orange,$yellow,$green,$teal,$cyan,$primary,$secondary,$success,$info,$warning,$danger,$light,$dark';
 		$utilityColors = [];
+		$utilColors = [];
 		$colors = [];
 		$customScss = self::getCustomScss('custom-variables');
-		if ($customScss['custom-variables']) {
+		if (!empty($customScss['custom-variables'])) {
 			$customScssArr = GeneralUtility::trimExplode(';', $customScss['custom-variables']);
 			foreach( $customScssArr as $customvariables ) {
 				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
-				if ( str_starts_with((string)$scsscolor[1], '$')
+				if ( !empty($scsscolor[1]) && str_starts_with((string)$scsscolor[1], '$')
 				 && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
 					$utilColors[$scsscolor[0]] = $scsscolor[1];
-				} elseif (str_starts_with((string)$scsscolor[1], '#')) {
+				} elseif (!empty($scsscolor[1]) && str_starts_with((string)$scsscolor[1], '#')) {
 					if (str_starts_with((string)$scsscolor[0], '$')) {
 						$colors[$scsscolor[0]] = $scsscolor[1];
 					}
@@ -733,7 +698,7 @@ class ConfigController extends ActionController
 			}
 			if (is_array($utilColors)) {
 				foreach($utilColors as $key=>$utiColor) {
-					if ( str_starts_with((string)$utiColor, '$') ) {
+					if ( !empty($utilityColors[$key]) && str_starts_with((string)$utiColor, '$') ) {
 						$utilityColors[$key] = $colors[$utiColor];
 					}
 				}
@@ -749,7 +714,7 @@ class ConfigController extends ActionController
 		foreach ( GeneralUtility::trimExplode(';', $variablesSCSS) as $defaultVariables) {
 
 			$defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
-			if ($defaultScssColor[1] && GeneralUtility::inList($defaultUtilColorsList, trim($defaultScssColor[0]))) {
+			if (!empty($defaultScssColor[1]) && GeneralUtility::inList($defaultUtilColorsList, trim($defaultScssColor[0]))) {
 				if ( str_starts_with((string)$defaultScssColor[1], '$')) {
 					// variable has variable
 				 	$defaultUtilColors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
@@ -779,11 +744,8 @@ class ConfigController extends ActionController
 
 	/**
 	 * Returns some default settings for new root configuration
-	 *
-	* @param Config $newConfig
-	* @return Config $newConfig
 	 */
-	protected function setDefaults($newConfig): Config
+	protected function setDefaults(Config $newConfig): Config
 	{
 		$newConfig->setHomepageUid($this->currentUid);
 		$newConfig->setPageTitle( 'jumbotron' );
@@ -838,8 +800,6 @@ class ConfigController extends ActionController
 
 	/**
 	 * Returns the currently configured "site" if a site is configured (= resolved) in the current request.
-	 *
-	 * @return SiteInterface
 	 */
 	protected function getCurrentSite(): SiteInterface
 	{

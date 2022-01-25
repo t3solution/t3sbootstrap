@@ -1,5 +1,19 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{parallaxImage} || {video}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Parallax Wrapper (uid = {data.uid}) no background-image or video is loaded!
+		</div>
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="Default">
 <f:if condition="{settings.cdn}">
 	<f:then>
 		<f:asset.script identifier="jarallaxJs" src="https://unpkg.com/jarallax@{settings.jarallaxVersion}/dist/jarallax.min.js" />
@@ -54,23 +68,15 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<f:if condition="{parallaxImage}">
-			<f:then>
-				<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-disable-parallax="{no-mobile}">
-					<figure class="jarallax-img">
-						<f:render section="Image" arguments="{_all}" />
-					</figure>
-					<f:render section="OverlayInner" arguments="{_all}" />
-				</div>
-			</f:then>
-			<f:else>
-				<div class="alert alert-danger" role="alert">No background-image or video is loaded!</div>
-			</f:else>
-		</f:if>
+		<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-disable-parallax="{no-mobile}">
+			<figure class="jarallax-img">
+				<f:render section="Image" arguments="{_all}" />
+			</figure>
+			<f:render section="OverlayInner" arguments="{_all}" />
+		</div>
 	</f:else>
 </f:if>
-</html>
-
+</f:section>
 
 <f:section name="OverlayInner">
 <f:if condition="{col_274.0}">
