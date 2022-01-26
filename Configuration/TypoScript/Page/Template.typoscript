@@ -312,16 +312,7 @@ page {
 				special.range = 0|-1
 				as = breadcrumb
 			}
-			30.if {
-				isTrue.cObject = COA
-				isTrue.cObject {
-					10 = TEXT
-					10.if.isTrue = {$bootstrap.config.breadcrumbEnable}
-					20 = TEXT
-					20.value = 1
-					20.if.isTrue = {$bootstrap.config.breadcrumbBottom}
-				}
-			}
+			30.if.isTrue = {$bootstrap.config.breadcrumbEnable}
 
  			#
 			# Language Navigation
