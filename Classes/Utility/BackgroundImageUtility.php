@@ -70,7 +70,7 @@ class BackgroundImageUtility implements SingletonInterface
 				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
-				if ( $flexconf['bgimagePosition'] != 3 ) {
+				if ( !empty($flexconf['bgimagePosition']) && $flexconf['bgimagePosition'] != 3 ) {
 					$uid = $frontendController->id;
 				}
 				foreach($filesFromRepository as $fileKey=>$file) {
