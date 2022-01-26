@@ -73,7 +73,6 @@ class BackgroundImageUtility implements SingletonInterface
 				if ( $flexconf['bgimagePosition'] != 3 ) {
 					$uid = $frontendController->id;
 				}
-				$uid = $frontendController->id;
 				foreach($filesFromRepository as $fileKey=>$file) {
 					$fileKey = $fileKey+1;
 					$image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
