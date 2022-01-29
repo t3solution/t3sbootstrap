@@ -110,11 +110,10 @@
 		<f:else>
 			<f:if condition="{settings.templateLayout} == 73">
 				<f:then>
-						{contentObjectData.styleAttr -> f:format.raw()}>
 						<f:comment> Card Groups </f:comment>
 						<f:if condition="{settings.hidePagination}">
 							<f:then>
-								<div id="news-container-{contentObjectData.uid}" class="card-group{contentObjectData.class}">
+								<div id="news-container-{contentObjectData.uid}" class="card-group{contentObjectData.class}"{contentObjectData.styleAttr -> f:format.raw()}>
 									<f:for each="{news}" as="newsItem" iteration="iterator">
 										<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
 									</f:for>
