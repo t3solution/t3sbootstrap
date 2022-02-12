@@ -103,12 +103,10 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	{
 		// Get crop variants
 		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
-
-
 		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
 			$mobileImgManipulation = json_decode($cropString)->mobile;
 		}
-		if ( $this->arguments['ratio'] ) {
+		if ( !empty($cropString) && $this->arguments['ratio'] ) {
 			$cropString = self::getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
@@ -362,6 +360,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		$cropObject = json_decode($cropString);
 		foreach($this->arguments['breakpoints'] as $cv) {
 			$cropVariant = $cv['cropVariant'];
+
 			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;

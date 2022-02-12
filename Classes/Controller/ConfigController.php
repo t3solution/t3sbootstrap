@@ -329,7 +329,7 @@ class ConfigController extends ActionController
 		if ( $this->isSiteroot ) {
 			$constantPath = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript');
 			if ( file_exists($constantPath) ) {
-				$fileGetContents = file_get_contents(GeneralUtility::getFileAbsFileName($constantPath));
+				$fileGetContents = file_get_contents($constantPath);
 				$outsourcedConstantsArr = explode('[END]', trim($fileGetContents));
 				$toEnd = count($outsourcedConstantsArr);
 				$filecontent = '';

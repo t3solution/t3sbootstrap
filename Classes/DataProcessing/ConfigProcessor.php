@@ -129,20 +129,20 @@ class ConfigProcessor implements DataProcessorInterface
 		/**
 		 * Language Navigation
 		 */
-		$site = self::getCurrentSite();
-		$langUid = [];
-
-		foreach ($site->getLanguages() as $lang ) {
-			$langUid[$lang->getLanguageId()] = $lang->getLanguageId();
-			$langTitle[$lang->getLanguageId()] = $lang->getNavigationTitle();
-			$langHref[$lang->getLanguageId()] = $lang->getHreflang();
-			$langFlag[$lang->getLanguageId()] = $lang->getFlagIdentifier();
+		if( $processedRecordVariables['navbarEnable'] && $processedRecordVariables['navbarLangmenu'] ) {
+			$site = self::getCurrentSite();
+			$langUid = [];
+			foreach ($site->getLanguages() as $lang ) {
+				$langUid[$lang->getLanguageId()] = $lang->getLanguageId();
+				$langTitle[$lang->getLanguageId()] = $lang->getNavigationTitle();
+				$langHref[$lang->getLanguageId()] = $lang->getHreflang();
+				$langFlag[$lang->getLanguageId()] = $lang->getFlagIdentifier();
+			}
+			$processedData['config']['lang']['uid'] = $langUid ?: '';
+			$processedData['config']['lang']['hreflang'] = $langHref ?: '';
+			$processedData['config']['lang']['title'] = $langTitle ?: '';
+			$processedData['config']['lang']['flag'] = $langFlag ?: '';
 		}
-
-		$processedData['config']['lang']['uid'] = $langUid ?: '';
-		$processedData['config']['lang']['hreflang'] = $langHref ?: '';
-		$processedData['config']['lang']['title'] = $langTitle ?: '';
-		$processedData['config']['lang']['flag'] = $langFlag ?: '';
 
 		/**
 		 * Meta Navigation
@@ -364,7 +364,6 @@ class ConfigProcessor implements DataProcessorInterface
 
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
-
 			if ( $processedRecordVariables['jumbotronBgimage'] == 'root' ) {
 				// slide in rootline
 				foreach ($frontendController->rootLine as $page) {
@@ -384,7 +383,6 @@ class ConfigProcessor implements DataProcessorInterface
 					  $processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 				}
-
 			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				if ( count($fileObjects) > 1 ) {
@@ -423,6 +421,7 @@ class ConfigProcessor implements DataProcessorInterface
 		 */
 		$processedData['config']['breadcrumb']['class'] = '';
 		if ( $processedRecordVariables['breadcrumbEnable'] || $processedRecordVariables['breadcrumbBottom'] ) {
+
 			if ( ($processedRecordVariables['homepageUid'] == $frontendController->id) && $processedRecordVariables['breadcrumbNotonrootpage'] ) {
 				$processedData['config']['breadcrumb']['enable'] = FALSE;
 				$processedData['config']['breadcrumb']['bottom'] = FALSE;

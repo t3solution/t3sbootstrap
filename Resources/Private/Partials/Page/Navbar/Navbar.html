@@ -135,7 +135,7 @@
 								<span class="nav-link">|</span>
 							</f:then>
 							<f:else>
-								<f:if condition="{navbarItem.children} && {config.navbar.enable} != 'slide'">
+								<f:if condition="{navbarItem.children}">
 									<f:then>
 										<f:render section="Dropdown" arguments="{_all}" />
 									</f:then>
@@ -223,32 +223,21 @@
 						<span class="nav-link">|</span>
 					</f:then>
 					<f:else>
-						<f:if condition="{navbarItem.children} && {config.navbar.enable} != 'slide'">
+						<f:if condition="{navbarItem.children}">
 							<f:then>
 								<f:render section="Dropdown" arguments="{_all}" />
 							</f:then>
 							<f:else>
-								<f:if condition="{navbarItem.active}">
+								<f:if condition="{navbarItem.active} && {navbarItem.current}">
 									<f:then>
-										<f:if condition="{navbarItem.data.shortcut} && {navbarItem.link} == '/'">
-											<f:then>
-												<f:if condition="{data.pid} == 0">
-													<f:then>
-														<f:variable name="activeItem" value=" active" />
-													</f:then>
-													<f:else>
-														<f:variable name="activeItem" value=" " />
-													</f:else>
-												</f:if>
-											</f:then>
-											<f:else>
-												<f:variable name="activeItem" value=" active" />
-											</f:else>
-										</f:if>
+										<f:variable name="activeItem" value=" active" />
 									</f:then>
 									<f:else>
 										<f:variable name="activeItem" value="" />
 									</f:else>
+								</f:if>
+								<f:if condition="{navbarItem.data.shortcut} && {data.is_siteroot} && {data.slug} == {navbarItem.link}">
+									<f:variable name="activeItem" value=" active" />
 								</f:if>
 								<a class="nav-link{activeItem}"
 									href="{navbarItem.link}"

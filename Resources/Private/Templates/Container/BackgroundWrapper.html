@@ -5,7 +5,7 @@
 		<f:render partial="Header/All" arguments="{_all}" />
 	{containerPost -> f:format.raw()}
 </f:if>
-<f:if condition="{videoId}">
+<f:if condition="{videoId} && {youtube}">
 	<f:then>
 		<f:comment>	Youtube video </f:comment>
 		<f:asset.script identifier="vanilla_ytvideo-{data.uid}">
@@ -23,7 +23,7 @@
 	top: {ytVideo.ytshift}% !important;
 }
 		</f:asset.css>
-			<div class="position-relative overflow-hidden"
+			<div class="position-relative overflow-hidden youtube-wrapper"
 				 style="height:{f:if(condition:'{ytVideo.bgHeight}',then:'{ytVideo.bgHeight}',else:'300')}px;{controlStyle}">
 				<div id="v{data.uid}" class="video-container"></div>
 				<f:render section="SectionInner" arguments="{_all}" />
@@ -62,11 +62,16 @@
 			</f:then>
 			<f:else>
 			<f:comment>	No BG-Image </f:comment>
-				<f:if condition="{vimeo}">
+				<f:if condition="{videoId} && {vimeo}">
 					<f:then>
 					<f:comment>	Vimeo video </f:comment>
-						<div class="alert alert-danger my-5" role="alert">
-							Vimeo videos are currently not supported!
+						<div class="position-relative overflow-hidden vimeo-wrapper" id="wrapper-vimeo-{data.uid}"
+							 style="height:{f:if(condition:'{ytVideo.bgHeight}',then:'{ytVideo.bgHeight}',else:'300')}px;{controlStyle}">
+							<div id="v{data.uid}" class="video-container">
+								<iframe id="vimeo-{data.uid}" src="https://player.vimeo.com/video/{videoId}?byline=0&title=0{vimeoParams-> f:format.raw()}"
+									  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+							</div>
+							<f:render section="SectionInner" arguments="{_all}" />
 						</div>
 					</f:then>
 					<f:else>

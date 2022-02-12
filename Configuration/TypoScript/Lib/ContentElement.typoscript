@@ -93,6 +93,7 @@ lib.contentElement {
 		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
 		webp = {$bootstrap.extconf.webp}
+		btnSlideOutCorrection = 21
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}

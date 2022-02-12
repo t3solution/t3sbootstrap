@@ -22,7 +22,6 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class BackgroundImageUtility implements SingletonInterface
 {
 
-
     protected $imageService;
 
     public function __construct(
@@ -59,6 +58,7 @@ class BackgroundImageUtility implements SingletonInterface
 		}
 
 		$css = '';
+
 		if ( count($filesFromRepository) > 1 && $body == FALSE ) {
 			if ( !empty($flexconf['bgimagePosition']) && ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) ) {
 				// bg-images in two-columns
@@ -68,11 +68,10 @@ class BackgroundImageUtility implements SingletonInterface
 				$bgImages = $this->generateSrcsetImages($file, $image);
 				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
 				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
+
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
-				if ( !empty($flexconf['bgimagePosition']) && $flexconf['bgimagePosition'] != 3 ) {
-					$uid = $frontendController->id;
-				}
+				$uid = $frontendController->id;
 				foreach($filesFromRepository as $fileKey=>$file) {
 					$fileKey = $fileKey+1;
 					$image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);

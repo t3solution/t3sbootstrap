@@ -51,7 +51,6 @@ class DefaultHelper implements SingletonInterface
 				}
 			}
 		}
-
 		if ($container) {
 			$processedData['containerPre'] = '<div class="'.trim($container).'">';
 			$processedData['containerPost'] = '</div>';

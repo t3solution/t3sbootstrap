@@ -107,16 +107,16 @@ class BootstrapProcessor implements DataProcessorInterface
 		$processedData['style'] = $styleHelper->getBgColor($processedData['data']);
 
 		// all tx_container
-		if ( str_contains(self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) ) {
+		if ( str_contains(self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) && $cType !== 'list' ) {
 
 			// tx_container - Grid system only
-			if ( str_contains(self::TX_CONTAINER_GRID, $cType) && $cType !== 'list' ) {
+			if ( str_contains(self::TX_CONTAINER_GRID, $cType) ) {
 				$ContainerGridHelper = GeneralUtility::makeInstance(ContainerGridHelper::class);
 				$processedData = $ContainerGridHelper->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp']);
 			}
 
 			// tx_container - NO Grid system
-			if ( str_contains(self::TX_CONTAINER, $cType) && $cType !== 'list' ) {
+			if ( str_contains(self::TX_CONTAINER, $cType) ) {
 				$containerHelper = GeneralUtility::makeInstance(ContainerHelper::class);
 
 				$processedData = $containerHelper->getProcessedData($processedData, $flexconf, $parentflexconf, (bool)$contentObjectConfiguration['settings.']['webp'],
