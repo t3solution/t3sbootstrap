@@ -43,6 +43,7 @@ class T3sbsElementHelper implements SingletonInterface
 					$processedData['btn-block'] = true;
 				}
 			}
+			$headerPosition = '';
 			if ($processedData['data']['header_position']) {
 				$headerPosition = $processedData['data']['header_position'];
 				if ( $headerPosition == 'left' ) $headerPosition = '';
@@ -62,7 +63,7 @@ class T3sbsElementHelper implements SingletonInterface
 			$processedData['slideInButton'] = FALSE;
 			$processedData['slideInButtonFaIcon'] = FALSE;
 
-			if ( $parentflexconf['fixedPosition'] == 'right'
+			if ( !empty($parentflexconf['fixedPosition']) && $parentflexconf['fixedPosition'] == 'right'
 			 && $parentflexconf['slideIn'] 
 			 && $parentflexconf['visiblePart'] 
 			 && $parentflexconf['vertical'] 

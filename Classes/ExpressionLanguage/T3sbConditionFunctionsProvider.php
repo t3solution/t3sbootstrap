@@ -12,7 +12,6 @@ namespace T3SBS\T3sbootstrap\ExpressionLanguage;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
@@ -84,8 +83,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 			if ( $_GET['id'] ?? 0 && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
 
 				$pid = (int)$_GET['id'];
-				$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-				$configRepository = $objectManager->get(ConfigRepository::class);
+				$configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
 				$config = $configRepository->findOneByPid($pid);
 
 				if ( empty($config) ) {

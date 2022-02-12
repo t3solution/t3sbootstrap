@@ -40,6 +40,7 @@ class WrapperHelper implements SingletonInterface
 				// youtube
 				if ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' ) {
 					$processedData['youtube'] = TRUE;
+					$processedData['vimeo'] = FALSE;
 					$processedData['isVideo'] = TRUE;
 					$processedData['contentPosition'] = $flexconf['contentPosition'];
 					$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
@@ -52,6 +53,14 @@ class WrapperHelper implements SingletonInterface
 					if ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
 					// vimeo video
 						$processedData['vimeo'] = TRUE;
+						$processedData['youtube'] = FALSE;
+						$processedData['isVideo'] = TRUE;
+						$processedData['contentPosition'] = $flexconf['contentPosition'];
+						$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
+						$processedData['ytVideo']['ytshift'] = $flexconf['ytshift'];
+						$processedData['videoAutoPlay'] = $file->getProperties()['autoplay'];
+						$youTubeRenderer = GeneralUtility::makeInstance(YouTubeRenderer::class);
+						$processedData['videoId'] = $youTubeRenderer->render($file);
 					} else {
 					// local video
 						$processedData['file'] = $file;
@@ -230,7 +239,6 @@ class WrapperHelper implements SingletonInterface
 
 		return $processedData;
 	}
-
 
 
 	/**

@@ -10,6 +10,7 @@ module.tx_t3sbootstrap {
 		editScss = {$bootstrap.extconf.editScss}
 		bootswatch = {$bootstrap.extconf.bootswatch}
 		bootswatchURL = https://bootswatch.com/5/
+		keepVariables = {$bootstrap.extconf.keepVariables}
 		indexedsearch = {$bootstrap.ext.indexedsearch}
 		expandedContent = {$bootstrap.extconf.expandedContent}
 		enableUtilityColors = {$bootstrap.config.enableUtilityColors}

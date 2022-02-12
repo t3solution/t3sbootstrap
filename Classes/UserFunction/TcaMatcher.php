@@ -283,6 +283,29 @@ class TcaMatcher
 
 
 	/**
+	 * isVimeo
+	 */
+	public function isVimeo(array $arguments): bool
+	{
+		$vimeo = false;
+
+		if (is_int($arguments['record']['uid'])) {
+
+			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
+			$file = !empty($fileObjects[0]) ? $fileObjects[0] : FALSE;
+
+			if (!empty($file)) {
+				if ( $file->getType() === 4 && ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) ) {
+					$vimeo = true;
+				}
+			}
+		}
+
+		return $vimeo;
+	}
+
+	/**
 	 * isLocalVideo
 	 */
 	public function isLocalVideo(array $arguments): bool

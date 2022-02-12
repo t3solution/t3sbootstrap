@@ -797,7 +797,7 @@ class GalleryProcessor implements DataProcessorInterface
 			|| $this->colPos == 4
 			|| $this->colPos == 20
 			|| $this->colPos == 21
-			|| $this->colPos > 199 && $this->processedParentData['colPos'] > 2
+			|| ($this->colPos > 199 && $this->processedParentData['colPos'] > 2)
 			|| ($this->colPos > 199 && $this->processedData['data']['CType'] == 'background_wrapper')
 		)
 		{

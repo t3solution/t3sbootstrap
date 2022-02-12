@@ -52,7 +52,7 @@ class ContainerHelper implements SingletonInterface
 				$processedData['class'] .= !empty($flexconf['rotate']) ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 				$processedData['class'] .= !empty($flexconf['vertical']) ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 				$processedData['fixedButton'] = TRUE;
-				if ( $flexconf['slideIn'] && $flexconf['vertical'] && $flexconf['fixedPosition'] == 'right' ) {
+				if ( !empty($flexconf['slideIn']) && !empty($flexconf['vertical']) && $flexconf['fixedPosition'] == 'right' ) {
 					$processedData['class'] .= ' slideInButton';
 					$processedData['visiblePart'] = $flexconf['visiblePart'] ? (int)$flexconf['visiblePart'] : 33;
 				}
@@ -74,11 +74,15 @@ class ContainerHelper implements SingletonInterface
 			} else {
 				$processedData['controlStyle'] = ' pointer-events:none;';
 			}
-
-			if ( !empty($processedData['videoId']) ) {
+			if ( !empty($processedData['videoId']) && $processedData['youtube'] ) {
 				$params = '?autoplay='.$processedData['videoAutoPlay'].'&loop='.$flexconf['videoLoop'].'&playlist='.
 				$processedData['videoId'].'&mute='.$mute.'&rel=0&showinfo=0&controls='.$flexconf['videoControls'].'&modestbranding='.$flexconf['videoControls'];
 				$processedData['youtubeParams'] = $params;
+			}
+			if ( !empty($processedData['videoId']) && $processedData['vimeo'] ) {
+				$background = !empty($processedData['videoAutoPlay']) ? '&background=1' : '';
+				$processedData['vimeoParams'] = $background.'&autoplay='.$processedData['videoAutoPlay'].'&loop='.$flexconf['videoLoop'].'&mute='.$mute;
+				$processedData['startButton'] = $processedData['videoAutoPlay'] ? 0 : 1;
 			}
 		}
 
@@ -215,10 +219,10 @@ class ContainerHelper implements SingletonInterface
 				$processedData['pill']['asideWidth'] = (int)$flexconf['aside_width'];
 				$processedData['pill']['mainWidth'] = $flexconf['aside_width'] ? 12 - (int)$flexconf['aside_width'] : 9;
 			}
-			$processedData['tab']['displayType'] = $flexconf['display_type'];
-			$processedData['tab']['switchEffect'] =	 $parentflexconf['switch_effect'];
-			$processedData['tab']['contentByPid'] =	 $flexconf['contentByPid'];
-			$processedData['tab']['fill'] =	 $flexconf['fill'] ? ' '.$flexconf['fill']: '';
+			$processedData['tab']['displayType'] = !empty($flexconf['display_type']) ? $flexconf['display_type'] : '';
+			$processedData['tab']['switchEffect'] =	!empty($parentflexconf['switch_effect']) ? $parentflexconf['switch_effect'] : '';
+			$processedData['tab']['contentByPid'] =	!empty($flexconf['contentByPid']) ? $flexconf['contentByPid'] : 0;
+			$processedData['tab']['fill'] =	 !empty($flexconf['fill']) ? ' '.$flexconf['fill']: '';
 		}
 
 		/**

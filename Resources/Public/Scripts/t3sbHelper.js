@@ -92,7 +92,7 @@ function t3sbScrollIt(e) {
 
 
 // Fixed button on left or right browser edge - Page/Assets.html
-function t3sbFixedButtons(fixedButtons, visiblePart) {
+function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
 	fixedButtons.forEach( fixedButton => {
 		if (fixedButton !== null && fixedButton !== '') {
 			fixedButton.style.opacity = '0';
@@ -122,18 +122,18 @@ function t3sbFixedButtons(fixedButtons, visiblePart) {
 					if (slideInButtons !== null && slideInButtons !== '') {
 						var slideIn = 0,
 							slideOut = 0,
-							boxWidth = fixedButton.clientWidth,
+							boxWidth = fixedButton.clientWidth + btnSlideOutCorrection,
 							boxHalfHeight = fixedButton.clientHeight / 2;
-						slideInButtons.childNodes.forEach( slideInButton => {
+						slideInButtons.children.forEach( slideInButton => {
 							if ( typeof slideInButton.firstChild !== 'undefined' ) {
-								var slideIn = boxWidth - visiblePart,
-									icon = slideInButton.getElementsByClassName("btn")[0].firstChild;
+								slideIn = boxWidth - visiblePart;
+								var	icon = slideInButton.getElementsByClassName('btn')[0].firstChild;
 								icon.classList.remove('me-1');
 								icon.classList.add('me-2');
 								slideInButton.style.right = '-'+slideIn+'px';
 								fixedButton.style.top = 'calc(50% - '+boxHalfHeight+'px)';
 								slideInButton.classList.add('mb-1');
-								slideInButton.addEventListener("mouseenter", function(e) {
+								slideInButton.addEventListener('mouseenter', function(e) {
 									if(e.target.classList.contains('btn')) {
 										slideOut = slideInButton.firstChild.clientWidth - slideIn - visiblePart -5;
 										e.target.parentNode.style.right = '-'+Math.abs(slideOut)+'px';
@@ -142,7 +142,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart) {
 										fixedButton.classList.add('btnGroupSlider');
 									}
 								},true);
-								slideInButton.addEventListener("mouseleave", function(e) {
+								slideInButton.addEventListener('mouseleave', function(e) {
 									if(e.target.classList.contains('btn')) {
 										e.target.parentNode.style.right = '-'+slideIn+'px';
 										e.target.parentNode.classList.remove('btn-slide-out');
@@ -355,7 +355,7 @@ function t3sbflipCard(viewportWidth) {
 			height = f.firstChild.firstChild.querySelectorAll('img')[0].getAttribute('height'),
 			r = width / height;
 		if ( viewportWidth < width ) {
-			width = viewportWidth-30
+			width = viewportWidth-30;
 			height = width * r;
 		}
 		f.style.minHeight = height+'px';
@@ -399,7 +399,7 @@ function t3sbShrinkingNavbar(navbar, padding) {
 	window.addEventListener('scroll', function() {
 		if ( t3sbOffsetTop(navbar) > 100) {
 			navbar.classList.remove('py-'+padding, navColorschemes, navColor);
-			navbar.classList.add('navbar-shrink', navShrinkColor, navShrinkColorschemes)
+			navbar.classList.add('navbar-shrink', navShrinkColor, navShrinkColorschemes);
 		} else {
 			navbar.classList.remove('navbar-shrink', navShrinkColor, navShrinkColorschemes);
 			navbar.classList.add('py-'+padding, navColorschemes, navColor);
@@ -464,7 +464,7 @@ function t3sbLocalCarouselVideo(videoCarousel) {
 				}
 			}
 		});
-	})
+	});
 	videoCarousel.addEventListener('slide.bs.carousel', function (el) {
 		let slides = this.getElementsByClassName('carousel-item');
 		slides.forEach( carouselItem => {
@@ -474,7 +474,7 @@ function t3sbLocalCarouselVideo(videoCarousel) {
 				}
 			}
 		});
-	})
+	});
 }
 
 
@@ -652,13 +652,13 @@ function t3sbAddHeight(TYPO3, objKey) {
 			}
 		});
 		if ( overlay.querySelector('.container') ) {
-			overlay.getElementsByClassName('container')[0].childNodes.forEach( bgwContent => {
+			overlay.getElementsByClassName('container')[0].children.forEach( bgwContent => {
 				totalHeight = bgwContent.clientHeight;
 			});
 			totalHeight = totalHeight + addHeight;
 			document.getElementById(objKey).style.minHeight = totalHeight+'px';
 		} else {
-			totalHeight = overlay.childNodes[0].childNodes[0].clientHeight;
+			totalHeight = overlay.children[0].children[0].clientHeight;
 			totalHeight = totalHeight + addHeight;
 			document.getElementById(objKey).style.minHeight = totalHeight+'px';
 		}

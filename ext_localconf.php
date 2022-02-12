@@ -29,9 +29,7 @@ defined('TYPO3') || die();
 	 * Register Icons
 	 */
 
-	if ( ($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
-		&& ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ||
-	 ExtensionManagementUtility::isLoaded('frontend_editing')) {
+	if ( $GLOBALS['TYPO3_REQUEST'] ?? null && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
 
 		$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 
@@ -73,6 +71,7 @@ defined('TYPO3') || die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.cTypeClass = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customScss = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.editScss = 0');
+	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.keepVariables = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.expandedContent = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
@@ -240,6 +239,9 @@ defined('TYPO3') || die();
 		// Edit in BE
 		if (array_key_exists('editScss', $extconf) && $extconf['editScss'] === '1') {
 			ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.editScss = 1');
+		}
+		if (array_key_exists('keepVariables', $extconf) && $extconf['keepVariables'] === '1') {
+			ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.keepVariables = 1');
 		}
 	}
 	// Optional "expanded content"

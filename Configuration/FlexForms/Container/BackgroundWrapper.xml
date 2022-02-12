@@ -443,13 +443,18 @@
 			<ROOT>
 				<type>array</type>
 				<TCEforms>
-					<sheetTitle>Youtube Video</sheetTitle>
+					<sheetTitle>Youtube/Vimeo Video</sheetTitle>
 				</TCEforms>
 				<el>
 					<contentPosition>
 						<TCEforms>
 							<label>Content Position</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</displayCond>
+							<displayCond>
+								<or>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
+									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
+								</or>
+							</displayCond>	 
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -504,7 +509,12 @@
 					<bgHeight>
 						<TCEforms>
 							<label>Height in px</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</displayCond>
+							<displayCond>
+								<or>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
+									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
+								</or>
+							</displayCond>
 							<config>
 								<type>input</type>
 								<size>5</size>
@@ -516,7 +526,12 @@
 					<ytshift>
 						<TCEforms>
 							<label>Extra shift for the video</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</displayCond>
+							<displayCond>
+								<or>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
+									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
+								</or>
+							</displayCond>
 							<description>e.g.: -100 or 100 (default = 50)</description>
 							<config>
 								<type>input</type>
@@ -538,7 +553,12 @@
 					<videoMute>
 						<TCEforms>
 							<label>Mute</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</displayCond>
+							<displayCond>
+								<or>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
+									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
+								</or>
+							</displayCond>
 							<description>automatically activated if autoplay</description>
 							<config>
 								<type>check</type>
@@ -559,7 +579,12 @@
 					<videoLoop>
 						<TCEforms>
 							<label>Loop</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</displayCond>
+							<displayCond>
+								<or>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
+									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
+								</or>
+							</displayCond>
 							<config>
 								<type>check</type>
 								<default>1</default>

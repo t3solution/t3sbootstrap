@@ -28,7 +28,7 @@ page {
 
 	##########################################################################################################
 	#
-	# FONTAWESOME - using the SVG + JS version
+	# FONTAWESOME PRO - using the SVG + JS version
 	#
 	##########################################################################################################
 
@@ -118,25 +118,18 @@ page.includeJSLibs {
 # FONTAWESOME - minimal installation with required icons and for link icons set in RTE
 #
 ##########################################################################################################
+[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} < 2]
+page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+page.includeCSS.t3sfontawesomeLink.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
+page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
+page.includeCSS.t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
+[END]
 
-[{$bootstrap.config.faLinkIcons} == 1]
-page.includeCSS {
-	t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
-	t3sfontawesomeLink.if {
-		value = 1
-		equals = {$bootstrap.extconf.fontawesomeCss}
-	}
-	t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
-	t3sfontawesomeProLink.if {
-		value = 2
-		equals = {$bootstrap.extconf.fontawesomeCss}
-	}
-	t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
-	t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
-}
-[ELSE]
-page.includeCSS {
-	t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
-	t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
-}
+[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 2]
+page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
+[END]
+
+[{$bootstrap.config.faLinkIcons} == 0]
+page.includeCSS.t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
+page.includeCSS.t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
 [END]

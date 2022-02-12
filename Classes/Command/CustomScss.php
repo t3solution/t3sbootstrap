@@ -270,23 +270,22 @@ class CustomScss extends Command
 	private function writeCustomFile($customPath, $customFileName, $settings, $name) {
 
 		$customFile = $customPath.$customFileName;
+		$keepVariables = (int)$settings['keepVariables'];
 
 		if (file_exists($customFile)) {
 			$copyFile = $customPath.'_'.time().'-'.$customFileName;
 			if (!copy($customFile, $copyFile)) {
 				return FALSE;
-			} else {
+			} elseif ($keepVariables === 0) {
 				unlink($customFile);
 			}
 		}
 
-		if (!file_exists($customFile)) {
+		if (!file_exists($customFile) && $keepVariables === 0) {
 			if (!is_dir($customPath)) {
 				mkdir($customPath, 0777, true);
 			}
-
 			$customContent = $name == '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' :	 '// Your own SCSS';
-
 			if ( $settings['bootswatch'] ) {
 				$customContent = file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
 				if ($name == '_variables') {

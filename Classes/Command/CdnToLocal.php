@@ -24,6 +24,8 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class CdnToLocal extends Command
 {
 
+    protected $configurationManager;
+
 	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
 	{
 		$this->configurationManager = $configurationManager;
