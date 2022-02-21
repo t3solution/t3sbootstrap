@@ -559,9 +559,9 @@ class ConfigProcessor implements DataProcessorInterface
 					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationbgcolor', $queryBuilder->createNamedParameter(''))
 				)
 			 )
-	->andWhere(
-		$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, \PDO::PARAM_INT)),
-	)
+			->andWhere(
+				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, \PDO::PARAM_INT))
+			)
 			 ->execute();
 
 		$navbarColors = $result->fetchAll();
