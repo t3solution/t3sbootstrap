@@ -83,7 +83,7 @@
 											<f:comment>	Local video </f:comment>
 											<f:asset.script identifier="vanilla_localVideo-{data.uid}">
 	// Local video-{data.uid} - BackgroundWrapper.html
-	let videoWrapper = document.querySelector('#video-{file.uid}'),
+	var videoWrapper = document.querySelector('#video-{file.uid}'),
 		videoElement = document.querySelector('#video-{file.uid} video'),
 		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight)/2;
 		shift = {shift};
