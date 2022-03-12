@@ -24,24 +24,20 @@
 
 
 <f:comment>
-Example from Default.html:
-<div class="swiper swiper-{data.uid}{f:if(condition: class, then: ' {class}')}"{f:if(condition: style, then: ' style="{style}"')}>
+Example:
+<div id="mySwiper" class="swiper-container mx-auto my-5" style="overflow: hidden">
 	<div class="swiper-wrapper">
-		<f:for each="{swiperSlides}" as="file">
+		<f:for each="{col_300}" as="slide">
 			<div class="swiper-slide">
-				<f:link.typolink parameter="{file.0.properties.link}" class="swiper-imglink">
-					<f:render section="Slide" arguments="{ratio: '{ratio}', file: '{file.0}', width: '1000'}" />
-				</f:link.typolink>
+				<f:render section="Image" arguments="{ratio: '{ratio}', file: '{swiperSlides.{slide.uid}.0}', width: '{width}'}" />
+				<div class="slide-content ">
+					<h2 class="text-white">{slide.header}</h2>
+					<div class="d-none d-md-block">{slide.bodytext -> f:format.html()}</div>
+				</div>
 			</div>
 		</f:for>
+		<div class="swiper-pagination"></div>
 	</div>
-	<f:if condition="{navigation}">
-		<div class="swiper-button-prev prev-{data.uid}"></div>
-		<div class="swiper-button-next next-{data.uid}"></div>
-	</f:if>
-	<f:if condition="{pagination}">
-		<div class="swiper-pagination" style="position:inherit"></div>
-	</f:if>
 </div>
 </f:comment>
 
