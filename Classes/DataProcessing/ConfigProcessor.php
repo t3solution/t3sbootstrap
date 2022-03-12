@@ -255,7 +255,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$navbarClass .= $processedRecordVariables['navbarHover'] ? ' navbarHover' : '';
 
 			if ($processedRecordVariables['navbarPlacement']) {
-				if ( !empty($processedData['config']['navbar']['containerposition']) && $processedData['config']['navbar']['containerposition'] == 'outside' ) 
+				if ( !empty($processedData['config']['navbar']['containerposition']) && $processedData['config']['navbar']['containerposition'] == 'outside' )
 				{
 					$processedData['config']['navbar']['container'] =
 					trim($processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbarPlacement']);
@@ -361,7 +361,6 @@ class ConfigProcessor implements DataProcessorInterface
 			# Image from pages media
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = [];
-
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
 			if ( $processedRecordVariables['jumbotronBgimage'] == 'root' ) {
@@ -372,18 +371,30 @@ class ConfigProcessor implements DataProcessorInterface
 					if ($fileObjects) break;
 				}
 				if ( count($fileObjects) > 1 ) {
-					// slider
-					$processedData['config']['jumbotron']['alignItem'] = '';
-					$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0,
-					  $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
-					$processedData['bgSlides'] = $bgSlides;
+					if ($settings['multiplePagesMedia']) {
+						// background images
+						$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
+						$processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+						$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
+						$processedData['config']['jumbotron']['multiplePagesMedia'] = TRUE;
+					} else {
+						// slider
+						$processedData['config']['jumbotron']['alignItem'] = '';
+						$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0,
+						$webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+						$processedData['bgSlides'] = $bgSlides;
+					}
 				} else {
 					// background image
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
-					  $processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+					$processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
+					if ($settings['multiplePagesMedia']) {
+						$processedData['config']['jumbotron']['multiplePagesMedia'] = FALSE;
+					}
 				}
 			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
+
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				if ( count($fileObjects) > 1 ) {
 					// slider
