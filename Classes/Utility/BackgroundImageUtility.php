@@ -71,7 +71,9 @@ class BackgroundImageUtility implements SingletonInterface
 
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
-				$uid = $frontendController->id;
+				if ($jumbotron === true){
+					$uid = $frontendController->id;
+				}
 				foreach($filesFromRepository as $fileKey=>$file) {
 					$fileKey = $fileKey+1;
 					$image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
