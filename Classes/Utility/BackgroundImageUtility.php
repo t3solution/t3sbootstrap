@@ -22,9 +22,9 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class BackgroundImageUtility implements SingletonInterface
 {
 
-    protected $imageService;
+	protected $imageService;
 
-    public function __construct(
+	public function __construct(
 		ImageService $imageService
 	)
 	{
@@ -60,6 +60,7 @@ class BackgroundImageUtility implements SingletonInterface
 		$css = '';
 
 		if ( count($filesFromRepository) > 1 && $body == FALSE ) {
+
 			if ( !empty($flexconf['bgimagePosition']) && ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) ) {
 				// bg-images in two-columns
 				// in the case if two images available but only one is selected in the flexform
@@ -96,7 +97,7 @@ class BackgroundImageUtility implements SingletonInterface
 				} elseif ($body) {
 					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf, TRUE, $bgMediaQueries);
 				} else {
-					if ( $flexconf['enableAutoheight'] ) {
+					if ( !empty($flexconf['enableAutoheight']) ) {
 						if ( $flexconf['addHeight'] ) {
 							$inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
 							if($inline)

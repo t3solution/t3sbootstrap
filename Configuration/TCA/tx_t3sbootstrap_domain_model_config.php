@@ -128,7 +128,6 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-#				['Default', 'pt-5'],
 				'items' => [
 					['none', ''],
 					['pt-1', 'pt-1'],
@@ -231,7 +230,7 @@ return [
 			'label' => 'Anchor extra offset (int)',
 			'accordion_id' => 1,
 			'accordion_sub' => '1-5',
-			'info' => 'for Section-Menu-Items: in px - (default 29)',
+			'info' => 'for Section-Menu-Items (also for "OnePageLayout"): in px - (default 29)',
 			'config' => [
 				'type' => 'input'
 			]
@@ -1044,6 +1043,7 @@ return [
 			'exclude' => false,
 			'label' => 'Background image ratio',
 			'accordion_id' => 4,
+			'info' => 'Only to be used with a background image - not with videos.',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',

@@ -1,6 +1,42 @@
-<div class="alert alert-info" role="alert">
-	<h3>BUILD YOUR OWN NEWS LIST-TEMPLATE</h3>
-	<p>Folgendes Template auslagern und anpassen: <br>
-		<pre>Resources/Private/Extensions/news/Resources/Private/Partials/List/Custom1.html</pre>
-	</p>
-</div> 
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+<f:for each="{news}" as="newsItem" iteration="iterator">
+<li class="media mb-4 pb-2{f:if(condition: iterator.isEven, then: ' even', else: ' odd')}" style="border-bottom: 1px solid #ddd;">
+	<n:excludeDisplayedNews newsItem="{newsItem}"/>
+	<f:if condition="{newsItem.mediaPreviews}">
+		<!-- media preview element -->
+		<f:then>
+			<f:alias map="{mediaElement: '{newsItem.mediaPreviews.0}'}">
+				<f:if condition="{mediaElement.originalResource.type} == 2">
+					<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
+						<f:render partial="List/Media/Image" arguments="{file: mediaElement}" />
+					</n:link>
+				</f:if>
+				<f:if condition="{mediaElement.originalResource.type} == 3 || {mediaElement.originalResource.type} == 4">
+					<f:render partial="List/Media/Video" arguments="{mediaElement: mediaElement}" />
+				</f:if>
+				<f:if condition="{mediaElement.originalResource.type} == 5">
+					<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
+						<f:render partial="List/Media/File" arguments="{mediaElement: mediaElement}" />
+					</n:link>
+				</f:if>
+			</f:alias>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.displayDummyIfNoMedia}">
+				<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
+					<f:render partial="List/Media/Dummy" />
+				</n:link>
+			</f:if>
+		</f:else>
+	</f:if>
+	<div class="media-body">
+		<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'true'}" />
+		<n:link newsItem="{newsItem}" settings="{settings}" class="more float-end btn btn-{settings.button.class} d-none d-sm-block" title="{newsItem.title}" style="margin-top: -.8rem;">
+			<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:more-link"/>
+		</n:link>
+	</div>
+</li>
+</f:for>
+</html>

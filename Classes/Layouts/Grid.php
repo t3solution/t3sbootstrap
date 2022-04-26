@@ -1,12 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace T3SBS\T3sbootstrap\Helper;
+namespace T3SBS\T3sbootstrap\Layouts;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Service\FlexFormService;
-use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
+
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -14,67 +12,8 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-class ContainerGridHelper implements SingletonInterface
+class Grid implements SingletonInterface
 {
-
-	/**
-	 * Returns the $processedData
-	 */
-	public function getProcessedData(array $processedData, array $flexconf, bool $webp=FALSE): array
-	{
-
-		$cType = $processedData['data']['CType'];
-
-		$horizontalGutters = !empty($flexconf['horizontalGutters']) ? trim((string)$flexconf['horizontalGutters']) : '';
-		$verticalGutters = !empty($flexconf['verticalGutters']) ? trim((string)$flexconf['verticalGutters']) : '';
-		$extraWrapperClass = '';
-		if ( $verticalGutters ) {
-			#  The vertical gutters can cause some overflow below the .row at the end of a page.
-			# If this occurs, you add a wrapper around .row with the .overflow-hidden class
-			$extraWrapperClass = 'overflow-hidden';
-		}
-		$processedData['gutters'] = $horizontalGutters || $verticalGutters ? ' '.$horizontalGutters.' '.$verticalGutters : '';
-		$processedData['extraWrapperClass'] = $extraWrapperClass;
-
-		$processedData = self::getGrid($processedData, $flexconf);
-
-		if ( $cType == 'two_columns' ) {
-			$processedData['style'] .= !empty($flexconf['colHeight']) ? ' min-height: '.$flexconf['colHeight'].'px;' : '';
-			$processedData['verticalAlign'] = !empty($flexconf['colHeight']) && !empty($flexconf['verticalAlign']) ? ' d-flex align-items-' . $flexconf['verticalAlign'] : '';
-			$processedData['bgimages'] = '';
-			$processedData['bgimagePosition'] = '';
-			if ( !empty($flexconf['bgimages']) ) {
-				$bgimages = $this->getBackgroundImageUtility()
-					->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
-					 $flexconf, FALSE, $processedData['data']['uid'], $webp,'2560,1920,1200,992,768,576', 2);
-				if ($bgimages) {
-					$processedData['bgimages'] = $bgimages;
-					$processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
-					$processedData['class'] .= ' col-image';
-				}
-			}
-		}
-
-		$rowClass = [];
-		if ( $cType == 'row_columns' ) {
-			if ($flexconf['cols_extraClass'] ?? '') {
-				foreach (explode(',',$flexconf['cols_extraClass']) as $key=>$cec ) {
-					$colsClass[$key] = ' '.trim($cec);
-				}
-				$processedData['extraClassCols'] = $colsClass;
-			}
-			foreach (array_reverse($flexconf) as $key=>$grid) {
-				if ( str_ends_with($key, 'rowclass') ) {
-					$rowClass[$key] = $grid;
-				}
-			}
-			$processedData['class'] .= ' '.trim(implode(' ',$rowClass));
-		}
-
-		return $processedData;
-	}
-
-
 	/**
 	 * Returns the $processedData
 	 */
@@ -199,15 +138,6 @@ class ContainerGridHelper implements SingletonInterface
 		$processedData['columnSix'] = trim($colSix.$columnSixExtraClass);
 
 		return $processedData;
-	}
-
-
-	/**
-	 * Returns an instance of the background image utility
-	 */
-	protected function getBackgroundImageUtility(): BackgroundImageUtility
-	{
-		return GeneralUtility::makeInstance(BackgroundImageUtility::class);
 	}
 
 }

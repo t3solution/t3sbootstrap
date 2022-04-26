@@ -9,10 +9,6 @@ namespace T3SBS\T3sbootstrap\Parser;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * ParserInterface
- */
 interface ParserInterface
 {
 	public function supports(string $extension): bool;

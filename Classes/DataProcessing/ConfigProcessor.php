@@ -177,9 +177,10 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['navbar']['hover'] = $processedRecordVariables['navbarHover'] ? ' dropdown-hover' : '';
 
 			if (!empty($frontendController->rootLine[1]) && $frontendController->rootLine[1]['doktype'] == 4) {
+				// shortcut
 				$processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
-				$processedData['config']['navbar']['clickableparent'] = $processedRecordVariables['navbarClickableparent'];
+				$processedData['config']['navbar']['clickableparent'] = (int) $processedRecordVariables['navbarClickableparent'];
 			}
 			if ( !empty($processedData['config']['navbar']['clickableparent']) && $processedRecordVariables['navbarPlusicon']) {
 				$processedData['config']['navbar']['navbarPlusicon'] = 0;
@@ -350,15 +351,10 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['jumbotron']['container'] = $processedRecordVariables['jumbotronContainer'];
 			$processedData['config']['jumbotron']['containerposition'] = $processedRecordVariables['jumbotronContainerposition'];
 			$processedData['config']['jumbotron']['class'] = ' '.trim($processedRecordVariables['jumbotronClass']);
-
 			$processedData['config']['jumbotron']['noBgRatio'] = TRUE;
-			if (!empty($processedRecordVariables['jumbotronBgimageratio'])) {
-				$processedData['config']['jumbotron']['noBgRatio'] = FALSE;
-				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
-
-			}
 
 			# Image from pages media
+			$hasBgImages = 0;
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = [];
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
@@ -370,8 +366,9 @@ class ConfigProcessor implements DataProcessorInterface
 					$uid = $page['uid'];
 					if ($fileObjects) break;
 				}
+				$hasBgImages = count($fileObjects);
 				if ( count($fileObjects) > 1 ) {
-					if ($settings['multiplePagesMedia']) {
+					if (!empty($settings['multiplePagesMedia'])) {
 						// background images
 						$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
 						$processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
@@ -389,13 +386,13 @@ class ConfigProcessor implements DataProcessorInterface
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
 					$processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
-					if ($settings['multiplePagesMedia']) {
+					if (!empty($settings['multiplePagesMedia'])) {
 						$processedData['config']['jumbotron']['multiplePagesMedia'] = FALSE;
 					}
 				}
 			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
-
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
+				$hasBgImages = count($fileObjects);
 				if ( count($fileObjects) > 1 ) {
 					// slider
 					$processedData['config']['jumbotron']['alignItem'] = '';
@@ -404,10 +401,14 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['bgSlides'] = $bgSlides;
 				} else {
 					// background image
-				$bgSlides = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0,
-				  $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
-				  $processedData['config']['jumbotron']['bgImage'] = $bgSlides;
+					$bgSlides = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0,
+					 $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 				}
+			}
+			if ($hasBgImages && !empty($processedRecordVariables['jumbotronBgimageratio'])) {
+				$processedData['config']['jumbotron']['noBgRatio'] = FALSE;
+				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
 			}
 		}
 
@@ -459,6 +460,11 @@ class ConfigProcessor implements DataProcessorInterface
 				$topOffset = (int)$processedRecordVariables['sectionmenuAnchorOffset'] + (int)$processedRecordVariables['navbarHeight'];
 				$processedData['config']['sidebar']['stickTopOffset'] = $topOffset ? $topOffset.'px' : 0;
 				$processedData['config']['sidebar']['scrollspyOffset'] = $processedRecordVariables['sectionmenuScrollspyOffset'];
+			} else {
+				if (!empty($processedData['subNavigation']) && is_array($processedData['subNavigation'])) {
+					$processedData['subNavigation'] =
+					 self::getSubNavigation($processedData['subNavigation'], (int)$processedRecordVariables['navbarClickableparent']);
+				}
 			}
 			$processedData['config']['sidebar']['sticky'] = $processedRecordVariables['submenuSticky'];
 		}
@@ -492,7 +498,6 @@ class ConfigProcessor implements DataProcessorInterface
 				->count('uid')
 				->from('tt_content')
 				->where(
-					$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($processedData['data']['sys_language_uid'], \PDO::PARAM_INT)),
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, \PDO::PARAM_INT))
 				)
 			->execute()
@@ -510,7 +515,6 @@ class ConfigProcessor implements DataProcessorInterface
 				->count('uid')
 				->from('tt_content')
 				->where(
-					$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($processedData['data']['sys_language_uid'], \PDO::PARAM_INT)),
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, \PDO::PARAM_INT))
 				)
 			->execute()
@@ -660,5 +664,27 @@ class ConfigProcessor implements DataProcessorInterface
 
 		return (string)$theList;
 	}
+
+
+	/**
+	 * Returns an array
+	 */
+	protected function getSubNavigation(array $subNavigation, int $navbarClickableparent): array
+	{
+		$res = [];
+		foreach ($subNavigation as $supNav ) {
+			if ($supNav['hasSubpages']) {
+				self::getSubNavigation($supNav['children'], $navbarClickableparent);
+			}
+			if ( $navbarClickableparent === 0 ) {
+				$supNav['link'] = '#';
+			}
+
+			$res[] = $supNav;
+		}
+
+		return $res;
+	}
+
 
 }

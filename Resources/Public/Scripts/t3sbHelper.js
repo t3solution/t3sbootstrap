@@ -127,27 +127,29 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
 						slideInButtons.children.forEach( slideInButton => {
 							if ( typeof slideInButton.firstChild !== 'undefined' ) {
 								slideIn = boxWidth - visiblePart;
-								var	icon = slideInButton.getElementsByClassName('btn')[0].firstChild;
-								icon.classList.remove('me-1');
+								var	icon = slideInButton.querySelector('i');
 								icon.classList.add('me-2');
+								slideInButton.style.width = 'auto';
 								slideInButton.style.right = '-'+slideIn+'px';
 								fixedButton.style.top = 'calc(50% - '+boxHalfHeight+'px)';
-								slideInButton.classList.add('mb-1');
+								slideInButton.classList.add('mb-1', 'text-start', 'btnGroupSlider');
 								slideInButton.addEventListener('mouseenter', function(e) {
 									if(e.target.classList.contains('btn')) {
-										slideOut = slideInButton.firstChild.clientWidth - slideIn - visiblePart -5;
-										e.target.parentNode.style.right = '-'+Math.abs(slideOut)+'px';
-										e.target.parentNode.classList.add('btn-slide-out');
-										e.target.parentNode.classList.remove('btn-slide-in');
-										fixedButton.classList.add('btnGroupSlider');
+										slideOut = slideInButton.clientWidth-visiblePart-2;
+										e.target.style.position = 'relative';
+										e.target.style.right = Math.abs(slideOut)+'px';
+										e.target.classList.add('btn-slide-out');
+										e.target.classList.remove('btn-slide-in');
+										slideInButton.classList.add('btnGroupSlider');
 									}
 								},true);
 								slideInButton.addEventListener('mouseleave', function(e) {
 									if(e.target.classList.contains('btn')) {
-										e.target.parentNode.style.right = '-'+slideIn+'px';
-										e.target.parentNode.classList.remove('btn-slide-out');
-										e.target.parentNode.classList.add('btn-slide-in');
-										fixedButton.classList.add('btnGroupSlider');
+										e.target.style.right = 0;
+										e.target.classList.remove('btn-slide-out');
+										e.target.classList.add('btn-slide-in');
+//										slideInButton.classList.add('btnGroupSlider');
+										e.target.style.position = 'inherit';
 									}
 								},true);
 							}
@@ -193,8 +195,11 @@ function t3sbStickyFooter(footerExtraHeight) {
 
 
 // Section Menu Navbar - Page/Navbar/Navbar.html
-function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight) {
+function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight,offcanvas) {
 	var scrollTrigger = document.querySelectorAll('.section-menu a.js-scroll-trigger');
+	if (offcanvas && !scrollTrigger.length) {
+		scrollTrigger = document.querySelectorAll('.offcanvas a.js-scroll-trigger');
+	}
 	scrollTrigger.forEach( st => {
 		st.addEventListener('click', (event) => {
 			event.preventDefault();
@@ -210,13 +215,14 @@ function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight) {
 			}
 		});
 	});
-
-	const navLinks = document.querySelectorAll('.nav-item:not(.dropdown)');
-	const menuToggle = document.getElementById('navbarToggler');
-	const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
-	navLinks.forEach((l) => {
-		l.addEventListener('click', () => { bsCollapse.toggle() });
-	});
+	if (!offcanvas) {
+		const navLinks = document.querySelectorAll('.nav-item:not(.dropdown)');
+		const menuToggle = document.getElementById('navbarToggler');
+		const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
+		navLinks.forEach((l) => {
+			l.addEventListener('click', () => { bsCollapse.toggle() });
+		});
+	}
 }
 
 function t3sbOffsetTop(el) {
@@ -351,8 +357,8 @@ function insertAfter(referenceNode, newNode) {
 // Flip Card rotate on hover - Card.html
 function t3sbflipCard(viewportWidth) {
 	document.querySelectorAll('.flip-card').forEach( f => {
-		var width = f.firstChild.firstChild.querySelectorAll('img')[0].getAttribute('width'),
-			height = f.firstChild.firstChild.querySelectorAll('img')[0].getAttribute('height'),
+		var width = f.querySelector('img').getAttribute('width'),
+			height = f.querySelector('img').getAttribute('height'),
 			r = width / height;
 		if ( viewportWidth < width ) {
 			width = viewportWidth-30;
@@ -360,10 +366,10 @@ function t3sbflipCard(viewportWidth) {
 		}
 		f.style.minHeight = height+'px';
 		f.style.width = width+'px';
-		f.firstChild.style.height = height+'px';
-		f.firstChild.style.width = width+'px';
-		f.firstChild.querySelector('.flip-card-back').style.height = height+'px';
-		f.firstChild.querySelector('.flip-card-back').style.width = width+'px';
+		f.querySelector('.flip-card-front').style.height = height+'px';
+		f.querySelector('.flip-card-front').style.width = width+'px';
+		f.querySelector('.flip-card-back').style.height = height+'px';
+		f.querySelector('.flip-card-back').style.width = width+'px';
 	});
 }
 
@@ -449,6 +455,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, videoElement) {
 		videoElement.currentTime = 0;
 		videoElement.play();
 		videoElement.setAttribute('playsinline', '');
+		videoElement.removeAttribute('controls');
 	}
 }
 
@@ -537,7 +544,7 @@ function t3sbVideoThumbnails(ratio) {
 
 // Offcanvas - Navbar/Assets.html
 function t3sbOffcanvas(vw, bp, utilColorArr) {
-	let navbarToggler = document.getElementById('navbarToggler');
+	var navbarToggler = document.getElementById('navbarToggler');
 	if ( vw > bp ) {
 		navbarToggler.classList.remove(utilColorArr[0]);
 		navbarToggler.classList.remove(utilColorArr[1]);
@@ -688,7 +695,7 @@ function t3sbToastContainer(toasts) {
 		} else {
 			newToast.show();
 		}
-		if( toast.querySelector('.setCookie') != null  ) {
+		if( toast.querySelector('.setCookie') != null	 ) {
 			toast.querySelector('.setCookie').checked = false;
 			toast.addEventListener('hidden.bs.toast', function () {
 				let dismiss = toast.querySelector('.setCookie').checked;

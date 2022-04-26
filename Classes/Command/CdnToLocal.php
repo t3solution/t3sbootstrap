@@ -17,10 +17,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * Command for update CDN to LOCAL
- */
 class CdnToLocal extends Command
 {
 
@@ -174,7 +170,7 @@ class CdnToLocal extends Command
 				$customFileName = 'halkaBox.min.css';
 				$cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
-				
+
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'halkaBox.min.js';
@@ -193,7 +189,7 @@ class CdnToLocal extends Command
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'glightbox.min.js';
 				$cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/js/'.$customFileName;
-				self::writeCustomFile($customPath, $customFileName, $cdnPath);			
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
 
 			if ($key == 'cookieconsent') {

@@ -13,10 +13,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * AbstractParser
- */
 abstract class AbstractParser implements ParserInterface
 {
 

@@ -69,7 +69,7 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 		// show on all pages after the 1st one
 		if ($currentPage > 0) {
 			$label = LocalizationUtility::translate('displayResults.previous', 'IndexedSearch');
-			$content .= '<li>' . self::makecurrentPageSelector_link($label, $currentPage - 1, $freeIndexUid) . '</li>';
+			$content .= '<li>' . self::makecurrentPageSelector_link((string) $label, $currentPage - 1, (string) $freeIndexUid) . '</li>';
 		}
 		// Check if $maximumNumberOfResultPages is in range
 		$maximumNumberOfResultPages = MathUtility::forceIntegerInRange($maximumNumberOfResultPages, 1, $pageCount, 10);
@@ -85,19 +85,22 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 			$maxPage = $pageCount - 1;
 		}
 		$pageLabel = '';
+
 		for ($a = $minPage; $a <= $maxPage; $a++) {
 			$label = trim($pageLabel . ' ' . ($a + 1));
-			$label = self::makecurrentPageSelector_link($label, $a, $freeIndexUid);
+			$label = self::makecurrentPageSelector_link((string) $label, (int) $a, (string) $freeIndexUid);
 			if ($a === $currentPage) {
 				$content .= '<li class="tx-indexedsearch-browselist-currentPage page-item"><strong>' . $label . '</strong></li>';
 			} else {
 				$content .= '<li class="page-item">' . $label . '</li>';
 			}
 		}
+
+
 		// next link
 		if ($currentPage < $pageCount - 1) {
 			$label = LocalizationUtility::translate('displayResults.next', 'IndexedSearch');
-			$content .= '<li>' . self::makecurrentPageSelector_link($label, ($currentPage + 1), $freeIndexUid) . '</li>';
+			$content .= '<li>' . self::makecurrentPageSelector_link((string) $label, ($currentPage + 1), (string) $freeIndexUid) . '</li>';
 		}
 		return '<ul class="tx-indexedsearch-browsebox pagination">' . $content . '</ul>';
 	}

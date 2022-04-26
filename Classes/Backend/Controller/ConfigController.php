@@ -28,10 +28,6 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * ConfigController
- */
 class ConfigController extends ActionController
 {
 
@@ -106,10 +102,10 @@ class ConfigController extends ActionController
 	protected $rootTemplates;
 
 
-    protected $persistenceManager;
+	protected $persistenceManager;
 
 
-    public function __construct(
+	public function __construct(
 		ConfigRepository $configRepository,
 		PersistenceManager $persistenceManager
 	)
@@ -453,7 +449,6 @@ class ConfigController extends ActionController
 					}
 				}
 			}
-
 		}
 
 		return $override;
@@ -564,12 +559,15 @@ class ConfigController extends ActionController
 			$configRepository = $this->configRepository->findOneByPid($this->rootPageId);
 			$navbarBreakpoint = $configRepository->getNavbarBreakpoint();
 			$breakpointWidth = $this->settings['breakpoint'][$navbarBreakpoint];
-
+			$siteroots = [];
 			$filecontent = '';
 
 			foreach( $this->configRepository->findAll() as $config ) {
 				$page = GeneralUtility::makeInstance(PageRepository::class)->getPage($config->getPid());
 				if ( $page['hidden'] === 0 && $page['deleted'] === 0 ) {
+					if (!empty($page['is_siteroot'])) {
+						$siteroots[$config->getUid()] = $page['is_siteroot'];
+					}
 					$pages[$config->getPid()] = $page;
 					$configurations[$config->getPid()] = $config;
 				}
@@ -578,7 +576,7 @@ class ConfigController extends ActionController
 			foreach ( $configurations as $config ) {
 				if ($config->getPid() == $config->getHomepageUid()) {
 					// is root page
-					if ( count($configurations) === 1 ) {
+					if ( count($siteroots) === 1 ) {
 						$filecontent .= self::getConstants($config, TRUE);
 						$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
 					} else {
@@ -587,7 +585,6 @@ class ConfigController extends ActionController
 						$filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
 						$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 					}
-
 				} else {
 					if ($config->getGeneralRootline()) {
 						$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
@@ -598,7 +595,6 @@ class ConfigController extends ActionController
 					$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 				}
 			}
-
 			$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
 			$customFileName = 't3sbconstants.typoscript';
@@ -678,7 +674,6 @@ class ConfigController extends ActionController
 	 private function getUtilityColors(): array
 	 {
 		$defaultUtilColorsList = '$white,$gray-100,$gray-200,$gray-300,$gray-400,$gray-500,$gray-600,$gray-700,$gray-800,$gray-900,$black,$blue,$indigo,$purple,$pink,$red,$orange,$yellow,$green,$teal,$cyan,$primary,$secondary,$success,$info,$warning,$danger,$light,$dark';
-#		$defaultUtilColorsList = '$gray-100,$gray-200,$gray-300,$gray-400,$gray-500,$gray-600,$gray-700,$gray-800,$gray-900,$black,$blue,$indigo,$purple,$pink,$red,$orange,$yellow,$green,$teal,$cyan,$primary,$secondary,$success,$info,$warning,$danger,$light,$dark';
 		$utilityColors = [];
 		$utilColors = [];
 		$colors = [];

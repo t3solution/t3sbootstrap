@@ -27,12 +27,6 @@
 
 
 <f:section name="Default">
-
-<f:comment>
-{dataAnimate} & animationSettings
-</f:comment>
-
-
 	<div class="row{class}"{styleAttr -> f:format.raw()}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 		<f:if condition="{data.header} || {data.subheader} || {data.date}">
 			<div class="col-12 w-100">

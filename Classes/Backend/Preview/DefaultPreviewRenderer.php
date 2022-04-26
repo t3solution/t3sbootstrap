@@ -129,8 +129,11 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 
 			if ($record['CType'] == 't3sbs_gallery') {
 				$out .= 'Columns: '.$record['imagecols'];
-				if ($record['CType'] == 't3sbs_gallery') {
-					$out .= '<br />Aspect ratio: '.$record['tx_t3sbootstrap_image_ratio'];
+				if ( !empty($record['tx_t3sbootstrap_image_ratio'])) {
+					$out .= '<br />Aspect ratio: '.$record['tx_t3sbootstrap_image_ratio'];	
+				}
+				if ( !empty($record['file_collections'])) {
+					$out .= '<br />File collection UID(s): '.$record['file_collections'];	
 				}
 			}
 			if ($record['CType'] === 't3sbs_card') {

@@ -82,8 +82,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		} else {
 			if (!empty($this->arguments['breakpoints'])) {
 				return $this->renderPicture($image, $width, $height);
-			} elseif (!empty($this->arguments['srcset'])) {
-				return $this->renderImageSrcset($image, $width, $height);
 			} else {
 				return parent::renderImage($image, $width, $height, $fileExtension);
 			}
@@ -106,7 +104,13 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
 			$mobileImgManipulation = json_decode($cropString)->mobile;
 		}
-		if ( !empty($cropString) && $this->arguments['ratio'] ) {
+
+		if (empty($cropString)) {
+			$cropString = '{"default":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"tablet":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"mobile":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null}}';
+		}
+
+#		if ( !empty($cropString) && $this->arguments['ratio'] ) {
+		if ( $this->arguments['ratio'] ) {
 			$cropString = self::getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
@@ -168,84 +172,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		return $this->tag->render();
 	}
 
-	/**
-	 * Render img tag with srcset/sizes attributes
-	 *
-	 * @param	FileInterface $image
-	 * @param	string		 $width
-	 * @param	string		 $height
-	 *
-	 * @return string					Rendered img tag
-	 */
-	protected function renderImageSrcset(FileInterface $image, $width, $height)
-	{
-		// Get crop variants
-		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
-
-		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
-			$mobileImgManipulation = json_decode($cropString)->mobile;
-		}
-
-		if ( $this->arguments['ratio'] ) {
-			$cropString = self::getCropString($image, $cropString);
-			if ( $this->arguments['mobileNoRatio'] ) {
-				$cropObject = json_decode($cropString);
-				$cropObject->mobile = $mobileImgManipulation;
-				$cropString = json_encode($cropObject);
-			}
-		}
-
-		$cropVariantCollection = CropVariantCollection::create((string) $cropString);
-
-		$cropVariant = $this->arguments['cropVariant'] ?: 'default';
-		$cropArea = $cropVariantCollection->getCropArea($cropVariant);
-		$focusArea = $cropVariantCollection->getFocusArea($cropVariant);
-
-		// Generate fallback image
-		$fallbackImage = $this->generateFallbackImage($image, $width, $cropArea);
-
-		if ( $GLOBALS['_GET']['type'] == '98' ) {
-			$lazyload = 0;
-		} else {
-			if ($this->arguments['lazyload']) {
-				if ($this->arguments['lazyload'] == 1) {
-					$lazyload = $this->arguments['lazyload'];
-				} else {
-					if ($this->arguments['lazyload'] == 2 && $image->getProperty('tx_t3sbootstrap_lazy_load')) {
-						$lazyload = $this->arguments['lazyload'];
-					} else {
-						$lazyload = 0;
-					}
-				}
-			} else {
-				$lazyload = 0;
-			}
-		}
-		$placeholderSize = 0;
-		$placeholderInline = 0;
-		if ($lazyload) {
-			$placeholderSize = $this->arguments['placeholderSize'] ? $this->arguments['placeholderSize'] : 60;
-			$placeholderInline = $this->arguments['placeholderInline'] ? $this->arguments['placeholderInline'] : 1;
-		}
-		// Generate image tag
-		$this->tag = $this->responsiveImagesUtility->createImageTagWithSrcset(
-			$image,
-			$fallbackImage,
-			$this->arguments['srcset'],
-			$cropArea,
-			$focusArea,
-			$this->arguments['sizes'],
-			$this->tag,
-			$this->arguments['picturefill'],
-			false,
-			$lazyload,
-			$this->arguments['ignoreFileExtensions'],
-			$placeholderSize,
-			$placeholderInline
-		);
-
-		return $this->tag->render();
-	}
 
 	/**
 	 * Generates a fallback image for picture and srcset markup
@@ -360,7 +286,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		$cropObject = json_decode($cropString);
 		foreach($this->arguments['breakpoints'] as $cv) {
 			$cropVariant = $cv['cropVariant'];
-
 			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;

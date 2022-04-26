@@ -13,7 +13,6 @@ use TYPO3\CMS\Core\Resource\FileRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
 class DummyImageViewHelper extends AbstractViewHelper
 {
 	use CompileWithRenderStatic;

@@ -13,10 +13,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * This service handles the parsing of css files for the frontend.
- */
 class CompileService
 {
 	/**

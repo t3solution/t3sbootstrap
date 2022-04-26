@@ -143,9 +143,9 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 					$out .= '<br />- row-cols-xxl: '.$flexconf['xxl_rowclass'];
 				}
 			} else {
-	   			if ( !empty($flexconf['equalWidth']) ) {
+					if ( !empty($flexconf['equalWidth']) ) {
 					$out .= '<br />- Equal Width';
-				}				
+				}
 			}
    			if ( !empty($flexconf['horizontalGutters'])) {
 				$out .= '<br />- Horizontal gutters: '.$flexconf['horizontalGutters'];

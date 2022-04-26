@@ -16,10 +16,6 @@ use TYPO3\CMS\Core\Domain\Repository\PageRepository;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * ConfigController
- */
 class TcaMatcher
 {
 
@@ -420,6 +416,5 @@ class TcaMatcher
 
 		return $parent;
 	}
-
 
 }
