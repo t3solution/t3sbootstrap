@@ -17,10 +17,6 @@ use TYPO3\CMS\Core\Utility\PathUtility;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * ScssParser
- */
 class ScssParser extends AbstractParser
 {
 	/**

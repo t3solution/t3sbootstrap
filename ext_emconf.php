@@ -19,12 +19,12 @@ $EM_CONF[$_EXTKEY] = [
     'state' => 'stable',
     'clearCacheOnLoad' => true,
     'author_company' => 't3solution',
-    'version' => '5.1.8',
+    'version' => '5.1.9',
     'constraints' => [
       'depends' => [
         'typo3' => '10.4.18-11.9.99',
-        'container' => '1.4.1-1.99.99',
-      	'content_defender' => '3.2.1-3.99.99',
+        'container' => '1.6.0-1.99.99',
+      	'content_defender' => '3.2.2-3.99.99',
       ],
       'conflicts' => [
         'ws_scss' => '*',

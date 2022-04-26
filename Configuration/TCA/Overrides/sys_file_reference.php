@@ -61,14 +61,12 @@ $tempSysFileReferenceColumns = [
 	'tx_t3sbootstrap_hover_effect' => [
 		'label' => 'Link Hover Effect (title and/or description)',
 		'exclude' => 1,
-
-'displayCond' => [
-	 'AND' => [
-		'FIELD:tablenames:=:tt_content',
-		'FIELD:fieldname:=:assets',
-	 ]
-],
-
+		'displayCond' => [
+			 'AND' => [
+				'FIELD:tablenames:=:tt_content',
+				'FIELD:fieldname:=:assets',
+			 ]
+		],
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
@@ -161,15 +159,12 @@ $tempSysFileReferenceColumns = [
 		'label' => 'Output image in <img> - instead in <picture> tag',
 		'description' => 'Did not work with any CType!',
 		'exclude' => 1,
-
-'displayCond' => [
-	 'AND' => [
-		'FIELD:tablenames:=:tt_content',
-		'FIELD:fieldname:=:assets',
-	 ]
-],
-
-
+		'displayCond' => [
+			 'AND' => [
+				'FIELD:tablenames:=:tt_content',
+				'FIELD:fieldname:=:assets',
+			 ]
+		],
 		'config' => [
 			'type' => 'check'
 		]
@@ -195,7 +190,6 @@ if (array_key_exists('imgCopyright', $extconf) && $extconf['imgCopyright']) {
 
 	if (array_key_exists('imgCopyright', $extconf) && $extconf['imgCopyright'] === '2') {
 		ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_copyright_source','after:tx_t3sbootstrap_copyright_color');
-
 	}
 }
 

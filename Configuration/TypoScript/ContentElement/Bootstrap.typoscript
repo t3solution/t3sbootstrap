@@ -31,7 +31,6 @@ tt_content {
 				overrideSmallColumns = {$pages.override.smallColumns}
 				configuid = {$bootstrap.config.uid}
 			}
-			223 = T3SBS\T3sbootstrap\DataProcessing\CardProcessor
 		}
 	}
 	t3sbs_card.stdWrap.editIcons = tt_content

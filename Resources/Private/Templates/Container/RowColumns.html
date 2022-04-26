@@ -33,12 +33,12 @@
 			<f:render partial="Header/All" arguments="{_all}" />
 		</div>
 	</f:if>
-		<f:if condition="{col_290}">
-			<f:for each="{col_290}" as="child" key="key">
-				<div id="s{data.uid}-{key}" class="col{extraClassCols.{key}}">
-					{child.renderedContent -> f:format.raw()}
-				</div>
-			</f:for>
-		</f:if>
+	<f:if condition="{col_290}">
+		<f:for each="{col_290}" as="child" key="key">
+			<div id="s{data.uid}-{key}" class="col{extraClassCols.{key}}">
+				{child.renderedContent -> f:format.raw()}
+			</div>
+		</f:for>
+	</f:if>
 </div>
 </f:section>

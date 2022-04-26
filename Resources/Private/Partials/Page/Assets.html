@@ -22,16 +22,16 @@
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
 	var visiblePart = {visiblePart};
 	var btnSlideOutCorrection = {settings.btnSlideOutCorrection}
-	if ( buttonsFixedPosition.length ) {				
+	if ( buttonsFixedPosition.length ) {
 		t3sbFixedButtons(buttonsFixedPosition, visiblePart, btnSlideOutCorrection);
 	}
-	</f:asset.script>	
+	</f:asset.script>
 		</f:then>
 		<f:else>
 	<f:asset.script identifier="vanilla_fixedbutton">
 	// Fixed button on left or right browser edge - Page/Assets.html
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
-	if ( buttonsFixedPosition.length ) {				
+	if ( buttonsFixedPosition.length ) {
 		t3sbFixedButtons(buttonsFixedPosition, 0);
 	}
 	</f:asset.script>
@@ -64,13 +64,18 @@
 </f:if>
 <f:if condition="{contentElement}">
 <f:asset.script identifier="vanilla_stickyTop">
-   window.onscroll = function() {stickyFunction()};
-   let sticky = sectionmenu.offsetTop;
-   function stickyFunction() {
-	  if (window.pageYOffset + navbarHeight >= sticky) {
-		 sectionmenu.style.top = navbarHeight+'px';
-	  }
-   }
+	window.onscroll = function() {stickyFunction()};
+	var sticky = sectionmenu.offsetTop;
+	var maincontent = document.getElementsByClassName('main-content');
+	function stickyFunction() {
+		if (window.pageYOffset + navbarHeight >= sticky) {
+			sectionmenu.style.width = maincontent[0].clientWidth+'px';
+			sectionmenu.style.position = 'fixed';
+			sectionmenu.style.top = navbarHeight+'px';
+		} else {
+			sectionmenu.style.position = 'inherit';
+		}
+	}
 </f:asset.script>
 </f:if>
 </html>

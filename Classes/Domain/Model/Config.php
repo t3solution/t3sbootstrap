@@ -9,10 +9,6 @@ namespace T3SBS\T3sbootstrap\Domain\Model;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * Config
- */
 class Config extends AbstractEntity
 {
 	/**

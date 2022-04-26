@@ -3,24 +3,19 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ExpressionLanguage;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use Symfony\Component\ExpressionLanguage\ExpressionFunction;
+use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
+use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
- */
-
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Symfony\Component\ExpressionLanguage\ExpressionFunction;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
-use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
-use TYPO3\CMS\Core\Http\ApplicationType;
-
-/**
- * Class T3sbConditionFunctionsProvider
- * @internal
  */
 class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterface {
 

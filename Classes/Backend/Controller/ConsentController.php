@@ -14,10 +14,6 @@ use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * ConsentController
- */
 class ConsentController extends ActionController
 {
 

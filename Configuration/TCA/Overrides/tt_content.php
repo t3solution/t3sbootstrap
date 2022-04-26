@@ -1465,7 +1465,7 @@ if ($extconf['sectionOrder']) {
 }
 
 if ( $extconf['preview'] ) {
-	/***************
+	/*
 	 * Show preview of tt_content elements in page module
 	 */
 	$t3sbsContent = ['t3sbs_button', 't3sbs_card', 't3sbs_carousel', 't3sbs_fluidtemplate', 't3sbs_gallery', 't3sbs_mediaobject', 't3sbs_toast'];

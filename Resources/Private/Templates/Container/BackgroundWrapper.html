@@ -77,7 +77,7 @@
 					<f:else>
 						<f:if condition="{file}">
 							<f:then>
-								<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{class}', then: ' {class}')}">
+								<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}">
 									<f:if condition="{file.type} == 4">
 										<f:then>
 											<f:comment>	Local video </f:comment>
@@ -87,11 +87,33 @@
 		videoElement = document.querySelector('#video-{file.uid} video'),
 		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight)/2;
 		shift = {shift};
+
+
+	var id = {data.uid};
+	var el = document.getElementById('s-'+id);
+	var winWidth = window.innerWidth;
+
+	if ( winWidth < 768 ) {
+		el.classList.remove('ratio');
+	} else {
+		el.classList.add('ratio');
+	}
+
+	window.addEventListener('resize', function(event) {
+		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
+			if ( resizedViewportWidth < 768 ) {
+				el.classList.remove('ratio');
+			} else {
+				el.classList.add('ratio');
+			}
+	}, true);
+
+
 	videoElement.style.marginTop = '-'+marginTop-shift+'px';
 	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, videoElement );
 											</f:asset.script>
 											<f:asset.css identifier="lovalvideocss-{data.uid}">
-#s-{data.uid}{width:100%;height:calc(100vw*{aspectRatio});position: relative}
+{localVideo.inlineCSS -> f:format.raw()}
 											</f:asset.css>
 											<f:render partial="Media/Type/Video" arguments="{file: file, dimensions: dimensions,
 											 class: class, border: border, addmedia: addmedia, position: position}" />
@@ -151,7 +173,7 @@
 
 <f:section name="SectionInner">
 	<f:if condition="{col_273 -> f:count()}">
-		<div class="position-absolute w-100{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
+		<div class="position-relative w-100{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 			<div class="col">
 				{containerPre -> f:format.raw()}
 					<f:for each="{col_273}" as="row">

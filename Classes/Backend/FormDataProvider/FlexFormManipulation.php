@@ -3,19 +3,15 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Backend\FormDataProvider;
 
+use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
- */
-
-use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
-
-/**
- * Fill the news records with default values
  */
 class FlexFormManipulation implements FormDataProviderInterface
 {

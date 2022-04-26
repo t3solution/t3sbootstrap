@@ -23,106 +23,104 @@ class FlexformHelper implements SingletonInterface
 		$flexconfEl = [];
 		$dataStructure = [];
 		$file = '';
+		$flexfomrsFolderPath = '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/';
 
 		if ( $t3sbsElement === FALSE ) {
-			$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Bootstrap.xml';
+			$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Bootstrap.xml';
 		} else {
 			if ($cType == 't3sbs_button') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Button.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Button.xml';
 			}
 			if ($cType == 't3sbs_card') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/CardSetting.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'CardSetting.xml';
 			}
 			if ($cType == 't3sbs_carousel') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Carousel.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Carousel.xml';
 			}
 			if ($cType == 't3sbs_mediaobject') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Mediaobject.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Mediaobject.xml';
 			}
 			if ($cType == 'table') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Table.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Table.xml';
 			}
 			if ($cType == 't3sbs_toast') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/ToastSetting.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'ToastSetting.xml';
 			}
 			if ($cType == 't3sbs_gallery') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Bootstrap.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Bootstrap.xml';
 			}
 			# container
 			if ($cType == 'carousel_container') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/CarouselContainer.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/CarouselContainer.xml';
 			}
 			if ($cType == 'toast_container') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/ToastContainer.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/ToastContainer.xml';
 			}
 			if ($cType == 'button_group') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/Buttongroup.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/Buttongroup.xml';
 			}
 			if ($cType == 'card_wrapper') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/CardWrapper.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/CardWrapper.xml';
 			}
 			if ($cType == 'background_wrapper') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/BackgroundWrapper.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/BackgroundWrapper.xml';
 			}
 			if ($cType == 'parallax_wrapper') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/ParallaxWrapper.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/ParallaxWrapper.xml';
 			}
 			if ($cType == 'autoLayout_row') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/AutoLayoutRow.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/AutoLayoutRow.xml';
 			}
 			if ($cType == 'container') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/Container.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/Container.xml';
 			}
 			if ($cType == 'collapsible_container') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/CollapseContainer.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/CollapseContainer.xml';
 			}
 			if ($cType == 'collapsible_accordion') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/Collapse.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/Collapse.xml';
 			}
 			if ($cType == 'modal') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/Modal.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/Modal.xml';
 			}
 			if ($cType == 'tabs_container') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/Tabs.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/Tabs.xml';
 			}
 			if ($cType == 'tabs_tab') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/TabsTab.xml';
 			}
 			if ($cType == 'listGroup_wrapper') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Bootstrap.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Bootstrap.xml';
 			}
 			if ($cType == 'masonry_wrapper') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/MasonryWrapper.xml';
 			}
 			if ($cType == 'swiper_container') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/SwiperContainer.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/SwiperContainer.xml';
 			}
 			if ($cType == 'two_columns') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/TwoColumns.xml';
 			}
 			if ($cType == 'three_columns') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/ThreeColumns.xml';
 			}
 			if ($cType == 'four_columns') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/FourColumns.xml';
 			}
 			if ($cType == 'six_columns') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/SixColumns.xml';
 			}
 			if ($cType == 'row_columns') {
-				$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/Container/RowColumns.xml';
+				$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Container/RowColumns.xml';
 			}
 		}
 
 		if ( !empty($file) ) {
-
 			$content = file_get_contents($file);
 			if ($content) {
 				$dataStructure = GeneralUtility::xml2array($content);
 			}
-
 			if ( count($dataStructure['sheets']) ) {
-
 				foreach ( $dataStructure['sheets'] as $tab=>$sheet ) {
 					if ( is_array($dataStructure['sheets'][$tab]['ROOT']['el']) ) {
 						foreach($dataStructure['sheets'][$tab]['ROOT']['el'] as $key=>$el) {
@@ -136,9 +134,7 @@ class FlexformHelper implements SingletonInterface
 					}
 				}
 			}
-
 			$flexconf = array_merge($flexconfEl, $flexconf);
-
 		}
 
 		return $flexconf;

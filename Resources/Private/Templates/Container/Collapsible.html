@@ -4,21 +4,12 @@
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
-<f:if condition="{col_278 -> f:count()} || {collapsibleByPid}">
+<f:if condition="{appearance} == 'accordion'">
 	<f:then>
-		<f:if condition="{appearance} == 'accordion'">
-			<f:then>
-				<f:render section="Accordion" arguments="{_all}" />
-			</f:then>
-			<f:else>
-				<f:render section="Button" arguments="{_all}" />
-			</f:else>
-		</f:if>
+		<f:render section="Accordion" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Collapsible Container (uid = {data.uid}) has no content!
-		</div>
+		<f:render section="Button" arguments="{_all}" />
 	</f:else>
 </f:if>
 </f:section>

@@ -2,6 +2,15 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.navbar.enable}">
 	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
+	<f:if condition="{config.navbar.navColorCSS}">
+		<div class="container my-5">
+			<div class="alert alert-danger" role="alert">
+				For the "Navigation color" an inline style is created.
+				Before you public your site, you should copy the generated inline style into a file and include it (with TS).
+				<strong>Afterwards you can deactivate the option in the extension configuration to avoid problems!</strong>
+			</div>
+		</div>
+	</f:if>
 	<f:if condition="{config.navbar.container}">
 		<f:then>
 			<div class="{config.navbar.container}">
@@ -257,12 +266,15 @@
 <f:section name="SectionMenu">
 	<f:asset.script identifier="vanilla_navbarsection">
 	// Sectionmenu in navbar (one-page-layout) - Navbar.html
-	t3sbSectionMenu(fixedNavbar, {settings.config.sectionmenuAnchorOffset}, navbarHeight);
+	var offcanvas = {settings.config.navbarOffcanvas};
+	var sectionmenuAnchorOffset = {settings.config.sectionmenuAnchorOffset};
+	t3sbSectionMenu(fixedNavbar, sectionmenuAnchorOffset, navbarHeight, offcanvas);
 	</f:asset.script>
 	<f:for each="{sectionMenu.0.content}" as="element">
 		<f:if condition="{element.data.header} && {element.data.colPos} != 4">
 			<div id="section-item-{element.data.uid}" class="nav-item">
-				<a class="nav-link js-scroll-trigger" href="{page.link}#c{element.data.uid}" target="{page.target}">
+				<a class="nav-link js-scroll-trigger" href="{page.link}#c{element.data.uid}" target="{page.target}"
+					{f:if(condition:'{settings.config.navbarOffcanvas}',then:' data-bs-dismiss="offcanvas" data-bs-target="#my-offcanvas" aria-label="Close"')}>
 					<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 						<f:then>
 							<span>{element.data.tx_t3sbootstrap_header_sectionMenu}</span>

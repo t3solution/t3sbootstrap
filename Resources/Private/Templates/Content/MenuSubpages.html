@@ -10,11 +10,13 @@
 					then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{page.current}',then:' active')}">
 					<f:if condition="{page.nav_title}">
 						<f:then>
-							{f:if(condition: '{element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
+							{f:if(condition: '{element.data.tx_t3sbootstrap_header_fontawesome}',
+							 then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 							{page.nav_title}
 						</f:then>
 						<f:else>
-							{f:if(condition: '{element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
+							{f:if(condition: '{element.data.tx_t3sbootstrap_header_fontawesome}',
+							 then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 							{page.title}
 						</f:else>
 					</f:if>

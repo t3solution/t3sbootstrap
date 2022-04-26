@@ -20,7 +20,8 @@
 		<f:for each="{languageNavigation}" as="item">
 			<f:if condition="{item.available}">
 				<f:then>
-					<a href="{item.link}" hreflang="{item.hreflang}" title="{item.title}" class="dropdown-item{f:if(condition: '{item.active}', then: ' active')}" >
+					<a href="{item.link}" hreflang="{item.hreflang}" title="{item.title}"
+						 class="dropdown-item{f:if(condition: '{item.active}', then: ' active')}" >
 					<f:render section="LanguageFlag" arguments="{_all}" />
 						{item.title}
 					</a>
