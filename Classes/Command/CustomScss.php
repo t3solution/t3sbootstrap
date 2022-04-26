@@ -152,7 +152,8 @@ class CustomScss extends Command
 			GeneralUtility::writeFile($customFile, $customContent);
 
 			# Custom
-			$customDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
+#			$customDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
+			$customDir = $settings['customScssPath'] ? $settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
 
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');

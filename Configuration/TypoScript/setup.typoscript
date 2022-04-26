@@ -7,6 +7,7 @@ module.tx_t3sbootstrap {
 	}
 	settings {
 		customScss = {$bootstrap.extconf.customScss}
+		customScssPath = {$bootstrap.customScssPath}
 		editScss = {$bootstrap.extconf.editScss}
 		bootswatch = {$bootstrap.extconf.bootswatch}
 		bootswatchURL = https://bootswatch.com/5/
