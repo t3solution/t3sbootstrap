@@ -300,7 +300,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 (int)$processorConfiguration['defaultHeaderType'], $processorConfiguration['contentMarginTop'], $extConf['animateCss'], $parentCType);
 
 		// trim header
-		$processedData['data']['header'] = trim($processedData['data']['header']);
+		$processedData['data']['header'] = !empty($processedData['data']['header']) ? trim($processedData['data']['header']) : '';
 
 		$processedData['style'] .= ' '.$processedData['data']['tx_t3sbootstrap_extra_style'];
 		$processedData['style'] = trim($processedData['style']);

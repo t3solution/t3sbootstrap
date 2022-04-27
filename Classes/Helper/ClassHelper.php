@@ -21,6 +21,9 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass): string
 	{
+
+
+
 	 	// class
 		if ( $cTypeClass ) {
 			$class = 'fsc-default ce-'. $data['CType'];
