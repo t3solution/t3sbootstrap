@@ -461,7 +461,7 @@ class ConfigController extends ActionController
 	public function getCustomScss( string $file ): array
 	{
 		$assignedOptions = [];
-		$customScssDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
+		$customScssDir = !empty($this->settings['customScssPath']) ? $this->settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
 		$customScssFilePath = GeneralUtility::getFileAbsFileName($customScssDir);
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 		$result = $queryBuilder
@@ -503,7 +503,6 @@ class ConfigController extends ActionController
 			} else {
 				$scss = !empty($arguments[$file]) ? $arguments[$file] : '';
 			}
-
 			if ($scss) {
 				$assignedOptions[$file] = $scss;
 				$handle = fopen($customScssFile, 'w') or die('Cannot open file:	 '.$customScssFile);

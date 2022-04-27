@@ -196,6 +196,9 @@ bootstrap.config.darkMode = 0
 # include print template
 bootstrap.print.enable = 0
 
+# Custom path to your custom.scss files: e.g.: fileadmin/T3SB/Resources/Public/SCSS/ (clear cache and run the Scheduler).
+bootstrap.customScssPath = 
+
 # disable default CSS - t3sbootstrap.css
 bootstrap.config.disableDefaultCss = 0
 
