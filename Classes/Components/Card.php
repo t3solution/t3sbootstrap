@@ -113,7 +113,7 @@ class Card implements SingletonInterface
 		}
 		// class
 		$cardClass = 'card';
-		$cardClass = $processedData['class'];
+		$cardClass .= $processedData['class'];
 		$cardClass .= !empty($parentflexconf['equalHeight']) ? ' h-100' : '';
 
 		if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
