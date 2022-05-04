@@ -13,6 +13,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -234,7 +236,16 @@ class GalleryProcessor implements DataProcessorInterface
 		$this->processorConfiguration = $processorConfiguration;
 		$this->processedData = $processedData;
 		$this->contentObjectConfiguration = $contentObjectConfiguration;
-		$this->processedParentData = !empty($processedData['data']['tx_container_parent']) ? self::getContentRecord($processedData['data']['tx_container_parent']) : [];
+
+		if (!empty($processedData['data']['tx_container_parent'])) {
+			$parentRecord = self::getContentRecord($processedData['data']['tx_container_parent']);
+			$this->processedParentData = !empty($parentRecord) ? $parentRecord : [];
+		} else {
+			$this->processedParentData = [];
+		}
+
+		$this->processedParentData = !empty($processedData['data']['tx_container_parent']) ? $parentRecord : [];
+
 
 		$filesProcessedDataKey = (string)$cObj->stdWrapValue(
 			'filesProcessedDataKey',
@@ -525,9 +536,7 @@ class GalleryProcessor implements DataProcessorInterface
 			}
 
 			if ( is_int($this->rowWidth) ) {
-
 				$rowWidth = $this->rowWidth;
-
 			} elseif ( $this->rowWidth != 'none' && is_string($this->rowWidth) ) {
 				$rowWidth = (int) end(explode('-', $this->rowWidth));
 
@@ -630,10 +639,7 @@ class GalleryProcessor implements DataProcessorInterface
 			 || $this->processedParentData['CType'] == 'three_columns'
 			 || $this->processedParentData['CType'] == 'four_columns'
 			 || $this->processedParentData['CType'] == 'six_columns') ) {
-
 				$bsGridWidth = self::getCalculatedGridWidth($bsGridWidth);
-			} else {
-				#$bsGridWidth = $bsGridWidth - 30;
 			}
 
 			$galleryWidth = $bsGridWidth / 100 * $rowWidth;
@@ -650,9 +656,6 @@ class GalleryProcessor implements DataProcessorInterface
 
 			// User entered a predefined width & height
 			if ( $this->equalMediaHeight ) {
-
-
-
 				// Set the corrected dimensions for each media element
 				foreach ($this->fileObjects as $key => $fileObject) {
 
@@ -858,17 +861,7 @@ class GalleryProcessor implements DataProcessorInterface
 	 */
 	protected function getContentRecord($uid, $table='tt_content', $equal='uid')
 	{
-		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-		$result = $queryBuilder
-			 ->select('*')
-			 ->from($table)
-			 ->where(
-			 $queryBuilder->expr()->eq($equal, $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
-			 )
-			 ->execute()
-			 ->fetch();
-
-		return $result;
+		return BackendUtility::getRecord($table, $uid, '*');
 	}
 
 
@@ -969,7 +962,7 @@ class GalleryProcessor implements DataProcessorInterface
 		// Bootstrap gutter width
 		$gutterWidth = 24;
 
-		if ( $this->parentflexconf['noGutters'] ) {
+		if ( !empty($this->parentflexconf['noGutters']) ) {
 			$gutterWidth = 0;
 		}
 

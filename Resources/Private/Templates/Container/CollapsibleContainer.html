@@ -13,10 +13,8 @@
 	}
 </f:asset.script>
 </f:if>
-
 <f:if condition="{col_277 -> f:count()}">
 	<f:then>
-
 		<f:if condition="{class} || {style}">
 			<f:then>
 				<div{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
@@ -27,8 +25,6 @@
 				<f:render section="Default" arguments="{_all}" />
 			</f:else>
 		</f:if>
-
-
 	</f:then>
 	<f:else>
 		<div class="alert alert-danger my-3" role="alert">
@@ -36,15 +32,9 @@
 		</div>
 	</f:else>
 </f:if>
-
 </f:section>
 </html>
 
-<f:comment>
-flush
-animate mmit repeat
-
-</f:comment>
 
 <f:section name="Default">
 	<f:if condition="{data.header} || {data.subheader} || {data.date}">
@@ -60,25 +50,17 @@ animate mmit repeat
 		</f:then>
 		<f:else>
 			<p>
-				
-
-
 				<f:for each="{col_277}" as="row" iteration="iterator">
 					<f:variable name="buttonstyle" value="{flexformArr.{iterator.index}.style}" />
 					<f:variable name="expanded" value="{flexformArr.{iterator.index}.active}" />
-					<f:variable name="headerExtraClass" value=" {headerExtraClassArr.{iterator.index}}" />
-
-
-
-
-	
-					<a id="c{col_277.{iterator.index}.uid}" class="btn btn-{buttonstyle}{headerExtraClass} me-1" data-bs-toggle="collapse" href="#collapse-{col_277.{iterator.index}.uid}"
+					<f:variable name="headerExtraClass" value=" {headerExtraClassArr.{iterator.index}}" />	
+					<a id="c{col_277.{iterator.index}.uid}" class="btn btn-{buttonstyle}{headerExtraClass} me-1"
+						 data-bs-toggle="collapse" href="#collapse-{col_277.{iterator.index}.uid}"
 						 role="button" aria-expanded="{expanded}" aria-controls="collapse-{col_277.{iterator.index}.uid}">
-	{headerFontawesomeArr.{iterator.index} -> f:format.raw()} 
+						 {headerFontawesomeArr.{iterator.index} -> f:format.raw()} 
 						{f:if(condition: '{col_277.{iterator.index}.header}',
 						 then: '{col_277.{iterator.index}.header -> f:format.raw()}', else: 'Button-{col_277.{iterator.index}.uid}')}
 					</a>
-	
 				</f:for>
 			</p>
 			<div class="row">

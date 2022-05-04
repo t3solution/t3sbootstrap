@@ -385,19 +385,6 @@
 							</config>
 						</TCEforms>
 					</aspectRatio>
-					<shift>
-						<TCEforms>
-							<label>Extra shift for the video</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-							<description>e.g.: 100 or -100</description>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<default>0</default>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
-					</shift>
 					<alignVideoItem>
 						<TCEforms>
 							<label>Align content items</label>
@@ -435,6 +422,94 @@
 							</config>
 						</TCEforms>
 					</alignVideoItem>
+					<shift>
+						<TCEforms>
+							<label>Extra vertical shift for the video</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<description>e.g.: 100 or -100</description>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>0</default>
+								<eval>int</eval>
+								<range>
+									<lower>-100</lower>
+									<upper>100</upper>
+								</range>
+								<slider>
+									<type>slider</type>
+									<step>5</step>
+									<width>200</width>
+								</slider>
+							</config>
+						</TCEforms>
+					</shift>
+					<horizontalShift>
+						<TCEforms>
+							<label>Extra horizontal shift for the video on mobile (max-width:767px)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<description>e.g.: 100 or -100</description>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>0</default>
+								<eval>int</eval>
+								<range>
+									<lower>-200</lower>
+									<upper>200</upper>
+								</range>
+								<slider>
+									<type>slider</type>
+									<step>5</step>
+									<width>200</width>
+								</slider>
+							</config>
+						</TCEforms>
+					</horizontalShift>
+					<mobileHeight>
+						 <TCEforms>
+							 <label>Min. hight on mobile (max-width:767px)</label>
+							 <description>card-img-overlay min-height in px</description>
+							 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							 <config>
+								<type>input</type>
+								<size>5</size>
+								<default>200</default>
+								<eval>int</eval>
+								<range>
+									<lower>100</lower>
+									<upper>1000</upper>
+								</range>
+								<slider>
+									<type>slider</type>
+									<step>5</step>
+									<width>200</width>
+								</slider>
+							 </config>
+						 </TCEforms>
+					</mobileHeight>
+					<mobileWidth>
+						 <TCEforms>
+							 <label>Mobile width for higher videos on mobile (max-width:767px)</label>
+							 <description>figure.video width in %</description>
+							 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							 <config>
+								<type>input</type>
+								<size>5</size>
+								<default>100</default>
+								<eval>int</eval>
+								<range>
+									<lower>100</lower>
+									<upper>500</upper>
+								</range>
+								<slider>
+									<type>slider</type>
+									<step>5</step>
+									<width>200</width>
+								</slider>
+							 </config>
+						 </TCEforms>
+					</mobileWidth>
 				</el>
 			</ROOT>
 		</localvideo>
@@ -454,7 +529,7 @@
 									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
 									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
 								</or>
-							</displayCond>	 
+							</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>

@@ -12,11 +12,6 @@ use T3SBS\T3sbootstrap\ExpressionLanguage\T3sbConditionFunctionsProvider;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * Class T3sbConditionProvider
- *
- */
 class T3sbConditionProvider extends AbstractProvider
 {
 	public function __construct()

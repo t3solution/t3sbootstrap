@@ -18,8 +18,8 @@
   "require": {
 	"php": "^7.4 || ^8.0",
     "typo3/cms-core": "^10.4 || ^11",
-    "b13/container": "^1.4.2",
-    "ichhabrecht/content-defender": "^3.2.1"
+    "b13/container": "^1.6.0",
+    "ichhabrecht/content-defender": "^3.2.2"
   },
   "autoload": {
     "psr-4": {

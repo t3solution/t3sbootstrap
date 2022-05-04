@@ -11,10 +11,6 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-
-/**
- * The repository for Configs
- */
 class ConfigRepository extends Repository
 {
 	public function initializeObject() {

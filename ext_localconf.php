@@ -11,14 +11,18 @@ use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Backend\Preview\StandardPreviewRendererResolver;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
-use Psr\Http\Message\ServerRequestInterface;
+
+#use Psr\Http\Message\ServerRequestInterface;
+
 use T3SBS\T3sbootstrap\Backend\FormDataProvider\FlexFormManipulation;
 use T3SBS\T3sbootstrap\Hooks\FlexFormHook;
 use T3SBS\T3sbootstrap\Controller\ConsentController;
 use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard;
-use T3SBS\T3sbootstrap\Hooks\PageLayoutView;
+
+#use T3SBS\T3sbootstrap\Hooks\PageLayoutView;
+
 use T3SBS\T3sbootstrap\Hooks\NewsFlexFormHook;
 
 defined('TYPO3') || die();

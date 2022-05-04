@@ -33,7 +33,7 @@ TCEFORM.tt_content {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
-t3sbs_carousel.disabled = 1
+			t3sbs_carousel.disabled = 1
 			two_columns.disabled = 1
 			three_columns.disabled = 1
 			four_columns.disabled = 1
@@ -164,7 +164,6 @@ t3sbs_carousel.disabled = 1
 			t3sbs_button.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
-#			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
 			t3sbs_card {
 				label.default = Card subtitle
@@ -284,12 +283,6 @@ t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 		}
 	}
-#	sectionIndex {
-#		types {
-#			t3sbs_toast.disabled = 1
-#			collapsible_accordion.disabled = 1
-#		}
-#	}
 	tx_t3sbootstrap_sectionOrder {
 		types {
 			t3sbs_toast.disabled = 1
@@ -381,12 +374,6 @@ t3sbs_carousel.disabled = 1
 			collapsible_accordion.disabled = 1
 		}
 	}
-	tx_t3sbootstrap_extra_class {
-		types {
-#			t3sbs_carousel.disabled = 1
-#			t3sbs_toast.disabled = 1
-		}
-	}
 	tx_t3sbootstrap_inTextImgRowWidth {
 		types {
 			t3sbs_card.disabled = 1
@@ -415,31 +402,22 @@ t3sbs_carousel.disabled = 1
 	}
 	tx_t3sbootstrap_animateCss {
 		types {
-#			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssDuration {
 		types {
-#			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssDelay {
 		types {
-#			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssRepeat {
 		types {
-#			t3sbs_toast.disabled = 1
-#			toast_container.disabled = 1
 			collapsible_accordion.disabled = 1
-#			t3sbs_carousel.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_header_sectionMenu {

@@ -9,13 +9,13 @@ services:
 
   T3SBS\T3sbootstrap\Command\CdnToLocal:
     tags:
-      - name: 'console.command'
+      - name: console.command
         command: 't3sbootstrap:cdnToLocal'
         schedulable: true
 
   T3SBS\T3sbootstrap\Command\CustomScss:
     tags:
-      - name: 'console.command'
+      - name: console.command
         command: 't3sbootstrap:customScss'
         schedulable: true
 

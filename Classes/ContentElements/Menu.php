@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace T3SBS\T3sbootstrap\Helper;
+namespace T3SBS\T3sbootstrap\ContentElements;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /*
@@ -14,23 +12,14 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-class ContentElementHelper implements SingletonInterface
+class Menu implements SingletonInterface
 {
 
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $flexconf): array
+	public function getProcessedData(array $processedData, array $flexconf, string $cType): array
 	{
-
-		$cType = $processedData['data']['CType'];
-		$styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
-
-
-		/**
-		 * Menu
-		 */
-		if ( substr($cType, 0, 4) == 'menu' ) {
 			$processedData['menudirection'] = ' '.$flexconf['menudirection'];
 			$processedData['menupills'] = $flexconf['menupills'] ? ' nav-pills' :'';
 			$processedData['menuHorizontalAlignment'] = !empty($flexconf['menudirection']) && $flexconf['menudirection'] == 'flex-row'
@@ -53,32 +42,11 @@ class ContentElementHelper implements SingletonInterface
 			if ($flexconf['menuHorizontalAlignment'] == 'nav-fill variant') {
 				$processedData['menupills'] = '';
 			}
-		}
 
-		/**
-		 * Table
-		 */
-		if ( $cType == 'table' ) {
-			$tableClassArr = explode(',', (string) $flexconf['tableClass']);
-			if ( count($tableClassArr) > 1 ) {
-				$tableclass = 'table';
-				foreach ($tableClassArr as $tc) {
-					if ( strlen($tc) > 5 ) {
-						$tableclass .= substr($tc, 5);
-					}
-				}
-			} else {
-				$tableclass = $flexconf['tableClass'] ? ' '.$flexconf['tableClass']:'';
-			}
-			$tableclass .= $flexconf['tableInverse'] ? ' table-dark' : '';
-			$tableclass .= $processedData['data']['tx_t3sbootstrap_extra_class'] ? ' '.$processedData['data']['tx_t3sbootstrap_extra_class'] : '';
-			$processedData['tableclass'] = trim($tableclass);
-			$processedData['theadclass'] = $flexconf['theadClass'];
-			$processedData['tableResponsive'] = $flexconf['tableResponsive'] ? TRUE : FALSE;
-		}
 
 		return $processedData;
 	}
+
 
 	/**
 	 * Returns the frontend controller

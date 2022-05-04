@@ -24,6 +24,7 @@
 </f:asset.script>
 </f:if>
 <f:comment> CARD GROUP </f:comment>
+
 <f:if condition="{card_wrapper_layout} == 'group'">
 		<div class="card-group gallery{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
@@ -33,8 +34,6 @@
 </f:if>
 <f:comment> CARD GRID (DECK) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'deck'">
-
-
 		<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
 			{styleAttr -> f:format.raw()}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">

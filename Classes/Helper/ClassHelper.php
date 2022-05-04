@@ -21,6 +21,9 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass): string
 	{
+
+
+
 	 	// class
 		if ( $cTypeClass ) {
 			$class = 'fsc-default ce-'. $data['CType'];
@@ -69,7 +72,7 @@ class ClassHelper implements SingletonInterface
 			$layoutAddItems = '';
 			$layoutClasses = '';
 			$layoutAltLabels = '';
-			
+
 			if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.'])) {
 				$layoutAddItems = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'];
 				$layoutClasses = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'];
@@ -318,7 +321,7 @@ class ClassHelper implements SingletonInterface
 	public function getContainerClass(array $parentflexconf, array $flexconf): string
 	{
 		$class = '';
-	
+
 		if ( !empty($parentflexconf['flexContainer']) && !empty($parentflexconf['responsiveVariations']) ) {
 			if (!empty($flexconf['responsiveVariations'])) {
 				$class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';

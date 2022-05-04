@@ -62,8 +62,8 @@ page {
 					dropdownRight = {$pages.override.dropdownRight}
 				}
 			}
+			// from DB
 			config {
-				// from DB
 				uid = {$bootstrap.config.uid}
 				company = {$bootstrap.config.company}
 				homepageUid = {$bootstrap.config.homepageUid}

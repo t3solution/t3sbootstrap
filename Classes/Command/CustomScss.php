@@ -20,9 +20,6 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-/**
- * Command for update Custom SCSS
- */
 class CustomScss extends Command
 {
 
@@ -155,7 +152,7 @@ class CustomScss extends Command
 			GeneralUtility::writeFile($customFile, $customContent);
 
 			# Custom
-			$customDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
+			$customDir = !empty($settings['customScssPath']) ? $settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
 
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
@@ -252,8 +249,7 @@ class CustomScss extends Command
 			$message = GeneralUtility::makeInstance(FlashMessage::class,
 				'You have to activate SCSS in the EM config!',
 				'T3S Bootstrap - Custom SCSS',
-				FlashMessage::ERROR,
-				true
+				FlashMessage::ERROR
 			);
 
 			$flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);

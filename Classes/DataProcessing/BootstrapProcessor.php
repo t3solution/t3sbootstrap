@@ -8,16 +8,37 @@ use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use T3SBS\T3sbootstrap\Helper\ClassHelper;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use T3SBS\T3sbootstrap\Helper\DefaultHelper;
-use T3SBS\T3sbootstrap\Helper\ContainerHelper;
-use T3SBS\T3sbootstrap\Helper\ContainerGridHelper;
-use T3SBS\T3sbootstrap\Helper\T3sbsElementHelper;
-use T3SBS\T3sbootstrap\Helper\ContentElementHelper;
 use T3SBS\T3sbootstrap\Helper\MediaElementHelper;
 use T3SBS\T3sbootstrap\Helper\FlexformHelper;
+use T3SBS\T3sbootstrap\Layouts\TwoColumns;
+use T3SBS\T3sbootstrap\Layouts\ThreeColumns;
+use T3SBS\T3sbootstrap\Layouts\FourColumns;
+use T3SBS\T3sbootstrap\Layouts\SixColumns;
+use T3SBS\T3sbootstrap\Layouts\RowColumns;
+use T3SBS\T3sbootstrap\Components\Mediaobject;
+use T3SBS\T3sbootstrap\Components\Card;
+use T3SBS\T3sbootstrap\Components\Carousel;
+use T3SBS\T3sbootstrap\Components\Button;
+use T3SBS\T3sbootstrap\Components\Toast;
+use T3SBS\T3sbootstrap\Wrapper\ButtonGroup;
+use T3SBS\T3sbootstrap\Wrapper\BackgroundWrapper;
+use T3SBS\T3sbootstrap\Wrapper\ParallaxWrapper;
+use T3SBS\T3sbootstrap\Wrapper\CardWrapper;
+use T3SBS\T3sbootstrap\Wrapper\CarouselContainer;
+use T3SBS\T3sbootstrap\Wrapper\CollapsibleAccordion;
+use T3SBS\T3sbootstrap\Wrapper\Modal;
+use T3SBS\T3sbootstrap\Wrapper\TabsContainer;
+use T3SBS\T3sbootstrap\Wrapper\CollapsibleContainer;
+use T3SBS\T3sbootstrap\Wrapper\ToastContainer;
+use T3SBS\T3sbootstrap\ContentElements\Menu;
+use T3SBS\T3sbootstrap\ContentElements\Table;
+use T3SBS\T3sbootstrap\Wrapper\MasonryWrapper;
+use T3SBS\T3sbootstrap\Wrapper\SwiperContainer;
+
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -27,12 +48,9 @@ use T3SBS\T3sbootstrap\Helper\FlexformHelper;
  */
 class BootstrapProcessor implements DataProcessorInterface
 {
-
-	const TX_CONTAINER = 'card_wrapper,button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container';
-
 	const TX_CONTAINER_GRID = 'two_columns,three_columns,four_columns,six_columns,row_columns';
-
 	const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast';
+	const TX_CONTAINER = 'button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container,card_wrapper';
 
 
 	/**
@@ -57,30 +75,22 @@ class BootstrapProcessor implements DataProcessorInterface
 		$parentUid = $processedData['data']['tx_container_parent'];
 
 		$t3sbsElement = FALSE;
-		if ( str_contains( self::TX_CONTAINER_GRID.','.self::TX_CONTAINER.','.self::T3SBS_ELEMENTS, $cType) && $cType !== 'list' ) {
+		if ( str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) && $cType !== 'list' ) {
 			$t3sbsElement = TRUE;
 		}
 
 		$flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
-		$flexconf = $flexformHelper->addMissingElements($flexconf, $cType, $t3sbsElement);
-
+		if (is_string($cType)) {
+			$flexconf = $flexformHelper->addMissingElements($flexconf, $cType, $t3sbsElement);
+		}
 		if ($parentUid) {
-			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-			$statement = $queryBuilder
-				->select('uid', 'CType', 'tx_t3sbootstrap_flexform', 'tx_container_parent')
-				->from('tt_content')
-				->where(
-					$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($parentUid, \PDO::PARAM_INT))
-				)
-				->execute()
-				->fetch();
-
-			$parentUid = $statement['uid'];
-			$parentCType = $statement['CType'];
-			$parentflexconf = $flexFormService->convertFlexFormContentToArray($statement['tx_t3sbootstrap_flexform']);
-			$parentflexconf = $flexformHelper->addMissingElements($parentflexconf, $parentCType, $t3sbsElement);
-			$parentContainer = $statement['tx_container_parent'];
+			$parentData = BackendUtility::getRecord('tt_content', $parentUid, 'uid, CType, tx_t3sbootstrap_flexform, tx_container_parent');
+			$parentCType = $parentData['CType'];
+			$parentflexconf = $flexFormService->convertFlexFormContentToArray($parentData['tx_t3sbootstrap_flexform']);
+			if (is_string($parentCType)) {
+				$parentflexconf = $flexformHelper->addMissingElements($parentflexconf, $parentCType, $t3sbsElement);
+			}
+			$parentContainer = $parentData['tx_container_parent'];
 		}
 
 		$processedData['parentCType'] = $parentCType;
@@ -106,39 +116,149 @@ class BootstrapProcessor implements DataProcessorInterface
 		$styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
 		$processedData['style'] = $styleHelper->getBgColor($processedData['data']);
 
-		// all tx_container
 		if ( str_contains(self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) && $cType !== 'list' ) {
-
-			// tx_container - Grid system only
-			if ( str_contains(self::TX_CONTAINER_GRID, $cType) ) {
-				$ContainerGridHelper = GeneralUtility::makeInstance(ContainerGridHelper::class);
-				$processedData = $ContainerGridHelper->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp']);
-			}
-
-			// tx_container - NO Grid system
-			if ( str_contains(self::TX_CONTAINER, $cType) ) {
-				$containerHelper = GeneralUtility::makeInstance(ContainerHelper::class);
-
-				$processedData = $containerHelper->getProcessedData($processedData, $flexconf, $parentflexconf, (bool)$contentObjectConfiguration['settings.']['webp'],
-				 $contentObjectConfiguration['settings.']['bgMediaQueries'], $contentObjectConfiguration['settings.']['navbarEnable']);
-			}
-
 			$isVideo = !empty($processedData['isVideo']) ? TRUE : FALSE;
 			$containerClass = $classHelper->getTxContainerClass($processedData['data'], $flexconf, $isVideo);
 			$processedData['class'] .= $containerClass ? ' '.$containerClass : '';
 			$processedData['isTxContainer'] = TRUE;
+		}
 
-		} else {
-			if ( str_contains(self::T3SBS_ELEMENTS, $cType) && $cType !== 'list' ) {
-				// t3sbs_* content elements
-				$t3sbsElementHelper = GeneralUtility::makeInstance(T3sbsElementHelper::class);
-				$processedData = $t3sbsElementHelper->getProcessedData($processedData, $flexconf, $parentflexconf, $extConf['animateCss']);
-			} else {
-				// default content elements
-				$contentElementHelper = GeneralUtility::makeInstance(ContentElementHelper::class);
-				$processedData = $contentElementHelper->getProcessedData($processedData, $flexconf);
+		#
+		# T3SB Elements
+		#
+		if ( str_contains(self::T3SBS_ELEMENTS, $cType) ) {
+			if ( $cType == 't3sbs_mediaobject' ) {
+				$processedData = GeneralUtility::makeInstance(Mediaobject::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 't3sbs_card' ) {
+				$processedData = GeneralUtility::makeInstance(Card::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 't3sbs_carousel' ) {
+				$processedData = GeneralUtility::makeInstance(Carousel::class)
+				->getProcessedData($processedData, $flexconf, $parentflexconf, $extConf['animateCss']);
+			}
+			if ( $cType == 't3sbs_button' ) {
+				$processedData = GeneralUtility::makeInstance(Button::class)
+				->getProcessedData($processedData, $flexconf, $parentflexconf);
+			}
+			if ( $cType == 't3sbs_toast' ) {
+				$processedData = GeneralUtility::makeInstance(Toast::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			#if ( $cType == 't3sbs_fluidtemplate' ) {}
+			#if ( $cType == 't3sbs_gallery' ) {}
+		}
+
+		#
+		# Grid container
+		#
+		if ( str_contains(self::TX_CONTAINER_GRID, $cType) ) {
+			if ( $cType == 'two_columns' ) {
+				$processedData = GeneralUtility::makeInstance(TwoColumns::class)
+				->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			}
+			if ( $cType == 'three_columns' ) {
+				$processedData = GeneralUtility::makeInstance(ThreeColumns::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'four_columns' ) {
+				$processedData = GeneralUtility::makeInstance(FourColumns::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'six_columns' ) {
+				$processedData = GeneralUtility::makeInstance(SixColumns::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'row_columns' ) {
+				$processedData = GeneralUtility::makeInstance(RowColumns::class)
+				->getProcessedData($processedData, $flexconf);
 			}
 		}
+
+
+		#
+		# Container/Wrapper
+		#
+		if ( str_contains(self::TX_CONTAINER, $cType) && $cType !== 'list' ) {
+			if ( $cType == 'card_wrapper' ) {
+				$processedData = GeneralUtility::makeInstance(CardWrapper::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'button_group' ) {
+				$processedData = GeneralUtility::makeInstance(ButtonGroup::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'background_wrapper' ) {
+				$processedData = GeneralUtility::makeInstance(BackgroundWrapper::class)
+				->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			}
+			if ( $cType == 'parallax_wrapper' ) {
+				$processedData = GeneralUtility::makeInstance(ParallaxWrapper::class)
+				->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp']);
+			}
+			if ( $cType == 'collapsible_container' ) {
+				$processedData = GeneralUtility::makeInstance(CollapsibleContainer::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'carousel_container' ) {
+				$processedData = GeneralUtility::makeInstance(CarouselContainer::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'collapsible_accordion' ) {
+				$processedData = GeneralUtility::makeInstance(CollapsibleAccordion::class)
+				->getProcessedData($processedData, $flexconf, $parentflexconf);
+			}
+			if ( $cType == 'modal' ) {
+				$processedData = GeneralUtility::makeInstance(Modal::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+
+			if ( $cType == 'tabs_container' ) {
+				$processedData = GeneralUtility::makeInstance(TabsContainer::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'tabs_tab' ) {
+				$processedData = GeneralUtility::makeInstance(TabsContainer::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'masonry_wrapper' ) {
+				$processedData = GeneralUtility::makeInstance(MasonryWrapper::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'swiper_container' ) {
+				$processedData = GeneralUtility::makeInstance(SwiperContainer::class)
+				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 'toast_container' ) {
+				$processedData = GeneralUtility::makeInstance(ToastContainer::class)
+				->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['navbarEnable']);
+			}
+			#if ( $cType == 'autoLayout_row' ) {}
+			#if ( $cType == 'container' ) {}
+			#if ( $cType == 'listGroup_wrapper' ) {}
+		}
+
+
+		#
+		# default content elements
+		#
+		if ( !str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) ) {
+			if ( substr($cType, 0, 4) == 'menu' ) {
+
+				$processedData = GeneralUtility::makeInstance(Menu::class)->getProcessedData($processedData, $flexconf, $cType);
+			}
+			if ( $cType == 'table' ) {
+
+				$processedData = GeneralUtility::makeInstance(Table::class)->getProcessedData($processedData, $flexconf);
+			}
+		}
+
+		#
+		# plug-ins
+		#
+		#if ( $cType == 'list' ) {}
 
 		// media
 		if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
@@ -180,7 +300,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		 (int)$processorConfiguration['defaultHeaderType'], $processorConfiguration['contentMarginTop'], $extConf['animateCss'], $parentCType);
 
 		// trim header
-		$processedData['data']['header'] = trim($processedData['data']['header']);
+		$processedData['data']['header'] = !empty($processedData['data']['header']) ? trim($processedData['data']['header']) : '';
 
 		$processedData['style'] .= ' '.$processedData['data']['tx_t3sbootstrap_extra_style'];
 		$processedData['style'] = trim($processedData['style']);
@@ -193,14 +313,6 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		if ( !empty($processedData['data']['tx_t3sbootstrap_header_fontawesome']) ) {
 			$processedData['headerFontawesome'] = '<i class="'.$processedData['data']['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ';
-		}
-
-		// EXT News
-		if ( $extConf['extNews'] && $cType == 'list' && $processedData['data']['list_type'] == 'news_pi1' ) {
-			$processedData['data']['style'] = $processedData['style'];
-			$processedData['data']['styleAttr'] = $processedData['styleAttr'];
-			$processedData['data']['class'] = $processedData['class'];
-			$processedData['data']['classAttr'] = $processedData['classAttr'];
 		}
 
 		return $processedData;

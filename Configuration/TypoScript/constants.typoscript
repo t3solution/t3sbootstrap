@@ -17,7 +17,7 @@ plugin.tx_t3sbootstrap {
 #	Constant Editor
 #-------------------------------------------------------------------------------
 
-# customcategory=bootstrap-cdn=* T3SB::CDN-Settings
+# customcategory=bootstrap-cdn=* T3SB::CDN- and Version-Settings
 # customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
 # customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
 # customsubcategory=c-integrity=CDN Integrity - if set crossorigin is set to anonymous
@@ -29,7 +29,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
 	bootstrap = 5.1.3
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 2.11.0
+	popperjs = 2.11.5
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
@@ -41,9 +41,9 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 11.3.1
+	highlight = 11.5.1
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 17.5.0
+	lazyload = 17.8
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
@@ -55,9 +55,9 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/45; type=small; label=G Lightbox:
 	glightbox = 3.1.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
-	jarallax = 1
+	jarallax = 2
 	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper:
-	swiper = 7
+	swiper = 8
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
 	bootstrapCssIntegrity = sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3
@@ -196,6 +196,9 @@ bootstrap.config.darkMode = 0
 # include print template
 bootstrap.print.enable = 0
 
+# Custom path to your custom.scss files: e.g.: fileadmin/T3SB/Resources/Public/SCSS/ (clear cache and run the Scheduler).
+bootstrap.customScssPath = 
+
 # disable default CSS - t3sbootstrap.css
 bootstrap.config.disableDefaultCss = 0
 
@@ -237,7 +240,6 @@ bootstrap.navbar {
 }
 # extra style for navbar items
 bootstrap.config.navbarPlusicon = 0
-
 
 # enable in EM config (info: https://github.com/insites/cookieconsent)
 bootstrap.cookieconsent {
@@ -288,8 +290,12 @@ pages.override {
 	dropdownRight = 
 }
 
+# Prevents a LOG ERROR "TYPO3.CMS.Frontend.Configuration.TypoScript.ConditionMatching.ConditionMatcher": Expression could not be parsed
 bootstrap.config.uid = 1
-
+bootstrap.config.lightboxSelection = 0
+bootstrap.config.faLinkIcons = 0
+bootstrap.config.backgroundImageEnable = 0
+bootstrap.config.footerSticky = 0
 
 // import outsourced constants from DB
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript'
