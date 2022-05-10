@@ -163,10 +163,24 @@ defined('TYPO3') || die();
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 1');
 		// if rte_ckeditor_fontawesome is loaded
 		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') ) {
-			if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFaPro.yaml';
-			} else {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa.yaml';
+			switch ($extconf['fontawesomeCss']) {
+				case 0:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Codesnippet.yaml';
+					break;
+				case 1:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa5.yaml';
+					break;
+				case 2:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa5Pro.yaml';
+					break;
+				case 3:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa6.yaml';
+					break;
+				case 4:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa6Pro.yaml';
+					break;
+				default:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Codesnippet.yaml';
 			}
 		} else {
 			$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Codesnippet.yaml';
@@ -174,10 +188,24 @@ defined('TYPO3') || die();
 	} else {
 		// if rte_ckeditor_fontawesome is loaded
 		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') ) {
-			if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFaPro.yaml';
-			} else {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa.yaml';
+			switch ($extconf['fontawesomeCss']) {
+				case 0:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Codesnippet.yaml';
+					break;
+				case 1:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa5.yaml';
+					break;
+				case 2:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa5Pro.yaml';
+					break;
+				case 3:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';
+					break;
+				case 4:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';
+					break;
+				default:
+					$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
 			}
 		} else {
 			$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
@@ -202,7 +230,12 @@ defined('TYPO3') || die();
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 1');
 	} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 2');
+	} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 3');
+	} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '4') {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 4');
 	}
+	
 	// Optional cookieconsent
 	if (array_key_exists('cookieconsent', $extconf) && $extconf['cookieconsent'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.cookieconsent = 1');

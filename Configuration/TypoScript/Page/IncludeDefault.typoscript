@@ -39,6 +39,12 @@ page {
 			value = 2
 			equals = {$bootstrap.extconf.fontawesomeCss}
 		}
+		63 = TEXT
+		63.value = <script src="/fileadmin/T3SB/FA6Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
+		63.if {
+			value = 4
+			equals = {$bootstrap.extconf.fontawesomeCss}
+		}
 	}
 
 	##########################################################################################################
@@ -119,14 +125,22 @@ page.includeJSLibs {
 #
 ##########################################################################################################
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} < 2]
-page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome5Link.css
 page.includeCSS.t3sfontawesomeLink.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
 page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
 page.includeCSS.t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
 [END]
 
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 2]
-page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
+page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome5ProLink.css
+[END]
+
+[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 3]
+page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome6Link.css
+[END]
+
+[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 4]
+page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome6ProLink.css
 [END]
 
 [{$bootstrap.config.faLinkIcons} == 0]
