@@ -124,12 +124,19 @@ page.includeJSLibs {
 # FONTAWESOME - minimal installation with required icons and for link icons set in RTE
 #
 ##########################################################################################################
-[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} < 2]
-page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome5Link.css
-page.includeCSS.t3sfontawesomeLink.if.isTrue = {$bootstrap.extconf.fontawesomeCss}
+##########################################################################################################
+#
+# FONTAWESOME - minimal installation with required icons and for link icons set in RTE
+#
+##########################################################################################################
+[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 0]
 page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
-page.includeCSS.t3sfontawesomeMinLink.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
 [END]
+
+[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 1]
+page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome5Link.css
+[END]
+
 
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 2]
 page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome5ProLink.css
