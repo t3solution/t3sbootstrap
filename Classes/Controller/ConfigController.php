@@ -752,7 +752,7 @@ class ConfigController extends ActionController
 		$newConfig->setNavbarAlignment( 'left' );
 		$newConfig->setNavbarBrand( 'imgText' );
 		$newConfig->setNavbarContainer( 'inside' );
-		$newConfig->setNavbarClass('bg-gradient');
+		$newConfig->setNavbarClass('');
 		$newConfig->setJumbotronEnable( 1 );
 		$newConfig->setJumbotronSlide( 0 );
 		$newConfig->setJumbotronPosition( 'below' );
@@ -760,7 +760,7 @@ class ConfigController extends ActionController
 		$newConfig->setJumbotronContainerposition( 'Inside' );
 		$newConfig->setJumbotronCarouselInterval(5000);
 		$newConfig->setJumbotronCarouselPause(0);
-		$newConfig->setJumbotronClass( 'p-5 mb-4 bg-light bg-gradient rounded-0' );
+		$newConfig->setJumbotronClass( 'p-5 mb-4 bg-light rounded-0' );
 		$newConfig->setBreadcrumbEnable( 1 );
 		$newConfig->setBreadcrumbCorner( 1 );
 		$newConfig->setBreadcrumbPosition( 'belowJum' );

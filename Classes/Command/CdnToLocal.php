@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -53,6 +54,25 @@ class CdnToLocal extends Command
 			't3sbootstrap',
 			'm1'
 		);
+
+		# check FA version & settings
+		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+		if ( !empty($extConf['fontawesomeCss']) ) {
+			if ( (int)$extConf['fontawesomeCss'] < 3 ) {
+				# v5
+				if ( (int)$settings['cdn']['fontawesome'] > 5 ) {
+					$settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome5latest'];
+				}
+			} elseif ( (int)$extConf['fontawesomeCss'] > 2 ) {
+				# v6
+				if ( (int)$settings['cdn']['fontawesome'] < 6 ) {
+					$settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome6latest'];
+				}
+			}
+		} else {
+			$settings['cdn']['fontawesome'] = '5.15.4';
+		}
+
 		foreach ($settings['cdn'] as $key=>$version) {
 
 			if ($key == 'jquery') {

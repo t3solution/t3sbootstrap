@@ -59,8 +59,6 @@ class CustomScss extends Command
 
 		if ( $settings['customScss'] && array_key_exists('customScss', $extConf)
 			 && $extConf['customScss'] === '1' ) {
-
-
 			# get the Boostrap SCSS-Files
 			$scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
 
@@ -154,7 +152,6 @@ class CustomScss extends Command
 			# Custom
 			$customDir = !empty($settings['customScssPath']) ? $settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 			$result = $queryBuilder
 				  ->select('*')
@@ -167,7 +164,6 @@ class CustomScss extends Command
 			$siteroots = $result->fetchAll();
 
 			foreach ($siteroots as $key=>$siteroot) {
-
 				if ($key === 0) {
 					$customFileName = 'custom-variables.scss';
 					$customFileNameOverride = 'custom.scss';
@@ -267,17 +263,18 @@ class CustomScss extends Command
 
 		$customFile = $customPath.$customFileName;
 		$keepVariables = (int)$settings['keepVariables'];
-
 		if (file_exists($customFile)) {
 			$copyFile = $customPath.'_'.time().'-'.$customFileName;
+
+
+
 			if (!copy($customFile, $copyFile)) {
 				return FALSE;
-			} elseif ($keepVariables === 0) {
+			} elseif (empty($keepVariables)) {
 				unlink($customFile);
 			}
 		}
-
-		if (!file_exists($customFile) && $keepVariables === 0) {
+		if (!file_exists($customFile) && empty($keepVariables)) {
 			if (!is_dir($customPath)) {
 				mkdir($customPath, 0777, true);
 			}

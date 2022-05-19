@@ -28,6 +28,11 @@
 			smp.style.top = '15px';
 		}
 	});
+</f:asset.script>
+</f:if>
+<f:if condition="{settings.submenu.styleOne}">
+	<f:then>
+<f:asset.script identifier="vanilla_submenuStickyStyleOne">
 	var navItems = document.querySelectorAll('.submenu .nav-item');
 	navItems.forEach( navItem => {
 		navItem.addEventListener('click', (item) => {
@@ -41,8 +46,67 @@
 		});
 	});
 </f:asset.script>
+		<f:render section="styleOne" arguments="{_all}"/>
+	</f:then>
+	<f:else>
+		<f:render section="default" arguments="{_all}"/>
+	</f:else>
 </f:if>
+</f:if>
+</html>
+
+
+<f:section name="default">
 <div class="d-md-flex mb-3 submenu{f:if(condition: config.sidebar.sticky, then:' sticky-top')}">
+	<ul class="nav flex-column flex-nowrap nav-pills w-100">
+		<f:for each="{subNavigation}" as="item">
+			<li class="nav-item{f:if(condition: item.active, then:' active')}">
+				<f:if condition="{item.children}">
+					<f:then>
+						<f:if condition="{item.children.spacer}">
+							<f:then>
+								<hr class="dropdown-divider">
+							</f:then>
+							<f:else>
+								<f:if condition="{item.data.tx_t3sbootstrap_fontawesome_icon}">
+									<f:then>
+										<a class="nav-link dd-link{f:if(condition: item.active, then:'', else:' collapsed')}{f:if(condition: item.current, then:'')}"
+											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
+												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">
+											<i class="{item.data.tx_t3sbootstrap_fontawesome_icon}"></i>
+											{f:if(condition:'{item.data.tx_t3sbootstrap_icon_only}',else:' {item.title}')}
+										</a>
+									</f:then>
+									<f:else>
+										<a class="nav-link dd-link{f:if(condition: item.active, then:'', else:' collapsed')}{f:if(condition: item.current, then:'')}"
+											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
+												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">{item.title}</a>
+									</f:else>
+								</f:if>
+								<f:render section="submenu" arguments="{submenu: item.children, id: item.data.uid, show: item.active}"/>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{item.spacer}">
+							<f:then>
+								<hr class="dropdown-divider">
+							</f:then>
+							<f:else>
+								<f:render section="link" arguments="{item: item}"/>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</li>
+		</f:for>
+	</ul>
+</div>
+</f:section>
+
+
+<f:section name="styleOne">
+<div class="d-md-flex mb-3 submenu style-one{f:if(condition: config.sidebar.sticky, then:' sticky-top')}">
 	<ul class="nav flex-column flex-nowrap nav-pills w-100">
 		<f:for each="{subNavigation}" as="item">
 			<li class="nav-item{f:if(condition: item.active, then:' active bg-primary bg-opacity-10')}">
@@ -89,9 +153,7 @@
 		</f:for>
 	</ul>
 </div>
-</f:if>
-</html>
-
+</f:section>
 
 <f:section name="link">
 <f:if condition="{item.data.tx_t3sbootstrap_fontawesome_icon}">
@@ -141,11 +203,19 @@
 							<hr class="dropdown-divider">
 						</f:then>
 						<f:else>
+							<f:if condition="{settings.submenu.styleOne}">
+								<f:then>
+									<f:variable name="hasSubpages" value="{f:if(condition: subItem.hasSubpages, then:' dd-item', else:'')}" />
+								</f:then>
+								<f:else>
+									<f:variable name="hasSubpages" value="{f:if(condition: subItem.hasSubpages, then:' dd-link', else:'')}" />
+								</f:else>
+							</f:if>
 							<li class="nav-item{f:if(condition: subItem.active, then:' active')}">
 								<f:if condition="{subItem.children}">
 									<f:then>
 										<a class="nav-link{f:if(condition: subItem.active, then:'',
-											 else:' collapsed')}{f:if(condition: subItem.current, then:' active')}{f:if(condition: subItem.hasSubpages, then:' dd-item')}"
+											 else:' collapsed')}{f:if(condition: subItem.current, then:' active')}{hasSubpages}"
 											href="{subItem.link}" data-bs-toggle="collapse" data-bs-target="#submenu{subItem.data.uid}">
 										<f:if condition="{subItem.data.tx_t3sbootstrap_fontawesome_icon}">
 											<f:then>

@@ -116,10 +116,13 @@ class CardWrapper implements SingletonInterface
 				$processedData['autoplay'] = (int)$flexconf['autoplay'];
 				$processedData['delay'] = $flexconf['autoplay'] ? (int)$flexconf['delay'] : 99999999;
 			}
+
+			if ($flexconf['card_wrapper'] == 'deck' && $flexconf['equalHeight']) {
+				$processedData['equalHeight'] = ' d-flex align-items-stretch';
+			}
 		}
 
 		$processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
-
 
 		return $processedData;
 	}

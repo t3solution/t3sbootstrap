@@ -42,6 +42,8 @@ module.tx_t3sbootstrap {
 			masonry = {$bootstrap.cdn.masonry}
 			jarallax = {$bootstrap.cdn.jarallax}
 			swiper = {$bootstrap.cdn.swiper}
+			fontawesome5latest = {$bootstrap.cdn.fontawesome5latest}
+			fontawesome6latest = {$bootstrap.cdn.fontawesome6latest}
 		}
 		optimize {
 			tables = {$bootstrap.optimize.tables}

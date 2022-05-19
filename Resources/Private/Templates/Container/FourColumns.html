@@ -33,28 +33,28 @@
 				<f:render partial="Header/All" arguments="{_all}" />
 			</div>
 		</f:if>
-		<div class="column {columnOne}">
+		<div class="column {columnOne}{equalHeight}">
 			<f:if condition="{col_241}">
 				<f:for each="{col_241}" as="child">
 					{child.renderedContent -> f:format.raw()}
 				</f:for>
 			</f:if>
 		</div>
-		<div class="column {columnTwo}">
+		<div class="column {columnTwo}{equalHeight}">
 			<f:if condition="{col_242}">
 				<f:for each="{col_242}" as="child">
 					{child.renderedContent -> f:format.raw()}
 				</f:for>
 			</f:if>
 		</div>
-		<div class="column {columnThree}">
+		<div class="column {columnThree}{equalHeight}">
 			<f:if condition="{col_243}">
 				<f:for each="{col_243}" as="child">
 					{child.renderedContent -> f:format.raw()}
 				</f:for>
 			</f:if>
 		</div>
-		<div class="column {columnFour}">
+		<div class="column {columnFour}{equalHeight}">
 			<f:if condition="{col_244}">
 				<f:for each="{col_244}" as="child">
 					{child.renderedContent -> f:format.raw()}

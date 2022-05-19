@@ -24,7 +24,6 @@
 </f:asset.script>
 </f:if>
 <f:comment> CARD GROUP </f:comment>
-
 <f:if condition="{card_wrapper_layout} == 'group'">
 		<div class="card-group gallery{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
@@ -37,7 +36,7 @@
 		<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
 			{styleAttr -> f:format.raw()}{dataAnimate}>
 			<f:for each="{col_270}" as="card" iteration="cardIterator">
-				<div class="col">
+				<div class="col{equalHeight}">
 					{card.renderedContent -> f:format.raw()}
 				</div>
 			</f:for>
@@ -68,10 +67,8 @@
 <f:if condition="{card_wrapper_layout} == 'slider'">
 	<f:if condition="{settings.cdn}">
 		<f:then>
-			<f:asset.css identifier="swipercss"
-				href="https://unpkg.com/swiper@{settings.swipeVersion}/swiper-bundle.min.css" />
-			<f:asset.script identifier="swiperjs"
-				src="https://unpkg.com/swiper@{settings.swipeVersion}/swiper-bundle.min.js" />
+			<f:asset.css identifier="swipercss" href="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.css" />		
+			<f:asset.script identifier="swiperjs" src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 		</f:then>
 		<f:else>
 			<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
@@ -91,6 +88,10 @@
 #swiper-{data.uid} .swiper-button-prev {
 	color: white;
 	text-shadow: 1px 1px 2px #000,0 0 25px #000,0 0 5px #000;
+}
+#swiper-{data.uid} .swiper-slide,
+#swiper-{data.uid} .swiper-wrapper {
+	height: auto !important;
 }
 	</f:asset.css>
 	<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
