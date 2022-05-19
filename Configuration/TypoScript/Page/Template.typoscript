@@ -28,6 +28,11 @@ page {
 		settings {
 			// from EM config
 			expandedContent = {$bootstrap.extconf.expandedContent}
+			fontawesome.extconf = {$bootstrap.extconf.fontawesomeCss}
+			fontawesome.cdn = {$bootstrap.cdn.enable}
+			fontawesome.version = {$bootstrap.cdn.fontawesome}
+			fontawesome.5latest = {$bootstrap.cdn.fontawesome5latest}
+			fontawesome.6latest = {$bootstrap.cdn.fontawesome6latest}
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			codesnippet = {$bootstrap.extconf.codesnippet}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
@@ -41,6 +46,7 @@ page {
 			gtm = {$bootstrap.gtm}
 			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
+			submenu.styleOne = {$bootstrap.submenu.styleOne}
 			navbar {
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}

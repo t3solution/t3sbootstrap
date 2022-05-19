@@ -17,6 +17,15 @@
 							</config>
 						</TCEforms>
 					</equalWidth>
+					<equalHeight>
+						<TCEforms>
+							<label>Equal height</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</equalHeight>
 					<horizontalGutters>
 						<TCEforms>
 							<label>Horizontal gutters</label>

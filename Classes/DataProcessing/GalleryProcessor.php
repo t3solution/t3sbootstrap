@@ -700,9 +700,12 @@ class GalleryProcessor implements DataProcessorInterface
 
 			// Set the corrected dimensions for each media element
 			foreach ($this->fileObjects as $key => $fileObject) {
-				  $mediaHeight = $this->equalMediaHeight;
-				  $mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
-				   * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
+				$mediaHeight = $this->equalMediaHeight;
+				if (is_array($fileObject)) {
+					$fileObject = $fileObject[0];	
+				}
+				$mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
+				 * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
 
 				$this->mediaDimensions[$key] = [
 					'width' => floor($mediaWidth),

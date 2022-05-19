@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  src: url("../webfonts_6/fa-solid-900.woff2") format('woff2'),
+	   url('../webfonts_6/fa-solid-900.ttf') format('truetype');
+  font-display: swap;
+}
+
+
+.internal-link::before,
+.external-link::before,
+.download-link::before,
+.email-link::before,
+.phone-link::before,
+.fax-link::before {
+	margin-right: .3em;
+	margin-left: .2em;
+	display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+}
+
+.internal-link::before {
+	font-family: "Font Awesome 6 Free"; font-weight: 900; content: "\f0c1";
+}
+.external-link::before {
+	font-family: "Font Awesome 6 Free"; font-weight: 900; content: "\f35d";
+}
+.download-link::before {
+	font-family: "Font Awesome 6 Free"; font-weight: 900; content: "\f019";
+}
+.email-link::before {
+	font-family: "Font Awesome 6 Free"; font-weight: 900; content: "\f0e0";
+}
+.phone-link::before {
+	font-family: "Font Awesome 6 Free"; font-weight: 900; content: "\f095";
+}
+.fax-link::before {
+	font-family: "Font Awesome 6 Free"; font-weight: 900; content: "\f1ac";
+}

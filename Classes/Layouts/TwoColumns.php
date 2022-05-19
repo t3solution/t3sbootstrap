@@ -41,6 +41,7 @@ class TwoColumns implements SingletonInterface
 				$processedData['class'] .= ' col-image';
 			}
 		}
+		$processedData['equalHeight'] = !empty($flexconf['equalHeight']) ? ' d-flex align-items-stretch' : '';
 
 		return $processedData;
 	}

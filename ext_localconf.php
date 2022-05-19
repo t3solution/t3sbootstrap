@@ -11,18 +11,12 @@ use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Backend\Preview\StandardPreviewRendererResolver;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
-
-#use Psr\Http\Message\ServerRequestInterface;
-
 use T3SBS\T3sbootstrap\Backend\FormDataProvider\FlexFormManipulation;
 use T3SBS\T3sbootstrap\Hooks\FlexFormHook;
 use T3SBS\T3sbootstrap\Controller\ConsentController;
 use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard;
-
-#use T3SBS\T3sbootstrap\Hooks\PageLayoutView;
-
 use T3SBS\T3sbootstrap\Hooks\NewsFlexFormHook;
 
 defined('TYPO3') || die();
@@ -163,8 +157,13 @@ defined('TYPO3') || die();
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 1');
 		// if rte_ckeditor_fontawesome is loaded
 		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') ) {
+
 			if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFaPro.yaml';
+			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa6.yaml';
+			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '4') {
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa6Pro.yaml';
 			} else {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa.yaml';
 			}
@@ -176,6 +175,10 @@ defined('TYPO3') || die();
 		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') ) {
 			if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFaPro.yaml';
+			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {			
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';			
+			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '4') {
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';			
 			} else {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa.yaml';
 			}
@@ -183,6 +186,9 @@ defined('TYPO3') || die();
 			$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
 		}
 	}
+	// Optional fontawesomeCss
+	$fontawesomeCss = (int)$extconf['fontawesomeCss'];
+	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = '.$fontawesomeCss.'');
 	// Optional Hover Link Effect (FAL)
 	if (array_key_exists('linkHoverEffect', $extconf) && $extconf['linkHoverEffect'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 1');
@@ -196,12 +202,6 @@ defined('TYPO3') || die();
 	// Optional fontawesomepagetitle
 	if (array_key_exists('fontawesomepagetitle', $extconf) && $extconf['fontawesomepagetitle'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomepagetitle = 1');
-	}
-	// Optional fontawesomeCss
-	if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '1') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 1');
-	} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 2');
 	}
 	// Optional cookieconsent
 	if (array_key_exists('cookieconsent', $extconf) && $extconf['cookieconsent'] === '1') {
