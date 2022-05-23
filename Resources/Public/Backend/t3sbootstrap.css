@@ -188,27 +188,35 @@ cite {
 
 
 /* object stile */
+.link-primary,
 .text-primary {
     color: #007bff !important;
 }
+.link-secondary,
 .text-secondary {
     color: #6c757d !important;
 }
+.link-success,
 .text-success {
     color: #1e7e34 !important;
 }
+.link-danger,
 .text-danger {
     color: #bd2130 !important;
 }
+.link-warning,
 .text-warning {
     color: #ffc107 !important;
 }
+.link-info,
 .text-info {
     color: #17a2b8 !important;
 }
+.link-light,
 .text-light {
     color: #dae0e5 !important;
 }
+.link-dark,
 .text-dark {
     color: #343a40 !important;
 }

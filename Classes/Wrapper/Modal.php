@@ -20,7 +20,6 @@ class Modal implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-
 		$processedData['modal']['animation'] = $flexconf['animation'];
 		$processedData['modal']['size'] = $flexconf['size'];
 		$processedData['modal']['button'] = $flexconf['button'];
