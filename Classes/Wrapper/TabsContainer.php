@@ -20,15 +20,17 @@ class TabsContainer implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-
-		if ( !empty($flexconf['display_type']) && $flexconf['display_type'] == 'verticalpills') {
-			$processedData['pill']['asideWidth'] = (int)$flexconf['aside_width'];
-			$processedData['pill']['mainWidth'] = $flexconf['aside_width'] ? 12 - (int)$flexconf['aside_width'] : 9;
+		if ($processedData['data']['CType'] == 'tabs_container') {
+			if ( !empty($flexconf['display_type']) && $flexconf['display_type'] == 'verticalpills') {
+				$processedData['pill']['asideWidth'] = (int)$flexconf['aside_width'];
+				$processedData['pill']['mainWidth'] = $flexconf['aside_width'] ? 12 - (int)$flexconf['aside_width'] : 9;
+			}
+			$processedData['tab']['displayType'] = !empty($flexconf['display_type']) ? $flexconf['display_type'] : '';
+			$processedData['tab']['switchEffect'] =	!empty($parentflexconf['switch_effect']) ? $parentflexconf['switch_effect'] : '';
+			$processedData['tab']['fill'] =	 !empty($flexconf['fill']) ? ' '.$flexconf['fill']: '';
+		} else {
+			$processedData['tab']['contentByPid'] =	!empty($flexconf['contentByPid']) ? $flexconf['contentByPid'] : 0;
 		}
-		$processedData['tab']['displayType'] = !empty($flexconf['display_type']) ? $flexconf['display_type'] : '';
-		$processedData['tab']['switchEffect'] =	!empty($parentflexconf['switch_effect']) ? $parentflexconf['switch_effect'] : '';
-		$processedData['tab']['contentByPid'] =	!empty($flexconf['contentByPid']) ? $flexconf['contentByPid'] : 0;
-		$processedData['tab']['fill'] =	 !empty($flexconf['fill']) ? ' '.$flexconf['fill']: '';
 
 		return $processedData;
 	}
