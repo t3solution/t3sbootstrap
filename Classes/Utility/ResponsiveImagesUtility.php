@@ -87,8 +87,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		$webpIsLoaded = ExtensionManagementUtility::isLoaded('webp');
 
-
-
 		// Deal with file formats that can't be cropped separately
 		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
 			return $this->createSimpleImageTag(
@@ -136,6 +134,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 				$fallbackTag->addAttribute('sizes', sprintf($lastBreakpoint['sizes'], $referenceWidth));
 			}
 		} else {
+
 			// Breakpoint can't be used as fallback
 			if ($lastBreakpoint) {
 				array_push($breakpoints, $lastBreakpoint);
@@ -240,7 +239,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Generate different image sizes for srcset attribute
 		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $webpIsLoaded, $type);
 		$srcsetMode = substr(key($srcsetImages), -1); // x or w
-
+		
 		// Create source tag for this breakpoint
 		$sourceTag = GeneralUtility::makeInstance(TagBuilder::class, 'source');
 
@@ -390,10 +389,12 @@ class ResponsiveImagesUtility implements SingletonInterface
 			$srcset = GeneralUtility::trimExplode(',', $srcset);
 		}
 
+
 		$images = [];
 		foreach ($srcset as $widthDescriptor) {
 			// Determine image width
 			$srcsetMode = substr($widthDescriptor, -1);
+
 			switch ($srcsetMode) {
 				case 'x':
 					$candidateWidth = (int) ($defaultWidth * (float) substr($widthDescriptor, 0, -1));

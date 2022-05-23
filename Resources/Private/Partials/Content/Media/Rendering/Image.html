@@ -5,6 +5,12 @@
 <f:variable name="altText" value="{f:if(condition: file.alternative, then: '{file.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}" />
 <f:variable name="lazyClass" value="{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2', then: ' lazy')}" />
 <f:variable name="ratio" value="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}" />
+
+
+
+
+
+
 <f:if condition="{addmedia.origImg}">
 	<f:then>
 		<f:image class="img-fluid{extraImgClass}" src="fileadmin/{file.identifier}" />
