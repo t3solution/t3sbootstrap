@@ -474,7 +474,6 @@ class ConfigController extends ActionController
 			 ->execute();
 
 		$siteroots = $result->fetchAll();
-
 		$customScssFileName = '';
 
 		foreach ($siteroots as $key=>$siteroot) {
@@ -492,12 +491,10 @@ class ConfigController extends ActionController
 		if ( file_exists($customScssFile) ) {
 
 			$customScssFile = $customScssFilePath.$customScssFileName;
-
 			if ($file == 'custom') {
 				$assignedOptions['customScss'] = TRUE;
 			}
 			$arguments = $this->request->getArguments();
-
 			if ( !empty($arguments['t3sbootstrap'][$file]) ) {
 				$scss = $arguments['t3sbootstrap'][$file];
 			} else {
@@ -674,27 +671,32 @@ class ConfigController extends ActionController
 	 {
 		$defaultUtilColorsList = '$white,$gray-100,$gray-200,$gray-300,$gray-400,$gray-500,$gray-600,$gray-700,$gray-800,$gray-900,$black,$blue,$indigo,$purple,$pink,$red,$orange,$yellow,$green,$teal,$cyan,$primary,$secondary,$success,$info,$warning,$danger,$light,$dark';
 		$utilityColors = [];
-		$utilColors = [];
 		$colors = [];
+		$customScssArr = [];
+		$defaultUtilityColors = [];
+		$defaultcolors = [];
+
 		$customScss = self::getCustomScss('custom-variables');
-		if (!empty($customScss['custom-variables'])) {
-			$customScssArr = GeneralUtility::trimExplode(';', $customScss['custom-variables']);
-			foreach( $customScssArr as $customvariables ) {
+		$custom_variables = empty($customScss['custom-variables']) ? '' : preg_replace('/\s+/', ' ', trim($customScss['custom-variables']));
+		$default = '// Overrides Bootstrap variables // $enable-shadows: true; // $enable-gradients: true; // $enable-negative-margins: true;';
+
+		if ( !empty($customScss['custom-variables']) && str_starts_with($custom_variables, $default) == FALSE ) {
+			foreach( GeneralUtility::trimExplode(';', $customScss['custom-variables']) as $customvariables ) {
 				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
-				if ( !empty($scsscolor[1]) && str_starts_with((string)$scsscolor[1], '$')
-				 && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
-					$utilColors[$scsscolor[0]] = $scsscolor[1];
-				} elseif (!empty($scsscolor[1]) && str_starts_with((string)$scsscolor[1], '#')) {
-					if (str_starts_with((string)$scsscolor[0], '$')) {
-						$colors[$scsscolor[0]] = $scsscolor[1];
-					}
+				if ( str_starts_with((string)$customvariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
+					$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
+
+
+					$customScssArr[$scsscolor[0]] = $scsscolor[1];
 				}
 			}
-			if (is_array($utilColors)) {
-				foreach($utilColors as $key=>$utiColor) {
-					if ( !empty($utilityColors[$key]) && str_starts_with((string)$utiColor, '$') ) {
-						$utilityColors[$key] = $colors[$utiColor];
-					}
+			foreach( $customScssArr as $key=>$customvariables ) {
+				if (str_starts_with((string)$customvariables, '$')) {
+					if ($customScssArr[$customvariables])
+					$utilityColors[$key] = $customScssArr[$customvariables];
+				} elseif ( str_starts_with((string)$customvariables, '#') ) {
+					if ($customvariables)
+					$utilityColors[$key] = $customvariables;
 				}
 			}
 		}
@@ -702,34 +704,38 @@ class ConfigController extends ActionController
 		$variablesSCSS = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
 		$variablesSCSS = GeneralUtility::getFileAbsFileName($variablesSCSS);
 		$variablesSCSS = GeneralUtility::getURL($variablesSCSS);
-		$defaultUtilityColors = [];
-		$defaultcolors = [];
 
-		foreach ( GeneralUtility::trimExplode(';', $variablesSCSS) as $defaultVariables) {
+		if (!empty($variablesSCSS)) {
+			foreach ( GeneralUtility::trimExplode(';', $variablesSCSS) as $defaultVariables) {
+				$defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
+				if ( str_starts_with((string)$defaultVariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $defaultScssColor[0])
+					 && ( str_starts_with((string)$defaultScssColor[1], '$') || str_starts_with((string)$defaultScssColor[1], '#') ) ) {
+					$scsscolor = GeneralUtility::trimExplode(':', $defaultVariables);
 
-			$defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
-			if (!empty($defaultScssColor[1]) && GeneralUtility::inList($defaultUtilColorsList, trim($defaultScssColor[0]))) {
-				if ( str_starts_with((string)$defaultScssColor[1], '$')) {
-					// variable has variable
-				 	$defaultUtilColors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
-				} elseif (str_starts_with((string)$defaultScssColor[1], '#')) {
-					if (str_starts_with((string)$defaultScssColor[0], '$')) {
-						$defaultcolors[$defaultScssColor[0]] = trim(rtrim($defaultScssColor[1], '!default'));
-					}
+
+					$defaultUtilColors[$scsscolor[0]] = substr($scsscolor[1], 0, -9);
+				}
+			}
+			foreach( $defaultUtilColors as $key=>$customvariables ) {
+				if (str_starts_with((string)$customvariables, '$')) {
+					if ($customScssArr[$customvariables])
+					$defaultUtilityColors[$key] = $customScssArr[$customvariables];
+				} elseif ( str_starts_with((string)$customvariables, '#') ) {
+					if ($customvariables)
+					$defaultUtilityColors[$key] = $customvariables;
 				}
 			}
 		}
+		if ( is_array($utilityColors) && is_array($defaultUtilityColors) ) {
 
-		if (is_array($defaultUtilColors)) {
-			foreach($defaultUtilColors as $key=>$defaultUtiColor) {
-				$defaultUtilityColors[$key] = $defaultcolors[$defaultUtiColor];
+			if ( !empty($utilityColors) ) {
+				$colorArr = array_merge($defaultUtilityColors, $utilityColors);
+				ksort($colorArr);
+				return $colorArr;
+			} else {
+				ksort($defaultUtilityColors);
+				return $defaultUtilityColors;	
 			}
-		}
-
-		if ( is_array($utilityColors) && is_array($colors) ) {
-			$colorArr = array_merge($defaultUtilityColors, $defaultcolors, $utilityColors, $colors);
-			ksort($colorArr);
-			return $colorArr;
 		} else {
 			return [];
 		}
@@ -752,7 +758,7 @@ class ConfigController extends ActionController
 		$newConfig->setNavbarAlignment( 'left' );
 		$newConfig->setNavbarBrand( 'imgText' );
 		$newConfig->setNavbarContainer( 'inside' );
-		$newConfig->setNavbarClass('bg-gradient');
+		$newConfig->setNavbarClass('');
 		$newConfig->setJumbotronEnable( 1 );
 		$newConfig->setJumbotronSlide( 0 );
 		$newConfig->setJumbotronPosition( 'below' );
@@ -760,7 +766,7 @@ class ConfigController extends ActionController
 		$newConfig->setJumbotronContainerposition( 'Inside' );
 		$newConfig->setJumbotronCarouselInterval(5000);
 		$newConfig->setJumbotronCarouselPause(0);
-		$newConfig->setJumbotronClass( 'p-5 mb-4 bg-light bg-gradient rounded-0' );
+		$newConfig->setJumbotronClass( 'p-5 mb-4 bg-light rounded-0' );
 		$newConfig->setBreadcrumbEnable( 1 );
 		$newConfig->setBreadcrumbCorner( 1 );
 		$newConfig->setBreadcrumbPosition( 'belowJum' );

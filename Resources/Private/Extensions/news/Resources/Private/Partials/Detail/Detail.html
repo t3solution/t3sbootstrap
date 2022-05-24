@@ -2,6 +2,7 @@
 	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
 	  xmlns:rx="http://typo3.org/ns/Reelworx/RxShariff/ViewHelper"
 	  data-namespace-typo3-fluid="true">
+
 	<n:format.nothing>
 		<n:excludeDisplayedNews newsItem="{newsItem}" />
 		<f:if condition="{newsItem.alternativeTitle}">
@@ -144,7 +145,6 @@
 		<!-- Link Back -->
 		<div class="news-backlink-wrap mt-4 mb-5">
 			<f:link.page pageUid="{settings.backPid}" class="btn btn-{settings.button.class}">
-
 				<f:translate key="back-link" />
 			</f:link.page>
 		</div>

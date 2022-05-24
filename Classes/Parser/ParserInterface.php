@@ -11,7 +11,16 @@ namespace T3SBS\T3sbootstrap\Parser;
  */
 interface ParserInterface
 {
-	public function supports(string $extension): bool;
+    /**
+     * @param string $extension
+     * @return bool
+     */
+    public function supports(string $extension): bool;
 
-	public function compile(string $file, array $settings): string;
+    /**
+     * @param string $file
+     * @param array $settings
+     * @return string
+     */
+    public function compile(string $file, array $settings): string;
 }

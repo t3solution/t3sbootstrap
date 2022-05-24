@@ -673,11 +673,11 @@ class ConfigProcessor implements DataProcessorInterface
 	{
 		$res = [];
 		foreach ($subNavigation as $supNav ) {
-			if ($supNav['hasSubpages']) {
+			if ( is_array($supNav['children'])) {
 				self::getSubNavigation($supNav['children'], $navbarClickableparent);
-			}
-			if ( $navbarClickableparent === 0 ) {
-				$supNav['link'] = '#';
+				if ( $navbarClickableparent === 0 ) {
+					$supNav['link'] = '#';
+				}
 			}
 
 			$res[] = $supNav;

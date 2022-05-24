@@ -17,6 +17,9 @@ plugin.tx_t3sbootstrap {
 #	Constant Editor
 #-------------------------------------------------------------------------------
 
+bootstrap.cdn.fontawesome5latest = 5.15.4
+bootstrap.cdn.fontawesome6latest = 6.1.1
+
 # customcategory=bootstrap-cdn=* T3SB::CDN- and Version-Settings
 # customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
 # customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
@@ -24,7 +27,7 @@ plugin.tx_t3sbootstrap {
 bootstrap.cdn {
 	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Public/
 	enable = 1
-	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme (run Scheduler) - Info: https://bootswatch.com/.
+	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/.
 	bootswatch = 0
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
 	bootstrap = 5.1.3
@@ -32,7 +35,7 @@ bootstrap.cdn {
 	popperjs = 2.11.5
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome:
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.1.1
 	fontawesome = 5.15.4
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.6.0
@@ -64,7 +67,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
 	bootstrapJsIntegrity = sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
-	popperjsIntegrity = sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB
+	popperjsIntegrity = sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
@@ -197,7 +200,7 @@ bootstrap.config.darkMode = 0
 bootstrap.print.enable = 0
 
 # Custom path to your custom.scss files: e.g.: fileadmin/T3SB/Resources/Public/SCSS/ (clear cache and run the Scheduler).
-bootstrap.customScssPath = 
+bootstrap.customScssPath = fileadmin/T3SB/Resources/Public/SCSS/
 
 # disable default CSS - t3sbootstrap.css
 bootstrap.config.disableDefaultCss = 0
@@ -240,6 +243,9 @@ bootstrap.navbar {
 }
 # extra style for navbar items
 bootstrap.config.navbarPlusicon = 0
+
+# style one for the submenu (0 = default)
+bootstrap.submenu.styleOne = 0
 
 # enable in EM config (info: https://github.com/insites/cookieconsent)
 bootstrap.cookieconsent {

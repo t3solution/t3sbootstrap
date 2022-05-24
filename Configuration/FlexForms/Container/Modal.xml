@@ -81,6 +81,8 @@
 									<numIndex index="1">modal-lg</numIndex></numIndex>
 									<numIndex index="2" type="array"><numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</numIndex>
 									<numIndex index="1">modal-sm</numIndex></numIndex>
+									<numIndex index="2" type="array"><numIndex index="0">Fullscreen</numIndex>
+									<numIndex index="1">modal-fullscreen</numIndex></numIndex>
 								</items>
 								<default>default</default>
 							</config>

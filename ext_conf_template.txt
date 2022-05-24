@@ -66,7 +66,7 @@ imgCopyright = 0
 # cat=dif/enable/20; type=boolean; label=Custom translations:(clear cache).
 customTranslations = 0
 
-# cat=advanced/enable/10; type=options[none=0, FA free=1, FA pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2]; label=Font Awesome: include Font Awesome SCSS - if deactivated, only some required icons are loaded (clear cache).
+# cat=advanced/enable/10; type=options[none=0, FA 5 free=1, FA 5 pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2, FA 6 free=3, FA 6 pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=4]; label=Font Awesome: include Font Awesome SCSS - if deactivated, only some required icons are loaded (check the version in the constant editor and clear cache).
 fontawesomeCss = 0
 # cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache).
 animateCss = 0

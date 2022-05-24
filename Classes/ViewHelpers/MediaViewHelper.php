@@ -223,7 +223,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 
 		 $cropVariantCollection = CropVariantCollection::create((string)$cropString);
 		 $cropArea = $cropVariantCollection->getCropArea($cropVariant);
-
 		if ( $this->arguments['ratio'] ) {
 			$m = $cropArea->getHeight() / $cropArea->getWidth();
 			$height = ceil((float)$height * (float)$m);
@@ -290,16 +289,13 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
 			$rArr = explode(':',$this->arguments['ratio']);
-
 			if ($cropVariant == 'mobile') {
 				$rArr[0] = '16';
 				$rArr[1] = '9';
-			} else {
-				if ( $this->arguments['shift'] ) {
-					$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
-					 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
-					$cropObject->$cropVariant->cropArea->y = $shift;
-				}
+			} elseif ( $this->arguments['shift'] ) {
+				$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
+				 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
+				$cropObject->$cropVariant->cropArea->y = $shift;
 			}
 
 			if ( $rArr[0] > $rArr[1] ) {
