@@ -3,7 +3,7 @@
 <f:spaceless>
 <f:if condition="{data.CType} == 'collapsible_accordion' || {data.CType} == 't3sbs_toast'">
 	<f:then>
-		<f:render section="Main" arguments="{_all}" />		
+		<f:render section="Main" arguments="{_all}" />
 	</f:then>
 	<f:else>
 		{containerPre -> f:format.raw()}
@@ -14,29 +14,29 @@
 		</f:if>
 		<f:link.typolink parameter="{celink}" class="ce-link{f:if(condition: '{parentCType} == listGroup_wrapper', then: ' list-group-item list-group-item-action')}">
 			<f:if condition="{isTxContainer}">
-				<f:then>
-					<div id="c{data.uid}">	
-						<f:render section="Header" optional="true">
-							<f:render partial="Header/All" arguments="{_all}" />
-						</f:render>
-						<f:render section="Main" arguments="{_all}" />
-					</div>
-				</f:then>
-				<f:else>
-					<div id="c{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
-						<f:render section="Header" optional="true">
-							<f:render partial="Header/All" arguments="{_all}" />
-						</f:render>
-						<f:render section="Main" arguments="{_all}" />
-					</div>
-				</f:else>
+			<f:then>
+				<div id="c{data.uid}" data-cmi5="{data.tx_t3sbootstrap_cmi5_select_statement} {data.tx_t3sbootstrap_cmi5_send_statement}">
+					<f:render section="Header" optional="true">
+						<f:render partial="Header/All" arguments="{_all}" />
+					</f:render>
+					<f:render section="Main" arguments="{_all}" />
+				</div>
+			</f:then>
+			<f:else>
+				<div id="c{data.uid}" data-cmi5="{data.tx_t3sbootstrap_cmi5_select_statement} {data.tx_t3sbootstrap_cmi5_send_statement}" {f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate -> f:format.raw()}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
+					<f:render section="Header" optional="true">
+						<f:render partial="Header/All" arguments="{_all}" />
+					</f:render>
+					<f:render section="Main" arguments="{_all}" />
+				</div>
+			</f:else>
 			</f:if>
 		</f:link.typolink>
 		<f:if condition="{newLine}">
 			<div class="w-100"></div>
 		</f:if>
-		{containerPost -> f:format.raw()}	
+		{containerPost -> f:format.raw()}
 	</f:else>
-</f:if>	
+</f:if>
 </f:spaceless>
 </html>

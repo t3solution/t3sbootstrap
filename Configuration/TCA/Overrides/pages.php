@@ -292,6 +292,15 @@ $tempPagesColumns = [
 				],
 			],
 		],
+	],
+	'tx_t3sbootstrap_cmi_generatexml' => [
+		'label'	 => 'Generate cmi5.xml',
+		'config' => [
+			'type' => 'check',
+			'items' => [
+				 ['Check to generate cmi5.xml', '0'],
+			],
+	 ],
 	]
 ];
 
@@ -307,7 +316,13 @@ ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,
 ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_container','after:tx_t3sbootstrap_dropdownRight');
 ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_linkToTop','after:tx_t3sbootstrap_container');
 ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_megamenu','after:tx_t3sbootstrap_linkToTop');
-
+ExtensionManagementUtility::addToAllTCAtypes(
+	'pages',
+	'--div--;cmi5,
+		tx_t3sbootstrap_cmi_generatexml;',
+	'',
+	''
+);
 if (array_key_exists('navigationColor', $extconf) && $extconf['navigationColor'] === '1') {
 	# add palette Navigation Colors
 	ExtensionManagementUtility::addToAllTCAtypes(

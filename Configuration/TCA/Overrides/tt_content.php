@@ -1141,7 +1141,31 @@ $tempContentColumns = [
 			'size' => 3
 		]
 	],
-
+	###### cmi5 ######
+	'tx_t3sbootstrap_cmi5_select_statement' => [
+		'label'	 => 'cmi5 Statement',
+		'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+						['experienced', 'experienced'],
+						['checked', 'checked'],
+						['played', 'played'],
+						['interacted', 'interacted'],
+				],
+				'size' => 1,
+		],
+	],
+	'tx_t3sbootstrap_cmi5_send_statement' => [
+		'label'	 => 'Send Statement',
+		'config' => [
+			'type' => 'check',
+			'items' => [
+				 ['Send Statement', '0'],
+			],
+	 ],
+	],
+	###### cmi5 ######
 ];
 
 
@@ -1403,6 +1427,16 @@ ExtensionManagementUtility::addToAllTCAtypes(
 	'',
 	'after:layout'
 );
+###### cmi5 ######
+ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'--div--;cmi5,
+		tx_t3sbootstrap_cmi5_select_statement;Select Activity,
+		tx_t3sbootstrap_cmi5_send_statement;Check to send Statement',
+	'',
+	''
+);
+###### cmi5 ######
 # add palette animate if EXT:content_animations is not loaded
 if ( !ExtensionManagementUtility::isLoaded('content_animations') ) {
 	ExtensionManagementUtility::addToAllTCAtypes(
@@ -1472,7 +1506,7 @@ if ( $extconf['preview'] ) {
 	foreach ($t3sbsContent as $t3sb) {
 		$GLOBALS['TCA']['tt_content']['types'][trim($t3sb)]['previewRenderer'] = DefaultPreviewRenderer::class;
 	}
-	
+
 	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'row_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
 	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container', 'toast_container'];
@@ -1483,4 +1517,3 @@ if ( $extconf['preview'] ) {
 
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['t3sbootstrap_pi1'] = 'recursive,select_key,pages';
-

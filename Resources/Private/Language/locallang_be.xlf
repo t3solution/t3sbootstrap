@@ -94,7 +94,17 @@
 				<source>Footer</source>
 			</trans-unit>
 
+			<trans-unit id="accordion_11">
+				<source>cmi5 Settings (click to edit)</source>
+			</trans-unit>
 
+			<trans-unit id="accordion_11-1">
+				<source>cmi5 Settings Assignable Unit (AU)</source>
+			</trans-unit>
+
+			<trans-unit id="accordion_11-2">
+				<source>cmi5 Settings Course</source>
+			</trans-unit>
 
 
 			<!-- New Content Element Wizard -->
