@@ -29,6 +29,6 @@ page {
       	main = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/main.js
         progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
        	plyrJs = https://cdn.plyr.io/3.6.8/plyr.js
-        #echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
+        echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
 	}
 }
