@@ -1,0 +1,1 @@
+const player = new Plyr(document.querySelector('audio, video'));

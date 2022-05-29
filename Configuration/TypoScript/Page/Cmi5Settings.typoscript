@@ -26,26 +26,9 @@ page {
       	plyrCss = https://cdn.plyr.io/3.6.8/plyr.css
 	}
 	includeJS {
-      	cmi5Controller = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Controller-new.js
-       	cryptojs = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cryptojs_v3.1.2.js
-      	utf8TextEncoding = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/utf8-text-encoding.js
-       	activitytypes = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/activitytypes.js
-       	verbs = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/verbs.js
-       	xapiwrapper= EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapiwrapper.js
-      	xapistatement = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapistatement.js
-       	xapiUtil = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-util.js
-       	xapiLaunch = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-launch.js
-        #videoprofile = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/videoprofile.js
-        #xapiYT = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-youtube-statements.js
-       	cmi5Wrapper = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Wrapper-new.js
+      	main = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/main.js
         progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
        	plyrJs = https://cdn.plyr.io/3.6.8/plyr.js
-        xmlwriter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/XMLWriter.js
-      	cmi5xml = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5xml.js
         echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
-        textHighlighter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/TextHighlighter.js
-        #customElements = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/custom-elements.min.js
-        #medium = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/medium-highlighter.js
-        #content = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/content.js
 	}
 }
