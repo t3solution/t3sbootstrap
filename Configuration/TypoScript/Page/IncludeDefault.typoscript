@@ -61,22 +61,6 @@ page {
 temp.jsCookieConsent >
 
 
-[{$bootstrap.config.footerSticky} == 1]
-page.cssInline.2431 = TEXT
-page.cssInline.2431.value (
-	/* footer-sticky - page.cssInline.2431 */
-	html {
-		position:relative;
-		min-height:100%
-	}
-	#page-footer {
-		position:absolute;
-		bottom:0;width:100%
-	}
-)
-[END]
-
-
 ##########################################################################################################
 #
 # Conditions

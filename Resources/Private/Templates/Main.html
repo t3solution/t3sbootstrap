@@ -110,14 +110,14 @@
 <f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	var	  navbarHeight = 0,
-		  navbarBreakpointWidth = 0,
-		  viewportWidth = 0,
-		  onePageLayout = 0,
-		  fixedNavbar = false;
+			navbarBreakpointWidth = 0,
+			viewportWidth = 0,
+			onePageLayout = 0,
+			fixedNavbar = false;
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
+		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
 	}
 </f:asset.script>
 	</f:then>
@@ -127,11 +127,11 @@
 				<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	const navbar = document.getElementById('main-navbar'),
-		  navbarHeight = navbar.clientHeight,
-		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = navbar.classList.contains('sectionMenu');
-		  
+			navbarHeight = navbar.clientHeight,
+			navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
+			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+			onePageLayout = navbar.classList.contains('sectionMenu');
+
 	var fixedNavbar = false;
 	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
 		fixedNavbar = true;
@@ -139,26 +139,26 @@
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
+		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
 	}
-				</f:asset.script>	
+				</f:asset.script>
 			</f:then>
 			<f:else>
 				<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	const navbar = false,
-		  navbarHeight = false,
-		  navbarBreakpointWidth = 99999,
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = 0;
+			navbarHeight = false,
+			navbarBreakpointWidth = 99999,
+			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+			onePageLayout = 0;
 
 	var fixedNavbar = false;
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);	
+		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
 	}
-				</f:asset.script>			
+				</f:asset.script>
 			</f:else>
 		</f:if>
 	</f:else>
@@ -176,7 +176,7 @@
 <f:if condition="{settings.config.darkMode}">
 <f:asset.script identifier="vanilla_darkMode">
 	// Dark mode - Main.html
-	t3sbDarkMode();    
+	t3sbDarkMode();
 </f:asset.script>
 </f:if>
 <f:comment> Lazyload </f:comment>
@@ -219,9 +219,22 @@
 			img => { t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) }
 		)
 	}
-			</f:asset.script>	
+			</f:asset.script>
 		</f:if>
 	</f:else>
+</f:if>
+<f:if condition="{settings.config.footerSticky}">
+<f:comment> Sticky footer </f:comment>
+<f:asset.css identifier="t3sbs_footerSticky">
+html {
+	position:relative;
+	min-height:100%
+}
+#page-footer {
+	position:absolute;
+	bottom:0;width:100%
+}
+</f:asset.css>
 </f:if>
 <f:comment> Link to top </f:comment>
 <f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">

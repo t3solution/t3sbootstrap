@@ -52,7 +52,6 @@ class BootstrapProcessor implements DataProcessorInterface
 	const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast';
 	const TX_CONTAINER = 'button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container,card_wrapper';
 
-
 	/**
 	 * Process data
 	 *
@@ -133,7 +132,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			}
 			if ( $cType == 't3sbs_card' ) {
 				$processedData = GeneralUtility::makeInstance(Card::class)
-				->getProcessedData($processedData, $flexconf);
+				->getProcessedData($processedData, $flexconf, $parentflexconf);
 			}
 			if ( $cType == 't3sbs_carousel' ) {
 				$processedData = GeneralUtility::makeInstance(Carousel::class)

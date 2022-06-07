@@ -162,6 +162,7 @@ page {
 				expandedcontentContainerbottom = {$bootstrap.config.expandedcontentContainerbottom}
 				expandedcontentClassbottom = {$bootstrap.config.expandedcontentClassbottom}
 				generalRootline = {$bootstrap.config.generalRootline}
+				generalOverride = {$bootstrap.config.generalOverride}
 				contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
 				jqueryHeader = {$bootstrap.config.jqueryHeader}
 				compress = {$bootstrap.config.compress}

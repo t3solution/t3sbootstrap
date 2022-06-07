@@ -9,7 +9,6 @@ use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use T3SBS\T3sbootstrap\Helper\FlexformHelper;
 
-
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
@@ -22,7 +21,7 @@ class Card implements SingletonInterface
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $flexconf): array
+	public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf): array
 	{
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 		$flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
@@ -38,7 +37,6 @@ class Card implements SingletonInterface
 				$parentflexconf =$flexformHelper->addMissingElements($parentflexconf, $parentFlexformData['CType'], TRUE);
 			}
 		}
-
 		$cardData = $flexconf;
 		// crop max characters
 		$cardData['cropMaxCharacters'] = !empty($parentflexconf['cropMaxCharacters']) ? $parentflexconf['cropMaxCharacters'] : '';
@@ -73,17 +71,13 @@ class Card implements SingletonInterface
 		// dimensions
 		$cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
 		$cardData['dimensions']['height'] = $processedData['data']['imageheight'];
+		// class
+		$cardClass = 'card'.$processedData['class'];
+		$cardClass .= !empty($flexconf['button']['stretchedLink']) ? ' ce-link-content' : '';
 		// image
 		if ( !empty($cardData['image']['overlay']) ) {
-			if ( $cardData['header']['text'] && $cardData['footer']['text'] ) {
-				$cardData['image']['class'] = 'img-fluid';
-			} elseif ( $cardData['header']['text'] ) {
-				$cardData['image']['class'] = 'card-img-bottom img-fluid';
-			} elseif ( $cardData['footer']['text'] ) {
-				$cardData['image']['class'] = 'card-img-top img-fluid';
-			} else {
-				$cardData['image']['class'] = 'img-fluid';
-			}
+			$cardClass .= ' overflow-hidden';
+			$cardData['image']['class'] = 'img-fluid';
 			$cardData['image']['overlay'] = 'card-img-overlay d-flex';
 			$cardData['mobile']['overlay'] = FALSE;
 		} else {
@@ -111,17 +105,6 @@ class Card implements SingletonInterface
 		} else {
 			$cardData['block']['enable'] = TRUE;
 		}
-		// class
-		$cardClass = $processedData['class'];
-		$cardClass .= ' card';
-
-		if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
-			$cardClass .= ' text-'.$processedData['data']['tx_t3sbootstrap_textcolor'];
-		}
-		if ( $processedData['data']['tx_t3sbootstrap_contextcolor'] ) {
-			$cardClass .= ' bg-'.$processedData['data']['tx_t3sbootstrap_contextcolor'];
-		}
-
 		// flip card
 		if ( !empty($flexconf['flipcard']) ) {
 			$backstyle = '';
@@ -144,7 +127,36 @@ class Card implements SingletonInterface
 		} else {
 			$cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position']:'';
 		}
+		// list group
+		if ( !empty($flexconf['list']['container']) && is_array($flexconf['list']['container']) ) {
+			foreach( $flexconf['list'] as $container ) {
+				foreach ($container as $list)
+					$listGroup[] = $list['list']['group'];
+			}
+			$cardData['list'] = $listGroup;
+		}
 
+		// profile card
+		$cardData['multiImage']['enable'] = FALSE;
+		if ( !empty($flexconf['multiImage']['enable']) ) {
+			$cardData['multiImage']['enable'] = TRUE;
+			$cardData['multiImage']['percent'] = '0.'.$flexconf['multiImage']['percent'];
+			$cardData['multiImage']['style'] = 'top: -' . $flexconf['multiImage']['percent']/2 .'px';
+			$borderColor = $flexconf['multiImage']['borderColor'] ? ' border-'.$flexconf['multiImage']['borderColor'] : '';
+			$shadow = $flexconf['multiImage']['shadow'] ? ' circularshadow' : '';
+			$cardData['multiImage']['shadow'] = $flexconf['multiImage']['shadow'] ? TRUE : FALSE;
+			$cardData['multiImage']['border'] = $flexconf['multiImage']['borderWidth'].$borderColor.$shadow;
+			$cardData['multiImage']['slope'] =	$flexconf['multiImage']['diagonal'] ? $flexconf['multiImage']['slope'] : 0;
+			$cardData['multiImage']['socialmedia']['enable'] = $flexconf['multiImage']['socialmedia']['enable'];
+			$cardData['multiImage']['socialmedia']['footer'] = $flexconf['multiImage']['socialmedia']['footer'];
+			if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
+				foreach ($flexconf['multiImage']['socialmedia'] as $key=>$socialmedia) {
+					if ($key != 'enable' && $key != 'footer' &&  !empty($socialmedia)) {
+						$cardData['multiImage']['socialmediaLinks'][$key] = $socialmedia;
+					}
+				}
+			}
+		}
 		// header position
 		if ( $processedData['data']['header_position'] ) {
 			$headerPosition = $processedData['data']['header_position'];
@@ -160,6 +172,11 @@ class Card implements SingletonInterface
 		if ( !empty($cardData['cardborder']) ) {
 			$cardClass .= ' border-'.$cardData['cardborderstyle'];
 		}
+		// parent equal Height
+		if ( !empty($parentflexconf['equalHeight']) ) {
+			$cardClass .= ' w-100';
+		}
+
 		$processedData['class'] = trim($cardClass);
 
 		// addmedia

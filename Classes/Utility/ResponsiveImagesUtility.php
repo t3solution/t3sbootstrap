@@ -563,6 +563,5 @@ class ResponsiveImagesUtility implements SingletonInterface
 		]);
 	}
 
-
 }
 

@@ -226,13 +226,10 @@
 									<lower>0</lower>
 									<upper>100</upper>
 								</range>
-								<wizards>
-									<autoplaySpeed>
-										<type>slider</type>
-										<step>1</step>
-										<width>200</width>
-									</autoplaySpeed>
-								</wizards>
+								<slider>
+									<step>1</step>
+									<width>200</width>
+								</slider>
 							</config>
 						</TCEforms>
 					</imgGrayscale>
@@ -249,13 +246,10 @@
 									<lower>0</lower>
 									<upper>100</upper>
 								</range>
-								<wizards>
-									<autoplaySpeed>
-										<type>slider</type>
-										<step>1</step>
-										<width>200</width>
-									</autoplaySpeed>
-								</wizards>
+								<slider>
+									<step>1</step>
+									<width>200</width>
+								</slider>
 							</config>
 						</TCEforms>
 					</imgSepia>
@@ -272,13 +266,10 @@
 									<lower>0</lower>
 									<upper>100</upper>
 								</range>
-								<wizards>
-									<autoplaySpeed>
-										<type>slider</type>
-										<step>1</step>
-										<width>200</width>
-									</autoplaySpeed>
-								</wizards>
+								<slider>
+									<step>1</step>
+									<width>200</width>
+								</slider>
 							</config>
 						</TCEforms>
 					</imgOpacity>
@@ -535,49 +526,31 @@
 								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">default</numIndex>
-										<numIndex index="1">top-0 start-50 translate-middle-x</numIndex>
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">none</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
-										<numIndex index="0">Top left</numIndex>
-										<numIndex index="1">top-0 start-0</numIndex>
+										<numIndex index="0">start</numIndex>
+										<numIndex index="1">align-self-start</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">Top center</numIndex>
-										<numIndex index="1">top-0 start-50 translate-middle-x</numIndex>
+										<numIndex index="0">end</numIndex>
+										<numIndex index="1">align-self-end</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">Top right</numIndex>
-										<numIndex index="1">top-0 end-0</numIndex>
+										<numIndex index="0">center</numIndex>
+										<numIndex index="1">align-self-center</numIndex>
 									</numIndex>
-
 									<numIndex index="4" type="array">
-										<numIndex index="0">Middle left</numIndex>
-										<numIndex index="1">top-50 start-0 translate-middle-y</numIndex>
+										<numIndex index="0">baseline</numIndex>
+										<numIndex index="1">align-self-baseline</numIndex>
 									</numIndex>
 									<numIndex index="5" type="array">
-										<numIndex index="0">Middle center</numIndex>
-										<numIndex index="1">top-50 start-50 translate-middle</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Middle right</numIndex>
-										<numIndex index="1">top-50 end-0 translate-middle-y</numIndex>
-									</numIndex>
-
-									<numIndex index="7" type="array">
-										<numIndex index="0">Bottom left</numIndex>
-										<numIndex index="1">bottom-0 start-0</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Bottom center</numIndex>
-										<numIndex index="1">bottom-0 start-50 translate-middle-x</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Bottom right</numIndex>
-										<numIndex index="1">bottom-0 end-0</numIndex>
+										<numIndex index="0">stretch</numIndex>
+										<numIndex index="1">align-self-stretch</numIndex>
 									</numIndex>
 								</items>
-								<default>top-50 start-50 translate-middle</default>
+								<default>align-self-center</default>
 							</config>
 						</TCEforms>
 					</contentPosition>

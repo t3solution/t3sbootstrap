@@ -20,13 +20,10 @@
 									<lower>-60</lower>
 									<upper>60</upper>
 								</range>
-								<wizards>
-									<autoplaySpeed>
-										<type>slider</type>
-										<step>1</step>
-										<width>200</width>
-									</autoplaySpeed>
-								</wizards>
+								<slider>
+									<step>1</step>
+									<width>200</width>
+								</slider>
 							</config>
 						</TCEforms>
 					</shift>

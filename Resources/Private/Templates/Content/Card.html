@@ -1,6 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	 xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
-	 xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+	 xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Header">
 <f:comment>no header here</f:comment>
@@ -21,59 +20,65 @@
 </f:if>
 <f:if condition="{card.flipcard}">
 	<f:then>
-		<f:render section="FlipCard" arguments="{_all}" />
+		<f:render partial="Card/FlipCard" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<f:if condition="{card.horizontal}">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<f:render partial="Media/RawGallery" arguments="{_all}" />
-				</div>
-				<div class="col-md-8">
-		</f:if>
-		<f:comment>Card Header</f:comment>
-		<f:if condition="{card.header.text} && !{card.image.overlay}">
-			<div class="card-header">{card.header.text -> f:format.raw()}</div>
-		</f:if>
-		<f:comment>Card Title (top)</f:comment>
-		<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
-			<div class="card-body">
-				<f:render partial="Header/All" arguments="{_all}"/>
-			</div>
-		</f:if>
-		<f:comment>Card Image (top)</f:comment>
-
-
-		<f:if condition="{data.imageorient} == 'top' && !{card.horizontal}">
-			<f:render partial="Media/RawGallery" arguments="{_all}" />
-		</f:if>
-		<f:comment>Card Text (top)</f:comment>
-		<f:if condition="{card.text.top} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
-			<f:render section="TextTop" arguments="{_all}" />
-		</f:if>
-		<f:comment>Card List</f:comment>
-		<f:if condition="{card.list} && !{card.image.overlay}">
-			<f:render section="ListGroup" arguments="{_all}" />
-		</f:if>
-		<f:comment>Card Text (bottom)</f:comment>
-		<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
-			<f:render section="TextBottom" arguments="{_all}" />
-		</f:if>
-		<f:comment>Card Image (bottom)</f:comment>
-		<f:if condition="{data.imageorient} == 'bottom' && !{card.horizontal}">
-			<f:render partial="Media/RawGallery" arguments="{_all}" />
-		</f:if>
-		<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
-			<div class="card-footer">
-				{card.footer.text -> f:format.raw()}
-				<f:if condition="{card.button.footer}">
-					<f:render section="Button" arguments="{_all}" />
+		<f:if condition="{card.multiImage.enable}">
+			<f:then>
+				<f:render partial="Card/ProfileCard" arguments="{_all}" />
+			</f:then>
+			<f:else>
+				<f:comment>Default Card </f:comment>
+				<f:if condition="{card.horizontal}">
+					<div class="row g-0">
+						<div class="col-md-4">
+							<f:render partial="Media/RawGallery" arguments="{_all}" />
+						</div>
+						<div class="col-md-8">
 				</f:if>
-			</div>
-		</f:if>
-		<f:if condition="{card.horizontal}">
-				</div>
-			</div>
+				<f:comment>Card Header</f:comment>
+				<f:if condition="{card.header.text} && !{card.image.overlay}">
+					<div class="card-header">{card.header.text -> f:format.raw()}</div>
+				</f:if>
+				<f:comment>Card Title (top)</f:comment>
+				<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
+					<div class="card-body">
+						<f:render partial="Header/All" arguments="{_all}"/>
+					</div>
+				</f:if>
+				<f:comment>Card Image (top)</f:comment>
+				<f:if condition="{data.imageorient} == 'top' && !{card.horizontal}">
+					<f:render partial="Media/RawGallery" arguments="{_all}" />
+				</f:if>
+				<f:comment>Card Text (top)</f:comment>
+				<f:if condition="{card.text.top} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
+					<f:render section="TextTop" arguments="{_all}" />
+				</f:if>
+				<f:comment>Card List</f:comment>
+				<f:if condition="{card.list} && !{card.image.overlay}">
+					<f:render section="ListGroup" arguments="{_all}" />
+				</f:if>
+				<f:comment>Card Text (bottom)</f:comment>
+				<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
+					<f:render section="TextBottom" arguments="{_all}" />
+				</f:if>
+				<f:comment>Card Image (bottom)</f:comment>
+				<f:if condition="{data.imageorient} == 'bottom' && !{card.horizontal}">
+					<f:render partial="Media/RawGallery" arguments="{_all}" />
+				</f:if>
+				<f:if condition="({card.footer.text} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
+					<div class="card-footer">
+						{card.footer.text -> f:format.raw()}
+						<f:if condition="{card.button.footer}">
+							<f:render section="Button" arguments="{_all}" />
+						</f:if>
+					</div>
+				</f:if>
+				<f:if condition="{card.horizontal}">
+						</div>
+					</div>
+				</f:if>
+			</f:else>
 		</f:if>
 	</f:else>
 </f:if>
@@ -83,7 +88,7 @@
 
 <f:section name="TextTop">
 	<f:if condition="({card.image.overlay} || {card.mobile.overlay})">
-		<div class="align-items-center{f:if(condition: card.image.overlay,then: ' {card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: ' {card.mobile.overlay}')}">
+		<div class="align-items-center{f:if(condition: card.image.overlay,then: ' {card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: ' {card.mobile.overlay}')}"{f:if(condition: card.image.overlay,then: ' style="z-index:1;"')}>
 	</f:if>
 	<div class="card-body">
 		<f:comment>Card Title (default)</f:comment>
@@ -121,7 +126,8 @@
 
 <f:section name="TextBottom">
 	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
-		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: '{card.mobile.overlay}')}">
+		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,
+			then: '{card.mobile.overlay}')}"{f:if(condition: card.image.overlay,then: ' style="z-index:1;"')}>
 	</f:if>
 	<div class="card-body">
 		<div class="card-text">
@@ -144,7 +150,6 @@
 </f:section>
 
 <f:section name="ListGroup">
-<f:comment>
 	<ul class="list-group list-group-flush">
 		<f:for each="{card.list}" as="listItem">
 			<li class="list-group-item">{listItem -> f:format.raw()}</li>
@@ -155,7 +160,6 @@
 			<f:render section="Button" arguments="{_all}" />
 		</div>
 	</f:if>
-</f:comment>
 </f:section>
 
 <f:section name="Button">
@@ -171,73 +175,4 @@
 			</f:if>
 		</f:link.typolink>
 	</f:if>
-</f:section>
-
-<f:section name="FlipCard">
-<f:asset.css identifier="flipCard-{data.uid}">
-#c{data.uid}.flip-card:hover .flip-card-inner {transform: rotateY({card.rotateY});}#c{data.uid} .flip-card-back {transform: rotateY({card.rotateY});}
-</f:asset.css>
-<f:asset.script identifier="vanilla_cardwrapper">
-	// Flip Card rotate on hover - Card.html
-	t3sbflipCard(viewportWidth);
-	window.addEventListener('resize', function(event) {
-		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
-		t3sbflipCard(resizedViewportWidth);
-	}, true);
-</f:asset.script>
-<div class="flip-card-inner">
-	<div class="flip-card-front position-absolute">
-		<f:if condition="{files -> f:count()}">
-			<f:render section="Image" arguments="{ratio: '{data.tx_t3sbootstrap_image_ratio}', file: '{files.0}', width: '{gallery.width}', height: '{gallery.height}'}" />
-		</f:if>
-		<f:if condition="{card.text.bottom}">
-		<div class="align-items-center card-img-overlay d-flex border-0 bg-transparent">
-			<div class="card-text text-white text-center w-100">
-				{card.text.bottom -> f:format.html()}
-			</div>
-		</div>
-		</f:if>
-	</div>
-	<div class="flip-card-back position-absolute d-flex{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: backclass, then: ' {backclass}')}"{f:if(condition: backstyle, then: ' style="background-color: {backstyle}"')}>
-		<f:if condition="{card.text.top}">
-			<f:then>
-				<div class="card-body align-self-center">
-					<div class="card-text">
-						<f:if condition="({data.header} || {data.subheader}) ">
-							<f:render partial="Header/All" arguments="{_all}"/>
-						</f:if>
-						{card.text.top -> f:format.html()}
-					</div>
-				</div>
-			</f:then>
-			<f:else>
-				<f:if condition="{files.1}">
-					<f:render section="Image" arguments="{ratio: '{data.tx_t3sbootstrap_image_ratio}', file: '{files.1}', width: '{gallery.width}', height: '{gallery.height}'}" />
-				</f:if>
-			</f:else>
-		</f:if>
-	</div>
-</div>
-</f:section>
-
-
-<f:section name="Image">
-<f:variable name="lazyload" value="{settings.lazyLoad}" />
-<f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
-<figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
-	<t3sb:media file="{file}"
-	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
-	 class="card-img-top img-fluid{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {lazyload} == 2 || {lazyload} == 1', then: ' lazy')}{imgClass}"
-	 width="{width}"
-	 height="{height}"
-	 breakpoints="{
-		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
-		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-	 }"
-	 picturefill="{settings.picturefill}"
-	 lazyload="{lazyload}"
-	 ratio="{ratio}"
-	/>
-</figure>
 </f:section>

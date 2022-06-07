@@ -37,6 +37,20 @@ return [
 				]
 			]
 		],
+		'general_override' => [
+			'exclude' => false,
+			'label' => 'Override all settings',
+			'accordion_id' => 1,
+			'config' => [
+				'type' => 'check',
+				'items' => [
+					'1' => [
+						'0' => 'The configuration from rootline (slide) if enabled or from rootpage will be overwritten.
+						<br /> This option is only needed in rare cases on subpages only!'
+					]
+				]
+			]
+		],
 		'content_only_on_rootpage' => [
 			'exclude' => false,
 			'label' => 'Content Only On Rootpage',

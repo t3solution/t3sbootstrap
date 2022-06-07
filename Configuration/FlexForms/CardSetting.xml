@@ -27,7 +27,6 @@
 							</config>
 						</TCEforms>
 					</effect>
-
 					<maxwidth>
 						<TCEforms>
 							<label>Card max-width == image width</label>
@@ -37,39 +36,50 @@
 							</config>
 						</TCEforms>
 					</maxwidth>
-
 					<image.overlay>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.imageOverlay</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
+							<displayCond>
+								<and>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
+								</and>
+							</displayCond>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</image.overlay>
-
 					<mobile.overlay>
 						<TCEforms>
 							<label>Image overlay - mobile view only</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
+							<displayCond>
+								<and>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
+								</and>
+							</displayCond>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</mobile.overlay>
-
 					<flipcard>
 						<TCEforms>
 							<label>Flip Card with Text or Image</label>
 							<description>Frontside with image - Backside with text (if "Text Top" available) or image (second image)</description>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
+							<displayCond>
+								<and>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
+								</and>
+							</displayCond>
 							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</flipcard>
-
 					<rotateY>
 						<TCEforms>
 							<label>Number of rotations in degree</label>
@@ -95,7 +105,6 @@
 							</config>
 						</TCEforms>
 					</rotateY>
-
 					<title.onTop>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.titleOnTop</label>
@@ -104,7 +113,6 @@
 							</config>
 						</TCEforms>
 					</title.onTop>
-
 					<button.enable>
 						<TCEforms>
 							<onChange>reload</onChange>
@@ -114,7 +122,6 @@
 							</config>
 						</TCEforms>
 					</button.enable>
-
 					<button.stretchedLink>
 						<TCEforms>
 							<label>Stretched link (link the entire Card)</label>
@@ -124,7 +131,6 @@
 							</config>
 						</TCEforms>
 					</button.stretchedLink>
-
 					<button.style>
 						<TCEforms>
 							<label>Predefined button styles</label>
@@ -166,11 +172,10 @@
 							</config>
 						</TCEforms>
 					</button.style>
-
 					<button.text>
 						<TCEforms>
 							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.buttonText</label>
-					<displayCond>FIELD:button.enable:=:1</displayCond>
+							<displayCond>FIELD:button.enable:=:1</displayCond>
 							<config>
 								<type>input</type>
 								<checkbox></checkbox>
@@ -181,7 +186,6 @@
 							</config>
 						</TCEforms>
 					</button.text>
-
 					<button.outline>
 						<TCEforms>
 							<label>Button Outline</label>
@@ -191,7 +195,6 @@
 							</config>
 						</TCEforms>
 					</button.outline>
-
 					<button.footer>
 						<TCEforms>
 							<label>Button in Card Footer</label>
@@ -201,7 +204,6 @@
 							</config>
 						</TCEforms>
 					</button.footer>
-
 					<button.block>
 						<TCEforms>
 							<label>Block level button</label>
@@ -211,7 +213,6 @@
 							</config>
 						</TCEforms>
 					</button.block>
-
 					<cardborder>
 						<TCEforms>
 							<label>Custom Border</label>
@@ -221,7 +222,6 @@
 							</config>
 						</TCEforms>
 					</cardborder>
-
 					<cardborderstyle>
 						<TCEforms>
 							<label>Predefined border styles</label>
@@ -275,17 +275,330 @@
 							</config>
 						</TCEforms>
 					</cardborderstyle>
-
 					<horizontal>
 						<TCEforms>
 							<label>Horizontal</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
+							<displayCond>
+								<and>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
+								</and>
+							</displayCond>
 							<config>
 								<type>check</type>
 							</config>
 						</TCEforms>
 					</horizontal>
-					
+					<multiImage.enable>
+						<TCEforms>
+							<label>Enable Profile Card</label>
+							<description>You need at least two images for the profile card. The second is the circular, smaller image</description>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</multiImage.enable>
+					<multiImage.percent>
+						<TCEforms>
+							<label>Width of the circular image (in %)</label>
+							<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>50</default>
+								<eval>trim,int</eval>
+								<range>
+									<lower>10</lower>
+									<upper>90</upper>
+								</range>
+								<slider>
+									<step>5</step>
+									<width>200</width>
+								</slider>
+							</config>
+						</TCEforms>
+					</multiImage.percent>
+					<multiImage.borderWidth>
+						<TCEforms>
+							<label>Border width</label>
+							<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">none</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">1</numIndex>
+										<numIndex index="1">border border-1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">2</numIndex>
+										<numIndex index="1">border border-2</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">3</numIndex>
+										<numIndex index="1">border border-3</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">4</numIndex>
+										<numIndex index="1">border border-4</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">5</numIndex>
+										<numIndex index="1">border border-5</numIndex>
+									</numIndex>
+								</items>
+								<default>border border-1</default>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</multiImage.borderWidth>
+					<multiImage.borderColor>
+						<TCEforms>
+							<label>Border color</label>
+							<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
+										<numIndex index="1">secondary</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
+										<numIndex index="1">primary</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
+										<numIndex index="1">success</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
+										<numIndex index="1">info</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
+										<numIndex index="1">warning</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
+										<numIndex index="1">danger</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">light</numIndex>
+										<numIndex index="1">light</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">dark</numIndex>
+										<numIndex index="1">dark</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">white</numIndex>
+										<numIndex index="1">white</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+								</items>
+								<default>white</default>
+							</config>
+						</TCEforms>
+					</multiImage.borderColor>
+					<multiImage.shadow>
+						<TCEforms>
+							<label>Shadow</label>
+							<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</multiImage.shadow>
+					<multiImage.diagonal>
+						<TCEforms>
+							<label>Cut image diagonally</label>
+							<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</multiImage.diagonal>
+					<multiImage.slope>
+						<TCEforms>
+							<label>Height of the slope (in %)</label>
+							 <displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.diagonal:=:1</numIndex>
+								</and>
+							 </displayCond>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<default>50</default>
+								<eval>trim,int</eval>
+								<range>
+									<lower>10</lower>
+									<upper>90</upper>
+								</range>
+								<slider>
+									<step>5</step>
+									<width>200</width>
+								</slider>
+							</config>
+						</TCEforms>
+					</multiImage.slope>
+					<multiImage.socialmedia.enable>
+						<TCEforms>
+							<label>Add some Social Media Links</label>
+							<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.enable>
+					<multiImage.socialmedia.footer>
+						<TCEforms>
+							<label>Social Media Links in Card Footer</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.footer>
+					<multiImage.socialmedia.facebook>
+						<TCEforms>
+							<label>Facebook</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.facebook>
+					<multiImage.socialmedia.twitter>
+						<TCEforms>
+							<label>Twitter</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.twitter>
+					<multiImage.socialmedia.google>
+						<TCEforms>
+							<label>Google-plus</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.google>
+					<multiImage.socialmedia.linkedin>
+						<TCEforms>
+							<label>Linkedin</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.linkedin>
+					<multiImage.socialmedia.youtube>
+						<TCEforms>
+							<label>Youtube</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.youtube>
+					<multiImage.socialmedia.instagram>
+						<TCEforms>
+							<label>Instagram</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.instagram>
+					<multiImage.socialmedia.pinterest>
+						<TCEforms>
+							<label>Pinterest</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.pinterest>
+					<multiImage.socialmedia.skype>
+						<TCEforms>
+							<label>Skype</label>
+							<displayCond>
+								<and>
+									<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
+									<numIndex index="1">FIELD:sDEF.multiImage.socialmedia.enable:=:1</numIndex>
+								</and>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<renderType>inputLink</renderType>
+							</config>
+						</TCEforms>
+					</multiImage.socialmedia.skype>
 				</el>
 			</ROOT>
 		</sDEF>
@@ -297,7 +610,6 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-
 					<gridSystem>
 						<TCEforms>
 							<label>Auto-layout</label>
@@ -329,7 +641,6 @@
 							</config>
 						</TCEforms>
 					</gridSystem>
-
 					<newLine>
 						<TCEforms>
 							<label>New line (break to a new line for multiple rows after this col)</label>
@@ -339,16 +650,15 @@
 							</config>
 						</TCEforms>
 					</newLine>
-
 					<alignSelf>
 						<TCEforms>
 							<label>Align self</label>
-								 <displayCond>
-								   <or>
-										<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
-										<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</numIndex>
-								   </or>
-								 </displayCond>
+							 <displayCond>
+								  <or>
+									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
+									<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</numIndex>
+								  </or>
+							 </displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -374,7 +684,6 @@
 							</config>
 						</TCEforms>
 					</alignSelf>
-
 					<responsiveVariations>
 						<TCEforms>
 							<label>Responsive Variations</label>
@@ -419,7 +728,6 @@
 							</config>
 						</TCEforms>
 					</responsiveVariations>
-
 					<autoMargins>
 						<TCEforms>
 							<label>Auto margins</label>
@@ -453,7 +761,6 @@
 							</config>
 						</TCEforms>
 					</autoMargins>
-
 					<order>
 						<TCEforms>
 							<label>Order</label>
@@ -976,7 +1283,6 @@
 							</config>
 						</TCEforms>
 					</xlColumns>
-
 				</el>
 			</ROOT>
 		</xl>
@@ -988,12 +1294,6 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-
-<!--
-	xxlColumns is issing in PHP
--->
-
-
 					<xxlColumns>
 						<TCEforms>
 							<label>Columns</label>
@@ -1073,10 +1373,8 @@
 							</config>
 						</TCEforms>
 					</xxlColumns>
-
 				</el>
 			</ROOT>
 		</xxl>
-
 	</sheets>
 </T3DataStructure>

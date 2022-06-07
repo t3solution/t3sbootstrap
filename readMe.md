@@ -19,7 +19,7 @@ The recommended way to install the extension is by using Composer. In your Compo
 #### Installation as extension from TYPO3 Extension Repository (TER)
 
 Download and install the extension with the extension manager module.
-The following extensions must be installed before: container min. v.1.3.1 & content_defender min. v.3.1.0
+The following extensions must be installed before: container & content_defender.
 
 ### 2) Minimal setup
 

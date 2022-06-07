@@ -587,7 +587,11 @@ class ConfigController extends ActionController
 					} else {
 						$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
 					}
-					$filecontent .= self::getConstants($config, FALSE);
+					if ($config->getGeneralOverride()) {
+						$filecontent .= self::getConstants($config, TRUE);	
+					} else {
+						$filecontent .= self::getConstants($config, FALSE);
+					}
 					$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 				}
 			}
@@ -685,8 +689,6 @@ class ConfigController extends ActionController
 				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
 				if ( str_starts_with((string)$customvariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
 					$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
-
-
 					$customScssArr[$scsscolor[0]] = $scsscolor[1];
 				}
 			}
@@ -711,8 +713,6 @@ class ConfigController extends ActionController
 				if ( str_starts_with((string)$defaultVariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $defaultScssColor[0])
 					 && ( str_starts_with((string)$defaultScssColor[1], '$') || str_starts_with((string)$defaultScssColor[1], '#') ) ) {
 					$scsscolor = GeneralUtility::trimExplode(':', $defaultVariables);
-
-
 					$defaultUtilColors[$scsscolor[0]] = substr($scsscolor[1], 0, -9);
 				}
 			}
