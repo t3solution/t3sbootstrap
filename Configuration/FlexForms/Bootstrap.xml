@@ -39,7 +39,6 @@
 							</config>
 						</TCEforms>
 					</gridSystem>
-
 					<newLine>
 						<TCEforms>
 							<label>New line (break to a new line for multiple rows after this col)</label>
@@ -49,7 +48,6 @@
 							</config>
 						</TCEforms>
 					</newLine>
-
 					<alignSelf>
 						<TCEforms>
 							<label>Align self</label>
@@ -84,7 +82,6 @@
 							</config>
 						</TCEforms>
 					</alignSelf>
-
 					<responsiveVariations>
 						<TCEforms>
 							<label>Responsive Variations</label>
@@ -132,7 +129,6 @@
 							</config>
 						</TCEforms>
 					</responsiveVariations>
-
 					<autoMargins>
 						<TCEforms>
 							<label>Auto margins</label>
@@ -166,7 +162,6 @@
 							</config>
 						</TCEforms>
 					</autoMargins>
-
 					<order>
 						<TCEforms>
 							<label>Order</label>
@@ -233,7 +228,6 @@
 							</config>
 						</TCEforms>
 					</order>
-
 					<hidden>
 						<TCEforms>
 							<label>Hiding / Display Elements</label>
@@ -286,65 +280,6 @@
 							</config>
 						</TCEforms>
 					</hidden>
-<!--
-					<float>
-						<TCEforms>
-							<label>Float</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">float-start</numIndex>
-										<numIndex index="1">float-start</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">float-end</numIndex>
-										<numIndex index="1">float-end</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">float-sm-start</numIndex>
-										<numIndex index="1">float-sm-start</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">float-sm-end</numIndex>
-										<numIndex index="1">float-sm-end</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">float-md-start</numIndex>
-										<numIndex index="1">float-md-start</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">float-md-end</numIndex>
-										<numIndex index="1">float-md-end</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">float-lg-start</numIndex>
-										<numIndex index="1">float-lg-start</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">float-lg-end</numIndex>
-										<numIndex index="1">float-lg-end</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">float-xl-start</numIndex>
-										<numIndex index="1">float-xl-start</numIndex>
-									</numIndex>
-									<numIndex index="10" type="array">
-										<numIndex index="0">float-xl-end</numIndex>
-										<numIndex index="1">float-xl-end</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
-					</float>
--->
-
 					<border>
 						<TCEforms>
 							<label>Border</label>
@@ -382,7 +317,6 @@
 							</config>
 						</TCEforms>
 					</border>
-
 					<borderstyle>
 						<TCEforms>
 							<label>Predefined border styles</label>
@@ -432,7 +366,6 @@
 							</config>
 						</TCEforms>
 					</borderstyle>
-
 					<borderradius>
 						<TCEforms>
 							<label>Predefined border radius</label>
@@ -478,7 +411,6 @@
 							</config>
 						</TCEforms>
 					</borderradius>
-
 					<menudirection>
 						<TCEforms>
 							<label>Menu in a column or row</label>
@@ -502,7 +434,6 @@
 							</config>
 						</TCEforms>
 					</menudirection>
-
 					<menuHorizontalAlignment>
 						<TCEforms>
 							<label>Menu Horizontal Alignment (for flex-row only)</label>
@@ -541,7 +472,6 @@
 							</config>
 						</TCEforms>
 					</menuHorizontalAlignment>
-
 					<menupills>
 						<TCEforms>
 							<label>Enable Pills (nav-pills)</label>
@@ -551,7 +481,6 @@
 							</config>
 						</TCEforms>
 					</menupills>
-
 				</el>
 			</ROOT>
 		</sDEF>
@@ -824,7 +753,6 @@
 							</config>
 						</TCEforms>
 					</mdColumns>
-
 				</el>
 			</ROOT>
 		</md>
@@ -915,7 +843,6 @@
 							</config>
 						</TCEforms>
 					</lgColumns>
-
 				</el>
 			</ROOT>
 		</lg>
@@ -927,7 +854,6 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-
 					<xlColumns>
 						<TCEforms>
 							<label>Columns</label>
@@ -1007,7 +933,6 @@
 							</config>
 						</TCEforms>
 					</xlColumns>
-
 				</el>
 			</ROOT>
 		</xl>

@@ -31,7 +31,6 @@ class BackgroundImageUtility implements SingletonInterface
 		$this->imageService = $imageService;
 	}
 
-
 	/**
 	 * Writes a css file with the background images
 	 *
@@ -235,6 +234,5 @@ class BackgroundImageUtility implements SingletonInterface
 	{
 		return $GLOBALS['TSFE'];
 	}
-
 
 }

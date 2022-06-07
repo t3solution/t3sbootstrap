@@ -190,6 +190,16 @@
 						</TCEforms>
 					</tableResponsive>
 
+					<tableResponsiveVariant>
+						<TCEforms>
+							<label>Responsive table variant</label>
+							<description>INFO: https://www.t3sbootstrap.de/demo/tabellen</description>
+							<displayCond>FIELD:sDEF.tableResponsive:=:1</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</tableResponsiveVariant>
 				</el>
 			</ROOT>
 		</sDEF>

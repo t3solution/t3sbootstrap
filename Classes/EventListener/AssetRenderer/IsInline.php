@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Core\Environment;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -16,7 +17,6 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class IsInline
 {
-
 	public function __invoke(BeforeJavaScriptsRenderingEvent $event): void
 	{
 		if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
@@ -39,10 +39,16 @@ class IsInline
 				$css .= $source['source']. ' ';
 				$event->getAssetCollector()->removeInlineStyleSheet($library);
 			}
-			if ( $css )
-			$event->getAssetCollector()->addInlineStyleSheet('t3sbInlineCSS', $css, [], ['priority' => true]);
+
+			if ( $css ) {
+				$cssFile = self::inline2TempFile($css, 'css');
+				if ($event->getAssetCollector()->getJavaScripts()['t3sbootstrap'] == NULL) {
+					$event->getAssetCollector()->addStyleSheet('t3sbootstrap', $cssFile);
+				}
+			}
 
 			return;
+
 		} else {
 
 			$assetJsInline = $event->getAssetCollector()->getInlineJavaScripts();
@@ -52,7 +58,6 @@ class IsInline
 			$js = '';
 
 			foreach ($assetJsInline as $library => $source) {
-
 				if (substr($library, 0, 7) == 'vanilla' ) {
 					$js .= $source['source'] .PHP_EOL;
 					$event->getAssetCollector()->removeInlineJavaScript($library);
@@ -78,12 +83,46 @@ class IsInline
 			}
 
 			if ($vanillaOnly) {
-				$event->getAssetCollector()->addInlineJavaScript("t3sbInlineJS",
-				 $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL);
+$source = $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL;
 			} else {
-				$event->getAssetCollector()->addInlineJavaScript("t3sbInlineJS",
-				 $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL.PHP_EOL."(function($){'use strict';".PHP_EOL. $jquery .PHP_EOL."})(jQuery);".PHP_EOL);
+$source = $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL.PHP_EOL."(function($){'use strict';".PHP_EOL. $jquery .PHP_EOL."})(jQuery);".PHP_EOL;
+			}
+
+			if (!empty($source)) {
+				$jsFile = self::inline2TempFile($source, 'js');
+				if ($event->getAssetCollector()->getJavaScripts()['t3sbootstrap'] == NULL) {
+					$event->getAssetCollector()->addJavaScript('t3sbootstrap', $jsFile);
+				}
 			}
 		}
 	}
+
+
+	/**
+	  * Writes string to a temporary file named after the md5-hash of the string
+	  *
+	  * @param string $str CSS styles / JavaScript to write to file.
+	  * @param string $ext Extension: "css" or "js
+	  * @return string <script> or <link> tag for the file.
+	  */
+	public static function inline2TempFile($str, $ext)
+	{
+		 $script = '';
+		 switch ($ext) {
+			 case 'js':
+				 $script = 'typo3temp/assets/t3sbootstrap_' . substr(md5($str), 0, 10) . '.js';
+				 break;
+			 case 'css':
+				 $script = 'typo3temp/assets/t3sbootstrap_' . substr(md5($str), 0, 10) . '.css';
+				 break;
+		 }
+		 if ($script) {
+			  $pathSite = Environment::getPublicPath() . '/';
+			 if (!@is_file($pathSite . $script)) {
+				 GeneralUtility::writeFile($pathSite . $script, $str);
+			 }
+		 }
+		 return $script;
+	}
+
 }

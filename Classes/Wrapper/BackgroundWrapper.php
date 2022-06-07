@@ -10,6 +10,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Context\Context;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
@@ -77,10 +78,11 @@ class BackgroundWrapper implements SingletonInterface
 							 ->count('uid')
 							 ->from('tt_content')
 							 ->where(
-								$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
-								 )
-							 ->executeQuery()
-							 ->fetchOne();
+									$queryBuilder->expr()->eq('sys_language_uid', $processedData['data']['sys_language_uid']),
+									$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+								)
+							 ->execute()
+							 ->fetchColumn(0);
 
 						$autoplay = $file->getProperties()['autoplay'];
 						$loop = $flexconf['loop'];
@@ -89,7 +91,8 @@ class BackgroundWrapper implements SingletonInterface
 						$mobileHeight = $flexconf['mobileHeight'] != 'none' ? (int) trim($flexconf['mobileHeight']) :'';
 						$mobileWidth = $flexconf['mobileWidth'] != 'none' ? (int) trim($flexconf['mobileWidth']) :'';
 						// max-width:575px
-						$processedData['localVideo']['inlineCSS'] = '@media (max-width:768px){#s-'.$processedData['data']['uid'].' figure.video{width:'.$mobileWidth.'%; max-height:'.$mobileHeight.'px; margin-left:'.$processedData['horizontalShift'].'%}}';
+						$processedData['localVideo']['inlineCSS'] = '@media (max-width:768px){#s-'.$processedData['data']['uid'].
+						' figure.video{width:'.$mobileWidth.'%; max-height:'.$mobileHeight.'px; margin-left:'.$processedData['horizontalShift'].'%}}';
 						$ratio = end(explode('/', $flexconf['aspectRatio'])).'x9';
 						$processedData['localVideo']['class'] = ' ratio ratio-'.$ratio;
 						$processedData['localVideo']['overlayChild'] = $overlayChild;

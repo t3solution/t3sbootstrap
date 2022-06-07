@@ -96,6 +96,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	expandedcontent_containerpositionbottom varchar(7) DEFAULT '' NOT NULL,
 	expandedcontent_classbottom varchar(255) DEFAULT '' NOT NULL,
 	general_rootline tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	general_override tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	content_only_on_rootpage tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	compress tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	disable_prefix_comment tinyint(1) unsigned DEFAULT '0' NOT NULL,
