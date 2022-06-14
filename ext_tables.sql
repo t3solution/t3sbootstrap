@@ -36,7 +36,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_container varchar(12) DEFAULT '' NOT NULL,
 	navbar_innercontainer varchar(15) DEFAULT '' NOT NULL,
 	navbar_placement varchar(12) DEFAULT '' NOT NULL,
-	navbar_alignment varchar(6) DEFAULT '' NOT NULL,
+	navbar_alignment varchar(9) DEFAULT '' NOT NULL,
 	navbar_class varchar(255) DEFAULT '' NOT NULL,
 	navbar_toggler varchar(20) DEFAULT '' NOT NULL,
 	navbar_breakpoint varchar(2) DEFAULT '' NOT NULL,
