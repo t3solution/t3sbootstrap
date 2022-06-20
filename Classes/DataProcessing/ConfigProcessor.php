@@ -40,6 +40,9 @@ class ConfigProcessor implements DataProcessorInterface
 		$request = $GLOBALS['TYPO3_REQUEST'];
 		$settings = $contentObjectConfiguration['settings.'];
 		$frontendController = $request->getAttribute('frontend.controller');
+		if (!$frontendController) {
+			$frontendController = self::getFrontendController();
+		}
 		$webp = (bool)$settings['webp'];
 
 		if ( is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
@@ -84,11 +87,9 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 
 		$processedData['colAside'] = $smallColumns;
-
 		if ($currentPage['backend_layout']) {
 			$threeCol = $currentPage['backend_layout'] == 'pagets__ThreeCol' ? TRUE : FALSE;
 		} else {
-
 			foreach ($frontendController->rootLine as $subPage) {
 				$bel = $subPage['backend_layout_next_level'];
 				if ( !empty($subPage['backend_layout_next_level']) ) break;
@@ -670,5 +671,15 @@ class ConfigProcessor implements DataProcessorInterface
 		return $res;
 	}
 
+
+	/**
+	 * Returns $typoScriptFrontendController TypoScriptFrontendController
+	 *
+	 * @return TypoScriptFrontendController
+	 */
+	protected function getFrontendController(): TypoScriptFrontendController
+	{
+		return $GLOBALS['TSFE'];
+	}
 
 }
