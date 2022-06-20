@@ -149,9 +149,8 @@ class ConfigController extends ActionController
 	public function listAction(bool $deleted = FALSE, bool $created = FALSE, bool $updateSss = FALSE): void
 	{
 		if ( $this->isSiteroot && $this->rootPageId ) {
-
 			$pidList = $this->getTreeList($this->rootPageId, 999999, 0, '1');
-
+			$allConfig = [];
 			foreach ( $this->configRepository->findAll() as $config ) {
 				if (GeneralUtility::inList($pidList, $config->getPid())) {
 					$page = BackendUtility::getRecord('pages',$config->getPid(),'uid,title');
