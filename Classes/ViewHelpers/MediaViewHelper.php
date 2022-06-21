@@ -109,7 +109,6 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$cropString = '{"default":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"tablet":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"mobile":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null}}';
 		}
 
-#		if ( !empty($cropString) && $this->arguments['ratio'] ) {
 		if ( $this->arguments['ratio'] ) {
 			$cropString = self::getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
@@ -288,16 +287,12 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
-			$rArr = explode(':',$this->arguments['ratio']);
-			if ($cropVariant == 'mobile') {
-				$rArr[0] = '16';
-				$rArr[1] = '9';
-			} elseif ( $this->arguments['shift'] ) {
+			$rArr = explode(':',$this->arguments['ratio']);			
+			if ( $this->arguments['shift'] ) {
 				$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
 				 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
 				$cropObject->$cropVariant->cropArea->y = $shift;
 			}
-
 			if ( $rArr[0] > $rArr[1] ) {
 				// landscape
 				$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];

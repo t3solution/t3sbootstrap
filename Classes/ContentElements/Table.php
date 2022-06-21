@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\ContentElements;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Resource\FileRepository;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -38,6 +36,7 @@ class Table implements SingletonInterface
 		$processedData['tableclass'] = trim($tableclass);
 		$processedData['theadclass'] = $flexconf['theadClass'];
 		$processedData['tableResponsive'] = $flexconf['tableResponsive'] ? TRUE : FALSE;
+		$processedData['tableResponsiveVariant'] = $flexconf['tableResponsiveVariant'] ? TRUE : FALSE;
 
 		return $processedData;
 	}

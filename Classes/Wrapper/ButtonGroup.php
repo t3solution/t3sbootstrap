@@ -24,6 +24,7 @@ class ButtonGroup implements SingletonInterface
 		$processedData['buttonGroupClass'] = !empty($flexconf['align']) ? $flexconf['align'] : '';
 
 		$processedData['visiblePart'] = '';
+
 		if ( !empty($flexconf['fixedPosition']) ) {
 			$processedData['buttonGroupClass'] .= ' d-none fixedGroupButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
 			$processedData['class'] .= !empty($flexconf['rotate']) ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
@@ -32,6 +33,7 @@ class ButtonGroup implements SingletonInterface
 			if ( !empty($flexconf['slideIn']) && !empty($flexconf['vertical']) && $flexconf['fixedPosition'] == 'right' ) {
 				$processedData['class'] .= ' slideInButton';
 				$processedData['visiblePart'] = $flexconf['visiblePart'] ? (int)$flexconf['visiblePart'] : 33;
+				$processedData['slideIn'] = $flexconf['slideIn'];
 			}
 		}
 

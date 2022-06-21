@@ -8,6 +8,7 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -153,11 +154,11 @@ class LastModifiedProcessor implements DataProcessorInterface
 
 
 	/**
-	 * Returns $typoScriptFrontendController \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 * Returns $typoScriptFrontendController TypoScriptFrontendController
 	 *
 	 * @return TypoScriptFrontendController
 	 */
-	protected function getFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}

@@ -31,7 +31,6 @@ class BackgroundImageUtility implements SingletonInterface
 		$this->imageService = $imageService;
 	}
 
-
 	/**
 	 * Writes a css file with the background images
 	 *
@@ -50,7 +49,11 @@ class BackgroundImageUtility implements SingletonInterface
 		int $divideBy=1
 	)
 	{
-		$frontendController = $this->getFrontendController();
+		$request = $GLOBALS['TYPO3_REQUEST'];
+		$frontendController = $request->getAttribute('frontend.controller');
+		if (!$frontendController) {
+			$frontendController = self::getFrontendController();
+		}
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$filesFromRepository = $fileRepository->findByRelation($table, 'assets', $uid);
 		if ( empty($filesFromRepository) ) {
@@ -229,12 +232,13 @@ class BackgroundImageUtility implements SingletonInterface
 
 
 	/**
-	 * Returns the frontend controller
+	 * Returns $typoScriptFrontendController TypoScriptFrontendController
+	 *
+	 * @return TypoScriptFrontendController
 	 */
 	protected function getFrontendController(): TypoScriptFrontendController
 	{
 		return $GLOBALS['TSFE'];
 	}
-
 
 }

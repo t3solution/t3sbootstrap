@@ -1,19 +1,15 @@
 <?php
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-use T3SBS\T3sbootstrap\Controller\ConfigController;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 defined('TYPO3') || die();
 
 (function () {
 
-	ExtensionUtility::registerModule(
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		'T3sbootstrap',
 		'web',
 		'm1',
 		'',
 		[
-			ConfigController::class => 'list, new, create, edit, update, delete, dashboard, constants ',
+			\T3SBS\T3sbootstrap\Controller\ConfigController::class => 'list, new, create, edit, update, delete, dashboard, constants ',
 		],
 		[
 			'access' => 'user,group',
@@ -22,7 +18,7 @@ defined('TYPO3') || die();
 		]
 	);
 
-	ExtensionManagementUtility::addLLrefForTCAdescr('tx_t3sbootstrap_domain_model_config', 'EXT:t3sbootstrap/Resources/Private/Language/locallang_csh_tx_t3sbootstrap_domain_model_config.xlf');
-	ExtensionManagementUtility::allowTableOnStandardPages('tx_t3sbootstrap_domain_model_config');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_t3sbootstrap_domain_model_config', 'EXT:t3sbootstrap/Resources/Private/Language/locallang_csh_tx_t3sbootstrap_domain_model_config.xlf');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_t3sbootstrap_domain_model_config');
 
 })();

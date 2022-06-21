@@ -21,9 +21,6 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass): string
 	{
-
-
-
 	 	// class
 		if ( $cTypeClass ) {
 			$class = 'fsc-default ce-'. $data['CType'];
@@ -131,7 +128,6 @@ class ClassHelper implements SingletonInterface
 			$class .= !empty($flexconf['borderradius']) ? ' '.$flexconf['borderradius'] : '';
 		}
 
-
 		// Hiding / Display Elements
 		$class .= !empty($flexconf['hidden']) ? ' '.$flexconf['hidden'] : '';
 		// Float
@@ -153,7 +149,6 @@ class ClassHelper implements SingletonInterface
 	 */
 	public function getTxContainerClass(array $data, array $flexconf, bool $isVideo): string
 	{
-
 		$class = '';
 
 		/**
@@ -298,6 +293,7 @@ class ClassHelper implements SingletonInterface
 					$class .= !empty($flexconf['mdColumns']) ? ' col-md' : '';
 					$class .= !empty($flexconf['lgColumns']) ? ' col-lg' : '';
 					$class .= !empty($flexconf['xlColumns']) ? ' col-xl': '';
+					$class .= !empty($flexconf['xxlColumns']) ? ' col-xxl': '';
 
 				} else {
 
@@ -306,6 +302,7 @@ class ClassHelper implements SingletonInterface
 					$class .= !empty($flexconf['mdColumns']) ? ' col-md-'.$flexconf['mdColumns'] : '';
 					$class .= !empty($flexconf['lgColumns']) ? ' col-lg-'.$flexconf['lgColumns'] : '';
 					$class .= !empty($flexconf['xlColumns']) ? ' col-xl-'.$flexconf['xlColumns'] : '';
+					$class .= !empty($flexconf['xxlColumns']) ? ' col-xxl-'.$flexconf['xxlColumns'] : '';
 				}
 				break;
 			}

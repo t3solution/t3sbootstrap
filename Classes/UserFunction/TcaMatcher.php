@@ -25,7 +25,7 @@ class TcaMatcher
 	public function autoLayoutParent(array $arguments): bool
 	{
 		$parent = false;
-		if ( $arguments['record']['tx_container_parent'][0] ) {
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
 			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
@@ -51,7 +51,7 @@ class TcaMatcher
 	public function buttonParent(array $arguments): bool
 	{
 		$parent = true;
-		if ( $arguments['record']['tx_container_parent'][0] ) {
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
 			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
@@ -77,7 +77,7 @@ class TcaMatcher
 	public function cardWrapperParent(array $arguments): bool
 	{
 		$parent = true;
-		if ( $arguments['record']['tx_container_parent'][0] ) {
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
 			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
@@ -176,7 +176,7 @@ class TcaMatcher
 
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 
-		if ( $arguments['record']['tx_container_parent'][0] ) {
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
 			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
@@ -205,7 +205,7 @@ class TcaMatcher
 		$button = false;
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 
-		if ( $arguments['record']['tx_container_parent'][0] ) {
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
 			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder
@@ -398,7 +398,7 @@ class TcaMatcher
 	public function toastContainerParent($arguments): bool
 	{
 		$parent = true;
-		if ( $arguments['record']['tx_container_parent'][0] ) {
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
 			$uid = (int)$arguments['record']['tx_container_parent'][0];
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 			$result = $queryBuilder

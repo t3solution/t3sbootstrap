@@ -23,7 +23,7 @@
 	top: {ytVideo.ytshift}% !important;
 }
 		</f:asset.css>
-			<div class="position-relative overflow-hidden youtube-wrapper"
+			<div class="position-relative overflow-hidden youtube-wrapper card"
 				 style="height:{f:if(condition:'{ytVideo.bgHeight}',then:'{ytVideo.bgHeight}',else:'300')}px;{controlStyle}">
 				<div id="v{data.uid}" class="video-container"></div>
 				<f:render section="SectionInner" arguments="{_all}" />
@@ -85,14 +85,11 @@
 	// Local video-{data.uid} - BackgroundWrapper.html
 	var videoWrapper = document.querySelector('#video-{file.uid}'),
 		videoElement = document.querySelector('#video-{file.uid} video'),
-		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight)/2;
-		shift = {shift};
-
-
-	var id = {data.uid};
-	var el = document.getElementById('s-'+id);
-	var winWidth = window.innerWidth;
-
+		marginTop = (videoElement.clientHeight - videoWrapper.clientHeight)/2,
+		shift = {shift},
+		id = {data.uid},
+		el = document.getElementById('s-'+id),
+		winWidth = window.innerWidth;
 	if ( winWidth < 768 ) {
 		el.classList.remove('ratio');
 	} else {
@@ -107,7 +104,6 @@
 				el.classList.add('ratio');
 			}
 	}, true);
-
 
 	videoElement.style.marginTop = '-'+marginTop-shift+'px';
 	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, videoElement );
@@ -173,8 +169,8 @@
 
 <f:section name="SectionInner">
 	<f:if condition="{col_273 -> f:count()}">
-		<div class="position-relative w-100{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
-			<div class="col">
+		<div class="card-img-overlay d-flex">
+			<div class="col{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 				{containerPre -> f:format.raw()}
 					<f:for each="{col_273}" as="row">
 						{row.renderedContent -> f:format.raw()}

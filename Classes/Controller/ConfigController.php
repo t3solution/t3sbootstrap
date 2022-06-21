@@ -149,9 +149,8 @@ class ConfigController extends ActionController
 	public function listAction(bool $deleted = FALSE, bool $created = FALSE, bool $updateSss = FALSE): void
 	{
 		if ( $this->isSiteroot && $this->rootPageId ) {
-
 			$pidList = $this->getTreeList($this->rootPageId, 999999, 0, '1');
-
+			$allConfig = [];
 			foreach ( $this->configRepository->findAll() as $config ) {
 				if (GeneralUtility::inList($pidList, $config->getPid())) {
 					$page = BackendUtility::getRecord('pages',$config->getPid(),'uid,title');
@@ -587,7 +586,11 @@ class ConfigController extends ActionController
 					} else {
 						$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
 					}
-					$filecontent .= self::getConstants($config, FALSE);
+					if ($config->getGeneralOverride()) {
+						$filecontent .= self::getConstants($config, TRUE);	
+					} else {
+						$filecontent .= self::getConstants($config, FALSE);
+					}
 					$filecontent .= '[END]'.PHP_EOL.PHP_EOL;
 				}
 			}
@@ -685,8 +688,6 @@ class ConfigController extends ActionController
 				$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
 				if ( str_starts_with((string)$customvariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $scsscolor[0]) ) {
 					$scsscolor = GeneralUtility::trimExplode(':', $customvariables);
-
-
 					$customScssArr[$scsscolor[0]] = $scsscolor[1];
 				}
 			}
@@ -711,8 +712,6 @@ class ConfigController extends ActionController
 				if ( str_starts_with((string)$defaultVariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $defaultScssColor[0])
 					 && ( str_starts_with((string)$defaultScssColor[1], '$') || str_starts_with((string)$defaultScssColor[1], '#') ) ) {
 					$scsscolor = GeneralUtility::trimExplode(':', $defaultVariables);
-
-
 					$defaultUtilColors[$scsscolor[0]] = substr($scsscolor[1], 0, -9);
 				}
 			}

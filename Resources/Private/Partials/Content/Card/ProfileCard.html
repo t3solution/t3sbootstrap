@@ -1,0 +1,244 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	 xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>Card Multi-Image</f:comment>
+<f:render section="MultiImage" arguments="{_all}" />
+<div class="card-content position-relative">
+<f:comment>Card Text (top)</f:comment>
+<f:if condition="{card.text.top} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
+	<f:render section="TextTop" arguments="{_all}" />
+</f:if>
+<f:comment>Card List</f:comment>
+<f:if condition="{card.list} && !{card.image.overlay}">
+	<f:render section="ListGroup" arguments="{_all}" />
+</f:if>
+<f:comment>Card Text (bottom)</f:comment>
+<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
+	<f:render section="TextBottom" arguments="{_all}" />
+</f:if>
+<f:comment>Social media</f:comment>
+<f:if condition="{card.multiImage.socialmedia.enable} && !{card.multiImage.socialmedia.footer}">
+	<div class="icon-block text-center my-2">
+		<f:for each="{card.multiImage.socialmediaLinks}" key="company" as="socialmediaLink">
+			<a target="_blank" title="{company}" href="{socialmediaLink}"><i class="fa fa-{company}"></i></a>
+		</f:for>
+	</div>
+</f:if>
+<f:if condition="({card.footer.text} || {card.multiImage.socialmedia.footer} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
+	<div class="card-footer{f:if(condition: card.multiImage.socialmedia.enable,then: ' bg-white')}">
+		{card.footer.text -> f:format.raw()}
+		<f:if condition="{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+		<f:if condition="{card.multiImage.socialmedia.enable}">
+			<div class="icon-block text-center my-2">
+				<f:for each="{card.multiImage.socialmediaLinks}" key="company" as="socialmediaLink">
+					<a target="_blank" title="{company}" href="{socialmediaLink}"><i class="fa fa-{company}"></i></a>
+				</f:for>
+			</div>
+		</f:if>
+	</div>
+</f:if>
+</div>
+</html>
+
+
+<f:section name="TextTop">
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay})">
+		<div class="align-items-center{f:if(condition: card.image.overlay,then: ' {card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: ' {card.mobile.overlay}')}">
+	</f:if>
+	<div class="card-body">
+		<f:comment>Card Title (default)</f:comment>
+		<f:if condition="({card.title.position} == 'default') && ({data.header} || {data.subheader})">
+			<f:render partial="Header/All" arguments="{_all}"/>
+		</f:if>
+		<div class="card-text">
+			<f:if condition="{card.cropMaxCharacters}">
+				<f:then>
+					{card.text.top -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				</f:then>
+				<f:else>
+					{card.text.top -> f:format.html()}
+				</f:else>
+			</f:if>
+			<f:if condition="{card.text.bottom} && ({card.image.overlay} || {card.mobile.overlay})">
+				<f:if condition="{card.cropMaxCharacters}">
+					<f:then>
+						{card.text.bottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					</f:then>
+					<f:else>
+						{card.text.bottom -> f:format.html()}
+					</f:else>
+				</f:if>
+			</f:if>
+		</div>
+		<f:if condition="{card.button.position} == 'top' && !{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+	</div>
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="ListGroup">
+	<ul class="list-group list-group-flush">
+		<f:for each="{card.list}" as="listItem">
+			<li class="list-group-item">{listItem -> f:format.raw()}</li>
+		</f:for>
+	</ul>
+	<f:if condition="{card.button.position} == 'list' && {card.button.enable} && {card.button.link} && !{card.button.footer}">
+		<div class="card-body">
+			<f:render section="Button" arguments="{_all}" />
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="TextBottom">
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
+		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: '{card.mobile.overlay}')}">
+	</f:if>
+	<div class="card-body">
+		<div class="card-text">
+			<f:if condition="{card.cropMaxCharacters}">
+				<f:then>
+					{card.text.bottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+				</f:then>
+				<f:else>
+					{card.text.bottom -> f:format.html()}
+				</f:else>
+			</f:if>
+		</div>
+		<f:if condition="{card.button.position} == 'bottom' && !{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+	</div>
+	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="Button">
+	<f:if condition="{card.button.enable} && {card.button.link}">
+		<f:link.typolink parameter="{card.button.link}" class="btn btn{card.button.linkClass} mt-2" additionalAttributes="{role: 'button'}">
+			<f:if condition="{card.button.text}">
+				<f:then>
+					{card.button.text -> f:format.raw()}
+				</f:then>
+				<f:else>
+					{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:more')}
+				</f:else>
+			</f:if>
+		</f:link.typolink>
+	</f:if>
+</f:section>
+
+<f:section name="MultiImage">
+	<f:if condition="{files.0}">
+		<f:variable name="file" value="{files.0}" />
+		<f:variable name="lazyload" value="{settings.lazyLoad}" />
+		<f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+		<figure  id="multiImage-{data.uid}"  class="multiImage image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}" data-slope="{card.multiImage.slope}">
+			<t3sb:media file="{file}"
+			 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+			 class="card-img-top img-fluid{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {lazyload} == 2 || {lazyload} == 1', then: ' lazy')}{imgClass}"
+			 width="{gallery.width}"
+			 height="{gallery.height}"
+			 breakpoints="{
+				0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+				1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+				2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+			 }"
+			 picturefill="{settings.picturefill}"
+			 lazyload="{lazyload}"
+			 ratio="{addmedia.ratio}"
+			/>
+		</figure>
+	</f:if>
+	<f:if condition="{files.1}">
+		<f:asset.css identifier="t3sbs_card_multiImage">
+figure.multiImageCircle.image{overflow:inherit;display:block;}
+		</f:asset.css>
+		<f:if condition="{card.multiImage.shadow}">
+			<f:asset.css identifier="vanilla_multiImage_shadow">
+img.circularshadow {box-shadow: 3px 3px 20px rgb(0 0 0 / 50%);}
+			</f:asset.css>
+		</f:if>
+		<f:if condition="{card.multiImage.socialmedia.enable}">
+			<f:asset.css identifier="t3sbs_card_multiImage_social">
+.icon-block a {
+	display: inline-block;
+	font-size: 16px;
+	color: #000;
+	text-align: center;
+	border: 1px solid #000;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 50%;
+	margin: 0 5px;
+	z-index: 1;
+	position: relative;
+}
+.icon-block a:hover {
+	color: #fff;
+	background-color: #000;
+}
+@media (min-width: 768px) {
+	.icon-block a {
+		 font-size: 20px;
+		 width: 40px;
+		 height: 40px;
+		 line-height: 40px;
+	}
+}
+			</f:asset.css>
+		</f:if>
+		<f:if condition="{card.multiImage.slope}">
+			<f:asset.css identifier="t3sbs_card_multiImage_slope_{data.uid}">
+figure#multiImage-{data.uid}::before {
+	width:0;
+	content:'';
+	position:absolute;
+	bottom:0;
+	right:0;
+	border-bottom: var(--t3sslope-{data.uid}) solid #fff;
+	border-left: var(--t3swidth-{data.uid}) solid transparent;
+}
+:root {
+  --t3sslope-{data.uid}: 0;
+  --t3swidth-{data.uid}: 0;
+}
+			</f:asset.css>
+		</f:if>
+		<f:asset.script identifier="vanilla_multiImage_slope">
+	// Profile Card Card/ProfileCard.html
+	document.querySelectorAll('.multiImage').forEach( multiImage => {
+		t3sbProfileCardImage(multiImage);
+	});
+	window.addEventListener('resize', function(event) {
+		document.querySelectorAll('.multiImage').forEach( multiImage => {
+			t3sbProfileCardImage(multiImage);
+		});
+	}, true);
+		</f:asset.script>
+		<f:variable name="file" value="{files.1}" />
+		<f:variable name="lazyload" value="{settings.lazyLoad}" />
+		<f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+		<figure  id="multiImageCircle-{data.uid}"	class="multiImageCircle image mx-auto position-relative{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}" style="{card.multiImage.style}" data-percent="{card.multiImage.percent}">
+			<t3sb:media file="{file}"
+			 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+			 class="rounded-circle img-fluid {card.multiImage.border}{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {lazyload} == 2 || {lazyload} == 1', then: ' lazy')}{imgClass}"
+			 width="{gallery.width * card.multiImage.percent}"
+			 height="auto"
+			 breakpoints="{
+				0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+				1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+				2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+			 }"
+			 picturefill="{settings.picturefill}"
+			 lazyload="{lazyload}"
+			 ratio="1:1"
+			/>
+		</figure>
+	</f:if>
+</f:section>

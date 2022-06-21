@@ -18,20 +18,20 @@
 
 <f:section name="Default">
 <f:if condition="{settings.cardFlipperOnClick}">
-<f:asset.script identifier="vanilla_cardwrapper">
+<f:asset.script identifier="vanilla_cardwrapper_flipper">
 	// Card-flipper rotate on click - CarouselWrapper.html
 	t3sbCardFlipper()
 </f:asset.script>
 </f:if>
 <f:comment> CARD GROUP </f:comment>
 <f:if condition="{card_wrapper_layout} == 'group'">
-		<div class="card-group gallery{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
-			<f:for each="{col_270}" as="card" iteration="cardIterator">
-				{card.renderedContent -> f:format.raw()}
-			</f:for>
-		</div>
+	<div class="card-group gallery{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
+		<f:for each="{col_270}" as="card" iteration="cardIterator">
+			{card.renderedContent -> f:format.raw()}
+		</f:for>
+	</div>
 </f:if>
-<f:comment> CARD GRID (DECK) </f:comment>
+<f:comment> GRID CARD (DECK) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'deck'">
 		<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
 			{styleAttr -> f:format.raw()}{dataAnimate}>
@@ -67,7 +67,7 @@
 <f:if condition="{card_wrapper_layout} == 'slider'">
 	<f:if condition="{settings.cdn}">
 		<f:then>
-			<f:asset.css identifier="swipercss" href="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.css" />		
+			<f:asset.css identifier="swipercss" href="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.css" />
 			<f:asset.script identifier="swiperjs" src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 		</f:then>
 		<f:else>
@@ -146,7 +146,7 @@
 	prev[0].style.top = 'calc(50% - '+offset+'px)';
 		</f:if>
 	</f:asset.script>
-<div id="swiper-{data.uid}" class="swiper">	
+<div id="swiper-{data.uid}" class="swiper">
 	<div class="swiper-wrapper card-{card_wrapper_layout}{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
 		<f:for each="{cards}" as="card" iteration="iterator">
 			<f:render section="SwiperCard" arguments="{_all}" />
@@ -220,7 +220,7 @@
 										{card.footer.text -> f:format.raw()}
 									</f:then>
 									<f:else>
-										<i class="fas fa-plus-square fa-2x mx-auto"></i>
+										<p class="square-link"><i class="fas fa-plus-square fa-2x mx-auto"></i></p>
 									</f:else>
 								</f:if>
 							</div>
