@@ -15,13 +15,13 @@
 </f:if>
 <f:if condition="{fixedbutton}">
 	<f:comment>Button.html, Page/Assets.html</f:comment>
-	<f:if condition="{btnGroup} && {visiblePart}">
+	<f:if condition="{btnGroup} && {slideIn}">
 		<f:then>
 	<f:asset.script identifier="vanilla_fixedbuttonGroup">
 	// Fixed button group on left or right browser edge - Page/Assets.html
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
 	var visiblePart = {visiblePart};
-	var btnSlideOutCorrection = {settings.btnSlideOutCorrection}
+	var btnSlideOutCorrection = {settings.btnSlideOutCorrection};
 	if ( buttonsFixedPosition.length ) {
 		t3sbFixedButtons(buttonsFixedPosition, visiblePart, btnSlideOutCorrection);
 	}

@@ -4,18 +4,16 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Site\Entity\SiteInterface;
-use TYPO3\CMS\Core\Routing\SiteMatcher;
+use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\QueryHelper;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
-use TYPO3\CMS\Core\Resource\FileRepository;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Database\Query\QueryHelper;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -38,8 +36,13 @@ class ConfigProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
 	{
+
+		$request = $GLOBALS['TYPO3_REQUEST'];
 		$settings = $contentObjectConfiguration['settings.'];
-		$frontendController = self::getFrontendController();
+		$frontendController = $request->getAttribute('frontend.controller');
+		if (!$frontendController) {
+			$frontendController = self::getFrontendController();
+		}
 		$webp = (bool)$settings['webp'];
 
 		if ( is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
@@ -84,11 +87,9 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 
 		$processedData['colAside'] = $smallColumns;
-
 		if ($currentPage['backend_layout']) {
 			$threeCol = $currentPage['backend_layout'] == 'pagets__ThreeCol' ? TRUE : FALSE;
 		} else {
-
 			foreach ($frontendController->rootLine as $subPage) {
 				$bel = $subPage['backend_layout_next_level'];
 				if ( !empty($subPage['backend_layout_next_level']) ) break;
@@ -130,7 +131,7 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Language Navigation
 		 */
 		if( $processedRecordVariables['navbarEnable'] && $processedRecordVariables['navbarLangmenu'] ) {
-			$site = self::getCurrentSite();
+			$site = $request->getAttribute('site');
 			$langUid = [];
 			foreach ($site->getLanguages() as $lang ) {
 				$langUid[$lang->getLanguageId()] = $lang->getLanguageId();
@@ -356,6 +357,8 @@ class ConfigProcessor implements DataProcessorInterface
 			# Image from pages media
 			$hasBgImages = 0;
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+
+
 			$fileObjects = [];
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
@@ -531,24 +534,6 @@ class ConfigProcessor implements DataProcessorInterface
 
 
 	/**
-	 * Returns the currently configured "site" if a site is configured (= resolved) in the current request.
-	 */
-	protected function getCurrentSite(): SiteInterface
-	{
-		$matcher = GeneralUtility::makeInstance(SiteMatcher::class);
-		return $matcher->matchByPageId((int)self::getFrontendController()->id);
-	}
-
-	/**
-	 * Returns the frontend controller
-	 */
-	protected function getFrontendController(): TypoScriptFrontendController
-	{
-		return $GLOBALS['TSFE'];
-	}
-
-
-	/**
 	 * Returns an instance of the rbackground image utility
 	 */
 	protected function getBackgroundImageUtility(): BackgroundImageUtility
@@ -686,5 +671,15 @@ class ConfigProcessor implements DataProcessorInterface
 		return $res;
 	}
 
+
+	/**
+	 * Returns $typoScriptFrontendController TypoScriptFrontendController
+	 *
+	 * @return TypoScriptFrontendController
+	 */
+	protected function getFrontendController(): TypoScriptFrontendController
+	{
+		return $GLOBALS['TSFE'];
+	}
 
 }

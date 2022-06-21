@@ -33,7 +33,7 @@
 						</TCEforms>
 					</text.top>
 					
-<!--
+
 					<list.container>
 						<section>1</section>
 						<type>array</type>
@@ -44,7 +44,7 @@
 								<el>
 									<group>
 										<TCEforms>
-											<label>List</label>
+											<label>List Group</label>
 											<config>
 												<type>input</type>
 												<size>48</size>
@@ -55,7 +55,7 @@
 							</list>
 						</el>
 					</list.container>
--->
+
 					<text.bottom>
 						<TCEforms>
 							<label>Text Bottom (optional: new .card-block)</label>

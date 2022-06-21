@@ -761,6 +761,15 @@ class Config extends AbstractEntity
 	 */
 	protected $generalRootline = false;
 
+
+	/**
+	 * generalRootline
+	 *
+	 * @var bool
+	 */
+	protected $generalOverride = false;
+
+
 	/**
 	 * contentOnlyOnRootpage
 	 *
@@ -3559,6 +3568,36 @@ class Config extends AbstractEntity
 		return $this->generalRootline;
 	}
 
+	/**
+	 * Returns the generalOverride
+	 *
+	 * @return bool $generalOverride
+	 */
+	public function getGeneralOverride()
+	{
+		return $this->generalOverride;
+	}
+
+	/**
+	 * Sets the generalOverride
+	 *
+	 * @param bool $generalOverride
+	 * @return void
+	 */
+	public function setGeneralOverride($generalOverride)
+	{
+		$this->generalOverride = $generalOverride;
+	}
+
+	/**
+	 * Returns the boolean state of generalOverride
+	 *
+	 * @return bool
+	 */
+	public function isGeneralOverride()
+	{
+		return $this->generalOverride;
+	}
 
 	/**
 	 * Returns the contentOnlyOnRootpage

@@ -110,10 +110,10 @@
 <f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	var	  navbarHeight = 0,
-		  navbarBreakpointWidth = 0,
-		  viewportWidth = 0,
-		  onePageLayout = 0,
-		  fixedNavbar = false;
+			navbarBreakpointWidth = 0,
+			viewportWidth = 0,
+			onePageLayout = 0,
+			fixedNavbar = false;
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
@@ -131,7 +131,6 @@
 		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
 		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
 		  onePageLayout = navbar.classList.contains('sectionMenu');
-
 	var fixedNavbar = false;
 	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
 		fixedNavbar = true;
@@ -147,10 +146,10 @@
 				<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
 	const navbar = false,
-		  navbarHeight = false,
-		  navbarBreakpointWidth = 99999,
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = 0;
+			navbarHeight = false,
+			navbarBreakpointWidth = 99999,
+			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+			onePageLayout = 0;
 
 	var fixedNavbar = false;
 
@@ -222,6 +221,19 @@
 			</f:asset.script>
 		</f:if>
 	</f:else>
+</f:if>
+<f:if condition="{settings.config.footerSticky}">
+<f:comment> Sticky footer </f:comment>
+<f:asset.css identifier="t3sbs_footerSticky">
+html {
+	position:relative;
+	min-height:100%
+}
+#page-footer {
+	position:absolute;
+	bottom:0;width:100%
+}
+</f:asset.css>
 </f:if>
 <f:comment> Link to top </f:comment>
 <f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages} || {data.tx_t3sbootstrap_cmi_generatexml}">

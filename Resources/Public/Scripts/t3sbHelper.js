@@ -122,7 +122,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
 					if (slideInButtons !== null && slideInButtons !== '') {
 						var slideIn = 0,
 							slideOut = 0,
-							boxWidth = fixedButton.clientWidth + btnSlideOutCorrection,
+							boxWidth = fixedButton.clientWidth,
 							boxHalfHeight = fixedButton.clientHeight / 2;
 						slideInButtons.children.forEach( slideInButton => {
 							if ( typeof slideInButton.firstChild !== 'undefined' ) {
@@ -135,7 +135,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
 								slideInButton.classList.add('mb-1', 'text-start', 'btnGroupSlider');
 								slideInButton.addEventListener('mouseenter', function(e) {
 									if(e.target.classList.contains('btn')) {
-										slideOut = slideInButton.clientWidth-visiblePart-2;
+										slideOut = slideInButton.clientWidth-visiblePart-3;
 										e.target.style.position = 'relative';
 										e.target.style.right = Math.abs(slideOut)+'px';
 										e.target.classList.add('btn-slide-out');
@@ -148,7 +148,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
 										e.target.style.right = 0;
 										e.target.classList.remove('btn-slide-out');
 										e.target.classList.add('btn-slide-in');
-//										slideInButton.classList.add('btnGroupSlider');
+										//slideInButton.classList.add('btnGroupSlider');
 										e.target.style.position = 'inherit';
 									}
 								},true);
@@ -324,7 +324,7 @@ function t3sbCardFlipper() {
 		cf.classList.add('cardflipper');
 		cf.classList.remove('card-flipper');
 	});
-	document.querySelectorAll('.cardflipper .mainflip .fa-plus-square').forEach( mainflipper => {
+	document.querySelectorAll('.square-link').forEach( mainflipper => {
 		mainflipper.addEventListener('click', function(flipper) {
 			var frontside = flipper.currentTarget.parentNode.parentNode.parentNode;
 			frontside.style.transform = 'rotateY(180deg)';
@@ -333,9 +333,9 @@ function t3sbCardFlipper() {
 			var cardBody = backside.querySelector('.card-body');
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
-			el.innerHTML = '<i class="fas fa-minus-square fa-2x mx-auto"></i>';
+			el.innerHTML = '<p class="square-backlink"><i class="fas fa-minus-square fa-2x mx-auto"></i></p>';
 			insertAfter(cardBody, el);
-			backside.querySelector('.fa-minus-square').addEventListener('click', function(minus) {
+			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
 				backside.style.transform = 'rotateY(180deg)';
 				frontside.style.transform = 'rotateY(0deg)';
 				if (backside.querySelector('.fa-minus-square') !== null && backside.querySelector('.fa-minus-square') !== '') {
@@ -344,7 +344,6 @@ function t3sbCardFlipper() {
 					}
 				}
 			});
-
 		});
 	});
 }
@@ -357,19 +356,17 @@ function insertAfter(referenceNode, newNode) {
 // Flip Card rotate on hover - Card.html
 function t3sbflipCard(viewportWidth) {
 	document.querySelectorAll('.flip-card').forEach( f => {
-		var width = f.querySelector('img').getAttribute('width'),
-			height = f.querySelector('img').getAttribute('height'),
+		var width = f.parentElement.clientWidth - 30,
+			height = width,
 			r = width / height;
-		if ( viewportWidth < width ) {
-			width = viewportWidth-30;
-			height = width * r;
-		}
-		f.style.minHeight = height+'px';
 		f.style.width = width+'px';
-		f.querySelector('.flip-card-front').style.height = height+'px';
-		f.querySelector('.flip-card-front').style.width = width+'px';
-		f.querySelector('.flip-card-back').style.height = height+'px';
-		f.querySelector('.flip-card-back').style.width = width+'px';
+		f.style.height = width+'px';
+		var front = f.querySelectorAll('.flip-card-front')[0];
+		var back = f.querySelectorAll('.flip-card-back')[0];
+		front.style.width = width+'px';
+		front.style.height = width+'px';
+		back.style.width = width+'px';
+		back.style.height = width+'px';
 	});
 }
 
@@ -730,6 +727,34 @@ function t3sbGetCookie(cname) {
 	return '';
 }
 
+function t3sbProfileCardImage(multiImage) {
+	var circleFigure = multiImage.nextElementSibling;
+	if (circleFigure.nodeName == 'FIGURE') {
+		var circleImage = circleFigure.querySelectorAll('img')[0],
+			percent = circleFigure.getAttribute('data-percent'),
+			circleWidth = multiImage.clientWidth * percent,
+			slope = multiImage.getAttribute('data-slope') / 100;
+		circleImage.width = circleWidth;
+		circleImage.height = circleWidth;
+		if (slope != 0) {
+			var slopeHeight = multiImage.clientHeight * slope,
+				marginTop = (circleWidth + slopeHeight) / 2,
+				idArray = multiImage.getAttribute('id').split('-'),
+				uid = idArray[1];
+			circleFigure.style.top = '-'+marginTop+'px';
+			circleFigure.nextElementSibling.style.marginTop = '-'+marginTop+'px';
+			document.documentElement.style.setProperty('--t3sslope-'+uid, slopeHeight+'px');
+			document.documentElement.style.setProperty('--t3swidth-'+uid, multiImage.clientWidth+'px');
+		} else {
+			circleFigure.style.top = '-'+circleWidth/2+'px';
+			if (circleFigure.nextSibling.nodeName == 'FIGURE') {
+				circleFigure.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
+			} else {
+				circleFigure.nextSibling.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
+			}
+		}
+	}
+}
 
 /**
  * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT) polyfill
