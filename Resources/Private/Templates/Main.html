@@ -20,7 +20,7 @@
 					</div>
 				</div>
 			</f:if>
-			<div id="page-wrapper" data-cmi5="{settings.cmiObjpropLang}, {settings.cmiDatamodelAuActtype}, {settings.cmiDatamodelAuTitle}, {settings.cmiDatamodelAuDescr}">
+			<div id="page-wrapper">
 				<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.config.contentOnlyOnRootpage}">
 					<f:else>
 						<f:comment> META NAVIGATION </f:comment>
@@ -105,15 +105,20 @@
 </f:section>
 <f:section name="AssetScripts">
 <f:asset.script identifier="t3sbHelper" src="EXT:t3sbootstrap/Resources/Public/Scripts/t3sbHelper.js" />
+<f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
 <f:if condition="{config.navbar.enable} == 'slide'">
 	<f:then>
 <f:asset.script identifier="vanilla_default">
 	// Default - Main.html
-	var	  navbarHeight = 0,
-			navbarBreakpointWidth = 0,
-			viewportWidth = 0,
-			onePageLayout = 0,
+  var	 navbarHeight = 0,
+		  navbarBreakpointWidth = 0,
+		  viewportWidth = 0,
+		  onePageLayout = 0,
 			fixedNavbar = false;
+
+			<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
+					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
+			</f:if>
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
@@ -126,12 +131,17 @@
 			<f:then>
 				<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
-	const navbar = document.getElementById('main-navbar'),
-		  navbarHeight = navbar.clientHeight,
-		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = navbar.classList.contains('sectionMenu');
-	var fixedNavbar = false;
+	var navbar = document.getElementById('main-navbar'),
+			navbarHeight = navbar.clientHeight,
+			navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
+			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+			onePageLayout = navbar.classList.contains('sectionMenu'),
+      fixedNavbar = false;
+
+      <f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
+					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
+			</f:if>
+
 	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
 		fixedNavbar = true;
 	}
@@ -145,13 +155,16 @@
 			<f:else>
 				<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
-	const navbar = false,
+	var navbar = false,
 			navbarHeight = false,
 			navbarBreakpointWidth = 99999,
 			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-			onePageLayout = 0;
+			onePageLayout = 0,
+      fixedNavbar = false;
 
-	var fixedNavbar = false;
+      <f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
+          cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
+      </f:if>
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
@@ -236,41 +249,10 @@ html {
 </f:asset.css>
 </f:if>
 <f:comment> Link to top </f:comment>
-<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages} || {data.tx_t3sbootstrap_cmi_generatexml}">
+<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
 <f:asset.script identifier="vanilla_linktotop">
-	<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
-			let xmlTextarea = document.createElement('TEXTAREA'), settings = {};
-			xmlTextarea.classList.add("parsedxml");
-			document.querySelector('#page-content main').insertAdjacentHTML('beforeend', '<textarea class="parsedxml" style="width:100%" rows="10"></textarea>');
-			settings.cmiObjpropLang = '{settings.config.cmiObjpropLang}';
-			settings.cmiDatamodelAuActtype = '{settings.config.cmiDatamodelAuActtype}';
-			settings.cmiDatamodelAuTitle = '{settings.config.cmiDatamodelAuTitle}';
-			settings.cmiDatamodelAuDescr = '{settings.config.cmiDatamodelAuDescr}';
-			settings.cmiDatamodelAuId = '{settings.config.cmiDatamodelAuId}';
-			settings.cmiDatamodelAuMoveon = '{settings.config.cmiDatamodelAuMoveon}';
-			settings.cmiDatamodelAuMasteryscore = '{settings.config.cmiDatamodelAuMasteryscore}';
-			settings.cmiDatamodelCourseTitle = '{settings.config.cmiDatamodelCourseTitle}';
-			settings.cmiDatamodelCourseDescr = '{settings.config.cmiDatamodelCourseDescr}';
-			settings.cmiDatamodelCourseId = '{settings.config.cmiDatamodelCourseId}';
-			sessionStorage.setItem("cmi5ObjectProperties",JSON.stringify([settings.cmiObjpropLang,settings.cmiDatamodelAuActtype,settings.cmiDatamodelAuTitle,settings.cmiDatamodelAuDescr]));
-			if (settings.cmiDatamodelAuActtype == 0) alert("Please select in valid Activity Type in cmi5 Settings!");
-			let cop = JSON.parse(sessionStorage.getItem("cmi5ObjectProperties"));
-			for (let i = 0; i < Object.keys(settings).length; i++) {
-				if (Object.values(settings)[i] == 0 && Object.keys(settings)[i] == "cmiDatamodelAuTitle") settings[Object.keys(settings)[i]] = "### valid AU Title required here ###";
-				if (Object.values(settings)[i] == 0 && Object.keys(settings)[i] == "cmiDatamodelAuId") settings[Object.keys(settings)[i]] = "### valid AU ID required here ###";
-				if (Object.values(settings)[i] == 0 && Object.keys(settings)[i] == "cmiDatamodelAuMoveon") settings[Object.keys(settings)[i]] = "### valid moveOn Criteria required here ###";
-				if (Object.values(settings)[i] == 0 && Object.keys(settings)[i] == "cmiDatamodelCourseTitle") settings[Object.keys(settings)[i]] = "### valid Course Title required here ###";
-				if (Object.values(settings)[i] == 0 && Object.keys(settings)[i] == "cmiDatamodelCourseId") settings[Object.keys(settings)[i]] = "### valid Course ID required here ###";
-				if (Object.values(settings)[i] == 0 && Object.keys(settings)[i] == "cmiObjpropLang") settings[Object.keys(settings)[i]] = "### valid Language Tag required here ###";
-			}
-			document.querySelector('.parsedxml').innerHTML = cmi5Xml(settings);
-			document.querySelector('#page-content main').insertAdjacentHTML('beforeend', '<button class="btn btn-warning btn-lg" id="save-button">Datei speichern</button>');
-			document.getElementById("save-button").onclick = saveFileAs;
-	</f:if>
-	<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-		// Link to top - Main.html
-		t3sbScrollToTop();
-	</f:if>
+	// Link to top - Main.html
+	t3sbScrollToTop();
 </f:asset.script>
 </f:if>
 </f:section>
