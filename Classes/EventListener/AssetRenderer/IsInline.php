@@ -39,10 +39,9 @@ class IsInline
 				$css .= $source['source']. ' ';
 				$event->getAssetCollector()->removeInlineStyleSheet($library);
 			}
-
 			if ( $css ) {
 				$cssFile = self::inline2TempFile($css, 'css');
-				if ($event->getAssetCollector()->getJavaScripts()['t3sbootstrap'] == NULL) {
+				if ($cssFile) {
 					$event->getAssetCollector()->addStyleSheet('t3sbootstrap', $cssFile);
 				}
 			}
@@ -90,7 +89,7 @@ $source = $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.r
 
 			if (!empty($source)) {
 				$jsFile = self::inline2TempFile($source, 'js');
-				if ($event->getAssetCollector()->getJavaScripts()['t3sbootstrap'] == NULL) {
+				if ($jsFile) {
 					$event->getAssetCollector()->addJavaScript('t3sbootstrap', $jsFile);
 				}
 			}
