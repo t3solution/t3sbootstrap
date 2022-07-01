@@ -52,13 +52,29 @@
 </f:section>
 
 <f:section name="Button">
-<f:link.typolink
-	parameter="{data.header_link}"
-	class="{trimClass}"
-	title="{linkTitle}"
-	additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
-	{headerFontawesome -> f:format.raw()} {data.header -> f:format.raw()}
-</f:link.typolink>
+<f:if condition="{dropdownItems}">
+	<f:then>
+		<f:if condition="{parentCType} == 'button_group'">
+			 <f:then>
+			 	<div class="btn-group{f:if(condition: dropdowndirection,then: ' {dropdowndirection}')}" role="group">
+					<f:render section="ButtonGroupLink" arguments="{_all}" />
+			 	</div>	 
+			 </f:then>
+			 <f:else>
+				<f:render section="ButtonGroupLink" arguments="{_all}" />	 
+			 </f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:link.typolink
+			parameter="{data.header_link}"
+			class="{trimClass}"
+			title="{linkTitle}"
+			additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
+			{headerFontawesome -> f:format.raw()} {data.header -> f:format.raw()}
+		</f:link.typolink>
+	</f:else>
+</f:if>
 </f:section>
 
 <f:section name="ButtonGroup">
@@ -77,8 +93,6 @@
 </f:section>
 
 <f:section name="ButtonInGroup">
-
-
 <f:if condition="{slideInButtonFaIcon}">
 	<f:then>
 		<f:link.typolink
@@ -100,3 +114,23 @@
 	</f:else>
 </f:if>
 </f:section>
+
+<f:section name="ButtonGroupLink">
+	<f:link.typolink
+		parameter="{data.header_link}"
+		class="{trimClass} dropdown-toggle"
+		title="{linkTitle}"
+		additionalAttributes="{id: 'c{data.uid}', role: 'button', data-bs-toggle: 'dropdown', aria-expanded: 'false', type: 'button'}">
+		{headerFontawesome -> f:format.raw()} {data.header -> f:format.raw()}
+	</f:link.typolink>
+	<ul class="dropdown-menu" aria-labelledby="c{data.uid}">
+		<f:for each="{dropdownItems}" as="dropdownItem">
+			<li>				
+				<f:link.typolink parameter="{dropdownItem.link}" class="dropdown-item {dropdownItem.class}" target="{dropdownItem.target}">
+					{dropdownItem.title}
+				</f:link.typolink>
+			</li>
+		</f:for>
+	</ul>
+</f:section>
+

@@ -126,16 +126,18 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		// Generate fallback image
 		$fallbackImage = $this->generateFallbackImage($image, $width, $cropArea);
 
-
-		if ( !empty($GLOBALS['_GET']['type']) && $GLOBALS['_GET']['type'] == '98' ) {
+		if ( !empty($GLOBALS['_GET']['type']) && $GLOBALS['_GET']['type'] == '98') {
 			$lazyload = 0;
 		} else {
 			if ($this->arguments['lazyload']) {
 				if ($this->arguments['lazyload'] == 1) {
-					$lazyload = $this->arguments['lazyload'];
+					$lazyload = 1;
+				} elseif ($this->arguments['lazyload'] == 3) {
+					$lazyload = 3;
+					$this->tag->addAttribute('loading', 'auto');		
 				} else {
 					if ($this->arguments['lazyload'] == 2 && $image->getProperty('tx_t3sbootstrap_lazy_load')) {
-						$lazyload = (int)$this->arguments['lazyload'];
+						$lazyload = 2;
 					} else {
 						$lazyload = 0;
 					}
@@ -144,6 +146,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 				$lazyload = 0;
 			}
 		}
+
 		$placeholderSize = 0;
 		$placeholderInline = 0;
 		if ($lazyload) {
@@ -245,30 +248,30 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$processedImage->setIdentifier($webpIdentifier);
 		}
 
-		 $imageUri = $imageService->getImageUri($processedImage);
+		$imageUri = $imageService->getImageUri($processedImage);
 
-		 if (!$this->tag->hasAttribute('data-focus-area')) {
-			 $focusArea = $cropVariantCollection->getFocusArea($cropVariant);
-			 if (!$focusArea->isEmpty()) {
-				 $this->tag->addAttribute('data-focus-area', $focusArea->makeAbsoluteBasedOnFile($image));
-			 }
-		 }
-		 $this->tag->addAttribute('src', $imageUri);
-		 $this->tag->addAttribute('width', $processedImage->getProperty('width'));
-		 $this->tag->addAttribute('height', $processedImage->getProperty('height'));
-		 if (in_array($this->arguments['loading'] ?? '', ['lazy', 'eager', 'auto'], true)) {
-			 $this->tag->addAttribute('loading', $this->arguments['loading']);
-		 }
+		if (!$this->tag->hasAttribute('data-focus-area')) {
+			$focusArea = $cropVariantCollection->getFocusArea($cropVariant);
+			if (!$focusArea->isEmpty()) {
+				$this->tag->addAttribute('data-focus-area', $focusArea->makeAbsoluteBasedOnFile($image));
+			}
+		}
+		$this->tag->addAttribute('src', $imageUri);
+		$this->tag->addAttribute('width', $processedImage->getProperty('width'));
+		$this->tag->addAttribute('height', $processedImage->getProperty('height'));
+		if ($this->arguments['lazyload'] == 3) {
+			$this->tag->addAttribute('loading', 'auto');
+		}
 
 		 $alt = $image->getProperty('alternative');
 		 $title = $image->getProperty('title');
 
 		 // The alt-attribute is mandatory to have valid html-code, therefore add it even if it is empty
-		 if (empty($this->arguments['alt'])) {
-			 $this->tag->addAttribute('alt', $alt);
+		if (empty($this->arguments['alt'])) {
+			$this->tag->addAttribute('alt', $alt);
 		 }
 		 if (empty($this->arguments['title']) && $title) {
-			 $this->tag->addAttribute('title', $title);
+			$this->tag->addAttribute('title', $title);
 		 }
 
 		 return $this->tag->render();
@@ -287,7 +290,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
 			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
-			$rArr = explode(':',$this->arguments['ratio']);			
+			$rArr = explode(':',$this->arguments['ratio']);
 			if ( $this->arguments['shift'] ) {
 				$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
 				 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);

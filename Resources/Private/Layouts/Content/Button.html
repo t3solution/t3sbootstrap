@@ -15,7 +15,7 @@
 	</f:then>
 	<f:else>
 		<f:comment> BUTTON GROUP </f:comment>
-		<div id="c{data.uid}"{f:if(condition: '{buttonGroupClass}',then: ' class="{buttonGroupClass}"')} role="group" aria-label="btn-{data.uid}">
+		<div id="c{data.uid}"{f:if(condition: '{buttonGroupClass}',then: ' class="{buttonGroupClass}"')}>
 			<f:render section="Main" arguments="{_all}" />
 		</div>
 	</f:else>

@@ -107,7 +107,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$referenceHeight = $fallbackImage->getProperty('height');
 
 		// if lazyload enabled add data- prefix
-		$attributePrefix = $lazyload ? 'data-' : '';
+		$attributePrefix = $lazyload && $lazyload != 3 ? 'data-' : '';
 
 		// Use last breakpoint as fallback image if it doesn't define a media query
 		$lastBreakpoint = array_pop($breakpoints);
@@ -239,14 +239,12 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Generate different image sizes for srcset attribute
 		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $webpIsLoaded, $type);
 		$srcsetMode = substr(key($srcsetImages), -1); // x or w
-		
+
 		// Create source tag for this breakpoint
 		$sourceTag = GeneralUtility::makeInstance(TagBuilder::class, 'source');
-
-		if ($lazyload) {
+		if ($lazyload && $lazyload < 3) {
 			$sourceTag->addAttribute('data-srcset', $this->generateSrcsetAttribute($srcsetImages));
 		}
-
 		$sourceTag->addAttribute('srcset', $this->generateSrcsetAttribute($srcsetImages));
 
 		if ($mediaQuery) {

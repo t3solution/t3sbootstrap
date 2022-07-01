@@ -72,7 +72,7 @@ fontawesomeCss = 0
 animateCss = 0
 # cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
 linkHoverEffect = 0
-# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2]; label=Lazy Load: for images - include lazyload.min.js (clear cache).
+# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache).
 lazyLoad = 0
 # cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
 cookieconsent = 0

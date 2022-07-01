@@ -72,6 +72,19 @@ class TcaMatcher
 	}
 
 	/**
+	 * buttonGroup
+	 */
+	public function buttonGroup(array $arguments): bool
+	{
+		$group = false;
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
+			$group = true;
+		}
+
+		return $group;
+	}
+
+	/**
 	 * cardWrapperParent
 	 */
 	public function cardWrapperParent(array $arguments): bool

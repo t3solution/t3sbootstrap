@@ -181,7 +181,7 @@
 </f:if>
 <f:comment> Lazyload </f:comment>
 <f:variable name="customthreshold">{t3sb:intval(number: '{settings.lazyLoadThreshold}')}</f:variable>
-<f:if condition="{settings.lazyLoad}">
+<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
 	<f:then>
 		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
 			<f:then>

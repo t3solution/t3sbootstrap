@@ -204,6 +204,58 @@
 							</config>
 						</TCEforms>
 					</linkTitle>
+					<dropdownItems>
+						<section>1</section>
+						<type>array</type>
+						<el>
+							<list>
+								<title>Dropdown Item</title>
+								<type>array</type>
+								<el>
+									<group>
+										<TCEforms>
+											<label>Input Link</label>
+											<config>
+												<type>input</type>
+												<renderType>inputLink</renderType>
+												<size>48</size>
+											</config>
+										</TCEforms>
+									</group>
+								</el>
+							</list>
+						</el>
+					</dropdownItems>
+					<direction>
+						<TCEforms>
+							<label>Dropdown direction</label>
+							<description>Trigger dropdown menus direction (if dropdown items)</description>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonGroup</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">dropdown</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Dropup</numIndex>
+										<numIndex index="1">dropup</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Dropright</numIndex>
+										<numIndex index="1">dropend</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">Dropleft</numIndex>
+										<numIndex index="1">dropstart</numIndex>
+									</numIndex>
+								</items>
+								<default></default>
+							</config>
+						</TCEforms>
+					</direction>
 				</el>
 			</ROOT>
 		</sDEF>

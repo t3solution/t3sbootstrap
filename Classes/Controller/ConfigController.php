@@ -717,7 +717,7 @@ class ConfigController extends ActionController
 			}
 			foreach( $defaultUtilColors as $key=>$customvariables ) {
 				if (str_starts_with((string)$customvariables, '$')) {
-					if ($customScssArr[$customvariables])
+					if ( !empty($customScssArr[$customvariables]) && $customScssArr[$customvariables])
 					$defaultUtilityColors[$key] = $customScssArr[$customvariables];
 				} elseif ( str_starts_with((string)$customvariables, '#') ) {
 					if ($customvariables)

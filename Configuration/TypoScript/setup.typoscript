@@ -107,11 +107,9 @@ temp.pagelayout {
 # Google Tag Manager
 #
 ##########################################################################################################
-
 [request.getCookieParams()['cookieconsent_status'] == 'allow']
 page.jsInline.1 = TEXT
 page.jsInline.1.value (
-
 	// Google Tag Manager
 	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

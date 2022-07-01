@@ -6,9 +6,11 @@
 			document.querySelectorAll('.' + CLASS_NAME).forEach(function(e) {
 				e.classList.remove(CLASS_NAME);
 			});
-			let dd = this._element.closest('.dropup').parentNode.closest('.dropup');
-			for (; dd && dd !== document; dd = dd.parentNode.closest('.dropup')) {
-				dd.classList.add(CLASS_NAME);
+			if (this._element.closest('.dropdown') != null) {
+				let dd = this._element.closest('.dropup').parentNode.closest('.dropup');
+				for (; dd && dd !== document; dd = dd.parentNode.closest('.dropup')) {
+					dd.classList.add(CLASS_NAME);
+				}
 			}
 			return _orginal.call(this);
 		};
