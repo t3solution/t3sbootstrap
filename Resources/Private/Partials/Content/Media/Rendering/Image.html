@@ -7,10 +7,6 @@
 <f:variable name="ratio" value="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}" />
 
 
-
-
-
-
 <f:if condition="{addmedia.origImg}">
 	<f:then>
 		<f:image class="img-fluid{extraImgClass}" src="fileadmin/{file.identifier}" />
@@ -55,3 +51,9 @@
 	</f:else>
 </f:if>
 </html>
+
+
+
+<f:comment>
+loading="{settings.media.lazyLoading}"
+</f:comment>

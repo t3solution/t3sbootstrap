@@ -175,10 +175,10 @@ defined('TYPO3') || die();
 		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') ) {
 			if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFaPro.yaml';
-			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {			
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';			
+			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';
 			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '4') {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';			
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';
 			} else {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa.yaml';
 			}
@@ -208,10 +208,8 @@ defined('TYPO3') || die();
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.cookieconsent = 1');
 	}
 	// Optional lazyLoad
-	if (array_key_exists('lazyLoad', $extconf) && $extconf['lazyLoad'] === '1') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = 1');
-	} elseif (array_key_exists('lazyLoad', $extconf) && $extconf['lazyLoad'] === '2') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = 2');
+	if (array_key_exists('lazyLoad', $extconf)) {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = '.$extconf['lazyLoad']);
 	}
 	// Optional animateCss
 	if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] > '0') {

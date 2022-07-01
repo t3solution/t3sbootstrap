@@ -20,9 +20,8 @@ class ButtonGroup implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
 		$processedData['class'] .= !empty($flexconf['vertical']) ? ' btn-group-vertical' : ' btn-group';
-		$processedData['class'] .= !empty($flexconf['btnsize']) && $flexconf['btnsize'] != 'default' ? ' '.$flexconf['btnsize']: '';
+		$processedData['class'] .= !empty($flexconf['btnsize']) && $flexconf['btnsize'] != 'null' ? ' '.$flexconf['btnsize'] : '';
 		$processedData['buttonGroupClass'] = !empty($flexconf['align']) ? $flexconf['align'] : '';
-
 		$processedData['visiblePart'] = '';
 
 		if ( !empty($flexconf['fixedPosition']) ) {

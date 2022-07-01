@@ -79,7 +79,10 @@ page {
 		lazyloadCDN = https://cdn.jsdelivr.net/npm/vanilla-lazyload@{$bootstrap.cdn.lazyload}/dist/lazyload.min.js
 		lazyloadCDN.integrity = {$bootstrap.cdn.lazyloadIntegrity}
 		lazyloadCDN.external = 1
-		lazyloadCDN.if.isTrue = {$bootstrap.extconf.lazyLoad}
+		lazyloadCDN.if {
+			value = 1,2
+			isInList = {$bootstrap.extconf.lazyLoad}
+		}
 
 		##########################################################################################################
 		#
@@ -104,7 +107,7 @@ page {
 		61 = TEXT
 		61.value = <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/{$bootstrap.cdn.fontawesome}/js/all.min.js" data-auto-replace-svg="nest"></script>
 		61.if {
-			value = 1,3 
+			value = 1,3
 			isInList = {$bootstrap.extconf.fontawesomeCss}
 		}
 	}
