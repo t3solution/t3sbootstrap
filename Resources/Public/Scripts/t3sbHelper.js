@@ -459,7 +459,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, videoElement) {
 
 // Local carousel video - CarouselContainer.html
 function t3sbLocalCarouselVideo(videoCarousel) {
-	videoCarousel.addEventListener('slid.bs.carousel', function (el) {
+	videoCarousel.addEventListener('slide.bs.carousel', function (el) {
 		let slides = this.getElementsByClassName('carousel-item');
 		slides.forEach( carouselItem => {
 			if ( carouselItem.classList.contains('active') ) {
