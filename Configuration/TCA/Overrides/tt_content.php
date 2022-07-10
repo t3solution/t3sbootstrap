@@ -1354,7 +1354,7 @@ ExtensionManagementUtility::addFieldsToPalette(
 ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
-	'tx_t3sbootstrap_bordercolor',
+	'--linebreak--, tx_t3sbootstrap_bordercolor',
 	'after:imageborder'
 );
 ExtensionManagementUtility::addFieldsToPalette(
