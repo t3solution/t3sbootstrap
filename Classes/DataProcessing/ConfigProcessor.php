@@ -223,7 +223,7 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['config']['navbar']['colorschemes'] = $processedRecordVariables['navbarBackground'];
 				} else {
 					$navColorArr = explode(' ', $processedRecordVariables['navbarColor']);
-					if ( $navColorArr[1] ) {
+					if ( !empty($navColorArr[1]) ) {
 						$processedData['config']['navbar']['colorschemes'] = 'bg-'.$navColorArr[0];
 						$processedData['config']['navbar']['gradient'] = 'bg-gradient';
 					} else {
