@@ -398,7 +398,7 @@ class TcaMatcher
 		$level = false;
 		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 		$parentPage = $pageRepository->getPage($arguments['record']['pid']);
-		if ($parentPage['is_siteroot']) {
+		if (!empty($parentPage['is_siteroot'])) {
 			$level = true;
 		}
 
