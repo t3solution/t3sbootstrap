@@ -11,8 +11,6 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -22,6 +20,16 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
  */
 class CustomScss extends Command
 {
+	const localZipFile = 't3sb.zip';
+	const localZipPath = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/';
+	const zipFilePath = 'https://github.com/twbs/bootstrap/archive/';
+
+
+	public function initializeAction()
+	{
+		 parent::initializeAction();
+	}
+
 
 	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
 	{
@@ -47,7 +55,6 @@ class CustomScss extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-
 		$this->configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
 		$settings = $this->configurationManager->getConfiguration(
 			ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -57,97 +64,10 @@ class CustomScss extends Command
 
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
-		if ( $settings['customScss'] && array_key_exists('customScss', $extConf)
-			 && $extConf['customScss'] === '1' ) {
+		if ( $settings['customScss'] && array_key_exists('customScss', $extConf) && $extConf['customScss'] === '1' ) {
 			# get the Boostrap SCSS-Files
-			$scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
-
-			$mixinsList = '_alert.scss, _backdrop.scss, _border-radius.scss, _box-shadow.scss, _breakpoints.scss, _buttons.scss, _caret.scss, _clearfix.scss, _color-scheme.scss, _container.scss, _deprecate.scss, _forms.scss, _gradients.scss, _grid.scss, _image.scss, _list-group.scss, _lists.scss, _pagination.scss, _reset-text.scss, _resize.scss, _table-variants.scss, _text-truncate.scss, _transition.scss, _utilities.scss, _visually-hidden.scss';
-
-			$utilitiesList = '_api.scss';
-
-			$formsList = '_floating-labels.scss, _form-check.scss, _form-control.scss, _form-range.scss, _form-select.scss, _form-text.scss, _input-group.scss, _labels.scss, _validation.scss';
-
-			$helpersList = '_clearfix.scss, _colored-links.scss, _position.scss, _ratio.scss, _stacks.scss, _stretched-link.scss, _text-truncation.scss, _visually-hidden.scss, _vr.scss';
-
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
-			$bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : '5.1.1';
-
-			foreach (explode(',', $scssList) as $scss ) {
-				$customFileName = trim($scss);
-				$customFile = $customPath.$customFileName;
-				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/'.$customFileName;
-				$customContent = GeneralUtility::getURL($cdnPath);
-				if (file_exists($customFile)) unlink($customFile);
-				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
-				GeneralUtility::writeFile($customFile, $customContent);
-			}
-
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/mixins/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
-			foreach (explode(',', $mixinsList) as $mixins ) {
-				$customFileName = trim($mixins);
-				$customFile = $customPath.$customFileName;
-				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/mixins/'.$customFileName;
-				$customContent = GeneralUtility::getURL($cdnPath);
-				if (file_exists($customFile)) unlink($customFile);
-				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
-				GeneralUtility::writeFile($customFile, $customContent);
-			}
-
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/utilities/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
-			foreach (explode(',', $utilitiesList) as $utils ) {
-				$customFileName = trim($utils);
-				$customFile = $customPath.$customFileName;
-				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/utilities/'.$customFileName;
-				$customContent = GeneralUtility::getURL($cdnPath);
-				if (file_exists($customFile)) unlink($customFile);
-				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
-				GeneralUtility::writeFile($customFile, $customContent);
-			}
-
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/forms/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
-
-			foreach (explode(',', $formsList) as $forms ) {
-				$customFileName = trim($forms);
-				$customFile = $customPath.$customFileName;
-				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/forms/'.$customFileName;
-				$customContent = GeneralUtility::getURL($cdnPath);
-				if (file_exists($customFile)) unlink($customFile);
-				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
-				GeneralUtility::writeFile($customFile, $customContent);
-			}
-
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/helpers/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
-			foreach (explode(',', $helpersList) as $helpers ) {
-				$customFileName = trim($helpers);
-				$customFile = $customPath.$customFileName;
-				$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/helpers/'.$customFileName;
-				$customContent = GeneralUtility::getURL($cdnPath);
-				if (file_exists($customFile)) unlink($customFile);
-				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
-				GeneralUtility::writeFile($customFile, $customContent);
-			}
-
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/vendor/';
-			$customPath = GeneralUtility::getFileAbsFileName($customDir);
-
-			$customFileName = '_rfs.scss';
-			$customFile = $customPath.$customFileName;
-			$cdnPath = 'https://raw.githubusercontent.com/twbs/bootstrap/v'.trim($bootstrapVersion).'/scss/vendor/_rfs.scss';
-			$customContent = GeneralUtility::getURL($cdnPath);
-			if (file_exists($customFile)) unlink($customFile);
-			if (!is_dir($customPath)) mkdir($customPath, 0777, true);
-			GeneralUtility::writeFile($customFile, $customContent);
+			$bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : '5.1.13';
+			self::getSccFiles($bootstrapVersion);
 
 			# Custom
 			$customDir = !empty($settings['customScssPath']) ? $settings['customScssPath'] : 'fileadmin/T3SB/Resources/Public/SCSS/';
@@ -199,13 +119,13 @@ class CustomScss extends Command
 					if ($key === 0) {
 						$includeContent = '
 @import "../../'.$customDir.'custom-variables";
-@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/bootstrap";
+@import "../../'.self::localZipPath.'scss/bootstrap";
 @import "../../'.$customDir.'custom";
 						';
 					} else {
 						$includeContent = '
 @import "../../'.$customDir.'custom-variables-'.$siteroot['uid'].'";
-@import "../../fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/bootstrap";
+@import "../../'.self::localZipPath.'scss/bootstrap";
 @import "../../'.$customDir.'custom-'.$siteroot['uid'].'";
 						';
 					}
@@ -217,43 +137,45 @@ class CustomScss extends Command
 			$tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
 			self::deleteFilesFromDirectory($tempPath);
 
-			$customDir = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/';
+			$customDir = self::localZipPath.'scss/';
 			$customPath = GeneralUtility::getFileAbsFileName($customDir);
 			$customFileName = 'bootstrap.scss';
 			$customFile = $customPath.$customFileName;
 			$customContent = GeneralUtility::getURL($customFile);
-			$length = strlen($customContent);
+			$length = 0;
+			if ($customContent) {
+				$length = strlen($customContent);
+			}
 
 			foreach ( $settings['optimize'] as $component=>$import ) {
-				if (!$import) {
+				if (!$import && $customContent) {
 					$find = '@import "'.$component.'";';
 					$replace = '// @import "'.$component.'";';
 					$customContent = str_replace($find, $replace, $customContent);
 				}
 			}
 
-			if ($length < strlen($customContent)) {
+			if ($customContent && $length < strlen($customContent)) {
 				if (file_exists($customFile)) unlink($customFile);
 				if (!is_dir($customPath)) mkdir($customPath, 0777, true);
 				GeneralUtility::writeFile($customFile, $customContent);
 			}
 
-			return 0;
+			if ( is_dir(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss')) ) {
+
+				return 0;
+
+			} else {
+				throw new \InvalidArgumentException('Check the bootstrap version in the constant editor for validity!', 1657204821);
+
+				return 1;
+			}
 
 		} else {
 
-			$message = GeneralUtility::makeInstance(FlashMessage::class,
-				'You have to activate SCSS in the EM config!',
-				'T3S Bootstrap - Custom SCSS',
-				FlashMessage::ERROR
-			);
-
-			$flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-			$messageQueue = $flashMessageService->getMessageQueueByIdentifier();
-			$messageQueue->addMessage($message);
+			throw new \InvalidArgumentException('You have to activate SCSS in the EM config!', 1657204821);
 
 			return 1;
-
 		}
 
 	}
@@ -307,7 +229,6 @@ class CustomScss extends Command
 	}
 
 
-
 	/**
 	* remove dirs
 	*/
@@ -357,6 +278,34 @@ class CustomScss extends Command
 		}
 
 		return 0;
+	}
+
+
+	public function getSccFiles($bootstrapVersion): void
+	{
+		if ( is_dir(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss')) ) {
+			self::rmDir(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss'));
+		}
+		$zipFilename = 'v'.$bootstrapVersion.'.zip';
+		$zip_file = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
+		$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
+		GeneralUtility::writeFile($zip_file, $zipContent);
+		$extractTo = GeneralUtility::getFileAbsFileName(self::localZipPath);
+		$zip = new \ZipArchive;
+		if ($zip->open($zip_file) === TRUE) {
+			$zip->extractTo($extractTo);
+			$zip->close();
+		} else {
+			throw new \InvalidArgumentException('Sorry ZIP creation failed at this time!', 1657464667);
+		}
+		$renameFrom = GeneralUtility::getFileAbsFileName(self::localZipPath.'bootstrap-'.$bootstrapVersion.'/scss');
+		$renameTo = GeneralUtility::getFileAbsFileName(self::localZipPath.'scss');
+		if ( is_dir($renameFrom) ) {
+			rename($renameFrom, $renameTo);
+		}
+		self::rmDir(GeneralUtility::getFileAbsFileName(self::localZipPath.'bootstrap-'.$bootstrapVersion));
+		$zipFile = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
+		if (file_exists($zipFile)) unlink($zipFile);
 	}
 
 }

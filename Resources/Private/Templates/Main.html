@@ -103,8 +103,10 @@
 		</f:if>
 	</div>
 </f:section>
+
+
 <f:section name="AssetScripts">
-<f:asset.script identifier="t3sbHelper" src="EXT:t3sbootstrap/Resources/Public/Scripts/t3sbHelper.js" />
+<f:render partial="FunctionAssets" arguments="{_all}" />
 <f:if condition="{config.navbar.enable} == 'slide'">
 	<f:then>
 <f:asset.script identifier="vanilla_default">
@@ -225,22 +227,27 @@
 </f:if>
 <f:if condition="{settings.config.footerSticky}">
 <f:comment> Sticky footer </f:comment>
-<f:asset.css identifier="t3sbs_footerSticky">
-html {
+<f:asset.css identifier="t3sbs_footerSticky">html {
 	position:relative;
 	min-height:100%
 }
 #page-footer {
 	position:absolute;
-	bottom:0;width:100%
+	bottom:0;
+	width:100%
 }
 </f:asset.css>
 </f:if>
+
 <f:comment> Link to top </f:comment>
 <f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
 <f:asset.script identifier="vanilla_linktotop">
 	// Link to top - Main.html
 	t3sbScrollToTop();
 </f:asset.script>
+</f:if>
+
+<f:if condition="{settings.webp}">
+	<f:asset.script identifier="t3sbmodernizr" src="EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js" />
 </f:if>
 </f:section>

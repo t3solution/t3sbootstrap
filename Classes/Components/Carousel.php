@@ -88,6 +88,16 @@ class Carousel implements SingletonInterface
 			 || $file->getMimeType() == 'video/ogg' || $file->getMimeType() == 'video/flac' || $file->getMimeType() == 'video/opus') {
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
 			}
+			$processedData['autoplay'] = $file->getProperties()['autoplay'];
+			$processedData['loop'] = $flexconf['loop'];
+			$processedData['muted'] = $file->getProperties()['autoplay'] ? 1 : $flexconf['muted'];
+			$processedData['playsinline'] = $flexconf['playsinline'];
+			if ($processedData['data']['header'] || $processedData['data']['bodytext']
+			 || ( $processedData['data']['header_link'] && $parentflexconf['link'] == 'button') ) {
+				$processedData['controls'] = 0;
+			} else {
+				$processedData['controls'] = $flexconf['controls'];
+			}
 		}
 		if ($parentflexconf['ratio']) {
 			$ratioArr = explode(':', $parentflexconf['ratio']);
@@ -148,7 +158,7 @@ class Carousel implements SingletonInterface
 		} else {
 			$style .= $flexconf['captionVAlign'] == 'top' ? ' top:0;' : '';
 			$style .= $flexconf['captionVAlign'] == 'center' ? ' bottom:0;' : '';
-			#$style .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+			$style .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
 			$captionStyle = '';
 		}
 		if ($animate){

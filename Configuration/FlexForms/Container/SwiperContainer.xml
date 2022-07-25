@@ -259,6 +259,15 @@
 							</config>
 						</TCEforms>
 					</swiperJs>
+					<zoom>
+						<TCEforms>
+							<label>Enable open in lightbox</label>
+							<description>Not working with a link inside the carousel content.</description>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</zoom>
 				</el>
 			</ROOT>
 		</general>

@@ -20,7 +20,7 @@
 		</f:asset.css>
 		<div class="carousel-item carousel-item-{data.uid} carousel-video">
 			<figure class="d-flex">
-					<video class="ratio ratio-16x9 img-fluid{imgLazyLoad}" autoplay loop muted>
+					<video class="ratio ratio-16x9 img-fluid{imgLazyLoad}"{f:if(condition: '{autoplay}',then:' autoplay')}{f:if(condition: '{loop}',then:' loop')}{f:if(condition: '{muted}',then:' muted')}{f:if(condition: '{controls}',then:' controls')}{f:if(condition: '{playsinline}',then:' playsinline')}>
 						<source src="{localVideoPath}" />
 					</video>
 				<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">

@@ -8,6 +8,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -28,18 +30,74 @@ class IsInline
 			return;
 		}
 
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+		$settings = $configurationManager->getConfiguration(
+			ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+			't3sbootstrap',
+			'm1'
+		);
+		$t3sbconcatenate = $settings['t3sbconcatenate'];
+
 		if ( $event->isInline() == FALSE ) {
+
+			if ( $event->isPriority() == FALSE ) {
+				// Java Scripts
+				if ( $t3sbconcatenate ) {
+					$jsCode = '';
+					foreach ( $event->getAssetCollector()->getJavaScripts() as $library => $jsFile ) {
+						$jsCode .= '// *** T3SB identifier: '.$library.LF.LF;
+						if ( str_starts_with($jsFile['source'], 'http') ) {
+							$jsCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
+						} else {
+							if ( GeneralUtility::getFileAbsFileName($jsFile['source']) != FALSE ) {
+								$jsCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
+							}
+						}
+						$event->getAssetCollector()->removeJavaScript($library);
+					}
+					if (!empty($jsCode)) {
+						// add Temp Java Scripts
+						$file = self::inline2TempFile($jsCode, 'js');
+						if ($file) {
+							$event->getAssetCollector()->addJavaScript('t3sbootstrap', $file);
+						}	
+					}
+				}
+			}
+
 			return;
 		}
-		# CSS in header
+
 		if ( $event->isPriority() == TRUE ) {
-			$assetCssInline = $event->getAssetCollector()->getInlineStyleSheets();
+
 			$css = '';
-			foreach ($assetCssInline as $library => $source) {
-				$css .= $source['source']. ' ';
+
+			if ( $t3sbconcatenate ) {
+				// Style Sheets
+				foreach ($event->getAssetCollector()->getStyleSheets() as $library => $source) {
+					$css .= LF.'/*** T3SB identifier: '.$library.' */'.LF;
+					if (!empty($source['source'])) {
+						if ( str_starts_with($source['source'], 'http') ) {		
+							$css .= GeneralUtility::getURL($source['source']).LF;
+						} else {
+							if ( GeneralUtility::getFileAbsFileName($source['source']) != FALSE ) {
+								$css .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($source['source'])).LF;
+							}	
+						}
+					}
+					$event->getAssetCollector()->removeStyleSheet($library);
+				}
+			}				
+
+			// Inline Style Sheets
+			foreach ($event->getAssetCollector()->getInlineStyleSheets() as $library => $source) {
+				$css .= LF.'/*** T3SB identifier: '.$library.' */'.LF;
+				$css .= $source['source'].LF.LF;
 				$event->getAssetCollector()->removeInlineStyleSheet($library);
 			}
-			if ( $css ) {
+
+			// add Temp Style Sheet
+			if (!empty($css)) {
 				$cssFile = self::inline2TempFile($css, 'css');
 				if ($cssFile) {
 					$event->getAssetCollector()->addStyleSheet('t3sbootstrap', $cssFile);
@@ -50,41 +108,42 @@ class IsInline
 
 		} else {
 
+			// Inline Java Scripts
 			$assetJsInline = $event->getAssetCollector()->getInlineJavaScripts();
 			$addheight ='';
-			$video ='';
 			$jquery ='';
 			$js = '';
+			$function = '';
 
 			foreach ($assetJsInline as $library => $source) {
-				if (substr($library, 0, 7) == 'vanilla' ) {
-					$js .= $source['source'] .PHP_EOL;
-					$event->getAssetCollector()->removeInlineJavaScript($library);
+				if (str_ends_with($library, 'function')) {
+					$function .= $source['source'] .LF.LF;
+				} elseif (str_starts_with($library, 'vanilla')) {	
+					$js .= $source['source'] .LF; 
 				} elseif ( str_starts_with($library, 'addheight-') ) {
-					$addheight .= $source['source'];
-					$event->getAssetCollector()->removeInlineJavaScript($library);
+					$addheight .= $source['source'] .LF.LF;
 				} else {
-					$jquery .= $source['source'] .PHP_EOL;
-					$event->getAssetCollector()->removeInlineJavaScript($library);
+					$jquery .= $source['source'] .LF.LF;
 				}
+				$event->getAssetCollector()->removeInlineJavaScript($library);
 			}
 
 			if ($addheight) {
 				$addheight = "
 	// Autoheight for background images
 	var TYPO3 = TYPO3 || {};
-	TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight),",")."}};" .PHP_EOL;
+	TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight),",")."}};" .LF;
 			}
 
-			$vanillaOnly = FALSE;
-			if ( strlen((string)$jquery) < 1 ) {
-				$vanillaOnly = TRUE;
+			$source = '';
+			if (!empty($function)) {
+				$source .= $function.LF;
 			}
 
-			if ($vanillaOnly) {
-$source = $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL;
-			} else {
-$source = $video.PHP_EOL.PHP_EOL."function ready(fn) {".PHP_EOL."	if (document.readyState != 'loading'){".PHP_EOL."		fn();".PHP_EOL."	} else {".PHP_EOL."		document.addEventListener('DOMContentLoaded', fn);".PHP_EOL."	}".PHP_EOL."}".PHP_EOL."ready(() => {".$addheight.$js."});".PHP_EOL.PHP_EOL."(function($){'use strict';".PHP_EOL. $jquery .PHP_EOL."})(jQuery);".PHP_EOL;
+			$source .= "function ready(fn) {".LF."	if (document.readyState != 'loading'){".LF."fn();".LF."	} else {".LF."document.addEventListener('DOMContentLoaded', fn);".LF."	}".LF."}".LF."ready(() => {".$addheight.$js."});".LF;
+
+			if (!empty($jquery)) {
+				$source .= LF."(function($){'use strict';".LF. $jquery .LF."})(jQuery);".LF;
 			}
 
 			if (!empty($source)) {

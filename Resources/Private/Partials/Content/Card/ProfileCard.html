@@ -210,6 +210,36 @@ figure#multiImage-{data.uid}::before {
 }
 			</f:asset.css>
 		</f:if>
+		<f:asset.script identifier="profileCard_function">
+function t3sbProfileCardImage(multiImage) {
+	var circleFigure = multiImage.nextElementSibling;
+	if (circleFigure.nodeName == 'FIGURE') {
+		var circleImage = circleFigure.querySelectorAll('img')[0],
+			percent = circleFigure.getAttribute('data-percent'),
+			circleWidth = multiImage.clientWidth * percent,
+			slope = multiImage.getAttribute('data-slope') / 100;
+		circleImage.width = circleWidth;
+		circleImage.height = circleWidth;
+		if (slope != 0) {
+			var slopeHeight = multiImage.clientHeight * slope,
+				marginTop = (circleWidth + slopeHeight) / 2,
+				idArray = multiImage.getAttribute('id').split('-'),
+				uid = idArray[1];
+			circleFigure.style.top = '-'+marginTop+'px';
+			circleFigure.nextElementSibling.style.marginTop = '-'+marginTop+'px';
+			document.documentElement.style.setProperty('--t3sslope-'+uid, slopeHeight+'px');
+			document.documentElement.style.setProperty('--t3swidth-'+uid, multiImage.clientWidth+'px');
+		} else {
+			circleFigure.style.top = '-'+circleWidth/2+'px';
+			if (circleFigure.nextSibling.nodeName == 'FIGURE') {
+				circleFigure.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
+			} else {
+				circleFigure.nextSibling.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
+			}
+		}
+	}
+}
+		</f:asset.script>
 		<f:asset.script identifier="vanilla_multiImage_slope">
 	// Profile Card Card/ProfileCard.html
 	document.querySelectorAll('.multiImage').forEach( multiImage => {

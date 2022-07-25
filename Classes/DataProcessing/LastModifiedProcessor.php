@@ -32,7 +32,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	{
 		if (!empty($processorConfiguration['lastModifiedContentElement'])) {
 			$processorConfiguration = [];
-			$processorConfiguration['pidInList'] = self::getFrontendController()->id;
+			$processorConfiguration['pidInList'] = self::getCurrentUid();
 			$records = $cObj->getRecords('tt_content', $processorConfiguration);
 
 			foreach ( $records as $record ) {
@@ -76,7 +76,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 			 ->from('tt_content')
 			 ->where(
 				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)),
-				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getFrontendController()->id, \PDO::PARAM_INT)),
+				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), \PDO::PARAM_INT)),
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('menu_recently_updated'))
 			 )
 			 ->execute()
@@ -103,7 +103,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 			 ->orderBy('tstamp', 'DESC')
 			 ->where(
 				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)),
-				$queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getFrontendController()->id, \PDO::PARAM_INT))
+				$queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), \PDO::PARAM_INT))
 			 )
 			 ->setMaxResults($setMaxResults)
 			 ->execute()
@@ -154,13 +154,13 @@ class LastModifiedProcessor implements DataProcessorInterface
 
 
 	/**
-	 * Returns $typoScriptFrontendController TypoScriptFrontendController
+	 * Returns $id int
 	 *
-	 * @return TypoScriptFrontendController
+	 * @return int
 	 */
-	protected function getFrontendController(): TypoScriptFrontendController
-	{
-		return $GLOBALS['TSFE'];
+	protected function getCurrentUid(): int
+	{		
+		return (int) $GLOBALS['TSFE']->id;
 	}
 
 

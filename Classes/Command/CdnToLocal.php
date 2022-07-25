@@ -36,7 +36,7 @@ class CdnToLocal extends Command
 	 */
 	protected function configure()
 	{
-		 $this->setDescription('Write required CSS and JS to fileadmin/Resources/Public/');
+		$this->setDescription('Write required CSS and JS to fileadmin/Resources/Public/');
 	}
 
 
@@ -87,19 +87,21 @@ class CdnToLocal extends Command
 				$customDir = 'fileadmin/T3SB/Resources/Public/CSS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'bootstrap.min.css';
-
 				if ($settings['cdn']['bootswatch']) {
 					$bootswatchTheme = $settings['cdn']['bootswatch'];
-					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootswatch@'.$settings['cdn']['bootstrap'].'/dist/'.$bootswatchTheme.'/'.$customFileName;
+					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootswatch@'.$version.'/dist/'.$bootswatchTheme.'/'.$customFileName;
 					self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 				} else {
-					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$settings['cdn']['bootstrap'].'/dist/css/'.$customFileName;
+					$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/css/'.$customFileName;
 					self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 				}
 
 				$customDir = 'fileadmin/T3SB/Resources/Public/JS/';
 				$customPath = GeneralUtility::getFileAbsFileName($customDir);
 				$customFileName = 'bootstrap.min.js';
+				$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
+				self::writeCustomFile($customPath, $customFileName, $cdnPath);
+				$customFileName = 'bootstrap.bundle.min.js';
 				$cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
 				self::writeCustomFile($customPath, $customFileName, $cdnPath);
 			}
@@ -263,25 +265,18 @@ class CdnToLocal extends Command
 	}
 
 	private function writeCustomFile($customPath, $customFileName, $cdnPath, $extend=false ) {
-
 		$customFile = $customPath.$customFileName;
 		$customContent = GeneralUtility::getURL($cdnPath);
-
-		if ($extend && str_contains($customContent, '/*#')) {
-
+		if ($extend && str_contains( (string)$customContent, '/*#')) {
 			$customContentArr = explode('/*#' , $customContent);
 			$customContent = $customContentArr[0];
-
 		} elseif (str_contains((string)$customContent, '//#')) {
-
 			$customContentArr = explode('//#' , $customContent);
 			$customContent = $customContentArr[0];
 		}
-
 		if (file_exists($customFile)) {
 			unlink($customFile);
 		}
-
 		if (!is_dir($customPath)) {
 			mkdir($customPath, 0777, true);
 		}

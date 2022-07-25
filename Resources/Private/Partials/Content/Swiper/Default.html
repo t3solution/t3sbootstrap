@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment>
 
@@ -52,7 +53,7 @@
 		b768 = {breakpoints768},
 		b992 = {breakpoints992},
 		lop = {loop},
-		uid = {data.uid};
+		suid = {data.uid};
 	var swiper = new Swiper('#swiper-{data.uid}', {
 		slidesPerView: spv,
 		spaceBetween: spb,
@@ -67,8 +68,8 @@
 			delay: del,
 		},
 		navigation: {
-			nextEl: '.next-'+uid,
-			prevEl: '.prev-'+uid,
+			nextEl: '.next-'+suid,
+			prevEl: '.prev-'+suid,
 		},
 		breakpoints: {
 			10: {
@@ -96,15 +97,26 @@
 </f:if>
 </f:asset.script>
 <div id="swiper-{data.uid}" class="swiper {class}"{styleAttr -> f:format.raw()}>
-	<div class="swiper-wrapper">
+	<div class="swiper-wrapper gallery">
 		<f:for each="{col_300}" as="card" iteration="iterator">
 			<f:if condition="{card.header} || {card.subheader} || {card.bodytext} || {swiperSlides.{card.uid}.0}">
 				<div class="swiper-slide">
 					<div class="card rounded-0 h-100">
 						<f:if condition="{swiperSlides.{card.uid} -> f:count()}">
-							<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
-								<f:render section="Image" arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true'}" />
-							</f:link.typolink>
+							<f:if condition="{zoom}">
+								<f:then>
+									<ce:link.clickEnlarge image="{swiperSlides.{card.uid}.0}" configuration="{settings.media.popup}">
+										<f:render section="Image"
+										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true'}" />
+									</ce:link.clickEnlarge>
+								</f:then>
+								<f:else>
+									<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
+										<f:render section="Image"
+										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true'}" />
+									</f:link.typolink>
+								</f:else>
+							</f:if>
 						</f:if>
 						<f:if condition="{card.header} || {card.subheader} || {card.bodytext}">
 							<div class="card-body{card.header_position}">
@@ -163,16 +175,20 @@
 	<f:if condition="{card.header} && {card.subheader}">
 		<f:then>
 			<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
-				<h4 class="card-title">
-					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
-				</h4>
+				<f:if condition="{card.header_layout} != 100">
+					<h{card.header_layout} class="card-title">
+						{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
+					</h{card.header_layout}>
+				</f:if>
 				<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 			</header>
 		</f:then>
 		<f:else if="{card.header}">
-			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
-				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
-			</h4>
+			<f:if condition="{card.header_layout} != 100">
+				<h{card.header_layout} class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
+					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
+				</h{card.header_layout}>
+			</f:if>
 		</f:else>
 		<f:else if="{card.subheader}">
 			<h6 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">

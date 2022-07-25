@@ -18,6 +18,36 @@
 
 
 <f:section name="Default">
+<f:asset.script identifier="tabs_function">
+// Tabs - Templates/Container/TabContainer.html
+function t3sbTabs(fixedNavbar, navbarHeight) {
+	if ( window.location.hash ) {
+		var idArr = window.location.hash.split('#c');
+		var targetElement = document.getElementById('tab-'+idArr[1]);
+		if (targetElement !== null && targetElement !== '') {
+			var tabTrigger = new bootstrap.Tab(targetElement);
+			tabTrigger.show();
+			var offsetSize = targetElement.clientHeight;
+			if ( fixedNavbar ) {
+				offsetSize += navbarHeight;
+			}
+			var scrollTo = Math.round(t3sbOffsetTop(targetElement)-offsetSize);
+			window.scroll({ top: scrollTo, behavior: 'smooth' });
+		}
+	} else {
+		var tabs = document.querySelectorAll('.nav.tabcontainer');
+		if ( tabs.length ) {
+			tabs.forEach( tabcontainer => {
+				if (tabcontainer.id) {
+					var firstTabEl = document.querySelector('#'+tabcontainer.id+' li:first-child button');
+					var firstTab = new bootstrap.Tab(document.getElementById(firstTabEl.id));
+					firstTab.show();
+				}
+			});
+		}
+	}
+}
+</f:asset.script>
 <f:asset.script identifier="vanilla_tabs">
 	// Tabs - TabContainer.html
 	var tabs = document.querySelectorAll('.nav.nav-tabs, .nav.nav-pills');

@@ -3,6 +3,24 @@
 <f:asset.css identifier="flipCard-{data.uid}">
 #c{data.uid}.flip-card:hover .flip-card-inner {transform: rotateY({card.rotateY});}#c{data.uid} .flip-card-back {transform: rotateY({card.rotateY});}
 </f:asset.css>
+<f:asset.script identifier="cardwrapper_function">
+// Flip Card rotate on hover - Card.html
+function t3sbflipCard(viewportWidth) {
+	document.querySelectorAll('.flip-card').forEach( f => {
+		var width = f.parentElement.clientWidth - 30,
+			height = width,
+			r = width / height;
+		f.style.width = width+'px';
+		f.style.height = width+'px';
+		var front = f.querySelectorAll('.flip-card-front')[0];
+		var back = f.querySelectorAll('.flip-card-back')[0];
+		front.style.width = width+'px';
+		front.style.height = width+'px';
+		back.style.width = width+'px';
+		back.style.height = width+'px';
+	});
+}		
+</f:asset.script>
 <f:asset.script identifier="vanilla_cardwrapper">
 	// Flip Card rotate on hover - Card.html
 	t3sbflipCard(viewportWidth);

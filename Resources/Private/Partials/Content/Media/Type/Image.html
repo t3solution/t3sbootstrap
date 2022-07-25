@@ -59,6 +59,28 @@
 
 <f:section name="CopyrightOnClick">
 <f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
+	<f:asset.script identifier="imgcopyright_function">
+// Image copyright on click - Media/Type/Image.html
+function t3sbCopyright() {
+	document.querySelectorAll('.image .img-copyright').forEach( imgCopy => {
+		imgCopy.addEventListener('click', function(ic) {
+			var imgCopyright = ic.currentTarget;
+			imgCopyright.style.opacity = 0;
+			var tid = ic.currentTarget.parentNode.querySelector('.toast').id;
+			var myToastEl = document.getElementById(tid);
+			var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl);
+			var iw = Math.round(myToast._element.parentNode.querySelector('img').getBoundingClientRect().width);
+			myToast.show();
+			var th = Math.round(myToast._element.parentNode.querySelector('.toast').getBoundingClientRect().height);
+			myToast._element.parentNode.querySelector('.toast').style.width = iw+'px';
+			myToast._element.parentNode.querySelector('.toast').style.marginTop = -th+'px';
+			myToast._element.addEventListener('hidden.bs.toast', function (icct) {
+				imgCopyright.style.opacity = 1;
+			});
+		});
+	});
+}
+	</f:asset.script>
 	<f:asset.script identifier="vanilla_imgcopyright">
 		// Image copyright on click - Media/Type/Image.html
 		t3sbCopyright();	
