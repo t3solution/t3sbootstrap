@@ -36,7 +36,6 @@ class ConfigProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
 	{
-
 		$request = $GLOBALS['TYPO3_REQUEST'];
 		$settings = $contentObjectConfiguration['settings.'];
 		$frontendController = $request->getAttribute('frontend.controller');

@@ -13,19 +13,6 @@ page {
 
 	}
 
-	includeJSFooter {
-
-		##########################################################################################################
-		#
-		# Modernizr JS
-		#
-		##########################################################################################################
-
-		modernizr = EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js
-		modernizr.if.isTrue = {$bootstrap.extconf.webp}
-
-	}
-
 	##########################################################################################################
 	#
 	# FONTAWESOME PRO - using the SVG + JS version

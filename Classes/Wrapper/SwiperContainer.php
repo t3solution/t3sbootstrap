@@ -37,6 +37,7 @@ class SwiperContainer implements SingletonInterface
 		$processedData['slidesPerGroup'] = (int)$flexconf['slidesPerGroup'];
 		$processedData['spaceBetween'] = (int)$flexconf['spaceBetween'];
 		$processedData['loop'] = (int)$flexconf['loop'];
+		$processedData['zoom'] = (int)$flexconf['zoom'];
 		$processedData['navigation'] = (int)$flexconf['navigation'];
 		$processedData['pagination'] = (int)$flexconf['pagination'];
 		$processedData['autoplay'] = (int)$flexconf['autoplay'];

@@ -20,6 +20,7 @@ plugin.tx_t3sbootstrap {
 bootstrap.cdn.fontawesome5latest = 5.15.4
 bootstrap.cdn.fontawesome6latest = 6.1.1
 
+
 # customcategory=bootstrap-cdn=* T3SB::CDN- and Version-Settings
 # customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
 # customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
@@ -44,7 +45,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 11.5.1
+	highlight = 11.6.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
 	lazyload = 17.8
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
@@ -56,7 +57,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/42; type=small; label=Halkabox:
 	halkabox = 1.6.0
 	# cat=bootstrap-cdn/b-version/45; type=small; label=G Lightbox:
-	glightbox = 3.1.0
+	glightbox = 3.2.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
 	jarallax = 2
 	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper:
@@ -66,9 +67,11 @@ bootstrap.cdn {
 	bootstrapCssIntegrity = sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
 	bootstrapJsIntegrity = sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13
-	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
+	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
+	bootstrapBundleJsIntegrity = sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2
+	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
 	popperjsIntegrity = sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk
-	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Masonry js:
+	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
 	jqueryIntegrity =

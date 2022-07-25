@@ -4,14 +4,50 @@
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
+
+
 <f:if condition="{appearance} == 'accordion' && !{settings.disableAccordionScrollToTop}">
-<f:asset.script identifier="vanilla_collapsible">
+	<f:asset.script identifier="collapsible_function">
+// Collapsible - Templates/Container/CollapsibleContainer.html
+function t3sbCollapsible(fixedNavbar, navbarHeight) {
+	if ( window.location.hash ) {
+		var idArr = window.location.hash.split('#c'),
+			accordionButton = document.getElementById('c'+idArr[1]);
+		if (accordionButton !== null && accordionButton !== '') {
+			var targetElement = document.getElementById('collapse-'+idArr[1]),
+				collapseTrigger = new bootstrap.Collapse(targetElement),
+				offsetSize = accordionButton.clientHeight;
+			collapseTrigger.show();
+			if ( fixedNavbar ) {
+				offsetSize += navbarHeight;
+			}
+			var scrollTo = Math.round(t3sbOffsetTop(accordionButton)-offsetSize);
+			window.scroll({ top: scrollTo, behavior: 'smooth' });
+		}
+	} else {
+		document.querySelectorAll('.accordion').forEach( acc => {
+			var collapse = document.getElementById(acc.id);
+			collapse.addEventListener('shown.bs.collapse', function (e) {
+				if ( e.target) {
+					var offsetSize = e.target.parentNode.querySelector('.accordion-button').clientHeight;
+					if ( fixedNavbar ) {
+						offsetSize += navbarHeight;
+					}
+					var scrollTo = Math.round(t3sbOffsetTop(e.target.parentNode)-offsetSize);
+					window.scroll({ top: scrollTo, behavior: 'smooth' });
+				}
+			});
+		});
+	}
+}
+	</f:asset.script>
+	<f:asset.script identifier="vanilla_collapsible">
 	// Collapsible - CollapsibleContainer.html
 	var collapse = document.querySelectorAll('.accordion .collapse');
 	if ( collapse.length ) {
 		t3sbCollapsible(fixedNavbar, navbarHeight);
 	}
-</f:asset.script>
+	</f:asset.script>
 </f:if>
 <f:if condition="{col_277 -> f:count()}">
 	<f:then>

@@ -26,7 +26,7 @@ page {
 			be_layout.value < temp.pagelayout
 		}
 		settings {
-			// from EM config
+			module.cdn < module.tx_t3sbootstrap.settings.cdn
 			expandedContent = {$bootstrap.extconf.expandedContent}
 			fontawesome.extconf = {$bootstrap.extconf.fontawesomeCss}
 			fontawesome.cdn = {$bootstrap.cdn.enable}
@@ -34,11 +34,16 @@ page {
 			fontawesome.5latest = {$bootstrap.cdn.fontawesome5latest}
 			fontawesome.6latest = {$bootstrap.cdn.fontawesome6latest}
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
+			fontawesome.fontawesomeCss = {$bootstrap.extconf.fontawesomeCss}
+			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}		
+			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			codesnippet = {$bootstrap.extconf.codesnippet}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
 			webp = {$bootstrap.extconf.webp}
-			// various not in DB
+			cookieconsent = {$bootstrap.extconf.cookieconsent}
+			cdn = {$bootstrap.cdn.enable}
+			t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
 			backToTopTitle = {$bootstrap.backToTopTitle}
 			backToTopClass = {$bootstrap.backToTopClass}

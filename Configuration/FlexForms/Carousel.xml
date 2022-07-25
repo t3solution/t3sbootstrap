@@ -27,6 +27,42 @@
 							</config>
 						</TCEforms>
 					</shift>
+					<loop>
+						<TCEforms>
+							<label>Loop (local video)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</loop>
+					<muted>
+						<TCEforms>
+							<label>Muted (local video)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</muted>
+					<controls>
+						<TCEforms>
+							<label>Controls (local video)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</controls>
+					<playsinline>
+						<TCEforms>
+							<label>Playsinline (local video)</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</playsinline>
 					<bgOverlay>
 						<TCEforms>
 							<label>Background color for caption</label>

@@ -37,12 +37,17 @@ page {
 		popperCDN = https://cdnjs.cloudflare.com/ajax/libs/popper.js/{$bootstrap.cdn.popperjs}/umd/popper.min.js
 		popperCDN.integrity = {$bootstrap.cdn.popperjsIntegrity}
 		popperCDN.external = 1
-
+		popperCDN.if.isFalse = {$bootstrap.extconf.t3sbconcatenate}
 
 		bootstrapCDN = https://cdn.jsdelivr.net/npm/bootstrap@{$bootstrap.cdn.bootstrap}/dist/js/bootstrap.min.js
 		bootstrapCDN.integrity = {$bootstrap.cdn.bootstrapJsIntegrity}
 		bootstrapCDN.external = 1
+		bootstrapCDN.if.isFalse = {$bootstrap.extconf.t3sbconcatenate}
 
+		bootstrapCDNBundle = https://cdn.jsdelivr.net/npm/bootstrap@{$bootstrap.cdn.bootstrap}/dist/js/bootstrap.bundle.min.js
+		bootstrapCDNBundle.integrity = {$bootstrap.cdn.bootstrapBundleJsIntegrity}
+		bootstrapCDNBundle.external = 1
+		bootstrapCDNBundle.if.isTrue = {$bootstrap.extconf.t3sbconcatenate}
 	}
 
 	includeJSFooter {

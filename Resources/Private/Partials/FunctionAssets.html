@@ -1,0 +1,310 @@
+<f:asset.script identifier="default_function">
+// Scroll anchor - Main.html
+function t3sbScrollToAnchor(sectionmenuAnchorOffset, fixedNavbar, navbarHeight, sectionhash=false) {
+	var hash = window.location.hash;
+	if (sectionhash) {
+		hash = sectionhash;
+	}
+	if (hash.length) {
+		var idArr = hash.split('#');
+		var targetElement = document.getElementById(idArr[1]);
+		if ( targetElement === null ) {
+			idArr = hash.split('#c');
+			targetElement = document.getElementById('tab-'+idArr[1]);
+		}
+		if ( targetElement != null ) {
+			var	offsetSize = sectionmenuAnchorOffset;
+			if ( fixedNavbar ) {
+				offsetSize += navbarHeight;
+			}
+			var scrollTo = Math.round(t3sbOffsetTop(targetElement)-offsetSize);
+			window.scroll({ top: scrollTo, behavior: 'smooth' });
+		}
+	}
+}
+
+function t3sbOffsetTop(el) {
+	var rect = el.getBoundingClientRect(),
+		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		return rect.top + scrollTop;
+}
+
+/**
+ * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT) polyfill
+ * https://gomakethings.com/looping-through-objects-with-es6/
+ * @author Chris Ferdinandi
+ * @license MIT
+ */
+if (!Object.prototype.forEach) {
+	Object.defineProperty(Object.prototype, 'forEach', {
+		value: function (callback, thisArg) {
+			if (this == null) {
+				throw new TypeError('Not an object');
+			}
+			thisArg = thisArg || window;
+			for (var key in this) {
+				if (this.hasOwnProperty(key)) {
+					callback.call(thisArg, this[key], key, this);
+				}
+			}
+		}
+	});
+}
+</f:asset.script>
+
+
+<f:if condition="{settings.config.loadingSpinner}">
+	<f:asset.script identifier="loadingspinner_function">
+// Loading spinner - Main.html
+function t3sbFadeOutEffect(fadeTarget) {
+	var fadeEffect = setInterval(function () {
+		if (!fadeTarget.style.opacity) {
+			fadeTarget.style.opacity = 1;
+		}
+		if (fadeTarget.style.opacity > 0) {
+			fadeTarget.style.opacity -= 0.1;
+		} else {
+			clearInterval(fadeEffect);
+		}
+	}, 60);
+	fadeTarget.classList.add('d-none');
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
+	<f:asset.script identifier="lazyload_function">
+// Magnifying glass icon - Main.html
+function t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) {
+	var zoomOverlay = img.parentElement.parentElement.querySelectorAll('div.zoom-overlay');
+	if ( zoomOverlay.length ) {
+		var imgwidth = Math.round(img.getBoundingClientRect().width)+'px',
+			imgheight = img.clientHeight+'px';
+		if ( viewportWidth < navbarBreakpointWidth ) {
+			imgwidth = '100%';
+		}
+		zoomOverlay[0].classList.add('card-img-overlay');
+		if ( imgwidth ) {
+			zoomOverlay[0].style.maxWidth = imgwidth;
+		}
+		if ( imgheight ) {
+			zoomOverlay[0].style.maxHeight = imgheight;
+		}
+	}
+}
+	</f:asset.script>
+</f:if>
+
+<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
+	<f:asset.script identifier="linktotop_function">
+// Link to top - Main.html
+function t3sbScrollToTop() {
+	document.addEventListener('scroll', t3sbHandleScroll);
+}
+
+function t3sbHandleScroll() {
+	var scrollToTopBtn = document.querySelector('.back-to-top');
+	scrollToTopBtn.addEventListener('click', t3sbScrollIt);
+	const scrollableHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+	const RATIO = 0.2;
+	if ((document.documentElement.scrollTop / scrollableHeight ) > RATIO) {
+		scrollToTopBtn.classList.add('st-block');
+		scrollToTopBtn.classList.remove('st-none');
+	} else {
+		scrollToTopBtn.classList.add('st-none');
+		scrollToTopBtn.classList.remove('st-block');
+	}
+}
+
+function t3sbScrollIt(e) {
+	e.preventDefault();
+	window.scroll({ top: 0, behavior: 'smooth' });
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.footerSticky}">
+	<f:asset.script identifier="stickyfooter_function">
+// Sticky footer - Page/Footer.html
+function t3sbStickyFooter(footerExtraHeight) {
+	const footer = document.getElementById('page-footer');
+	var footerHeight = footer.clientHeight;
+	if ( footerExtraHeight > 0 ) {
+		footerHeight += footerExtraHeight;
+	}
+	if ( footer.classList.contains('footer-sticky') ) {
+		document.body.style.paddingBottom = footerHeight+'px';
+	}
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.navbarSectionmenu}">
+	<f:asset.script identifier="navbarsection_function">
+// Section Menu Navbar - Page/Navbar/Navbar.html
+function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight,offcanvas) {
+	var scrollTrigger = document.querySelectorAll('.section-menu a.js-scroll-trigger');
+	if (offcanvas && !scrollTrigger.length) {
+		scrollTrigger = document.querySelectorAll('.offcanvas a.js-scroll-trigger');
+	}
+	scrollTrigger.forEach( st => {
+		st.addEventListener('click', (event) => {
+			event.preventDefault();
+			var anchor = event.currentTarget.getAttribute('href');
+			if (anchor.length) {
+				var offsetSize = sectionmenuAnchorOffset;
+				if ( fixedNavbar ) {
+					offsetSize = navbarHeight+offsetSize;
+				}
+				var targetElement = document.getElementById(anchor.split('#')[1]);
+				var scrollTo = Math.round(t3sbOffsetTop(targetElement)-offsetSize);
+				window.scroll({ top: scrollTo, behavior: 'smooth' });
+			}
+		});
+	});
+	if (!offcanvas) {
+		const navLinks = document.querySelectorAll('.nav-item:not(.dropdown)');
+		const menuToggle = document.getElementById('navbarToggler');
+		const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
+		navLinks.forEach((l) => {
+			l.addEventListener('click', () => { bsCollapse.toggle() });
+		});
+	}
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.navbarTransparent}">
+	<f:asset.script identifier="navbartransparent_function">
+// Navbar transparent - Navbar/Assets.html
+function t3sbTransparentNavbar(colorschemes, gradient) {
+	window.onscroll = function(){
+		var navbar = document.getElementById('main-navbar');
+		var top =	 window.pageYOffset || document.documentElement.scrollTop;
+		if (top > 100) {
+			navbar.classList.remove('bg-transparent');
+			navbar.classList.add(colorschemes);
+			if (gradient) {
+				navbar.classList.add(gradient);
+			}
+		} else {
+			navbar.classList.add('bg-transparent');
+			navbar.classList.remove(colorschemes);
+			if (gradient) {
+				navbar.classList.remove(gradient);
+			}
+		}
+	};
+}
+	</f:asset.script>
+</f:if>
+
+<f:if condition="{settings.config.navbarShrinkcolor}">
+	<f:asset.script identifier="navbarshrinkcolor_function">
+// Shrinking Navbar on scrolling - Navbar/Assets.html
+function t3sbShrinkingNavbar(navbar, padding) {
+	let navShrinkColorschemes = navbar.getAttribute('data-shrinkcolorschemes'),
+		navShrinkColor = navbar.getAttribute('data-shrinkcolor'),
+		navColorschemes = navbar.getAttribute('data-colorschemes'),
+		navColor = navbar.getAttribute('data-color');
+	window.addEventListener('scroll', function() {
+		if ( t3sbOffsetTop(navbar) > 100) {
+			navbar.classList.remove('py-'+padding, navColorschemes, navColor);
+			navbar.classList.add('navbar-shrink', navShrinkColor, navShrinkColorschemes);
+		} else {
+			navbar.classList.remove('navbar-shrink', navShrinkColor, navShrinkColorschemes);
+			navbar.classList.add('py-'+padding, navColorschemes, navColor);
+		}
+	});
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.navbarExtraRow}">
+	<f:asset.script identifier="navbarExtraRow_function">
+// Extra Row - Navbar/Assets.html
+function t3sbExtraRow(vw, bp) {
+	let extraRow = document.querySelector('.navbar .extra-row');
+	if (extraRow) {
+		if ( vw < bp ) {
+			extraRow.classList.add('flex-row','me-auto','mt-4','mb-0');
+			extraRow.classList.remove('ms-auto');
+
+		} else {
+			extraRow.classList.remove('flex-row','me-auto','mt-4','mb-0');
+			extraRow.classList.add('ms-auto');
+		}
+	}
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.navbarOffcanvas}">
+	<f:asset.script identifier="offcanvas_function">
+// Offcanvas - Navbar/Assets.html
+function t3sbOffcanvas(vw, bp, utilColorArr) {
+	var navbarToggler = document.getElementById('navbarToggler');
+	if ( vw > bp ) {
+		navbarToggler.classList.remove(utilColorArr[0]);
+		navbarToggler.classList.remove(utilColorArr[1]);
+	} else {
+		navbarToggler.classList.add(utilColorArr[0]);
+		navbarToggler.classList.add(utilColorArr[1]);
+	}
+	let extraRow = document.querySelector('.navbar .extra-row');
+	if (extraRow) {
+		if ( vw < bp ) {
+			extraRow.classList.add('ms-3');
+		} else {
+			extraRow.classList.remove('ms-3');
+		}
+	}
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.navbarSearchbox}">
+	<f:asset.script identifier="navbarSearchbox_function">
+// Searchbox in Navbar - Navbar/Assets.html
+function t3sbNavbarSearchbox(vw, bp) {
+	let	form = document.querySelector('.navbar form');
+	if ( vw < bp ) {
+		if (form.classList.contains('ms-auto')) {
+			form.classList.remove('ms-auto');
+			form.classList.add('xl-ms-auto');
+		}
+		form.classList.add('mt-3');
+	} else {
+		if (form.classList.contains('xl-ms-auto')) {
+			form.classList.add('ms-auto');
+			form.classList.remove('xl-ms-auto');
+		}
+		form.classList.remove('mt-3');
+	}
+}
+	</f:asset.script>
+</f:if>
+
+
+<f:if condition="{settings.config.darkMode}">
+<f:asset.script identifier="darkMode_function">
+// Dark mode - Main.html
+function t3sbDarkMode() {
+	let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	let body = document.querySelector('body');
+	if (dark) {
+		body.classList.add('dark-mode');
+	} else {
+		body.classList.remove('dark-mode');
+	}
+}
+</f:asset.script>
+</f:if>
+

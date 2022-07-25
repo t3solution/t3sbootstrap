@@ -46,11 +46,24 @@ editor:
       - { name: "Text: Zitat center", element: "blockquote" ,attributes: { 'class': 'blockquote text-center' }}
       - { name: "Text: Zitat right", element: "blockquote" ,attributes: { 'class': 'blockquote text-end' }}
 
+      - { name: "Text: fw-bold", element: "span", attributes: { 'class': 'fw-bold' } }
+      - { name: "Text: fw-bolder", element: "span", attributes: { 'class': 'fw-bolder' } }
+      - { name: "Text: fw-semibold", element: "span", attributes: { 'class': 'fw-semibold' } }
+      - { name: "Text: fw-normal", element: "span", attributes: { 'class': 'fw-normal' } }
+      - { name: "Text: fw-light", element: "span", attributes: { 'class': 'fw-light' } }
+      - { name: "Text: fw-lighter", element: "span", attributes: { 'class': 'fw-lighter' } }
+      - { name: "Text: fst-italic", element: "span", attributes: { 'class': 'fst-italic' } }
+      - { name: "Text: fst-normal", element: "span", attributes: { 'class': 'fst-normal' } }
+
       - { name: "Text: h2-style", element: "span", attributes: { 'class': 'h2' } }
       - { name: "Text: h3-style", element: "span", attributes: { 'class': 'h3' } }
       - { name: "Text: h4-style", element: "span", attributes: { 'class': 'h4' } }
       - { name: "Text: h5-style", element: "span", attributes: { 'class': 'h5' } }
       - { name: "Text: h6-style", element: "span", attributes: { 'class': 'h6' } }
+
+      - { name: "Lowercase", element: "p", attributes: { 'class': 'text-lowercase' } }
+      - { name: "Uppercase", element: "p", attributes: { 'class': 'text-uppercase' } }
+      - { name: "Capitalize", element: "p", attributes: { 'class': 'text-capitalize' } }
 
       - { name: "Lowercase", element: "p", attributes: { 'class': 'text-lowercase' } }
       - { name: "Uppercase", element: "p", attributes: { 'class': 'text-uppercase' } }
@@ -64,6 +77,11 @@ editor:
       - { name: "Color: Info", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-info' } }
       - { name: "Color: Light", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-light' } }
       - { name: "Color: Dark", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-dark' } }
+
+      - { name: "Line height: lh-1", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-1' } }
+      - { name: "Line height: lh-sm", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-sm' } }
+      - { name: "Line height: lh-base", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-base' } }
+      - { name: "Line height: lh-lg", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-lg' } }
 
       #Tabellen
       - { name: "Table: Hover", element: "table", attributes: { 'class': 'table table-hover' } }

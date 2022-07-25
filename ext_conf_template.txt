@@ -58,6 +58,8 @@ expandedContent = 0
 cTypeClass = 0
 # cat=t3sb/enable/60; type=boolean; label=Content Consent Plug-In: Currently only for YouTube videos.
 contentconsent = 0
+# cat=t3sb/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Minify CSS and JS files - best with "Compress" (T3SB config).
+t3sbconcatenate = 0
 
 # cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0
