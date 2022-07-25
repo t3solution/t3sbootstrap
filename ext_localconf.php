@@ -18,6 +18,7 @@ use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard;
 use T3SBS\T3sbootstrap\Hooks\NewsFlexFormHook;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 defined('TYPO3') || die();
 
@@ -26,18 +27,20 @@ defined('TYPO3') || die();
 	/***************
 	 * Register Icons
 	 */
-
-	if ( $GLOBALS['TYPO3_REQUEST'] ?? null && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
-
-		$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-
-		// FontawesomeIconProvider
-		$iconRegistry->registerIcon(
-			'buttongroup',
-			FontawesomeIconProvider::class,
-			['name' => 'bars']
-		);
-		unset($iconRegistry);
+	if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() < 11) {
+		
+		if ( $GLOBALS['TYPO3_REQUEST'] ?? null && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
+	
+			$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
+	
+			// FontawesomeIconProvider
+			$iconRegistry->registerIcon(
+				'buttongroup',
+				FontawesomeIconProvider::class,
+				['name' => 'bars']
+			);
+			unset($iconRegistry);
+		}
 	}
 
 	/***************
