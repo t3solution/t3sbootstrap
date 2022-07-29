@@ -318,6 +318,16 @@
 					<sheetTitle>Local Video</sheetTitle>
 				</TCEforms>
 				<el>
+					<localControls>
+						<TCEforms>
+							<label>Controls</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</localControls>
 					<loop>
 						<TCEforms>
 							<label>Loop</label>

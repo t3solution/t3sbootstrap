@@ -165,7 +165,7 @@ abstract class AbstractController extends ActionController
 	*/
 	protected function getNewConfig(Config $rootConfig): Config
 	{
-		$newConfig = new \Config();
+		$newConfig = new Config();
 
 		foreach ( $this->tcaColumns as $field=>$columns ) {
 			$var = GeneralUtility::underscoredToUpperCamelCase($field);
@@ -238,8 +238,6 @@ abstract class AbstractController extends ActionController
 
 		return $override;
 	}
-
-
 
 
 	/**
@@ -462,10 +460,11 @@ abstract class AbstractController extends ActionController
 	 */
 	protected function setDefaults(Config $newConfig): Config
 	{
+		$defaultNavbarImagePath = isset($this->settings['defaultNavbarImagePath']) ? $this->settings['defaultNavbarImagePath'] : '';
 		$newConfig->setHomepageUid($this->currentUid);
 		$newConfig->setPageTitle( 'jumbotron' );
 		$newConfig->setPageTitlealign( 'center' );
-		$newConfig->setNavbarImage($this->settings['defaultNavbarImagePath']);
+		$newConfig->setNavbarImage($defaultNavbarImagePath);
 		$newConfig->setNavbarEnable( 'light' );
 		$newConfig->setNavbarLevels( 4 );
 		$newConfig->setNavbarbrandAlignment( 'left' );

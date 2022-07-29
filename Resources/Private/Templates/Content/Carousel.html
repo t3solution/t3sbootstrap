@@ -14,13 +14,14 @@
 <f:if condition="{localVideoPath}">
 	<f:then>
 		<f:comment> Local Video </f:comment>
-		<f:asset.css identifier="localvideocss-{data.uid}">
-@media(min-width: 576px){.carousel-item-{data.uid}{width:100%;height:calc(100vw*{ratioCalc});position:relative}}
-<f:if condition="{videoShift}">{videoShift}</f:if>
-		</f:asset.css>
-		<div class="carousel-item carousel-item-{data.uid} carousel-video">
-			<figure class="d-flex">
-					<video class="ratio ratio-16x9 img-fluid{imgLazyLoad}"{f:if(condition: '{autoplay}',then:' autoplay')}{f:if(condition: '{loop}',then:' loop')}{f:if(condition: '{muted}',then:' muted')}{f:if(condition: '{controls}',then:' controls')}{f:if(condition: '{playsinline}',then:' playsinline')}>
+		<f:if condition="{videoShift}">
+			<f:asset.css identifier="localvideocss-{data.uid}">
+				{videoShift}
+			</f:asset.css>
+		</f:if>
+		<div class="carousel-item carousel-item-{data.uid} carousel-video carousel-image">
+			<figure class="ratio ratio-16x9 d-flex">
+					<video class="img-fluid{imgLazyLoad}"{f:if(condition: '{autoplay}',then:' autoplay')}{f:if(condition: '{loop}',then:' loop')}{f:if(condition: '{muted}',then:' muted')}{f:if(condition: '{controls}',then:' controls')}{f:if(condition: '{playsinline}',then:' playsinline')}>
 						<source src="{localVideoPath}" />
 					</video>
 				<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">

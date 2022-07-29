@@ -99,6 +99,7 @@ class BackgroundWrapper implements SingletonInterface
 						$processedData['localVideo']['autoplay'] = $autoplay;
 						$processedData['localVideo']['loop'] = $loop;
 						$processedData['localVideo']['mute'] = $mute;
+						$processedData['localVideo']['controls'] = $flexconf['localControls'] ?: 0;
 					}
 				}
 
@@ -156,7 +157,7 @@ class BackgroundWrapper implements SingletonInterface
 			$processedData['controlStyle'] = '';
 		} else {
 			$processedData['controlStyle'] = ' pointer-events:none;';
-		}
+		}		
 		if ( !empty($processedData['videoId']) && $processedData['youtube'] ) {
 			$params = '?autoplay='.$processedData['videoAutoPlay'].'&loop='.$flexconf['videoLoop'].'&playlist='.
 			$processedData['videoId'].'&mute='.$mute.'&rel=0&showinfo=0&controls='.$flexconf['videoControls'].'&modestbranding='.$flexconf['videoControls'];

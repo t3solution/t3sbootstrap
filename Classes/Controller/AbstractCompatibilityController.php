@@ -132,11 +132,11 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 				}
 
 			} else {
-				$newConfig = new \Config();
+				$newConfig = new Config();
 				// some defaults
 				$newConfig = parent::setDefaults($newConfig);
 
-				$assignedOptions['pid'] = $this->getCurrentUid;
+				#$assignedOptions['pid'] = $this->getCurrentUid;
 				$assignedOptions['newConfig'] = $newConfig;
 			}
 
@@ -392,7 +392,7 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 				// some defaults
 				$newConfig = parent::setDefaults($newConfig);
 
-				$assignedOptions['pid'] = $this->getCurrentUid;
+				#$assignedOptions['pid'] = $this->getCurrentUid;
 				$assignedOptions['newConfig'] = $newConfig;
 			}
 

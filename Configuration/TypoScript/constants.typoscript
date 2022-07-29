@@ -36,7 +36,7 @@ bootstrap.cdn {
 	popperjs = 2.11.5
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.1.1
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.1.2
 	fontawesome = 5.15.4
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.6.0
