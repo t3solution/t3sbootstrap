@@ -127,7 +127,7 @@ function t3sbAddHeight(TYPO3, objKey) {
 											<f:comment>	Local video </f:comment>
 											<f:asset.script identifier="localVideo_function">
 // Local video - BackgroundWrapper.html
-function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, videoElement) {
+function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoElement) {
 	videoElement.muted = mute;
 	videoElement.loop = loop;
 	if (autoplay) {
@@ -135,7 +135,11 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, videoElement) {
 		videoElement.currentTime = 0;
 		videoElement.play();
 		videoElement.setAttribute('playsinline', '');
-		videoElement.removeAttribute('controls');
+		if (controls) {
+			videoElement.setAttribute('controls', '');
+		} else {
+			videoElement.removeAttribute('controls');
+		}
 	}
 }
 											</f:asset.script>
@@ -164,7 +168,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, videoElement) {
 	}, true);
 
 	videoElement.style.marginTop = '-'+marginTop-shift+'px';
-	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, videoElement );
+	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, {localVideo.controls}, videoElement );
 											</f:asset.script>
 											<f:asset.css identifier="lovalvideocss-{data.uid}">
 {localVideo.inlineCSS -> f:format.raw()}
