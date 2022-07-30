@@ -291,7 +291,7 @@ class CustomScss extends Command
 		GeneralUtility::writeFile($localZipFile, $zipContent);
 		$extractTo = $localZipPath;
 		$zip = new \ZipArchive;
-		if ($zip->open($zip_file) === TRUE) {
+		if ($zip->open($localZipFile) === TRUE) {
 			$zip->extractTo($extractTo);
 			$zip->close();
 		} else {
