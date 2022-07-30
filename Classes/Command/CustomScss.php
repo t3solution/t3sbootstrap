@@ -187,9 +187,6 @@ class CustomScss extends Command
 		$keepVariables = (int)$settings['keepVariables'];
 		if (file_exists($customFile)) {
 			$copyFile = $customPath.'_'.time().'-'.$customFileName;
-
-
-
 			if (!copy($customFile, $copyFile)) {
 				return FALSE;
 			} elseif (empty($keepVariables)) {
@@ -283,14 +280,16 @@ class CustomScss extends Command
 
 	public function getSccFiles($bootstrapVersion): void
 	{
-		if ( is_dir(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss')) ) {
-			self::rmDir(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss'));
+		$localZipPath = GeneralUtility::getFileAbsFileName(self::localZipPath);
+		if ( is_dir($localZipPath) ) {
+			self::rmDir($localZipPath);
 		}
+		mkdir($localZipPath, 0777, true);
+		$localZipFile = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
 		$zipFilename = 'v'.$bootstrapVersion.'.zip';
-		$zip_file = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
 		$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
-		GeneralUtility::writeFile($zip_file, $zipContent);
-		$extractTo = GeneralUtility::getFileAbsFileName(self::localZipPath);
+		GeneralUtility::writeFile($localZipFile, $zipContent);
+		$extractTo = $localZipPath;
 		$zip = new \ZipArchive;
 		if ($zip->open($zip_file) === TRUE) {
 			$zip->extractTo($extractTo);
