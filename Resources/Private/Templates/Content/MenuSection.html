@@ -4,10 +4,10 @@
 <f:if condition="{menu}">
 	<f:if condition="{settings.sectionmenuStickyTop}">
 		<f:then>
-			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true', contentElement:'true'}"	/>
+			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'{settings.sectionmenuScrollspy}', contentElement:'true'}"	/>
 		</f:then>
 		<f:else>
-			<f:render partial="Page/Assets" arguments="{scrollspy:'true', contentElement:'true'}" />
+			<f:render partial="Page/Assets" arguments="{scrollspy:'{settings.sectionmenuScrollspy}', contentElement:'true'}" />
 		</f:else>
 	</f:if>
 	<f:if condition="{onlyCurrentPageSelected}">
@@ -48,10 +48,11 @@
 </ul>
 </f:section>
 
+
 <f:section name="OnlyCurrent">
 	<f:for each="{menu}" as="page">
 		<f:if condition="{page.content}">
-			<nav id="sectionmenu" class="nav sticky-top section-menu{menudirection}{menupills}{menuHorizontalAlignment}">
+			<nav id="sectionmenu" class="nav{f:if(condition:settings.sectionmenuStickyTop, then: ' sticky-top')} section-menu{menudirection}{menupills}{menuHorizontalAlignment}">
 				<f:for each="{page.content}" as="element">
 					<f:if condition="{element.data.CType} != 'menu_section'">
 						<f:if condition="{element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu}">

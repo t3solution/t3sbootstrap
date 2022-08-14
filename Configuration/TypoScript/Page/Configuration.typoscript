@@ -20,3 +20,4 @@ config {
 	concatenateJs = {$bootstrap.config.compress}
 	concatenateCss = {$bootstrap.config.compress}
 }
+

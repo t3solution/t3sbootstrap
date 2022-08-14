@@ -11,27 +11,19 @@ page {
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
 		t3sbootstrap.if.isFalse = {$bootstrap.config.disableDefaultCss}
 
-	}
 
-	##########################################################################################################
-	#
-	# FONTAWESOME PRO - using the SVG + JS version
-	#
-	##########################################################################################################
+		##########################################################################################################
+		#
+		# GOOGLE FONTS
+		#
+		##########################################################################################################
 
-	footerData {
-		62 = TEXT
-		62.value = <script src="/fileadmin/T3SB/FA5Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
-		62.if {
-			value = 2
-			equals = {$bootstrap.extconf.fontawesomeCss}
+		googleFontCSS = /fileadmin/T3SB/Resources/Public/CSS/googlefonts.css
+		googleFontCSS.forceOnTop = 1
+		googleFontCSS.if {
+			isTrue = {$bootstrap.cdn.googlefonts}
 		}
-		63 = TEXT
-		63.value = <script src="/fileadmin/T3SB/FA6Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
-		63.if {
-			value = 4
-			equals = {$bootstrap.extconf.fontawesomeCss}
-		}
+		
 	}
 
 	##########################################################################################################

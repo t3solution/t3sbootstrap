@@ -58,8 +58,10 @@ expandedContent = 0
 cTypeClass = 0
 # cat=t3sb/enable/60; type=boolean; label=Content Consent Plug-In: Currently only for YouTube videos.
 contentconsent = 0
-# cat=t3sb/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Minify CSS and JS files - best with "Compress" (T3SB config).
+# cat=t3sb/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Concatenate CSS and JS files - best with "Compress" in T3SB config (clear cache).
 t3sbconcatenate = 0
+# cat=t3sb/enable/80; type=boolean; label=Minify CSS- and JS files from t3sbootstrap - EXPERIMENTAL: Minify CSS and JS with "toptal.com" if no error message is generated (clear cache).
+t3sbminify = 0
 
 # cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0

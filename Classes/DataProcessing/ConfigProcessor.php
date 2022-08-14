@@ -462,6 +462,7 @@ class ConfigProcessor implements DataProcessorInterface
 				$topOffset = (int)$processedRecordVariables['sectionmenuAnchorOffset'] + (int)$processedRecordVariables['navbarHeight'];
 				$processedData['config']['sidebar']['stickTopOffset'] = $topOffset ? $topOffset.'px' : 0;
 				$processedData['config']['sidebar']['scrollspyOffset'] = $processedRecordVariables['sectionmenuScrollspyOffset'];
+				$processedData['config']['sidebar']['scrollspy'] = $processedRecordVariables['sectionmenuScrollspy'];
 			} else {
 				if (!empty($processedData['subNavigation']) && is_array($processedData['subNavigation'])) {
 					$processedData['subNavigation'] =

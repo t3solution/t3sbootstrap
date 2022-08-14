@@ -127,7 +127,6 @@ function t3sbFadeInEffect(fadeTarget) {
 	</f:if>
 </f:if>
 
-
 <f:if condition="{scrollspy}">
 	<f:comment>Page/Section.html, Page/MenuSection.html</f:comment>
 	<f:asset.script identifier="vanilla_scrollspy">
@@ -136,7 +135,7 @@ function t3sbFadeInEffect(fadeTarget) {
 	document.body.setAttribute('data-bs-target', '#sectionmenu');
 	document.body.setAttribute('data-bs-offset', {settings.config.sectionmenuScrollspyOffset});
 	document.body.setAttribute('tabindex', '0');
-	document.body.style.position = 'relative';
+	//document.body.style.position = 'relative';
 	if (document.body.style.overflowY) {
 		document.body.style.overflowY = 'unset';
 	}
@@ -152,7 +151,8 @@ function t3sbFadeInEffect(fadeTarget) {
 	});
 	</f:asset.script>
 </f:if>
-<f:if condition="{contentElement}">
+
+<f:if condition="{contentElement} && {settings.sectionmenuStickyTop}">
 <f:asset.script identifier="vanilla_stickyTop">
 	window.onscroll = function() {stickyFunction()};
 	var sticky = sectionmenu.offsetTop;

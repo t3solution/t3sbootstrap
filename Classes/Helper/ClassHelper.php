@@ -261,7 +261,6 @@ class ClassHelper implements SingletonInterface
 		}
 
 		return $header;
-
 	}
 
 

@@ -5,7 +5,7 @@
 		<ul class="nav catpages{menudirection}{menupills}{menuHorizontalAlignment}">
 			<f:for each="{menu}" as="page">
 				<li class="nav-item">
-					<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}" title="{page.title}">
+					<a href="{page.link}"{f:if(condition:'{page.target}',then:' target="{page.target}"')} class="nav-link{f:if(condition:'{page.current}',then:' active')}" title="{page.title}">
 						<f:if condition="{page.nav_title}">
 							<f:then>
 								{page.nav_title}

@@ -6,6 +6,7 @@
 	</f:then>
 	<f:else>
 		<f:spaceless>
+			<f:render partial="FunctionAssets" arguments="{_all}" />
 			<f:render section="AssetScripts" arguments="{_all}" />
 			<f:comment> GOOGLE TAG MANAGER </f:comment>
 			<f:if condition="{settings.gtm}">
@@ -80,8 +81,7 @@
 			</f:if>
 			<f:comment> BACK TO TOP BUTTON </f:comment>
 			<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-				<f:link.page class="back-to-top"
-					title="{settings.backToTopTitle}">
+				<f:link.page class="back-to-top st-none" title="{settings.backToTopTitle}">
 					<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
 				</f:link.page>
 			</f:if>
@@ -106,7 +106,6 @@
 
 
 <f:section name="AssetScripts">
-<f:render partial="FunctionAssets" arguments="{_all}" />
 <f:if condition="{config.navbar.enable} == 'slide'">
 	<f:then>
 <f:asset.script identifier="vanilla_default">
@@ -249,5 +248,17 @@
 
 <f:if condition="{settings.webp}">
 	<f:asset.script identifier="t3sbmodernizr" src="EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js" />
+</f:if>
+
+<f:if condition="!{settings.fontawesome.cdn}">
+	<f:if condition="{settings.fontawesome.extconf} == '1' || {settings.fontawesome.extconf} == '3' ">
+		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" />
+	</f:if>
+	<f:if condition="{settings.fontawesome.extconf} == '2' ">
+		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA5Pro/js/all.min.js" />
+	</f:if>
+	<f:if condition="{settings.fontawesome.extconf} == '4' ">
+		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA6Pro/js/all.min.js" />
+	</f:if>
 </f:if>
 </f:section>

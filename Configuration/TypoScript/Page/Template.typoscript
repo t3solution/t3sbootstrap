@@ -43,6 +43,7 @@ page {
 			webp = {$bootstrap.extconf.webp}
 			cookieconsent = {$bootstrap.extconf.cookieconsent}
 			cdn = {$bootstrap.cdn.enable}
+			googlefonts = {$bootstrap.cdn.googlefonts}
 			t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
 			backToTopTitle = {$bootstrap.backToTopTitle}

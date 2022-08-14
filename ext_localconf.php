@@ -78,6 +78,7 @@ defined('TYPO3') || die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbconcatenate = 0');
+	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbminify = 0');
 
 	/***************
 	 * Extension configuration
@@ -203,9 +204,13 @@ defined('TYPO3') || die();
 	} elseif (array_key_exists('imgCopyright', $extconf) && $extconf['imgCopyright'] === '2') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 2');
 	}
-	// Optional concatenate JS files in asset collector
+	// Optional concatenate CSS & JS files in asset collector
 	if (array_key_exists('t3sbconcatenate', $extconf) && $extconf['t3sbconcatenate'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbconcatenate = 1');
+	}
+	// Optional minify CSS & JS with toptal.com
+	if (array_key_exists('t3sbminify', $extconf) && $extconf['t3sbminify'] === '1') {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbminify = 1');
 	}
 	// Optional fontawesomepagetitle
 	if (array_key_exists('fontawesomepagetitle', $extconf) && $extconf['fontawesomepagetitle'] === '1') {

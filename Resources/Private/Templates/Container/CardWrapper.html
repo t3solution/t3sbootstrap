@@ -341,11 +341,11 @@ function insertAfter(referenceNode, newNode) {
 <f:section name="Title">
 	<f:if condition="{card.header} && {card.subheader}">
 		<f:then>
-		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
-			<h4 class="card-title">
-				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
-			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
-		</header>
+			<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
+				<h4 class="card-title">
+					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+				<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
+			</header>
 		</f:then>
 		<f:else if="{card.header}">
 			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
@@ -363,7 +363,8 @@ function insertAfter(referenceNode, newNode) {
 		<f:then>
 		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
 			<h4 class="card-title">
-				<f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" 
+				parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
 			</h4>
 			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 		</header>
@@ -371,14 +372,14 @@ function insertAfter(referenceNode, newNode) {
 		<f:else if="{card.header}">
 			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
 				then: ' {card.tx_t3sbootstrap_header_class}')}">
-				<f:link.typolink parameter='{card.header_link}'>
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
 					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>
 		<f:else if="{card.subheader}">
 			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
 				then: ' {card.tx_t3sbootstrap_header_class}')}">
-				<f:link.typolink parameter='{card.header_link}'>
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
 					{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>

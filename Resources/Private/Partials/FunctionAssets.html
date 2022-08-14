@@ -73,8 +73,8 @@ function t3sbFadeOutEffect(fadeTarget) {
 </f:if>
 
 
-<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
-	<f:asset.script identifier="lazyload_function">
+<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+	<f:asset.script identifier="magnifying_function">
 // Magnifying glass icon - Main.html
 function t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) {
 	var zoomOverlay = img.parentElement.parentElement.querySelectorAll('div.zoom-overlay');
@@ -104,11 +104,10 @@ function t3sbScrollToTop() {
 }
 
 function t3sbHandleScroll() {
-	var scrollToTopBtn = document.querySelector('.back-to-top');
+	var scrollToTopBtn = document.querySelector('.back-to-top'),
+		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 	scrollToTopBtn.addEventListener('click', t3sbScrollIt);
-	const scrollableHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-	const RATIO = 0.2;
-	if ((document.documentElement.scrollTop / scrollableHeight ) > RATIO) {
+	if (scrollTop > 100) {
 		scrollToTopBtn.classList.add('st-block');
 		scrollToTopBtn.classList.remove('st-none');
 	} else {

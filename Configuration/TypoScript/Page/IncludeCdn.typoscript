@@ -1,9 +1,4 @@
 
-config.compressJs = 0
-config.compressCss = 0
-config.concatenateJs = 0
-config.concatenateCss = 0
-
 page {
 	includeCSS {
 
