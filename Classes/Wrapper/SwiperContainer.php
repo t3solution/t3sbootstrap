@@ -42,6 +42,11 @@ class SwiperContainer implements SingletonInterface
 		$processedData['pagination'] = (int)$flexconf['pagination'];
 		$processedData['autoplay'] = (int)$flexconf['autoplay'];
 		$processedData['delay'] = !empty($flexconf['autoplay']) ? (int)$flexconf['delay'] : 99999999;
+
+
+$processedData['origImage'] = $flexconf['origImage'] ?? '';
+
+
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
 		$statement = $queryBuilder

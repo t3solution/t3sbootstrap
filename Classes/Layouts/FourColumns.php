@@ -24,7 +24,6 @@ class FourColumns implements SingletonInterface
 	{
 		$processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
 		$processedData = GeneralUtility::makeInstance(Grid::class)->getGrid($processedData, $flexconf);
-
 		$processedData['equalHeight'] = !empty($flexconf['equalHeight']) ? ' d-flex align-items-stretch' : '';
 
 		return $processedData;

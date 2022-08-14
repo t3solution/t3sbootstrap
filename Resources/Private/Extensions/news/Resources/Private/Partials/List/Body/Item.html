@@ -32,11 +32,11 @@
 <f:if condition="{link} == 'true'">
 	<f:then>
 		<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
-			<span itemprop="headline">{newsItem.title}</span>
+			<span itemprop="headline">{newsItem.title -> f:format.raw()}</span>
 		</n:link>
 	</f:then>
 	<f:else>
-		<span itemprop="headline">{newsItem.title}</span>
+		<span itemprop="headline">{newsItem.title -> f:format.raw()}</span>
 	</f:else>
 </f:if>
 </h3>

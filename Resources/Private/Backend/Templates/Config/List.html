@@ -39,16 +39,17 @@
 						</f:link.action>
 						<f:if condition="{isSiteroot}">
 							<f:then>
+								<f:if condition="{admin} && {settings.enableInfo}">
+									<f:render section="Hints" arguments="{_all}" />
+								</f:if>								
 								<f:if condition="{utilColors} && {settings.enableUtilityColors}">
 									<f:render section="UtilityColors" arguments="{_all}" />
 								</f:if>
-								<p>
-									<button class="btn btn-info bg-gradient page-conf-btn" type="button" data-toggle="collapse"
-									 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="width: 250px;">
+									<button class="btn btn-info bg-gradient page-conf-btn d-block mb-2" type="button" data-toggle="collapse"
+									 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="width: 300px;">
 										Pages with T3SB Configuration
 									</button>
-								</p>
-								<div class="collapse" id="allPages">
+								<div class="collapse mb-2" id="allPages">
 									<div class="card card-body mb-0" style="padding: 0 !important">
 										<table class="table table-striped">
 											<thead class="thead-default text-white">
@@ -185,12 +186,10 @@
 
 
 <f:section name="UtilityColors">
-	<p>
-		<button class="btn btn-info bg-gradient util-color-btn" type="button" data-toggle="collapse"
-		 data-target="#util-color" aria-expanded="false" aria-controls="util-color" style="width: 250px;">
-			Utility Colors
-		</button>
-	</p>
+	<button class="btn btn-info bg-gradient util-color-btn mb-2" type="button" data-toggle="collapse"
+	 data-target="#util-color" aria-expanded="false" aria-controls="util-color" style="width: 300px;">
+		Utility Colors
+	</button>
 	<div class="collapse" id="util-color">
 		<div class="card card-body mb-0" style="padding: 0 !important">
 			<p>Currently available utility colors:</p>
@@ -203,8 +202,91 @@
 					</tr>
 				</f:for>
 			</table>
-			<p class="mb-4">Set the following constant to disable the "Utility Colors":<br />
+			<p class="mb-4 text-secondary">Set the following constant to disable the "Utility Colors":<br />
 				<code>bootstrap.config.enableUtilityColors = 0</code></p>
 		</div>
 	</div>
+</f:section>
+
+<f:section name="Hints">
+	<button class="btn btn-info bg-gradient page-conf-btn mb-2 d-block" type="button" data-toggle="collapse"
+	 data-target="#hints" aria-expanded="false" aria-controls="hints" style="width: 300px;">
+		Hints to increase the Website speed
+	</button>
+	<div class="collapse" id="hints">
+		<div class="card card-body mb-0 p-0 pt-2">
+			<f:if condition="{settings.webp}">
+				<f:then>
+					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> WebP Support is enabled</p>
+				</f:then>
+				<f:else>
+					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> WebP Support is disabled</p>
+				</f:else>
+			</f:if>
+			<f:if condition="{settings.lazyLoad}">
+				<f:then>
+					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> EM config: T3SB lazyLoad is enabled</p>
+				</f:then>
+				<f:else>
+					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> EM config: T3SB lazyLoad is disabled</p>
+				</f:else>
+			</f:if>
+			<f:if condition="{settings.t3sbconcatenate}">
+				<f:then>
+					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> EM config: T3SB concatenate is enabled</p>
+				</f:then>
+				<f:else>
+					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> EM config: T3SB concatenate is disabled</p>
+				</f:else>
+			</f:if>
+			<f:if condition="{settings.t3sbminify}">
+				<f:then>
+					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> EM config: T3SB minify is enabled</p>
+				</f:then>
+				<f:else>
+					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> EM config: T3SB minify is disabled</p>
+				</f:else>
+			</f:if>
+			<f:if condition="{compress}">
+				<f:then>
+					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> BE Modul: T3SB compress is enabled</p>
+				</f:then>
+				<f:else>
+					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> BE Modul: T3SB compress is disabled</p>
+				</f:else>
+			</f:if>
+
+
+			<f:if condition="{settings.cdn.enable}">
+				<f:then>
+					<p class="text-info mt-2"><i class="fa fa-info text-info mr-1"></i> Konstanten-Editor: CDN is enabled</p>
+				</f:then>
+				<f:else>
+					<p class="text-info mt-2"><i class="fa fa-info text-info mr-1"></i> Konstanten-Editor: CDN is disabled</p>
+				</f:else>
+			</f:if>
+
+			<p class="text-info" type="button" data-toggle="collapse"
+				 data-target="#collapseOptimize" aria-expanded="false" aria-controls="collapseOptimize">
+				<i class="fa fa-info text-info mr-1"></i> <u>Konstanten-Editor: T3SB Optimize Bootstrap</u>
+			</p>
+			<div class="collapse" id="collapseOptimize">
+				<div class="card card-body p-0">	
+					<p>Make sure you optimize Bootstrap by only @importing the components you need.</p>
+					<table class="table">
+						<f:for each="{settings.optimize}" as="optimize" iteration="iterator" key="label">
+							<tr{f:if(condition: '{optimize}',then: '  class="table-warning"', else: ' class="table-success"')}>
+								<td class="table-success">{label}</td>
+								<td>{optimize}</td>
+							</tr>
+						</f:for>
+					</table>
+				</div>
+			</div>
+
+			<p class="text-secondary my-2">Set the following constant to disable this hints:<br />
+				<code>bootstrap.config.enableInfo = 0</code></p>
+		</div>
+	</div>
+
 </f:section>

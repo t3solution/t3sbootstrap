@@ -36,11 +36,11 @@ abstract class AbstractController extends ActionController
 	protected $rootTemplates;
 	protected $persistenceManager;
 
-    /**
-     * Init all actions.
-     */
-    public function initializeAction()
-    {
+	/**
+	 * Init all actions.
+	 */
+	public function initializeAction()
+	{
 		$site = self::getCurrentSite();
 		$this->rootPageId = $site->getRootPageId();
 		$this->currentUid = (int) GeneralUtility::_GET('id');
@@ -64,9 +64,9 @@ abstract class AbstractController extends ActionController
 			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
 			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
 		);
-    }
-    
-    
+	}
+
+
 	/**
 	 * SCSS in the BE
 	 */
@@ -301,7 +301,7 @@ abstract class AbstractController extends ActionController
 						$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
 					}
 					if ($config->getGeneralOverride()) {
-						$filecontent .= self::getConstants($config, TRUE);	
+						$filecontent .= self::getConstants($config, TRUE);
 					} else {
 						$filecontent .= self::getConstants($config, FALSE);
 					}
@@ -447,7 +447,7 @@ abstract class AbstractController extends ActionController
 				return $colorArr;
 			} else {
 				ksort($defaultUtilityColors);
-				return $defaultUtilityColors;	
+				return $defaultUtilityColors;
 			}
 		} else {
 			return [];
@@ -466,46 +466,47 @@ abstract class AbstractController extends ActionController
 		$newConfig->setPageTitlealign( 'center' );
 		$newConfig->setNavbarImage($defaultNavbarImagePath);
 		$newConfig->setNavbarEnable( 'light' );
-		$newConfig->setNavbarLevels( 4 );
+		$newConfig->setNavbarLevels(4);
 		$newConfig->setNavbarbrandAlignment( 'left' );
 		$newConfig->setNavbarColor( 'warning' );
 		$newConfig->setNavbarAlignment( 'left' );
 		$newConfig->setNavbarBrand( 'imgText' );
 		$newConfig->setNavbarContainer( 'inside' );
 		$newConfig->setNavbarClass('');
-		$newConfig->setJumbotronEnable( 1 );
-		$newConfig->setJumbotronSlide( 0 );
+		$newConfig->setJumbotronEnable(1);
+		$newConfig->setJumbotronSlide(0);
 		$newConfig->setJumbotronPosition( 'below' );
 		$newConfig->setJumbotronContainer( 'container' );
 		$newConfig->setJumbotronContainerposition( 'Inside' );
 		$newConfig->setJumbotronCarouselInterval(5000);
 		$newConfig->setJumbotronCarouselPause(0);
 		$newConfig->setJumbotronClass( 'p-5 mb-4 bg-light rounded-0' );
-		$newConfig->setBreadcrumbEnable( 1 );
-		$newConfig->setBreadcrumbCorner( 1 );
+		$newConfig->setBreadcrumbEnable(1);
+		$newConfig->setBreadcrumbCorner(1);
 		$newConfig->setBreadcrumbPosition( 'belowJum' );
 		$newConfig->setBreadcrumbContainer( 'container' );
-		$newConfig->setSidebarLevels( 4 );
-		$newConfig->setFooterEnable( 1 );
-		$newConfig->setFooterSlide( 0 );
+		$newConfig->setSidebarLevels(4);
+		$newConfig->setFooterEnable(1);
+		$newConfig->setFooterSlide(0);
 		$newConfig->setFooterContainer( 'container' );
-		$newConfig->setFooterSticky( 1 );
+		$newConfig->setFooterSticky(1);
 		$newConfig->setFooterContainerposition( 'inside' );
 		$newConfig->setFooterClass( 'bg-dark text-light py-4' );
 		$newConfig->setStickyFooterExtraPadding(100);
-		$newConfig->setCompress( 1 );
+		$newConfig->setCompress(1);
 		$newConfig->setDisablePrefixComment(1);
 		$newConfig->setGlobalPaddingTop( 'pt-5' );
 		$newConfig->setLoadingSpinnerColor( 'primary' );
 		$newConfig->setLightboxSelection(1);
 		$newConfig->setShrinkingNavPadding( '5' );
 		$newConfig->setSidebarMenuPosition( 'above' );
-		$newConfig->setLangMenuWithFaIcon( 1 );
+		$newConfig->setLangMenuWithFaIcon(1);
 		$newConfig->setDateFormat( 'd.m.Y' );
 		$newConfig->setSubheaderColor( 'secondary' );
-		$newConfig->setFaLinkIcons( 1 );
+		$newConfig->setFaLinkIcons(1);
 		$newConfig->setSectionmenuAnchorOffset(29);
 		$newConfig->setSectionmenuScrollspyOffset(130);
+		$newConfig->setSectionmenuScrollspy(1);
 		$newConfig->setNavbarLangFlags(1);
 
 		return $newConfig;
@@ -562,6 +563,6 @@ abstract class AbstractController extends ActionController
 
 		return (string)$theList;
 	}
-	
-	
+
+
 }

@@ -107,13 +107,13 @@
 								<f:then>
 									<ce:link.clickEnlarge image="{swiperSlides.{card.uid}.0}" configuration="{settings.media.popup}">
 										<f:render section="Image"
-										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true'}" />
+										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true', origImage: '{origImage}'}" />
 									</ce:link.clickEnlarge>
 								</f:then>
 								<f:else>
 									<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
 										<f:render section="Image"
-										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true'}" />
+										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true', origImage: '{origImage}'}" />
 									</f:link.typolink>
 								</f:else>
 							</f:if>
@@ -143,20 +143,27 @@
 <f:section name="Image">
 <f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
-	<t3sb:media file="{file}"
-	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
-	 class="img-fluid d-block{imgClass}"
-	 width="{width}"
-	 height="auto"
-	 breakpoints="{
-		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
-		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-	 }"
-	 picturefill="{settings.picturefill}"
-	 lazyload="0"
-	 ratio="{ratio}"
-	/>
+<f:if condition="{origImage}">
+	<f:then>
+		<f:image class="img-fluid d-block{imgClass}" src="fileadmin/{file.identifier}" width="{width}" height="auto" />
+	</f:then>
+	<f:else>
+		<t3sb:media file="{file}"
+		 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
+		 class="img-fluid d-block{imgClass}"
+		 width="{width}"
+		 height="auto"
+		 breakpoints="{
+			0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+			1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+			2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+		 }"
+		 picturefill="{settings.picturefill}"
+		 lazyload="0"
+		 ratio="{ratio}"
+		/>
+	</f:else>
+</f:if>
 </figure>
 </f:section>
 

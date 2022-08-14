@@ -398,37 +398,10 @@ class GalleryProcessor implements DataProcessorInterface
 				$countChildren = self::countContentRecord($this->processedData['data']['tx_container_parent'], 'tt_content', 'tx_container_parent');
 				$this->galleryData['count']['columns'] = $countChildren;
 				$this->rowWidth = 100;
+
 				$this->cardWrapper = $this->parentflexconf['card_wrapper'];
 
-				if ($this->parentflexconf['card_wrapper'] == 'deck' || $this->parentflexconf['card_wrapper'] == 'group' ) {
-
-					$x = 0;
-					if ($countChildren)
-					$x = (int) floor(100 / $this->galleryData['count']['columns']);
-
-					if ( $x == 100 ) {
-						$p = 100;
-					} elseif ( $x == 50 ) {
-						$p = 50;
-					} elseif ( $x == 33 ) {
-						$p = 33;
-					} elseif ( $x == 25 ) {
-						$p = 25;
-					} elseif ( $x == 20 ) {
-						$p = 20;
-					} elseif ( $x == 16 ) {
-						$p = 16;
-					}
-
-					if ( $p != 25 ) {
-						// 1% = space between
-						$p = $p - 1;
-						$block = '.card-deck .card {-ms-flex: 0 0 '. $p .'%; flex: 0 0 '. $p .'%;}';
-						if($block)
-						GeneralUtility::makeInstance(AssetCollector::class)
-							 ->addInlineStyleSheet('cardwrapperinlinecss-'.$this->processedData['data']['tx_container_parent'], $block,[],['priority' => true]);
-					}
-				} elseif ($this->parentflexconf['card_wrapper'] == 'columns' ) {
+				if ($this->parentflexconf['card_wrapper'] == 'columns' ) {
 
 					$this->galleryData['count']['columns'] = 4;
 

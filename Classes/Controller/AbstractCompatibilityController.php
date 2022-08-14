@@ -60,6 +60,7 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 						$allConfig[$page['uid']]['confUid'] = $config->getUid();
 						$allConfig[$page['uid']]['title'] = $page['title'];
 						$allConfig[$page['uid']]['uid'] = $page['uid'];
+						$assignedOptions['compress'] = $config->getCompress();
 					}
 				}
 
@@ -321,9 +322,9 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 						$allConfig[$page['uid']]['confUid'] = $config->getUid();
 						$allConfig[$page['uid']]['title'] = $page['title'];
 						$allConfig[$page['uid']]['uid'] = $page['uid'];
+						$assignedOptions['compress'] = $config->getCompress();
 					}
 				}
-
 				$assignedOptions['isSiteroot'] = TRUE;
 				$assignedOptions['allConfig'] = $allConfig;
 			}

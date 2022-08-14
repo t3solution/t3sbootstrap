@@ -11,13 +11,14 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col-12 col-md-4">
+				<f:render section="Preview" arguments="{_all}" />
 				<f:render section="Content" arguments="{_all}" />
 				<f:render section="Pages" arguments="{_all}" />
-				<f:render section="SCSS" arguments="{_all}" />
 			</div>
 			<div class="col-12 col-md-4">
-				<f:render section="T3SB" arguments="{_all}" />
+				<f:render section="SCSS" arguments="{_all}" />
 				<f:render section="Flexform" arguments="{_all}" />
+				<f:render section="T3SB" arguments="{_all}" />
 				 </div>
 				 <div class="col-12 col-md-4">
 				<f:render section="Different" arguments="{_all}" />
@@ -30,8 +31,43 @@
 </html>
 
 
+<f:section name="Preview">
+<div class="card" style="margin-bottom: 2rem !important;">
+	<h5 class="card-header text-white">
+		<span="float-left">Backend Preview</span>
+		<f:link.external uri="https://www.t3sbootstrap.de/dokumentation/snippets/css-scss/custom-scss"
+		 target="_blank" title="More information!" class="float-right" style="margin-top: .1rem;">
+			<i class="fa fa-info text-white"></i>
+		</f:link.external>
+	</h5>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			{f:if(condition: extconf.preview, then: '<i class="fa fa-check text-success mr-1"></i> ',
+			 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Enable</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.previewCrop, then: '<i class="fa fa-check text-success mr-1"></i> ',
+			 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Crop bodytext</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.previewCropMaxCharacters, then: '<i class="fa fa-check text-success mr-1"></i> ',
+			 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Max Characters</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.previewClosedCollapsible, then: '<i class="fa fa-check text-success mr-1"></i> ',
+			 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Closed Collapsible</strong>
+		</li>
+	</ul>
+</div>
+</f:section>
+
+
 <f:section name="SCSS">
-<div class="card mb-3">
+<div class="card mb-3" style="margin-bottom: 2rem !important;">
 	<h5 class="card-header text-white">
 		<span="float-left">Custom SCSS</span>
 		<f:link.external uri="https://www.t3sbootstrap.de/dokumentation/snippets/css-scss/custom-scss"
@@ -55,6 +91,12 @@
 					{f:if(condition: extconf.editScss, then: '<i class="fa fa-check text-success mr-1"></i> ',
 					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 					<strong>Edit in Backend</strong>
+				</li>
+
+				<li class="list-group-item">
+					{f:if(condition: extconf.keepVariables, then: '<i class="fa fa-check text-success mr-1"></i> ',
+					 else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+					<strong>Keep Bootstrap variables </strong>
 				</li>
 			</ul>
 		</f:then>
@@ -118,16 +160,24 @@
 			<strong>Color:</strong>
 		</li>
 		<li class="list-group-item">
-			{f:if(condition: extconf.extraStyle, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
-			<strong>Extra Style:</strong>
-		</li>
-		<li class="list-group-item">
 			{f:if(condition: extconf.ratio, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>Image ratio:</strong>
 		</li>
 		<li class="list-group-item">
+			{f:if(condition: extconf.imgtag, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Image Tag:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.origimage, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Original Image:</strong>
+		</li>
+		<li class="list-group-item">
 			{f:if(condition: extconf.sectionOrder, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>Custom section order:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.extraStyle, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Extra Style:</strong>
 		</li>
 	</ul>
 </div>
@@ -147,6 +197,11 @@
 			{f:if(condition: extconf.fontawesomepagetitle, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>FA Icon in Page Title:</strong>
 		</li>
+
+		<li class="list-group-item">
+			{f:if(condition: extconf.navigationColor, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Navigation color:</strong>
+		</li>
 	</ul>
 </div>
 </f:section>
@@ -164,6 +219,18 @@
 		<li class="list-group-item">
 			{f:if(condition: extconf.cTypeClass, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
 			<strong>CType in class:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.contentconsent, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Content Consent Plug-In:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.t3sbconcatenate, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Merge CSS- and JS files:</strong>
+		</li>
+		<li class="list-group-item">
+			{f:if(condition: extconf.t3sbminify, then: '<i class="fa fa-check text-success mr-1"></i> ', else: '<i class="fa fa-times text-danger mr-1"></i> ')}
+			<strong>Minify CSS- and JS files :</strong>
 		</li>
 	</ul>
 </div>

@@ -9,6 +9,10 @@
 		<f:variable name="imgLazyLoad" value="" />	
 	</f:else>
 </f:if>
+
+
+
+
 <f:comment> load lightbox CSS if needed </f:comment>
 <f:render partial="Layouts/Assets" arguments="{_all}" />
 <f:if condition="{localVideoPath}">
@@ -38,6 +42,11 @@
 	</f:then>
 	<f:else>
 		<f:comment> Image </f:comment>
+
+
+<f:if condition="{parentCType} != 'swiper_container'">
+
+
 		<div class="carousel-item carousel-item-{data.uid} carousel-image">
 			<f:if condition="{files -> f:count()}">
 				<f:then>
@@ -68,6 +77,9 @@
 				</f:else>
 			</f:if>
 		</div>
+		
+</f:if>
+
 	</f:else>
 </f:if>
 </html>

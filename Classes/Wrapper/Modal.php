@@ -42,6 +42,9 @@ class Modal implements SingletonInterface
 			if ( $headerPosition == 'right' ) $headerPosition = 'end';
 			$processedData['class'] .= ' text-'.$headerPosition;
 		}
+		if ($flexconf['whiteclosebutton']) {
+			$processedData['modal']['whiteclosebutton'] = TRUE;
+		}
 
 		return $processedData;
 	}

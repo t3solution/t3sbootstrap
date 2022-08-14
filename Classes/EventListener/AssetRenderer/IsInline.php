@@ -42,25 +42,43 @@ class IsInline
 
 			if ( $event->isPriority() == FALSE ) {
 				// Java Scripts
+				$jsCode = '';
+				$faCode = '';
 				if ( $t3sbconcatenate ) {
-					$jsCode = '';
 					foreach ( $event->getAssetCollector()->getJavaScripts() as $library => $jsFile ) {
 						$jsCode .= '// *** T3SB identifier: '.$library.LF.LF;
-						if ( str_starts_with($jsFile['source'], 'http') ) {
-							$jsCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
+						if ( $library == 'fontawesome' ) {
+							if ( str_starts_with($jsFile['source'], 'http') ) {
+								$faCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
+							} else {
+								if ( GeneralUtility::getFileAbsFileName($jsFile['source']) != FALSE ) {
+									$faCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
+								}
+							}
 						} else {
-							if ( GeneralUtility::getFileAbsFileName($jsFile['source']) != FALSE ) {
-								$jsCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
+							if ( str_starts_with($jsFile['source'], 'http') ) {
+								$jsCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
+							} else {
+								if ( GeneralUtility::getFileAbsFileName($jsFile['source']) != FALSE ) {
+									$jsCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
+								}
 							}
 						}
+
 						$event->getAssetCollector()->removeJavaScript($library);
 					}
-					if (!empty($jsCode)) {
-						// add Temp Java Scripts
-						$file = self::inline2TempFile($jsCode, 'js');
-						if ($file) {
-							$event->getAssetCollector()->addJavaScript('t3sbootstrap', $file);
-						}	
+				}
+
+				if (!empty($jsCode) || !empty($faCode)) {
+
+					if ( !empty($settings['t3sbminify']) && !empty($jsCode) ) {
+						$url = 'https://www.toptal.com/developers/javascript-minifier/api/raw';
+						$jsCode = self::minifyData($url, $jsCode);
+					}
+					// add Temp Java Scripts
+					$file = self::inline2TempFile($faCode.$jsCode, 'js');
+					if ($file) {
+						$event->getAssetCollector()->addJavaScript('t3sbootstrapjsinline', $file);
 					}
 				}
 			}
@@ -77,17 +95,17 @@ class IsInline
 				foreach ($event->getAssetCollector()->getStyleSheets() as $library => $source) {
 					$css .= LF.'/*** T3SB identifier: '.$library.' */'.LF;
 					if (!empty($source['source'])) {
-						if ( str_starts_with($source['source'], 'http') ) {		
+						if ( str_starts_with($source['source'], 'http') ) {
 							$css .= GeneralUtility::getURL($source['source']).LF;
 						} else {
 							if ( GeneralUtility::getFileAbsFileName($source['source']) != FALSE ) {
 								$css .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($source['source'])).LF;
-							}	
+							}
 						}
 					}
 					$event->getAssetCollector()->removeStyleSheet($library);
 				}
-			}				
+			}
 
 			// Inline Style Sheets
 			foreach ($event->getAssetCollector()->getInlineStyleSheets() as $library => $source) {
@@ -98,9 +116,15 @@ class IsInline
 
 			// add Temp Style Sheet
 			if (!empty($css)) {
+
+				if (!empty($settings['t3sbminify'])) {
+					$url = 'https://www.toptal.com/developers/cssminifier/api/raw';
+					$css = self::minifyData($url, $css);
+				}
+
 				$cssFile = self::inline2TempFile($css, 'css');
 				if ($cssFile) {
-					$event->getAssetCollector()->addStyleSheet('t3sbootstrap', $cssFile);
+					$event->getAssetCollector()->addStyleSheet('t3sbootstrapcss', $cssFile);
 				}
 			}
 
@@ -118,8 +142,8 @@ class IsInline
 			foreach ($assetJsInline as $library => $source) {
 				if (str_ends_with($library, 'function')) {
 					$function .= $source['source'] .LF.LF;
-				} elseif (str_starts_with($library, 'vanilla')) {	
-					$js .= $source['source'] .LF; 
+				} elseif (str_starts_with($library, 'vanilla')) {
+					$js .= $source['source'] .LF;
 				} elseif ( str_starts_with($library, 'addheight-') ) {
 					$addheight .= $source['source'] .LF.LF;
 				} else {
@@ -146,10 +170,15 @@ class IsInline
 				$source .= LF."(function($){'use strict';".LF. $jquery .LF."})(jQuery);".LF;
 			}
 
+			if ( !empty($settings['t3sbminify']) ) {
+				   $url = 'https://www.toptal.com/developers/javascript-minifier/api/raw';
+				$source = self::minifyData($url, $source);
+			}
+
 			if (!empty($source)) {
 				$jsFile = self::inline2TempFile($source, 'js');
 				if ($jsFile) {
-					$event->getAssetCollector()->addJavaScript('t3sbootstrap', $jsFile);
+					$event->getAssetCollector()->addJavaScript('t3sbootstrapjs', $jsFile);
 				}
 			}
 		}
@@ -175,12 +204,38 @@ class IsInline
 				 break;
 		 }
 		 if ($script) {
-			  $pathSite = Environment::getPublicPath() . '/';
+				 $pathSite = Environment::getPublicPath() . '/';
 			 if (!@is_file($pathSite . $script)) {
 				 GeneralUtility::writeFile($pathSite . $script, $str);
 			 }
 		 }
 		 return $script;
 	}
+
+
+	public static function minifyData($url, $input)
+	{
+		 // init the request, set various options, and send it
+		 $ch = curl_init();
+		 curl_setopt_array($ch, [
+			 CURLOPT_URL => $url,
+			 CURLOPT_RETURNTRANSFER => true,
+			 CURLOPT_POST => true,
+			 CURLOPT_HTTPHEADER => ["Content-Type: application/x-www-form-urlencoded"],
+			 CURLOPT_POSTFIELDS => http_build_query([ "input" => $input ])
+		 ]);
+
+		 $output = curl_exec($ch);
+		 // finally, close the request
+		 curl_close($ch);
+
+		if ( str_starts_with($output, 'error') ) {
+			// input remains
+			$output = $input;
+		}
+
+		 return $output;
+	}
+
 
 }

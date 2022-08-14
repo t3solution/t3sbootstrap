@@ -86,6 +86,7 @@ lib.contentElement {
 		containerError = {$bootstrap.config.containerError}
 		sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 		sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
+		sectionmenuScrollspy = {$bootstrap.config.sectionmenuScrollspy}
 		sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
 		breakpoint = {$bootstrap.config.navbarBreakpoint}
 		lightboxSelection = {$bootstrap.config.lightboxSelection}

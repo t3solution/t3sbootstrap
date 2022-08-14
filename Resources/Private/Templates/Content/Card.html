@@ -42,7 +42,7 @@
 				</f:if>
 				<f:comment>Card Title (top)</f:comment>
 				<f:if condition="({card.title.position} == 'top') && ({data.header} || {data.subheader}) ">
-					<div class="card-body">
+					<div class="card-body top-body">
 						<f:render partial="Header/All" arguments="{_all}"/>
 					</div>
 				</f:if>

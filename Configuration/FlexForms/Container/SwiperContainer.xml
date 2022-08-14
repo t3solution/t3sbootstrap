@@ -97,6 +97,14 @@
 							</config>
 						</TCEforms>
 					</width>
+					<origImage>
+						<TCEforms>
+							<label>Use Original Image</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</origImage>
 					<ratio>
 						<TCEforms>
 							<label>Image ratio - e.g.: 37:9</label>

@@ -259,6 +259,20 @@ return [
 				'type' => 'input'
 			]
 		],
+		'sectionmenu_scrollspy' => [
+			'exclude' => false,
+			'label' => 'Scrollspy',
+			'accordion_id' => 1,
+			'accordion_sub' => '1-5',
+			'config' => [
+				'type' => 'check',
+				'items' => [
+					'1' => [
+						'0' => 'activate/deaktivate scrollspy'
+					]
+				]
+			]
+		],
 		'sectionmenu_sticky_top' => [
 			'exclude' => false,
 			'label' => 'Sticky Top',
