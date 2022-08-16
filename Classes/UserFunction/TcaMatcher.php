@@ -353,7 +353,7 @@ class TcaMatcher
 
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
-			$file = $fileObjects[0] ? $fileObjects[0] : FALSE;
+			$file = !empty($fileObjects[0]) ? $fileObjects[0] : FALSE;
 
 			if (!$file) {
 				$media = true;
