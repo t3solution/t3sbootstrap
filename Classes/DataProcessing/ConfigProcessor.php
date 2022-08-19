@@ -14,6 +14,9 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
+use T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -49,6 +52,18 @@ class ConfigProcessor implements DataProcessorInterface
 		} else {
 			$processedData['noConfig'] = TRUE;
 			return $processedData;
+		}
+
+		/**
+		 * Page title provider - BreadcrumbProvider
+		 */
+		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\Extbase\\Object\\ObjectManager');
+		$configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
+		$extbaseFrameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		if ($extbaseFrameworkConfiguration['config.']['pageTitleProviders.']['breadcrumb.']['provider']
+		 === 'T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider') {
+			$titleProvider = GeneralUtility::makeInstance(BreadcrumbProvider::class);
+			$titleProvider->setTitle('');
 		}
 
 		/**
@@ -182,10 +197,10 @@ class ConfigProcessor implements DataProcessorInterface
 			} else {
 				$processedData['config']['navbar']['clickableparent'] = (int) $processedRecordVariables['navbarClickableparent'];
 			}
-			if ( !empty($processedData['config']['navbar']['clickableparent']) && $processedRecordVariables['navbarPlusicon']) {
+			if ( !empty($processedData['config']['navbar']['clickableparent']) && !empty($processedRecordVariables['navbarPlusicon'])) {
 				$processedData['config']['navbar']['navbarPlusicon'] = 0;
 			} else {
-				$processedData['config']['navbar']['navbarPlusicon'] = $processedRecordVariables['navbarPlusicon'];
+				$processedData['config']['navbar']['navbarPlusicon'] = !empty($processedRecordVariables['navbarPlusicon']) ?: 0;
 			}
 			$processedData['config']['navbar']['image'] = $processedRecordVariables['navbarImage']
 			? $processedRecordVariables['navbarImage']	: $contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
@@ -195,12 +210,8 @@ class ConfigProcessor implements DataProcessorInterface
 			if ( !$processedRecordVariables['navbarContainer'] ) {
 				$processedData['config']['navbar']['container'] = '';
 			} else {
-				if ( $processedRecordVariables['navbarContainer'] == 'fluid' ) {
-					$processedData['config']['navbar']['container'] = 'container-fluid';
-				} else {
-					$processedData['config']['navbar']['containerposition'] = $processedRecordVariables['navbarContainer'];
-					$processedData['config']['navbar']['container'] = 'container';
-				}
+				$processedData['config']['navbar']['containerposition'] = $processedRecordVariables['navbarContainer'];
+				$processedData['config']['navbar']['container'] = 'container';
 			}
 
 			$processedData['config']['navbar']['innercontainer'] = $processedRecordVariables['navbarInnercontainer'] ?: 'container';
@@ -214,12 +225,11 @@ class ConfigProcessor implements DataProcessorInterface
 				$navbarClass .= ' shrink py-'.$contentObjectConfiguration['settings.']['config.']['shrinkingNavPadding'];
 			}
 			$processedData['config']['navbar']['breakpoint'] = $processedRecordVariables['navbarBreakpoint'];
-
 			$navbarClass .= $processedRecordVariables['navbarClass'] ? ' '.$processedRecordVariables['navbarClass'] : '';
-
 			if ( $processedRecordVariables['navbarTransparent'] && $processedRecordVariables['navbarPlacement'] == 'fixed-top') {
 				if ( $processedRecordVariables['navbarColor'] == 'color' && $processedRecordVariables['navbarBackground'] ) {
-					$processedData['config']['navbar']['colorschemes'] = $processedRecordVariables['navbarBackground'];
+					$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
+					$processedData['config']['navbar']['style'] = $navbarStyle;
 				} else {
 					$navColorArr = explode(' ', $processedRecordVariables['navbarColor']);
 					if ( !empty($navColorArr[1]) ) {
@@ -231,7 +241,6 @@ class ConfigProcessor implements DataProcessorInterface
 				}
 				$processedData['config']['navbar']['transparent'] = true;
 			} else {
-
 				if ( $processedRecordVariables['navbarColor'] == 'color' ) {
 					if ( $processedRecordVariables['navbarBackground'] ) {
 						$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';

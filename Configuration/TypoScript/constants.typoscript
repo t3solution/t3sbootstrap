@@ -14,7 +14,7 @@ plugin.tx_t3sbootstrap {
 }
 
 
-bootstrap.cdn.bootstraplatest = 5.1.3
+bootstrap.cdn.bootstraplatest = 5.2.0
 bootstrap.cdn.noZip = 0
 bootstrap.cdn.fontawesome5latest = 5.15.4
 bootstrap.cdn.fontawesome6latest = 6.1.2
@@ -219,6 +219,8 @@ bootstrap.backToTopTitle = to top
 bootstrap.backToTopClass = fa fa-chevron-circle-up fa-4x
 bootstrap.backToTopForAllPages = 0
 
+# Preload the google fonts includedby bootstrap.cdn.googlefonts if activated (execute scheduler task t3sbootstrap:cdnToLocal)
+bootstrap.preloadGooleFonts = 0
 # GTM Account ID - include the Google Tag Manager if entered
 bootstrap.gtm =
 
@@ -311,6 +313,8 @@ bootstrap.config.lightboxSelection = 0
 bootstrap.config.faLinkIcons = 0
 bootstrap.config.backgroundImageEnable = 0
 bootstrap.config.footerSticky = 0
+bootstrap.config.compress = 
+bootstrap.config.navbarBreakpoint = 
 
 // import outsourced constants from DB
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript'

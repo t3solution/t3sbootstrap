@@ -98,12 +98,15 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 	public function renderPageModulePreviewContent(GridColumnItem $item): string
 	{
 		$typo3Version = new Typo3Version();
+		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 		if ($typo3Version->getMajorVersion() === 11) {
-			$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 			$pageRenderer->loadRequireJsModule(
 				 'TYPO3/CMS/T3sbootstrap/Bootstrap',
-				 'function() { console.log("Loaded bootstrap.js by t3sbootstrap."); }'
+				 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
 			);
+			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v11.css');
+		} else {
+			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v10.css');			
 		}
 		$content = parent::renderPageModulePreviewContent($item);
 		$context = $item->getContext();
@@ -336,7 +339,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 				if (!empty($col['colPos'])) {
 					$records = $container->getChildrenByColPos($col['colPos']);
 					foreach ($records as $contentRecord) {
-						$columnItem = GeneralUtility::makeInstance(ContainerGridColumnItem::class, $context, $columnObject, $contentRecord, $container);
+						$columnItem = GeneralUtility::makeInstance(ContainerGridColumnItem::class, $context, $columnObject, $contentRecord, $container, false);
 						$columnObject->addItem($columnItem);
 					}
 				}

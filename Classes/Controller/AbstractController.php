@@ -60,6 +60,11 @@ abstract class AbstractController extends ActionController
 			 ->execute()->fetchAll();
 
 		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+		if ($typo3Version->getMajorVersion() === 11) {
+			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v11.css');
+		} else {
+			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v10.css');
+		}
 		$pageRenderer->loadRequireJsModule(
 			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
 			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
@@ -282,6 +287,17 @@ abstract class AbstractController extends ActionController
 				}
 			}
 
+			// outsourced setup
+			$setup = '';
+			$model = GeneralUtility::makeInstance(Config::class);
+			foreach ( $this->objectToArr($model) as $key=>$value) {
+				if ( !str_starts_with($key, '_') ) {
+					$setup .= 'page.10.settings.config.'.$key.' = {$bootstrap.config.'.$key.'}'.PHP_EOL;
+				}
+			}
+			$setup .= 'page.10.settings.config.navbarBreakpointWidth = {$bootstrap.config.navbarBreakpointWidth}'.PHP_EOL;
+
+			// outsourced constants
 			foreach ( $configurations as $config ) {
 				if ($config->getPid() == $config->getHomepageUid()) {
 					// is root page
@@ -319,9 +335,36 @@ abstract class AbstractController extends ActionController
 			if (!is_dir($customPath)) {
 				mkdir($customPath, 0777, true);
 			}
-
+			// constants
 			GeneralUtility::writeFile($customFile, $filecontent);
+
+			$customFileName = 't3sbsetup.typoscript';
+			$customFile = $customPath.$customFileName;
+
+			if (file_exists($customFile)) {
+				unlink($customFile);
+			}
+			if (!is_dir($customPath)) {
+				mkdir($customPath, 0777, true);
+			}
+			// setup
+			GeneralUtility::writeFile($customFile, $setup);
+
 		}
+	}
+
+
+	private function objectToArr($obj)
+	{
+		$result = [];
+		$cls = new \ReflectionClass($obj);
+		$props = $cls->getProperties();
+		foreach ($props as $key=>$prop)
+		{
+			$result[$prop->getName()] = 'get'.ucfirst($prop->getName());
+		}
+
+		return $result;
 	}
 
 

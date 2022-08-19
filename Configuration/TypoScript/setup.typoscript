@@ -29,6 +29,7 @@ module.tx_t3sbootstrap {
 		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		disableJquery = {$bootstrap.disable.jquery}
+		preloadGooleFonts = {$bootstrap.preloadGooleFonts}
 		cdn {
 			// Versions
 			enable = {$bootstrap.cdn.enable}
@@ -53,7 +54,7 @@ module.tx_t3sbootstrap {
 			fontawesome5latest = {$bootstrap.cdn.fontawesome5latest}
 			fontawesome6latest = {$bootstrap.cdn.fontawesome6latest}
 			bootstraplatest = {$bootstrap.cdn.bootstraplatest}
-			noZip = {$bootstrap.cdn.noZip}			
+			noZip = {$bootstrap.cdn.noZip}
 		}
 		optimize {
 			tables = {$bootstrap.optimize.tables}
@@ -91,10 +92,11 @@ plugin.tx_t3sbootstrap {
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		# in days for contentconsent
 		cookieExpire = 30
-		# concatenate JS files in asset collector	
+		# concatenate JS files in asset collector
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		t3sbminify = {$bootstrap.extconf.t3sbminify}
 		cdn = {$bootstrap.cdn.enable}
+		pageTitle.separator = |
 	}
 }
 

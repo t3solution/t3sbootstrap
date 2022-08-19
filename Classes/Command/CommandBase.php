@@ -65,6 +65,4 @@ class CommandBase extends Command
 		return 0;
 	}
 
-
-
 }
