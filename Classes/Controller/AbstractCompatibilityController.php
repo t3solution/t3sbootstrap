@@ -83,7 +83,7 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 			$assignedOptions['deleted'] = $deleted;
 			$assignedOptions['created'] = $created;
 
-			if ( (int)$this->settings['customScss'] === 1 ) {
+			if ( !empty($this->settings['customScss']) && (int)$this->settings['customScss'] === 1 ) {
 				$customScss = parent::getCustomScss('custom-variables');
 				$assignedOptions['custom-variables'] = !empty($customScss['custom-variables']) ? $customScss['custom-variables'] : '';
 				$customScss = parent::getCustomScss('custom');

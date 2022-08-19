@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -20,11 +18,11 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
  */
 class CdnToLocal extends CommandBase
 {
-
 	const localZipFile = 'googlefont.zip';
 	const localZipPath = 'fileadmin/T3SB/Resources/Public/CSS/googlefonts/';
 	const zipFilePath = 'https://google-webfonts-helper.herokuapp.com/api/fonts/';
 	const localGoogleFile = 'fileadmin/T3SB/Resources/Public/CSS/googlefonts.css';
+	const googleFilestyles = ['300', 'regular', '700'];
 
 	protected $configurationManager;
 
@@ -43,6 +41,7 @@ class CdnToLocal extends CommandBase
 	{
 		$this->setDescription('Write required CSS and JS to fileadmin/Resources/Public/');
 	}
+
 
 
 	/**
@@ -75,11 +74,10 @@ class CdnToLocal extends CommandBase
 				}
 			}
 		} else {
-			$settings['cdn']['fontawesome'] = '5.15.4';
+			$settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome6latest'];
 		}
-
 		if ( !empty($settings['cdn']['googlefonts']) && empty($settings['cdn']['noZip']) ) {
-			self::getGoogleFonts($settings['cdn']['googlefonts']);
+			self::getGoogleFonts($settings['cdn']['googlefonts'], $settings['preloadGooleFonts']);
 		} else {
 			$localZipPath = GeneralUtility::getFileAbsFileName(self::localZipPath);
 			if ( is_dir($localZipPath) ) {
@@ -302,7 +300,7 @@ class CdnToLocal extends CommandBase
 	}
 
 
-	private function getGoogleFonts($googleFonts) {
+	private function getGoogleFonts($googleFonts, $preloadGooleFonts) {
 		$localZipPath = GeneralUtility::getFileAbsFileName(self::localZipPath);
 		if ( is_dir($localZipPath) ) {
 			parent::rmDir($localZipPath);
@@ -310,54 +308,109 @@ class CdnToLocal extends CommandBase
 		mkdir($localZipPath, 0777, true);
 		$localZipFile = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
 		$googleFontsArr = explode(',', $googleFonts);
-		$cFF = '';
-		foreach ($googleFontsArr as $key=>$font) {
+		foreach ($googleFontsArr as $font) {
 			$fontFamily = trim($font);
 			$font = str_replace(' ', '-', trim($font));
-			$zipFilename = strtolower($font).'?download=zip&subsets=latin&variants=regular';
-
-			$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
-
-			if ($zipContent) {
-				GeneralUtility::writeFile($localZipFile, $zipContent);
-				$extractTo = $localZipPath;
-				$zip = new \ZipArchive;
-				if ($zip->open($localZipFile) === TRUE) {
-					$zip->extractTo($extractTo);
-					$zip->close();
-				} else {
-					throw new \InvalidArgumentException('Sorry ZIP creation failed at this time!', 1655291667);
-				}
-				$zipFile = GeneralUtility::getFileAbsFileName($localZipFile);
-				if (file_exists($zipFile)) unlink($zipFile);
-				$googleFiles = scandir($localZipPath);
-				$css = '';
-				foreach ($googleFiles as $googleFile) {
-					if ( str_ends_with($googleFile, 'woff') && $cFF != $fontFamily ) {
-						$googleFileArr[$key] = $googleFile;
-						$cFF = $fontFamily;
-					}
-				}
-			} else {
-				throw new \InvalidArgumentException('Check the spelling of the google fonts!', 1657464667);
+			foreach ( self::googleFilestyles as $style ) {
+				$zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
+				$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
+				$fontArr[$fontFamily] = self::getGoogleFiles($zipContent, $localZipFile, $localZipPath);
 			}
 		}
 
-		foreach ($googleFileArr as $key=>$googleFile) {
-$css .= "@font-face {".LF."
-  font-family: '".trim($googleFontsArr[$key])."';".LF."
-  font-style: normal;".LF."
-  font-weight: 400;".LF."
-  src: local(''),".LF."
-		url('googlefonts/".$googleFile."') format('woff2'),".LF."
-		url('googlefonts/".$googleFile."') format('woff');".LF."
+		if ( is_array($fontArr)) {
+			foreach ($fontArr as $fontFamily=>$googlePath) {
+				$sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
+			}
+			$css = '';
+			$headerData = '';
+			foreach ($sliceArr as $fontFamily=>$googlePath) {
+				foreach ( self::googleFilestyles as $i=>$style ) {
+					$file = str_replace('300','', explode('.', $googlePath[0])[0]).trim($style);
+					$style = $style == 'regular' ? '400' : $style;
+					if (!empty($preloadGooleFonts)) {
+						$num = self::generateRandomString();
+						$s = $i + 1;
+						$headerData .= '	22'.$num.$i.' = TEXT'.LF;
+						$headerData .= '	22'.$num.$i.'.value = <link rel="preload" href="/fileadmin/T3SB/Resources/Public/CSS/googlefonts/'.
+						$file.'.woff" as="font" type="font/woff" crossorigin="anonymous">'.LF;
+						$headerData .= '	22'.$num.$s.' = TEXT'.LF;
+						$headerData .= '	22'.$num.$s.'.value = <link rel="preload" href="/fileadmin/T3SB/Resources/Public/CSS/googlefonts/'.
+						$file.'.woff2" as="font" type="font/woff2" crossorigin="anonymous">'.LF;
+					}
+
+$css .= "@font-face {
+  font-family: '".$fontFamily."';
+  font-style: normal;
+  font-weight: ".$style.";
+  src: url('googlefonts/".$file.".eot');
+  src: local(''),
+  		url('googlefonts/".$file.".eot?#iefix') format('embedded-opentype'),
+		url('googlefonts/".$file.".woff2') format('woff2'),
+		url('googlefonts/".$file.".woff') format('woff');
+		url('googlefonts/".$file.".ttf') format('truetype'),
+		url('googlefonts/".$file.".svg#".trim(str_replace(' ', '', $fontFamily))."') format('svg');
 }".LF.LF;
+				}
+			}
+
+			if (!empty($preloadGooleFonts)) {
+				$setup = 'page.headerData {'.LF.$headerData;
+				$setup .= '}';
+				$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
+				$customPath = GeneralUtility::getFileAbsFileName($customDir);
+				$customFileName = 'preloadGooleFonts.typoscript';
+				$customFile = $customPath.$customFileName;
+				if (file_exists($customFile)) {unlink($customFile);}
+				if (!is_dir($customPath)) {mkdir($customPath, 0777, true);}
+				GeneralUtility::writeFile($customFile, $setup);
+			}
+
+			if (!empty($css)) {
+				$cssFile = GeneralUtility::getFileAbsFileName(self::localGoogleFile);
+				if (file_exists($cssFile)) unlink($cssFile);
+				GeneralUtility::writeFile($cssFile, $css);
+			}
 		}
-		$cssFile = GeneralUtility::getFileAbsFileName(self::localGoogleFile);
-		if (file_exists($cssFile)) unlink($cssFile);
-		GeneralUtility::writeFile($cssFile, $css);
 	}
 
 
+	private function getGoogleFiles($zipContent, $localZipFile, $localZipPath) {
+		if ($zipContent) {
+			GeneralUtility::writeFile($localZipFile, $zipContent);
+			$zip = new \ZipArchive;
+			if ($zip->open($localZipFile) === TRUE) {
+				$zip->extractTo($localZipPath);
+				$zip->close();
+			} else {
+				throw new \InvalidArgumentException('Sorry ZIP creation failed at this time!', 1655291469);
+			}
+			$zipFile = GeneralUtility::getFileAbsFileName($localZipFile);
+			if (file_exists($zipFile)) unlink($zipFile);
+			$googleFiles = scandir($localZipPath);
+			$css = '';
+			$googleFileArr = [];
+			foreach ($googleFiles as $googleFile) {
+				if ( str_ends_with($googleFile, 'woff') ) {
+					$googleFileArr[] = $googleFile;
+				}
+			}
+		} else {
+			throw new \InvalidArgumentException('Check the spelling of the google fonts!', 1657464667);
+		}
+
+		return $googleFileArr;
+	}
+
+
+	private function generateRandomString($length = 4) {
+		 $characters = '0123456789';
+		 $charactersLength = strlen($characters);
+		 $randomString = '';
+		 for ($i = 0; $i < $length; $i++) {
+			 $randomString .= $characters[rand(0, $charactersLength - 1)];
+		 }
+		 return $randomString;
+	}
 
 }

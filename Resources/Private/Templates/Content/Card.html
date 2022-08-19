@@ -55,7 +55,7 @@
 					<f:render section="TextTop" arguments="{_all}" />
 				</f:if>
 				<f:comment>Card List</f:comment>
-				<f:if condition="{card.list} && !{card.image.overlay}">
+				<f:if condition="{card.list.0} && !{card.image.overlay}">
 					<f:render section="ListGroup" arguments="{_all}" />
 				</f:if>
 				<f:comment>Card Text (bottom)</f:comment>
