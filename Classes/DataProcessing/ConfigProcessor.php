@@ -173,18 +173,12 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Navbar
 		 */
 		if ( $processedRecordVariables['navbarEnable'] ) {
-			switch ( (int)$contentObjectConfiguration['settings.']['config.']['navbarDropdownAnimate'] ) {
-				 case 1:
-					$processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-1';
-				break;
-				 case 2:
-					$processedData['config']['navbar']['dropdownAnimate'] = ' dd-animate-2';
-				break;
-				 default:
-					$processedData['config']['navbar']['dropdownAnimate'] = '';
+			if ( !empty( $processedRecordVariables['navbarDropdownAnimate'] ) ) {
+				$processedData['config']['navbar']['dropdownAnimate'] =
+				 ' dd-animate-'.(int)$processedRecordVariables['navbarDropdownAnimate'];
+				$processedData['config']['navbar']['dropdownAnimateValue'] = 
+				 (int)$contentObjectConfiguration['settings.']['config.']['navbarDropdownAnimate'];
 			}
-
-			$processedData['config']['navbar']['dropdownAnimateValue'] = (int)$contentObjectConfiguration['settings.']['config.']['navbarDropdownAnimate'];
 			$processedData['config']['navbar']['enable'] = $processedRecordVariables['navbarEnable'];
 			$processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbarSectionmenu'] ? ' section-menu' : '';
 			$processedData['config']['navbar']['brand'] = $processedRecordVariables['navbarBrand'];
