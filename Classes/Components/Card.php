@@ -174,7 +174,7 @@ class Card implements SingletonInterface
 		}
 		// parent equal Height
 		if ( !empty($parentflexconf['equalHeight']) ) {
-			$cardClass .= ' w-100';
+			$cardClass .= ' h-100';
 		}
 
 		$processedData['class'] = trim($cardClass);

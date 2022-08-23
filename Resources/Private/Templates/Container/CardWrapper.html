@@ -18,10 +18,45 @@
 
 <f:section name="Default">
 <f:if condition="{settings.cardFlipperOnClick}">
-<f:asset.script identifier="vanilla_cardwrapper_flipper">
+	<f:asset.script identifier="cardwrapperFlipper_function">
+// Card-flipper rotate on click - CarouselWrapper.html
+function t3sbCardFlipper() {
+	document.querySelectorAll('.card-flipper').forEach( cf => {
+		cf.classList.add('cardflipper');
+		cf.classList.remove('card-flipper');
+	});
+	document.querySelectorAll('.square-link').forEach( mainflipper => {
+		mainflipper.addEventListener('click', function(flipper) {
+			var frontside = flipper.currentTarget.parentNode.parentNode.parentNode;
+			frontside.style.transform = 'rotateY(180deg)';
+			var backside = flipper.currentTarget.parentNode.parentNode.parentNode.parentNode.querySelector('.backside');
+			backside.style.transform = 'rotateY(0deg)';
+			var cardBody = backside.querySelector('.card-body');
+			var el = document.createElement('div');
+			el.classList.add('card-footer','jsfooter','text-center');
+			el.innerHTML = '<p class="square-backlink"><i class="fas fa-minus-square fa-2x mx-auto"></i></p>';
+			insertAfter(cardBody, el);
+			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
+				backside.style.transform = 'rotateY(180deg)';
+				frontside.style.transform = 'rotateY(0deg)';
+				if (backside.querySelector('.fa-minus-square') !== null && backside.querySelector('.fa-minus-square') !== '') {
+					if (backside.querySelector('.card-footer').classList.contains('jsfooter')) {
+						backside.querySelector('.card-footer').remove();
+					}
+				}
+			});
+		});
+	});
+}
+
+function insertAfter(referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+	</f:asset.script>
+	<f:asset.script identifier="vanilla_cardwrapper_flipper">
 	// Card-flipper rotate on click - CarouselWrapper.html
 	t3sbCardFlipper()
-</f:asset.script>
+	</f:asset.script>
 </f:if>
 <f:comment> CARD GROUP </f:comment>
 <f:if condition="{card_wrapper_layout} == 'group'">
@@ -306,11 +341,11 @@
 <f:section name="Title">
 	<f:if condition="{card.header} && {card.subheader}">
 		<f:then>
-		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
-			<h4 class="card-title">
-				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
-			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
-		</header>
+			<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
+				<h4 class="card-title">
+					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+				<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
+			</header>
 		</f:then>
 		<f:else if="{card.header}">
 			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
@@ -328,7 +363,8 @@
 		<f:then>
 		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
 			<h4 class="card-title">
-				<f:link.typolink parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" 
+				parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
 			</h4>
 			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 		</header>
@@ -336,14 +372,14 @@
 		<f:else if="{card.header}">
 			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
 				then: ' {card.tx_t3sbootstrap_header_class}')}">
-				<f:link.typolink parameter='{card.header_link}'>
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
 					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>
 		<f:else if="{card.subheader}">
 			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
 				then: ' {card.tx_t3sbootstrap_header_class}')}">
-				<f:link.typolink parameter='{card.header_link}'>
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
 					{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>

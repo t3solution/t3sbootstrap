@@ -18,6 +18,7 @@ use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard;
 use T3SBS\T3sbootstrap\Hooks\NewsFlexFormHook;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 defined('TYPO3') || die();
 
@@ -26,18 +27,20 @@ defined('TYPO3') || die();
 	/***************
 	 * Register Icons
 	 */
-
-	if ( $GLOBALS['TYPO3_REQUEST'] ?? null && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
-
-		$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-
-		// FontawesomeIconProvider
-		$iconRegistry->registerIcon(
-			'buttongroup',
-			FontawesomeIconProvider::class,
-			['name' => 'bars']
-		);
-		unset($iconRegistry);
+	if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() < 11) {
+		
+		if ( $GLOBALS['TYPO3_REQUEST'] ?? null && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
+	
+			$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
+	
+			// FontawesomeIconProvider
+			$iconRegistry->registerIcon(
+				'buttongroup',
+				FontawesomeIconProvider::class,
+				['name' => 'bars']
+			);
+			unset($iconRegistry);
+		}
 	}
 
 	/***************
@@ -74,6 +77,8 @@ defined('TYPO3') || die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 0');
+	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbconcatenate = 0');
+	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbminify = 0');
 
 	/***************
 	 * Extension configuration
@@ -175,10 +180,10 @@ defined('TYPO3') || die();
 		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') ) {
 			if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '2') {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFaPro.yaml';
-			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {			
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';			
+			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '3') {
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';
 			} elseif (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '4') {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';			
+				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';
 			} else {
 				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa.yaml';
 			}
@@ -199,6 +204,14 @@ defined('TYPO3') || die();
 	} elseif (array_key_exists('imgCopyright', $extconf) && $extconf['imgCopyright'] === '2') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 2');
 	}
+	// Optional concatenate CSS & JS files in asset collector
+	if (array_key_exists('t3sbconcatenate', $extconf) && $extconf['t3sbconcatenate'] === '1') {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbconcatenate = 1');
+	}
+	// Optional minify CSS & JS with toptal.com
+	if (array_key_exists('t3sbminify', $extconf) && $extconf['t3sbminify'] === '1') {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbminify = 1');
+	}
 	// Optional fontawesomepagetitle
 	if (array_key_exists('fontawesomepagetitle', $extconf) && $extconf['fontawesomepagetitle'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomepagetitle = 1');
@@ -208,10 +221,8 @@ defined('TYPO3') || die();
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.cookieconsent = 1');
 	}
 	// Optional lazyLoad
-	if (array_key_exists('lazyLoad', $extconf) && $extconf['lazyLoad'] === '1') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = 1');
-	} elseif (array_key_exists('lazyLoad', $extconf) && $extconf['lazyLoad'] === '2') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = 2');
+	if (array_key_exists('lazyLoad', $extconf)) {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = '.$extconf['lazyLoad']);
 	}
 	// Optional animateCss
 	if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] > '0') {
@@ -297,4 +308,5 @@ defined('TYPO3') || die();
 		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class]
 		 = PreProcessHook::class . '->execute';
 	}
+
 })();

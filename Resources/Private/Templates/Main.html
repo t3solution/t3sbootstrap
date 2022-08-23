@@ -6,6 +6,7 @@
 	</f:then>
 	<f:else>
 		<f:spaceless>
+			<f:render partial="FunctionAssets" arguments="{_all}" />
 			<f:render section="AssetScripts" arguments="{_all}" />
 			<f:comment> GOOGLE TAG MANAGER </f:comment>
 			<f:if condition="{settings.gtm}">
@@ -80,8 +81,7 @@
 			</f:if>
 			<f:comment> BACK TO TOP BUTTON </f:comment>
 			<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-				<f:link.page class="back-to-top"
-					title="{settings.backToTopTitle}">
+				<f:link.page class="back-to-top st-none" title="{settings.backToTopTitle}">
 					<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
 				</f:link.page>
 			</f:if>
@@ -103,8 +103,9 @@
 		</f:if>
 	</div>
 </f:section>
+
+
 <f:section name="AssetScripts">
-<f:asset.script identifier="t3sbHelper" src="EXT:t3sbootstrap/Resources/Public/Scripts/t3sbHelper.js" />
 <f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
 <f:if condition="{config.navbar.enable} == 'slide'">
 	<f:then>
@@ -193,7 +194,7 @@
 </f:if>
 <f:comment> Lazyload </f:comment>
 <f:variable name="customthreshold">{t3sb:intval(number: '{settings.lazyLoadThreshold}')}</f:variable>
-<f:if condition="{settings.lazyLoad}">
+<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
 	<f:then>
 		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
 			<f:then>
@@ -237,22 +238,39 @@
 </f:if>
 <f:if condition="{settings.config.footerSticky}">
 <f:comment> Sticky footer </f:comment>
-<f:asset.css identifier="t3sbs_footerSticky">
-html {
+<f:asset.css identifier="t3sbs_footerSticky">html {
 	position:relative;
 	min-height:100%
 }
 #page-footer {
 	position:absolute;
-	bottom:0;width:100%
+	bottom:0;
+	width:100%
 }
 </f:asset.css>
 </f:if>
+
 <f:comment> Link to top </f:comment>
 <f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
 <f:asset.script identifier="vanilla_linktotop">
 	// Link to top - Main.html
 	t3sbScrollToTop();
 </f:asset.script>
+</f:if>
+
+<f:if condition="{settings.webp}">
+	<f:asset.script identifier="t3sbmodernizr" src="EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js" />
+</f:if>
+
+<f:if condition="!{settings.fontawesome.cdn}">
+	<f:if condition="{settings.fontawesome.extconf} == '1' || {settings.fontawesome.extconf} == '3' ">
+		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" />
+	</f:if>
+	<f:if condition="{settings.fontawesome.extconf} == '2' ">
+		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA5Pro/js/all.min.js" />
+	</f:if>
+	<f:if condition="{settings.fontawesome.extconf} == '4' ">
+		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA6Pro/js/all.min.js" />
+	</f:if>
 </f:if>
 </f:section>

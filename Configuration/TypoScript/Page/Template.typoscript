@@ -26,7 +26,7 @@ page {
 			be_layout.value < temp.pagelayout
 		}
 		settings {
-			// from EM config
+			module.cdn < module.tx_t3sbootstrap.settings.cdn
 			expandedContent = {$bootstrap.extconf.expandedContent}
 			fontawesome.extconf = {$bootstrap.extconf.fontawesomeCss}
 			fontawesome.cdn = {$bootstrap.cdn.enable}
@@ -34,11 +34,17 @@ page {
 			fontawesome.5latest = {$bootstrap.cdn.fontawesome5latest}
 			fontawesome.6latest = {$bootstrap.cdn.fontawesome6latest}
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
+			fontawesome.fontawesomeCss = {$bootstrap.extconf.fontawesomeCss}
+			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}		
+			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			codesnippet = {$bootstrap.extconf.codesnippet}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
 			webp = {$bootstrap.extconf.webp}
-			// various not in DB
+			cookieconsent = {$bootstrap.extconf.cookieconsent}
+			cdn = {$bootstrap.cdn.enable}
+			googlefonts = {$bootstrap.cdn.googlefonts}
+			t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
 			backToTopTitle = {$bootstrap.backToTopTitle}
 			backToTopClass = {$bootstrap.backToTopClass}
@@ -68,135 +74,10 @@ page {
 					dropdownRight = {$pages.override.dropdownRight}
 				}
 			}
-			// from DB
 			config {
-				uid = {$bootstrap.config.uid}
-				company = {$bootstrap.config.company}
-				homepageUid = {$bootstrap.config.homepageUid}
-				pageTitle = {$bootstrap.config.pageTitle}
-				pageTitlealign = {$bootstrap.config.pageTitlealign}
-				pageTitlecontainer = {$bootstrap.config.pageTitlecontainer}
-				pageTitleclass = {$bootstrap.config.pageTitleclass}
-				metaEnable = {$bootstrap.config.metaEnable}
-				metaValue = {$bootstrap.config.metaValue}
-				metaContainer = {$bootstrap.config.metaContainer}
-				metaClass = {$bootstrap.config.metaClass}
-				metaText = {$bootstrap.config.metaText}
-				navbarEnable = {$bootstrap.config.navbarEnable}
-				navbarEntrylevel = {$bootstrap.config.navbarEntrylevel}
-				navbarLevels = {$bootstrap.config.navbarLevels}
-				navbarExcludeuiduist = {$bootstrap.config.navbarExcludeuiduist}
-				navbarIncludespacer = {$bootstrap.config.navbarIncludespacer}
-				navbarSectionmenu = {$bootstrap.config.navbarSectionmenu}
-				navbarMegamenu = {$bootstrap.config.navbarMegamenu}
-				navbarHover = {$bootstrap.config.navbarHover}
-				navbarClickableparent = {$bootstrap.config.navbarClickableparent}
-				navbarPlusicon = {$bootstrap.config.navbarPlusicon}
-				navbarDropdownAnimate = {$bootstrap.config.navbarDropdownAnimate}
-				navbarBrand = {$bootstrap.config.navbarBrand}
-				navbarbrandAlignment = {$bootstrap.config.navbarbrandAlignment}
-				navbarImage = {$bootstrap.config.navbarImage}
-				navbarColor = {$bootstrap.config.navbarColor}
-				navbarBackground = {$bootstrap.config.navbarBackground}
-				navbarTransparent = {$bootstrap.config.navbarTransparent}
-				navbarContainer = {$bootstrap.config.navbarContainer}
-				navbarInnercontainer = {$bootstrap.config.navbarInnercontainer}
-				navbarPlacement = {$bootstrap.config.navbarPlacement}
-				navbarAlignment = {$bootstrap.config.navbarAlignment}
-				navbarClass = {$bootstrap.config.navbarClass}
-				navbarToggler = {$bootstrap.config.navbarToggler}
-				navbarAnimatedtoggler = {$bootstrap.config.navbarAnimatedtoggler}
-				navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
-				navbarOffcanvas = {$bootstrap.config.navbarOffcanvas}
-				navbarHeight = {$bootstrap.config.navbarHeight}
-				navbarSearchbox = {$bootstrap.config.navbarSearchbox}
-				navbarLangmenu = {$bootstrap.config.navbarLangmenu}
-				navbarShrinkcolorschemes = {$bootstrap.config.navbarShrinkcolorschemes}
-				navbarShrinkcolor = {$bootstrap.config.navbarShrinkcolor}
-				navbarRightMenuUidList = {$bootstrap.config.navbarRightMenuUidList}
-				navbarExtraRow = {$bootstrap.config.navbarExtraRow}
-				navbarLangFlags = {$bootstrap.config.navbarLangFlags}
-				jumbotronEnable = {$bootstrap.config.jumbotronEnable}
-				jumbotronBgimage = {$bootstrap.config.jumbotronBgimage}
-				jumbotronBgimageratio = {$bootstrap.config.jumbotronBgimageratio}
-				jumbotronAlignitem = {$bootstrap.config.jumbotronAlignitem}
-				jumbotronSlide = {$bootstrap.config.jumbotronSlide}
-				jumbotronPosition = {$bootstrap.config.jumbotronPosition}
-				jumbotronContainer = {$bootstrap.config.jumbotronContainer}
-				jumbotronContainerposition = {$bootstrap.config.jumbotronContainerposition}
-				jumbotronClass = {$bootstrap.config.jumbotronClass}
-				jumbotronCarouselInterval = {$bootstrap.config.jumbotronCarouselInterval}
-				jumbotronCarouselPause = {$bootstrap.config.jumbotronCarouselPause}
-				breadcrumbEnable = {$bootstrap.config.breadcrumbEnable}
-				breadcrumbNotonrootpage = {$bootstrap.config.breadcrumbNotonrootpage}
-				breadcrumbFaicon = {$bootstrap.config.breadcrumbFaicon}
-				breadcrumbCorner = {$bootstrap.config.breadcrumbCorner}
-				breadcrumbBottom = {$bootstrap.config.breadcrumbBottom}
-				breadcrumbPosition = {$bootstrap.config.breadcrumbPosition}
-				breadcrumbContainer = {$bootstrap.config.breadcrumbContainer}
-				breadcrumbContainerposition = {$bootstrap.config.breadcrumbContainerposition}
-				breadcrumbClass = {$bootstrap.config.breadcrumbClass}
-				sidebarEnable = {$bootstrap.config.sidebarEnable}
-				sidebarRightenable = {$bootstrap.config.sidebarRightenable}
-				sidebarLevels = {$bootstrap.config.sidebarLevels}
-				sidebarEntrylevel = {$bootstrap.config.sidebarEntrylevel}
-				sidebarExcludeuiduist = {$bootstrap.config.sidebarExcludeuiduist}
-				sidebarIncludespacer = {$bootstrap.config.sidebarIncludespacer}
-				sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
-				submenuSticky = {$bootstrap.config.submenuSticky}
-				footerEnable = {$bootstrap.config.footerEnable}
-				footerSlide = {$bootstrap.config.footerSlide}
-				footerSticky = {$bootstrap.config.footerSticky}
-				footerContainer = {$bootstrap.config.footerContainer}
-				footerContainerposition = {$bootstrap.config.footerContainerposition}
-				footerClass = {$bootstrap.config.footerClass}
-				footerPid = {$bootstrap.config.footerPid}
-				expandedcontentEnabletop = {$bootstrap.config.expandedcontentEnabletop}
-				expandedcontentSlidetop = {$bootstrap.config.expandedcontentSlidetop}
-				expandedcontentContainerpositiontop = {$bootstrap.config.expandedcontentContainerpositiontop}
-				expandedcontentContainertop = {$bootstrap.config.expandedcontentContainertop}
-				expandedcontentClasstop = {$bootstrap.config.expandedcontentClasstop}
-				expandedcontentEnablebottom = {$bootstrap.config.expandedcontentEnablebottom}
-				expandedcontentSlidebottom = {$bootstrap.config.expandedcontentSlidebottom}
-				expandedcontentContainerpositionbottom = {$bootstrap.config.expandedcontentContainerpositionbottom}
-				expandedcontentContainerbottom = {$bootstrap.config.expandedcontentContainerbottom}
-				expandedcontentClassbottom = {$bootstrap.config.expandedcontentClassbottom}
-				generalRootline = {$bootstrap.config.generalRootline}
-				generalOverride = {$bootstrap.config.generalOverride}
-				contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
-				jqueryHeader = {$bootstrap.config.jqueryHeader}
-				compress = {$bootstrap.config.compress}
-				disablePrefixComment = {$bootstrap.config.disablePrefixComment}
-				containerError = {$bootstrap.config.containerError}
-				slideLeftAside = {$bootstrap.config.slideLeftAside}
-				slideRightAside = {$bootstrap.config.slideRightAside}
-				pageContentExtraClass = {$bootstrap.config.pageContentExtraClass}
-				bodyExtraClass = {$bootstrap.config.bodyExtraClass}
-				asideExtraClass = {$bootstrap.config.asideExtraClass}
-				mainExtraClass = {$bootstrap.config.mainExtraClass}
-				globalPaddingTop = {$bootstrap.config.globalPaddingTop}
-				stickyFooterExtraPadding = {$bootstrap.config.stickyFooterExtraPadding}
-				contentMarginTop = {$bootstrap.config.contentMarginTop}
-				loadingSpinner = {$bootstrap.config.loadingSpinner}
-				loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
-				lightboxSelection = {$bootstrap.config.lightboxSelection}
-				magnifying = {$bootstrap.config.magnifying}
-				sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
-				sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
-				sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
-				backgroundImageEnable = {$bootstrap.config.backgroundImageEnable}
-				backgroundImageSlide = {$bootstrap.config.backgroundImageSlide}
-				shrinkingNavPadding = {$bootstrap.config.shrinkingNavPadding}
-				sidebarMenuPosition = {$bootstrap.config.sidebarMenuPosition}
-				langMenuWithFaIcon = {$bootstrap.config.langMenuWithFaIcon}
-				subheaderColor = {$bootstrap.config.subheaderColor}
-				dateFormat = {$bootstrap.config.dateFormat}
-				favicon = {$bootstrap.config.favicon}
-				faLinkIcons = {$bootstrap.config.faLinkIcons}
-				cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
-				lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
-				recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
 				darkMode = {$bootstrap.config.darkMode}
+				jqueryHeader = {$bootstrap.config.jqueryHeader}
+				navbarPlusicon = {$bootstrap.config.navbarPlusicon}
 			}
 		}
 		dataProcessing {
@@ -437,6 +318,9 @@ page {
 	}
 }
 
+# prevent error: Undefined array key "breadcrumb."
+config.pageTitleProviders.breadcrumb.provider = 
+
 # Language in Toast
 lib.t3sbs.close = TEXT
 lib.t3sbs.close.value = Schließen
@@ -459,3 +343,6 @@ plugin.tx_felogin_login {
 		}
 	}
 }
+
+// import outsourced setup
+@import 'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript'

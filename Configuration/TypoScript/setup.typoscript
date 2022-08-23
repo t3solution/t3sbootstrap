@@ -15,6 +15,12 @@ module.tx_t3sbootstrap {
 		indexedsearch = {$bootstrap.ext.indexedsearch}
 		expandedContent = {$bootstrap.extconf.expandedContent}
 		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
+		enableInfo = {$bootstrap.config.enableInfo}
+		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
+		t3sbminify = {$bootstrap.extconf.t3sbminify}
+		compress = {$bootstrap.config.compress}
+		lazyLoad = {$bootstrap.extconf.lazyLoad}
+		webp = {$bootstrap.extconf.webp}
 		gtm = {$bootstrap.gtm}
 		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
 		breakpoint.sm = {$bootstrap.navbar.breakpoint.sm}
@@ -23,8 +29,11 @@ module.tx_t3sbootstrap {
 		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		disableJquery = {$bootstrap.disable.jquery}
+		preloadGooleFonts = {$bootstrap.preloadGooleFonts}
 		cdn {
 			// Versions
+			enable = {$bootstrap.cdn.enable}
+			googlefonts = {$bootstrap.cdn.googlefonts}
 			bootstrap = {$bootstrap.cdn.bootstrap}
 			popperjs = {$bootstrap.cdn.popperjs}
 			bootswatch = {$bootstrap.cdn.bootswatch}
@@ -44,6 +53,8 @@ module.tx_t3sbootstrap {
 			swiper = {$bootstrap.cdn.swiper}
 			fontawesome5latest = {$bootstrap.cdn.fontawesome5latest}
 			fontawesome6latest = {$bootstrap.cdn.fontawesome6latest}
+			bootstraplatest = {$bootstrap.cdn.bootstraplatest}
+			noZip = {$bootstrap.cdn.noZip}
 		}
 		optimize {
 			tables = {$bootstrap.optimize.tables}
@@ -81,6 +92,11 @@ plugin.tx_t3sbootstrap {
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		# in days for contentconsent
 		cookieExpire = 30
+		# concatenate JS files in asset collector
+		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
+		t3sbminify = {$bootstrap.extconf.t3sbminify}
+		cdn = {$bootstrap.cdn.enable}
+		pageTitle.separator = |
 	}
 }
 
@@ -107,11 +123,9 @@ temp.pagelayout {
 # Google Tag Manager
 #
 ##########################################################################################################
-
 [request.getCookieParams()['cookieconsent_status'] == 'allow']
 page.jsInline.1 = TEXT
 page.jsInline.1.value (
-
 	// Google Tag Manager
 	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

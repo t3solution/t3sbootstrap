@@ -10,7 +10,9 @@
 						<div class="row align-items-center h-100">
 							<div class="col">
 								<f:render section="HeaderBeside" arguments="{_all}" />
-								{data.bodytext -> f:format.html()}
+								<f:if condition="{data.bodytext}">
+									{data.bodytext -> f:format.html()}
+								</f:if>
 							</div>
 						</div>
 					</div>
@@ -32,7 +34,9 @@
 						<div class="row align-items-center h-100">
 							<div class="col">
 								<f:render section="HeaderBeside" arguments="{_all}" />
-								{data.bodytext -> f:format.html()}
+								<f:if condition="{data.bodytext}">
+									{data.bodytext -> f:format.html()}
+								</f:if>
 							</div>
 						</div>
 					</div>
@@ -53,7 +57,9 @@
 	<f:then>
 		<f:render partial="Media/Gallery" arguments="{_all}" />
 		<f:render section="HeaderBeside" arguments="{_all}" />
+<f:if condition="{data.bodytext}">
 		{data.bodytext -> f:format.html()}
+</f:if>
 	</f:then>
 	<f:else>
 		<f:comment> Beside Text right or left </f:comment>
@@ -98,13 +104,17 @@
 					<f:if condition="{gallery.position.vertical} == 'below'">
 						<f:then>
 							<f:render section="HeaderBeside" arguments="{_all}" />
-							<div class="bodytext">{data.bodytext -> f:format.html()}</div>
+							<f:if condition="{data.bodytext}">
+								<div class="bodytext">{data.bodytext -> f:format.html()}</div>
+							</f:if>
 							<f:render partial="Media/Gallery" arguments="{_all}" />
 						</f:then>
 						<f:else>
 							<f:render partial="Media/Gallery" arguments="{_all}" />
 							<f:render section="HeaderBeside" arguments="{_all}" />
-							<div class="bodytext">{data.bodytext -> f:format.html()}</div>
+							<f:if condition="{data.bodytext}">
+								<div class="bodytext">{data.bodytext -> f:format.html()}</div>
+							</f:if>
 						</f:else>
 					</f:if>
 				</div>

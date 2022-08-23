@@ -7,6 +7,16 @@
 </f:if>
 <f:if condition="{videoId} && {youtube}">
 	<f:then>
+		<f:asset.script identifier="bgytvideo_function">
+// YouTube Background embed - BackgroundWrapper.html
+function t3sbBackgroundVideo(div, params) {
+	var iframe = document.createElement('iframe');
+	iframe.setAttribute('src','https://www.youtube-nocookie.com/embed/' + div.dataset.id + params);
+	iframe.setAttribute('allowfullscreen', '1');
+	iframe.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+	div.replaceWith(iframe);
+}
+		</f:asset.script>
 		<f:comment>	Youtube video </f:comment>
 		<f:asset.script identifier="vanilla_ytvideo-{data.uid}">
 	// YouTube background embeds (v{data.uid}) - BackgroundWrapper.html
@@ -35,6 +45,41 @@
 			<f:then>
 				<f:if condition="{enableAutoheight} && {addHeight} ">
 					<f:then>
+						<f:asset.script identifier="autoheight_function">
+// Autoheight for backgroundimages - BackgroundWrapper.html
+function t3sbAddHeight(TYPO3, objKey) {
+	var overlay = document.getElementById(objKey).nextElementSibling;
+	if (overlay) {
+		var totalHeight = 0;
+		var addHeight = 0;
+		TYPO3.settings.ADDHEIGHT.forEach(function(value, key) {
+			if (objKey == 'bg-img-'+key) {
+				addHeight = parseInt(value);
+			}
+		});
+		if ( overlay.querySelector('.container') ) {
+			overlay.getElementsByClassName('container')[0].children.forEach( bgwContent => {
+				totalHeight = bgwContent.clientHeight;
+			});
+			totalHeight = totalHeight + addHeight;
+			document.getElementById(objKey).style.minHeight = totalHeight+'px';
+		} else {
+			totalHeight = overlay.children[0].children[0].clientHeight;
+			totalHeight = totalHeight + addHeight;
+			document.getElementById(objKey).style.minHeight = totalHeight+'px';
+		}
+	}
+	var mobile = false;
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		mobile = true;
+	}
+	if (mobile){
+		document.querySelectorAll('.background-image').forEach( bgimg => {
+			bgimg.classList.remove('background-fixed');
+		});
+	}
+}
+						</f:asset.script>
 						<f:asset.script identifier="vanilla_enableAutoheight">
 	// Autoheight for backgroundimages - BackgroundWrapper.html
 	document.querySelectorAll('.enableAutoheight').forEach(function(ah) {
@@ -80,6 +125,24 @@
 									<f:if condition="{file.type} == 4">
 										<f:then>
 											<f:comment>	Local video </f:comment>
+											<f:asset.script identifier="localVideo_function">
+// Local video - BackgroundWrapper.html
+function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoElement) {
+	videoElement.muted = mute;
+	videoElement.loop = loop;
+	if (autoplay) {
+		videoElement.pause();
+		videoElement.currentTime = 0;
+		videoElement.play();
+		videoElement.setAttribute('playsinline', '');
+		if (controls) {
+			videoElement.setAttribute('controls', '');
+		} else {
+			videoElement.removeAttribute('controls');
+		}
+	}
+}
+											</f:asset.script>
 											<f:asset.script identifier="vanilla_localVideo-{data.uid}">
 	// Local video-{data.uid} - BackgroundWrapper.html
 	var videoWrapper = document.querySelector('#video-{file.uid}'),
@@ -105,7 +168,7 @@
 	}, true);
 
 	videoElement.style.marginTop = '-'+marginTop-shift+'px';
-	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, videoElement );
+	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, {localVideo.controls}, videoElement );
 											</f:asset.script>
 											<f:asset.css identifier="lovalvideocss-{data.uid}">
 {localVideo.inlineCSS -> f:format.raw()}

@@ -4,8 +4,6 @@
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
-
-
 <f:if condition="{col_276 -> f:count()}">
 	<f:then>
 		<f:render section="Default" arguments="{_all}" />
@@ -23,6 +21,21 @@
 <f:section name="Default">
 <f:comment> BOOTSTRAP CAROUSEL </f:comment>
 <f:if condition="{containsVideo}">
+	<f:asset.script identifier="localvideoCarousel_function">
+// Local carousel video - CarouselContainer.html
+function t3sbLocalCarouselVideo(videoCarousel) {
+	videoCarousel.addEventListener('slide.bs.carousel', function (el) {
+		let slides = this.getElementsByClassName('carousel-item');
+		slides.forEach( carouselItem => {
+			if ( carouselItem.classList.contains('active') ) {
+				if ( carouselItem.classList.contains('carousel-video') ) {
+					carouselItem.getElementsByTagName('video')[0].play();
+				}
+			}
+		});
+	});
+}
+	</f:asset.script>
 	<f:asset.script identifier="vanilla_localvideojs-{data.uid}">
 	// Local video in Carousel-Container (pause/play) - CarouselContainer.html
 	var videoCarousel = document.getElementById('carousel-{data.uid}');

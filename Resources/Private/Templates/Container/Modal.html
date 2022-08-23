@@ -50,7 +50,7 @@
 		<div class="modal-content">      
 			<div class="modal-header">
 				<f:render partial="Header/All" arguments="{_all}" />
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+				<button type="button" class="btn-close{f:if(condition:'{modal.whiteclosebutton}',then:' btn-close-white')}" data-bs-dismiss="modal" aria-label="Schließen"></button>
 			</div>
 			<div class="modal-body{f:if(condition:'{data.tx_t3sbootstrap_container}',then:' {data.tx_t3sbootstrap_container}')}">
 			<f:for each="{col_279}" as="row">

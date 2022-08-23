@@ -43,7 +43,6 @@ class Menu implements SingletonInterface
 				$processedData['menupills'] = '';
 			}
 
-
 		return $processedData;
 	}
 

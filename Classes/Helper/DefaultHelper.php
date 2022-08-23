@@ -135,8 +135,6 @@ class DefaultHelper implements SingletonInterface
 
 		if ( ($processedData['data']['tx_t3sbootstrap_header_celink'] && $processedData['data']['header_link'])
 			|| (!empty($flexconf['bgwlink']) && $processedData['data']['header_link']) ) {
-
-
 			if ( $cType == 't3sbs_card' ) {
 				if (!empty($flexconf['button']['enable'])) {
 					$processedData['card']['button']['link'] = $processedData['data']['header_link'];

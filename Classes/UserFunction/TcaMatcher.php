@@ -72,6 +72,19 @@ class TcaMatcher
 	}
 
 	/**
+	 * buttonGroup
+	 */
+	public function buttonGroup(array $arguments): bool
+	{
+		$group = false;
+		if ( !empty($arguments['record']['tx_container_parent'][0]) ) {
+			$group = true;
+		}
+
+		return $group;
+	}
+
+	/**
 	 * cardWrapperParent
 	 */
 	public function cardWrapperParent(array $arguments): bool
@@ -340,7 +353,7 @@ class TcaMatcher
 
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
-			$file = $fileObjects[0] ? $fileObjects[0] : FALSE;
+			$file = !empty($fileObjects[0]) ? $fileObjects[0] : FALSE;
 
 			if (!$file) {
 				$media = true;
@@ -385,7 +398,7 @@ class TcaMatcher
 		$level = false;
 		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 		$parentPage = $pageRepository->getPage($arguments['record']['pid']);
-		if ($parentPage['is_siteroot']) {
+		if (!empty($parentPage['is_siteroot'])) {
 			$level = true;
 		}
 

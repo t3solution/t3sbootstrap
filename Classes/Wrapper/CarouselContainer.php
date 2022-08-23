@@ -22,7 +22,6 @@ class CarouselContainer implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-
 		$processedData['maxWidth'] = $flexconf['width'] ? $flexconf['width'].'px' : '1440px';
 		$processedData['interval'] = $flexconf['interval'];
 		$processedData['darkVariant'] = $flexconf['darkVariant'];
@@ -54,7 +53,6 @@ class CarouselContainer implements SingletonInterface
 		}
 
 		$processedData['carouselSlides'] = !empty($carouselSlides) ? $carouselSlides : '';
-
 
 		return $processedData;
 	}

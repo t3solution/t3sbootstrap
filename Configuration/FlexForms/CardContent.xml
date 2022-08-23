@@ -6,7 +6,6 @@
 					<sheetTitle>Content</sheetTitle>
 				</TCEforms>
 				<type>array</type>
-
 				<el>
 					<header.text>
 						<TCEforms>
@@ -20,7 +19,6 @@
 							</config>
 						</TCEforms>
 					</header.text>
-
 					<text.top>
 						<TCEforms>
 							<label>Text Top</label>
@@ -32,8 +30,6 @@
 							</config>
 						</TCEforms>
 					</text.top>
-					
-
 					<list.container>
 						<section>1</section>
 						<type>array</type>
@@ -55,7 +51,6 @@
 							</list>
 						</el>
 					</list.container>
-
 					<text.bottom>
 						<TCEforms>
 							<label>Text Bottom (optional: new .card-block)</label>
@@ -67,7 +62,6 @@
 							</config>
 						</TCEforms>
 					</text.bottom>
-
 					<footer.text>
 						<TCEforms>
 							<label>Card Footer</label>
@@ -80,7 +74,6 @@
 							</config>
 						</TCEforms>
 					</footer.text>
-
 				</el>
 			</ROOT>
 		</sDEF>

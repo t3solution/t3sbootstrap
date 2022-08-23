@@ -52,15 +52,17 @@ class CardWrapper implements SingletonInterface
 				$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $child['uid']);
 				$children[$key] = $flexFormService->convertFlexFormContentToArray($child['pi_flexform']);
 				$children[$key]['imgwidth'] = $child['imagewidth'] ?: 576;
-				if ($flexconf['card_wrapper'] == 'flipper'){
-					$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
-					 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ' : '';
-					$children[$key]['file'] = $fileObjects;
-					$children[$key]['backheader'] = $children[$key]['header']['text'];
-					$children[$key]['header'] = $child['header'];
-				} else {
-					$children[$key]['file'] = $fileObjects[0];
-					$children[$key]['header'] = $child['header'];
+				if (!empty($fileObjects)) {
+					if ($flexconf['card_wrapper'] == 'flipper'){
+						$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
+						 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ' : '';
+						$children[$key]['file'] = $fileObjects;
+						$children[$key]['backheader'] = $children[$key]['header']['text'];
+						$children[$key]['header'] = $child['header'];
+					} else {
+						$children[$key]['file'] = $fileObjects[0];
+						$children[$key]['header'] = $child['header'];
+					}
 				}
 				$children[$key]['ratio'] = $child['tx_t3sbootstrap_image_ratio'] ?: '0';
 				$children[$key]['uid'] = $child['uid'];
@@ -71,6 +73,7 @@ class CardWrapper implements SingletonInterface
 				$children[$key]['tx_t3sbootstrap_header_display'] = $child['tx_t3sbootstrap_header_display'];
 				$children[$key]['tx_t3sbootstrap_header_class'] = $child['tx_t3sbootstrap_header_class'];
 				$children[$key]['tx_t3sbootstrap_header_fontawesome'] = $child['tx_t3sbootstrap_header_fontawesome'];
+				$children[$key]['celink'] = $child['tx_t3sbootstrap_header_celink'];
 
 				$children[$key]['settings'] = $flexFormService->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
 			}

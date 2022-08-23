@@ -44,6 +44,19 @@
 	z-index: -1;
 }
 </f:asset.css>
+<f:asset.script identifier="jarallax_function">
+// Jarallax - ParallaxWrapper.html
+function t3sbParallax(addHeight, uid) {
+	let jarallax = document.getElementById('c'+uid),
+		textWrapper = document.getElementById('text-wrapper-'+uid);
+	if (textWrapper !== null && textWrapper !== '') {
+		jarallaxHeight = parseInt(textWrapper.clientHeight + addHeight);
+	} else {
+		jarallaxHeight = parseInt(300 + addHeight);
+	}
+	jarallax.style.minHeight = jarallaxHeight+'px';
+}
+</f:asset.script>
 <f:asset.script identifier="vanilla_jarallaxJs-{data.uid}">
 	// Parallax - ParallaxWrapper.html
 	t3sbParallax({addHeight}, {data.uid});

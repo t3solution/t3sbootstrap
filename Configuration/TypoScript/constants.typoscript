@@ -13,15 +13,19 @@ plugin.tx_t3sbootstrap {
 	}
 }
 
+
+bootstrap.cdn.bootstraplatest = 5.2.0
+bootstrap.cdn.noZip = 0
+bootstrap.cdn.fontawesome5latest = 5.15.4
+bootstrap.cdn.fontawesome6latest = 6.1.2
+
 #-------------------------------------------------------------------------------
 #	Constant Editor
 #-------------------------------------------------------------------------------
 
-bootstrap.cdn.fontawesome5latest = 5.15.4
-bootstrap.cdn.fontawesome6latest = 6.1.1
-
-# customcategory=bootstrap-cdn=* T3SB::CDN- and Version-Settings
+# customcategory=bootstrap-cdn=* T3SB::CDN- Google Fonts and Version-Settings
 # customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
+# customsubcategory=a-google=GoogleFonts - Integrate Google Fonts
 # customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
 # customsubcategory=c-integrity=CDN Integrity - if set crossorigin is set to anonymous
 bootstrap.cdn {
@@ -29,13 +33,15 @@ bootstrap.cdn {
 	enable = 1
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/.
 	bootswatch = 0
+	# cat=bootstrap-cdn/a-google/10; type=small; label=Comma separated list with google fonts:integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)
+	googlefonts =
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.1.3
+	bootstrap = 5.2.0
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
 	popperjs = 2.11.5
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.1.1
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.1.2
 	fontawesome = 5.15.4
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.6.0
@@ -44,7 +50,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
 	cookieconsent = 3
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 11.5.1
+	highlight = 11.6.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
 	lazyload = 17.8
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
@@ -56,38 +62,40 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/42; type=small; label=Halkabox:
 	halkabox = 1.6.0
 	# cat=bootstrap-cdn/b-version/45; type=small; label=G Lightbox:
-	glightbox = 3.1.0
+	glightbox = 3.2.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
 	jarallax = 2
 	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper:
 	swiper = 8
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3
+	bootstrapCssIntegrity = sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13
-	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Popper js:
+	bootstrapJsIntegrity = sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK
+	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
+	bootstrapBundleJsIntegrity = sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa
+	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
 	popperjsIntegrity = sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk
-	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Masonry js:
+	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
-	jqueryIntegrity =
+	jqueryIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
-	jqueryEasingIntegrity =
+	jqueryEasingIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/25; type=small; label=Cookieconsent:
-	cookieconsentIntegrity =
+	cookieconsentIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/27; type=small; label=Highlight:
-	highlightIntegrity =
+	highlightIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/30; type=small; label=Lazyload:
-	lazyloadIntegrity =
+	lazyloadIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/32; type=small; label=Picturefill:
-	picturefillIntegrity =
+	picturefillIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/37; type=small; label=Baguette Box:
-	baguetteBoxIntegrity =
+	baguetteBoxIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Halkabox:
-	halkaboxIntegrity =
+	halkaboxIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/42; type=small; label=G Lightbox:
-	glightboxIntegrity =
+	glightboxIntegrity = 
 }
 
 # customcategory=bootstrap-image=* T3SB::Image settings
@@ -181,7 +189,6 @@ bootstrap.optimize {
 #-------------------------------------------------------------------------------
 #	NOT in Constant Editor
 #-------------------------------------------------------------------------------
-
 # Pagebrowser - MORE INFO: https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html#special-browse
 bootstrap.pagebrowser.enable = 0
 bootstrap.pagebrowser.prevnextToSection = 1
@@ -193,6 +200,8 @@ bootstrap.pagebrowser.entryLevel = 1
 
 # enable the currently available utility colors in the BE Modul
 bootstrap.config.enableUtilityColors = 1
+# hints to increase the website speed in the BE Modul
+bootstrap.config.enableInfo = 1
 # enable the Dark Mode - if "prefers-color-scheme" (iOS and Android) is "dark" -> the body tag gets the class "dark-mode" 
 bootstrap.config.darkMode = 0
 
@@ -210,6 +219,8 @@ bootstrap.backToTopTitle = to top
 bootstrap.backToTopClass = fa fa-chevron-circle-up fa-4x
 bootstrap.backToTopForAllPages = 0
 
+# Preload the google fonts includedby bootstrap.cdn.googlefonts if activated (execute scheduler task t3sbootstrap:cdnToLocal)
+bootstrap.preloadGooleFonts = 0
 # GTM Account ID - include the Google Tag Manager if entered
 bootstrap.gtm =
 
@@ -302,6 +313,8 @@ bootstrap.config.lightboxSelection = 0
 bootstrap.config.faLinkIcons = 0
 bootstrap.config.backgroundImageEnable = 0
 bootstrap.config.footerSticky = 0
+bootstrap.config.compress = 
+bootstrap.config.navbarBreakpoint = 
 
 // import outsourced constants from DB
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript'

@@ -58,6 +58,10 @@ expandedContent = 0
 cTypeClass = 0
 # cat=t3sb/enable/60; type=boolean; label=Content Consent Plug-In: Currently only for YouTube videos.
 contentconsent = 0
+# cat=t3sb/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Concatenate CSS and JS files - best with "Compress" in T3SB config (clear cache).
+t3sbconcatenate = 0
+# cat=t3sb/enable/80; type=boolean; label=Minify CSS- and JS files from t3sbootstrap - EXPERIMENTAL: Minify CSS and JS with "toptal.com" if no error message is generated (clear cache).
+t3sbminify = 0
 
 # cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
 codesnippet = 0
@@ -72,7 +76,7 @@ fontawesomeCss = 0
 animateCss = 0
 # cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache).
 linkHoverEffect = 0
-# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2]; label=Lazy Load: for images - include lazyload.min.js (clear cache).
+# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache).
 lazyLoad = 0
 # cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache).
 cookieconsent = 0

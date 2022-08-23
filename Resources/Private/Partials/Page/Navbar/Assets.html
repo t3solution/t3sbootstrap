@@ -21,6 +21,22 @@
 </f:asset.script>
 </f:if>
 <f:if condition="{config.navbar.dropdownAnimate} && {config.navbar.dropdownAnimateValue}">
+	<f:asset.script identifier="navbarDropdownAnimate_function">
+// Dropdown animate - Navbar/Assets.html
+function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
+	if ( vw < bp ) {
+		document.querySelectorAll('.dd-animate-'+dropdownAnimateValue).forEach(function(dda) {
+			dda.classList.remove('dd-animate-'+dropdownAnimateValue);
+			dda.classList.add('removed-animate-'+dropdownAnimateValue);
+		});
+	} else {
+		document.querySelectorAll('.removed-animate-'+dropdownAnimateValue).forEach(function(dda) {
+			dda.classList.add('dd-animate-'+dropdownAnimateValue);
+			dda.classList.remove('removed-animate-'+dropdownAnimateValue);
+		});
+	}
+}	
+	</f:asset.script>
 <f:asset.script identifier="vanilla_navbarDropdownAnimate">
 	// Dropdown animate - Navbar/Assets.html
 	t3sbDropdownAnimate(viewportWidth, navbarBreakpointWidth, {config.navbar.dropdownAnimateValue});

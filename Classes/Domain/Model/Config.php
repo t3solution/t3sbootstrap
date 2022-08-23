@@ -919,6 +919,13 @@ class Config extends AbstractEntity
 	protected $sectionmenuStickyTop = false;
 
 	/**
+	 * sectionmenuScrollspy
+	 *
+	 * @var bool
+	 */
+	protected $sectionmenuScrollspy = false;
+
+	/**
 	 * backgroundImageEnable
 	 *
 	 * @var bool
@@ -4043,6 +4050,27 @@ class Config extends AbstractEntity
 	public function setSectionmenuStickyTop($sectionmenuStickyTop)
 	{
 		$this->sectionmenuStickyTop = $sectionmenuStickyTop;
+	}
+
+	/**
+	 * Returns the sectionmenuScrollspy
+	 *
+	 * @return bool $sectionmenuScrollspy
+	 */
+	public function getSectionmenuScrollspy()
+	{
+		return $this->sectionmenuScrollspy;
+	}
+
+	/**
+	 * Sets the sectionmenuScrollspy
+	 *
+	 * @param bool $sectionmenuScrollspy
+	 * @return void
+	 */
+	public function setSectionmenuScrollspy($sectionmenuScrollspy)
+	{
+		$this->sectionmenuScrollspy = $sectionmenuScrollspy;
 	}
 
 	/**

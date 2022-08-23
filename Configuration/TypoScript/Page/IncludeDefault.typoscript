@@ -11,39 +11,17 @@ page {
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
 		t3sbootstrap.if.isFalse = {$bootstrap.config.disableDefaultCss}
 
-	}
-
-	includeJSFooter {
 
 		##########################################################################################################
 		#
-		# Modernizr JS
+		# GOOGLE FONTS
 		#
 		##########################################################################################################
 
-		modernizr = EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js
-		modernizr.if.isTrue = {$bootstrap.extconf.webp}
-
-	}
-
-	##########################################################################################################
-	#
-	# FONTAWESOME PRO - using the SVG + JS version
-	#
-	##########################################################################################################
-
-	footerData {
-		62 = TEXT
-		62.value = <script src="/fileadmin/T3SB/FA5Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
-		62.if {
-			value = 2
-			equals = {$bootstrap.extconf.fontawesomeCss}
-		}
-		63 = TEXT
-		63.value = <script src="/fileadmin/T3SB/FA6Pro/js/all.min.js" data-auto-replace-svg="nest"></script>
-		63.if {
-			value = 4
-			equals = {$bootstrap.extconf.fontawesomeCss}
+		googleFontCSS = /fileadmin/T3SB/Resources/Public/CSS/googlefonts.css
+		googleFontCSS.forceOnTop = 1
+		googleFontCSS.if {
+			isTrue = {$bootstrap.cdn.googlefonts}
 		}
 	}
 
@@ -66,6 +44,11 @@ temp.jsCookieConsent >
 # Conditions
 #
 ##########################################################################################################
+
+// preload GOOGLE FONTS
+[{$bootstrap.preloadGooleFonts} == 1]
+@import 'fileadmin/T3SB/Configuration/TypoScript/preloadGooleFonts.typoscript'
+[END]
 
 # Bugfix for Safari browser if using webp with lazyload
 [browser('Safari') && {$bootstrap.extconf.webp} == 1 && {$bootstrap.extconf.lazyLoad} > 0]

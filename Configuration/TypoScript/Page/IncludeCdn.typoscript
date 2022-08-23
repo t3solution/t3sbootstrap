@@ -1,9 +1,4 @@
 
-config.compressJs = 0
-config.compressCss = 0
-config.concatenateJs = 0
-config.concatenateCss = 0
-
 page {
 	includeCSS {
 
@@ -37,12 +32,17 @@ page {
 		popperCDN = https://cdnjs.cloudflare.com/ajax/libs/popper.js/{$bootstrap.cdn.popperjs}/umd/popper.min.js
 		popperCDN.integrity = {$bootstrap.cdn.popperjsIntegrity}
 		popperCDN.external = 1
-
+		popperCDN.if.isFalse = {$bootstrap.extconf.t3sbconcatenate}
 
 		bootstrapCDN = https://cdn.jsdelivr.net/npm/bootstrap@{$bootstrap.cdn.bootstrap}/dist/js/bootstrap.min.js
 		bootstrapCDN.integrity = {$bootstrap.cdn.bootstrapJsIntegrity}
 		bootstrapCDN.external = 1
+		bootstrapCDN.if.isFalse = {$bootstrap.extconf.t3sbconcatenate}
 
+		bootstrapCDNBundle = https://cdn.jsdelivr.net/npm/bootstrap@{$bootstrap.cdn.bootstrap}/dist/js/bootstrap.bundle.min.js
+		bootstrapCDNBundle.integrity = {$bootstrap.cdn.bootstrapBundleJsIntegrity}
+		bootstrapCDNBundle.external = 1
+		bootstrapCDNBundle.if.isTrue = {$bootstrap.extconf.t3sbconcatenate}
 	}
 
 	includeJSFooter {
@@ -79,7 +79,10 @@ page {
 		lazyloadCDN = https://cdn.jsdelivr.net/npm/vanilla-lazyload@{$bootstrap.cdn.lazyload}/dist/lazyload.min.js
 		lazyloadCDN.integrity = {$bootstrap.cdn.lazyloadIntegrity}
 		lazyloadCDN.external = 1
-		lazyloadCDN.if.isTrue = {$bootstrap.extconf.lazyLoad}
+		lazyloadCDN.if {
+			value = 1,2
+			isInList = {$bootstrap.extconf.lazyLoad}
+		}
 
 		##########################################################################################################
 		#
@@ -104,7 +107,7 @@ page {
 		61 = TEXT
 		61.value = <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/{$bootstrap.cdn.fontawesome}/js/all.min.js" data-auto-replace-svg="nest"></script>
 		61.if {
-			value = 1,3 
+			value = 1,3
 			isInList = {$bootstrap.extconf.fontawesomeCss}
 		}
 	}

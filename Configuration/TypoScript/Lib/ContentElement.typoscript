@@ -86,6 +86,7 @@ lib.contentElement {
 		containerError = {$bootstrap.config.containerError}
 		sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 		sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
+		sectionmenuScrollspy = {$bootstrap.config.sectionmenuScrollspy}
 		sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
 		breakpoint = {$bootstrap.config.navbarBreakpoint}
 		lightboxSelection = {$bootstrap.config.lightboxSelection}
@@ -94,6 +95,7 @@ lib.contentElement {
 		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
 		webp = {$bootstrap.extconf.webp}
 		btnSlideOutCorrection = 21
+		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}

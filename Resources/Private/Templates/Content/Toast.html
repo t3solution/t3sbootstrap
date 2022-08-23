@@ -4,6 +4,56 @@
 <f:comment>No header for t3sbs_toast</f:comment>
 </f:section>
 <f:section name="Main">
+<f:asset.script identifier="toast_function">
+// Toasts - ToastContainer.html & Toast.html
+function t3sbToastContainer(toasts) {
+	toasts.forEach( t => {
+		var toast = document.getElementById(t.id);
+		var newToast = new bootstrap.Toast(toast);
+		var toastBody = toast.getElementsByClassName('toast-body');
+		var toastBodyLength = toastBody[0].innerText.length;
+		if (t3sbGetCookie(t.id) != null ) {
+			if ( t3sbGetCookie(t.id) != toastBodyLength ) {
+				newToast.show();
+			}
+		} else {
+			newToast.show();
+		}
+		if( toast.querySelector('.setCookie') != null	 ) {
+			toast.querySelector('.setCookie').checked = false;
+			toast.addEventListener('hidden.bs.toast', function () {
+				let dismiss = toast.querySelector('.setCookie').checked;
+				if (dismiss) {
+					t3sbSetCookie(t.id,toastBodyLength,1);
+				}
+			});
+		}
+	});
+}
+	</f:asset.script>
+	<f:asset.script identifier="cookie_function">
+function t3sbSetCookie(cname,cvalue,exdays) {
+	const d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	let expires = 'expires=' + d.toGMTString();
+	document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+}
+function t3sbGetCookie(cname) {
+	let name = cname + '=';
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return '';
+}
+</f:asset.script>
 <f:asset.script identifier="vanilla_toast">
 	// Toast - Content/Toast.html
 	var toasts = document.querySelectorAll('.toast.ce-toast');
