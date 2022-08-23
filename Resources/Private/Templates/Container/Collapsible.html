@@ -1,4 +1,5 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" 
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Header">
 <f:comment>no header here</f:comment>
@@ -20,8 +21,24 @@
 <div id="c{data.uid}" class="accordion-item">
 	<h2 class="accordion-header" id="heading-{data.uid}">
 		<button class="accordion-button{collapsed}{f:if(condition: '{media.originalFile}', then: ' p-0 accordion-img')}{f:if(condition: '{header.hClass}',then: ' {header.hClass}')}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{data.uid}" aria-expanded="{expanded}" aria-controls="collapse-{data.uid}">
-			<f:if condition="{media.originalFile}">
-				<f:image image="{media.originalFile}" alt="{media.alt}" title="{media.title}" width="60c" height="60c" class="float-left me-3" />
+			<f:if condition="{media}">
+				<t3sb:media
+					file="{media}"
+					title=""
+					alt=""
+					class="float-left me-3"
+					width="60"
+					height="60"
+					breakpoints="{
+					0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+					1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+					2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+					}"
+					imgtag="false"
+					picturefill="{settings.picturefill}"
+					lazyload="{settings.lazyLoad}"
+					ratio="{ratio}"
+				/>
 			</f:if>
 			{headerFontawesome -> f:format.raw()}
 			{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}

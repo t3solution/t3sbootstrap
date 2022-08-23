@@ -44,8 +44,7 @@
 						<f:comment>	BG-Image : overlay and autoheight </f:comment>
 						<section id="s-{data.uid}" class="card rounded-0 border-0">
 							<f:comment>	background-image by css </f:comment>
-							<div id="bg-img-{data.uid}"
-								 class="{imageRaster}background-image enableAutoheight{class}"{styleAttr -> f:format.raw()}">
+							<div id="bg-img-{data.uid}" class="{imageRaster}background-image enableAutoheight{class}"{styleAttr -> f:format.raw()}>
 							</div>
 							<f:render section="SectionOverlayInner" arguments="{_all}" />
 						</section>
@@ -54,7 +53,7 @@
 					<f:comment>	BG-Image : default </f:comment>
 						<f:comment>	background-image by css </f:comment>
 						<section id="s{data.uid}"
-							 class="{imageRaster}background-image{class}"{styleAttr -> f:format.raw()}">
+							 class="{imageRaster}background-image{class}"{styleAttr -> f:format.raw()}>
 							<f:render section="SectionInner" arguments="{_all}" />
 						</section>
 					</f:else>
@@ -120,8 +119,8 @@
 												<f:if condition="{settings.lazyLoadBgWrapperImage}">
 													<f:then>
 														<t3sb:media file="{file}" width="2560" height="auto"
-															class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2
-															 || {settings.lazyLoad} == 1', then: ' lazy')}"
+															class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load}
+															 && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}"
 															breakpoints="{
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
 															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
@@ -169,7 +168,7 @@
 
 <f:section name="SectionInner">
 	<f:if condition="{col_273 -> f:count()}">
-		<div class="card-img-overlay d-flex">
+		<div class="d-flex">
 			<div class="col{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 				{containerPre -> f:format.raw()}
 					<f:for each="{col_273}" as="row">
