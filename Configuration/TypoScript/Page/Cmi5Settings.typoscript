@@ -22,13 +22,30 @@ config {
 
 page {
 	includeCSS {
+        plyrCss = https://cdn.plyr.io/3.7.2/plyr.css
       	custom3Css = EXT:t3sbootstrap/Resources/Public/CmiFive/Css/custom3.css
-      	plyrCss = https://cdn.plyr.io/3.6.8/plyr.css
+        #swordCss = https://unpkg.com/spoken-word/css/style.css
 	}
 	includeJS {
-      	main = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/main.js
-        progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
-       	plyrJs = https://cdn.plyr.io/3.6.8/plyr.js
+      	#main = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/main.js
+        cmi5Controller = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Controller-new.js
+        cryptojs = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cryptojs_v3.1.2.js
+        utf8TextEncoding = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/utf8-text-encoding.js
+        activitytypes = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/activitytypes.js
+        verbs = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/verbs.js
+        xapiwrapper= EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapiwrapper.js
+        xapistatement = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapistatement.js
+        xapiUtil = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-util.js
+        xapiLaunch = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-launch.js
+        cmi5Wrapper = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Wrapper-new.js
+        xmlwriter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/XMLWriter.js
+        cmi5xml = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5xml.js
         echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
+        textHighlighter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/TextHighlighter.js
+        progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
+       	plyrJs = https://cdn.plyr.io/3.7.2/plyr.js
+        echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
+        #sword = https://westonruter.github.io/spoken-word/dist/spoken-word.js
+        html2canvas = https://html2canvas.hertzen.com/dist/html2canvas.min.js
 	}
 }

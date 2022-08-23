@@ -173,6 +173,14 @@ padding: 10px;
   top: calc(50% - 0px);
   margin: 0rem auto;
   max-width: 80vw;
+  transition: none;
+}
+.modal.fade .modal-dialog {
+    transition: none;
+    transform: translate(0, -50%);
+    top: calc(50% - 0px);
+    margin: 0rem auto;
+    max-width: 80vw;
 }
 .navbar-dark .navbar-toggler {
   border-color: transparent;
@@ -374,7 +382,7 @@ nav.mm-menu_offcanvas {
     background: #eee !important;
 }
 .plyr--video, .plyr__video-wrapper {
-    position: initial !important;
+    /*position: initial !important;*/
 }
 .plyr--video .plyr__controls {
   padding: 10px;
@@ -583,5 +591,83 @@ blockquote {
 }
 .h5p-video-title h1,
 .h5p-column h1 {
+  display: none;
+}
+[data-tooltip]:before {
+    /* needed - do not touch */
+    content: attr(data-tooltip);
+    position: absolute;
+    opacity: 0;
+    font-size: 1rem;
+    line-height: 1.1rem;
+
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 5px;
+    box-shadow: 0;
+}
+
+[data-tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+
+    /* customizable */
+    background: #eee;
+    margin-top: 0px;
+    margin-left: 24px;
+}
+
+[data-tooltip]:not([data-tooltip-persistent]):before {
+    pointer-events: none;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.btn-close.btn-close-white {
+    opacity: 1;
+}
+
+.btn-close[data-tooltip]:hover:before {
+    /* needed - do not touch */
+    color: #ddd;
+    /* customizable */
+    background: #e46969;
+    margin-top: -8px;
+    margin-left: 24px;
+}
+.btn-group-lg>.btn, .btn-lg {
+    padding: 0.5rem 2rem;
+}
+.background-color-2 .text-center {
+    text-align: right!important;
+}
+.background-color-2 .row {
+    --bs-gutter-x: 0;
+}
+.background-color-2 figure.image {
+    margin: 0;
+}
+
+.background-color-2 .gallery .col-sm {
+    padding-right: 0;
+    padding-left: 0;
+}
+.background-color-2.d-flex {
+    display: block!important;
+}
+
+.plyr--video .display-visited .plyr__progress__buffer {
+    color: var(--plyr-video-progress-buffered-background,hsla(0,0%,100%,.75));
+}
+.plyr--video .plyr__progress.display-visited {
+  top: -5px;
+}
+.plyr--video .plyr__progress input {
+  height: 40px;
+}
+.back-to-top {
   display: none;
 }
