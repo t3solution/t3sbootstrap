@@ -11,8 +11,7 @@ var bookmarkingTracking = function() {
   this.hls = [];
   this.videos = [];
   this.durations = [];
-  this.h5pBodyStates = [];
-  this.h5pHeadStates = [];
+  this.h5pStates = [];
 };
 
 bookmarkingTracking.prototype = {
@@ -27,8 +26,7 @@ bookmarkingTracking.prototype = {
     this.hls = bookmark.hls;
     this.videos = bookmark.videos;
     this.durations = bookmark.durations;
-    this.h5pBodyStates = bookmark.h5pBodyStates;
-    this.h5pHeadStates = bookmark.h5pHeadStates;
+    this.h5pStates = bookmark.h5pStates;
   },
   getAttemptDuration: function() {
     if (typeof this.attemptDuration === "string") this.attemptDuration = parseInt(this.attemptDuration);
@@ -78,7 +76,7 @@ bookmarkingTracking.prototype = {
     // load highlighted text at relevant pages to sessionStorage
     if (bookmark.hls) textHightlighting("", "", "", bookmark.hls);
     if (bookmark.videos) visitedVideoSections("", "", "", bookmark.videos, bookmark.durations);
-    if (bookmark.h5pBodyStates) h5pState("", "", "", "", bookmark.h5pBodyStates, bookmark.h5pHeadStates);
+    if (bookmark.h5pStates) h5pState(bookmark.h5pStates);
     // populate object of bookmarking data
     if (typeof bookmark.pagesVisited !== "undefined") this.initFromBookmark(bookmark);
     else document.querySelector("body").style.display = "block";
@@ -104,7 +102,7 @@ bookmarkingTracking.prototype = {
     if (sessionStorage.getItem("passedOrFailed")) this.passedOrFailed = true;*/
 
     // save bookmarking data to LRS
-    let states = h5pState();
+    let vvs = visitedVideoSections();
     bookmark = {
       pagesVisited: this.pagesVisited,
       attemptDuration: sessionStorage.getItem("attemptDuration"),
@@ -114,11 +112,9 @@ bookmarkingTracking.prototype = {
       passed: sessionStorage.getItem("passed"),
       passedOrFailed: sessionStorage.getItem("passedOrFailed"),
       hls: textHightlighting("", document.querySelector('.navbar .notes-au-button'), true),
-      videos: visitedVideoSections().videos,
-      durations: visitedVideoSections().durations
-      /*,
-            h5pBodyStates: states.bodyStates,
-            h5pHeadStates: states.headStates*/
+      videos: vvs.videos,
+      durations: vvs.durations,
+      h5pStates: h5pState()
     };
     cmi5Controller.sendAllowedState("bookmarkingData", bookmark);
   },
@@ -665,7 +661,6 @@ function customizeTemplate() {
       cmi5Controller.sendStatements(JSON.parse(sessionStorage.getItem("videostatements")));
       sessionStorage.removeItem("videostatements");
     }
-
     if (navLinks.length > 0) {
       for (let i = 0; i < navLinks.length; i++) {
         if (!navLinks[i].classList.contains("dropdown-toggle")) {
@@ -698,14 +693,6 @@ function customizeTemplate() {
         lPlayer[i].on('ready', (event) => {
           trackVideoEvents(lPlayer[i].media, context);
         });
-      }
-    }
-    if (h5pIframe.length > 0) {
-      for (let i = 0; i < h5pIframe.length; i++) {
-        let h5pId = h5pIframe[i].getAttribute("data-content-id");
-        for (let j = 0; j < sessionStorage.length; j++) {
-          if (sessionStorage.key(j).includes(location.pathname + "/h5pcid_" + h5pId) && sessionStorage.key(j).includes("h5p-headState___")) h5pState(location.pathname + "/h5pcid_" + h5pId, h5pId, "", true);
-        }
       }
     }
     if (navbarContainer.length > 0 && !jumbotron) textHightlighting(pageContent, notesAuButton);
@@ -1573,23 +1560,17 @@ var H5Ptitle, handleH5P = function(event) {
   let H5PXapiStmt = event.data.statement,
     page, title, stmt, cid = parseInt(H5PXapiStmt.object.definition.extensions["http://h5p.org/x-api/h5p-local-content-id"]),
     stmtObject = JSON.parse(sessionStorage.getItem("stmtObject"));
-
-  sessionStorage.setItem("h5p13", JSON.stringify(frames[0].H5P.instances[0].getCurrentState()));
-  frames[0].H5PIntegration.contents["cid-" + cid].contentUserData[0].state = JSON.stringify(frames[0].H5P.instances[0].getCurrentState());
-
   if (cmi5Controller.getContextExtensions()) {
     // add cmi5 activity ID
     stmtObject.id += "/" + location.hostname + location.pathname + "/h5pcid_" + cid + H5PXapiStmt.object.id;
     H5PXapiStmt.object.id = stmtObject.id;
     if (!H5PXapiStmt.verb["id"].includes("completed")) sessionStorage.setItem("objectid", H5PXapiStmt.object.id);
     sessionStorage.setItem("h5ppage", location.pathname);
-    //H5Ptitle = H5PXapiStmt.context.contextActivities.category[0].id.replace("http://h5p.org/libraries/", "");
-
+    H5Ptitle = frames[0].H5P.instances[0].libraryInfo.machineName;
     // add cmi5 description: "name of content type" at "name of page"
     H5PXapiStmt.object.definition.name = {
       [cmi5Controller.dLang]: cmi5Controller.dTitle + ': "' + H5Ptitle + ': ' + cid + '"' + ' at page ' + '"' + bm.pageTitle + '"'
     };
-
     // create cmi5 allowed statement
     stmt = cmi5Controller.getcmi5AllowedStatement(H5PXapiStmt.verb, H5PXapiStmt.object, cmi5Controller.getContextActivities(), cmi5Controller.getContextExtensions());
     // add result to statement if applicable
@@ -1602,111 +1583,27 @@ var H5Ptitle, handleH5P = function(event) {
         else sessionStorage.setItem("failed", true);
         //sendDefinedStatementWrapper("Passed", "", this.attemptDuration);
       }
-      h5pState(H5PXapiStmt.object.id, cid, true);
     }
     cmi5Controller.sendStatement(stmt);
   }
 };
 
-function h5pState(id, cid, set, get, storedBodyStates, storedHeadStates) {
-  return;
-  if (storedBodyStates) {
+function h5pState(storedH5pStates) {
+  if (storedH5pStates) {
     // read object from LRS via State API and re-store sessionStorage
-    for (let i = 0; i < storedBodyStates.length; i++) {
-      sessionStorage.setItem(Object.keys(storedBodyStates[i])[0], Object.values(storedBodyStates[i])[0]);
-      sessionStorage.setItem(Object.keys(storedHeadStates[i])[0], Object.values(storedHeadStates[i])[0]);
+    for (let i = 0; i < storedH5pStates.length; i++) {
+      sessionStorage.setItem(Object.keys(storedH5pStates[i])[0], Object.values(storedH5pStates[i])[0]);
     }
-  } else if (set) {
-    setTimeout(function() {
-      let lp = location.pathname,
-        cd = document.querySelector("#h5p-iframe-" + cid + ".h5p-iframe").contentDocument;
-      for (let j = 0; j < sessionStorage.length; j++) {
-        if (sessionStorage.key(j).includes(location.pathname + "/h5pcid_" + cid)) sessionStorage.removeItem(sessionStorage.key(j));
-      }
-      if (!cd.body.querySelector('.h5p-questionnaire')) {
-        sessionStorage.setItem("h5p-bodyState___" + id, JSON.stringify(cd.body.innerHTML));
-        sessionStorage.setItem("h5p-headState___" + id, JSON.stringify(cd.head.innerHTML));
-      }
-    }, 2000);
-  } else if (get) {
-    let cidState = cid + "state";
-    setTimeout(function() {
-      document.querySelector(".h5p-iframe-wrapper").insertAdjacentHTML("beforeend", '<iframe id="h5p-iframe-' + cidState + '" class="h5p-iframe h5p-initialized" data-content-id=' + cidState + ' scrolling="no" frameborder="0" src="about:blank"></iframe>');
-      let cidStateFrame = document.querySelector("#h5p-iframe-" + cidState + ".h5p-iframe"),
-        cidStateFrameCd = cidStateFrame.contentDocument,
-        cidFrame = document.querySelector('.h5p-iframe-wrapper #h5p-iframe-' + cid),
-        cidFrameH5pWrapper = cidFrame.contentDocument.querySelector('body .h5p-wrapper'),
-        cidFrameH5pInner = cidFrame.contentDocument.querySelector('body .h5p-inner');
-      cidStateFrameCd.open();
-      cidStateFrameCd.close();
-      for (let j = 0; j < sessionStorage.length; j++) {
-        if (sessionStorage.key(j).includes(location.pathname + "/h5pcid_" + cid) && sessionStorage.key(j).includes("h5p-headState___")) cidStateFrame.contentDocument.head.innerHTML = JSON.parse(sessionStorage.getItem(sessionStorage.key(j)));
-        if (sessionStorage.key(j).includes(location.pathname + "/h5pcid_" + cid) && sessionStorage.key(j).includes("h5p-bodyState___")) cidStateFrame.contentDocument.body.innerHTML = JSON.parse(sessionStorage.getItem(sessionStorage.key(j)));
-      }
-      cidStateFrameCd.body.style = 'font-family: Sans-Serif; margin: 0;';
-      if (cidFrameH5pWrapper) {
-        var cidStateFrameCdH5pWrapper = cidStateFrameCd.querySelector('body .h5p-wrapper')
-        cidStateFrame.style.height = cidStateFrameCdH5pWrapper.style.height = cidFrameH5pWrapper.style.height;
-        cidStateFrameCd.querySelector('body .h5p-wrapper').style.fontSize = cidFrameH5pWrapper.style.fontSize;
-      } else if (cidFrameH5pInner) {
-        var cidStateFrameCdH5pInner = cidStateFrameCd.querySelector('body .h5p-inner');
-        cidStateFrameCdH5pInner.style.height = cidFrameH5pInner.clientHeight + "px";
-        cidStateFrame.style.height = cidFrameH5pInner.clientHeight + 130 + "px";
-        cidStateFrameCdH5pInner.style.width = cidFrameH5pInner.style.width;
-      } else cidStateFrame.style.height = cidFrame.style.height;
-
-      cidFrame.style = "display: none;";
-      let divwrapstyle = '<style>.h5p-display-state-button {text-align: center; padding: 10px 25px; border-radius: 5px; border: 0;} .h5p-display-state-text {color: #fff; text-align: center; padding: 10vh 10vw;} .h5p-display-state-wrapper {font-size: 125%; hyphens: auto; font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; line-height: 1.9; font-weight: 300; position: fixed; top: 0; left: 0; z-index: 1050; width: 100vw; height: 100vh; transition: 0.5s; webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 1;background-color: rgba(0,0,0,.5);}</style>',
-        divwrap = '<div class="h5p-display-state-wrapper"><div class="h5p-display-state-text"><p></p><button class="h5p-display-state-button">OK</button></div></div>';
-      cidStateFrameCd.head.insertAdjacentHTML('beforeend', '<style>.h5p-question-show-solution {display: none; )</style>');
-      cidStateFrameCd.body.insertAdjacentHTML('afterbegin', divwrap);
-      cidStateFrameCd.body.insertAdjacentHTML('afterbegin', divwrapstyle);
-      if (window.innerWidth < 600) cidStateFrameCd.querySelector(".h5p-display-state-text p").style.fontSize = "75%";
-      cidStateFrameCd.querySelector(".h5p-display-state-button").addEventListener("click", function() {
-        cidStateFrameCd.querySelector('.h5p-display-state-wrapper').style.display = "none";
-      });
-      let qta = cidStateFrameCd.querySelectorAll(".h5p-question-try-again"),
-        divtext1 = 'Diese Aufgabe wurde bereits bearbeitet. Klicke "OK" um den Bearbeitungsstand zu prüfen. Anschließend kannst du die Aufgabe mit Klick auf "Wiederholen" erneut bearbeiten.',
-        divtext2 = 'Diese Aufgabe wurde bereits erfolgreich bearbeitet. Klicke "OK" um das Bearbeitungsergebnis noch einmal zu sehen.';
-      if (qta.length > 0) {
-        cidStateFrameCd.querySelector(".h5p-display-state-text p").innerHTML = divtext1;
-        for (let i = 0; i < qta.length; i++) {
-          qta[i].addEventListener("click", function() {
-            cidFrame.style = "display: block; height: " + cidStateFrame.style.height + ";";
-            if (cidFrameH5pWrapper) {
-              cidFrameH5pWrapper.style.height = cidStateFrame.style.height;
-              cidFrameH5pWrapper.style.fontSize = cidStateFrameCdH5pWrapper.style.fontSize;
-            } else if (cidFrameH5pInner) {
-              cidFrameH5pInner.style.height = cidStateFrameCdH5pInner.style.height;
-              cidFrameH5pInner.style.width = cidStateFrameCdH5pInner.style.width;
-            }
-            for (let j = 0; j < sessionStorage.length; j++) {
-              if (sessionStorage.key(j).includes(location.pathname + "/h5pcid_" + cid)) sessionStorage.removeItem(sessionStorage.key(j));
-            }
-            cidStateFrame.remove();
-          });
-        }
-      } else cidStateFrameCd.querySelector(".h5p-display-state-text p").innerHTML = divtext2;
-    }, 900);
   } else {
-    let bodyStates = [],
-      headStates = [];
+    let h5pStates = [];
     for (let i = 0; i < sessionStorage.length; i++) {
-      if (sessionStorage.key(i).includes("h5p-bodyState___")) {
-        bodyStates.push({
-          [sessionStorage.key(i)]: sessionStorage.getItem(sessionStorage.key(i))
-        });
-      }
-      if (sessionStorage.key(i).includes("h5p-headState___")) {
-        headStates.push({
+      if (sessionStorage.key(i).includes("h5p-state___")) {
+        h5pStates.push({
           [sessionStorage.key(i)]: sessionStorage.getItem(sessionStorage.key(i))
         });
       }
     }
-    return {
-      bodyStates: bodyStates,
-      headStates: headStates
-    };
+    return h5pStates;
   }
 }
 
