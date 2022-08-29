@@ -84,8 +84,9 @@ bookmarkingTracking.prototype = {
     if (!sessionStorage.getItem("bookMarkInit")) this.resumeDialog();
   },
   setBookmarkingData: function(notfinish) {
-    let bookmark, index, lp = location.pathname;
-    index = this.getCurrentPage(this.pagesVisited, lp);
+    var bookmark, index, lp = location.pathname,
+      index = this.getCurrentPage(this.pagesVisited, lp),
+      thl, vvs, h5ps;
     if (index < 0 && !sessionStorage.getItem("bookMarkInit")) this.pagesVisited.push(lp);
     else {
       // remove pathname of current page if visited before ...
@@ -102,7 +103,9 @@ bookmarkingTracking.prototype = {
     if (sessionStorage.getItem("passedOrFailed")) this.passedOrFailed = true;*/
 
     // save bookmarking data to LRS
-    let vvs = visitedVideoSections();
+    vvs = visitedVideoSections();
+    thl = textHightlighting("", document.querySelector('.navbar .notes-au-button'), true);
+    h5ps = h5pState();
     bookmark = {
       pagesVisited: this.pagesVisited,
       attemptDuration: sessionStorage.getItem("attemptDuration"),
@@ -111,10 +114,10 @@ bookmarkingTracking.prototype = {
       failed: sessionStorage.getItem("failed"),
       passed: sessionStorage.getItem("passed"),
       passedOrFailed: sessionStorage.getItem("passedOrFailed"),
-      hls: textHightlighting("", document.querySelector('.navbar .notes-au-button'), true),
+      hls: thl,
       videos: vvs.videos,
       durations: vvs.durations,
-      h5pStates: h5pState()
+      h5pStates: h5ps
     };
     cmi5Controller.sendAllowedState("bookmarkingData", bookmark);
   },
