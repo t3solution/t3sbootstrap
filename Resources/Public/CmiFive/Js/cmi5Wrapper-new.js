@@ -1,4 +1,4 @@
-var bookmarkingTracking = function() {
+var statesController = function() {
   this.pagesVisited = [];
   this.attemptDuration = 0;
   this.completed = false;
@@ -14,25 +14,24 @@ var bookmarkingTracking = function() {
   this.h5pStates = [];
 };
 
-bookmarkingTracking.prototype = {
-  initFromBookmark: function(bookmark) {
-    this.pagesVisited = bookmark.pagesVisited;
-    this.attemptDuration = bookmark.attemptDuration;
-    this.pagesTotal = bookmark.pagesTotal;
-    this.completed = bookmark.completed;
-    this.failed = bookmark.failed;
-    this.passed = bookmark.passed;
-    this.passedOrFailed = bookmark.passedOrFailed;
-    this.hls = bookmark.hls;
-    this.videos = bookmark.videos;
-    this.durations = bookmark.durations;
-    this.h5pStates = bookmark.h5pStates;
+statesController.prototype = {
+  initStates: function(states) {
+    this.pagesVisited = states.pagesVisited;
+    this.attemptDuration = states.attemptDuration;
+    this.pagesTotal = states.pagesTotal;
+    this.completed = states.completed;
+    this.failed = states.failed;
+    this.passed = states.passed;
+    this.passedOrFailed = states.passedOrFailed;
+    this.hls = states.hls;
+    this.videos = states.videos;
+    this.durations = states.durations;
+    this.h5pStates = states.h5pStates;
   },
   getAttemptDuration: function() {
     if (typeof this.attemptDuration === "string") this.attemptDuration = parseInt(this.attemptDuration);
     if (sessionStorage.getItem("pageDuration")) this.attemptDuration += parseInt(sessionStorage.getItem("pageDuration"));
     sessionStorage.setItem("attemptDuration", this.attemptDuration);
-    return this.attemptDuration;
   },
   getPageDuration: function() {
     let pd, pds = [];
@@ -44,70 +43,70 @@ bookmarkingTracking.prototype = {
     sessionStorage.setItem("pageDuration", pd);
     return pd;
   },
-  getBookmarkingData: function(launchedSessions) {
-    // get bookmarking data on init session ...
-    let bookmark = [];
-    if (!sessionStorage.getItem("bookMarkInit")) {
+  getStates: function(launchedSessions, markMenuItemsCb) {
+    // get state data on init session ...
+    let states = [];
+    if (sessionStorage.getItem("statesInit")) {
+      // ... get state data from sessionStorage during session
+      if (sessionStorage.getItem("pagesTotal")) states.pagesTotal = parseInt(sessionStorage.getItem("pagesTotal"));
+      if (sessionStorage.getItem("completed")) states.completed = sessionStorage.getItem("completed");
+      if (sessionStorage.getItem("passed")) states.passed = sessionStorage.getItem("passed");
+      if (sessionStorage.getItem("passedOrFailed")) states.passedOrFailed = sessionStorage.getItem("passedOrFailed");
+      if (sessionStorage.getItem("failed")) states.failed = sessionStorage.getItem("failed");
+      if (sessionStorage.getItem("pagesVisited")) states.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
+      if (sessionStorage.getItem("attemptDuration")) states.attemptDuration = parseInt(sessionStorage.getItem("attemptDuration"));
+    } else {
+      // ... handle state data
       sessionStorage.setItem("startTimeStamp", Math.abs((new Date())));
       // check moveOn..
       let satisfiedSession, initializedSessions;
       initializedSessions = this.getStatementsBase("initialized", cmi5Controller.agent.account, cmi5Controller.registration);
-      // create empty state bookmarkingData in LRS on init
+      // create empty state data in LRS on init
       if (launchedSessions.length < 2 || initializedSessions.length < 1) cmi5Controller.sendAllowedState("bookmarkingData", {});
-      // get state bookmarkingData from LRS
+      // get state data from LRS
       else {
-        bookmark = cmi5Controller.getAllowedState("bookmarkingData");
+        states = cmi5Controller.getAllowedState("bookmarkingData");
         satisfiedSession = this.getStatementsBase("satisfied", cmi5Controller.agent.account, cmi5Controller.registration);
         if (satisfiedSession.length > 0) sessionStorage.setItem("satisfied", true);
       }
-    } else {
-      // ... or get bookmarking data from sessionStorage during session
-      if (sessionStorage.getItem("pagesTotal")) bookmark.pagesTotal = parseInt(sessionStorage.getItem("pagesTotal"));
-      if (sessionStorage.getItem("completed")) bookmark.completed = sessionStorage.getItem("completed");
-      if (sessionStorage.getItem("passed")) bookmark.passed = sessionStorage.getItem("passed");
-      if (sessionStorage.getItem("passedOrFailed")) bookmark.passedOrFailed = sessionStorage.getItem("passedOrFailed");
-      if (sessionStorage.getItem("failed")) bookmark.failed = sessionStorage.getItem("failed");
-      if (sessionStorage.getItem("pagesVisited")) bookmark.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
-      if (sessionStorage.getItem("attemptDuration")) bookmark.attemptDuration = parseInt(sessionStorage.getItem("attemptDuration"));
     }
-    // check if completed and set launchmode to "Review"
-    //console.log("launchMode set to: " + cmi5Controller.launchMode);
-
+    // console.log("launchMode set to: " + cmi5Controller.launchMode);
     // load highlighted text at relevant pages to sessionStorage
-    if (bookmark.hls) textHightlighting("", "", "", bookmark.hls);
-    if (bookmark.videos) visitedVideoSections("", "", "", bookmark.videos, bookmark.durations);
-    if (bookmark.h5pStates) h5pState(bookmark.h5pStates);
-    // populate object of bookmarking data
-    if (typeof bookmark.pagesVisited !== "undefined") this.initFromBookmark(bookmark);
+    if (states.hls) textHightlighting("", "", "", states.hls);
+    if (states.videos) visitedVideoSections("", "", "", states.videos, states.durations);
+    if (states.h5pStates) h5pState(states.h5pStates);
+    // populate object of states data
+    if (typeof states.pagesVisited !== "undefined") this.initStates(states);
     else document.querySelector("body").style.display = "block";
     // resume dialog beyond first entry
-    if (!sessionStorage.getItem("bookMarkInit")) this.resumeDialog();
+    if (!sessionStorage.getItem("statesInit")) this.resumeDialog();
+    markMenuItemsCb(bm.setStates);
   },
-  setBookmarkingData: function(notfinish) {
-    var bookmark, index, lp = location.pathname,
-      index = this.getCurrentPage(this.pagesVisited, lp),
+  setStates: function() {
+    var states, index, lp = location.pathname,
+      index = bm.getCurrentPage(bm.pagesVisited, lp),
       thl, vvs, h5ps;
-    if (index < 0 && !sessionStorage.getItem("bookMarkInit")) this.pagesVisited.push(lp);
+    if (index < 0 && !sessionStorage.getItem("statesInit")) bm.pagesVisited.push(lp);
     else {
       // remove pathname of current page if visited before ...
-      if (index > -1) this.pagesVisited.splice(index, 1);
+      if (index > -1) bm.pagesVisited.splice(index, 1);
       // ... and add pathname of current page to the top of the array of pathnames
-      this.pagesVisited.unshift(lp);
+      bm.pagesVisited.unshift(lp);
     }
-    this.getAttemptDuration();
-    sessionStorage.setItem("pagesVisited", JSON.stringify(this.pagesVisited));
+    bm.getAttemptDuration();
+    sessionStorage.setItem("pagesVisited", JSON.stringify(bm.pagesVisited));
 
     /*if (sessionStorage.getItem("completed")) this.completed = true;
     if (sessionStorage.getItem("failed")) this.failed = true;
     if (sessionStorage.getItem("passed")) this.passed = true;
     if (sessionStorage.getItem("passedOrFailed")) this.passedOrFailed = true;*/
 
-    // save bookmarking data to LRS
+    // save states data to LRS
     vvs = visitedVideoSections();
-    thl = textHightlighting("", document.querySelector('.navbar .notes-au-button'), true);
+    thl = textHightlighting(document.getElementById("page-content"), document.querySelector('.navbar .notes-au-button'), true);
     h5ps = h5pState();
-    bookmark = {
-      pagesVisited: this.pagesVisited,
+    states = {
+      pagesVisited: bm.pagesVisited,
       attemptDuration: sessionStorage.getItem("attemptDuration"),
       pagesTotal: sessionStorage.getItem("pagesTotal"),
       completed: sessionStorage.getItem("completed"),
@@ -119,7 +118,7 @@ bookmarkingTracking.prototype = {
       durations: vvs.durations,
       h5pStates: h5ps
     };
-    cmi5Controller.sendAllowedState("bookmarkingData", bookmark);
+    cmi5Controller.sendAllowedState("bookmarkingData", states);
   },
   // function: follow up on resume dialog...
   resumeDialog: function() {
@@ -187,7 +186,7 @@ bookmarkingTracking.prototype = {
   },
   // function: indicate relevant menu items in t3 menu as visited, set current progress in progressbar
   // Typo3: apply to typo3 menu object?
-  markMenuItems: function() {
+  markMenuItems: function(setStatesCb) {
     let mItemsTotal = document.querySelectorAll(".main-navbarnav a[target=_self]"),
       dItemsTotal = document.querySelectorAll(".main-navbarnav .nav-item > a"),
       progressbar = document.querySelectorAll(".progress-bar"),
@@ -195,7 +194,7 @@ bookmarkingTracking.prototype = {
       mItemsP, dItemsP, mItems = [];
     // get menu items from t3 menu and skip submenu items if applicable
     // indicate relevant menu items in t3 menu as visited and add checkmarks
-    if (sessionStorage.getItem("bookMarkInit") && sessionStorage.getItem("startPageId") != pageId) {
+    if (sessionStorage.getItem("statesInit") && sessionStorage.getItem("startPageId") != pageId) {
       for (let i = 0; i < mItemsTotal.length; i++) {
         mItemsP = mItemsTotal[i];
         // get total of pages
@@ -204,7 +203,7 @@ bookmarkingTracking.prototype = {
         if (mItemsP.classList.contains("active")) {
           //mItemsTotal[i].classList.add("active"); //, "visited");
           mItemsP.classList.add("visited"); //, "visited");
-          this.pageTitle = mItemsP.innerHTML.trim();
+          bm.pageTitle = mItemsP.innerHTML.trim();
           // hide pagination on last page
           if (i < mItemsTotal.length - 1) document.querySelector(".page-pagination").style.display = "block";
         }
@@ -216,8 +215,8 @@ bookmarkingTracking.prototype = {
           spanNode.classList.add("check-mark");
           mItemsP.insertBefore(spanNode, mItemsP.childNodes[0]);
           mItemsP.firstChild.appendChild(iNode);
-          for (let j = 0; j < this.pagesVisited.length; j++) {
-            if (mItemsTotal[i].getAttribute("href").indexOf(this.pagesVisited[j]) != -1 && !mItemsP.classList.contains("visited")) {
+          for (let j = 0; j < bm.pagesVisited.length; j++) {
+            if (mItemsTotal[i].getAttribute("href").indexOf(bm.pagesVisited[j]) != -1 && !mItemsP.classList.contains("visited")) {
               mItemsTotal[i].classList.add("visited");
               mItemsP.classList.add("visited");
             }
@@ -243,13 +242,14 @@ bookmarkingTracking.prototype = {
         dItemsTotal[i].classList.add("progress-circle");
       }
     }
-    if (sessionStorage.getItem("bookMarkInit") && sessionStorage.getItem("startPageId") != pageId && !sessionStorage.getItem("pagesTotal")) sessionStorage.setItem("pagesTotal", mItems.length);
+    if (sessionStorage.getItem("statesInit") && sessionStorage.getItem("startPageId") != pageId && !sessionStorage.getItem("pagesTotal")) sessionStorage.setItem("pagesTotal", mItems.length);
     // set current progress in progressbar
-    this.progress = parseInt(this.pagesVisited.length / parseInt(sessionStorage.getItem("pagesTotal")) * 100);
+    bm.progress = parseInt(bm.pagesVisited.length / parseInt(sessionStorage.getItem("pagesTotal")) * 100);
     if (progressbar.length > 0) {
-      progressbar[0].style.width = this.progress + "%";
-      progressbar[0].innerHTML = this.progress + "%";
+      progressbar[0].style.width = bm.progress + "%";
+      progressbar[0].innerHTML = bm.progress + "%";
     }
+    setStatesCb();
   },
   getStatementsBase: function(verb, agent, registration, sessionid, since, until, relatedactivities, relatedagents, format, activity, page, more) {
     var sessions = ADL.XAPIWrapper.searchParams(),
@@ -272,8 +272,6 @@ bookmarkingTracking.prototype = {
       "endpoint": cmi5Controller.endPoint,
       "auth": "Basic " + cmi5Controller.authToken
     });
-    //console.log(sessions);
-
     sessions_ = ADL.XAPIWrapper.getStatements(sessions);
     if (sessions_.statements.length < 1) {
       sessions["verb"] = "https://w3id.org/xapi/adl/verbs/" + verb;
@@ -287,11 +285,13 @@ bookmarkingTracking.prototype = {
     }
 
     function getMoreSessions(s) {
-      s = getSessions(s);
-      for (let i = 0; i < s.statements.length; i++) {
-        sessions.statements.push(s.statements[i]);
-      }
-      return s;
+      if (s.more) {
+        s = getSessions(s);
+        for (let i = 0; i < s.statements.length; i++) {
+          sessions.statements.push(s.statements[i]);
+        }
+        return s;
+      } else return s.more = "";
     }
     if (more && sessions.more && sessions.more !== "") {
       sessions_ = getSessions(sessions);
@@ -301,9 +301,7 @@ bookmarkingTracking.prototype = {
       do sessions_ = getMoreSessions(sessions_);
       while (sessions_.more && sessions_.more !== "");
     }
-
     sessions = sessions.statements;
-
     if (page) {
       let match, selection = [];
       for (let i = 0; i < sessions.length; i++) {
@@ -352,13 +350,22 @@ bookmarkingTracking.prototype = {
           "name": user,
           "value": selectionNameVisits[p[i]]
         });
+        cmi5Controller.st.sort(function(a, b) {
+          return a.vi - b.vi;
+        });
         cmi5Controller.st.pr.push({
           "name": user,
           "value": selectionNameProgress[p[i]]
         });
+        cmi5Controller.st.sort(function(a, b) {
+          return a.pr - b.pr;
+        });
         cmi5Controller.st.du.push({
           "name": user,
           "value": selectionNameDuration[p[i]]
+        });
+        cmi5Controller.st.sort(function(a, b) {
+          return a.du - b.du;
         });
       }
     }
@@ -367,6 +374,8 @@ bookmarkingTracking.prototype = {
     let selection = this.getStatementsBase(verb, "", "", "", "", "", true, true, "ids", activityId, sessionStorage.getItem("h5ppage"), true),
       success, successCounter = 0,
       failedCounter = 0;
+    sessionStorage.removeItem("h5ppage");
+    sessionStorage.removeItem("objectid");
     for (let i = 0; i < selection.length; i++) {
       success = selection[i].result["success"];
       if (success) successCounter++;
@@ -374,14 +383,13 @@ bookmarkingTracking.prototype = {
     }
     cmi5Controller.st = [];
     cmi5Controller.st["su"] = [];
-
     cmi5Controller.st.su.push({
       "name": "Erfolgreich",
-      "value": parseInt(successCounter * 100 / selection.length)
+      "value": Math.round(successCounter * 100 / selection.length)
     });
     cmi5Controller.st.su.push({
       "name": "Nicht erfolgreich",
-      "value": parseInt(failedCounter * 100 / selection.length)
+      "value": Math.round(failedCounter * 100 / selection.length)
     });
   },
   getStatementsPoll: function(verb, activityId) {
@@ -390,7 +398,8 @@ bookmarkingTracking.prototype = {
       choice1 = 0,
       choice2 = 0,
       choice3 = 0;
-
+    sessionStorage.removeItem("h5ppage");
+    sessionStorage.removeItem("objectid");
     for (let i = 0; i < selection.length; i++) {
       if (selection[i].result) {
         switch (selection[i].result["response"]) {
@@ -413,31 +422,29 @@ bookmarkingTracking.prototype = {
     cmi5Controller.st["su"] = [];
     cmi5Controller.st.su.push({
       "name": "Wusste es",
-      "value": parseInt(choice0 * 100 / selection.length)
+      "value": Math.round(choice0 * 100 / selection.length)
     });
     cmi5Controller.st.su.push({
       "name": "Dachte, er weiß",
-      "value": parseInt(choice1 * 100 / selection.length)
+      "value": Math.round(choice1 * 100 / selection.length)
     });
     cmi5Controller.st.su.push({
       "name": "Nicht sicher",
-      "value": parseInt(choice2 * 100 / selection.length)
+      "value": Math.round(choice2 * 100 / selection.length)
     });
     cmi5Controller.st.su.push({
       "name": "Keine Ahnung",
-      "value": parseInt(choice3 * 100 / selection.length)
+      "value": Math.round(choice3 * 100 / selection.length)
     });
   }
 };
 
-var bm = new bookmarkingTracking(),
+var bm = new statesController(),
   xMouseDown = false;
 
 document.addEventListener(
   "DOMContentLoaded", () => {
-
     customizeTemplate();
-
     if (document.querySelectorAll(".course-login").length > 0) {
       sessionStorage.setItem("courseLoggedIn", 0);
       document.getElementById("main-navbar").classList.add("d-none");
@@ -465,7 +472,6 @@ document.addEventListener(
 
 function cmi5Ready() {
   // This method was passed to the cmi5Controller.startup() call.
-
   // Set additional properties for the xAPI object.
   // The cmi5Controller already knows the object ID to use in cmi5-defined statements since it is passed on the launch command.
   // It does not know:
@@ -473,8 +479,7 @@ function cmi5Ready() {
   // 2) The actitityType
   // 3) The name of the AU
   // 4) The description of the AU
-  // pass the 4 values of cmi5ObjectProperties called in template of AU, e.g. "au1.js"
-  // Typo3: make constants editable in template of AU?.
+  // Typo3: constants editable in template of AU - pass the 4 values of cmi5ObjectProperties
   let cop = JSON.parse(sessionStorage.getItem("cmi5ObjectProperties"));
   cmi5Controller.setObjectProperties(cop[0], cop[1], cop[2], cop[3]);
   cmi5Controller.dLang = cop[0];
@@ -494,6 +499,7 @@ function cmi5Ready() {
       cop[0] = Object.keys(objectProperties.name)[0];
       cop[2] = objectProperties.name[cop[0]];
       cop[3] = objectProperties.description[cop[0]];
+      if (document.querySelector(".jumbotron-content .text-light")) document.querySelector(".jumbotron-content .text-light").innerHTML = cop[2];
       sessionStorage.setItem("courseTitle", cop[2]);
       cmi5Controller.dLang = cop[0];
       cmi5Controller.dTitle = '"' + cop[2] + '"';
@@ -505,8 +511,8 @@ function cmi5Ready() {
       sessionStorage.setItem("cmi5No", "false");
     }
     // on init/move to a new page perform bookmarking and highlight visited pages in menu (progress)
-    bookmarkingAndProgress(launchedSessions);
-    if (!sessionStorage.getItem("bookMarkInit")) document.querySelector("body").style.display = "block";
+    handleStates(launchedSessions);
+    if (!sessionStorage.getItem("statesInit")) document.querySelector("body").style.display = "block";
   }
   // on launch of AU, log in as frontend user
   else feLogIn();
@@ -555,6 +561,12 @@ function customizeTemplate() {
   }
   //  if (sessionStorage.getItem("cmi5No")) document.querySelector(".page-pagination").style.display = "block";
 
+  let jumbotronImage = document.querySelectorAll('.jumbotron.background-image');
+  if (jumbotronImage.length > 0 && sessionStorage.getItem("jumbotron")) {
+    jumbotronImage[0].insertAdjacentHTML("beforebegin", '<style> #' + jumbotronImage[0].id + '.jumbotron {background-image: ' + sessionStorage.getItem("jumbotron") + '!important}</style>');
+    document.querySelector(".jumbotron-content .text-light").innerHTML = sessionStorage.getItem("courseTitle");
+  }
+
   if (pageItems.length > 0) {
     if (pageItems.length > 1) {
       pageItems[0].style.display = "none"; //remove();
@@ -582,22 +594,11 @@ function customizeTemplate() {
         document.querySelector(".next-page .page-link").click();
       });
     }
-
-    let jumbotronImage = document.querySelectorAll('.jumbotron.background-image');
-    if (jumbotronImage.length > 0) {
-      jumbotronImage = jumbotronImage[0];
-      let style = jumbotronImage.currentStyle || window.getComputedStyle(jumbotronImage, false),
-        bi = style.backgroundImage;
-      bi = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), " + bi;
-      jumbotronImage.insertAdjacentHTML("beforebegin", '<style> #' + jumbotronImage.id + '.jumbotron {background-image: ' + bi + '!important}</style>');
-      sessionStorage.setItem("jumbotron", bi);
-    }
   } else if (offcanvasBody.length > 0) {
     offcanvasBody[0].classList.add("fs-4", "fw-light");
     offcanvasBody[0].insertAdjacentHTML("afterbegin", '<div class="progress"><div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div></div>');
     offcanvasHeader[0].insertAdjacentHTML("afterbegin", '<div class="module-title fs-4 fw-light" style="background-image:"></div>');
   }
-  //sessionStorage.setItem("xpage", "false");
 
   function exitAUDialog() {
     document.querySelector(".btn.exit-dialog").click();
@@ -616,7 +617,7 @@ function customizeTemplate() {
   }
 
   var beforeUnloadListener = function(event, msg) {
-    if (msg && !xMouseDown && sessionStorage.getItem("bookMarkInit")) {
+    if (msg && !xMouseDown && sessionStorage.getItem("statesInit")) {
       window.xUnload = true;
       let sd = Math.abs((new Date())) - parseInt(sessionStorage.getItem("startTimeStamp"));
       sendDefinedStatementWrapper("Terminated", "", sd);
@@ -650,10 +651,19 @@ function customizeTemplate() {
       jumbotron = document.querySelector(".jumbotron"),
       summary = document.querySelector(".summary-highlights"),
       navLinks = document.querySelectorAll('.dropdown-item, .start-button, .nav-link, .page-link, .resume-button'),
-      h5pIframe = document.querySelectorAll('iframe.h5p-iframe'),
       vimeoOrYt = document.querySelectorAll('.video iframe'),
       localVideo = document.querySelectorAll('.video video'),
-      context = cmi5Controller.getContextExtensions();
+      context = cmi5Controller.getContextExtensions(),
+      jumbotronImage = document.querySelectorAll('.jumbotron.background-image');
+
+    if (jumbotronImage.length > 0 && !sessionStorage.getItem("jumbotron")) {
+      jumbotronImage = jumbotronImage[0];
+      let style = jumbotronImage.currentStyle || window.getComputedStyle(jumbotronImage, false),
+        bi = style.backgroundImage;
+      bi = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), " + bi;
+      jumbotronImage.insertAdjacentHTML("beforebegin", '<style> #' + jumbotronImage.id + '.jumbotron {background-image: ' + bi + '!important}</style>');
+      sessionStorage.setItem("jumbotron", bi);
+    }
 
     //iframe.contentDocument.querySelector("video").muted = true;
     //iframe.contentDocument.querySelector("video").play();
@@ -752,6 +762,7 @@ function textHightlighting(pageContent, notesAuButton, createObject, readObject)
     var hls = [];
     for (let i = 0; i < sessionStorage.length; i++) {
       if (sessionStorage.key(i) === "hl___" + lp) {
+        if (!cmi5Controller.hltr) textHightlighting(pageContent, notesAuButton);
         cmi5Controller.hltr.deserializeHighlights(sessionStorage.getItem(sessionStorage.key(i)));
         notesAuButton.style.color = "rgba(255,255,255,1)";
       }
@@ -1344,29 +1355,17 @@ function getCmi5Parms() {
   } else sessionStorage.setItem("cmi5No", "true");
 }
 
-// function: on init/move to a new page perform bookmarking and highlight visited pages in menu (progress)
-function bookmarkingAndProgress(launchedSessions) {
-  // get title of AU and set at start page
-  if (document.querySelector(".jumbotron-content .text-light")) document.querySelector(".jumbotron-content .text-light").innerHTML = sessionStorage.getItem("courseTitle");
-
-  // go to page bookmarked in LRS when resume course
-  bm.getBookmarkingData(launchedSessions);
-
+// function: on init/move to a new page perform bookmarking, highlight visited pages in menu (progress) etc
+function handleStates(launchedSessions) {
+  // get/set states when resume course
+  bm.getStates(launchedSessions, bm.markMenuItems);
   // indicate relevant menu items in t3 menu as visited
-  // Typo3: apply to typo3 menu object?
-  bm.markMenuItems();
-
-  // get pathname of current page as bookmark, send statement "completed" if applicable
-  setTimeout(function() {
-    bm.setBookmarkingData(true);
-  }, 800);
-
   // send statement "completed" if number of visited pages is greater than cmi5 mastery score (for example "0.8")
   // Typo3: there may be other conditions for completion, like score achieved in assessment etc - how to make editable in template of AU?
   // else send Progressed statement on current page visited
   bm.checkMoveOn(cmi5Controller.moveOn);
-  // set bookMarkInit session flag
-  if (!sessionStorage.getItem("bookMarkInit")) sessionStorage.setItem("bookMarkInit", "true");
+  // set statesInit session flag
+  if (!sessionStorage.getItem("statesInit")) sessionStorage.setItem("statesInit", "true");
 }
 
 function startUpError() {
@@ -1610,14 +1609,12 @@ function h5pState(storedH5pStates) {
   }
 }
 
-document.onreadystatechange = function() {
+document.addEventListener('readystatechange', function() {
   if (sessionStorage.getItem("cmi5Init") || sessionStorage.getItem("cmi5No") == "true") document.querySelector("body").style.display = "block";
   //else if (location.href.indexOf("simUser") == -1) document.querySelector("body").style.display = "none";
   else document.querySelector("body").style.display = "none";
-  if ('complete' === document.readyState && typeof H5P !== 'undefined' && H5P.externalDispatcher && cmi5Controller && sessionStorage.getItem("cmi5No") == "false") {
-    H5P.externalDispatcher.on('xAPI', handleH5P);
-  }
-};
+  if ('complete' === document.readyState && typeof H5P !== 'undefined' && H5P.externalDispatcher && cmi5Controller && sessionStorage.getItem("cmi5No") == "false") H5P.externalDispatcher.on('xAPI', handleH5P);
+});
 
 function exitAU() {
   finishAU();
@@ -1628,7 +1625,7 @@ function finishAU() {
   let sd = Math.abs((new Date())) - parseInt(sessionStorage.getItem("startTimeStamp"));
   if (cmi5Controller.launchMode.toUpperCase() === "NORMAL") sendAllowedStatementWrapper("Suspended", "", sd);
   bm.checkMoveOn(cmi5Controller.moveOn, true);
-  bm.setBookmarkingData(false);
+  bm.setStates();
   sendDefinedStatementWrapper("Terminated", "", sd);
   sessionStorage.clear();
   cmi5Controller.goLMS();
