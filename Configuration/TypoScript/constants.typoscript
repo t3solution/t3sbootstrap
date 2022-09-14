@@ -186,6 +186,29 @@ bootstrap.optimize {
 	placeholders = 1
 }
 
+
+# customcategory=bootstrap-pages=* T3SB::Global pages override
+# customsubcategory=a-pages=Global pages override
+bootstrap.pages.override {
+	# cat=bootstrap-pages/a-pages/05; type=options[none=0, container, container-sm, container-md, container-lg, container-xl, container-xxl, container-fluid]; label=Container (for the whole page):
+	container = 0
+	# cat=bootstrap-pages/a-pages/10; type=boolean; label=Link to top:
+	linkToTop = 0
+	# cat=bootstrap-pages/a-pages/15; type=options[0, 1, 2, 3, 4, 5, 6]; label=Aside columns width:
+	smallColumns = 0
+	# cat=bootstrap-pages/a-pages/20; type=boolean; label=Dropdown menu right:
+	dropdownRight = 0
+	# cat=bootstrap-pages/a-pages/25; type=options[0, default, top, bottom, leftTop, leftBottom, rightTop, rightBottom]; label=Aside order on mobile:
+	mobileOrder = 0
+	# cat=bootstrap-pages/a-pages/30; type=options[0, md, sm, md, lg, xl, xxl]; label=Breakpoint:
+	breakpoint = 0
+	# cat=bootstrap-pages/a-pages/50; type=small; label=Title color: Hex color codes, RGB or CSS variables e.g. var(--bs-primary)
+	titlecolor =
+	# cat=bootstrap-pages/a-pages/55; type=small; label=Subtitle color: Hex color codes, RGB or CSS variables e.g. var(--bs-primary)
+	subtitlecolor =
+}
+
+
 #-------------------------------------------------------------------------------
 #	NOT in Constant Editor
 #-------------------------------------------------------------------------------
@@ -251,9 +274,9 @@ bootstrap.navbar {
 	searchboxLink = 0
 	# (boolean) fe user name in navbar - if logged in
 	feUserName = 0
+	# Dropdown icon float right
+	floatDropdownIconRight = 0
 }
-# extra style for navbar items
-bootstrap.config.navbarPlusicon = 0
 
 # style one for the submenu (0 = default)
 bootstrap.submenu.styleOne = 0

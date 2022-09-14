@@ -106,13 +106,15 @@ function t3sbScrollToTop() {
 function t3sbHandleScroll() {
 	var scrollToTopBtn = document.querySelector('.back-to-top'),
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-	scrollToTopBtn.addEventListener('click', t3sbScrollIt);
-	if (scrollTop > 100) {
-		scrollToTopBtn.classList.add('st-block');
-		scrollToTopBtn.classList.remove('st-none');
-	} else {
-		scrollToTopBtn.classList.add('st-none');
-		scrollToTopBtn.classList.remove('st-block');
+	if (scrollToTopBtn != null) {
+		scrollToTopBtn.addEventListener('click', t3sbScrollIt);
+		if (scrollTop > 100) {
+			scrollToTopBtn.classList.add('st-block');
+			scrollToTopBtn.classList.remove('st-none');
+		} else {
+			scrollToTopBtn.classList.add('st-none');
+			scrollToTopBtn.classList.remove('st-block');
+		}
 	}
 }
 

@@ -61,6 +61,7 @@ page {
 				subdropdown.twoColumns = {$bootstrap.navbar.subdropdown.twoColumns}
 				searchboxLink = {$bootstrap.navbar.searchboxLink}
 				feUserName = {$bootstrap.navbar.feUserName}
+				floatDropdownIconRight = {$bootstrap.navbar.floatDropdownIconRight}
 				sm = {$bootstrap.navbar.breakpoint.sm}
 				md = {$bootstrap.navbar.breakpoint.md}
 				lg = {$bootstrap.navbar.breakpoint.lg}
@@ -69,9 +70,16 @@ page {
 			}
 			pages {
 				override {
-					smallColumns = {$pages.override.smallColumns}
-					breakpoint = {$pages.override.breakpoint}
-					dropdownRight = {$pages.override.dropdownRight}
+					colAside = {$bootstrap.pages.override.smallColumns}
+					smallColumns = {$bootstrap.pages.override.smallColumns}
+					gridBreakpoint = {$bootstrap.pages.override.breakpoint}
+					breakpoint = {$bootstrap.pages.override.breakpoint}
+					dropdownRight = {$bootstrap.pages.override.dropdownRight}
+					container = {$bootstrap.pages.override.container}
+					linkToTop = {$bootstrap.pages.override.linkToTop}
+					mobileOrder = {$bootstrap.pages.override.mobileOrder}
+					tx_t3sbootstrap_titlecolor = {$bootstrap.pages.override.titlecolor}
+					tx_t3sbootstrap_subtitlecolor = {$bootstrap.pages.override.subtitlecolor}
 				}
 			}
 			config {

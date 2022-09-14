@@ -65,3 +65,6 @@
 .fax-link::before {
 	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f1ac";
 }
+.fa-square-plus:before{
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f0fe";
+}

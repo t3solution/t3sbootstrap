@@ -334,7 +334,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		foreach ($containerGrid as $row => $cols) {
 			$rowObject = GeneralUtility::makeInstance(GridRow::class, $context);
 			foreach ($cols as $col) {
-				$columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container);
+				$columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, false);
 				$rowObject->addColumn($columnObject);
 				if (!empty($col['colPos'])) {
 					$records = $container->getChildrenByColPos($col['colPos']);

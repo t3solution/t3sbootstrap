@@ -621,6 +621,21 @@ return [
 				]
 			]
 		],
+		'navbar_plusicon' => [
+			'exclude' => false,
+			'label' => 'Plus icon for dropdown',
+			'accordion_id' => 3,
+			'accordion_sub' => '3-1',
+			'info' => 'Hover is disabled by default if activated!',
+			'config' => [
+				'type' => 'check',
+					'items' => [
+					'1' => [
+						'0' => 'Extra plus icon to open dropdown'
+					]
+				]
+			]
+		],
 		'navbar_dropdown_animate' => [
 			'exclude' => false,
 			'label' => 'Dropdown animation',
@@ -813,7 +828,7 @@ return [
 					['default', ''],
 					['fixed-top', 'fixed-top'],
 					['fixed-bottom', 'fixed-bottom'],
-					['sticky-top (JS solution)', 'sticky-top'],
+					['sticky-top', 'sticky-top'],
 				]
 			]
 		],
