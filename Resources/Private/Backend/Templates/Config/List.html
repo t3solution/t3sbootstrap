@@ -24,7 +24,7 @@
 </f:if>
 
 <div class="card">
-	<div class="card-header" style="background-color: rgba(0,0,0,.03) !important; border-bottom: 1px solid rgba(0,0,0,.125) !important; padding: .6rem !important;">
+	<div class="card-header card-header-light">
 		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
 			<h2><em class="fa fas fa-cogs" aria-hidden="true"></em> Configuration</h2>
 		</div>
@@ -71,6 +71,18 @@
 										</table>
 									</div>
 								</div>
+								<f:if condition="{pagesOverride}">
+									<div class="bs-callout bs-callout-primary bg-white">
+										<h3>Global pages override is set in Constant Editor:</h3>
+										<ul class="list-unstyled">
+											<f:for each="{pagesOverride}" as="override" key="field">
+												<f:if condition="{override}">
+													<li>{field} = {override}</li>
+												</f:if>
+											</f:for>
+										</ul>
+									</div>
+								</f:if>
 							</f:then>
 							<f:else>
 								<f:if condition="{admin}">
@@ -255,8 +267,6 @@
 					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> BE Modul: T3SB compress is disabled</p>
 				</f:else>
 			</f:if>
-
-
 			<f:if condition="{settings.cdn.enable}">
 				<f:then>
 					<p class="text-info mt-2"><i class="fa fa-info text-info mr-1"></i> Konstanten-Editor: CDN is enabled</p>
@@ -265,7 +275,6 @@
 					<p class="text-info mt-2"><i class="fa fa-info text-info mr-1"></i> Konstanten-Editor: CDN is disabled</p>
 				</f:else>
 			</f:if>
-
 			<p class="text-info" type="button" data-toggle="collapse"
 				 data-target="#collapseOptimize" aria-expanded="false" aria-controls="collapseOptimize">
 				<i class="fa fa-info text-info mr-1"></i> <u>Konstanten-Editor: T3SB Optimize Bootstrap</u>

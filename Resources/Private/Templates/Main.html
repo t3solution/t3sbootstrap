@@ -81,9 +81,9 @@
 			</f:if>
 			<f:comment> BACK TO TOP BUTTON </f:comment>
 			<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-				<f:link.page class="back-to-top st-none" title="{settings.backToTopTitle}">
+				<p class="back-to-top st-none" title="{settings.backToTopTitle}" style="cursor: pointer;">
 					<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
-				</f:link.page>
+				</p>
 			</f:if>
 		</f:spaceless>
 	</f:else>

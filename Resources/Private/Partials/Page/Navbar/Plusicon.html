@@ -1,0 +1,134 @@
+
+	<f:asset.css identifier="t3sb_navbarPlusicon">
+#main-navbar.navplusicon .dropdown-toggle::after {
+	display: inline-block;
+}
+#main-navbar .nav-link {
+	white-space: nowrap;
+}
+
+@media (min-width: {settings.config.navbarBreakpointWidth}px) {
+	#main-navbar.navplusicon .btn {
+		border-radius: 0;
+		background-image: none;
+	}
+	#main-navbar.navplusicon .dropdown-toggle::before,
+	#main-navbar.navplusicon .dropdown-toggle::after {
+	  display: none !important;
+	}
+	#main-navbar.navplusicon .dropdown {
+		position: relative;
+		display: inline-flex;
+		vertical-align: middle;
+		width: 100%;
+	}
+	#main-navbar.navplusicon .dropdown .has-submenu {
+		position: relative;
+		flex: 1 1 auto;
+	}
+	#main-navbar.navplusicon .plusicon {
+		float: right;
+	}
+	#main-navbar.navplusicon .dropdown {
+		width: 100%;
+	}
+	#main-navbar.navplusicon .btn-link {
+		max-height: 40px;
+		text-decoration: none;
+	}
+	#main-navbar.navplusicon .dropdown .btn-link {
+		color: var(--bs-nav-link-color);
+	}
+	#main-navbar.navplusicon .dropdown.dropend .btn-link {
+		color: inherit;
+	}
+	#main-navbar.navplusicon .dropdown .btn-link {
+		width: 100% !important;
+		text-align: right;
+	}
+	#main-navbar.navplusicon .dropdown-menu .dropdown .btn-link {
+		height: 32px !important;
+	}
+	#main-navbar.navplusicon .dropdown-menu .btn-link {
+		padding-top: 0.25rem !important;
+		padding-bottom: 0.25rem !important;
+	}
+	#main-navbar.navplusicon .dropdown .btn-link:focus {
+	  box-shadow: none !important;
+	}
+	#main-navbar.navplusicon .dropdown-menu button.btn-link {
+		width: 40px !important;
+		text-align: right !important;
+	}
+	#main-navbar.navplusicon .dropdown-menu .btn-link.parent-active {
+	  color: inherit;
+	  text-decoration: none;
+	  background-color: var(--bs-dropdown-link-hover-bg);
+	}
+}
+	</f:asset.css>
+	<f:asset.script identifier="vanilla_navbarPlusicon">
+
+	// Navbar with plusicon
+	if ( window.innerWidth < navbarBreakpointWidth ) {
+		// mobile view
+		if ( navbar.classList.contains('navplusicon') ) {
+			navbar.classList.remove('navplusicon');
+		}
+	
+		var toggleSplits = document.querySelectorAll(".dropdown-toggle-split");
+	
+		toggleSplits.forEach(function(toggleSplit) {
+			toggleSplit.previousElementSibling.classList.remove('btn', 'btn-link');
+			toggleSplit.previousElementSibling.classList.add('dropdown-toggle');
+			toggleSplit.previousElementSibling.setAttribute('data-bs-toggle', 'dropdown');
+			toggleSplit.previousElementSibling.setAttribute('aria-expanded', 'false');
+			toggleSplit.previousElementSibling.setAttribute('role', 'button');
+			toggleSplit.previousElementSibling.setAttribute('aria-haspopup', 'true');
+	
+			if ( toggleSplit.nextElementSibling != null ) {
+				if (toggleSplit.nextElementSibling.classList.contains('dropdown-menu')) {
+					var dItem = toggleSplit.nextElementSibling.firstChild.firstChild;
+					if ( toggleSplit.nextElementSibling.firstChild != null ) {
+						if ( toggleSplit.nextElementSibling.firstChild.children != null ) {
+							toggleSplit.nextElementSibling.firstChild.children.forEach(function(child) {
+								if ( child.classList.contains('text-nowrap') ) {
+									child.classList.add('has-submenu', 'dropdown-item');
+									child.classList.remove('ps-3', 'py-1', 'text-nowrap', 'text-start');
+								}
+							});
+						}
+					}
+				}
+			}
+			toggleSplit.remove()
+		});
+	
+		document.querySelectorAll('.dropdown-toggle').forEach(function(sub) {
+			sub.addEventListener('click', function(e) {
+				if ( e.currentTarget.classList.contains('show') ) {
+					e.preventDefault();
+				} else {
+					href = e.currentTarget.getAttribute('href');
+					if(href != '#') {
+						location.href = href;
+					}
+				}
+			});
+		});
+	
+	} else {
+		// desctop view
+		var dropdowns = document.querySelectorAll('.navplusicon .dropdown');
+		dropdowns.forEach(function (dropdown, index) {
+			dropdown.addEventListener('show.bs.dropdown', event => {
+				event.target.children[0].classList.remove('fa-square-plus');
+				event.target.children[0].classList.add('fa-square-minus');
+			});
+			dropdown.addEventListener('hidden.bs.dropdown', event => {
+				event.target.children[0].classList.remove('fa-square-minus');
+				event.target.children[0].classList.add('fa-square-plus');
+			});
+		});
+	}
+	</f:asset.script>

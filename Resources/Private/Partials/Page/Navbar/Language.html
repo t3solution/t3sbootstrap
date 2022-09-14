@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<div id="language-menu" class="navbar-nav nav-item {config.navbar.dropdown}{config.navbar.hover}">
+<div id="language-menu" class="navbar-nav mb-2 mb-lg-0 {config.navbar.dropdown}{config.navbar.hover}" style="width: auto;">
 	<a class="nav-link dropdown-toggle dropdown-item-language-menu" id="language" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">
 		<f:if condition="{settings.config.langMenuWithFaIcon}">
 			<f:then>
@@ -35,7 +35,12 @@
 			</f:if>
 		</f:for>
 	</div>
-	</div>
+	<f:if condition="{config.navbar.navbarPlusicon}">
+		<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+		<i class="fa-solid fa-square-plus"></i>
+		</button>
+	</f:if>
+</div>
 </html>
 
 

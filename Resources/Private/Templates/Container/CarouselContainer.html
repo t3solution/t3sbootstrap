@@ -49,7 +49,7 @@ function t3sbLocalCarouselVideo(videoCarousel) {
 	<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-bs-ride="carousel"
 		 data-bs-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>
 		<f:if condition="{col_276 -> f:count()} > 1">
-			<div class="carousel-indicators text-center d-none d-md-block"{f:if(condition:'{thumbnails}',then:' style="bottom: -100px;"')}>
+			<div class="carousel-indicators text-center{mobileIndicators}"{f:if(condition:'{thumbnails}',then:' style="bottom: -100px;"')}>
 				<f:for each="{col_276}" as="colSlide" iteration="iterator">
 					<f:if condition="{thumbnails} && {carouselSlides.{colSlide.uid}}">
 						<f:then>

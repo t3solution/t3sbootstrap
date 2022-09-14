@@ -154,6 +154,21 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
 		}
 
+		foreach( $this->arguments['breakpoints'] as $bpKey=>$breakpoint ) {
+			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
+			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
+			foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
+				if ($width > (int)$srcset) {
+					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
+				} else {
+					$breakpointArr[$bpKey]['srcset'] .= $srcset;
+					break;			
+				}
+			}
+		}
+
+		$this->arguments['breakpoints'] = $breakpointArr;
+
 		// Generate picture tag
 		$this->tag = $this->responsiveImagesUtility->createPictureTag(
 			$image,

@@ -94,6 +94,14 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 				}
 			}
 
+			if ( !empty($this->settings['pages']['override']) ) {
+				foreach ($this->settings['pages']['override'] as $field=>$override) {
+					if (!empty($override)) {
+						$assignedOptions['pagesOverride'][$field] = $override;
+					}
+				}
+			}
+
 			$this->view->assignMultiple($assignedOptions);
 
 			$moduleTemplate = $this->moduleTemplateFactory->create($this->request);
@@ -352,6 +360,15 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
 				$assignedOptions['customScss'] = !empty($customScss['customScss']) ? $customScss['customScss'] : '';
 				if ( !empty($this->settings['enableUtilityColors']) ) {
 					$assignedOptions['utilColors'] = parent::getUtilityColors();
+				}
+			}
+
+
+			if ( !empty($this->settings['pages']['override']) ) {
+				foreach ($this->settings['pages']['override'] as $field=>$override) {
+					if (!empty($override)) {
+						$assignedOptions['pagesOverride'][$field] = $override;
+					}
 				}
 			}
 

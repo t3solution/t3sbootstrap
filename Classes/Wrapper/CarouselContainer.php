@@ -28,6 +28,7 @@ class CarouselContainer implements SingletonInterface
 		$processedData['carouselFade'] = !empty($flexconf['carouselFade']) ? ' carousel-fade': '';
 		$processedData['carouselFade'] .= !empty($flexconf['darkVariant']) ? ' carousel-dark': '';
 		$processedData['thumbnails'] = !empty($flexconf['thumbnails']) ? true : false;
+		$processedData['mobileIndicators'] = !empty($flexconf['mobileIndicators']) ? '' : ' d-none d-md-block';
 
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');

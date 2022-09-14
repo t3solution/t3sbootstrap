@@ -9,10 +9,6 @@
 		<f:variable name="imgLazyLoad" value="" />	
 	</f:else>
 </f:if>
-
-
-
-
 <f:comment> load lightbox CSS if needed </f:comment>
 <f:render partial="Layouts/Assets" arguments="{_all}" />
 <f:if condition="{localVideoPath}">
@@ -42,19 +38,27 @@
 	</f:then>
 	<f:else>
 		<f:comment> Image </f:comment>
-
-
-<f:if condition="{parentCType} != 'swiper_container'">
-
-
-		<div class="carousel-item carousel-item-{data.uid} carousel-image">
-			<f:if condition="{files -> f:count()}">
-				<f:then>
-					<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class,
-					 then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
-						<f:render section="Slide" arguments="{_all}" />
+		<f:if condition="{parentCType} != 'swiper_container'">
+			<div class="carousel-item carousel-item-{data.uid} carousel-image">
+				<f:if condition="{files -> f:count()}">
+					<f:then>
+						<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class,
+						 then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
+							<f:render section="Slide" arguments="{_all}" />
+							<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
+								<div id="c{data.uid}" class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
+									<div class="w-100{class}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
+										<f:render partial="Header/All" arguments="{_all}" />
+										<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
+										<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext: buttontext}" />
+									</div>
+								</div>
+							</f:if>
+						</figure>
+					</f:then>
+					<f:else>
 						<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-							<div id="c{data.uid}" class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
+							<div class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
 								<div class="w-100{class}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
 									<f:render partial="Header/All" arguments="{_all}" />
 									<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
@@ -62,24 +66,10 @@
 								</div>
 							</div>
 						</f:if>
-					</figure>
-				</f:then>
-				<f:else>
-					<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
-						<div class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
-							<div class="w-100{class}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>
-								<f:render partial="Header/All" arguments="{_all}" />
-								<f:render section="Bodytext" arguments="{data: data, carouselLink: carouselLink}" />
-								<f:render section="Button" arguments="{data: data, carouselLink: carouselLink, buttontext: buttontext}" />
-							</div>
-						</div>
-					</f:if>
-				</f:else>
-			</f:if>
-		</div>
-		
-</f:if>
-
+					</f:else>
+				</f:if>
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </html>
