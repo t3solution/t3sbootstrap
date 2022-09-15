@@ -112,10 +112,11 @@ class ConfigProcessor implements DataProcessorInterface
 			if ($threeCol === TRUE) {
 				$smallColumns = $smallColumns < 6 ? $smallColumns : 5;
 				$processedData['colMain'] = 12 - $smallColumns * 2;
+				$processedData['colAside'] = (12 - $processedData['colMain']) / 2;
 			} else {
 				$processedData['colMain'] = 12 - $smallColumns;
+				$processedData['colAside'] = 12 - $processedData['colMain'];
 			}
-			$processedData['colAside'] = 12 - $processedData['colMain'];
 		}
 
 		// grid breakpoint
