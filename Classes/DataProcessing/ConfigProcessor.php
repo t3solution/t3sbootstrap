@@ -16,7 +16,7 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -112,11 +112,10 @@ class ConfigProcessor implements DataProcessorInterface
 			if ($threeCol === TRUE) {
 				$smallColumns = $smallColumns < 6 ? $smallColumns : 5;
 				$processedData['colMain'] = 12 - $smallColumns * 2;
-				$processedData['colAside'] = (12 - $processedData['colMain']) / 2;
 			} else {
 				$processedData['colMain'] = 12 - $smallColumns;
-				$processedData['colAside'] = 12 - $processedData['colMain'];
 			}
+			$processedData['colAside'] = 12 - $processedData['colMain'];
 		}
 
 		// grid breakpoint
@@ -125,8 +124,7 @@ class ConfigProcessor implements DataProcessorInterface
 		/**
 		 * Page title provider - BreadcrumbProvider
 		 */
-		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\Extbase\\Object\\ObjectManager');
-		$configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
 		$extbaseFrameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		if ($extbaseFrameworkConfiguration['config.']['pageTitleProviders.']['breadcrumb.']['provider']
 		 === 'T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider') {

@@ -157,6 +157,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		foreach( $this->arguments['breakpoints'] as $bpKey=>$breakpoint ) {
 			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
 			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
+			$breakpointArr[$bpKey]['srcset'] = '';
 			foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
 				if ($width > (int)$srcset) {
 					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
