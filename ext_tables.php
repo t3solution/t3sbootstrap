@@ -13,7 +13,7 @@ defined('TYPO3') || die();
 		],
 		[
 			'access' => 'user,group',
-			'icon'		 => 'EXT:t3sbootstrap/Resources/Public/Images/bootstrap-solid.svg',
+			'icon' => 'EXT:t3sbootstrap/Resources/Public/Images/bootstrap-solid.svg',
 			'labels' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_m1.xlf',
 		]
 	);

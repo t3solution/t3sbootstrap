@@ -65,7 +65,7 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 	(
 		new \B13\Container\Tca\ContainerConfiguration(
 			'three_columns',
-			'3 cols',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
 			'description',
 			[
 				[
