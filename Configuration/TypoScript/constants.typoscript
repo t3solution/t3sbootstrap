@@ -190,21 +190,21 @@ bootstrap.optimize {
 # customcategory=bootstrap-pages=* T3SB::Global pages override
 # customsubcategory=a-pages=Global pages override
 bootstrap.pages.override {
-	# cat=bootstrap-pages/a-pages/05; type=options[none=0, container, container-sm, container-md, container-lg, container-xl, container-xxl, container-fluid]; label=Container (for the whole page):
+	# cat=bootstrap-pages/a-pages/10; type=options[none=0, container=container, container-sm=container-sm, container-md=container-md, container-lg=container-lg, container-xl=container-xl, container-xxl=container-xxl, container-fluid=container-fluid]; label=Container (for the whole page):
 	container = 0
-	# cat=bootstrap-pages/a-pages/10; type=boolean; label=Link to top:
+	# cat=bootstrap-pages/a-pages/20; type=boolean; label=Link to top:
 	linkToTop = 0
-	# cat=bootstrap-pages/a-pages/15; type=options[0, 1, 2, 3, 4, 5, 6]; label=Aside columns width:
+	# cat=bootstrap-pages/a-pages/25; type=options[0=0, 1=1, 2=2, 3=3, 4=4, 5=5, 6=6]; label=Aside columns width:
 	smallColumns = 0
-	# cat=bootstrap-pages/a-pages/20; type=boolean; label=Dropdown menu right:
+	# cat=bootstrap-pages/a-pages/30; type=boolean; label=Dropdown menu right:
 	dropdownRight = 0
-	# cat=bootstrap-pages/a-pages/25; type=options[0, default, top, bottom, leftTop, leftBottom, rightTop, rightBottom]; label=Aside order on mobile:
+	# cat=bootstrap-pages/a-pages/35; type=options[0=0, default=default, top=top, bottom=bottom, leftTop=leftTop, leftBottom=leftBottom, rightTop=rightTop, rightBottom=rightBottom]; label=Aside order on mobile:
 	mobileOrder = 0
-	# cat=bootstrap-pages/a-pages/30; type=options[0, md, sm, md, lg, xl, xxl]; label=Breakpoint:
+	# cat=bootstrap-pages/a-pages/40; type=options[0=0, md=md, sm=sm, md=md, lg=lg, xl=xl, xxl=xxl]; label=Breakpoint:
 	breakpoint = 0
-	# cat=bootstrap-pages/a-pages/50; type=small; label=Title color: Hex color codes, RGB or CSS variables e.g. var(--bs-primary)
+	# cat=bootstrap-pages/a-pages/60; type=small; label=Title color: Hex color codes, RGB or CSS variables e.g. var(--bs-primary)
 	titlecolor =
-	# cat=bootstrap-pages/a-pages/55; type=small; label=Subtitle color: Hex color codes, RGB or CSS variables e.g. var(--bs-primary)
+	# cat=bootstrap-pages/a-pages/65; type=small; label=Subtitle color: Hex color codes, RGB or CSS variables e.g. var(--bs-primary)
 	subtitlecolor =
 }
 

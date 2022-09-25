@@ -84,10 +84,12 @@ class ConfigProcessor implements DataProcessorInterface
 		// global override page data
 		if ( !empty($contentObjectConfiguration['settings.']['pages.']['override.']) ) {
 			foreach ( $contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override ) {
-				if ( ($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
-					$processedData['data'][$field] = 'var('.$override.')';
-				} else {
-					$processedData['data'][$field] = $override;
+				if (!empty($override)) {
+					if ( ($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
+						$processedData['data'][$field] = 'var('.$override.')';
+					} else {
+						$processedData['data'][$field] = $override;
+					}
 				}
 			}
 		}
