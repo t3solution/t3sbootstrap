@@ -238,7 +238,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 				$out .= '<br />- Delay between transitions (in ms): '.$flexconf['delay'];
 			}
 		}
-		if ($record['CType'] == 'card_wrapper') {
+		if (!empty($flexconf['card_wrapper']) && $record['CType'] == 'card_wrapper') {
 			$out .= '<br />- Wrapper: Card '.$flexconf['card_wrapper'];
 			if ( !empty($flexconf['visibleCards']) ) {
 				$out .= '<br />- Visible Cards: '.$flexconf['visibleCards'];

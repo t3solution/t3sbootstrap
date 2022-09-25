@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = array (
   'title' => 'Bootstrap Components',
   'description' => 'Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: www.t3sbootstrap.de',
   'category' => 'templates',
-  'version' => '5.2.3',
+  'version' => '5.2.4',
   'state' => 'stable',
   'uploadfolder' => false,
   'clearcacheonload' => true,
@@ -26,8 +26,8 @@ $EM_CONF[$_EXTKEY] = array (
     'depends' => 
     array (
       'typo3' => '10.4.18-11.9.99',
-      'container' => '1.6.0-2.99.99',
-      'content_defender' => '3.2.2-3.99.99',
+      'container' => '2.0.5-2.99.99',
+      'content_defender' => '3.2.3-3.99.99',
     ),
     'conflicts' => 
     array (
@@ -40,4 +40,3 @@ $EM_CONF[$_EXTKEY] = array (
     ),
   ),
 );
-

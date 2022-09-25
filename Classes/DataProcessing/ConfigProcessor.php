@@ -47,7 +47,8 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 		$webp = (bool)$settings['webp'];
 
-		if ( is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
+		if ( !empty($contentObjectConfiguration['settings.']['config.']['uid'])
+			 && is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
 			$processedRecordVariables = $contentObjectConfiguration['settings.']['config.'];
 		} else {
 			$processedData['noConfig'] = TRUE;
@@ -164,8 +165,8 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Navbar
 		 */
 		if ( $processedRecordVariables['navbarEnable'] ) {
-
 			// navbar menu
+			$mainMenu = [];
 			foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
 				$mainMenu[$key] = $navbarMenu;
 				if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
@@ -292,7 +293,7 @@ class ConfigProcessor implements DataProcessorInterface
 				} else {
 					$navbarColor = $processedRecordVariables['navbarColor'];
 				}
-				$navBarAttr .= ' data-colorschemes="'.'bg-'.$navbarColor.'"';
+				$navBarAttr .= ' data-colorschemes="'.$navbarColor.'"';
 				$navBarAttr .= ' data-color="navbar-'.$processedRecordVariables['navbarEnable'].'"';
 			}
 
@@ -405,8 +406,6 @@ class ConfigProcessor implements DataProcessorInterface
 			# Image from pages media
 			$hasBgImages = 0;
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-
-
 			$fileObjects = [];
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];

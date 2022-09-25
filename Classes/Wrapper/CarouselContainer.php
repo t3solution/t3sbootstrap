@@ -42,6 +42,7 @@ class CarouselContainer implements SingletonInterface
 			->fetchAll();
 
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+		$carouselSlides = [];
 		foreach($statement as $element) {
 			$file = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);
 			if ( !empty($file) ) {
@@ -50,7 +51,11 @@ class CarouselContainer implements SingletonInterface
 					$processedData['containsVideo'] = TRUE;
 				}
 			}
-			$carouselSlides[$element['uid']] = $file[0];
+			if (!empty($file[0])) {
+				$carouselSlides[$element['uid']] = $file[0];
+			} else {
+				$carouselSlides[$element['uid']] = '';				
+			}
 		}
 
 		$processedData['carouselSlides'] = !empty($carouselSlides) ? $carouselSlides : '';
