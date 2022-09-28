@@ -343,13 +343,13 @@ $css .= "@font-face {
   font-family: '".$fontFamily."';
   font-style: normal;
   font-weight: ".$style.";
-  src: url('googlefonts/".$file.".eot');
+  src: url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".eot');
   src: local(''),
-  		url('googlefonts/".$file.".eot?#iefix') format('embedded-opentype'),
-		url('googlefonts/".$file.".woff2') format('woff2'),
-		url('googlefonts/".$file.".woff') format('woff');
-		url('googlefonts/".$file.".ttf') format('truetype'),
-		url('googlefonts/".$file.".svg#".trim(str_replace(' ', '', $fontFamily))."') format('svg');
+  		url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".eot?#iefix') format('embedded-opentype'),
+		url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".woff2') format('woff2'),
+		url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".woff') format('woff');
+		url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".ttf') format('truetype'),
+		url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".svg#".trim(str_replace(' ', '', $fontFamily))."') format('svg');
 }".LF.LF;
 				}
 			}
