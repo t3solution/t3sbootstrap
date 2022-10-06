@@ -1,5 +1,14 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.navbar.floatDropdownIconRight} && !{config.navbar.navbarPlusicon}">
+	<f:asset.css identifier="floatDropdownIconRight">
+.dropend .dropdown-toggle::after {
+  float: right;
+  margin-top: 8px;
+}
+	</f:asset.css>
+</f:if>
+
 <f:if condition="{config.navbar.searchbox}">
 <f:asset.script identifier="vanilla_navbarSearchbox">
 	// Searchbox - Navbar/Assets.html
@@ -92,22 +101,7 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 <f:if condition="{settings.config.navbarShrinkcolor}">
 <f:asset.script identifier="vanilla_navbarshrinkcolor">
 	// Shrinking Navbar on scrolling - Navbar/Assets.html
-	let x;
 	t3sbShrinkingNavbar(navbar, {settings.config.shrinkingNavPadding});
-</f:asset.script>
-</f:if>
-<f:if condition="{settings.config.navbarPlacement} == 'sticky-top'">
-<f:asset.script identifier="vanilla_navbarstickytop">
-	// Navbar sticky-top - Navbar/Assets.html
-	window.onscroll = function() {stickyFunction()};
-	let sticky = navbar.offsetTop;
-	function stickyFunction() {
-		if (window.pageYOffset >= sticky) {
-			navbar.classList.add('sticky');
-		} else {
-			navbar.classList.remove('sticky');
-		}
-	}
 </f:asset.script>
 </f:if>
 <f:if condition="{config.navbar.navColorCSS}">

@@ -27,6 +27,7 @@ class ConsentController extends ActionController
 		$consentRecordUid = (int)$this->settings['consent']['contentByUid'];
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $consentRecordUid);
+		$assignedValues = [];
 
 		if ( !empty($fileObjects) ) {
 			if ( $fileObjects[0]->getProperties()['mime_type'] == 'video/youtube') {

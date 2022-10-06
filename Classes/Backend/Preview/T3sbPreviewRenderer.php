@@ -5,9 +5,11 @@ namespace T3SBS\T3sbootstrap\Backend\Preview;
 
 use B13\Container\Backend\Grid\ContainerGridColumn;
 use B13\Container\Backend\Grid\ContainerGridColumnItem;
+use B13\Container\ContentDefender\ContainerColumnConfigurationService;
 use B13\Container\Domain\Factory\Exception;
 use B13\Container\Domain\Factory\PageView\Backend\ContainerFactory;
 use B13\Container\Tca\Registry;
+use B13\Container\Domain\Service\ContainerService;
 use TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\Grid;
@@ -29,20 +31,38 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 {
 
-	/**
-	* @var Registry
-	*/
-	protected $tcaRegistry;
+    /**
+     * @var Registry
+     */
+    protected $tcaRegistry;
 
-	/**
-	* @var ContainerFactory
-	*/
-	protected $containerFactory;
+    /**
+     * @var ContainerFactory
+     */
+    protected $containerFactory;
 
-	public function __construct(Registry $tcaRegistry = null, ContainerFactory $containerFactory = null)
+    /**
+     * @var ContainerColumnConfigurationService
+     */
+    protected $containerColumnConfigurationService;
+
+    /**
+     * @var ContainerService
+     */
+    protected $containerService;
+
+
+	public function __construct(
+		Registry $tcaRegistry,
+		ContainerFactory $containerFactory,
+		ContainerColumnConfigurationService $containerColumnConfigurationService,
+		ContainerService $containerService
+	)
 	{
-		$this->tcaRegistry = $tcaRegistry ?? GeneralUtility::makeInstance(Registry::class);
-		$this->containerFactory = $containerFactory ?? GeneralUtility::makeInstance(ContainerFactory::class);
+		$this->tcaRegistry = $tcaRegistry;
+		$this->containerFactory = $containerFactory;
+		$this->containerColumnConfigurationService = $containerColumnConfigurationService;
+		$this->containerService = $containerService;
 	}
 
 
@@ -106,7 +126,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			);
 			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v11.css');
 		} else {
-			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v10.css');			
+			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v10.css');
 		}
 		$content = parent::renderPageModulePreviewContent($item);
 		$context = $item->getContext();
@@ -218,7 +238,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 				$out .= '<br />- Delay between transitions (in ms): '.$flexconf['delay'];
 			}
 		}
-		if ($record['CType'] == 'card_wrapper') {
+		if (!empty($flexconf['card_wrapper']) && $record['CType'] == 'card_wrapper') {
 			$out .= '<br />- Wrapper: Card '.$flexconf['card_wrapper'];
 			if ( !empty($flexconf['visibleCards']) ) {
 				$out .= '<br />- Visible Cards: '.$flexconf['visibleCards'];
@@ -334,12 +354,17 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		foreach ($containerGrid as $row => $cols) {
 			$rowObject = GeneralUtility::makeInstance(GridRow::class, $context);
 			foreach ($cols as $col) {
-				$columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container);
+				$newContentElementAtTopTarget = $this->containerService->getNewContentElementAtTopTargetInColumn($container, $col['colPos']);
+                if ($this->containerColumnConfigurationService->isMaxitemsReached($container, $col['colPos'])) {
+                    $columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, $newContentElementAtTopTarget, false);
+                } else {
+                    $columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, $newContentElementAtTopTarget);
+                }
 				$rowObject->addColumn($columnObject);
 				if (!empty($col['colPos'])) {
 					$records = $container->getChildrenByColPos($col['colPos']);
 					foreach ($records as $contentRecord) {
-						$columnItem = GeneralUtility::makeInstance(ContainerGridColumnItem::class, $context, $columnObject, $contentRecord, $container, false);
+						$columnItem = GeneralUtility::makeInstance(ContainerGridColumnItem::class, $context, $columnObject, $contentRecord, $container);
 						$columnObject->addItem($columnItem);
 					}
 				}

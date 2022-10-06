@@ -83,6 +83,18 @@ module.tx_t3sbootstrap {
 			offcanvas = {$bootstrap.optimize.offcanvas}
 			placeholders = {$bootstrap.optimize.placeholders}
 		}
+		pages {
+			override {
+				tx_t3sbootstrap_smallColumns = {$bootstrap.pages.override.smallColumns}
+				tx_t3sbootstrap_breakpoint = {$bootstrap.pages.override.breakpoint}
+				tx_t3sbootstrap_dropdownRight = {$bootstrap.pages.override.dropdownRight}
+				tx_t3sbootstrap_container = {$bootstrap.pages.override.container}
+				tx_t3sbootstrap_linkToTop = {$bootstrap.pages.override.linkToTop}
+				tx_t3sbootstrap_mobileOrder = {$bootstrap.pages.override.mobileOrder}
+				tx_t3sbootstrap_titlecolor = {$bootstrap.pages.override.titlecolor}
+				tx_t3sbootstrap_subtitlecolor = {$bootstrap.pages.override.subtitlecolor}
+			}
+		}
 	}
 }
 

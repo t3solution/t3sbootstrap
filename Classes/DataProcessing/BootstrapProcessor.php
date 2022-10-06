@@ -66,7 +66,6 @@ class BootstrapProcessor implements DataProcessorInterface
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 		$cType = $processedData['data']['CType'];
 		$parentCType = '';
-
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 		$flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['tx_t3sbootstrap_flexform']);
 		$parentflexconf = [];

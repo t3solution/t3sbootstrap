@@ -242,6 +242,14 @@
 							</config>
 						</TCEforms>
 					</zoom>
+					<mobileIndicators>
+						<TCEforms>
+							<label>Indicators also on mobile view</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</mobileIndicators>
 				</el>
 			</ROOT>
 		</general>

@@ -261,6 +261,13 @@ class Config extends AbstractEntity
 	protected $navbarClickableparent = false;
 
 	/**
+	 * navbarPlusicon
+	 *
+	 * @var bool
+	 */
+	protected $navbarPlusicon = false;
+
+	/**
 	 * navbarDropdownAnimate
 	 *
 	 * @var string
@@ -1819,6 +1826,27 @@ class Config extends AbstractEntity
 	public function setNavbarClickableparent($navbarClickableparent)
 	{
 		$this->navbarClickableparent = $navbarClickableparent;
+	}
+
+	/**
+	 * Returns the navbarPlusicon
+	 *
+	 * @return bool $navbarPlusicon
+	 */
+	public function getNavbarPlusicon()
+	{
+		return $this->navbarPlusicon;
+	}
+
+	/**
+	 * Sets the navbarPlusicon
+	 *
+	 * @param bool $navbarPlusicon
+	 * @return void
+	 */
+	public function setNavbarPlusicon($navbarPlusicon)
+	{
+		$this->navbarPlusicon = $navbarPlusicon;
 	}
 
 	/**

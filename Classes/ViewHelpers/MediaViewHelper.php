@@ -154,6 +154,22 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
 		}
 
+		foreach( $this->arguments['breakpoints'] as $bpKey=>$breakpoint ) {
+			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
+			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
+			$breakpointArr[$bpKey]['srcset'] = '';
+			foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
+				if ($width > (int)$srcset) {
+					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
+				} else {
+					$breakpointArr[$bpKey]['srcset'] .= $srcset;
+					break;			
+				}
+			}
+		}
+
+		$this->arguments['breakpoints'] = $breakpointArr;
+
 		// Generate picture tag
 		$this->tag = $this->responsiveImagesUtility->createPictureTag(
 			$image,
@@ -285,52 +301,54 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	protected function getCropString($image, $cropString)
 	{
 		$cropObject = json_decode($cropString);
-		foreach($this->arguments['breakpoints'] as $cv) {
-			$cropVariant = $cv['cropVariant'];
-			$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
-			$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
-			$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
-			$rArr = explode(':',$this->arguments['ratio']);
-			if ( $this->arguments['shift'] ) {
-				$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
-				 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
-				$cropObject->$cropVariant->cropArea->y = $shift;
-			}
-			if ( $rArr[0] > $rArr[1] ) {
-				// landscape
-				$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];
-				if ( $image->getProperties()['height'] > $pxHeight ) {
-					$cHeight = $pxHeight / $image->getProperties()['height'];
-					$cropObject->$cropVariant->cropArea->height = $cHeight;
-				} else {
-					$cHeight = $image->getProperties()['height'] / $pxHeight;
-
-					$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-					$cWidth = $pxWidth / $image->getProperties()['width'];
-					$cropObject->$cropVariant->cropArea->width = $cWidth;
+		if (!empty($this->arguments['breakpoints'])) {
+			foreach($this->arguments['breakpoints'] as $cv) {
+				$cropVariant = $cv['cropVariant'];
+				$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
+				$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
+				$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
+				$rArr = explode(':',$this->arguments['ratio']);
+				if ( $this->arguments['shift'] ) {
+					$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
+					 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
+					$cropObject->$cropVariant->cropArea->y = $shift;
 				}
-			} elseif ($rArr[0] == $rArr[1]) {
-				// square
-				if ( $image->getProperties()['width'] > $image->getProperties()['height'] ) {
+				if ( $rArr[0] > $rArr[1] ) {
+					// landscape
+					$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];
+					if ( $image->getProperties()['height'] > $pxHeight ) {
+						$cHeight = $pxHeight / $image->getProperties()['height'];
+						$cropObject->$cropVariant->cropArea->height = $cHeight;
+					} else {
+						$cHeight = $image->getProperties()['height'] / $pxHeight;
+	
+						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
+						$cWidth = $pxWidth / $image->getProperties()['width'];
+						$cropObject->$cropVariant->cropArea->width = $cWidth;
+					}
+				} elseif ($rArr[0] == $rArr[1]) {
+					// square
+					if ( $image->getProperties()['width'] > $image->getProperties()['height'] ) {
+						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
+						$cWidth = $pxWidth / $image->getProperties()['width'];
+						$cropObject->$cropVariant->cropArea->width = $cWidth;
+					} else {
+						$pxHeight = $cropedWidth / $rArr[0] * $rArr[1];
+						$cHeight = $pxHeight / $image->getProperties()['height'];
+						$cropObject->$cropVariant->cropArea->height = $cHeight;
+					}
+				} else {
+					// portrait
 					$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-					$cWidth = $pxWidth / $image->getProperties()['width'];
-					$cropObject->$cropVariant->cropArea->width = $cWidth;
-				} else {
-					$pxHeight = $cropedWidth / $rArr[0] * $rArr[1];
-					$cHeight = $pxHeight / $image->getProperties()['height'];
-					$cropObject->$cropVariant->cropArea->height = $cHeight;
-				}
-			} else {
-				// portrait
-				$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-				if ( $image->getProperties()['width'] > $pxWidth ) {
-					$cWidth = $pxWidth / $image->getProperties()['width'];
-					$cropObject->$cropVariant->cropArea->width = $cWidth;
-				} else {
-					$cWidth = $image->getProperties()['width'] / $pxWidth;
-					$pxHeight = $cropedWidth / $rArr[1] * $rArr[0];
-					$cHeight = $pxHeight / $image->getProperties()['height'];
-					$cropObject->$cropVariant->cropArea->height = $cHeight;
+					if ( $image->getProperties()['width'] > $pxWidth ) {
+						$cWidth = $pxWidth / $image->getProperties()['width'];
+						$cropObject->$cropVariant->cropArea->width = $cWidth;
+					} else {
+						$cWidth = $image->getProperties()['width'] / $pxWidth;
+						$pxHeight = $cropedWidth / $rArr[1] * $rArr[0];
+						$cHeight = $pxHeight / $image->getProperties()['height'];
+						$cropObject->$cropVariant->cropArea->height = $cHeight;
+					}
 				}
 			}
 		}

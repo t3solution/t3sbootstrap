@@ -80,10 +80,11 @@ class Carousel implements SingletonInterface
 		$processedData['style'] .= self::getCarouselCaptionStyle( $flexconf, $animate );
 
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
-
+		if (!empty($fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']))) {
+			$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+		}
 		$processedData['localVideoPath'] = '';
-		if ($file) {
+		if (!empty($file)) {
 			if ($file->getMimeType() == 'video/mp4' || $file->getMimeType() == 'video/webm' || $file->getMimeType() == 'video/wav'
 			 || $file->getMimeType() == 'video/ogg' || $file->getMimeType() == 'video/flac' || $file->getMimeType() == 'video/opus') {
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);

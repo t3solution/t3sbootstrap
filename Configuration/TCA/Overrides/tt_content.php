@@ -1,31 +1,22 @@
 <?php
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-use B13\Container\Tca\Registry;
-use B13\Container\Tca\ContainerConfiguration;
-use T3SBS\T3sbootstrap\Backend\Preview\DefaultPreviewRenderer;
-use T3SBS\T3sbootstrap\Backend\Preview\T3sbPreviewRenderer;
 
 defined('TYPO3') || die();
 
-
 # Extension configuration
-$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 if (array_key_exists('contentconsent', $extconf) && $extconf['contentconsent'] === '1') {
 
-	ExtensionUtility::registerPlugin(
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 		'T3sbootstrap',
 		'Pi1',
 		'Content Consent for YouTube'
 	);
 
-	$extensionName = GeneralUtility::underscoredToUpperCamelCase('t3sbootstrap');
+	$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase('t3sbootstrap');
 	$pluginSignature = strtolower($extensionName) . '_pi1';
 	$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-	ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Consent.xml');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Consent.xml');
 
 }
 
@@ -34,9 +25,9 @@ if (array_key_exists('contentconsent', $extconf) && $extconf['contentconsent'] =
  */
 
 # GRID COLUMNS
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'two_columns',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
@@ -70,17 +61,17 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 ';
 
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'three_columns',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
-			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.description',
+			'description',
 			[
 				[
-					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 231],
-					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 232],
-					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 233]
+					['name' => 'col 1', 'colPos' => 231],
+					['name' => 'col 2', 'colPos' => 232],
+					['name' => 'col 3', 'colPos' => 233]
 				  ]
 			]
 		)
@@ -90,9 +81,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 );
 $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'four_columns',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
@@ -111,9 +102,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 );
 $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'six_columns',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
@@ -136,9 +127,9 @@ $GLOBALS['TCA']['tt_content']['types']['six_columns']['showitem'] = $GLOBALS['TC
 
 
 # ROW CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'row_columns',
 			'Row Columns',
 			'Use these row columns classes to quickly create basic grid layouts.',
@@ -156,9 +147,9 @@ $GLOBALS['TCA']['tt_content']['types']['row_columns']['showitem'] = $GLOBALS['TC
 
 
 # CARD WRAPPER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'card_wrapper',
 			'Card Wrapper',
 			'In addition to styling the content within cards, Bootstrap includes a few options for laying out series of cards.',
@@ -176,9 +167,9 @@ $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['showitem'] = $GLOBALS['T
 
 
 # BUTTON GROUP
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'button_group',
 			'Button Group',
 			'Group a series of buttons together on a single line with the button group.',
@@ -195,9 +186,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['button_group']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # AUTO LAYOUT
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'autoLayout_row',
 			'Auto-layout',
 			'Options: "Equal-width", "Setting one column width" or "Variable width content".',
@@ -214,9 +205,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # BACKGROUND WRAPPER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'background_wrapper',
 			'Background Wrapper',
 			'Options: "Full width container with background color -image or -Youtube vido.',
@@ -260,9 +251,9 @@ $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides']
 ];
 
 # PARALLAX WRAPPER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'parallax_wrapper',
 			'Parallax Wrapper',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.parallaxWrapper.description',
@@ -279,9 +270,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
 
 # CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'container',
 			'Container',
 			'Bootstrap .container',
@@ -298,9 +289,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # CAROUSEL CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'carousel_container',
 			'Carousel Container',
 			'A container for several Carousel slides (CE:t3sbs_carousel)',
@@ -317,9 +308,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['carousel_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # COLLAPSIBLE CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'collapsible_container',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.description',
@@ -336,9 +327,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # COLLAPSIBLE ELEMENT
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'collapsible_accordion',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.description',
@@ -355,9 +346,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'];
 
 # MODAL CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'modal',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.description',
@@ -374,9 +365,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['modal']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # TAB CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'tabs_container',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.description',
@@ -393,9 +384,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['tabs_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # TAB
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'tabs_tab',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.description',
@@ -412,9 +403,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # LIST GROUP WRAPPER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'listGroup_wrapper',
 			'List Group Wrapper',
 			'Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"',
@@ -431,9 +422,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # MASONRY
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'masonry_wrapper',
 			'Masonry Wrapper',
 			'Masonry with the Bootstrap grid system',
@@ -450,9 +441,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # SWIPE CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'swiper_container',
 			'Swiper Container',
 			'A container for several Swipe slides (CE:t3sbs_carousel)',
@@ -469,9 +460,9 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 $GLOBALS['TCA']['tt_content']['types']['swiper_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 
 # TOAST CONTAINER
-GeneralUtility::makeInstance(Registry::class)->configureContainer(
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
 	(
-		new ContainerConfiguration(
+		new \B13\Container\Tca\ContainerConfiguration(
 			'toast_container',
 			'Toast Container',
 			'A container for several Toast content',
@@ -491,7 +482,7 @@ $GLOBALS['TCA']['tt_content']['types']['toast_container']['showitem'] = $GLOBALS
 /***************
  * Add new CTypes
  */
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -502,7 +493,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 	'textmedia',
 	'after'
 );
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -513,7 +504,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 	't3sbs_mediaobject',
 	'after'
 );
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -524,7 +515,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 	't3sbs_card',
 	'after'
 );
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -535,7 +526,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 	't3sbs_toast',
 	'after'
 );
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -546,7 +537,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 	't3sbs_carousel',
 	'after'
 );
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -557,7 +548,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 	't3sbs_button',
 	'after'
 );
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
 	[
@@ -1169,7 +1160,7 @@ $tempContentColumns = [
 ];
 
 
-ExtensionManagementUtility::addTCAcolumns('tt_content',$tempContentColumns);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content',$tempContentColumns);
 unset($tempContentColumns);
 
 
@@ -1300,7 +1291,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
 	]
 ];
 // Add flexform
-ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardContent.xml', 't3sbs_card');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardContent.xml', 't3sbs_card');
 
 
 /***************
@@ -1356,45 +1347,45 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 ];
 
 
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'appearanceLinks',
 	'tx_t3sbootstrap_header_sectionMenu',
 	'after:sectionIndex'
 );
 
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'header',
 	'tx_t3sbootstrap_header_celink',
 	'after:header_link'
 );
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'headers',
 	'tx_t3sbootstrap_header_celink',
 	'after:header_link'
 );
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
 	'--linebreak--, tx_t3sbootstrap_bordercolor',
 	'after:imageborder'
 );
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
 	'tx_t3sbootstrap_image_ratio',
 	'after:tx_t3sbootstrap_bordercolor'
 );
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
 	'tx_t3sbootstrap_image_orig',
 	'before:tx_t3sbootstrap_image_ratio'
 );
 
-ExtensionManagementUtility::addFieldsToPalette(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'mediaAdjustments',
 	'tx_t3sbootstrap_inTextImgRowWidth',
@@ -1403,25 +1394,25 @@ ExtensionManagementUtility::addFieldsToPalette(
 
 
 # add palette bootstrap etc
-ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--palette--; ;bsHeaderExtra',
 	'',
 	'after:header'
 );
-ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--palette--;Bootstrap Color;bootstrapColor',
 	'',
 	'after:layout'
 );
-ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--palette--;Bootstrap Utilities;bootstrap',
 	'',
 	'after:layout'
 );
-ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--palette--;Bootstrap Spacing;bootstrapSpacing',
 	'',
@@ -1438,8 +1429,8 @@ ExtensionManagementUtility::addToAllTCAtypes(
 );
 ###### cmi5 ######
 # add palette animate if EXT:content_animations is not loaded
-if ( !ExtensionManagementUtility::isLoaded('content_animations') ) {
-	ExtensionManagementUtility::addToAllTCAtypes(
+if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations') ) {
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 		'tt_content',
 		'--palette--;Animation;animate',
 		'',
@@ -1490,7 +1481,7 @@ if ($extconf['animateCss']) {
 }
 
 if ($extconf['sectionOrder']) {
-	ExtensionManagementUtility::addFieldsToPalette(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 		'tt_content',
 		'appearanceLinks',
 		'tx_t3sbootstrap_sectionOrder',
@@ -1504,14 +1495,14 @@ if ( $extconf['preview'] ) {
 	 */
 	$t3sbsContent = ['t3sbs_button', 't3sbs_card', 't3sbs_carousel', 't3sbs_fluidtemplate', 't3sbs_gallery', 't3sbs_mediaobject', 't3sbs_toast'];
 	foreach ($t3sbsContent as $t3sb) {
-		$GLOBALS['TCA']['tt_content']['types'][trim($t3sb)]['previewRenderer'] = DefaultPreviewRenderer::class;
+		$GLOBALS['TCA']['tt_content']['types'][trim($t3sb)]['previewRenderer'] = \T3SBS\T3sbootstrap\Backend\Preview\DefaultPreviewRenderer::class;
 	}
 
 	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'row_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
 	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container', 'toast_container'];
 	foreach ($containers as $container) {
-		$GLOBALS['TCA']['tt_content']['types'][trim($container)]['previewRenderer'] = T3sbPreviewRenderer::class;
+		$GLOBALS['TCA']['tt_content']['types'][trim($container)]['previewRenderer'] = \T3SBS\T3sbootstrap\Backend\Preview\T3sbPreviewRenderer::class;
 	}
 }
 

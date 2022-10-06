@@ -7,6 +7,9 @@ services:
   T3SBS\T3sbootstrap\:
     resource: '../Classes/*'
 
+  T3SBS\T3sbootstrap\Backend\Preview\T3sbPreviewRenderer:
+    public: true
+
   T3SBS\T3sbootstrap\Command\CdnToLocal:
     tags:
       - name: console.command

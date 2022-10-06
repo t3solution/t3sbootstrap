@@ -106,13 +106,15 @@ function t3sbScrollToTop() {
 function t3sbHandleScroll() {
 	var scrollToTopBtn = document.querySelector('.back-to-top'),
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-	scrollToTopBtn.addEventListener('click', t3sbScrollIt);
-	if (scrollTop > 100) {
-		scrollToTopBtn.classList.add('st-block');
-		scrollToTopBtn.classList.remove('st-none');
-	} else {
-		scrollToTopBtn.classList.add('st-none');
-		scrollToTopBtn.classList.remove('st-block');
+	if (scrollToTopBtn != null) {
+		scrollToTopBtn.addEventListener('click', t3sbScrollIt);
+		if (scrollTop > 100) {
+			scrollToTopBtn.classList.add('st-block');
+			scrollToTopBtn.classList.remove('st-none');
+		} else {
+			scrollToTopBtn.classList.add('st-none');
+			scrollToTopBtn.classList.remove('st-block');
+		}
 	}
 }
 
@@ -207,16 +209,30 @@ function t3sbTransparentNavbar(colorschemes, gradient) {
 // Shrinking Navbar on scrolling - Navbar/Assets.html
 function t3sbShrinkingNavbar(navbar, padding) {
 	let navShrinkColorschemes = navbar.getAttribute('data-shrinkcolorschemes'),
-		navShrinkColor = navbar.getAttribute('data-shrinkcolor'),
+		navShrinkColor = 'navbar-'+navbar.getAttribute('data-shrinkcolor'),
 		navColorschemes = navbar.getAttribute('data-colorschemes'),
-		navColor = navbar.getAttribute('data-color');
+		navColor = navbar.getAttribute('data-color'),
+		gradient = navShrinkColorschemes.split(' ');
+	if (gradient[1]) {
+		navShrinkColorschemes = gradient[0];
+	}
 	window.addEventListener('scroll', function() {
-		if ( t3sbOffsetTop(navbar) > 100) {
-			navbar.classList.remove('py-'+padding, navColorschemes, navColor);
-			navbar.classList.add('navbar-shrink', navShrinkColor, navShrinkColorschemes);
+		if (navColor == navShrinkColor) {	
+			if ( t3sbOffsetTop(navbar) > 100) {
+				navbar.classList.remove('py-'+padding, navColorschemes);
+				navbar.classList.add('navbar-shrink', navShrinkColorschemes);
+			} else {
+				navbar.classList.add('py-'+padding, navColorschemes);
+				navbar.classList.remove('navbar-shrink', navShrinkColorschemes);
+			}
 		} else {
-			navbar.classList.remove('navbar-shrink', navShrinkColor, navShrinkColorschemes);
-			navbar.classList.add('py-'+padding, navColorschemes, navColor);
+			if ( t3sbOffsetTop(navbar) > 100) {
+				navbar.classList.remove('py-'+padding, navColorschemes, navColor);
+				navbar.classList.add('navbar-shrink', navShrinkColor, navShrinkColorschemes);
+			} else {
+				navbar.classList.add('py-'+padding, navColorschemes, navColor);
+				navbar.classList.remove('navbar-shrink', navShrinkColor, navShrinkColorschemes);
+			}	
 		}
 	});
 }

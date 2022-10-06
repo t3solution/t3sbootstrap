@@ -111,7 +111,7 @@
 				<el>
 					<extraClass_one>
 						<TCEforms type="array">
-							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+							<label>Column 1</label>
 							<config>
 								<type>input</type>
 							</config>
@@ -119,7 +119,7 @@
 					</extraClass_one>
 					<extraClass_two>
 						<TCEforms type="array">
-							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+							<label>Column 2</label>
 							<config>
 								<type>input</type>
 							</config>
@@ -127,7 +127,7 @@
 					</extraClass_two>
 					<extraClass_three>
 						<TCEforms type="array">
-							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2</label>
+							<label>Column 3</label>
 							<config>
 								<type>input</type>
 							</config>

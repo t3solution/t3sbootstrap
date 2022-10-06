@@ -57,9 +57,9 @@
 	<f:then>
 		<f:render partial="Media/Gallery" arguments="{_all}" />
 		<f:render section="HeaderBeside" arguments="{_all}" />
-<f:if condition="{data.bodytext}">
-		{data.bodytext -> f:format.html()}
-</f:if>
+		<f:if condition="{data.bodytext}">
+			{data.bodytext -> f:format.html()}
+		</f:if>
 	</f:then>
 	<f:else>
 		<f:comment> Beside Text right or left </f:comment>

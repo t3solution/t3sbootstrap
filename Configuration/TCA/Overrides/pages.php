@@ -1,13 +1,9 @@
 <?php
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 defined('TYPO3') || die();
 
 # Extension configuration
-$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 $tempPagesColumns = [
 	'tx_t3sbootstrap_smallColumns' => [
@@ -115,6 +111,7 @@ $tempPagesColumns = [
 	'tx_t3sbootstrap_icon_only' => [
 		'exclude' => 1,
 		'label' => 'Icon only',
+		'description' => 'for nav-item not for page title',
 		'config' => [
 				'type' => 'check',
 		]
@@ -304,9 +301,10 @@ $tempPagesColumns = [
 	]
 ];
 
-ExtensionManagementUtility::addTCAcolumns('pages',$tempPagesColumns);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages',$tempPagesColumns);
 unset($tempPagesColumns);
 
+<<<<<<< HEAD
 ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_titlecolor','after:title');
 ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_subtitlecolor','after:subtitle');
 ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_smallColumns','after:backend_layout_next_level');
@@ -323,25 +321,37 @@ ExtensionManagementUtility::addToAllTCAtypes(
 	'',
 	''
 );
+=======
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_titlecolor','after:title');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_subtitlecolor','after:subtitle');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_smallColumns','after:backend_layout_next_level');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_mobileOrder','after:tx_t3sbootstrap_smallColumns');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_breakpoint','after:tx_t3sbootstrap_mobileOrder');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_dropdownRight','after:tx_t3sbootstrap_breakpoint');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_container','after:tx_t3sbootstrap_dropdownRight');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_linkToTop','after:tx_t3sbootstrap_container');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_megamenu','after:tx_t3sbootstrap_linkToTop');
+
+>>>>>>> 99cc7872a3dc01866655c7395c8e071e70b9b185
 if (array_key_exists('navigationColor', $extconf) && $extconf['navigationColor'] === '1') {
 	# add palette Navigation Colors
-	ExtensionManagementUtility::addToAllTCAtypes(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 		'pages',
 		'--palette--; Navigation Colors for dropdown items;navColors',
 		'',
 		'after:title'
 	);
 
-	ExtensionManagementUtility::addFieldsToPalette(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationcolor','after:tx_t3sbootstrap_subtitlecolor'
 	);
-	ExtensionManagementUtility::addFieldsToPalette(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationactivecolor','after:tx_t3sbootstrap_navigationcolor'
 	);
-	ExtensionManagementUtility::addFieldsToPalette(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationhover','after:tx_t3sbootstrap_navigationactivecolor'
 	);
-	ExtensionManagementUtility::addFieldsToPalette(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 		'pages', 'navColors','--linebreak--,tx_t3sbootstrap_navigationbgcolor','after:tx_t3sbootstrap_navigationhover'
 	);
 }
@@ -354,7 +364,7 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 			 'canNotCollapse' => 1
 	];
 
-	ExtensionManagementUtility::addToAllTCAtypes(
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 		'pages',
 		'--palette--;Fontawesome Icon;fontawesome',
 		'',
@@ -371,7 +381,7 @@ $GLOBALS['PAGES_TYPES'][$menuheader] = [
 ];
 
 // Add new page type as possible select item:
-ExtensionManagementUtility::addTcaSelectItem(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'pages',
 	'doktype',
 	[
@@ -384,7 +394,7 @@ ExtensionManagementUtility::addTcaSelectItem(
 );
 
 // Add icon for new page type:
-ArrayUtility::mergeRecursiveWithOverrule(
+\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule(
 	$GLOBALS['TCA']['pages'],
 	[
 		'ctrl' => [
@@ -398,27 +408,27 @@ ArrayUtility::mergeRecursiveWithOverrule(
 /***************
  * Register PageTSConfig Files
 */
-ExtensionManagementUtility::registerPageTSConfigFile(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
 	'Configuration/TSConfig/Registered/Textpic.tsconfig',
 	'Remove CType textpic'
 );
-ExtensionManagementUtility::registerPageTSConfigFile(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
 	'Configuration/TSConfig/Registered/Text.tsconfig',
 	'Remove CType text'
 );
-ExtensionManagementUtility::registerPageTSConfigFile(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
 	'Configuration/TSConfig/Registered/Image.tsconfig',
 	'Remove CType image'
 );
-ExtensionManagementUtility::registerPageTSConfigFile(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
 	'Configuration/TSConfig/Registered/Header.tsconfig',
 	'Remove CType header'
 );
-ExtensionManagementUtility::registerPageTSConfigFile(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
 	't3sbootstrap',
 	'Configuration/TSConfig/Registered/Callouts.tsconfig',
 	'Add BS-Callouts options in Layout field'

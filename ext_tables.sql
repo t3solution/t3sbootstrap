@@ -43,6 +43,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_megamenu tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_hover tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_clickableparent tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	navbar_plusicon tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_dropdown_animate varchar(7) DEFAULT '' NOT NULL,
 	navbar_brand varchar(7) DEFAULT '' NOT NULL,
 	navbarbrand_alignment varchar(5) DEFAULT '' NOT NULL,

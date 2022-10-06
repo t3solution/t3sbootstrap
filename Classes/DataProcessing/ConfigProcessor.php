@@ -16,7 +16,7 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -47,23 +47,12 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 		$webp = (bool)$settings['webp'];
 
-		if ( is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
+		if ( !empty($contentObjectConfiguration['settings.']['config.']['uid'])
+			 && is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
 			$processedRecordVariables = $contentObjectConfiguration['settings.']['config.'];
 		} else {
 			$processedData['noConfig'] = TRUE;
 			return $processedData;
-		}
-
-		/**
-		 * Page title provider - BreadcrumbProvider
-		 */
-		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\Extbase\\Object\\ObjectManager');
-		$configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
-		$extbaseFrameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		if ($extbaseFrameworkConfiguration['config.']['pageTitleProviders.']['breadcrumb.']['provider']
-		 === 'T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider') {
-			$titleProvider = GeneralUtility::makeInstance(BreadcrumbProvider::class);
-			$titleProvider->setTitle('');
 		}
 
 		/**
@@ -78,7 +67,7 @@ class ConfigProcessor implements DataProcessorInterface
 		} else {
 			$company = $companyArr[0] ?: $company;
 		}
-		$processedData['config']['general']['company'] = trim($company);
+		$processedData['config']['general']['company'] = !empty($company) ? trim($company) : 'Company Name';
 		$processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepageUid'] ?: 1;
 		$processedData['config']['general']['pageTitle'] = $processedRecordVariables['pageTitle'] ?: '';
 		$processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['pageTitlealign'] ?: '';
@@ -92,53 +81,58 @@ class ConfigProcessor implements DataProcessorInterface
 		$smallColumnsRootline = (int)$rootlinePage['tx_t3sbootstrap_smallColumns'];
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 
-		if ( $contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns'] ) {
-			if ( GeneralUtility::inList('1,2,3,4,6', $contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns']) ) {
-				$smallColumns = $contentObjectConfiguration['settings.']['pages.']['override.']['smallColumns'];
-			} else {
-				$smallColumns = 3;
+		// global override page data
+		if ( !empty($contentObjectConfiguration['settings.']['pages.']['override.']) ) {
+			foreach ( $contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override ) {
+				if (!empty($override)) {
+					if ( ($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
+						$processedData['data'][$field] = 'var('.$override.')';
+					} else {
+						$processedData['data'][$field] = $override;
+					}
+				}
 			}
 		}
 
-		$processedData['colAside'] = $smallColumns;
-		if ($currentPage['backend_layout']) {
-			$threeCol = $currentPage['backend_layout'] == 'pagets__ThreeCol' ? TRUE : FALSE;
+		/**
+		 * Backend layout
+		 */
+		if (!empty($processedData['data']['backend_layout'])) {
+			$oneCol = $processedData['data']['backend_layout'] == 'pagets__OneCol' ? TRUE : FALSE;
+			$threeCol = $processedData['data']['backend_layout'] == 'pagets__ThreeCol' ? TRUE : FALSE;
 		} else {
+			$backendLayoutNextLevel = FALSE;
 			foreach ($frontendController->rootLine as $subPage) {
-				$bel = $subPage['backend_layout_next_level'];
+				$backendLayoutNextLevel = $subPage['backend_layout_next_level'];
 				if ( !empty($subPage['backend_layout_next_level']) ) break;
 			}
-			$threeCol = $bel == 'pagets__ThreeCol' ? TRUE : FALSE;
+			$oneCol = $backendLayoutNextLevel == 'pagets__OneCol' ? TRUE : FALSE;
+			$threeCol = $backendLayoutNextLevel == 'pagets__ThreeCol' ? TRUE : FALSE;
 		}
-
-		switch ( $processedData['colAside'] ) {
-			 case 1:
-				$processedData['colMain'] = $threeCol ? 10 : 11;
-			break;
-			 case 2:
-				$processedData['colMain'] = $threeCol ? 8 : 10;
-			break;
-			 case 3:
-				$processedData['colMain'] = $threeCol ? 6 : 9;
-			break;
-			 case 4:
-				$processedData['colMain'] = $threeCol ? 4 : 8;
-			break;
-			 case 6:
-				$processedData['colMain'] = $threeCol ? 0 : 6;
-			break;
-				  default:
-				$processedData['colMain'] = 9;
+		if ($oneCol === FALSE) {
+			$smallColumns = (int)$processedData['data']['tx_t3sbootstrap_smallColumns'];
+			$processedData['colAside'] = $smallColumns;
+			if ($threeCol === TRUE) {
+				$smallColumns = $smallColumns < 6 ? $smallColumns : 5;
+				$processedData['colMain'] = 12 - $smallColumns * 2;
+			} else {
+				$processedData['colMain'] = 12 - $smallColumns;
+			}
+			$processedData['colAside'] = (12 - $processedData['colMain']) / 2;
 		}
 
 		// grid breakpoint
 		$processedData['gridBreakpoint'] = $currentPage['tx_t3sbootstrap_breakpoint'] ?: 'md';
-		if ( $contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint'] ) {
-			if ( GeneralUtility::inList('sm,md,lg,xl', $contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint']) ) {
-				$processedData['gridBreakpoint'] = $contentObjectConfiguration['settings.']['pages.']['override.']['breakpoint'];
-			} else {
-				$processedData['gridBreakpoint'] = $currentPage['tx_t3sbootstrap_breakpoint'] ?: 'md';
-			}
+
+		/**
+		 * Page title provider - BreadcrumbProvider
+		 */
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+		$extbaseFrameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		if ($extbaseFrameworkConfiguration['config.']['pageTitleProviders.']['breadcrumb.']['provider']
+		 === 'T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider') {
+			$titleProvider = GeneralUtility::makeInstance(BreadcrumbProvider::class);
+			$titleProvider->setTitle('');
 		}
 
 		/**
@@ -173,111 +167,162 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Navbar
 		 */
 		if ( $processedRecordVariables['navbarEnable'] ) {
+			// navbar menu
+			$mainMenu = [];
+			foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
+				$mainMenu[$key] = $navbarMenu;
+				if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
+					$mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
+				}
+				if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
+					$mainMenu[$key]['title'] = '';
+				}
+				$mainMenu[$key]['target'] = $navbarMenu['data']['target'] ? $navbarMenu['data']['target'] : '_self';
+				if (!empty($navbarMenu['data']['tx_t3sbootstrap_dropdownRight'])) {
+					$mainMenu[$key]['dropdownRightClass'] = ' dropdown-menu-end';
+				}
+				if (!empty($navbarMenu['current']) && !empty($navbarMenu['active'])) {
+					$mainMenu[$key]['active'] = 0;
+					$mainMenu[$key]['activeClass'] = ' active';
+				} elseif (!empty($navbarMenu['active'])) {
+					$mainMenu[$key]['activeClass'] = '  parent-active';
+				} else {
+					$mainMenu[$key]['activeClass'] = '';
+				}
+				if (!empty($navbarMenu['children'][0])) {	
+					if (self::getChildItems($navbarMenu['children'])) {
+						$mainMenu[$key]['children'] = self::getChildItems($navbarMenu['children']);
+					}
+				}
+			}
+			$processedData['navbarMenu'] = $mainMenu;
+
+			$processedData['config']['navbar']['enable'] = $processedRecordVariables['navbarEnable'];
+			$processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbarSectionmenu'] ? ' section-menu' : '';
+			$processedData['config']['navbar']['hover'] = $processedRecordVariables['navbarHover'] ? ' dropdown-hover' : '';
+			$processedData['config']['navbar']['spacer'] = $processedRecordVariables['navbarIncludespacer'];
+			$processedData['config']['navbar']['megamenu'] = $processedRecordVariables['navbarMegamenu'];
+			$processedData['config']['navbar']['dataToggle'] = 'collapse';
+
+			// dropdown animate			
 			if ( !empty( $processedRecordVariables['navbarDropdownAnimate'] ) ) {
 				$processedData['config']['navbar']['dropdownAnimate'] =
 				 ' dd-animate-'.(int)$processedRecordVariables['navbarDropdownAnimate'];
-				$processedData['config']['navbar']['dropdownAnimateValue'] = 
+				 $processedData['config']['navbar']['dropdownAnimateValue'] = 
 				 (int)$contentObjectConfiguration['settings.']['config.']['navbarDropdownAnimate'];
 			}
-			$processedData['config']['navbar']['enable'] = $processedRecordVariables['navbarEnable'];
-			$processedData['config']['navbar']['sectionMenu'] = $processedRecordVariables['navbarSectionmenu'] ? ' section-menu' : '';
-			$processedData['config']['navbar']['brand'] = $processedRecordVariables['navbarBrand'];
-			$processedData['config']['navbar']['brandAlignment'] = $processedRecordVariables['navbarbrandAlignment'];
-			$processedData['config']['navbar']['hover'] = $processedRecordVariables['navbarHover'] ? ' dropdown-hover' : '';
 
-			if (!empty($frontendController->rootLine[1]) && $frontendController->rootLine[1]['doktype'] == 4) {
-				// shortcut
+			// shortcut & clickableparent
+			if (!empty($frontendController->rootLine[1]) && $frontendController->rootLine[1]['doktype'] == 4 && empty($processedRecordVariables['navbarPlusicon'])) {
 				$processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
 				$processedData['config']['navbar']['clickableparent'] = (int) $processedRecordVariables['navbarClickableparent'];
 			}
-			if ( !empty($processedData['config']['navbar']['clickableparent']) && !empty($processedRecordVariables['navbarPlusicon'])) {
-				$processedData['config']['navbar']['navbarPlusicon'] = 0;
-			} else {
-				$processedData['config']['navbar']['navbarPlusicon'] = !empty($processedRecordVariables['navbarPlusicon']) ?: 0;
-			}
+
+			// image
 			$processedData['config']['navbar']['image'] = $processedRecordVariables['navbarImage']
 			? $processedRecordVariables['navbarImage']	: $contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
 
-			$processedData['config']['navbar']['toggler'] = $processedRecordVariables['navbarToggler'];
-
+			// container
 			if ( !$processedRecordVariables['navbarContainer'] ) {
 				$processedData['config']['navbar']['container'] = '';
 			} else {
 				$processedData['config']['navbar']['containerposition'] = $processedRecordVariables['navbarContainer'];
 				$processedData['config']['navbar']['container'] = 'container';
 			}
-
 			$processedData['config']['navbar']['innercontainer'] = $processedRecordVariables['navbarInnercontainer'] ?: 'container';
 
+			// brand
+			$processedData['config']['navbar']['brand'] = $processedRecordVariables['navbarBrand'];
+			$processedData['config']['navbar']['brandAlignment'] = $processedRecordVariables['navbarbrandAlignment'];
+			if ($processedRecordVariables['navbarBrand'] === 'imgText' && !empty($processedRecordVariables['company'])) {
+				$processedData['config']['navbar']['brandClass'] = ' d-inline-block me-2';
+			}
+			// toggler
+			$processedData['config']['navbar']['toggler'] = $processedRecordVariables['navbarToggler'];
+			$processedData['config']['navbar']['animatedToggler'] = $processedRecordVariables['navbarAnimatedtoggler'];
+
+			// breakpoint
+			$processedData['navbarBreakpoint'] = $processedRecordVariables['navbarBreakpoint'] ?: 'md';
+			$processedData['config']['navbar']['breakpoint'] = $processedRecordVariables['navbarBreakpoint'];
+
+			// class ff
 			$navbarClass = 'navbar-'.$processedRecordVariables['navbarEnable'];
 			$navbarClass .= $processedRecordVariables['navbarBreakpoint']
 			 ? ' navbar-expand-'.$processedRecordVariables['navbarBreakpoint'] : ' navbar-expand-sm';
-			// navbar breakpoint
-			$processedData['navbarBreakpoint'] = $processedRecordVariables['navbarBreakpoint'] ?: 'md';
-			if ( $processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
-				$navbarClass .= ' shrink py-'.$contentObjectConfiguration['settings.']['config.']['shrinkingNavPadding'];
-			}
-			$processedData['config']['navbar']['breakpoint'] = $processedRecordVariables['navbarBreakpoint'];
 			$navbarClass .= $processedRecordVariables['navbarClass'] ? ' '.$processedRecordVariables['navbarClass'] : '';
-			if ( $processedRecordVariables['navbarTransparent'] && $processedRecordVariables['navbarPlacement'] == 'fixed-top') {
-				if ( $processedRecordVariables['navbarColor'] == 'color' && $processedRecordVariables['navbarBackground'] ) {
-					$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
-					$processedData['config']['navbar']['style'] = $navbarStyle;
-				} else {
-					$navColorArr = explode(' ', $processedRecordVariables['navbarColor']);
-					if ( !empty($navColorArr[1]) ) {
-						$processedData['config']['navbar']['colorschemes'] = 'bg-'.$navColorArr[0];
-						$processedData['config']['navbar']['gradient'] = 'bg-gradient';
-					} else {
-						$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
-					}
-				}
-				$processedData['config']['navbar']['transparent'] = true;
-			} else {
-				if ( $processedRecordVariables['navbarColor'] == 'color' ) {
-					if ( $processedRecordVariables['navbarBackground'] ) {
-						$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
-						$processedData['config']['navbar']['style'] = $navbarStyle;
-					} else {
-						$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
-						$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
-					}
-				} else {
-					$navbarClass .= ' bg-'.$processedRecordVariables['navbarColor'];
-					$processedData['config']['navbar']['shrinkColorschemes'] = 'bg-'.$processedRecordVariables['navbarShrinkcolorschemes'];
-					$processedData['config']['navbar']['colorschemes'] = 'bg-'.$processedRecordVariables['navbarColor'];
-				}
-			}
-
-			if ( $processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
-				$processedData['config']['navbar']['shrinkColor'] = 'navbar-'.$processedRecordVariables['navbarShrinkcolor'];
-				$processedData['config']['navbar']['color'] = 'navbar-'.$processedRecordVariables['navbarEnable'];
-			}
-
+			$navbarClass .= $processedRecordVariables['navbarSectionmenu'] ? ' sectionMenu' : '';
 			$navbarClass .= $processedRecordVariables['navbarClickableparent'] ? ' clickableparent' : '';
 			$navbarClass .= $processedRecordVariables['navbarHover'] ? ' navbarHover' : '';
 
-			if ($processedRecordVariables['navbarPlacement']) {
-				if ( !empty($processedData['config']['navbar']['containerposition']) && $processedData['config']['navbar']['containerposition'] == 'outside' )
-				{
-					$processedData['config']['navbar']['container'] =
-					trim($processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbarPlacement']);
-				} else {
-					$navbarClass = $navbarClass.' '.$processedRecordVariables['navbarPlacement'];
+			// transparent
+			if ( $processedRecordVariables['navbarTransparent'] && $processedRecordVariables['navbarPlacement'] === 'fixed-top') {
+				$processedData['config']['navbar']['transparent'] = TRUE;
+			} else {
+				$processedData['config']['navbar']['transparent'] = FALSE;			
+			}
+			if ( $processedRecordVariables['navbarColor'] === 'color' && !empty($processedRecordVariables['navbarBackground']) ) {
+				$navbarStyle = 'background-color: '.$processedRecordVariables['navbarBackground'].';';
+				$processedData['config']['navbar']['styleAttr'] = ' style="'.$navbarStyle.'"';
+			} else {
+				if (!$processedData['config']['navbar']['transparent']) {
+					$navbarClass .= ' bg-'.$processedRecordVariables['navbarColor'];				
 				}
 			}
 
-			$navbarClass .= $processedRecordVariables['navbarSectionmenu'] ? ' sectionMenu' : '';
-			$processedData['config']['navbar']['class'] = trim($navbarClass);
+			// plusicon
+			$processedData['config']['navbar']['bstoggle'] = 'dropdown';
+			if (!empty($processedRecordVariables['navbarPlusicon'])) {
+				$processedData['config']['navbar']['navbarPlusicon'] = $processedRecordVariables['navbarPlusicon'];
+				$processedData['config']['navbar']['bstoggle'] = 'none';
+				$navbarClass .= ' navplusicon';
+				$processedData['config']['navbar']['hover'] = '';		
+			}
+
+			// shrinking navbar on scrolling
+			$navBarAttr = '';
+			if ( $processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
+				$processedData['config']['navbar']['transparent'] = FALSE;
+				$navbarClass .= ' shrink py-'.$contentObjectConfiguration['settings.']['config.']['shrinkingNavPadding'];
+				$navbarShrinkcolorschemes = $processedRecordVariables['navbarShrinkcolorschemes'];
+				$navBarAttr .= ' data-shrinkcolorschemes="bg-'.$navbarShrinkcolorschemes.'"';
+				$shrinkColor = $processedRecordVariables['navbarShrinkcolor'];
+				$navBarAttr .= ' data-shrinkcolor="'.$shrinkColor.'"';
+				$navColorArr = explode(' ', $processedRecordVariables['navbarColor']);
+				if ( !empty($navColorArr[1]) ) {
+					$navbarColor = 'bg-'.$navColorArr[0];
+					$processedData['config']['navbar']['gradient'] = 'bg-gradient';
+				} else {
+					$navbarColor = $processedRecordVariables['navbarColor'];
+				}
+				$navBarAttr .= ' data-colorschemes="'.$navbarColor.'"';
+				$navBarAttr .= ' data-color="navbar-'.$processedRecordVariables['navbarEnable'].'"';
+			}
+
+			// sticky-top
+			if ($processedRecordVariables['navbarPlacement'] === 'sticky-top') {
+				$navBarAttr .= ' data-bs-toggle="sticky-onscroll"';
+			}
+			$processedData['config']['navbar']['dataAttr'] = $navBarAttr;
+
+			// placement
+			if ($processedRecordVariables['navbarPlacement']) {
+				$processedData['config']['navbar']['placement'] = $processedRecordVariables['navbarPlacement'];
+				if ( !empty($processedData['config']['navbar']['containerposition']) && $processedData['config']['navbar']['containerposition'] == 'outside' ) {
+					$processedData['config']['navbar']['container'] =
+					trim($processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbarPlacement']);
+				} else {
+					$navbarClass .= ' '.$processedRecordVariables['navbarPlacement'];
+				}
+			}
 			$dropdown = $processedRecordVariables['navbarPlacement'] == 'fixed-bottom' ? 'dropup' : 'dropdown';
 			$processedData['config']['navbar']['dropdown'] = $dropdown;
-			$processedData['config']['navbar']['spacer'] = $processedRecordVariables['navbarIncludespacer'];
-			$processedData['config']['navbar']['megamenu'] = $processedRecordVariables['navbarMegamenu'];
-			$processedData['config']['navbar']['placement'] = $processedRecordVariables['navbarPlacement'];
-			$processedData['config']['navbar']['sticky'] = $processedRecordVariables['navbarPlacement'] == 'sticky-top' ? TRUE : FALSE;
-			$processedData['config']['navbar']['alignment'] = $processedRecordVariables['navbarAlignment'];
 
+			// set class
+			$processedData['config']['navbar']['class'] = trim($navbarClass);
+
+			// alignment
+			$processedData['config']['navbar']['alignment'] = $processedRecordVariables['navbarAlignment'];
 			if ($processedRecordVariables['navbarAlignment'] == 'fill') {
 				$processedData['config']['navbar']['mauto'] = ' nav-fill w-100';
 			} elseif ($processedRecordVariables['navbarAlignment'] == 'justified') {
@@ -289,10 +334,15 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] == 'right') ? ' ms-auto': ' me-auto';
 			}
 
-			$processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbarOffcanvas'];
+			// extra row
+			if ($processedRecordVariables['navbarExtraRow']) {
+				$processedData['config']['navbar']['navbarExtraRow'] = ' flex-column';
+			}
 
-			// Offcanvas
+			// offcanvas
 			if ($processedRecordVariables['navbarOffcanvas']) {
+				$processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbarOffcanvas'];
+				$processedData['config']['navbar']['dataToggle'] = 'offcanvas';
 				$processedData['config']['navbar']['offcanvasBgColorClass'] = 'bg-'.$processedRecordVariables['navbarColor'];
 				if ($processedRecordVariables['navbarEnable'] == 'dark') {
 					$processedData['config']['navbar']['offcanvasTitleColor'] = 'rgba(255, 255, 255, 0.75)';
@@ -302,7 +352,6 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['config']['navbar']['offcanvasCross'] = 'dark';
 				}
 				if ($processedRecordVariables['navbarAlignment'] == 'left') {
-
 					$processedData['config']['navbar']['navbarAlignment'] = 'start';
 				} elseif ($processedRecordVariables['navbarAlignment'] == 'right') {
 					$processedData['config']['navbar']['navbarAlignment'] = 'end';
@@ -314,16 +363,14 @@ class ConfigProcessor implements DataProcessorInterface
 				} else {
 					$processedData['config']['navbar']['offcanvasAlign'] = 'end';
 				}
+				$processedData['config']['navbar']['sectionMenuDataAttr'] = ' data-bs-dismiss="offcanvas" aria-label="Close"';
 			}
 
-			$processedData['config']['navbar']['animatedToggler'] = $processedRecordVariables['navbarAnimatedtoggler'];
-
+			// searchbox
 			if ( $processedRecordVariables['navbarSearchbox'] ) {
 				$processedData['config']['navbar']['searchbox'] = $processedRecordVariables['navbarSearchbox'];
 				$processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbarEnable'] == 'light' ? 'dark' : 'light';
-
 				if ( $processedData['config']['navbar']['mauto'] == ' me-auto' ) {
-
 					$processedData['config']['navbar']['sbmauto'] = ' ms-auto';
 				}
 				if ( $processedData['config']['navbar']['mauto'] == ' ms-auto' ) {
@@ -334,10 +381,12 @@ class ConfigProcessor implements DataProcessorInterface
 				}
 			}
 
+			// content only on rootpage
 			if ( ($processedRecordVariables['homepageUid'] == $frontendController->id) && $processedRecordVariables['contentOnlyOnRootpage'] ) {
 				$processedData['config']['navbar']['enable'] = FALSE;
 			}
 
+			// navigation color
 			$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 			if ( $extConf['navigationColor'] ) {
 				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor((int)$processedData['data']['sys_language_uid']);
@@ -359,8 +408,6 @@ class ConfigProcessor implements DataProcessorInterface
 			# Image from pages media
 			$hasBgImages = 0;
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-
-
 			$fileObjects = [];
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
@@ -615,6 +662,9 @@ class ConfigProcessor implements DataProcessorInterface
 	}
 
 
+	/**
+	 * Returns an string
+	 */
 	protected function getTreeList(int $id, int $depth, int $begin = 0, string $permsClause = ''): string
 	{
 		if ($id < 0) {
@@ -672,6 +722,41 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 
 		return $res;
+	}
+
+
+	/**
+	 * Returns an array
+	 */
+	protected function getChildItems($children)
+	{
+		$mainMenu = $children;
+		foreach ($children as $cKey=>$child) {
+			if (!empty($child['data']['tx_t3sbootstrap_fontawesome_icon'])) {
+				$mainMenu[$cKey]['faIcon'] = '<i class="'.$child['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';				
+			}
+			if (!empty($child['data']['tx_t3sbootstrap_icon_only'])) {
+				$mainMenu[$cKey]['title'] = '';
+			}
+			$mainMenu[$cKey]['target'] = $child['target'] ? $child['target'] : '_self';
+			if (!empty($child['current'])) {
+				$mainMenu[$cKey]['active'] = 0;
+			}
+			if (!empty($child['children'][0]) && !empty(self::getChildItems($child['children']))) {
+				$mainMenu[$cKey]['children'] = $child;
+				$mainMenu[$cKey]['children'] = self::getChildItems($child['children']);
+			}
+			if (!empty($child['current']) && !empty($child['active'])) {
+				$mainMenu[$cKey]['active'] = 0;
+				$mainMenu[$cKey]['activeClass'] = ' active';
+			} elseif (!empty($child['active'])) {
+				$mainMenu[$cKey]['activeClass'] = '  parent-active';
+			} else {
+				$mainMenu[$cKey]['activeClass'] = '';
+			}
+		}
+
+		return $mainMenu;
 	}
 
 
