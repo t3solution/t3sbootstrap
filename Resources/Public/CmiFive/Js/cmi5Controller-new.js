@@ -106,6 +106,7 @@ var cmi5Controller = (function() {
       var t = typeof(obj["returnURL"]);
       if (t === "string") {
         cmi5Controller.returnURL = obj["returnURL"];
+        sessionStorage.setItem("returnurl", cmi5Controller.returnURL);
       }
       // Get other state properties into cmi5Controller properties.
       cmi5Controller.moveOn = obj["moveOn"];
@@ -166,7 +167,9 @@ var cmi5Controller = (function() {
     },
     goLMS: function() {
       // This function returns to the LMS if the returnURL property was provided.  If not, it attempts to close the browser.
-      var returnUrl = cmi5Controller.getReturnUrl();
+      var returnUrl;
+      if (cmi5Controller.getReturnUrl()) returnUrl = cmi5Controller.getReturnUrl();
+      else returnUrl = sessionStorage.getItem("returnurl");
       if ((typeof returnUrl) == "string" && returnUrl.length > 0) {
         var href = decodeURIComponent(returnUrl);
         document.location.href = href;

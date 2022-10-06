@@ -1,3 +1,39 @@
+var xMouseDown = false,
+  beforeunload = true,
+  pagehide = true,
+  beforeUnloadListener = function(event) {
+    sessionStorage.setItem("persisted", event.persisted);
+    if (!window.xUnload && !event.persisted && !xMouseDown && sessionStorage.getItem("statesInit")) {
+      window.xUnload = true;
+      sessionStorage.setItem("terminated", "true");
+      let sd = Math.abs((new Date())) - parseInt(sessionStorage.getItem("startTimeStamp"));
+      sendDefinedStatementWrapper("Terminated", "", sd);
+      //window.removeEventListener('pagehide', beforeUnloadListener, false);
+      //window.removeEventListener('beforeunload', beforeUnloadListener, false);
+    }
+  };
+window.addEventListener('pagehide', (event) => {
+  pagehide = false;
+  if (beforeunload) beforeUnloadListener(event);
+}, {
+  once: true
+});
+if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
+  window.addEventListener('beforeunload', (event) => {
+    beforeunload = false;
+    if (pagehide) beforeUnloadListener(event);
+  }, {
+    once: true
+  });
+}
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', (event) => {
+  history.go(1);
+  swal("Bitte verwenden Sie die Navigation im Lernmodul!");
+});
+// add cmi5 parms to URL if applicable
+if (location.href.indexOf("endpoint") === -1 && parseInt(sessionStorage.getItem("courseLoggedIn")) > 0) window.history.replaceState(null, null, "?" + sessionStorage.getItem("cmi5Parms"));
+
 var statesController = function() {
   this.pagesVisited = [];
   this.attemptDuration = 0;
@@ -12,6 +48,7 @@ var statesController = function() {
   this.videos = [];
   this.durations = [];
   this.h5pStates = [];
+  this.h5pObjectIdAndPage = [];
 };
 
 statesController.prototype = {
@@ -27,6 +64,7 @@ statesController.prototype = {
     this.videos = states.videos;
     this.durations = states.durations;
     this.h5pStates = states.h5pStates;
+    this.h5pObjectIdAndPage = states.h5pObjectIdAndPage;
   },
   getAttemptDuration: function() {
     if (typeof this.attemptDuration === "string") this.attemptDuration = parseInt(this.attemptDuration);
@@ -53,7 +91,7 @@ statesController.prototype = {
       if (sessionStorage.getItem("passed")) states.passed = sessionStorage.getItem("passed");
       if (sessionStorage.getItem("passedOrFailed")) states.passedOrFailed = sessionStorage.getItem("passedOrFailed");
       if (sessionStorage.getItem("failed")) states.failed = sessionStorage.getItem("failed");
-      if (sessionStorage.getItem("pagesVisited")) states.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
+      //if (sessionStorage.getItem("pagesVisited")) states.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
       if (sessionStorage.getItem("attemptDuration")) states.attemptDuration = parseInt(sessionStorage.getItem("attemptDuration"));
     } else {
       // ... handle state data
@@ -72,9 +110,13 @@ statesController.prototype = {
     }
     // console.log("launchMode set to: " + cmi5Controller.launchMode);
     // load highlighted text at relevant pages to sessionStorage
+    delete states.hls;
+    //delete states.h5pStates;
+    if (sessionStorage.getItem("pagesVisited")) states.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
     if (states.hls) textHightlighting("", "", "", states.hls);
     if (states.videos) visitedVideoSections("", "", "", states.videos, states.durations);
     if (states.h5pStates) h5pState(states.h5pStates);
+    if (states.h5pObjectIdAndPage) h5pObjectIdAndPage(states.h5pObjectIdAndPage);
     // populate object of states data
     if (typeof states.pagesVisited !== "undefined") this.initStates(states);
     else document.querySelector("body").style.display = "block";
@@ -83,16 +125,7 @@ statesController.prototype = {
     markMenuItemsCb(bm.setStates);
   },
   setStates: function() {
-    var states, index, lp = location.pathname,
-      index = bm.getCurrentPage(bm.pagesVisited, lp),
-      thl, vvs, h5ps;
-    if (index < 0 && !sessionStorage.getItem("statesInit")) bm.pagesVisited.push(lp);
-    else {
-      // remove pathname of current page if visited before ...
-      if (index > -1) bm.pagesVisited.splice(index, 1);
-      // ... and add pathname of current page to the top of the array of pathnames
-      bm.pagesVisited.unshift(lp);
-    }
+    let states, thl, vvs, h5ps;
     bm.getAttemptDuration();
     sessionStorage.setItem("pagesVisited", JSON.stringify(bm.pagesVisited));
 
@@ -105,6 +138,7 @@ statesController.prototype = {
     vvs = visitedVideoSections();
     thl = textHightlighting(document.getElementById("page-content"), document.querySelector('.navbar .notes-au-button'), true);
     h5ps = h5pState();
+    h5po = h5pObjectIdAndPage();
     states = {
       pagesVisited: bm.pagesVisited,
       attemptDuration: sessionStorage.getItem("attemptDuration"),
@@ -116,7 +150,8 @@ statesController.prototype = {
       hls: thl,
       videos: vvs.videos,
       durations: vvs.durations,
-      h5pStates: h5ps
+      h5pStates: h5ps,
+      h5pObjectIdAndPage: h5po
     };
     cmi5Controller.sendAllowedState("bookmarkingData", states);
   },
@@ -128,18 +163,13 @@ statesController.prototype = {
   },
   // function: go to page bookmarked in LRS when resume course
   goToBookmarkedPage: function() {
-    if (this.pagesVisited.length > 0) location.href = this.pagesVisited[1];
+    if (this.pagesVisited.length > 0) location.href = this.pagesVisited[0].substring(0, this.pagesVisited[0].indexOf("__vp__"));
   },
   // function: get pathname of current page as bookmark and save to LRS
   getCurrentPage: function(pagesVisited, currentPage, attr) {
-    if (attr)
-      for (let i = 0; i < pagesVisited.length; i++) {
-        if (pagesVisited[i][attr] === currentPage) return i;
-      }
-    else
-      for (let i = 0; i < pagesVisited.length; i++) {
-        if (pagesVisited[i] == currentPage) return i;
-      }
+    for (let i = 0; i < pagesVisited.length; i++) {
+      if (pagesVisited[i].includes(currentPage)) return i;
+    }
     return -1;
   },
   checkMoveOn: function(moveOn, finish) {
@@ -185,69 +215,131 @@ statesController.prototype = {
     }
   },
   // function: indicate relevant menu items in t3 menu as visited, set current progress in progressbar
-  // Typo3: apply to typo3 menu object?
   markMenuItems: function(setStatesCb) {
     let mItemsTotal = document.querySelectorAll(".main-navbarnav a[target=_self]"),
       dItemsTotal = document.querySelectorAll(".main-navbarnav .nav-item > a"),
-      progressbar = document.querySelectorAll(".progress-bar"),
+      offcanvasProgressbar = document.querySelector(".offcanvas .progress-bar"),
+      offcanvasProgress = document.querySelector(".offcanvas .progress"),
       pageId = document.querySelector("body").id,
-      mItemsP, dItemsP, mItems = [];
-    // get menu items from t3 menu and skip submenu items if applicable
-    // indicate relevant menu items in t3 menu as visited and add checkmarks
+      mItemI, dItemI, mItems = [];
+    // when navbar is visible, track pages visited and display progress on current page
+    if (document.querySelector("#main-navbar")) {
+      var p = [window.innerHeight / document.body.scrollHeight * 100, 0],
+        py = 0,
+        lpx,
+        lp = location.pathname,
+        index = bm.getCurrentPage(bm.pagesVisited, lp);
+      document.querySelector("#main-navbar").insertAdjacentHTML("afterend", "<div class='page-progress-bar'></div>");
+      if (sessionStorage.getItem("pagesVisited")) bm.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
+      for (let i = 0; i < bm.pagesVisited.length; i++) {
+        if (bm.pagesVisited[i].includes(lp)) lpx = i;
+      }
+      if (lpx !== undefined) {
+        p[0] = bm.pagesVisited[lpx].substring(bm.pagesVisited[lpx].indexOf("__vp__") + 6);
+        if (parseFloat(p[0]) > 100) p[0] = 100;
+        document.querySelector(".page-progress-bar").style.width = p[0] + "%";
+      } else document.querySelector(".page-progress-bar").style.width = (window.innerHeight / document.body.scrollHeight * 100) + "%";
+      if (index < 0 && !sessionStorage.getItem("statesInit")) bm.pagesVisited.push(lp + "__vp__" + p[0]);
+      else {
+        // remove pathname of current page if visited before ...
+        if (index > -1) bm.pagesVisited.splice(index, 1);
+        // ... and add pathname of current page to the top of the array of pathnames
+        bm.pagesVisited.unshift(lp + "__vp__" + p[0]);
+      }
+      document.addEventListener('scroll', function() {
+        py = (window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100;
+        if (p[0] < py) {
+          p.push(py);
+          if (parseFloat(p[2]) > 100) p[2] = 100;
+          document.querySelector(".page-progress-bar").style.width = p[2] + "%";
+          bm.pagesVisited[0] = lp + "__vp__" + p[2];
+          sessionStorage.setItem("pagesVisited", JSON.stringify(bm.pagesVisited));
+          p.shift();
+        }
+      });
+    }
+    // indicate relevant menu items in t3 menu as visited and add progress circles
     if (sessionStorage.getItem("statesInit") && sessionStorage.getItem("startPageId") != pageId) {
+      let pc1 = '<progress-circle color="#fff" value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="100" radius="50" stroke="#444" fill=',
+        pc1_ = '"transparent"',
+        pc1b = '><!--No label--></slice><slice part="circle" x="438" y="64" size="',
+        pc2 = '%" stroke-width="',
+        pc3 = '" radius="50" stroke="#444"><!--No label--></slice><style>',
+        pc3_ = '[part="background"]{opacity:0.3}',
+        pc3b = 'text {font-size: 28em; transform: translate(0, 170px); font-weight: 900;}</style><slice size="190%" stroke-width="0"><tspan x="50%" y="50%">',
+        pc4 = '</slice></tspan></progress-circle>';
+      // set progress circles to pages in menu items
       for (let i = 0; i < mItemsTotal.length; i++) {
-        mItemsP = mItemsTotal[i];
+        mItemI = mItemsTotal[i];
         // get total of pages
-        if (!sessionStorage.getItem("pagesTotal")) mItems.push(mItemsP);
+        if (!sessionStorage.getItem("pagesTotal")) mItems.push(mItemI);
         // highlight menu item of current page and add checkmark
-        if (mItemsP.classList.contains("active")) {
-          //mItemsTotal[i].classList.add("active"); //, "visited");
-          mItemsP.classList.add("visited"); //, "visited");
-          bm.pageTitle = mItemsP.innerHTML.trim();
-          // hide pagination on last page
+        if (mItemI.classList.contains("active")) {
+          mItemI.classList.add("visited");
+          bm.pageTitle = mItemI.innerHTML.trim();
+          // hide page-link on last page
           if (i < mItemsTotal.length - 1) document.querySelector(".page-pagination").style.display = "block";
         }
-        // add checkmarks to menu items of pages visited
-        if (!mItemsP.classList.contains("check-mark") && !mItemsP.parentNode.classList.contains("nav-item")) {
-          let iNode = document.createElement("i"),
-            spanNode = document.createElement("span");
-          iNode.classList.add("fas", "fa-check");
-          spanNode.classList.add("check-mark");
-          mItemsP.insertBefore(spanNode, mItemsP.childNodes[0]);
-          mItemsP.firstChild.appendChild(iNode);
+        // set progress circles to menu items of pages
+        if (!mItemI.parentNode.classList.contains("nav-item")) {
+          mItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + 0 + pc2 + 0 + pc3 + pc3_ + pc3b + pc4);
           for (let j = 0; j < bm.pagesVisited.length; j++) {
-            if (mItemsTotal[i].getAttribute("href").indexOf(bm.pagesVisited[j]) != -1 && !mItemsP.classList.contains("visited")) {
-              mItemsTotal[i].classList.add("visited");
-              mItemsP.classList.add("visited");
+            if (bm.pagesVisited[j].includes(mItemI.getAttribute("href"))) {
+              mItemI.querySelector("progress-circle").remove();
+              mItemI.classList.add("visited");
+              if (parseFloat(bm.pagesVisited[j].substring(bm.pagesVisited[j].indexOf("__vp__") + 6)) === 100) {
+                pc4 = '✓</slice></tspan></progress-circle>';
+                pc1_ = '"#444"';
+                pc3_ = '[part="background"]{opacity:1}';
+              }
+              mItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + bm.pagesVisited[j].substring(bm.pagesVisited[j].indexOf("__vp__") + 6) + pc2 + 100 + pc3 + pc3_ + pc3b + pc4);
+              if (pc4.includes('✓')) {
+                pc4 = '</slice></tspan></progress-circle>';
+                pc1_ = '"transparent"';
+                pc3_ = '[part="background"]{opacity:0.3}';
+              }
             }
           }
         }
       }
-    }
-    let pc1 = '<progress-circle value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="150" radius="75" stroke="#fff" fill="transparent"><!--No label--></slice><slice part="circle" x="438" y="64" size="',
-      pc2 = '%" stroke-width="',
-      pc3 = '" radius="75" stroke="#fff"><!--No label--></slice></progress-circle>';
-    for (let i = 0; i < dItemsTotal.length; i++) {
-      if (!dItemsTotal[i].classList.contains("progress-circle")) {
-        if (!dItemsTotal[i].classList.contains("dropdown-toggle")) dItemsTotal[i].insertAdjacentHTML("afterbegin", pc1 + 100 + pc2 + 150 + pc3);
-        else {
-          let l = 0,
-            lt = dItemsTotal[i].nextSibling.childNodes.length;
-          for (let j = 0; j < lt; j++) {
-            if (dItemsTotal[i].nextSibling.childNodes[j].classList.contains("visited")) l++;
+      // set progress circles to chapters in menu items
+      for (let i = 0; i < dItemsTotal.length; i++) {
+        dItemI = dItemsTotal[i];
+        if (!dItemI.classList.contains("progress-circle")) {
+          // always check first item as completed
+          if (!dItemI.classList.contains("dropdown-toggle")) dItemI.insertAdjacentHTML("afterbegin", pc1 + '"#444"' + pc1b + 0 + pc2 + 100 + pc3 + '[part="background"]{opacity:1}' + pc3b + '✓</slice></tspan></progress-circle>');
+          else {
+            let l = 0,
+              lt = dItemI.nextSibling.childNodes.length;
+            for (let j = 0; j < lt; j++) {
+              if (dItemI.nextSibling.childNodes[j].classList.contains("visited")) l++;
+            }
+            if (l > 0) {
+              if (l === lt) {
+                pc4 = '✓</slice></tspan></progress-circle>';
+                pc1_ = '"#444"';
+                pc3_ = '[part="background"]{opacity:1}';
+              }
+              dItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + (l / lt * 100) + pc2 + 100 + pc3 + pc3_ + pc3b + pc4);
+              if (pc4.includes('✓')) {
+                pc4 = '</slice></tspan></progress-circle>';
+                pc1_ = '"transparent"';
+                pc3_ = '[part="background"]{opacity:0.3}';
+              }
+            } else dItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + (l / lt * 100) + pc2 + 0 + pc3 + pc3_ + pc3b + pc4);
           }
-          if (l > 0) dItemsTotal[i].insertAdjacentHTML("afterbegin", pc1 + (l / lt * 100) + pc2 + 150 + pc3);
-          else dItemsTotal[i].insertAdjacentHTML("afterbegin", pc1 + (l / lt * 100) + pc2 + 0 + pc3);
+          dItemI.classList.add("progress-circle");
         }
-        dItemsTotal[i].classList.add("progress-circle");
       }
-    }
-    if (sessionStorage.getItem("statesInit") && sessionStorage.getItem("startPageId") != pageId && !sessionStorage.getItem("pagesTotal")) sessionStorage.setItem("pagesTotal", mItems.length);
-    // set current progress in progressbar
-    bm.progress = parseInt(bm.pagesVisited.length / parseInt(sessionStorage.getItem("pagesTotal")) * 100);
-    if (progressbar.length > 0) {
-      progressbar[0].style.width = bm.progress + "%";
-      progressbar[0].innerHTML = bm.progress + "%";
+      // set total number of pages
+      if (!sessionStorage.getItem("pagesTotal")) sessionStorage.setItem("pagesTotal", mItems.length);
+      // set current progress in progressbar
+      bm.progress = parseInt((bm.pagesVisited.length + 1) / parseInt(sessionStorage.getItem("pagesTotal")) * 100);
+      if (offcanvasProgressbar) {
+        offcanvasProgressbar.style.width = bm.progress + "%";
+        offcanvasProgress.insertAdjacentHTML("afterend", "<div class='progress-bar-value'>25%</div>");
+        document.querySelector(".offcanvas .progress-bar-value").innerHTML = bm.progress + "% " + "bearbeitet";
+      }
     }
     setStatesCb();
   },
@@ -311,6 +403,17 @@ statesController.prototype = {
       return selection;
     } else return sessions;
   },
+  getH5pObjectIdAndPage: function() {
+    let mItemsTotal = document.querySelectorAll(".main-navbarnav a[target=_self]"),
+      h5pPage, objectId, result;
+    for (let i = 1; i < mItemsTotal.length; i++) {
+      if (location.pathname.includes(mItemsTotal[i].getAttribute("href"))) h5pPage = mItemsTotal[i - 1].getAttribute("href");
+    }
+    for (let i = 0; i < sessionStorage.length; i++) {
+      if (sessionStorage.key(i).includes("h5p-obj-id___" + h5pPage)) objectId = sessionStorage.getItem(sessionStorage.key(i));
+    }
+    return result = [objectId, h5pPage];
+  },
   getStatementsVpd: function(verb) {
     let selection = this.getStatementsBase(verb, "", "", "", "", "", true, true, "ids", cmi5Controller.activityId + "/" + location.hostname + location.pathname, location.pathname, true),
       actorAccount = cmi5Controller.agent.account,
@@ -371,11 +474,12 @@ statesController.prototype = {
     }
   },
   getStatementsSuccess: function(verb, activityId) {
-    let selection = this.getStatementsBase(verb, "", "", "", "", "", true, true, "ids", activityId, sessionStorage.getItem("h5ppage"), true),
+    let h5pObjectIdAndPage = this.getH5pObjectIdAndPage(),
+      selection = this.getStatementsBase(verb, "", "", "", "", "", true, true, "ids", h5pObjectIdAndPage[0], h5pObjectIdAndPage[1], true),
       success, successCounter = 0,
       failedCounter = 0;
     sessionStorage.removeItem("h5ppage");
-    sessionStorage.removeItem("objectid");
+    //sessionStorage.removeItem("objectid");
     for (let i = 0; i < selection.length; i++) {
       success = selection[i].result["success"];
       if (success) successCounter++;
@@ -393,13 +497,15 @@ statesController.prototype = {
     });
   },
   getStatementsPoll: function(verb, activityId) {
-    let selection = this.getStatementsBase(verb, "", "", "", "", "", true, true, "ids", activityId, sessionStorage.getItem("h5ppage"), true),
+    let h5pObjectIdAndPage = this.getH5pObjectIdAndPage(),
+      selection = this.getStatementsBase(verb, "", "", "", "", "", true, true, "ids", h5pObjectIdAndPage[0], h5pObjectIdAndPage[1],
+        true),
       choice0 = 0,
       choice1 = 0,
       choice2 = 0,
       choice3 = 0;
     sessionStorage.removeItem("h5ppage");
-    sessionStorage.removeItem("objectid");
+    //sessionStorage.removeItem("objectid");
     for (let i = 0; i < selection.length; i++) {
       if (selection[i].result) {
         switch (selection[i].result["response"]) {
@@ -439,8 +545,7 @@ statesController.prototype = {
   }
 };
 
-var bm = new statesController(),
-  xMouseDown = false;
+var bm = new statesController();
 
 document.addEventListener(
   "DOMContentLoaded", () => {
@@ -451,10 +556,7 @@ document.addEventListener(
     }
     // get cmi5 parms of location.href
     if (!sessionStorage.getItem("cmi5Parms")) getCmi5Parms();
-    // add cmi5 parms to URL if applicable
-    else if (location.href.indexOf("endpoint") == -1 && parseInt(sessionStorage.getItem("courseLoggedIn")) > 0) {
-      window.history.replaceState(null, null, "?" + sessionStorage.getItem("cmi5Parms"));
-    }
+
     // Parse parameters passed on the command line and set properties of the cmi5 controller.
     if ((sessionStorage.getItem("cmi5No") == "false" && location.href.indexOf("endpoint") != -1)) {
       cmi5Controller.setEndPoint(parse("endpoint"));
@@ -466,6 +568,20 @@ document.addEventListener(
       // cmi5Ready......This function is called once the controller has fetched the authorization token, read the State document and the agent Profile.
       // startUpError...This function is called if the startUp() method detects an error.
       cmi5Controller.startUp(cmi5Ready, startUpError);
+    }
+    if (sessionStorage.getItem("terminated")) {
+      swal("Die Verbindung zum LMS wurde unterbrochen. Bitte starten Sie das Lernmodul neu!", {
+          buttons: {
+            ok: "OK",
+            cancel: {
+              visible: false,
+              closeModal: false,
+            },
+          },
+        })
+        .then((value) => {
+          if (value === "ok") cmi5Controller.goLMS();
+        });
     }
   }
 );
@@ -540,7 +656,6 @@ function feLogIn() {
 }
 
 // function: add "exit course" button to header, style jumbotron image, style "next" button etc
-// Typo3: layout, design, location, function of exit button?
 var navbar = false;
 
 function customizeTemplate() {
@@ -552,7 +667,7 @@ function customizeTemplate() {
     offcanvasHeader = document.querySelectorAll('.offcanvas-header'),
     offcanvasBody = document.querySelectorAll('.offcanvas-body'),
     pageId = document.querySelector("body").id,
-    pageItems = document.querySelectorAll('.pagination .page-item');
+    pageItems = document.querySelectorAll('.page-item');
   if (navbarContainer.length > 0) {
     navbar = true;
     navbarContainer[0].insertAdjacentHTML("beforeend", b1);
@@ -566,21 +681,47 @@ function customizeTemplate() {
     jumbotronImage[0].insertAdjacentHTML("beforebegin", '<style> #' + jumbotronImage[0].id + '.jumbotron {background-image: ' + sessionStorage.getItem("jumbotron") + '!important}</style>');
     document.querySelector(".jumbotron-content .text-light").innerHTML = sessionStorage.getItem("courseTitle");
   }
-
   if (pageItems.length > 0) {
+    let pageItemsA = document.querySelectorAll(".page-item a"),
+      pageItemsArrow = document.querySelectorAll(".page-item a span"),
+      mItemsTotal = document.querySelectorAll(".main-navbarnav a[target=_self]");
     if (pageItems.length > 1) {
-      pageItems[0].style.display = "none"; //remove();
-      pageItems[0].classList.add("prev-page");
+      if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) window.scrollTo(0, 60);
+      else window.scrollTo(0, 1);
+      document.querySelector("#page-wrapper").insertBefore(pageItems[0], document.querySelector("#page-wrapper").children[0]);
+      pageItems[0].classList.add("prev-page", "pagination", "justify-content-center");
       pageItems[1].classList.add("next-page");
-    } else pageItems[0].classList.add("next-page");
-    let pageItemsA = document.querySelectorAll('.pagination .next-page.page-item a'),
-      pageItemsArrow = document.querySelectorAll('.pagination .next-page.page-item a span');
-    pageItemsA[0].innerHTML = "Weiter";
-    pageItemsA[0].appendChild(pageItemsArrow[0]);
-    let varArrowN = document.querySelectorAll('.pagination .next-page.page-item a span i');
-    varArrowN[0].className = "";
-    varArrowN[0].classList.add("fas", "fa-chevron-down");
-    pageItemsA[0].classList.add("text-center", "text-grid");
+      pageItemsA[0].innerHTML = "<span>Zurück</span>";
+      pageItemsA[1].innerHTML = "Weiter";
+      pageItemsA[0].insertBefore(pageItemsArrow[0], pageItemsA[0].children[0]);
+      pageItemsA[1].appendChild(pageItemsArrow[1]);
+      let varArrowN = document.querySelectorAll('.page-item a span i');
+      varArrowN[0].className = "";
+      varArrowN[1].className = "";
+      varArrowN[0].classList.add("fas", "fa-chevron-up");
+      varArrowN[1].classList.add("fas", "fa-chevron-down");
+      pageItemsA[0].classList.add("text-center", "text-grid");
+      pageItemsA[1].classList.add("text-center", "text-grid");
+    } else if (mItemsTotal.length > 0 && location.pathname.includes(mItemsTotal[1].getAttribute("href"))) {
+      pageItems[0].classList.add("next-page");
+      pageItemsA[0].innerHTML = "Weiter";
+      pageItemsA[0].appendChild(pageItemsArrow[0]);
+      let varArrowN = document.querySelectorAll(".page-item a span i");
+      varArrowN[0].className = "";
+      varArrowN[0].classList.add("fas", "fa-chevron-down");
+      pageItemsA[0].classList.add("text-center", "text-grid");
+    } else if (jumbotronImage.length < 1) {
+      if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) window.scrollTo(0, 60);
+      else window.scrollTo(0, 1);
+      document.querySelector("#page-wrapper").insertBefore(pageItems[0], document.querySelector("#page-wrapper").children[0]);
+      pageItems[0].classList.add("prev-page", "pagination", "justify-content-center");
+      pageItemsA[0].innerHTML = "<span>Zurück</span>";
+      pageItemsA[0].insertBefore(pageItemsArrow[0], pageItemsA[0].children[0]);
+      let varArrowN = document.querySelectorAll('.page-item a span i');
+      varArrowN[0].className = "";
+      varArrowN[0].classList.add("fas", "fa-chevron-up");
+      pageItemsA[0].classList.add("text-center", "text-grid");
+    }
   }
   if (document.querySelector("footer.start-page")) {
     if (!sessionStorage.getItem("startPageId")) sessionStorage.setItem("startPageId", pageId);
@@ -591,12 +732,12 @@ function customizeTemplate() {
     }
     if (document.querySelectorAll(".start-button")) {
       document.querySelector(".start-button").addEventListener("click", function() {
-        document.querySelector(".next-page .page-link").click();
+        document.querySelector(".pagination .page-link").click();
       });
     }
   } else if (offcanvasBody.length > 0) {
     offcanvasBody[0].classList.add("fs-4", "fw-light");
-    offcanvasBody[0].insertAdjacentHTML("afterbegin", '<div class="progress"><div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div></div>');
+    offcanvasBody[0].insertAdjacentHTML("afterbegin", '<div class="progress"><div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div></div>');
     offcanvasHeader[0].insertAdjacentHTML("afterbegin", '<div class="module-title fs-4 fw-light" style="background-image:"></div>');
   }
 
@@ -607,33 +748,14 @@ function customizeTemplate() {
   function modalNotesDialog() {
     let modalNotes = document.querySelectorAll(".container button.modal-notes");
     if (modalNotes.length > 0) modalNotes[0].click();
-    else alert("Keine Notizen hier ...");
+    else swal("Keine Notizen hier ...");
   }
 
   function modalRulesDialog() {
     let modalRules = document.querySelectorAll(".container button.modal-rules");
     if (modalRules.length > 0) modalRules[0].click();
-    else alert("Keine Merksätze hier ...");
+    else swal("Keine Merksätze hier ...");
   }
-
-  var beforeUnloadListener = function(event, msg) {
-    if (msg && !xMouseDown && sessionStorage.getItem("statesInit")) {
-      window.xUnload = true;
-      let sd = Math.abs((new Date())) - parseInt(sessionStorage.getItem("startTimeStamp"));
-      sendDefinedStatementWrapper("Terminated", "", sd);
-      return;
-    }
-  };
-
-  window.addEventListener('pagehide', function(e) {
-    if (!window.xUnload) beforeUnloadListener(e, 'pagehide');
-  });
-
-  window.addEventListener('beforeunload unload', function(e) {
-    if (!window.xUnload) beforeUnloadListener(e, 'unload');
-  }, {
-    once: true
-  });
 
   window.addEventListener('load', function(e) {
     let menuImage = document.querySelectorAll('.offcanvas-header .module-title'),
@@ -654,7 +776,8 @@ function customizeTemplate() {
       vimeoOrYt = document.querySelectorAll('.video iframe'),
       localVideo = document.querySelectorAll('.video video'),
       context = cmi5Controller.getContextExtensions(),
-      jumbotronImage = document.querySelectorAll('.jumbotron.background-image');
+      jumbotronImage = document.querySelectorAll('.jumbotron.background-image'),
+      spokenWord_ = document.querySelectorAll(".spoken-word");
 
     if (jumbotronImage.length > 0 && !sessionStorage.getItem("jumbotron")) {
       jumbotronImage = jumbotronImage[0];
@@ -664,7 +787,27 @@ function customizeTemplate() {
       jumbotronImage.insertAdjacentHTML("beforebegin", '<style> #' + jumbotronImage.id + '.jumbotron {background-image: ' + bi + '!important}</style>');
       sessionStorage.setItem("jumbotron", bi);
     }
+    if (spokenWord_) {
+      function sp(spokenWord) {
+        for (let i = 0; i < spokenWord.querySelectorAll("button").length; i++) {
+          spokenWord.querySelectorAll("button")[i].classList.add("btn", "btn-warning");
+        }
+        spokenWord.querySelector("button[aria-label=Play]").addEventListener("click", updatePlayPause);
 
+        function updatePlayPause() {
+          notesAuButton.click();
+          if (spokenWord.querySelector("button[aria-label=Play]")) spokenWord.querySelector("button[aria-label=Play]").innerHTML = '<i class="bi bi-play-fill"></i>';
+          if (spokenWord.querySelector("button[aria-label=Pause]")) spokenWord.querySelector("button[aria-label=Pause]").innerHTML = '<i class="bi bi-pause-fill"></i>';
+        }
+        spokenWord.querySelector("button[aria-label=Settings]").innerHTML = '<i class="bi bi-gear-fill"></i>';
+        spokenWord.querySelector("button[aria-label=Play]").innerHTML = '<i class="bi bi-play-fill"></i>';
+        spokenWord.querySelector("button[aria-label=Forward]").innerHTML = '<i class="bi bi-skip-forward-fill"></i>';
+        spokenWord.querySelector("button[aria-label=Previous]").innerHTML = '<i class="bi bi-skip-backward-fill"></i>';
+      }
+      for (let i = 0; i < spokenWord_.length; i++) {
+        sp(spokenWord_[i]);
+      }
+    }
     //iframe.contentDocument.querySelector("video").muted = true;
     //iframe.contentDocument.querySelector("video").play();
     //iframe.contentDocument.querySelector("video").unmuted = true;
@@ -673,6 +816,10 @@ function customizeTemplate() {
     if (sessionStorage.getItem("videostatements")) {
       cmi5Controller.sendStatements(JSON.parse(sessionStorage.getItem("videostatements")));
       sessionStorage.removeItem("videostatements");
+    }
+    if (sessionStorage.getItem("h5pstatements")) {
+      cmi5Controller.sendStatements(JSON.parse(sessionStorage.getItem("h5pstatements")));
+      sessionStorage.removeItem("h5pstatements");
     }
     if (navLinks.length > 0) {
       for (let i = 0; i < navLinks.length; i++) {
@@ -747,6 +894,8 @@ function customizeTemplate() {
     if (summaryExitAuButton.length > 0) summaryExitAuButton[0].addEventListener("click", function() {
       exitAUDialog();
     });
+  }, {
+    once: true
   });
 }
 
@@ -1370,7 +1519,7 @@ function handleStates(launchedSessions) {
 
 function startUpError() {
   // This is called if there is an error in the cmi5 controller startUp method.
-  alert("An error was detected in the cmi5Controller.startUp() method.  Please check the console log for any errors.");
+  swal("An error was detected in the cmi5Controller.startUp() method.  Please check the console log for any errors.");
 }
 
 function sendAllowedStatementWrapper(verbName, score, duration, progress, highlighted) {
@@ -1552,7 +1701,7 @@ function sendDefinedStatementWrapper(verbName, score, duration, progress) {
 }
 
 // function to handle H5P generated statements and generate cmi5 allowed statements
-var H5Ptitle, handleH5P = function(event) {
+var handleH5P = function(event) {
   if (cmi5Controller.launchMode.toUpperCase() !== "NORMAL") {
     // Only initialized and terminated are allowed per section 10.0 of the spec.
     console.log("When launchMode is " + cmi5Controller.launchMode + "only Initialized and Terminated verbs are allowed");
@@ -1560,18 +1709,18 @@ var H5Ptitle, handleH5P = function(event) {
   }
   // get H5P statement
   let H5PXapiStmt = event.data.statement,
-    page, title, stmt, cid = parseInt(H5PXapiStmt.object.definition.extensions["http://h5p.org/x-api/h5p-local-content-id"]),
+    stmt, cid = parseInt(H5PXapiStmt.object.definition.extensions["http://h5p.org/x-api/h5p-local-content-id"]),
+    title = H5PXapiStmt.context.contextActivities.category[0].id.substring(25),
     stmtObject = JSON.parse(sessionStorage.getItem("stmtObject"));
   if (cmi5Controller.getContextExtensions()) {
     // add cmi5 activity ID
     stmtObject.id += "/" + location.hostname + location.pathname + "/h5pcid_" + cid + H5PXapiStmt.object.id;
     H5PXapiStmt.object.id = stmtObject.id;
-    if (!H5PXapiStmt.verb["id"].includes("completed")) sessionStorage.setItem("objectid", H5PXapiStmt.object.id);
+    if (!H5PXapiStmt.verb["id"].includes("completed")) sessionStorage.setItem("h5p-obj-id___" + location.pathname + "/h5pcid_" + cid, H5PXapiStmt.object.id);
     sessionStorage.setItem("h5ppage", location.pathname);
-    H5Ptitle = frames[0].H5P.instances[0].libraryInfo.machineName;
     // add cmi5 description: "name of content type" at "name of page"
     H5PXapiStmt.object.definition.name = {
-      [cmi5Controller.dLang]: cmi5Controller.dTitle + ': "' + H5Ptitle + ': ' + cid + '"' + ' at page ' + '"' + bm.pageTitle + '"'
+      [cmi5Controller.dLang]: cmi5Controller.dTitle + ': "' + title + ': ' + cid + '"' + ' at page ' + '"' + bm.pageTitle + '"'
     };
     // create cmi5 allowed statement
     stmt = cmi5Controller.getcmi5AllowedStatement(H5PXapiStmt.verb, H5PXapiStmt.object, cmi5Controller.getContextActivities(), cmi5Controller.getContextExtensions());
@@ -1586,7 +1735,10 @@ var H5Ptitle, handleH5P = function(event) {
         //sendDefinedStatementWrapper("Passed", "", this.attemptDuration);
       }
     }
-    cmi5Controller.sendStatement(stmt);
+    cmi5Controller.h5pstmts.push(stmt);
+    //console.log(cmi5Controller.h5pstmts);
+    sessionStorage.setItem("h5pstatements", JSON.stringify(cmi5Controller.h5pstmts));
+    //cmi5Controller.sendStatement(stmt);
   }
 };
 
@@ -1609,11 +1761,42 @@ function h5pState(storedH5pStates) {
   }
 }
 
+function h5pObjectIdAndPage(storedH5pObjIds) {
+  if (storedH5pObjIds) {
+    // read object from LRS via State API and re-store sessionStorage
+    for (let i = 0; i < storedH5pObjIds.length; i++) {
+      sessionStorage.setItem(Object.keys(storedH5pObjIds[i])[0], Object.values(storedH5pObjIds[i])[0]);
+    }
+  } else {
+    let h5pObjIds = [];
+    for (let i = 0; i < sessionStorage.length; i++) {
+      if (sessionStorage.key(i).includes("h5p-obj-id___")) {
+        h5pObjIds.push({
+          [sessionStorage.key(i)]: sessionStorage.getItem(sessionStorage.key(i))
+        });
+      }
+    }
+    return h5pObjIds;
+  }
+}
 document.addEventListener('readystatechange', function() {
   if (sessionStorage.getItem("cmi5Init") || sessionStorage.getItem("cmi5No") == "true") document.querySelector("body").style.display = "block";
   //else if (location.href.indexOf("simUser") == -1) document.querySelector("body").style.display = "none";
   else document.querySelector("body").style.display = "none";
-  if ('complete' === document.readyState && typeof H5P !== 'undefined' && H5P.externalDispatcher && cmi5Controller && sessionStorage.getItem("cmi5No") == "false") H5P.externalDispatcher.on('xAPI', handleH5P);
+  if ('complete' === document.readyState && typeof H5P !== 'undefined' && H5P.externalDispatcher && cmi5Controller && sessionStorage.getItem("cmi5No") == "false") {
+    let h5pIframe = document.querySelectorAll('iframe.h5p-iframe');
+    if (h5pIframe.length > 0) {
+      for (let i = 0; i < h5pIframe.length; i++) {
+        if ((h5pIframe[i].contentDocument.querySelector("button.h5p-question-check-answer") || h5pIframe[i].contentDocument.querySelector("button.h5p-joubelui-button")) && !h5pIframe[i].contentDocument.querySelector("button.h5p-dialogcards-turn")) {
+          for (let j = 0; j < sessionStorage.length; j++) {
+            if (sessionStorage.key(j) === ("h5p-state___" + location.pathname + "/h5pcid_" + h5pIframe[i].dataset.contentId)) h5pIframe[i].contentDocument.querySelector("button.h5p-question-check-answer").click();
+          }
+        }
+      }
+    }
+    cmi5Controller.h5pstmts = [];
+    H5P.externalDispatcher.on('xAPI', handleH5P);
+  }
 });
 
 function exitAU() {

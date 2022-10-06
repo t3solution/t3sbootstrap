@@ -24,7 +24,8 @@ page {
 	includeCSS {
         plyrCss = https://cdn.plyr.io/3.7.2/plyr.css
       	custom3Css = EXT:t3sbootstrap/Resources/Public/CmiFive/Css/custom3.css
-        #swordCss = https://unpkg.com/spoken-word/css/style.css
+        swordCss = https://unpkg.com/spoken-word/css/style.css
+        bsicons = /fileadmin/bootstrap-icons/bootstrap-icons.css
 	}
 	includeJS {
       	#main = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/main.js
@@ -45,6 +46,7 @@ page {
         progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
        	plyrJs = https://cdn.plyr.io/3.7.2/plyr.js
         echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
-        #sword = https://westonruter.github.io/spoken-word/dist/spoken-word.js
+        swal = https://unpkg.com/sweetalert/dist/sweetalert.min.js
+        sword = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/spoken-word.js
 	}
 }

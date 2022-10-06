@@ -1467,14 +1467,17 @@ function isDate(date) {
       }
     };
 
-    xhr.onreadystatechange = function() {
+    xhr.addEventListener('readystatechange', function() {
       if (xhr.readyState === 4) {
         return requestComplete();
       }
-    };
-
-    xhr.onload = requestComplete;
-    xhr.onerror = requestComplete;
+    });
+    xhr.addEventListener('onload', function() {
+      return requestComplete();
+    });
+    xhr.addEventListener('onerror', function() {
+      return requestComplete();
+    });
     //xhr.onerror =  ADL.xhrRequestOnError(xhr, method, url);
 
     xhr.send(ieXDomain ? ieModeRequest.data : data);
