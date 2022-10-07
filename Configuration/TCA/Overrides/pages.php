@@ -303,25 +303,13 @@ $tempPagesColumns = [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages',$tempPagesColumns);
 unset($tempPagesColumns);
-
-<<<<<<< HEAD
-ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_titlecolor','after:title');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_subtitlecolor','after:subtitle');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_smallColumns','after:backend_layout_next_level');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_mobileOrder','after:tx_t3sbootstrap_smallColumns');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_breakpoint','after:tx_t3sbootstrap_mobileOrder');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_dropdownRight','after:tx_t3sbootstrap_breakpoint');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_container','after:tx_t3sbootstrap_dropdownRight');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_linkToTop','after:tx_t3sbootstrap_container');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_megamenu','after:tx_t3sbootstrap_linkToTop');
-ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'pages',
 	'--div--;cmi5,
 		tx_t3sbootstrap_cmi_generatexml;',
 	'',
 	''
 );
-=======
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_titlecolor','after:title');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'title','--linebreak--,tx_t3sbootstrap_subtitlecolor','after:subtitle');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_smallColumns','after:backend_layout_next_level');
@@ -332,7 +320,6 @@ ExtensionManagementUtility::addToAllTCAtypes(
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_linkToTop','after:tx_t3sbootstrap_container');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('pages', 'layout','--linebreak--,tx_t3sbootstrap_megamenu','after:tx_t3sbootstrap_linkToTop');
 
->>>>>>> 99cc7872a3dc01866655c7395c8e071e70b9b185
 if (array_key_exists('navigationColor', $extconf) && $extconf['navigationColor'] === '1') {
 	# add palette Navigation Colors
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(

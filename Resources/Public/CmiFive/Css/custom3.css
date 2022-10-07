@@ -260,6 +260,7 @@ padding: 10px;
   border: 0;
   opacity: 0.7;
 }
+.navbar .navbar-brand,
 .offcanvas-header .navbar-brand,
 .offcanvas-header .offcanvas-title {
   visibility: hidden;
@@ -733,6 +734,10 @@ dialog.spoken-word-playback-controls__dialog {
 .navbar-nav .nav-link.active, .navbar-nav .show>.nav-link, .nav-link, .nav-link:focus, .nav-link:hover {
   color: #000;
 }
+.navbar-nav .nav-link {
+  display: initial;
+}
+
 .navbar-expand-no {
     overflow-x: hidden;
 }

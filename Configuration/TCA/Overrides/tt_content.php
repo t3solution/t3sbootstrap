@@ -1419,7 +1419,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'after:layout'
 );
 ###### cmi5 ######
-ExtensionManagementUtility::addToAllTCAtypes(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'--div--;cmi5,
 		tx_t3sbootstrap_cmi5_select_statement;Select Activity,

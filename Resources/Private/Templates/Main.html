@@ -106,44 +106,7 @@
 
 
 <f:section name="AssetScripts">
-<<<<<<< HEAD
 <f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
-<f:if condition="{config.navbar.enable} == 'slide'">
-	<f:then>
-<f:asset.script identifier="vanilla_default">
-	// Default - Main.html
-  var	 navbarHeight = 0,
-		  navbarBreakpointWidth = 0,
-		  viewportWidth = 0,
-		  onePageLayout = 0,
-			fixedNavbar = false;
-
-			<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
-					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
-			</f:if>
-
-	// Scroll anchor - Main.html
-	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
-	}
-</f:asset.script>
-	</f:then>
-	<f:else>
-		<f:if condition="{config.navbar.enable}">
-			<f:then>
-				<f:asset.script identifier="vanilla_default">
-	// Default - Main.html
-	var navbar = document.getElementById('main-navbar'),
-			navbarHeight = navbar.clientHeight,
-			navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
-			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-			onePageLayout = navbar.classList.contains('sectionMenu'),
-      fixedNavbar = false;
-
-      <f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
-					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
-			</f:if>
-=======
 <f:if condition="{config.navbar.enable}">
 	<f:then>
 		<f:asset.script identifier="vanilla_default">
@@ -153,12 +116,14 @@
 		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
 		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
 		  onePageLayout = navbar.classList.contains('sectionMenu');
->>>>>>> 99cc7872a3dc01866655c7395c8e071e70b9b185
 
+	var fixedNavbar = false;
 	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
 		fixedNavbar = true;
 	}
-
+	<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
+			cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
+	</f:if>
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
 		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
@@ -168,24 +133,13 @@
 	<f:else>
 		<f:asset.script identifier="vanilla_default">
 	// Default - Main.html
-<<<<<<< HEAD
-	var navbar = false,
-			navbarHeight = false,
-			navbarBreakpointWidth = 99999,
-			viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-			onePageLayout = 0,
-      fixedNavbar = false;
-=======
 	const navbar = false,
 		  navbarHeight = false,
 		  navbarBreakpointWidth = 99999,
 		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
 		  onePageLayout = 0;
->>>>>>> 99cc7872a3dc01866655c7395c8e071e70b9b185
 
-      <f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
-          cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
-      </f:if>
+	var fixedNavbar = false;
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
