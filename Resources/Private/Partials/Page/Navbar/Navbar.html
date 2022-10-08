@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{config.navbar.enable}">
+<f:if condition="{config.navbar.enable} != 'none'">
 	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
 	<f:if condition="{config.navbar.navColorCSS}">
 		<div class="container my-5">
@@ -52,7 +52,7 @@
 
 <f:section name="Default">
 	<div id="navbarToggler" class="collapse p-3 py-{navbarBreakpoint}-0 navbar-collapse{config.navbar.navbarCenter}{config.navbar.navbarExtraRow}">
-		<f:if condition="{navbarMenu} || {sectionMenu}">
+		<f:if condition="{navbarMenu} || {sectionMenu} || {languageNavigation}">
 			<f:if condition="{settings.config.navbarExtraRow}">
 				<f:render partial="Page/Navbar/NavbarExtraRow" arguments="{_all}" />
 			</f:if>
@@ -138,7 +138,7 @@
 					<i class="fa-navlink fas fa-info-circle me-1"></i>
 				</a>
 				<f:if condition="{config.navbar.navbarPlusicon}">
-					<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+					<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" href="#">
 						<i class="fa-solid fa-square-plus"></i>
 					</button>
 				</f:if>
@@ -311,7 +311,7 @@
 				<f:render section="Title" arguments="{item: navbarItem}" />
 			</a>
 			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split{f:if(condition: navbarItem.active, then:' --bs-dropdown-link-active-bg')}"
-			 data-bs-toggle="dropdown" aria-expanded="false">
+			 data-bs-toggle="dropdown" aria-expanded="false" href="#">
 				<i class="fa-solid fa-square-plus"></i>
 			</button>
 		</f:then>
@@ -391,7 +391,7 @@
 							class="ps-3 py-1 btn btn-link text-nowrap text-start{child.activeClass}">
 							<f:render section="Title" arguments="{item: child}" />
 						</a>
-						<button type="button" class="btn btn-link ps-0 dropdown-toggle dropdown-toggle-split{child.activeClass}" data-bs-toggle="dropdown" aria-expanded="false">
+						<button type="button" class="btn btn-link ps-0 dropdown-toggle dropdown-toggle-split{child.activeClass}" data-bs-toggle="dropdown" aria-expanded="false" href="#">
 							<i class="fa-solid fa-square-plus"></i>
 						</button>
 					</f:then>

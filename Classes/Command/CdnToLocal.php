@@ -22,7 +22,6 @@ class CdnToLocal extends CommandBase
 	const localZipPath = 'fileadmin/T3SB/Resources/Public/CSS/googlefonts/';
 	const zipFilePath = 'https://google-webfonts-helper.herokuapp.com/api/fonts/';
 	const localGoogleFile = 'fileadmin/T3SB/Resources/Public/CSS/googlefonts.css';
-	const googleFilestyles = ['300', 'regular', '700'];
 
 	protected $configurationManager;
 
@@ -77,7 +76,7 @@ class CdnToLocal extends CommandBase
 			$settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome6latest'];
 		}
 		if ( !empty($settings['cdn']['googlefonts']) && empty($settings['cdn']['noZip']) ) {
-			self::getGoogleFonts($settings['cdn']['googlefonts'], $settings['preloadGooleFonts']);
+			self::getGoogleFonts($settings['cdn']['googlefonts'], $settings['preloadGooleFonts'], $settings['gooleFontsWeights']);
 		} else {
 			$localZipPath = GeneralUtility::getFileAbsFileName(self::localZipPath);
 			if ( is_dir($localZipPath) ) {
@@ -300,7 +299,7 @@ class CdnToLocal extends CommandBase
 	}
 
 
-	private function getGoogleFonts($googleFonts, $preloadGooleFonts) {
+	private function getGoogleFonts($googleFonts, $preloadGooleFonts, $gooleFontsWeights) {
 		$localZipPath = GeneralUtility::getFileAbsFileName(self::localZipPath);
 		if ( is_dir($localZipPath) ) {
 			parent::rmDir($localZipPath);
@@ -311,7 +310,8 @@ class CdnToLocal extends CommandBase
 		foreach ($googleFontsArr as $font) {
 			$fontFamily = trim($font);
 			$font = str_replace(' ', '-', trim($font));
-			foreach ( self::googleFilestyles as $style ) {
+			foreach ( explode(',', $gooleFontsWeights) as $style ) {
+				$style = trim($style);
 				$zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
 				$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
 				$fontArr[$fontFamily] = self::getGoogleFiles($zipContent, $localZipFile, $localZipPath);
@@ -325,8 +325,9 @@ class CdnToLocal extends CommandBase
 			$css = '';
 			$headerData = '';
 			foreach ($sliceArr as $fontFamily=>$googlePath) {
-				foreach ( self::googleFilestyles as $i=>$style ) {
-					$file = str_replace('300','', explode('.', $googlePath[0])[0]).trim($style);
+				foreach ( explode(',', $gooleFontsWeights) as $i=>$style ) {
+					$style = trim($style);
+					$file = str_replace('300','', explode('.', $googlePath[0])[0]).$style;
 					$style = $style == 'regular' ? '400' : $style;
 					if (!empty($preloadGooleFonts)) {
 						$num = self::generateRandomString();
@@ -343,6 +344,7 @@ $css .= "@font-face {
   font-family: '".$fontFamily."';
   font-style: normal;
   font-weight: ".$style.";
+  font-display: swap;
   src: url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".eot');
   src: local(''),
   		url('/fileadmin/T3SB/Resources/Public/CSS/googlefonts/".$file.".eot?#iefix') format('embedded-opentype'),

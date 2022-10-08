@@ -14,10 +14,10 @@ plugin.tx_t3sbootstrap {
 }
 
 
-bootstrap.cdn.bootstraplatest = 5.2.0
+bootstrap.cdn.bootstraplatest = 5.2.2
 bootstrap.cdn.noZip = 0
 bootstrap.cdn.fontawesome5latest = 5.15.4
-bootstrap.cdn.fontawesome6latest = 6.1.2
+bootstrap.cdn.fontawesome6latest = 6.2.0
 
 #-------------------------------------------------------------------------------
 #	Constant Editor
@@ -36,15 +36,15 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-google/10; type=small; label=Comma separated list with google fonts:integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)
 	googlefonts =
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.2.0
+	bootstrap = 5.2.2
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 2.11.5
+	popperjs = 2.11.6
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.1.2
-	fontawesome = 5.15.4
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.2.0
+	fontawesome = 6.2.0
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
-	jquery = 3.6.0
+	jquery = 3.6.1
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
@@ -63,23 +63,23 @@ bootstrap.cdn {
 	halkabox = 1.6.0
 	# cat=bootstrap-cdn/b-version/45; type=small; label=G Lightbox:
 	glightbox = 3.2.0
-	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax:
+	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax: set to 2 only to get v2.x (latest)
 	jarallax = 2
-	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper:
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 8 only to get v8.x (latest)
 	swiper = 8
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx
+	bootstrapCssIntegrity = sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK
+	bootstrapJsIntegrity = sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
-	bootstrapBundleJsIntegrity = sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa
+	bootstrapBundleJsIntegrity = sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
-	popperjsIntegrity = sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk
+	popperjsIntegrity = sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
-	jqueryIntegrity = 
+	jqueryIntegrity = sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=
 	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
 	jqueryEasingIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/25; type=small; label=Cookieconsent:
@@ -244,6 +244,9 @@ bootstrap.backToTopForAllPages = 0
 
 # Preload the google fonts includedby bootstrap.cdn.googlefonts if activated (execute scheduler task t3sbootstrap:cdnToLocal)
 bootstrap.preloadGooleFonts = 0
+# font-weights for Google fonts (regular == 400)
+bootstrap.gooleFontsWeights = 300, regular, 700
+
 # GTM Account ID - include the Google Tag Manager if entered
 bootstrap.gtm =
 

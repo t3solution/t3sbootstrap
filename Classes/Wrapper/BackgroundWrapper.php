@@ -52,7 +52,6 @@ class BackgroundWrapper implements SingletonInterface
 					$youTubeRenderer = GeneralUtility::makeInstance(YouTubeRenderer::class);
 					$processedData['videoId'] = $youTubeRenderer->render($file);
 				} else {
-
 					if ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
 					// vimeo video
 						$processedData['vimeo'] = TRUE;
