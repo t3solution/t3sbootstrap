@@ -85,7 +85,11 @@ class ConfigProcessor implements DataProcessorInterface
 		if ( !empty($contentObjectConfiguration['settings.']['pages.']['override.']) ) {
 			foreach ( $contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override ) {
 				if (!empty($override)) {
-					if ( ($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
+					if ( $field == 'smallColumns' ) {
+						$processedData['colAside'] = $override;
+						$processedData['data'][$field] = $override;	
+						$smallColumns = $override;
+					} elseif ( ($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
 						$processedData['data'][$field] = 'var('.$override.')';
 					} else {
 						$processedData['data'][$field] = $override;
@@ -110,15 +114,13 @@ class ConfigProcessor implements DataProcessorInterface
 			$threeCol = $backendLayoutNextLevel == 'pagets__ThreeCol' ? TRUE : FALSE;
 		}
 		if ($oneCol === FALSE) {
-			$smallColumns = (int)$processedData['data']['tx_t3sbootstrap_smallColumns'];
-			$processedData['colAside'] = $smallColumns;
 			if ($threeCol === TRUE) {
 				$smallColumns = $smallColumns < 6 ? $smallColumns : 5;
 				$processedData['colMain'] = 12 - $smallColumns * 2;
 			} else {
 				$processedData['colMain'] = 12 - $smallColumns;
 			}
-			$processedData['colAside'] = (12 - $processedData['colMain']) / 2;
+			$processedData['colAside'] = $smallColumns;
 		}
 
 		// grid breakpoint
@@ -379,6 +381,13 @@ class ConfigProcessor implements DataProcessorInterface
 				if ( $processedData['config']['navbar']['mauto'] == 'center' ) {
 					$processedData['config']['navbar']['sbmauto'] = '';
 				}
+			}
+
+			// color
+			$processedData['config']['navbar']['colorschemes'] = explode(' ', $processedRecordVariables['navbarColor'])[0];
+			$processedData['config']['navbar']['gradient'] = '';
+			if ( explode(' ', $processedRecordVariables['navbarColor'])[1] ) {
+				$processedData['config']['navbar']['gradient'] = explode(' ', $processedRecordVariables['navbarColor'])[1];
 			}
 
 			// content only on rootpage

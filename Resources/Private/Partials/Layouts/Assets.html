@@ -6,22 +6,26 @@
 <f:if condition="{codesnippet} && {settings.codesnippet}">
 	<f:if condition="{settings.cdn}">
 		<f:then>
-			<f:asset.css identifier="codesnippetCssPrimary"
-				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/default.min.css" />
 			<f:asset.css identifier="codesnippetCssSecondary"
 				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/a11y-light.min.css" />
 			<f:asset.script identifier="codesnippetJsPrimary"
 				src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/highlight.min.js"
 				integrity="{settings.highlightIntegrity}" />
+<f:comment>
+			<f:asset.css identifier="codesnippetCssPrimary"
+				href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/styles/default.min.css" />
 			<f:asset.script identifier="codesnippetJsSecondary"
 				src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{settings.highlightVersion}/languages/php.min.js"
 				integrity="{settings.highlightIntegrity}" />
+</f:comment>
 		</f:then>
 		<f:else>
-			<f:asset.css identifier="codesnippetCssPrimary" href="fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css" />
 			<f:asset.css identifier="codesnippetCssSecondary" href="fileadmin/T3SB/Resources/Public/CSS/highlight.a11y-light.min.css" />
 			<f:asset.script identifier="codesnippetJsPrimary" src="fileadmin/T3SB/Resources/Public/JS/highlight.min.js" />
+<f:comment>
+			<f:asset.css identifier="codesnippetCssPrimary" href="fileadmin/T3SB/Resources/Public/CSS/highlight.default.min.css" />
 			<f:asset.script identifier="codesnippetJsSecondary" src="fileadmin/T3SB/Resources/Public/JS/highlight.php.min.js" />
+</f:comment>
 		</f:else>
 	</f:if>
 	<f:asset.script identifier="vanilla_codesnippetJsInline">

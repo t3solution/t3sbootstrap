@@ -30,6 +30,7 @@ module.tx_t3sbootstrap {
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		disableJquery = {$bootstrap.disable.jquery}
 		preloadGooleFonts = {$bootstrap.preloadGooleFonts}
+		gooleFontsWeights = {$bootstrap.gooleFontsWeights}
 		cdn {
 			// Versions
 			enable = {$bootstrap.cdn.enable}

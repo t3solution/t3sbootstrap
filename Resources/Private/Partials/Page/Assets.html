@@ -15,8 +15,33 @@
 </f:if>
 <f:if condition="{fixedbutton}">
 	<f:asset.script identifier="fixedbutton_function">
+						<f:asset.script identifier="objectprototypeforEach_function">
+/**
+ * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT etc) polyfill
+ * https://gomakethings.com/looping-through-objects-with-es6/
+ * @author Chris Ferdinandi
+ * @license MIT
+ */
+if (!Object.prototype.forEach) {
+	Object.defineProperty(Object.prototype, 'forEach', {
+		value: function (callback, thisArg) {
+			if (this == null) {
+				throw new TypeError('Not an object');
+			}
+			thisArg = thisArg || window;
+			for (var key in this) {
+				if (this.hasOwnProperty(key)) {
+					callback.call(thisArg, this[key], key, this);
+				}
+			}
+		}
+	});
+}						
+						</f:asset.script>
+
+
 // Fixed button on left or right browser edge - Page/Assets.html
-function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
+function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {
 	fixedButtons.forEach( fixedButton => {
 		if (fixedButton !== null && fixedButton !== '') {
 			fixedButton.style.opacity = '0';
@@ -48,34 +73,36 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection) {
 							slideOut = 0,
 							boxWidth = fixedButton.clientWidth,
 							boxHalfHeight = fixedButton.clientHeight / 2;
-						slideInButtons.children.forEach( slideInButton => {
-							if ( typeof slideInButton.firstChild !== 'undefined' ) {
-								slideIn = boxWidth - visiblePart;
-								var	icon = slideInButton.querySelector('i');
-								icon.classList.add('me-2');
-								slideInButton.style.width = 'auto';
-								slideInButton.style.right = '-'+slideIn+'px';
-								fixedButton.style.top = 'calc(50% - '+boxHalfHeight+'px)';
-								slideInButton.classList.add('mb-1', 'text-start', 'btnGroupSlider');
-								slideInButton.addEventListener('mouseenter', function(e) {
-									if(e.target.classList.contains('btn')) {
-										slideOut = slideInButton.clientWidth-visiblePart-3;
-										e.target.style.position = 'relative';
-										e.target.style.right = Math.abs(slideOut)+'px';
-										e.target.classList.add('btn-slide-out');
-										e.target.classList.remove('btn-slide-in');
-									}
-								},true);
-								slideInButton.addEventListener('mouseleave', function(e) {
-									if(e.target.classList.contains('btn')) {
-										e.target.style.right = 0;
-										e.target.classList.remove('btn-slide-out');
-										e.target.classList.add('btn-slide-in');
-										e.target.style.position = 'inherit';
-									}
-								},true);
-							}
-						});
+						if (isBtnGroup) {
+							slideInButtons.children.forEach( slideInButton => {
+								if ( typeof slideInButton.firstChild !== 'undefined' ) {
+									slideIn = boxWidth - visiblePart;
+									var	icon = slideInButton.querySelector('i');
+									icon.classList.add('me-2');
+									slideInButton.style.width = 'auto';
+									slideInButton.style.right = '-'+slideIn+'px';
+									fixedButton.style.top = 'calc(50% - '+boxHalfHeight+'px)';
+									slideInButton.classList.add('mb-1', 'text-start', 'btnGroupSlider');
+									slideInButton.addEventListener('mouseenter', function(e) {
+										if(e.target.classList.contains('btn')) {
+											slideOut = slideInButton.clientWidth-visiblePart-3;
+											e.target.style.position = 'relative';
+											e.target.style.right = Math.abs(slideOut)+'px';
+											e.target.classList.add('btn-slide-out');
+											e.target.classList.remove('btn-slide-in');
+										}
+									},true);
+									slideInButton.addEventListener('mouseleave', function(e) {
+										if(e.target.classList.contains('btn')) {
+											e.target.style.right = 0;
+											e.target.classList.remove('btn-slide-out');
+											e.target.classList.add('btn-slide-in');
+											e.target.style.position = 'inherit';
+										}
+									},true);
+								}
+							});
+						}
 					}
 				}
 			}
@@ -106,12 +133,15 @@ function t3sbFadeInEffect(fadeTarget) {
 	<f:if condition="{btnGroup} && {slideIn}">
 		<f:then>
 	<f:asset.script identifier="vanilla_fixedbuttonGroup">
+
+
+
 	// Fixed button group on left or right browser edge - Page/Assets.html
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
 	var visiblePart = {visiblePart};
 	var btnSlideOutCorrection = {settings.btnSlideOutCorrection};
 	if ( buttonsFixedPosition.length ) {
-		t3sbFixedButtons(buttonsFixedPosition, visiblePart, btnSlideOutCorrection);
+		t3sbFixedButtons(buttonsFixedPosition, visiblePart, btnSlideOutCorrection, true);
 	}
 	</f:asset.script>
 		</f:then>
@@ -120,7 +150,7 @@ function t3sbFadeInEffect(fadeTarget) {
 	// Fixed button on left or right browser edge - Page/Assets.html
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
 	if ( buttonsFixedPosition.length ) {
-		t3sbFixedButtons(buttonsFixedPosition, 0);
+		t3sbFixedButtons(buttonsFixedPosition, 0, 0, false);		
 	}
 	</f:asset.script>
 		</f:else>
