@@ -70,12 +70,12 @@ class CustomScss extends CommandBase
 			$bootstrapScssPath = GeneralUtility::getFileAbsFileName($bootstrapScssDir);
 
 			if ($settings['cdn']['noZip']) {
-				self::getSccFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath);
+				self::getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath);
 			} else {
-				self::getSccFiles($bootstrapVersion);
+				self::getBootstrapFiles($bootstrapVersion);
 			}
 			if (!file_exists(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss/bootstrap.scss'))) {
-				self::getSccFiles($settings, $bootstrapVersion, $bootstrapScssPath);
+				self::getBootstrapFiles($settings, $bootstrapVersion, $bootstrapScssPath);
 			}
 
 			# Custom
@@ -237,7 +237,7 @@ class CustomScss extends CommandBase
 	}
 
 
-	public function getSccFiles($bootstrapVersion): void
+	public function getBootstrapFiles($bootstrapVersion): void
 	{
 		$localZipPath = GeneralUtility::getFileAbsFileName(self::localZipPath);
 		if ( is_dir($localZipPath) ) {
@@ -257,11 +257,13 @@ class CustomScss extends CommandBase
 			} else {
 				throw new \InvalidArgumentException('Sorry ZIP creation failed at this time! Set the constant "bootstrap.cdn.noZip=1" and try again.', 1657464538);
 			}
+
 			$renameFrom = GeneralUtility::getFileAbsFileName(self::localZipPath.'bootstrap-'.$bootstrapVersion.'/scss');
 			$renameTo = GeneralUtility::getFileAbsFileName(self::localZipPath.'scss');
 			if ( is_dir($renameFrom) ) {
 				rename($renameFrom, $renameTo);
 			}
+
 			parent::rmDir(GeneralUtility::getFileAbsFileName(self::localZipPath.'bootstrap-'.$bootstrapVersion));
 			$zipFile = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
 			if (file_exists($zipFile)) unlink($zipFile);
@@ -271,7 +273,7 @@ class CustomScss extends CommandBase
 	}
 
 
-	public function getSccFilesNoZip($settings, $bootstrapVersion, $customPath): void
+	public function getBootstrapFilesNoZip($settings, $bootstrapVersion, $customPath): void
 	{
 		$gitURL = 'https://raw.githubusercontent.com/twbs/bootstrap/';
 		$bootstrapPath = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss';

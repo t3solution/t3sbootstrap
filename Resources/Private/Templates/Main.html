@@ -104,10 +104,10 @@
 	</div>
 </f:section>
 
-
 <f:section name="AssetScripts">
+
 <f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
-<f:if condition="{config.navbar.enable}">
+<f:if condition="{config.navbar.enable} != 'none'">
 	<f:then>
 		<f:asset.script identifier="vanilla_default">
 	// Default - Main.html

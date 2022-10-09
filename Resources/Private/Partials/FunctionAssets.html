@@ -28,28 +28,6 @@ function t3sbOffsetTop(el) {
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 		return rect.top + scrollTop;
 }
-
-/**
- * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT) polyfill
- * https://gomakethings.com/looping-through-objects-with-es6/
- * @author Chris Ferdinandi
- * @license MIT
- */
-if (!Object.prototype.forEach) {
-	Object.defineProperty(Object.prototype, 'forEach', {
-		value: function (callback, thisArg) {
-			if (this == null) {
-				throw new TypeError('Not an object');
-			}
-			thisArg = thisArg || window;
-			for (var key in this) {
-				if (this.hasOwnProperty(key)) {
-					callback.call(thisArg, this[key], key, this);
-				}
-			}
-		}
-	});
-}
 </f:asset.script>
 
 
@@ -183,6 +161,7 @@ function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight,offcan
 	<f:asset.script identifier="navbartransparent_function">
 // Navbar transparent - Navbar/Assets.html
 function t3sbTransparentNavbar(colorschemes, gradient) {
+	if (colorschemes) colorschemes = 'bg-'+colorschemes;
 	window.onscroll = function(){
 		var navbar = document.getElementById('main-navbar');
 		var top =	 window.pageYOffset || document.documentElement.scrollTop;

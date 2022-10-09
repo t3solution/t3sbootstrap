@@ -1,0 +1,18 @@
+{
+    "name": "typo3/symfony-psr-event-dispatcher-adapter",
+    "description": "Adapter to provide compatibility with the Symfony's event dispatcher interface in all versions with the PSR-14 specification.",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://typo3.org/",
+    "keywords": ["psr", "psr-14", "events", "adapter"],
+    "require": {
+        "php": "^7.2 || ^8.0",
+        "symfony/event-dispatcher-contracts": "^2.0",
+        "psr/event-dispatcher": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TYPO3\\SymfonyPsrEventDispatcherAdapter\\": "src"
+        }
+    }
+}

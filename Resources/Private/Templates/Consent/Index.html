@@ -24,9 +24,12 @@ function t3sbVideo(videoId, params, id, consent=false) {
 function t3sbConsent(cuid, cookieExpire) {
 	document.getElementById(cuid).onclick = function() {
 		let ytvideo = document.getElementById('iframe-'+this.id);
+		let videoContent = document.getElementById('v'+this.id);
+		let videoOverlay = videoContent.getElementsByClassName('video-overlay')[0];
+		videoOverlay.remove();
 		ytvideo.src = ytvideo.getAttribute('data-src');
 		ytvideo.parentNode.parentNode.style.backgroundImage = '';
-		ytvideo.parentNode.firstChild.remove();
+		//ytvideo.parentNode.firstChild.remove();	
 		let name = 'contentconsent_' + this.id,
 			value = 'allow',
 			days = cookieExpire;

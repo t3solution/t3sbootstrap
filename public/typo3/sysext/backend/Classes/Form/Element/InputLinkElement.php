@@ -1,0 +1,469 @@
+<?php
+
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
+namespace TYPO3\CMS\Backend\Form\Element;
+
+use TYPO3\CMS\Backend\Form\Behavior\OnFieldChangeTrait;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\LinkHandling\Exception\UnknownLinkHandlerException;
+use TYPO3\CMS\Core\LinkHandling\LinkService;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Page\JavaScriptModuleInstruction;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\InvalidPathException;
+use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Utility\StringUtility;
+use TYPO3\CMS\Frontend\Service\TypoLinkCodecService;
+
+/**
+ * Link input element.
+ *
+ * Shows current link and the link popup.
+ */
+class InputLinkElement extends AbstractFormElement
+{
+    use OnFieldChangeTrait;
+
+    /**
+     * Default field information enabled for this element.
+     *
+     * @var array
+     */
+    protected $defaultFieldInformation = [
+        'tcaDescription' => [
+            'renderType' => 'tcaDescription',
+        ],
+    ];
+
+    /**
+     * Default field controls render the link icon
+     *
+     * @var array
+     */
+    protected $defaultFieldControl = [
+        'linkPopup' => [
+            'renderType' => 'linkPopup',
+            'options' => [],
+        ],
+    ];
+
+    /**
+     * Default field wizards enabled for this element.
+     *
+     * @var array
+     */
+    protected $defaultFieldWizard = [
+        'localizationStateSelector' => [
+            'renderType' => 'localizationStateSelector',
+        ],
+        'otherLanguageContent' => [
+            'renderType' => 'otherLanguageContent',
+            'after' => [
+                'localizationStateSelector',
+            ],
+        ],
+        'defaultLanguageDifferences' => [
+            'renderType' => 'defaultLanguageDifferences',
+            'after' => [
+                'otherLanguageContent',
+            ],
+        ],
+    ];
+
+    /**
+     * This will render a single-line input form field, possibly with various control/validation features
+     *
+     * @return array As defined in initializeResultArray() of AbstractNode
+     */
+    public function render()
+    {
+        $languageService = $this->getLanguageService();
+
+        $table = $this->data['tableName'];
+        $fieldName = $this->data['fieldName'];
+        $row = $this->data['databaseRow'];
+        $parameterArray = $this->data['parameterArray'];
+        $resultArray = $this->initializeResultArray();
+        $config = $parameterArray['fieldConf']['config'];
+
+        $itemValue = $parameterArray['itemFormElValue'];
+        $evalList = GeneralUtility::trimExplode(',', $config['eval'] ?? '', true);
+        $size = MathUtility::forceIntegerInRange($config['size'] ?? $this->defaultInputWidth, $this->minimumInputWidth, $this->maxInputWidth);
+        $width = (int)$this->formMaxWidth($size);
+        $nullControlNameEscaped = htmlspecialchars('control[active][' . $table . '][' . $row['uid'] . '][' . $fieldName . ']');
+
+        $fieldInformationResult = $this->renderFieldInformation();
+        $fieldInformationHtml = $fieldInformationResult['html'];
+        $resultArray = $this->mergeChildReturnIntoExistingResult($resultArray, $fieldInformationResult, false);
+
+        if ($config['readOnly'] ?? false) {
+            // Early return for read only fields
+            $html = [];
+            $html[] = '<div class="formengine-field-item t3js-formengine-field-item">';
+            $html[] =   $fieldInformationHtml;
+            $html[] =   '<div class="form-wizards-wrap">';
+            $html[] =       '<div class="form-wizards-element">';
+            $html[] =           '<div class="form-control-wrap" style="max-width: ' . $width . 'px">';
+            $html[] =               '<input class="form-control" value="' . htmlspecialchars($itemValue) . '" type="text" disabled>';
+            $html[] =           '</div>';
+            $html[] =       '</div>';
+            $html[] =   '</div>';
+            $html[] = '</div>';
+            $resultArray['html'] = implode(LF, $html);
+            return $resultArray;
+        }
+
+        // @todo: The whole eval handling is a mess and needs refactoring
+        foreach ($evalList as $func) {
+            // @todo: This is ugly: The code should find out on it's own whether an eval definition is a
+            // @todo: keyword like "date", or a class reference. The global registration could be dropped then
+            // Pair hook to the one in \TYPO3\CMS\Core\DataHandling\DataHandler::checkValue_input_Eval()
+            if (isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tce']['formevals'][$func])) {
+                if (class_exists($func)) {
+                    $evalObj = GeneralUtility::makeInstance($func);
+                    if (method_exists($evalObj, 'deevaluateFieldValue')) {
+                        $_params = [
+                            'value' => $itemValue,
+                        ];
+                        $itemValue = $evalObj->deevaluateFieldValue($_params);
+                    }
+                    $resultArray = $this->resolveJavaScriptEvaluation($resultArray, $func, $evalObj);
+                }
+            }
+        }
+
+        $fieldId = StringUtility::getUniqueId('formengine-input-');
+
+        $attributes = [
+            'value' => '',
+            'id' => $fieldId,
+            'class' => implode(' ', [
+                'form-control',
+                't3js-clearable',
+                't3js-form-field-inputlink-input',
+                'hidden',
+                'hasDefaultValue',
+            ]),
+            'data-formengine-validation-rules' => $this->getValidationDataAsJsonString($config),
+            'data-formengine-input-params' => (string)json_encode([
+                'field' => $parameterArray['itemFormElName'],
+                'evalList' => implode(',', $evalList),
+            ]),
+            'data-formengine-input-name' => (string)($parameterArray['itemFormElName'] ?? ''),
+        ];
+
+        $maxLength = $config['max'] ?? 0;
+        if ((int)$maxLength > 0) {
+            $attributes['maxlength'] = (string)(int)$maxLength;
+        }
+        if (!empty($config['placeholder'])) {
+            $attributes['placeholder'] = trim($config['placeholder']);
+        }
+        if (isset($config['autocomplete'])) {
+            $attributes['autocomplete'] = empty($config['autocomplete']) ? 'new-' . $fieldName : 'on';
+        }
+
+        $valuePickerHtml = [];
+        if (isset($config['valuePicker']['items']) && is_array($config['valuePicker']['items'])) {
+            $valuePickerConfiguration = [
+                'mode' => $config['valuePicker']['mode'] ?? 'replace',
+                'linked-field' => '[data-formengine-input-name="' . $parameterArray['itemFormElName'] . '"]',
+            ];
+            $valuePickerAttributes = array_merge(
+                [
+                    'class' => 'form-select form-control-adapt',
+                ],
+                $this->getOnFieldChangeAttrs('change', $parameterArray['fieldChangeFunc'] ?? [])
+            );
+
+            $valuePickerHtml[] = '<typo3-formengine-valuepicker ' . GeneralUtility::implodeAttributes($valuePickerConfiguration, true) . '>';
+            $valuePickerHtml[] = '<select ' . GeneralUtility::implodeAttributes($valuePickerAttributes, true) . '>';
+            $valuePickerHtml[] = '<option></option>';
+            foreach ($config['valuePicker']['items'] as $item) {
+                $valuePickerHtml[] = '<option value="' . htmlspecialchars($item[1]) . '">' . htmlspecialchars($languageService->sL($item[0])) . '</option>';
+            }
+            $valuePickerHtml[] = '</select>';
+            $valuePickerHtml[] = '</typo3-formengine-valuepicker>';
+
+            $resultArray['requireJsModules'][] = JavaScriptModuleInstruction::forRequireJS('TYPO3/CMS/Backend/FormEngine/FieldWizard/ValuePicker');
+        }
+
+        $fieldWizardResult = $this->renderFieldWizard();
+        $fieldWizardHtml = $fieldWizardResult['html'];
+        $resultArray = $this->mergeChildReturnIntoExistingResult($resultArray, $fieldWizardResult, false);
+
+        $fieldControlResult = $this->renderFieldControl();
+        $fieldControlHtml = $fieldControlResult['html'];
+        $resultArray = $this->mergeChildReturnIntoExistingResult($resultArray, $fieldControlResult, false);
+
+        $linkExplanation = $this->getLinkExplanation($itemValue ?: '');
+        $explanation = htmlspecialchars($linkExplanation['text'] ?? '');
+        $toggleButtonTitle = $languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:buttons.toggleLinkExplanation');
+
+        $expansionHtml = [];
+        $expansionHtml[] = '<div class="form-control-wrap" style="max-width: ' . $width . 'px">';
+        $expansionHtml[] =  '<div class="form-wizards-wrap">';
+        $expansionHtml[] =      '<div class="form-wizards-element">';
+        $expansionHtml[] =          '<div class="input-group t3js-form-field-inputlink">';
+        $expansionHtml[] =              '<span class="t3js-form-field-inputlink-icon input-group-addon">' . ($linkExplanation['icon'] ?? '') . '</span>';
+        $expansionHtml[] =              '<input class="form-control t3js-form-field-inputlink-explanation" data-bs-toggle="tooltip" title="' . $explanation . '" value="' . $explanation . '" readonly>';
+        $expansionHtml[] =              '<input type="text" ' . GeneralUtility::implodeAttributes($attributes, true) . ' />';
+        $expansionHtml[] =              '<button class="btn btn-default t3js-form-field-inputlink-explanation-toggle" type="button" title="' . htmlspecialchars($toggleButtonTitle) . '">';
+        $expansionHtml[] =                  $this->iconFactory->getIcon('actions-version-workspaces-preview-link', Icon::SIZE_SMALL)->render();
+        $expansionHtml[] =              '</button>';
+        $expansionHtml[] =              '<input type="hidden" name="' . $parameterArray['itemFormElName'] . '" value="' . htmlspecialchars($itemValue) . '" />';
+        $expansionHtml[] =          '</div>';
+        $expansionHtml[] =      '</div>';
+        if (!empty($valuePickerHtml) || !empty($fieldControlHtml)) {
+            $expansionHtml[] =      '<div class="form-wizards-items-aside form-wizards-items-aside--field-control">';
+            $expansionHtml[] =          '<div class="btn-group">';
+            $expansionHtml[] =              implode(LF, $valuePickerHtml);
+            $expansionHtml[] =              $fieldControlHtml;
+            $expansionHtml[] =          '</div>';
+            $expansionHtml[] =      '</div>';
+        }
+        $expansionHtml[] =      '<div class="form-wizards-items-bottom">';
+        $expansionHtml[] =          $linkExplanation['additionalAttributes'] ?? '';
+        $expansionHtml[] =          $fieldWizardHtml;
+        $expansionHtml[] =      '</div>';
+        $expansionHtml[] =  '</div>';
+        $expansionHtml[] = '</div>';
+        $expansionHtml = implode(LF, $expansionHtml);
+
+        $fullElement = $expansionHtml;
+        if ($this->hasNullCheckboxButNoPlaceholder()) {
+            $checked = $itemValue !== null ? ' checked="checked"' : '';
+            $fullElement = [];
+            $fullElement[] = '<div class="t3-form-field-disable"></div>';
+            $fullElement[] = '<div class="form-check t3-form-field-eval-null-checkbox">';
+            $fullElement[] =     '<input type="hidden" name="' . $nullControlNameEscaped . '" value="0" />';
+            $fullElement[] =     '<input type="checkbox" class="form-check-input" name="' . $nullControlNameEscaped . '" id="' . $nullControlNameEscaped . '" value="1"' . $checked . ' />';
+            $fullElement[] =     '<label class="form-check-label" for="' . $nullControlNameEscaped . '">';
+            $fullElement[] =         $languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.nullCheckbox');
+            $fullElement[] =     '</label>';
+            $fullElement[] = '</div>';
+            $fullElement[] = $expansionHtml;
+            $fullElement = implode(LF, $fullElement);
+        } elseif ($this->hasNullCheckboxWithPlaceholder()) {
+            $checked = $itemValue !== null ? ' checked="checked"' : '';
+            $placeholder = $shortenedPlaceholder = $config['placeholder'] ?? '';
+            $disabled = '';
+            $fallbackValue = 0;
+            if (strlen($placeholder) > 0) {
+                $shortenedPlaceholder = GeneralUtility::fixed_lgd_cs($placeholder, 20);
+                if ($placeholder !== $shortenedPlaceholder) {
+                    $overrideLabel = sprintf(
+                        $languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.placeholder.override'),
+                        '<span title="' . htmlspecialchars($placeholder) . '">' . htmlspecialchars($shortenedPlaceholder) . '</span>'
+                    );
+                } else {
+                    $overrideLabel = sprintf(
+                        $languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.placeholder.override'),
+                        htmlspecialchars($placeholder)
+                    );
+                }
+            } else {
+                $overrideLabel = $languageService->sL(
+                    'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.placeholder.override_not_available'
+                );
+            }
+            $fullElement = [];
+            $fullElement[] = '<div class="form-check t3js-form-field-eval-null-placeholder-checkbox">';
+            $fullElement[] =     '<input type="hidden" name="' . $nullControlNameEscaped . '" value="' . $fallbackValue . '" />';
+            $fullElement[] =     '<input type="checkbox" class="form-check-input" name="' . $nullControlNameEscaped . '" id="' . $nullControlNameEscaped . '" value="1"' . $checked . $disabled . ' />';
+            $fullElement[] =     '<label class="form-check-label" for="' . $nullControlNameEscaped . '">';
+            $fullElement[] =         $overrideLabel;
+            $fullElement[] =     '</label>';
+            $fullElement[] = '</div>';
+            $fullElement[] = '<div class="t3js-formengine-placeholder-placeholder">';
+            $fullElement[] =    '<div class="form-control-wrap" style="max-width:' . $width . 'px">';
+            $fullElement[] =        '<input type="text" class="form-control" disabled="disabled" value="' . htmlspecialchars($shortenedPlaceholder) . '" />';
+            $fullElement[] =    '</div>';
+            $fullElement[] = '</div>';
+            $fullElement[] = '<div class="t3js-formengine-placeholder-formfield">';
+            $fullElement[] =    $expansionHtml;
+            $fullElement[] = '</div>';
+            $fullElement = implode(LF, $fullElement);
+        }
+
+        $resultArray['requireJsModules'][] = JavaScriptModuleInstruction::forRequireJS(
+            'TYPO3/CMS/Backend/FormEngine/Element/InputLinkElement'
+        )->instance($fieldId);
+        $resultArray['html'] = '<div class="formengine-field-item t3js-formengine-field-item">' . $fieldInformationHtml . $fullElement . '</div>';
+        return $resultArray;
+    }
+
+    /**
+     * @param string $itemValue
+     * @return array
+     */
+    protected function getLinkExplanation(string $itemValue): array
+    {
+        if (empty($itemValue)) {
+            return [];
+        }
+        $data = ['text' => '', 'icon' => ''];
+        $typolinkService = GeneralUtility::makeInstance(TypoLinkCodecService::class);
+        $linkParts = $typolinkService->decode($itemValue);
+        $linkService = GeneralUtility::makeInstance(LinkService::class);
+
+        try {
+            $linkData = $linkService->resolve($linkParts['url']);
+        } catch (FileDoesNotExistException|FolderDoesNotExistException|UnknownLinkHandlerException|InvalidPathException $e) {
+            return $data;
+        }
+
+        // Resolving the TypoLink parts (class, title, params)
+        $additionalAttributes = [];
+        foreach ($linkParts as $key => $value) {
+            if ($key === 'url') {
+                continue;
+            }
+            if ($value) {
+                switch ($key) {
+                    case 'class':
+                        $label = $this->getLanguageService()->sL('LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:class');
+                        break;
+                    case 'title':
+                        $label = $this->getLanguageService()->sL('LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:title');
+                        break;
+                    case 'additionalParams':
+                        $label = $this->getLanguageService()->sL('LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:params');
+                        break;
+                    default:
+                        $label = (string)$key;
+                }
+
+                $additionalAttributes[] = '<span><strong>' . htmlspecialchars($label) . ': </strong> ' . htmlspecialchars($value) . '</span>';
+            }
+        }
+
+        // Resolve the actual link
+        switch ($linkData['type']) {
+            case LinkService::TYPE_PAGE:
+                $pageRecord = BackendUtility::readPageAccess($linkData['pageuid'] ?? null, '1=1');
+                // Is this a real page
+                if ($pageRecord['uid'] ?? 0) {
+                    $fragmentTitle = '';
+                    if (isset($linkData['fragment'])) {
+                        if (MathUtility::canBeInterpretedAsInteger($linkData['fragment'])) {
+                            $contentElement = BackendUtility::getRecord('tt_content', (int)$linkData['fragment'], '*', 'pid=' . $pageRecord['uid']);
+                            if ($contentElement) {
+                                $fragmentTitle = BackendUtility::getRecordTitle('tt_content', $contentElement, false, false);
+                            }
+                        }
+                        $fragmentTitle = ' #' . ($fragmentTitle ?: $linkData['fragment']);
+                    }
+                    $data = [
+                        'text' => $pageRecord['_thePathFull'] . '[' . $pageRecord['uid'] . ']' . $fragmentTitle,
+                        'icon' => $this->iconFactory->getIconForRecord('pages', $pageRecord, Icon::SIZE_SMALL)->render(),
+                    ];
+                }
+                break;
+            case LinkService::TYPE_EMAIL:
+                $data = [
+                    'text' => $linkData['email'],
+                    'icon' => $this->iconFactory->getIcon('content-elements-mailform', Icon::SIZE_SMALL)->render(),
+                ];
+                break;
+            case LinkService::TYPE_URL:
+                $data = [
+                    'text' => $linkData['url'],
+                    'icon' => $this->iconFactory->getIcon('apps-pagetree-page-shortcut-external', Icon::SIZE_SMALL)->render(),
+
+                ];
+                break;
+            case LinkService::TYPE_FILE:
+                /** @var File $file */
+                $file = $linkData['file'];
+                if ($file) {
+                    $data = [
+                        'text' => $file->getPublicUrl(),
+                        'icon' => $this->iconFactory->getIconForFileExtension($file->getExtension(), Icon::SIZE_SMALL)->render(),
+                    ];
+                }
+                break;
+            case LinkService::TYPE_FOLDER:
+                /** @var Folder $folder */
+                $folder = $linkData['folder'];
+                if ($folder) {
+                    $data = [
+                        'text' => $folder->getPublicUrl(),
+                        'icon' => $this->iconFactory->getIcon('apps-filetree-folder-default', Icon::SIZE_SMALL)->render(),
+                    ];
+                }
+                break;
+            case LinkService::TYPE_RECORD:
+                $table = $this->data['pageTsConfig']['TCEMAIN.']['linkHandler.'][$linkData['identifier'] . '.']['configuration.']['table'] ?? '';
+                $record = BackendUtility::getRecord($table, $linkData['uid']);
+                if ($record) {
+                    $recordTitle = BackendUtility::getRecordTitle($table, $record);
+                    $tableTitle = $this->getLanguageService()->sL($GLOBALS['TCA'][$table]['ctrl']['title']);
+                    $data = [
+                        'text' => sprintf('%s [%s:%d]', $recordTitle, $tableTitle, $linkData['uid']),
+                        'icon' => $this->iconFactory->getIconForRecord($table, $record, Icon::SIZE_SMALL)->render(),
+                    ];
+                } else {
+                    $data = [
+                        'text' => sprintf('%s', $linkData['uid']),
+                        'icon' => $this->iconFactory->getIcon('tcarecords-' . $table . '-default', Icon::SIZE_SMALL, 'overlay-missing')->render(),
+                    ];
+                }
+                break;
+            case LinkService::TYPE_TELEPHONE:
+                $telephone = $linkData['telephone'];
+                if ($telephone) {
+                    $data = [
+                        'text' => $telephone,
+                        'icon' => $this->iconFactory->getIcon('actions-device-mobile', Icon::SIZE_SMALL)->render(),
+                    ];
+                }
+                break;
+            default:
+                // Please note that this hook is preliminary and might change, as this element could become its own
+                // TCA type in the future
+                if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['linkHandler'][$linkData['type']])) {
+                    $linkBuilder = GeneralUtility::makeInstance($GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['linkHandler'][$linkData['type']]);
+                    $data = $linkBuilder->getFormData($linkData, $linkParts, $this->data, $this);
+                } elseif ($linkData['type'] === LinkService::TYPE_UNKNOWN) {
+                    $data = [
+                        'text' => $linkData['file'],
+                        'icon' => $this->iconFactory->getIcon('actions-link', Icon::SIZE_SMALL)->render(),
+                    ];
+                } else {
+                    $data = [
+                        'text' => 'not implemented type ' . $linkData['type'],
+                        'icon' => '',
+                    ];
+                }
+        }
+
+        $data['additionalAttributes'] = '<div class="help-block">' . implode(' - ', $additionalAttributes) . '</div>';
+        return $data;
+    }
+
+    /**
+     * @return LanguageService
+     */
+    protected function getLanguageService()
+    {
+        return $GLOBALS['LANG'];
+    }
+}
