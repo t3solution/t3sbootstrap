@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{config.navbar.enable} != 'none'">
+<f:if condition="{config.navbar.enable} && {config.navbar.enable} != 'none'">
 	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
 	<f:if condition="{config.navbar.navColorCSS}">
 		<div class="container my-5">
