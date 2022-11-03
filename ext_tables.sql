@@ -34,7 +34,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_color varchar(40) DEFAULT '' NOT NULL,
 	navbar_background varchar(255) DEFAULT '' NOT NULL,
 	navbar_transparent tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	navbar_container varchar(12) DEFAULT '' NOT NULL,
+	navbar_container varchar(15) DEFAULT '' NOT NULL,
 	navbar_innercontainer varchar(15) DEFAULT '' NOT NULL,
 	navbar_placement varchar(12) DEFAULT '' NOT NULL,
 	navbar_alignment varchar(9) DEFAULT '' NOT NULL,
