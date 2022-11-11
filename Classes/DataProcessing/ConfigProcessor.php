@@ -386,8 +386,10 @@ class ConfigProcessor implements DataProcessorInterface
 			// color
 			$processedData['config']['navbar']['colorschemes'] = explode(' ', $processedRecordVariables['navbarColor'])[0];
 			$processedData['config']['navbar']['gradient'] = '';
-			if ( explode(' ', $processedRecordVariables['navbarColor'])[1] ) {
-				$processedData['config']['navbar']['gradient'] = explode(' ', $processedRecordVariables['navbarColor'])[1];
+			if (!empty($processedRecordVariables['navbarColor'])) {
+				if (!empty(explode(' ', $processedRecordVariables['navbarColor'])[1])) {
+					$processedData['config']['navbar']['gradient'] = explode(' ', $processedRecordVariables['navbarColor'])[1];
+				}
 			}
 
 			// content only on rootpage
