@@ -164,7 +164,6 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
-			collapsible_accordion.disabled = 1
 			t3sbs_card {
 				label.default = Card subtitle
 				label.de = Card Untertitel
