@@ -67,7 +67,7 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 		$content = '';
 		// prev page
 		// show on all pages after the 1st one
-		if ($currentPage > 0) {
+		if ($currentPage > 0 && !empty($freeIndexUid)) {
 			$label = LocalizationUtility::translate('displayResults.previous', 'IndexedSearch');
 			$content .= '<li>' . self::makecurrentPageSelector_link((string) $label, $currentPage - 1, (string) $freeIndexUid) . '</li>';
 		}
@@ -88,7 +88,9 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 
 		for ($a = $minPage; $a <= $maxPage; $a++) {
 			$label = trim($pageLabel . ' ' . ($a + 1));
-			$label = self::makecurrentPageSelector_link((string) $label, (int) $a, (string) $freeIndexUid);
+			if (!empty($freeIndexUid)) {
+				$label = self::makecurrentPageSelector_link((string) $label, (int) $a, (string) $freeIndexUid);
+			}
 			if ($a === $currentPage) {
 				$content .= '<li class="tx-indexedsearch-browselist-currentPage page-item"><strong>' . $label . '</strong></li>';
 			} else {
@@ -98,7 +100,7 @@ class PageBrowsingViewHelper extends AbstractViewHelper
 
 
 		// next link
-		if ($currentPage < $pageCount - 1) {
+		if ($currentPage < $pageCount - 1 && !empty($freeIndexUid)) {
 			$label = LocalizationUtility::translate('displayResults.next', 'IndexedSearch');
 			$content .= '<li>' . self::makecurrentPageSelector_link((string) $label, ($currentPage + 1), (string) $freeIndexUid) . '</li>';
 		}
