@@ -97,32 +97,33 @@ class GalleryHelper implements SingletonInterface
 		$galleryClass = 'gallery imageorient-'.$processedData['data']['imageorient'];
 		$galleryRowClass = '';
 		$imageorient = $processedData['data']['imageorient'];
-
+		$rowwidth = empty($processedData['rowwidth']) ? 0 : $processedData['rowwidth'];
 		// Above or below (0,1,2,8,9,10)
 		if ( $imageorient < 11 ) {
 			if ( $imageorient == 0 || $imageorient == 8 ) {
 				// center
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= !empty($processedData['rowwidth']) ? $processedData['rowwidth'].' text-center mx-auto' : '';
+				$galleryRowClass .= $rowwidth.' text-center mx-auto';
 				$processedData['addmedia']['zoomOverlay'] = ' d-flex mx-auto';
 			}
 			if ( $imageorient == 1 || $imageorient == 9 ) {
 				// right
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $processedData['rowwidth'].' float-md-end';
+				$galleryRowClass .= $rowwidth.' float-md-end';
 				$processedData['addmedia']['zoomOverlay'] = ' zoom-right';
 			}
 			if ( $imageorient == 2 || $imageorient == 10 ) {
 				// left
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $processedData['rowwidth'].' float-md-start';
+				$galleryRowClass .= $rowwidth.' float-md-start';
 			}
 		}
 		// In Text right or left (17,18)
 		if ( $imageorient == 17 || $imageorient == 18 ) {
-			$galleryClass .= $imageorient == 17 ? ' col-md-'.$processedData['data']['tx_t3sbootstrap_inTextImgColumns'].' float-md-end mb-3 ms-md-3'
-			 : ' col-md-'.$processedData['data']['tx_t3sbootstrap_inTextImgColumns'].' float-md-start mb-3 me-md-3';
-			$galleryClass .= ' '.$processedData['rowwidth'];
+			$inTextImgColumns = empty($processedData['data']['tx_t3sbootstrap_inTextImgColumns']) ? 4 : $processedData['data']['tx_t3sbootstrap_inTextImgColumns'];
+			$galleryClass .= $imageorient == 17 ? ' col-md-'.$inTextImgColumns.' float-md-end mb-3 ms-md-3'
+			 : ' col-md-'.$inTextImgColumns.' float-md-start mb-3 me-md-3';
+			$galleryClass .= ' '.$rowwidth;
 		}
 		// Beside Text right or left (nowrap) (25,26)
 		if ( $imageorient == 25 || $imageorient == 26 ) {
@@ -135,7 +136,8 @@ class GalleryHelper implements SingletonInterface
 		// gallery class
 		$processedData['gallery']['class'] = trim($galleryClass);
 		$processedData['gallery']['rowClass'] = trim($galleryRowClass);
-		$processedData['gallery']['headerBeside'] = $processedData['data']['tx_t3sbootstrap_header_position'] == 'beside' ? TRUE : FALSE;
+		$header_position = empty($processedData['data']['tx_t3sbootstrap_header_position']) ? 'above' : $processedData['data']['tx_t3sbootstrap_header_position'];
+		$processedData['gallery']['headerBeside'] = $header_position == 'beside' ? TRUE : FALSE;
 
 		return $processedData;
 	}
