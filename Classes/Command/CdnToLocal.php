@@ -20,7 +20,7 @@ class CdnToLocal extends CommandBase
 {
 	const localZipFile = 'googlefont.zip';
 	const localZipPath = 'fileadmin/T3SB/Resources/Public/CSS/googlefonts/';
-	const zipFilePath = 'https://google-webfonts-helper.herokuapp.com/api/fonts/';
+	const zipFilePath = 'https://gwfh.mranftl.com/api/fonts/';
 	const localGoogleFile = 'fileadmin/T3SB/Resources/Public/CSS/googlefonts.css';
 
 	protected $configurationManager;
