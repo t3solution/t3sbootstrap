@@ -112,7 +112,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 									foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
 										foreach ($fieldsInSheet as $fieldArr) {
 											foreach ($fieldArr as $fieldName) {
-												if (!empty($fieldName)) {
+												if (!empty($fieldName) && is_array($fieldName)) {
 													foreach ($fieldName as $key=>$name) {
 														if ($name['config']['type'] == 'select') {
 															if (substr($field, 0, -1) == $key) {
@@ -134,7 +134,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 									foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
 										foreach ($fieldsInSheet as $fieldArr) {
 											foreach ($fieldArr as $fieldName) {
-												if (!empty($fieldName)) {
+												if (!empty($fieldName) && is_array($fieldName)) {
 													foreach ($fieldName as $key=>$name) {
 														if ($name['config']['type'] == 'select') {
 															if (substr($field, 0, -1) == $key) {
