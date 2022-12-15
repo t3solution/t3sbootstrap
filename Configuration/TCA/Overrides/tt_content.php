@@ -1132,7 +1132,49 @@ $tempContentColumns = [
 			'size' => 3
 		]
 	],
-
+	'tx_t3sbootstrap_bodytext' => [
+		'label' => 'Text bottom ',
+		'config' => [
+			'type' => 'text',
+			'cols' => 80,
+			'rows' => 15,
+			'softref' => 'typolink_tag,email[subst],url',
+			'search' => [
+				'andWhere' => '{#CType}=\'t3sbs_card\'',
+			],
+		],
+	],
+	'tx_t3sbootstrap_cardheader' => [
+		'label' => 'Card Header',
+		'config' => [
+			'type' => 'input',
+			'size' => 50,
+			'max' => 255,
+		],
+	],
+	'tx_t3sbootstrap_cardfooter' => [
+		'label' => 'Card Header',
+		'config' => [
+			'type' => 'input',
+			'size' => 50,
+			'max' => 255,
+		],
+	],
+	'tx_t3sbootstrap_list_item' => [
+		'label' => 'List Group',
+		'config' => [
+			'type' => 'inline',
+			'foreign_table' => 'tx_t3sbootstrap_list_item_inline',
+			'foreign_field' => 'parentid',
+			'foreign_table_field' => 'parenttable',
+		],
+	],
+	'tx_t3sbootstrap_upgrade_card' => [
+		'label' => 'Upgrade wizard',
+		'config' => [
+			'type' => 'check',
+		]
+	],
 ];
 
 
@@ -1241,6 +1283,11 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
 		--div--;Content,pi_flexform;Card Content,
+			tx_t3sbootstrap_cardheader;Card Header,
+			bodytext;Text top,
+			tx_t3sbootstrap_list_item;List Group,
+			tx_t3sbootstrap_bodytext;Text bottom,
+			tx_t3sbootstrap_cardfooter;Card Footer,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,
 			assets,
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.mediaAdjustments;mediaAdjustments,
@@ -1259,6 +1306,16 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 	',
 	'columnsOverrides' => [
+		'bodytext' => [
+			'config' => [
+				'enableRichtext' => true
+			]
+		],
+		'tx_t3sbootstrap_bodytext' => [
+			'config' => [
+				'enableRichtext' => true
+			]
+		],
 		'assets' => [
 			'config' => [
 				'maxitems' => 2
@@ -1266,8 +1323,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
 		]
 	]
 ];
-// Add flexform
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardContent.xml', 't3sbs_card');
 
 
 /***************
@@ -1368,7 +1423,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'after:tx_t3sbootstrap_bordercolor'
 );
 
-
 # add palette bootstrap etc
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
@@ -1455,6 +1509,7 @@ if ($extconf['sectionOrder']) {
 	);
 }
 
+
 if ( $extconf['preview'] ) {
 	/*
 	 * Show preview of tt_content elements in page module
@@ -1463,7 +1518,7 @@ if ( $extconf['preview'] ) {
 	foreach ($t3sbsContent as $t3sb) {
 		$GLOBALS['TCA']['tt_content']['types'][trim($t3sb)]['previewRenderer'] = \T3SBS\T3sbootstrap\Backend\Preview\DefaultPreviewRenderer::class;
 	}
-	
+
 	$containers = ['two_columns', 'three_columns', 'four_columns', 'six_columns', 'row_columns', 'card_wrapper', 'button_group', 'autoLayout_row',
 	 'background_wrapper','parallax_wrapper',' container', 'carousel_container', 'collapsible_container', 'collapsible_accordion',
 	 'modal', 'tabs_container', 'tabs_tab', 'listGroup_wrapper', 'masonry_wrapper', 'swiper_container', 'toast_container'];

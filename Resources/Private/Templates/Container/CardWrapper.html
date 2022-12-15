@@ -216,10 +216,10 @@ function insertAfter(referenceNode, newNode) {
 			<f:render section="CardTitle" arguments="{_all}" />
 			<f:if condition="{cropMaxCharacters}">
 				<f:then>
-					{card.text.top -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					{card.bodytext -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 				</f:then>
 				<f:else>
-					{card.text.top -> f:format.html()}
+					{card.bodytext -> f:format.html()}
 				</f:else>
 			</f:if>
 		</div>
@@ -242,17 +242,17 @@ function insertAfter(referenceNode, newNode) {
 								<f:render section="CardTitle" arguments="{_all}" />
 								<f:if condition="{cropMaxCharacters}">
 									<f:then>
-										{card.text.top -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+										{card.bodytext -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 									</f:then>
 									<f:else>
-										{card.text.top -> f:format.html()}
+										{card.bodytext -> f:format.html()}
 									</f:else>
 								</f:if>
 							</div>
 							<div class="card-footer text-center">
-								<f:if condition="{card.footer.text}">
+								<f:if condition="{card.tx_t3sbootstrap_cardfooter}">
 									<f:then>
-										{card.footer.text -> f:format.raw()}
+										{card.tx_t3sbootstrap_cardfooter -> f:format.raw()}
 									</f:then>
 									<f:else>
 										<p class="square-link"><i class="fas fa-plus-square fa-2x mx-auto"></i></p>
@@ -270,10 +270,10 @@ function insertAfter(referenceNode, newNode) {
 								<h4 class="card-title my-3">{card.backheader -> f:format.raw()}</h4>
 								<f:if condition="{cropMaxCharacters}">
 									<f:then>
-										{card.text.bottom -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+										{card.tx_t3sbootstrap_bodytext -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 									</f:then>
 									<f:else>
-										{card.text.bottom -> f:format.html()}
+										{card.tx_t3sbootstrap_bodytext -> f:format.html()}
 									</f:else>
 								</f:if>
 							</div>
@@ -363,7 +363,7 @@ function insertAfter(referenceNode, newNode) {
 		<f:then>
 		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
 			<h4 class="card-title">
-				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" 
+				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}"
 				parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
 			</h4>
 			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>

@@ -34,7 +34,7 @@ class TwoColumns implements SingletonInterface
 		if ( !empty($flexconf['bgimages']) ) {
 			$bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 				->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
-				 $flexconf, FALSE, $processedData['data']['uid'], $webp,$bgMediaQueries, 2);
+				 $flexconf, FALSE, $processedData['data']['uid'], $webp,$bgMediaQueries);
 			if ($bgimages) {
 				$processedData['bgimages'] = $bgimages;
 				$processedData['bgimagePosition'] = $flexconf['bgimagePosition'];

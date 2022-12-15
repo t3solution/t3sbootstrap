@@ -14,10 +14,10 @@ plugin.tx_t3sbootstrap {
 }
 
 
-bootstrap.cdn.bootstraplatest = 5.2.2
+bootstrap.cdn.bootstraplatest = 5.2.3
 bootstrap.cdn.noZip = 0
 bootstrap.cdn.fontawesome5latest = 5.15.4
-bootstrap.cdn.fontawesome6latest = 6.2.0
+bootstrap.cdn.fontawesome6latest = 6.2.1
 
 #-------------------------------------------------------------------------------
 #	Constant Editor
@@ -36,13 +36,13 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-google/10; type=small; label=Comma separated list with google fonts:integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)
 	googlefonts =
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.2.2
+	bootstrap = 5.2.3
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
 	popperjs = 2.11.6
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.2.0
-	fontawesome = 6.2.0
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.2.1
+	fontawesome = 6.2.1
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.6.1
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
@@ -69,11 +69,11 @@ bootstrap.cdn {
 	swiper = 8
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi
+	bootstrapCssIntegrity = sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk
+	bootstrapJsIntegrity = sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
-	bootstrapBundleJsIntegrity = sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3
+	bootstrapBundleJsIntegrity = sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
 	popperjsIntegrity = sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:

@@ -1,0 +1,21 @@
+<!--
+	=====================
+	Partials/Sorting.html
+
+	modified by EXT:t3sbootstrap
+-->
+
+<f:if condition="{conf.showSortInFrontend}">
+	<f:if condition="{conf.sortByVisitor}">
+		<div id="kesearch_ordering">
+			<div class="ordering mt-3">
+				<ul class="list-inline">
+				<p class="lead mb-0 list-inline-item"><strong>{f:translate(key: 'LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:label_sort')}</strong></p>
+					<f:for each="{sortingLinks}" as="sortingLink">
+						<li class="list-inline-item sortlink sortlink-{sortingLink.field}"><f:link.typolink parameter="{sortingLink.urlOnly}">{sortingLink.label}</f:link.typolink><span class="{sortingLink.class}"></span></li>
+					</f:for>
+				</ul>
+			</div>
+		</div>
+	</f:if>
+</f:if>

@@ -40,6 +40,9 @@ class CollapsibleContainer implements SingletonInterface
 			->fetchAll();
 
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+		$flexformArr = [];
+		$headerExtraClassArr = [];
+		$headerFontawesomeArr = [];
 		foreach ($statements as $key=>$statement) {
 			$flexformArr[$key] = $flexFormService->convertFlexFormContentToArray($statement['tx_t3sbootstrap_flexform']);
 			$headerExtraClassArr[$key] = !empty($statement['tx_t3sbootstrap_header_class']) ? $statement['tx_t3sbootstrap_header_class'] : '';

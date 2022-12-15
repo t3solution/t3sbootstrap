@@ -178,6 +178,17 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_animateCssDelay varchar(2) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_extra_style varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_image_orig varchar(4) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_cardheader varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_bodytext mediumtext,
+	tx_t3sbootstrap_cardfooter varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_list_item varchar(255) DEFAULT '' NOT NULL,
+);
+
+
+CREATE TABLE tx_t3sbootstrap_list_item_inline (
+    parentid int(11) DEFAULT '0' NOT NULL,
+    parenttable text,
+    listitem varchar(255) DEFAULT '' NOT NULL,
 );
 
 #

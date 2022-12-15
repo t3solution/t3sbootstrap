@@ -42,7 +42,6 @@ class CdnToLocal extends CommandBase
 	}
 
 
-
 	/**
 	 * Update all records
 	 *
@@ -84,6 +83,14 @@ class CdnToLocal extends CommandBase
 			}
 			$cssFile = GeneralUtility::getFileAbsFileName(self::localGoogleFile);
 			if (file_exists($cssFile)) unlink($cssFile);
+
+			$customDir = 'fileadmin/T3SB/Configuration/TypoScript/';
+			$customPath = GeneralUtility::getFileAbsFileName($customDir);
+			$customFileName = 'preloadGooleFonts.typoscript';
+			$customFile = $customPath.$customFileName;
+			if (file_exists($customFile)) {unlink($customFile);}
+			if (!is_dir($customPath)) {mkdir($customPath, 0777, true);}
+			GeneralUtility::writeFile($customFile, '');
 		}
 
 		foreach ($settings['cdn'] as $key=>$version) {

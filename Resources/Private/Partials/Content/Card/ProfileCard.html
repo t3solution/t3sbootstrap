@@ -4,7 +4,7 @@
 <f:render section="MultiImage" arguments="{_all}" />
 <div class="card-content position-relative">
 <f:comment>Card Text (top)</f:comment>
-<f:if condition="{card.text.top} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
+<f:if condition="{data.bodytext} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
 	<f:render section="TextTop" arguments="{_all}" />
 </f:if>
 <f:comment>Card List</f:comment>
@@ -12,7 +12,7 @@
 	<f:render section="ListGroup" arguments="{_all}" />
 </f:if>
 <f:comment>Card Text (bottom)</f:comment>
-<f:if condition="{card.text.bottom} && !{card.image.overlay} && !{card.mobile.overlay}">
+<f:if condition="{data.tx_t3sbootstrap_bodytext} && !{card.image.overlay} && !{card.mobile.overlay}">
 	<f:render section="TextBottom" arguments="{_all}" />
 </f:if>
 <f:comment>Social media</f:comment>
@@ -23,13 +23,13 @@
 		</f:for>
 	</div>
 </f:if>
-<f:if condition="({card.footer.text} || {card.multiImage.socialmedia.footer} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
+<f:if condition="({data.tx_t3sbootstrap_cardfooter} || {card.multiImage.socialmedia.footer} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
 	<div class="card-footer{f:if(condition: card.multiImage.socialmedia.enable,then: ' bg-white')}">
-		{card.footer.text -> f:format.raw()}
+		{data.tx_t3sbootstrap_cardfooter -> f:format.raw()}
 		<f:if condition="{card.button.footer}">
 			<f:render section="Button" arguments="{_all}" />
 		</f:if>
-		<f:if condition="{card.multiImage.socialmedia.enable}">
+		<f:if condition="{card.multiImage.socialmedia.footer}">
 			<div class="icon-block text-center my-2">
 				<f:for each="{card.multiImage.socialmediaLinks}" key="company" as="socialmediaLink">
 					<a target="_blank" title="{company}" href="{socialmediaLink}"><i class="fa-brands fa-{company}"></i></a>
@@ -54,19 +54,19 @@
 		<div class="card-text">
 			<f:if condition="{card.cropMaxCharacters}">
 				<f:then>
-					{card.text.top -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					{data.bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 				</f:then>
 				<f:else>
-					{card.text.top -> f:format.html()}
+					{data.bodytext -> f:format.html()}
 				</f:else>
 			</f:if>
-			<f:if condition="{card.text.bottom} && ({card.image.overlay} || {card.mobile.overlay})">
+			<f:if condition="{data.tx_t3sbootstrap_bodytext} && ({card.image.overlay} || {card.mobile.overlay})">
 				<f:if condition="{card.cropMaxCharacters}">
 					<f:then>
-						{card.text.bottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+						{data.tx_t3sbootstrap_bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 					</f:then>
 					<f:else>
-						{card.text.bottom -> f:format.html()}
+						{data.tx_t3sbootstrap_bodytext -> f:format.html()}
 					</f:else>
 				</f:if>
 			</f:if>
@@ -83,7 +83,7 @@
 <f:section name="ListGroup">
 	<ul class="list-group list-group-flush">
 		<f:for each="{card.list}" as="listItem">
-			<li class="list-group-item">{listItem -> f:format.raw()}</li>
+			<li class="list-group-item">{listItem.listitem -> f:format.raw()}</li>
 		</f:for>
 	</ul>
 	<f:if condition="{card.button.position} == 'list' && {card.button.enable} && {card.button.link} && !{card.button.footer}">
@@ -101,10 +101,10 @@
 		<div class="card-text">
 			<f:if condition="{card.cropMaxCharacters}">
 				<f:then>
-					{card.text.bottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+					{data.tx_t3sbootstrap_bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 				</f:then>
 				<f:else>
-					{card.text.bottom -> f:format.html()}
+					{data.tx_t3sbootstrap_bodytext -> f:format.html()}
 				</f:else>
 			</f:if>
 		</div>
@@ -233,8 +233,10 @@ function t3sbProfileCardImage(multiImage) {
 			circleFigure.style.top = '-'+circleWidth/2+'px';
 			if (circleFigure.nextSibling.nodeName == 'FIGURE') {
 				circleFigure.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
-			} else {
+			} else if (circleFigure.nextSibling.nextSibling) {
 				circleFigure.nextSibling.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
+			} else {
+				circleFigure.nextSibling.style.marginTop = '-'+circleWidth/2+'px';
 			}
 		}
 	}
