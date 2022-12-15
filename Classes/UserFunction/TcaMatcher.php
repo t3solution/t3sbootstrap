@@ -37,7 +37,7 @@ class TcaMatcher
 				  ->execute();
 			$parent_rec = $result->fetch();
 
-			if ( $parent_rec['CType'] == 'autoLayout_row' ) {
+			if ( !empty($parent_rec['CType']) && $parent_rec['CType'] == 'autoLayout_row' ) {
 				$parent = true;
 			}
 		}
@@ -63,7 +63,7 @@ class TcaMatcher
 				  ->execute();
 			$parent_rec = $result->fetch();
 
-			if ( $parent_rec['CType'] == 'button_group' ) {
+			if ( !empty($parent_rec['CType']) && $parent_rec['CType'] == 'button_group' ) {
 				$parent = false;
 			}
 		}
@@ -102,7 +102,7 @@ class TcaMatcher
 				  ->execute();
 			$parent_rec = $result->fetch();
 
-			if ( $parent_rec['CType'] == 'card_wrapper' ) {
+			if ( !empty($parent_rec['CType']) && $parent_rec['CType'] == 'card_wrapper' ) {
 				$parent = false;
 			}
 		}
@@ -200,10 +200,13 @@ class TcaMatcher
 				  )
 				  ->execute();
 			$parent_rec = $result->fetch();
-			$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
-			if ( $parent_rec['CType'] == 'container' && $parent_flexconf['flexContainer'] ) {
-				$parent = true;
+			if (!empty($parent_rec)) {
+				$parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
+
+				if ( !empty($parent_rec['CType']) && $parent_rec['CType'] == 'container' && $parent_flexconf['flexContainer'] ) {
+					$parent = true;
+				}
 			}
 		}
 
@@ -229,9 +232,11 @@ class TcaMatcher
 				  )
 				  ->execute();
 			$parent_rec = $result->fetchAll();
-			$flexconf = $flexformService->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
-			if ( $flexconf['appearance'] == 'button' ) {
-				$button = true;
+			if (!empty($parent_rec)) {
+				$flexconf = $flexformService->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
+				if ($flexconf['appearance'] == 'button' ) {
+					$button = true;
+				}
 			}
 		}
 

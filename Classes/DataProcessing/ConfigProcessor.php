@@ -171,29 +171,32 @@ class ConfigProcessor implements DataProcessorInterface
 		if ( $processedRecordVariables['navbarEnable'] ) {
 			// navbar menu
 			$mainMenu = [];
-			foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
-				$mainMenu[$key] = $navbarMenu;
-				if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
-					$mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
-				}
-				if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
-					$mainMenu[$key]['title'] = '';
-				}
-				$mainMenu[$key]['target'] = $navbarMenu['data']['target'] ? $navbarMenu['data']['target'] : '_self';
-				if (!empty($navbarMenu['data']['tx_t3sbootstrap_dropdownRight'])) {
-					$mainMenu[$key]['dropdownRightClass'] = ' dropdown-menu-end';
-				}
-				if (!empty($navbarMenu['current']) && !empty($navbarMenu['active'])) {
-					$mainMenu[$key]['active'] = 0;
-					$mainMenu[$key]['activeClass'] = ' active';
-				} elseif (!empty($navbarMenu['active'])) {
-					$mainMenu[$key]['activeClass'] = '  parent-active';
-				} else {
-					$mainMenu[$key]['activeClass'] = '';
-				}
-				if (!empty($navbarMenu['children'][0])) {	
-					if (self::getChildItems($navbarMenu['children'])) {
-						$mainMenu[$key]['children'] = self::getChildItems($navbarMenu['children']);
+
+			if (!empty($processedData['navbarMenu'])) {
+				foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
+					$mainMenu[$key] = $navbarMenu;
+					if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
+						$mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
+					}
+					if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
+						$mainMenu[$key]['title'] = '';
+					}
+					$mainMenu[$key]['target'] = $navbarMenu['data']['target'] ? $navbarMenu['data']['target'] : '_self';
+					if (!empty($navbarMenu['data']['tx_t3sbootstrap_dropdownRight'])) {
+						$mainMenu[$key]['dropdownRightClass'] = ' dropdown-menu-end';
+					}
+					if (!empty($navbarMenu['current']) && !empty($navbarMenu['active'])) {
+						$mainMenu[$key]['active'] = 0;
+						$mainMenu[$key]['activeClass'] = ' active';
+					} elseif (!empty($navbarMenu['active'])) {
+						$mainMenu[$key]['activeClass'] = '  parent-active';
+					} else {
+						$mainMenu[$key]['activeClass'] = '';
+					}
+					if (!empty($navbarMenu['children'][0])) {	
+						if (self::getChildItems($navbarMenu['children'])) {
+							$mainMenu[$key]['children'] = self::getChildItems($navbarMenu['children']);
+						}
 					}
 				}
 			}
@@ -722,7 +725,7 @@ class ConfigProcessor implements DataProcessorInterface
 	{
 		$res = [];
 		foreach ($subNavigation as $supNav ) {
-			if ( is_array($supNav['children'])) {
+			if ( !empty($supNav['children']) && is_array($supNav['children'])) {
 				self::getSubNavigation($supNav['children'], $navbarClickableparent);
 				if ( $navbarClickableparent === 0 ) {
 					$supNav['link'] = '#';

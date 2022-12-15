@@ -1,0 +1,17 @@
+
+plugin.tx_kesearch_pi1 {
+	view {
+		templateRootPaths {
+			5 = EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Resources/Private/Templates/
+		}
+		partialRootPaths {
+			5 = EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Resources/Private/Partials/
+		}
+	}
+}
+
+plugin.tx_kesearch_pi1.cssFile =
+plugin.tx_kesearch_pi2.cssFile =
+
+plugin.tx_kesearch_pi2.includeFilters = 1
+

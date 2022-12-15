@@ -51,7 +51,6 @@ class LastModifiedProcessor implements DataProcessorInterface
 		if (!empty($processorConfiguration['recentlyUpdatedContentElements'])) {
 
 			$setMaxResults = $processorConfiguration['setMaxResults'] ?: 10;
-
 			if (self::isMenuRecentlyUpdatedOnPage()) {
 				$processedData['recentlyUpdatedContentElements'] = self::getRecentlyUpdated((int) $setMaxResults);
 			}
@@ -146,7 +145,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 				 ->execute()
 				 ->fetch();
 
-			$pageTitle = $result['nav_title'] ?: $result['title'];
+			$pageTitle = !empty($result['nav_title']) ? $result['nav_title'] : $result['title'];
 		}
 
 		return (string)$pageTitle;
@@ -159,7 +158,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 * @return int
 	 */
 	protected function getCurrentUid(): int
-	{		
+	{
 		return (int) $GLOBALS['TSFE']->id;
 	}
 

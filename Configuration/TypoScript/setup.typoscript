@@ -136,7 +136,7 @@ temp.pagelayout {
 # Google Tag Manager
 #
 ##########################################################################################################
-[request.getCookieParams()['cookieconsent_status'] == 'allow']
+[traverse(request.getCookieParams(), 'cookieconsent_status') == 'allow']
 page.jsInline.1 = TEXT
 page.jsInline.1.value (
 	// Google Tag Manager
@@ -145,10 +145,10 @@ page.jsInline.1.value (
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 	})(window,document,'script','dataLayer','{$bootstrap.gtm}');
-
 )
 page.jsInline.1.if.isTrue = {$bootstrap.gtm}
 [END]
+
 
 [applicationContext == "Development"]
 config {

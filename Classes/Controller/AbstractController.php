@@ -314,7 +314,7 @@ abstract class AbstractController extends ActionController
 					if ($config->getGeneralRootline()) {
 						$filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
 					} else {
-						$filecontent .= '[page["uid"] == '.$config->getPid().']'.PHP_EOL;
+						$filecontent .= '[traverse(page, "uid") == '.$config->getPid().']'.PHP_EOL;
 					}
 					if ($config->getGeneralOverride()) {
 						$filecontent .= self::getConstants($config, TRUE);

@@ -6,6 +6,7 @@ namespace T3SBS\T3sbootstrap\DataProcessing;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -175,7 +176,6 @@ class BootstrapProcessor implements DataProcessorInterface
 			}
 		}
 
-
 		#
 		# Container/Wrapper
 		#
@@ -238,17 +238,14 @@ class BootstrapProcessor implements DataProcessorInterface
 			#if ( $cType == 'listGroup_wrapper' ) {}
 		}
 
-
 		#
 		# default content elements
 		#
 		if ( !str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) ) {
 			if ( substr($cType, 0, 4) == 'menu' ) {
-
 				$processedData = GeneralUtility::makeInstance(Menu::class)->getProcessedData($processedData, $flexconf, $cType);
 			}
 			if ( $cType == 'table' ) {
-
 				$processedData = GeneralUtility::makeInstance(Table::class)->getProcessedData($processedData, $flexconf);
 			}
 		}
@@ -262,6 +259,24 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
 			$mediaElementHelper = GeneralUtility::makeInstance(MediaElementHelper::class);
 			$processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint']);
+			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+			$fileObjects = $fileRepository->findByRelation('tt_content ', 'assets', 875);
+			$fileParts = [];
+			foreach ($fileObjects as $key=>$fileObject) {
+				if ( $fileObject->getType() === 4 ) {
+					$fileConfig = $fileObject->getStorage()->getConfiguration();
+					$filePath = substr($fileConfig['basePath'], 0, -1).explode('.', $fileObject->getIdentifier())[0];
+					if (file_exists($filePath.'.png')) {
+						$fileParts[$key]['poster'] = $filePath.'.png';
+					} elseif (file_exists($filePath.'.jpg')) {
+						$fileParts[$key]['poster'] = $filePath.'.jpg';
+					} else {
+						$fileParts[$key]['poster'] = '';
+					}
+				}
+			}
+			$processedData['posters'] = $fileParts;
+
 			if (!empty($flexconf['zoom']) || !empty($parentflexconf['zoom'])) {
 				$processedData['lightBox'] = TRUE;
 			}

@@ -642,9 +642,10 @@ class GalleryProcessor implements DataProcessorInterface
 						 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
 					}
 
+					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 					$this->mediaDimensions[$key] = [
 						'width' => floor($mediaWidth),
-						'height' => floor($mediaHeight),
+						'height' => $mediaHeight,
 						'ratio' => $ratio
 					];
 				}
@@ -660,9 +661,10 @@ class GalleryProcessor implements DataProcessorInterface
 					$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
 					 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
 
+					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 					$this->mediaDimensions[$key] = [
 						'width' => floor($mediaWidth),
-						'height' => floor($mediaHeight),
+						'height' => $mediaHeight,
 						'ratio' => ''
 					];
 				}
@@ -680,9 +682,10 @@ class GalleryProcessor implements DataProcessorInterface
 				$mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
 				 * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
 
+				$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 				$this->mediaDimensions[$key] = [
 					'width' => floor($mediaWidth),
-					'height' => floor($mediaHeight),
+					'height' => $mediaHeight,
 					'ratio' => ''
 				];
 			}
@@ -699,9 +702,10 @@ class GalleryProcessor implements DataProcessorInterface
 				$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
 				 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
 
+				$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 				$this->mediaDimensions[$key] = [
 					'width' => floor($mediaWidth),
-					'height' => floor($mediaHeight),
+					'height' => $mediaHeight,
 					'ratio' => ''
 				];
 			}

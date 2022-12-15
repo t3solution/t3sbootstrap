@@ -50,14 +50,13 @@ class CardWrapper implements SingletonInterface
 
 			foreach ( $children as $key=>$child ) {
 				$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $child['uid']);
-				$children[$key] = $flexFormService->convertFlexFormContentToArray($child['pi_flexform']);
 				$children[$key]['imgwidth'] = $child['imagewidth'] ?: 576;
 				if (!empty($fileObjects)) {
 					if ($flexconf['card_wrapper'] == 'flipper'){
 						$children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
 						 ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ' : '';
 						$children[$key]['file'] = $fileObjects;
-						$children[$key]['backheader'] = $children[$key]['header']['text'];
+						$children[$key]['backheader'] = $child['tx_t3sbootstrap_cardheader'];
 						$children[$key]['header'] = $child['header'];
 					} else {
 						$children[$key]['file'] = $fileObjects[0];

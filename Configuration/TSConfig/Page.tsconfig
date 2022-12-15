@@ -13,7 +13,7 @@ TCAdefaults.pages.tx_t3sbootstrap_container = container
 TCEFORM.pages.tx_t3sbootstrap_dropdownRight.disabled = 1
 [END]
 
-[page["doktype"] == 198]
+[traverse(page, "doktype") == 198]
 TCEFORM.pages.subtitle.disabled = 1
 TCEFORM.pages.nav_title.disabled = 1
 TCEFORM.pages.crdate.disabled = 1
@@ -67,9 +67,9 @@ TCEFORM.tt_content {
 		types {
 			collapsible_accordion.disabled = 1
 			t3sbs_toast.disabled = 1
-		}		
+		}
 	}
-	
+
 	pi_flexform {
 		types {
 			two_columns.disabled = 1
@@ -89,6 +89,7 @@ TCEFORM.tt_content {
 			tabs_container.disabled = 1
 			tabs_tab.disabled = 1
 			listGroup_wrapper.disabled = 1
+			t3sbs_card.disabled = 1
 		}
 	}
 	header {
@@ -286,7 +287,7 @@ TCEFORM.tt_content {
 		types {
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-		}		
+		}
 	}
 	tx_t3sbootstrap_header_class {
 		types {

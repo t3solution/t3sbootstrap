@@ -1544,7 +1544,6 @@ return [
 				]
 			]
 		],
-
 		'expandedcontent_enabletop' => [
 			'exclude' => false,
 			'label' => 'Enable',
