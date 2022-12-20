@@ -325,6 +325,12 @@
         "es-ES": "",
         "ar-AR": ""
       }
+    },
+    "referenced": {
+      "id": "https://w3id.org/xapi/adb/verbs/referenced",
+      "display": {
+        "en-US": "referenced"
+      }
     }
   };
 }(window.ADL = window.ADL || {}));

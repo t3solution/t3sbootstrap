@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{noConfig}">
 	<f:then>
 		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
@@ -15,8 +14,7 @@
 			<f:comment> LOADING SPINNER </f:comment>
 			<f:if condition="{settings.config.loadingSpinner}">
 				<div id="site-preloader">
-					<div id="site-spinner" class="spinner-{settings.config.loadingSpinner} text-{settings.config.loadingSpinnerColor}"
-						 style="width: 3rem; height: 3rem;" role="status">
+					<div id="site-spinner" class="spinner-{settings.config.loadingSpinner} text-{settings.config.loadingSpinnerColor}" style="width: 3rem; height: 3rem;" role="status">
 						<span class="visually-hidden">Loading...</span>
 					</div>
 				</div>
@@ -88,11 +86,12 @@
 		</f:spaceless>
 	</f:else>
 </f:if>
+
 </html>
 
 
 <f:section name="PageContent">
-	<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')} >
+	<div id="page-content" {f:if(condition: '{settings.config.pageContentExtraClass}' ,then: ' class="{settings.config.pageContentExtraClass}"' )}>
 		<f:if condition="{be_layout} && {be_layout} != 'default'">
 			<f:then>
 				<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
@@ -106,144 +105,144 @@
 
 <f:section name="AssetScripts">
 
-<f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
-<f:if condition="{config.navbar.enable} != 'none'">
-	<f:then>
-		<f:asset.script identifier="vanilla_default">
-	// Default - Main.html
-	const navbar = document.getElementById('main-navbar'),
-		  navbarHeight = navbar.clientHeight,
-		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = navbar.classList.contains('sectionMenu');
+	<f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
+	<f:if condition="{config.navbar.enable} != 'none'">
+		<f:then>
+			<f:asset.script identifier="vanilla_default">
+				// Default - Main.html
+				const navbar = document.getElementById('main-navbar'),
+				navbarHeight = navbar.clientHeight,
+				navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
+				viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+				onePageLayout = navbar.classList.contains('sectionMenu');
 
-	var fixedNavbar = false;
-	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
-		fixedNavbar = true;
-	}
-	<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
-			cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
-	</f:if>
-	// Scroll anchor - Main.html
-	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
-	}
-		</f:asset.script>
-	</f:then>
-	<f:else>
-		<f:asset.script identifier="vanilla_default">
-	// Default - Main.html
-	const navbar = false,
-		  navbarHeight = false,
-		  navbarBreakpointWidth = 99999,
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = 0;
-
-	var fixedNavbar = false;
-
-	// Scroll anchor - Main.html
-	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
-	}
-		</f:asset.script>
-	</f:else>
-</f:if>
-<f:comment> Loading spinner </f:comment>
-<f:if condition="{settings.config.loadingSpinner}">
-<f:asset.script identifier="vanilla_loadingspinner">
-	// Loading spinner - Main.html
-	window.onload = function() {
-		let spinner = document.getElementById('site-preloader');
-		t3sbFadeOutEffect(spinner);
-	};
-</f:asset.script>
-</f:if>
-<f:if condition="{settings.config.darkMode}">
-<f:asset.script identifier="vanilla_darkMode">
-	// Dark mode - Main.html
-	t3sbDarkMode();
-</f:asset.script>
-</f:if>
-<f:comment> Lazyload </f:comment>
-<f:variable name="customthreshold">{t3sb:intval(number: '{settings.lazyLoadThreshold}')}</f:variable>
-<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
-	<f:then>
-		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
-			<f:then>
-				<f:asset.script identifier="vanilla_lazyload">
-	// LazyLoad & Magnifying glass icon - Main.html
-	var customthreshold = {customthreshold};
-	new LazyLoad({
-		elements_selector: '.lazy',
-		threshold: customthreshold,
-		callback_loaded: function(img) {
-			t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth);
-		}
-	});
-				</f:asset.script>
-			</f:then>
-			<f:else>
-				<f:asset.script identifier="vanilla_lazyload">
-	// LazyLoad - Main.html
-	var customthreshold = {customthreshold};
-	new LazyLoad({
-		elements_selector: '.lazy',
-		threshold: customthreshold
-	});
-				</f:asset.script>
-			</f:else>
-		</f:if>
-	</f:then>
-	<f:else>
-		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
-			<f:asset.script identifier="vanilla_magnifying">
-	// Magnifying glass icon - Main.html
-	var magnify = document.querySelectorAll('.zoom-overlay');
-	if ( magnify.length ) {
-		document.querySelectorAll('figure.image').forEach (
-			img => { t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) }
-		)
-	}
+				var fixedNavbar = false;
+				if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
+				fixedNavbar = true;
+				}
+				<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
+					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
+				</f:if>
+				// Scroll anchor - Main.html
+				if (window.location.hash) {
+				t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
+				}
 			</f:asset.script>
+		</f:then>
+		<f:else>
+			<f:asset.script identifier="vanilla_default">
+				// Default - Main.html
+				const navbar = false,
+				navbarHeight = false,
+				navbarBreakpointWidth = 99999,
+				viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+				onePageLayout = 0;
+
+				var fixedNavbar = false;
+
+				// Scroll anchor - Main.html
+				if (window.location.hash) {
+				t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
+				}
+			</f:asset.script>
+		</f:else>
+	</f:if>
+	<f:comment> Loading spinner </f:comment>
+	<f:if condition="{settings.config.loadingSpinner}">
+		<f:asset.script identifier="vanilla_loadingspinner">
+			// Loading spinner - Main.html
+			window.onload = function() {
+			let spinner = document.getElementById('site-preloader');
+			t3sbFadeOutEffect(spinner);
+			};
+		</f:asset.script>
+	</f:if>
+	<f:if condition="{settings.config.darkMode}">
+		<f:asset.script identifier="vanilla_darkMode">
+			// Dark mode - Main.html
+			t3sbDarkMode();
+		</f:asset.script>
+	</f:if>
+	<f:comment> Lazyload </f:comment>
+	<f:variable name="customthreshold">{t3sb:intval(number: '{settings.lazyLoadThreshold}')}</f:variable>
+	<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
+		<f:then>
+			<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+				<f:then>
+					<f:asset.script identifier="vanilla_lazyload">
+						// LazyLoad & Magnifying glass icon - Main.html
+						var customthreshold = {customthreshold};
+						new LazyLoad({
+						elements_selector: '.lazy',
+						threshold: customthreshold,
+						callback_loaded: function(img) {
+						t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth);
+						}
+						});
+					</f:asset.script>
+				</f:then>
+				<f:else>
+					<f:asset.script identifier="vanilla_lazyload">
+						// LazyLoad - Main.html
+						var customthreshold = {customthreshold};
+						new LazyLoad({
+						elements_selector: '.lazy',
+						threshold: customthreshold
+						});
+					</f:asset.script>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+				<f:asset.script identifier="vanilla_magnifying">
+					// Magnifying glass icon - Main.html
+					var magnify = document.querySelectorAll('.zoom-overlay');
+					if ( magnify.length ) {
+					document.querySelectorAll('figure.image').forEach (
+					img => { t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) }
+					)
+					}
+				</f:asset.script>
+			</f:if>
+		</f:else>
+	</f:if>
+	<f:if condition="{settings.config.footerSticky}">
+		<f:comment> Sticky footer </f:comment>
+		<f:asset.css identifier="t3sbs_footerSticky">
+			html {
+			position:relative;
+			min-height:100%
+			}
+			#page-footer {
+			position:absolute;
+			bottom:0;
+			width:100%
+			}
+		</f:asset.css>
+	</f:if>
+
+	<f:comment> Link to top </f:comment>
+	<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
+		<f:asset.script identifier="vanilla_linktotop">
+			// Link to top - Main.html
+			t3sbScrollToTop();
+		</f:asset.script>
+	</f:if>
+
+	<f:if condition="{settings.webp}">
+		<f:asset.script identifier="t3sbmodernizr" src="EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js" />
+	</f:if>
+
+	<f:if condition="!{settings.fontawesome.cdn}">
+		<f:if condition="{settings.fontawesome.extconf} == '1' || {settings.fontawesome.extconf} == '3' ">
+			<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" />
 		</f:if>
-	</f:else>
-</f:if>
-<f:if condition="{settings.config.footerSticky}">
-<f:comment> Sticky footer </f:comment>
-<f:asset.css identifier="t3sbs_footerSticky">
-html {
-	position:relative;
-	min-height:100%
-}
-#page-footer {
-	position:absolute;
-	bottom:0;
-	width:100%
-}
-</f:asset.css>
-</f:if>
-
-<f:comment> Link to top </f:comment>
-<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-<f:asset.script identifier="vanilla_linktotop">
-	// Link to top - Main.html
-	t3sbScrollToTop();
-</f:asset.script>
-</f:if>
-
-<f:if condition="{settings.webp}">
-	<f:asset.script identifier="t3sbmodernizr" src="EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js" />
-</f:if>
-
-<f:if condition="!{settings.fontawesome.cdn}">
-	<f:if condition="{settings.fontawesome.extconf} == '1' || {settings.fontawesome.extconf} == '3' ">
-		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" />
+		<f:if condition="{settings.fontawesome.extconf} == '2' ">
+			<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA5Pro/js/all.min.js" />
+		</f:if>
+		<f:if condition="{settings.fontawesome.extconf} == '4' ">
+			<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA6Pro/js/all.min.js" />
+		</f:if>
 	</f:if>
-	<f:if condition="{settings.fontawesome.extconf} == '2' ">
-		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA5Pro/js/all.min.js" />
-	</f:if>
-	<f:if condition="{settings.fontawesome.extconf} == '4' ">
-		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA6Pro/js/all.min.js" />
-	</f:if>
-</f:if>
 </f:section>

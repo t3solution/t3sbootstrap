@@ -38,6 +38,7 @@ page {
         xapistatement = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapistatement.js
         xapiUtil = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-util.js
         xapiLaunch = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-launch.js
+        lifecycle = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/lifecycle.es5.js
         cmi5Wrapper = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Wrapper-new.js
         xmlwriter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/XMLWriter.js
         cmi5xml = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5xml.js

@@ -1,40 +1,65 @@
 var xMouseDown = false,
-  beforeunload = true,
-  pagehide = true,
-  beforeUnloadListener = function(event) {
-    sessionStorage.setItem("persisted", event.persisted);
-    if (!window.xUnload && !event.persisted && !xMouseDown && sessionStorage.getItem("statesInit")) {
-      window.xUnload = true;
-      sessionStorage.setItem("terminated", "true");
-      let sd = Math.abs((new Date())) - parseInt(sessionStorage.getItem("startTimeStamp"));
-      sendDefinedStatementWrapper("Terminated", "", sd);
-      //window.removeEventListener('pagehide', beforeUnloadListener, false);
-      //window.removeEventListener('beforeunload', beforeUnloadListener, false);
+  ios = false,
+  safari = false,
+  beforeUnloadListener, statesController;
+
+// detect platform, agent
+if (navigator.platform === "iPhone" || navigator.platform === "iPad") ios = true;
+if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) safari = true;
+
+// send Terminated on close browser window/tab
+beforeUnloadListener = function(event) {
+  sessionStorage.setItem("persisted", event);
+  if (!window.xUnload && !event.persisted && !xMouseDown && sessionStorage.getItem("statesInit")) {
+    window.xUnload = true;
+    sessionStorage.setItem("terminated", "true");
+    let sd = Math.abs((new Date())) - parseInt(sessionStorage.getItem("startTimeStamp"));
+    sendDefinedStatementWrapper("Terminated", "", sd);
+  }
+};
+
+// set event listener to send Terminated on close browser window/tab
+if (ios) {
+  /*lifecycle.addEventListener('statechange', function(event) {
+    if (event.newState === "hidden") {
+      beforeUnloadListener(event);
+      userAlerts("golms");
     }
-  };
-window.addEventListener('pagehide', (event) => {
-  pagehide = false;
-  if (beforeunload) beforeUnloadListener(event);
-}, {
-  once: true
-});
-if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
-  window.addEventListener('beforeunload', (event) => {
-    beforeunload = false;
-    if (pagehide) beforeUnloadListener(event);
-  }, {
-    once: true
+  });*/
+  window.addEventListener('visibilitychange', (event) => {
+    if (document.visibilityState === 'hidden') {
+      beforeUnloadListener(event);
+      userAlerts("golms");
+    }
   });
+} else {
+  if (safari) {
+    window.addEventListener('beforeunload', (event) => {
+      beforeUnloadListener(event);
+    }, {
+      once: true
+    });
+  } else {
+    window.addEventListener('pagehide', (event) => {
+      beforeUnloadListener(event);
+    }, {
+      once: true
+    });
+  }
 }
+
+// prevent browser navigation
 history.pushState(null, null, location.href);
 window.addEventListener('popstate', (event) => {
   history.go(1);
-  swal("Bitte verwenden Sie die Navigation im Lernmodul!");
+  userAlerts("prevnext");
 });
+
 // add cmi5 parms to URL if applicable
 if (location.href.indexOf("endpoint") === -1 && parseInt(sessionStorage.getItem("courseLoggedIn")) > 0) window.history.replaceState(null, null, "?" + sessionStorage.getItem("cmi5Parms"));
 
-var statesController = function() {
+// init, set/get, handle xapi states
+statesController = function() {
   this.pagesVisited = [];
   this.attemptDuration = 0;
   this.completed = false;
@@ -121,7 +146,7 @@ statesController.prototype = {
     if (typeof states.pagesVisited !== "undefined") this.initStates(states);
     else document.querySelector("body").style.display = "block";
     // resume dialog beyond first entry
-    if (!sessionStorage.getItem("statesInit")) this.resumeDialog();
+    if (!sessionStorage.getItem("statesInit") && !sessionStorage.getItem("goToPage")) this.resumeDialog();
     markMenuItemsCb(bm.setStates);
   },
   setStates: function() {
@@ -163,7 +188,7 @@ statesController.prototype = {
   },
   // function: go to page bookmarked in LRS when resume course
   goToBookmarkedPage: function() {
-    if (this.pagesVisited.length > 0) location.href = this.pagesVisited[0].substring(0, this.pagesVisited[0].indexOf("__vp__"));
+    if (this.pagesVisited.length > 0) location.href = this.pagesVisited[1].substring(0, this.pagesVisited[1].indexOf("__vp__"));
   },
   // function: get pathname of current page as bookmark and save to LRS
   getCurrentPage: function(pagesVisited, currentPage, attr) {
@@ -221,7 +246,8 @@ statesController.prototype = {
       offcanvasProgressbar = document.querySelector(".offcanvas .progress-bar"),
       offcanvasProgress = document.querySelector(".offcanvas .progress"),
       pageId = document.querySelector("body").id,
-      mItemI, dItemI, mItems = [];
+      mItemI, dItemI, mItems = [],
+      pColor = "red";
     // when navbar is visible, track pages visited and display progress on current page
     if (document.querySelector("#main-navbar")) {
       var p = [window.innerHeight / document.body.scrollHeight * 100, 0],
@@ -229,7 +255,6 @@ statesController.prototype = {
         lpx,
         lp = location.pathname,
         index = bm.getCurrentPage(bm.pagesVisited, lp);
-      document.querySelector("#main-navbar").insertAdjacentHTML("afterend", "<div class='page-progress-bar'></div>");
       if (sessionStorage.getItem("pagesVisited")) bm.pagesVisited = JSON.parse(sessionStorage.getItem("pagesVisited"));
       for (let i = 0; i < bm.pagesVisited.length; i++) {
         if (bm.pagesVisited[i].includes(lp)) lpx = i;
@@ -260,11 +285,11 @@ statesController.prototype = {
     }
     // indicate relevant menu items in t3 menu as visited and add progress circles
     if (sessionStorage.getItem("statesInit") && sessionStorage.getItem("startPageId") != pageId) {
-      let pc1 = '<progress-circle color="#fff" value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="100" radius="50" stroke="#444" fill=',
+      let pc1 = '<progress-circle color="#fff" value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="100" radius="50" stroke="' + pColor + '" fill=',
         pc1_ = '"transparent"',
         pc1b = '><!--No label--></slice><slice part="circle" x="438" y="64" size="',
         pc2 = '%" stroke-width="',
-        pc3 = '" radius="50" stroke="#444"><!--No label--></slice><style>',
+        pc3 = '" radius="50" stroke="' + pColor + '"><!--No label--></slice><style>',
         pc3_ = '[part="background"]{opacity:0.3}',
         pc3b = 'text {font-size: 28em; transform: translate(0, 170px); font-weight: 900;}</style><slice size="190%" stroke-width="0"><tspan x="50%" y="50%">',
         pc4 = '</slice></tspan></progress-circle>';
@@ -282,6 +307,7 @@ statesController.prototype = {
         }
         // set progress circles to menu items of pages
         if (!mItemI.parentNode.classList.contains("nav-item")) {
+          if (mItemI.href.includes(location.pathname)) sessionStorage.setItem("mItemCurrentPage", mItemI.classList);
           mItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + 0 + pc2 + 0 + pc3 + pc3_ + pc3b + pc4);
           for (let j = 0; j < bm.pagesVisited.length; j++) {
             if (bm.pagesVisited[j].includes(mItemI.getAttribute("href"))) {
@@ -289,7 +315,7 @@ statesController.prototype = {
               mItemI.classList.add("visited");
               if (parseFloat(bm.pagesVisited[j].substring(bm.pagesVisited[j].indexOf("__vp__") + 6)) === 100) {
                 pc4 = '✓</slice></tspan></progress-circle>';
-                pc1_ = '"#444"';
+                pc1_ = '"' + pColor + '"';
                 pc3_ = '[part="background"]{opacity:1}';
               }
               mItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + bm.pagesVisited[j].substring(bm.pagesVisited[j].indexOf("__vp__") + 6) + pc2 + 100 + pc3 + pc3_ + pc3b + pc4);
@@ -307,7 +333,7 @@ statesController.prototype = {
         dItemI = dItemsTotal[i];
         if (!dItemI.classList.contains("progress-circle")) {
           // always check first item as completed
-          if (!dItemI.classList.contains("dropdown-toggle")) dItemI.insertAdjacentHTML("afterbegin", pc1 + '"#444"' + pc1b + 0 + pc2 + 100 + pc3 + '[part="background"]{opacity:1}' + pc3b + '✓</slice></tspan></progress-circle>');
+          if (!dItemI.classList.contains("dropdown-toggle")) dItemI.insertAdjacentHTML("afterbegin", pc1 + '"' + pColor + '"' + pc1b + 0 + pc2 + 100 + pc3 + '[part="background"]{opacity:1}' + pc3b + '✓</slice></tspan></progress-circle>');
           else {
             let l = 0,
               lt = dItemI.nextSibling.childNodes.length;
@@ -317,7 +343,7 @@ statesController.prototype = {
             if (l > 0) {
               if (l === lt) {
                 pc4 = '✓</slice></tspan></progress-circle>';
-                pc1_ = '"#444"';
+                pc1_ = '"' + pColor + '"';
                 pc3_ = '[part="background"]{opacity:1}';
               }
               dItemI.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + (l / lt * 100) + pc2 + 100 + pc3 + pc3_ + pc3b + pc4);
@@ -334,8 +360,9 @@ statesController.prototype = {
       // set total number of pages
       if (!sessionStorage.getItem("pagesTotal")) sessionStorage.setItem("pagesTotal", mItems.length);
       // set current progress in progressbar
-      bm.progress = parseInt((bm.pagesVisited.length + 1) / parseInt(sessionStorage.getItem("pagesTotal")) * 100);
+      bm.progress = parseInt(bm.pagesVisited.length / parseInt(sessionStorage.getItem("pagesTotal")) * 100);
       if (offcanvasProgressbar) {
+        offcanvasProgressbar.style.backgroundColor = pColor;
         offcanvasProgressbar.style.width = bm.progress + "%";
         offcanvasProgress.insertAdjacentHTML("afterend", "<div class='progress-bar-value'>25%</div>");
         document.querySelector(".offcanvas .progress-bar-value").innerHTML = bm.progress + "% " + "bearbeitet";
@@ -547,42 +574,33 @@ statesController.prototype = {
 
 var bm = new statesController();
 
+// config page on document load
 document.addEventListener(
   "DOMContentLoaded", () => {
     customizeTemplate();
     if (document.querySelectorAll(".course-login").length > 0) {
+      sessionStorage.setItem("courseLoginPage", location.pathname);
       sessionStorage.setItem("courseLoggedIn", 0);
+      // if dynamic link "goToPage"
+      if (document.querySelector(".go-to-page")) sessionStorage.setItem("goToPage", "true");
       document.getElementById("main-navbar").classList.add("d-none");
     }
     // get cmi5 parms of location.href
     if (!sessionStorage.getItem("cmi5Parms")) getCmi5Parms();
 
     // Parse parameters passed on the command line and set properties of the cmi5 controller.
-    if ((sessionStorage.getItem("cmi5No") == "false" && location.href.indexOf("endpoint") != -1)) {
+    if ((sessionStorage.getItem("cmi5No") === "false" && location.href.indexOf("endpoint") !== -1)) {
       cmi5Controller.setEndPoint(parse("endpoint"));
       cmi5Controller.setFetchUrl(parse("fetch"));
       cmi5Controller.setRegistration(parse("registration"));
       cmi5Controller.setActivityId(parse("activityid"));
       cmi5Controller.setActor(parse("actor"));
-      // Call the cmi5Controller.startUp() method.  Two call back functions are passed:
+      // Call the cmi5Controller.startUp() method. Two call back functions are passed:
       // cmi5Ready......This function is called once the controller has fetched the authorization token, read the State document and the agent Profile.
       // startUpError...This function is called if the startUp() method detects an error.
       cmi5Controller.startUp(cmi5Ready, startUpError);
     }
-    if (sessionStorage.getItem("terminated")) {
-      swal("Die Verbindung zum LMS wurde unterbrochen. Bitte starten Sie das Lernmodul neu!", {
-          buttons: {
-            ok: "OK",
-            cancel: {
-              visible: false,
-              closeModal: false,
-            },
-          },
-        })
-        .then((value) => {
-          if (value === "ok") cmi5Controller.goLMS();
-        });
-    }
+    if (sessionStorage.getItem("terminated")) userAlerts("golms");
   }
 );
 
@@ -628,6 +646,20 @@ function cmi5Ready() {
     }
     // on init/move to a new page perform bookmarking and highlight visited pages in menu (progress)
     handleStates(launchedSessions);
+    // if dynamic link "goToPage"
+    if (sessionStorage.getItem("goToPage") && sessionStorage.getItem("goToPage") === "true") {
+      let sessions, since = new Date(),
+        until = new Date();
+      since.setSeconds(since.getSeconds() - 250);
+      until.setSeconds(until.getSeconds() + 250);
+      sessionStorage.setItem("goToPage", "false");
+      //sessions = bm.getStatementsBase("progressed", "", "", "", since, until);
+      //console.log(sessions);
+      /*for (let i = 0; i < sessions.length; i++) {
+        referrer = sessions[i].context.extensions["http://id.tincanapi.com/extension/referrer"];
+      }*/
+      location.href = location.origin + "/sandbox/lernthemen/lernthema/lernmodule/neues-lernmodul/inhalt/inhalt/inhalt-seite-1";
+    }
     if (!sessionStorage.getItem("statesInit")) document.querySelector("body").style.display = "block";
   }
   // on launch of AU, log in as frontend user
@@ -674,6 +706,7 @@ function customizeTemplate() {
     navbarContainer[0].insertAdjacentHTML("beforeend", b2);
     navbarContainer[0].insertAdjacentHTML("beforeend", b3);
   }
+  if (document.querySelector("#main-navbar")) document.querySelector("#main-navbar").insertAdjacentHTML("afterend", "<div class='page-progress-bar'></div>");
   //  if (sessionStorage.getItem("cmi5No")) document.querySelector(".page-pagination").style.display = "block";
 
   let jumbotronImage = document.querySelectorAll('.jumbotron.background-image');
@@ -686,7 +719,10 @@ function customizeTemplate() {
       pageItemsArrow = document.querySelectorAll(".page-item a span"),
       mItemsTotal = document.querySelectorAll(".main-navbarnav a[target=_self]");
     if (pageItems.length > 1) {
-      if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) window.scrollTo(0, 60);
+      if (safari) window.scrollTo({
+        top: 60,
+        behavior: 'instant'
+      });
       else window.scrollTo(0, 1);
       document.querySelector("#page-wrapper").insertBefore(pageItems[0], document.querySelector("#page-wrapper").children[0]);
       pageItems[0].classList.add("prev-page", "pagination", "justify-content-center");
@@ -711,7 +747,10 @@ function customizeTemplate() {
       varArrowN[0].classList.add("fas", "fa-chevron-down");
       pageItemsA[0].classList.add("text-center", "text-grid");
     } else if (jumbotronImage.length < 1) {
-      if (navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) window.scrollTo(0, 60);
+      if (safari) window.scrollTo({
+        top: 60,
+        behavior: 'instant'
+      });
       else window.scrollTo(0, 1);
       document.querySelector("#page-wrapper").insertBefore(pageItems[0], document.querySelector("#page-wrapper").children[0]);
       pageItems[0].classList.add("prev-page", "pagination", "justify-content-center");
@@ -748,13 +787,13 @@ function customizeTemplate() {
   function modalNotesDialog() {
     let modalNotes = document.querySelectorAll(".container button.modal-notes");
     if (modalNotes.length > 0) modalNotes[0].click();
-    else swal("Keine Notizen hier ...");
+    else userAlerts("nonotes");
   }
 
   function modalRulesDialog() {
     let modalRules = document.querySelectorAll(".container button.modal-rules");
     if (modalRules.length > 0) modalRules[0].click();
-    else swal("Keine Merksätze hier ...");
+    else userAlerts("noinfo");
   }
 
   window.addEventListener('load', function(e) {
@@ -777,8 +816,18 @@ function customizeTemplate() {
       localVideo = document.querySelectorAll('.video video'),
       context = cmi5Controller.getContextExtensions(),
       jumbotronImage = document.querySelectorAll('.jumbotron.background-image'),
-      spokenWord_ = document.querySelectorAll(".spoken-word");
+      spokenWord_ = document.querySelectorAll(".spoken-word"),
+      navbarToggler = document.querySelector(".navbar-toggler"),
+      h5pIframeWrapper = document.querySelectorAll(".h5p-iframe-wrapper");
 
+    if (h5pIframeWrapper.length > 0) {
+      for (let i = 0; i < h5pIframeWrapper.length; i++) {
+        let h = h5pIframeWrapper[i].parentNode.querySelectorAll("h1");
+        for (let j = 0; j < h.length; j++) {
+          h[j].classList.add("d-none");
+        }
+      }
+    };
     if (jumbotronImage.length > 0 && !sessionStorage.getItem("jumbotron")) {
       jumbotronImage = jumbotronImage[0];
       let style = jumbotronImage.currentStyle || window.getComputedStyle(jumbotronImage, false),
@@ -812,7 +861,33 @@ function customizeTemplate() {
     //iframe.contentDocument.querySelector("video").play();
     //iframe.contentDocument.querySelector("video").unmuted = true;
     //if (parseInt(sessionStorage.getItem("courseLoggedIn")) > 0 && document.querySelectorAll('.video iframe').length > 0) {
+    navbarToggler.addEventListener("click", function() {
+      let cl = sessionStorage.getItem("mItemCurrentPage");
+      cl = cl.split(" ");
+      let pn = document.querySelector("." + cl[0] + "." + cl[1]).parentNode;
+      pn.classList.add("show");
+      pn.parentNode.querySelector("#" + pn.parentNode.id + " > a.dropdown-toggle").setAttribute("aria-expanded", "true");
 
+      let mi = document.querySelector("." + cl[0] + "." + cl[1]),
+        pColor = "red",
+        pc1 = '<progress-circle color="#fff" value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="100" radius="50" stroke="' + pColor + '" fill=',
+        pc1_ = '"transparent"',
+        pc1b = '><!--No label--></slice><slice part="circle" x="438" y="64" size="',
+        pc2 = '" stroke-width="',
+        pc3 = '" radius="50" stroke="' + pColor + '"><!--No label--></slice><style>',
+        pc3_ = '[part="background"]{opacity:0.3}',
+        pc3b = 'text {font-size: 28em; transform: translate(0, 170px); font-weight: 900;}</style><slice size="190%" stroke-width="0"><tspan x="50%" y="50%">',
+        pc4 = '</slice></tspan></progress-circle>',
+        p = document.querySelector(".page-progress-bar").style.width;
+
+      mi.querySelector("progress-circle").remove();
+      if (parseFloat(p, 10) >= 100) {
+        pc4 = '✓</slice></tspan></progress-circle>';
+        pc1_ = '"' + pColor + '"';
+        pc3_ = '[part="background"]{opacity:1}';
+      }
+      mi.insertAdjacentHTML("afterbegin", pc1 + pc1_ + pc1b + p + pc2 + 100 + pc3 + pc3_ + pc3b + pc4);
+    });
     if (sessionStorage.getItem("videostatements")) {
       cmi5Controller.sendStatements(JSON.parse(sessionStorage.getItem("videostatements")));
       sessionStorage.removeItem("videostatements");
@@ -856,6 +931,7 @@ function customizeTemplate() {
       }
     }
     if (navbarContainer.length > 0 && !jumbotron) textHightlighting(pageContent, notesAuButton);
+    if (jumbotron) bm.pageTitle = "Start";
     if (summary) summaryHighlights();
     if (menuImage.length > 0) {
       menuImage[0].style.backgroundImage = sessionStorage.getItem("jumbotron");
@@ -1449,9 +1525,10 @@ function sendVideoStatement(verbName, videoObj, result, cExtentions) {
   if (verb) {
     // Context extensions were read from the State document's context template
     let stmt, cx, vObj = [],
-      stmtObject = JSON.parse(sessionStorage.getItem("stmtObject"));
+      stmtObject = JSON.parse(sessionStorage.getItem("stmtObject")),
+      stmtObjectParent = JSON.parse(sessionStorage.getItem("stmtObject"));
     // Get basic cmi5 defined statement object
-    stmtObject.id += "/" + location.hostname + location.pathname;
+    stmtObject.id += "/objectid/" + location.hostname + location.pathname;
     vObj = {
       "id": stmtObject.id + "/" + videoSrcPath,
       "objectType": "Activity",
@@ -1519,7 +1596,7 @@ function handleStates(launchedSessions) {
 
 function startUpError() {
   // This is called if there is an error in the cmi5 controller startUp method.
-  swal("An error was detected in the cmi5Controller.startUp() method.  Please check the console log for any errors.");
+  userAlerts("startuperror");
 }
 
 function sendAllowedStatementWrapper(verbName, score, duration, progress, highlighted) {
@@ -1552,9 +1629,10 @@ function sendAllowedStatementWrapper(verbName, score, duration, progress, highli
   if (verb) {
     // Context extensions were read from the State document's context template
     let stmt, dur = convertMillisecondsToMinSec(duration),
-      stmtObject = JSON.parse(sessionStorage.getItem("stmtObject"));
+      stmtObject = JSON.parse(sessionStorage.getItem("stmtObject")),
+      stmtObjectParent = JSON.parse(sessionStorage.getItem("stmtObject"));
     // Get basic cmi5 allowed statement object
-    stmtObject.id += "/" + location.hostname + location.pathname;
+    stmtObject.id += "/objectid/" + location.hostname + location.pathname;
     stmt = cmi5Controller.getcmi5AllowedStatement(verb, stmtObject, cmi5Controller.getContextActivities(), cExtentions);
     stmt.object.definition.name = {
       [cmi5Controller.dLang]: cmi5Controller.dTitle + ' at page ' + '"' + bm.pageTitle + '", duration: ' + dur
@@ -1604,6 +1682,16 @@ function sendAllowedStatementWrapper(verbName, score, duration, progress, highli
     }*/
     Object.assign(cExtentions, cx);
     stmt.context.extensions = cExtentions;
+    stmt.context.contextActivities.parent = [{
+      "id": stmtObjectParent.id += "/parentid/" + location.hostname + sessionStorage.getItem("courseLoginPage"),
+      "definition": {
+        "name": {
+          [cmi5Controller.dLang]: cmi5Controller.dTitle + ' at page ' + '"' + bm.pageTitle + '"'
+        },
+        "type": "http://id.tincanapi.com/activitytype/page"
+      },
+      "objectType": "Activity"
+    }];
     cmi5Controller.sendStatement(stmt);
   } else console.log("Invalid verb passed: " + verbName);
   return false;
@@ -1709,21 +1797,36 @@ var handleH5P = function(event) {
   }
   // get H5P statement
   let H5PXapiStmt = event.data.statement,
-    stmt, cid = parseInt(H5PXapiStmt.object.definition.extensions["http://h5p.org/x-api/h5p-local-content-id"]),
-    title = H5PXapiStmt.context.contextActivities.category[0].id.substring(25),
-    stmtObject = JSON.parse(sessionStorage.getItem("stmtObject"));
+    stmt, h5pLib, cid = parseInt(H5PXapiStmt.object.definition.extensions["http://h5p.org/x-api/h5p-local-content-id"]),
+    stmtObject = JSON.parse(sessionStorage.getItem("stmtObject")),
+    stmtObjectParent = JSON.parse(sessionStorage.getItem("stmtObject"));
   if (cmi5Controller.getContextExtensions()) {
-    // add cmi5 activity ID
-    stmtObject.id += "/" + location.hostname + location.pathname + "/h5pcid_" + cid + H5PXapiStmt.object.id;
+    // get h5p library type
+    h5pLib = this.libraryInfo.versionedNameNoSpaces;
+    // extend cmi5 activity ID
+    stmtObject.id += "/objectid/" + location.hostname + location.pathname + "/h5pcid_" + cid + H5PXapiStmt.object.id;
     H5PXapiStmt.object.id = stmtObject.id;
     if (!H5PXapiStmt.verb["id"].includes("completed")) sessionStorage.setItem("h5p-obj-id___" + location.pathname + "/h5pcid_" + cid, H5PXapiStmt.object.id);
     sessionStorage.setItem("h5ppage", location.pathname);
     // add cmi5 description: "name of content type" at "name of page"
     H5PXapiStmt.object.definition.name = {
-      [cmi5Controller.dLang]: cmi5Controller.dTitle + ': "' + title + ': ' + cid + '"' + ' at page ' + '"' + bm.pageTitle + '"'
+      [cmi5Controller.dLang]: cmi5Controller.dTitle + ': "' + h5pLib + ' cid: ' + cid + '"' + ' at page ' + '"' + bm.pageTitle + '"'
     };
     // create cmi5 allowed statement
     stmt = cmi5Controller.getcmi5AllowedStatement(H5PXapiStmt.verb, H5PXapiStmt.object, cmi5Controller.getContextActivities(), cmi5Controller.getContextExtensions());
+    // add h5p library type to extensions object
+    stmt.context.extensions["https://h5p.org/libraries"] = h5pLib;
+    // add parent to contextActivities object
+    stmt.context.contextActivities.parent = [{
+      "id": stmtObjectParent.id += "/parentid/" + location.hostname + location.pathname,
+      "definition": {
+        "name": {
+          [cmi5Controller.dLang]: cmi5Controller.dTitle + ' at page ' + '"' + bm.pageTitle + '"'
+        },
+        "type": "http://id.tincanapi.com/activitytype/page"
+      },
+      "objectType": "Activity"
+    }];
     // add result to statement if applicable
     if (H5PXapiStmt.result) {
       stmt.result = H5PXapiStmt.result;
@@ -1788,9 +1891,9 @@ document.addEventListener('readystatechange', function() {
     if (h5pIframe.length > 0) {
       for (let i = 0; i < h5pIframe.length; i++) {
         if ((h5pIframe[i].contentDocument.querySelector("button.h5p-question-check-answer") || h5pIframe[i].contentDocument.querySelector("button.h5p-joubelui-button")) && !h5pIframe[i].contentDocument.querySelector("button.h5p-dialogcards-turn")) {
-          for (let j = 0; j < sessionStorage.length; j++) {
+          /*for (let j = 0; j < sessionStorage.length; j++) {
             if (sessionStorage.key(j) === ("h5p-state___" + location.pathname + "/h5pcid_" + h5pIframe[i].dataset.contentId)) h5pIframe[i].contentDocument.querySelector("button.h5p-question-check-answer").click();
-          }
+          }*/
         }
       }
     }
@@ -1798,6 +1901,37 @@ document.addEventListener('readystatechange', function() {
     H5P.externalDispatcher.on('xAPI', handleH5P);
   }
 });
+
+function userAlerts(issue) {
+  switch (issue) {
+    case "glolms":
+      swal("Die Verbindung zum LMS wurde unterbrochen. Bitte starten Sie das Lernmodul neu!", {
+          buttons: {
+            ok: "OK",
+            cancel: {
+              visible: false,
+              closeModal: false,
+            },
+          },
+        })
+        .then((value) => {
+          if (value === "ok") cmi5Controller.goLMS();
+        });
+      break;
+    case "prevnext":
+      swal("Bitte verwenden Sie die Navigation im Lernmodul!");
+      break;
+    case "nonotes":
+      swal("Keine Notizen hier ...");
+      break;
+    case "noinfo":
+      swal("Keine Merksätze hier ...");
+      break;
+    case "startuperror":
+      swal("An error was detected in the cmi5Controller.startUp() method.  Please check the console log for any errors.");
+      break;
+  }
+}
 
 function exitAU() {
   finishAU();

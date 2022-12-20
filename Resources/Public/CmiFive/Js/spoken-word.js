@@ -3984,4 +3984,3 @@ window.spokenWord = function(t) {
   var r = n(1)(n(0), "WeakMap");
   t.exports = r
 }]);
-//# sourceMappingURL=spoken-word.js.map
