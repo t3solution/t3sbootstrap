@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-03-20T09:52:16Z" product-name="sitegenerator">
+		<header/>
+		<body>
+			<trans-unit id="itemProvider.siteGenerator" xml:pace="preserve">
+				<!--<source>Site generator / tree model duplicator</source>-->
+				<source>Neues Lernmodul erstellen</source>
+			</trans-unit>
+            <trans-unit id="alert">
+				<source>Alert</source>
+			</trans-unit>
+            <trans-unit id="allfieldsMandatory">
+				<source>All fields with an asterisk are mandatory</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

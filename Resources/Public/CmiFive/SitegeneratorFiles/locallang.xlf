@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file t3:id="1518092390" source-language="en" datatype="plaintext" original="messages" date="2018-02-08T20:22:33Z" product-name="site_generator">
+		<header/>
+		<body>
+			<trans-unit id="title_generator">
+				<source>Neues Lernmodul aus Template erstellen</source>
+			</trans-unit>
+
+            <trans-unit id="form.previousStep">
+				<source>Previous step</source>
+			</trans-unit>
+            <trans-unit id="form.nexStep">
+				<source>Lernmodul erstellen</source>
+			</trans-unit>
+
+            <trans-unit id="form.FirstStepData.title">
+				<source>Einstellungen</source>
+			</trans-unit>
+            <trans-unit id="form.FirstStepData.siteTitle">
+				<source>Titel des neuen Lernmoduls</source>
+			</trans-unit>
+            <trans-unit id="form.FirstStepData.selectModel">
+				<source>Template auswählen</source>
+			</trans-unit>
+            <trans-unit id="form.SecondStepData.domain">
+				<source>Domain name (https://www.example.com/) - leave empty to ignore</source>
+			</trans-unit>
+
+            <trans-unit id="form.SecondStepData.title">
+				<source>Optional Information</source>
+			</trans-unit>
+            <trans-unit id="form.SecondStepData.groupPrefix">
+				<source>Group prefix (BE and FE)</source>
+			</trans-unit>
+            <trans-unit id="form.SecondStepData.newFolderCreation">
+				<source>New folders will be created in fileadmin like : "baseFolderName > Site title > SubFolderName"</source>
+			</trans-unit>
+            <trans-unit id="form.SecondStepData.baseFolderName">
+				<source>Base folder name</source>
+			</trans-unit>
+            <trans-unit id="form.SecondStepData.subFolderNames">
+				<source>Sub-folder names to create (comma separated)</source>
+			</trans-unit>
+
+            <trans-unit id="noModelFounded">
+				<source>No model founded</source>
+			</trans-unit>
+            <trans-unit id="checkModelPid">
+				<source>Check modelsPid in extension configuration</source>
+			</trans-unit>
+
+            <trans-unit id="generate.success.copySuccessfull">
+				<source>- Model copy successful (pid model root page = %s)</source>
+			</trans-unit>
+            <trans-unit id="generate.success.feGroupCreated">
+				<source>- A new FE group has been created : %s (uid = %s)</source>
+			</trans-unit>
+            <trans-unit id="generate.success.beGroupCreated">
+				<source>- A new BE group has been created : %s (uid = %s)</source>
+			</trans-unit>
+            <trans-unit id="generate.success.noFeGroupCreated">
+				<source>- FE group couldn't be created because module.tx_sitegenerator.settings.siteGenerator.wizard.pidFeGroup (Cf TS constants) is not defined</source>
+			</trans-unit>
+            <trans-unit id="generate.success.folderExist">
+				<source>- Folder '%s' hasn't been created because it already exists</source>
+			</trans-unit>
+            <trans-unit id="generate.success.folderCreated">
+				<source>- Folder '%s' has been created</source>
+			</trans-unit>
+            <trans-unit id="generate.success.feGroupSetToPages">
+				<source>- The FE group with uid %s has been set for pages : %s</source>
+			</trans-unit>
+            <trans-unit id="generate.success.beGroupSetToPages">
+				<source>- The BE group with uid %s has been set for pages : %s</source>
+			</trans-unit>
+            <trans-unit id="generate.success.homePageUpdated">
+				<source>- Home page title has been set to '%s'</source>
+			</trans-unit>
+            <trans-unit id="generate.success.updatePageTS">
+				<source>- Update page TSConfig (TCEMAIN.clearCacheCmd) done for pages : %s</source>
+			</trans-unit>
+            <trans-unit id="generate.success.createSiteConfiguration">
+				<source>- The site configuration for domain '%s' has been created</source>
+			</trans-unit>
+            <trans-unit id="generate.success.createFileMount">
+				<source>- A new file mount has been set : %s (uid = %d)</source>
+			</trans-unit>
+
+            <trans-unit id="generate.success">
+				<source>Das neue Lernmodul wurde erstellt.</source>
+			</trans-unit>
+
+            <trans-unit id="wizard.firstPage.error">
+				<source>The first page couldn't be created.</source>
+			</trans-unit>
+            <trans-unit id="wizard.createSiteConfiguration.error">
+				<source>The site configuration couldn't be created.</source>
+			</trans-unit>
+            <trans-unit id="wizard.createSiteConfiguration.error.noRooTPage">
+				<source>- The site configuration couldn't be created because model contains no root page.</source>
+			</trans-unit>
+            <trans-unit id="wizard.copyModel.error">
+				<source>Site model copy error.</source>
+			</trans-unit>
+            <trans-unit id="wizard.feGroup.error">
+				<source>Create FE group error - check TypoScript configuration for pidFeGroup.</source>
+			</trans-unit>
+            <trans-unit id="wizard.beGroup.error">
+				<source>Create BE group error.</source>
+			</trans-unit>
+            <trans-unit id="wizard.fileMount.error">
+				<source>Create file mount error.</source>
+			</trans-unit>
+            <trans-unit id="wizard.folderCreation.error">
+				<source>Directory creation error for "%s".</source>
+			</trans-unit>
+            <trans-unit id="wizard.tsConfig.error">
+				<source>No steps defined in your TS Config, check config for module.tx_sitegenerator / wizardSteps</source>
+			</trans-unit>
+            <trans-unit id="wizard.tsError">
+				<source>TS configuration error for "%s".</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

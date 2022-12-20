@@ -1,0 +1,42 @@
+# Module configuration
+# ../public/typo3conf/ext/site_generator/Configuration/TypoScript/
+# ../public/typo3conf/ext/site_generator/Resources/Private/Language/ -> locallang.xlf, backend.xlf
+module.tx_sitegenerator {
+    view {
+        templateRootPaths {
+            0 = EXT:site_generator/Resources/Private/Templates/
+            1 = {$module.tx_sitegenerator.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:site_generator/Resources/Private/Partials/
+            1 = {$module.tx_sitegenerator.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:site_generator/Resources/Private/Layouts/
+            1 = {$module.tx_sitegenerator.view.layoutRootPath}
+        }
+    }
+    settings {
+        siteGenerator {
+            wizard {
+                steps {
+                    10 = Oktopuce\SiteGenerator\Wizard\StateCopyModelSite
+                    #20 = Oktopuce\SiteGenerator\Wizard\StateCreateFolder
+                    #30 = Oktopuce\SiteGenerator\Wizard\StateCreateFileMount
+                    #40 = Oktopuce\SiteGenerator\Wizard\StateCreateFeGroup
+                    #50 = Oktopuce\SiteGenerator\Wizard\StateCreateBeGroup
+                    #60 = Oktopuce\SiteGenerator\Wizard\StateSetPageBeGroup
+                    70 = Oktopuce\SiteGenerator\Wizard\StateSiteConfiguration
+                    80 = Oktopuce\SiteGenerator\Wizard\StateUpdateHomePage
+                    90 = Oktopuce\SiteGenerator\Wizard\StateUpdateTemplateHP
+                    100 = Oktopuce\SiteGenerator\Wizard\StateUpdatePageTs
+                    110 = Oktopuce\SiteGenerator\Wizard\StateUpdateSlugs
+                }
+                formDto = {$module.tx_sitegenerator.settings.siteGenerator.wizard.formDto}
+                pidFeGroup = {$module.tx_sitegenerator.settings.siteGenerator.wizard.pidFeGroup}
+                storageUid = {$module.tx_sitegenerator.settings.siteGenerator.wizard.storageUid}
+                hideHomePage = {$module.tx_sitegenerator.settings.siteGenerator.wizard.hideHomePage}
+            }
+        }
+    }
+}
