@@ -9,7 +9,6 @@ function cmi5Settings(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11) {
     }
   }
   document.querySelector('#page-content main').insertAdjacentHTML('beforeend', '<textarea class="parsedxml" style="width:100%" rows="10"></textarea>');
-  console.log(s11);
   settings.cmiObjpropLang = s1;
   settings.cmiDatamodelAuActtype = s2;
   settings.cmiDatamodelAuTitle = s3;
