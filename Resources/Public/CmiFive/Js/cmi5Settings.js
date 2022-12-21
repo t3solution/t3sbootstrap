@@ -1,4 +1,4 @@
-function cmi5Settings(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10) {
+function cmi5Settings(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11) {
   let xmlTextarea = document.createElement('TEXTAREA'),
     pagination = document.querySelectorAll('.pagination'),
     settings = {};
@@ -9,6 +9,7 @@ function cmi5Settings(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10) {
     }
   }
   document.querySelector('#page-content main').insertAdjacentHTML('beforeend', '<textarea class="parsedxml" style="width:100%" rows="10"></textarea>');
+  console.log(s11);
   settings.cmiObjpropLang = s1;
   settings.cmiDatamodelAuActtype = s2;
   settings.cmiDatamodelAuTitle = s3;
@@ -19,6 +20,7 @@ function cmi5Settings(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10) {
   settings.cmiDatamodelCourseTitle = s8;
   settings.cmiDatamodelCourseDescr = s9;
   settings.cmiDatamodelCourseId = s10;
+  settings.cmiDatamodelAuLaunchmethod = s11;
   sessionStorage.setItem("cmi5ObjectProperties", JSON.stringify([settings.cmiObjpropLang, settings.cmiDatamodelAuActtype, settings.cmiDatamodelAuTitle, settings.cmiDatamodelAuDescr]));
   if (settings.cmiDatamodelAuActtype == 0) alert("Please select in valid Activity Type in cmi5 Settings!");
   let cop = JSON.parse(sessionStorage.getItem("cmi5ObjectProperties"));

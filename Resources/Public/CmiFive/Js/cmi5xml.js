@@ -113,6 +113,8 @@ function cmi5Xml(settings) {
     xw.writeAttributeString('id', settings.cmiDatamodelAuId.substring(0, settings.cmiDatamodelAuId.indexOf("xxx")) + deUmlaut(pageTitle));
     xw.writeAttributeString('moveOn', settings.cmiDatamodelAuMoveon);
     xw.writeAttributeString('masteryScore', settings.cmiDatamodelAuMasteryscore);
+    xw.writeAttributeString('launchMethod', settings.cmiDatamodelAuLaunchmethod);
+    xw.writeAttributeString('activityType', settings.cmiDatamodelAuActtype);
     xw.writeStartElement('title');
     xw.writeStartElement('langstring');
     xw.writeString(settings.cmiDatamodelAuTitle);
@@ -130,6 +132,7 @@ function cmi5Xml(settings) {
     xw.writeEndElement();
     xw.writeEndElement();
     xw.writeEndDocument();
+    console.log(xw.flush());
     return xw.flush();
   }
 }

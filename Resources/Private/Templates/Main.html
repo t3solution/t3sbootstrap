@@ -105,7 +105,7 @@
 
 <f:section name="AssetScripts">
 
-	<f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/Scripts/cmi5Settings.js" />
+	<f:asset.script identifier="cmi5Settings" src="EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Settings.js" />
 	<f:if condition="{config.navbar.enable} != 'none'">
 		<f:then>
 			<f:asset.script identifier="vanilla_default">
@@ -121,7 +121,7 @@
 				fixedNavbar = true;
 				}
 				<f:if condition="{data.tx_t3sbootstrap_cmi_generatexml}">
-					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}');
+					cmi5Settings('{settings.config.cmiObjpropLang}','{settings.config.cmiDatamodelAuActtype}','{settings.config.cmiDatamodelAuTitle}','{settings.config.cmiDatamodelAuDescr}','{settings.config.cmiDatamodelAuId}','{settings.config.cmiDatamodelAuMoveon}','{settings.config.cmiDatamodelAuMasteryscore}','{settings.config.cmiDatamodelCourseTitle}','{settings.config.cmiDatamodelCourseDescr}','{settings.config.cmiDatamodelCourseId}','{settings.config.cmiDatamodelAuLaunchmethod}');
 				</f:if>
 				// Scroll anchor - Main.html
 				if (window.location.hash) {
