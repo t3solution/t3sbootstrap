@@ -132,7 +132,6 @@ function cmi5Xml(settings) {
     xw.writeEndElement();
     xw.writeEndElement();
     xw.writeEndDocument();
-    console.log(xw.flush());
     return xw.flush();
   }
 }
