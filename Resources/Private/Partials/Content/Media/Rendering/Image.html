@@ -9,7 +9,7 @@
 
 <f:if condition="{addmedia.origImg}">
 	<f:then>
-		<f:image class="img-fluid{extraImgClass}" src="fileadmin/{file.identifier}" />
+		<f:image class="img-fluid{extraImgClass}" alt="{altText}" src="fileadmin/{file.identifier}" />
 	</f:then>
 	<f:else>
 		<f:if condition="{file.properties.tx_t3sbootstrap_imgtag}">
