@@ -500,7 +500,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 	{
 		$srcsetString = [];
 		foreach ($srcsetImages as $widthDescriptor => $imageCandidate) {
-			$srcsetString[] = $this->sanitizeSrcsetUrl($imageCandidate) . ' ' . $widthDescriptor;
+			if($widthDescriptor !== '0w') {
+				$srcsetString[] = $this->sanitizeSrcsetUrl($imageCandidate) . ' ' . $widthDescriptor;
+			}
 		}
 
 		return implode(', ', $srcsetString);
