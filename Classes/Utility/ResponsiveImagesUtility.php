@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -28,6 +29,13 @@ class ResponsiveImagesUtility implements SingletonInterface
 	protected $imageService;
 
 	/**
+	 * Configuration Manager
+	 *
+	 * @var ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
 	 * Default media breakpoint configuration
 	 *
 	 * @var array
@@ -42,9 +50,10 @@ class ResponsiveImagesUtility implements SingletonInterface
 	/**
 	 * @param ImageService $imageService
 	 */
-	public function __construct(ImageService $imageService)
+	public function __construct(ImageService $imageService, ConfigurationManager $configurationManager)
 	{
 		 $this->imageService = $imageService;
+		 $this->configurationManager = $configurationManager;
 	}
 
 
@@ -85,7 +94,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$tag = $tag ?: GeneralUtility::makeInstance(TagBuilder::class, 'picture');
 		$fallbackTag = $fallbackTag ?: GeneralUtility::makeInstance(TagBuilder::class, 'img');
 
-		$webpIsLoaded = ExtensionManagementUtility::isLoaded('webp');
+		$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$webpIsLoaded = (bool)$settings['page.']['10.']['settings.']['webp'];
 
 		// Deal with file formats that can't be cropped separately
 		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
