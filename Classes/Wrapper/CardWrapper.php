@@ -34,7 +34,8 @@ class CardWrapper implements SingletonInterface
 			->select('*')
 			->from('tt_content')
 			->where(
-				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT)),
+				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($processedData['data']['sys_language_uid'], \PDO::PARAM_INT))
 			)
 			->orderBy('sorting')
 			->execute()
