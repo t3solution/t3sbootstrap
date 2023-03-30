@@ -34,7 +34,7 @@ class Table implements SingletonInterface
 		$tableclass .= $flexconf['tableInverse'] ? ' table-dark' : '';
 		$tableclass .= $processedData['data']['tx_t3sbootstrap_extra_class'] ? ' '.$processedData['data']['tx_t3sbootstrap_extra_class'] : '';
 		$processedData['tableclass'] = trim($tableclass);
-		$processedData['theadclass'] = $flexconf['theadClass'];
+		$processedData['theadclass'] = !empty($flexconf['theadClass']) ? $flexconf['theadClass'] : '';
 		$processedData['tableResponsive'] = $flexconf['tableResponsive'] ? TRUE : FALSE;
 		$processedData['tableResponsiveVariant'] = isset($flexconf['tableResponsiveVariant']) ? TRUE : FALSE;
 
