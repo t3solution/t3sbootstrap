@@ -9,6 +9,7 @@ use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -26,11 +27,24 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	protected $responsiveImagesUtility;
 
 	/**
+	 * @var ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
 	 * @param ResponsiveImagesUtility $responsiveImagesUtility
 	 */
 	public function injectResponsiveImagesUtility(ResponsiveImagesUtility $responsiveImagesUtility)
 	{
 		$this->responsiveImagesUtility = $responsiveImagesUtility;
+	}
+
+	/**
+	 * @param ConfigurationManager $configurationManager
+	 */
+	public function injectConfigurationManager(ConfigurationManager $configurationManager)
+	{
+		$this->configurationManager = $configurationManager;
 	}
 
 	/**
@@ -258,7 +272,8 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		 $imageService = $this->getImageService();
 		 $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
-		$webpIsLoaded = ExtensionManagementUtility::isLoaded('webp');
+		$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$webpIsLoaded = (bool)$settings['page.']['10.']['settings.']['webp'];
 		if ( $webpIsLoaded ) {
 			$webpIdentifier = $processedImage->getIdentifier().'.webp';
 			$processedImage->setIdentifier($webpIdentifier);
