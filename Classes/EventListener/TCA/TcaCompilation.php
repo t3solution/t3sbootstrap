@@ -31,7 +31,7 @@ class TcaCompilation
 			}
 			$tca['tt_content']['columns']['tx_t3sbootstrap_header_fontawesome']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 
 		if (!empty($extconf['customHeaderClass'])) {
@@ -42,7 +42,7 @@ class TcaCompilation
 			}
 			$tca['tt_content']['columns']['tx_t3sbootstrap_header_class']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 
 
@@ -56,7 +56,7 @@ class TcaCompilation
 			}
 			$tca['pages']['columns']['tx_t3sbootstrap_fontawesome_icon']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 
 
@@ -68,7 +68,7 @@ class TcaCompilation
 			}
 			$tca['pages']['columns']['tx_t3sbootstrap_titlecolor']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 
 
@@ -80,7 +80,7 @@ class TcaCompilation
 			}
 			$tca['pages']['columns']['tx_t3sbootstrap_subtitlecolor']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 
 
@@ -94,7 +94,7 @@ class TcaCompilation
 			}
 			$tca['sys_file_reference']['columns']['tx_t3sbootstrap_extra_class']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 
 
@@ -106,7 +106,7 @@ class TcaCompilation
 			}
 			$tca['sys_file_reference']['columns']['tx_t3sbootstrap_extra_imgclass']['config']['valuePicker']['items'] = $newItems;
 		} else {
-			$tca = $event->getTca();
+			$tca = $event->setTca();
 		}
 		
 		$event->setTca($tca);
