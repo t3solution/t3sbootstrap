@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Hooks\PageRenderer;
 
+use TYPO3\CMS\Core\Page\PageRenderer;
 use T3SBS\T3sbootstrap\Service\CompileService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
@@ -24,7 +25,7 @@ class PreProcessHook
 
 	/**
 	 * @param array $params
-	 * @param \TYPO3\CMS\Core\Page\PageRenderer $pagerenderer
+	 * @param PageRenderer $pagerenderer
 	 */
 	public function execute(&$params, &$pagerenderer): void
 	{

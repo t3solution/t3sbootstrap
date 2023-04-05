@@ -5,13 +5,13 @@
 	modified by EXT:t3sbootstrap
 -->
 
-<f:render partial="Sorting" arguments="{conf: conf, numberofresults: numberofresults, sortingLinks: sortingLinks}" />
+<f:render partial="T3SB/Sorting" arguments="{conf: conf, numberofresults: numberofresults, sortingLinks: sortingLinks}" />
 <f:if condition="{conf.pagebrowserOnTop}">
 	<div id="kesearch_pagebrowser_top"><f:render partial="PageBrowser" arguments="{conf: conf, numberofresults:numberofresults, pagebrowser:pagebrowser}" /></div>
 </f:if>
-<div id="kesearch_results" class="card-deck gallery g-4 row row-cols-1 row-cols-md-4">
+<div id="kesearch_results" class="card-deck gallery g-4 row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
 	<f:for each="{resultrows}" as="resultrow">
-		<f:render partial="ResultRow" arguments="{conf: conf, resultrow: resultrow}" />
+		<f:render partial="T3SB/ResultRow" arguments="{conf: conf, resultrow: resultrow}" />
 	</f:for>
 </div>
 <f:if condition="{conf.pagebrowserAtBottom}">

@@ -5,7 +5,6 @@
 	modified by EXT:t3sbootstrap
 -->
 
-
 <f:asset.css identifier="searchResult">
 .card {
 	border-radius: 0;
@@ -36,7 +35,7 @@ color: var(--bs-primary)
 		<f:if condition="{resultrow.type} == 'cal'">
 			<f:then>
 				<f:comment><!-- Special cal date rendering --></f:comment>
-				<f:render partial="CalDate" arguments="{resultrow: resultrow}" />
+				<f:render partial="T3SB/CalDate" arguments="{resultrow: resultrow}" />
 			</f:then>
 			<f:else>
 				<f:comment><!-- Default date rendering --></f:comment>
@@ -55,12 +54,9 @@ color: var(--bs-primary)
 <div class="card-text">
 	<span class="result-teaser">{resultrow.teaser -> f:format.raw()}</span>
 </div>
-
 </div>
   <div class="card-footer">
-	  	<f:if condition="{conf.showTags}">
-	  		<i class="fa-solid fa-tags me-1"></i>{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}
-		</f:if>
+	  <i class="fa-solid fa-tags me-1"></i>{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}
   </div>
 </div>
 </div>

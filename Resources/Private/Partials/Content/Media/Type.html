@@ -6,7 +6,7 @@
 	<f:case value="4">	
 		<f:render partial="Media/Type/Video" arguments="{file: file, dimensions: dimensions, class: class, border: border, addmedia: addmedia, position: position, poster: poster}" />
 	</f:case>
-	<f:defaultCase>
+	<f:defaultCase>	
 		<f:render partial="Media/Type/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, celink: celink}" />
 	</f:defaultCase>
 </f:switch>

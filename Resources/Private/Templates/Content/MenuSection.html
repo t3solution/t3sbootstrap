@@ -7,7 +7,7 @@
 			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'{settings.sectionmenuScrollspy}', contentElement:'true'}"	/>
 		</f:then>
 		<f:else>
-			<f:render partial="Page/Assets" arguments="{scrollspy:'{settings.sectionmenuScrollspy}', contentElement:'true'}" />
+			<f:render partial="Page/Assets" arguments="{stickytop:'false', scrollspy:'{settings.sectionmenuScrollspy}', contentElement:'true'}" />
 		</f:else>
 	</f:if>
 	<f:if condition="{onlyCurrentPageSelected}">

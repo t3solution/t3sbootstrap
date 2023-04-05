@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+	<div class="nav-item dropdown dm-toggler">
+		<a class="nav-link dropdown-toggle ps-lg-3"
+				id="bd-theme"
+				type="button"
+				aria-expanded="false"
+				data-bs-toggle="dropdown"
+				data-bs-display="static">
+			<i class="bi me-2 theme-icon-active bi-brightness-high-fill"></i>
+			<span class="d-lg-none ms-2">Toggle theme</span>
+		</a>
+		<div class="dropdown-menu dropdown-menu-end{config.navbar.dropdownAnimate}" style="--bs-dropdown-min-width: 8rem;">
+			<a type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+				<i class="bi me-2 opacity-50 bi-brightness-high-fill"></i>
+				Light
+				<svg class="d-none"><use href="#check2"></use></svg>
+			</a>
+			<a type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+				<i class="bi me-2 opacity-50 bi-moon-stars-fill"></i>
+				Dark
+				<svg class="d-none"><use href="#check2"></use></svg>
+			</a>
+			<a type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto">
+				<i class="bi me-2 opacity-50 bi-circle-half"></i>
+				Auto
+				<svg class="d-none"><use href="#check2"></use></svg>
+			</a>
+		</div>
+	</div>
+</html>

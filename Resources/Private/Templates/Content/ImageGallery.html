@@ -6,7 +6,7 @@
 	<f:if condition="{files}">
 		<div class="wrapper-parent image-gallery gallery">
 			<f:for each="{files}" as="row" iteration="fileIterator">
-				<div class="row">
+				<div class="row {data.tx_t3sbootstrap_gutters} {data.tx_t3sbootstrap_verticalgutters}">
 					<f:for each="{row}" as="file">
 						<f:if condition="{data.imagecols} == 1">
 							<div class="col-12 ig-col">
@@ -29,14 +29,14 @@
 						<f:if condition="{file.type} == 2">
 							<f:if condition="{file.link}">
 								<f:then>
-									<figure class="image">
+									<figure class="image m-0">
 										<f:link.typolink parameter="{file.link}">
 											<f:render section="Image" arguments="{_all}" />
 										</f:link.typolink>
 									</figure>
 								</f:then>
 								<f:else>
-									<figure class="image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+									<figure class="image m-0{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 										<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
 											<f:render section="Image" arguments="{_all}" />
 											<div class="zoom-overlay ml-2">

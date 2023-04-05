@@ -95,6 +95,21 @@
 						</TCEforms>
 					</card_wrapper>
 
+					<colclass>
+						<TCEforms>
+							<label>Column class</label>
+							<displayCond>FIELD:sDEF.card_wrapper:=:columns</displayCond>
+							<description>default - 3 columns: "col-sm-6 col-lg-4 mb-4"</description>
+							<config>
+								 <type>input</type>
+								 <size>40</size>
+								 <default>col-sm-6 col-lg-4 mb-4</default>
+								 <eval>trim</eval>
+							</config>
+						</TCEforms>
+					</colclass>
+
+
 					<visibleCards>
 						<TCEforms>
 							<label>Visible Cards</label>
@@ -174,6 +189,7 @@
 					<width>
 						<TCEforms>
 							<label>max. Image width</label>
+							<description>if "0" the cards width is used - or auto-width if the cards width is also empty (best practies)</description>
 							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 							<config>
 								<type>input</type>
@@ -315,7 +331,7 @@
 							</config>
 						</TCEforms>
 					</autoplay>
-		
+
 					<delay>
 						<TCEforms>
 							<label>Delay between transitions (in ms)</label>
@@ -333,7 +349,6 @@
 							</config>
 						</TCEforms>
 					</delay>
-
 
 					<cropMaxCharacters>
 						<TCEforms>

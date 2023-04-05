@@ -227,9 +227,18 @@
 	</button>
 	<div class="collapse" id="hints">
 		<div class="card card-body mb-0 p-0 pt-2">
-			<f:if condition="{settings.webp}">
+			<f:if condition="{settings.webp} || {webpIsLoaded}">
 				<f:then>
-					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> WebP Support is enabled</p>
+					<f:if condition="{settings.webp}">
+						<f:then>
+							<p class="text-success"><i class="fa fa-check text-success mr-1"></i> WebP Support is enabled</p>						
+						</f:then>
+						<f:else>
+							<p class="text-success"><i class="fa fa-check text-success mr-1"></i>
+								 WebP Support is enabled for use the default EXT:webp .htaccess configuration
+							</p>
+						</f:else>
+					</f:if>
 				</f:then>
 				<f:else>
 					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> WebP Support is disabled</p>

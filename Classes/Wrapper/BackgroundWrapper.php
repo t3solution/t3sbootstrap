@@ -80,7 +80,7 @@ class BackgroundWrapper implements SingletonInterface
 									$queryBuilder->expr()->eq('sys_language_uid', $processedData['data']['sys_language_uid']),
 									$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
 								)
-							 ->execute()
+							 ->executeQuery()
 							 ->fetchColumn(0);
 
 						$autoplay = $file->getProperties()['autoplay'];
@@ -93,6 +93,10 @@ class BackgroundWrapper implements SingletonInterface
 						$processedData['localVideo']['inlineCSS'] = '@media (max-width:768px){#s-'.$processedData['data']['uid'].
 						' figure.video{width:'.$mobileWidth.'%; max-height:'.$mobileHeight.'px; margin-left:'.$processedData['horizontalShift'].'%}}';
 						$ratio = end(explode('/', $flexconf['aspectRatio'])).'x9';
+						$ratioArr = explode('x', $ratio);
+						$x = $ratio;
+						$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
+						$processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
 						$processedData['localVideo']['class'] = ' ratio ratio-'.$ratio;
 						$processedData['localVideo']['overlayChild'] = $overlayChild;
 						$processedData['localVideo']['autoplay'] = $autoplay;
@@ -107,6 +111,7 @@ class BackgroundWrapper implements SingletonInterface
 				// orig. image option in flexform
 				if ($flexconf['origImage']) {
 					$processedData['file'] = $file;
+					$processedData['ingWidth'] = $flexconf['width'] ? $flexconf['width'] : 1296;
 				} else {
 					$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp, $bgMediaQueries);
@@ -156,7 +161,7 @@ class BackgroundWrapper implements SingletonInterface
 			$processedData['controlStyle'] = '';
 		} else {
 			$processedData['controlStyle'] = ' pointer-events:none;';
-		}		
+		}
 		if ( !empty($processedData['videoId']) && $processedData['youtube'] ) {
 			$params = '?autoplay='.$processedData['videoAutoPlay'].'&loop='.$flexconf['videoLoop'].'&playlist='.
 			$processedData['videoId'].'&mute='.$mute.'&rel=0&showinfo=0&controls='.$flexconf['videoControls'].'&modestbranding='.$flexconf['videoControls'];

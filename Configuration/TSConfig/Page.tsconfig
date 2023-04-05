@@ -27,13 +27,13 @@ TCEFORM.tt_content {
 	linkToTop.disabled = 1
 	table_class.disabled = 1
 	space_before_class.disabled = 1
-	space_after_class.disabled = 1
-
+	space_after_class.disabled = 1	
 	tx_t3sbootstrap_header_celink {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_gallery.disabled = 1
 			two_columns.disabled = 1
 			three_columns.disabled = 1
 			four_columns.disabled = 1
@@ -234,7 +234,6 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_image_ratio {
 		types {
 			t3sbs_toast.disabled = 1
-			t3sbs_mediaobject.disabled = 1
 			two_columns.disabled = 1
 			three_columns.disabled = 1
 			four_columns.disabled = 1

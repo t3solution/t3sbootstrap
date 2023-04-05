@@ -17,7 +17,7 @@ plugin.tx_t3sbootstrap {
 bootstrap.cdn.bootstraplatest = 5.2.3
 bootstrap.cdn.noZip = 0
 bootstrap.cdn.fontawesome5latest = 5.15.4
-bootstrap.cdn.fontawesome6latest = 6.2.1
+bootstrap.cdn.fontawesome6latest = 6.4.0
 
 #-------------------------------------------------------------------------------
 #	Constant Editor
@@ -41,8 +41,8 @@ bootstrap.cdn {
 	popperjs = 2.11.6
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.2.1
-	fontawesome = 6.2.1
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.4.0
+	fontawesome = 6.4.0
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.6.1
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
@@ -104,6 +104,8 @@ bootstrap.cdn {
 # customsubcategory=c-image=Lazyloading Threshold
 # customsubcategory=d-image=Picturefill
 bootstrap.image {
+	# cat=bootstrap-image/a-image/10; type=boolean; label=Set Cookie with viewport width: usefull if using container "fluid-container" and auto image width.
+	viewportWidthCookie = 0
 	# cat=bootstrap-image/a-image/30; type=boolean; label=Min. width: if enabled the minimum "equalMediaWidth" is set to 575px and therefore 100% wide on mobile.
 	minimumWidth = 0
 	# cat=bootstrap-image/a-image/40; type=boolean; label=Ratio: if enabled use width and height for ratio in textmedia, textpic, image, card and media object.
@@ -225,8 +227,6 @@ bootstrap.pagebrowser.entryLevel = 1
 bootstrap.config.enableUtilityColors = 1
 # hints to increase the website speed in the BE Modul
 bootstrap.config.enableInfo = 1
-# enable the Dark Mode - if "prefers-color-scheme" (iOS and Android) is "dark" -> the body tag gets the class "dark-mode" 
-bootstrap.config.darkMode = 0
 
 # include print template
 bootstrap.print.enable = 0
@@ -323,7 +323,7 @@ styles.content.textmedia.borderColor =
 styles.content.textmedia.borderWidth =
 styles.content.textmedia.borderPadding =
 
-# pages override
+# pages override - deprecated
 pages.override {
 	# 1,2,3,4 or 6 (only)
 	smallColumns =

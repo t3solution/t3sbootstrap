@@ -66,7 +66,7 @@ class T3sbCardsUpdateWizard implements UpgradeWizardInterface
 			->where(
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('t3sbs_card'))
 			)
-			->execute()
+			->executeQuery()
 			->fetchAll();
 
 		if (!empty($statements)) {
@@ -128,7 +128,7 @@ class T3sbCardsUpdateWizard implements UpgradeWizardInterface
 						->set('tx_t3sbootstrap_bodytext', $flexconf['text']['bottom'])
 						->set('tx_t3sbootstrap_cardfooter', $flexconf['footer']['text'])
 						->set('tx_t3sbootstrap_list_item', $count)
-						->execute();
+						->executeQuery();
 				}
 
 			}
@@ -183,7 +183,7 @@ class T3sbCardsUpdateWizard implements UpgradeWizardInterface
 			->where(
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('t3sbs_card'))
 			)
-			->execute()
+			->executeQuery()
 			->fetchAll();
 
 		if (!empty($statements)) {

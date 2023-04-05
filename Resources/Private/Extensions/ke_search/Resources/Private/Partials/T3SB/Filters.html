@@ -1,0 +1,16 @@
+<f:comment><!--
+	=====================
+	Partials/Filters.html
+--></f:comment>
+	<p class="lead">Filter</p>
+<f:for each="{filters}" as="filter">
+	<f:switch expression="{filter.rendertype}">
+		<f:case value="select"><f:render partial="Filters/Select" arguments="{conf: conf, filter: filter, resultrows: resultrows}" /></f:case>
+		<f:case value="list"><f:render partial="Filters/List" arguments="{conf: conf, filter: filter, resultrows: resultrows}" /></f:case>
+
+		<f:case value="checkbox"><f:render partial="T3SB/Filters/Checkbox" arguments="{conf: conf, filter: filter, resultrows: resultrows}" /></f:case>
+
+		<f:case value="dateRange"><f:render partial="Filters/DateRange" arguments="{conf: conf, filter: filter, resultrows: resultrows}" /></f:case>
+		<f:case value="custom"><f:format.raw>{filter.rawHtmlContent}</f:format.raw></f:case>
+	</f:switch>
+</f:for>

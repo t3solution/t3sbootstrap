@@ -106,6 +106,21 @@ $tempPagesColumns = [
 		'config' => [
 			'type' => 'input',
 			'size' => 20,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['typo3', 'fab fa-typo3'],
+					['envelope', 'far fa-envelope'],
+					['info-circle', 'fas fa-info-circle'],
+					['exclamation-circle', 'fas fa-exclamation-circle'],
+					['question-circle', 'fas fa-question-circle'],
+					['check-circle', 'fas fa-check-circle'],
+					['chevron-circle-left', 'fas fa-chevron-circle-left'],
+					['chevron-circle-right', 'fas fa-chevron-circle-right'],
+					['youtube', 'fab fa-youtube'],
+					['vimeo', 'fab fa-vimeo-square'],
+				],
+			],
 		]
 	],
 	'tx_t3sbootstrap_icon_only' => [
@@ -329,7 +344,6 @@ if (array_key_exists('navigationColor', $extconf) && $extconf['navigationColor']
 }
 
 if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1') {
-
 	$GLOBALS['TCA']['pages']['palettes']['fontawesome'] = [
 		 'showitem' => 'tx_t3sbootstrap_fontawesome_icon,
 				tx_t3sbootstrap_icon_only',
@@ -340,7 +354,7 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 		'pages',
 		'--palette--;Fontawesome Icon;fontawesome',
 		'',
-		'after:layout'
+		'after:title'
 	);
 }
 
@@ -376,6 +390,7 @@ $GLOBALS['PAGES_TYPES'][$menuheader] = [
 		],
 	]
 );
+			
 
 /***************
  * Register PageTSConfig Files

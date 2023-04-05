@@ -125,32 +125,27 @@ function t3sbStickyFooter(footerExtraHeight) {
 	<f:asset.script identifier="navbarsection_function">
 // Section Menu Navbar - Page/Navbar/Navbar.html
 function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight,offcanvas) {
-	var scrollTrigger = document.querySelectorAll('.section-menu a.js-scroll-trigger');
-	if (offcanvas && !scrollTrigger.length) {
-		scrollTrigger = document.querySelectorAll('.offcanvas a.js-scroll-trigger');
-	}
-	scrollTrigger.forEach( st => {
-		st.addEventListener('click', (event) => {
-			event.preventDefault();
-			var anchor = event.currentTarget.getAttribute('href');
-			if (anchor.length) {
-				var offsetSize = sectionmenuAnchorOffset;
-				if ( fixedNavbar ) {
-					offsetSize = navbarHeight+offsetSize;
-				}
-				var targetElement = document.getElementById(anchor.split('#')[1]);
-				var scrollTo = Math.round(t3sbOffsetTop(targetElement)-offsetSize);
-				window.scroll({ top: scrollTo, behavior: 'smooth' });
-			}
+	const sectionmenu = document.getElementById('main-navbar');
+	sectionmenu.querySelectorAll('a.js-scroll-trigger').forEach( link => {
+		link.addEventListener('click', function(l) {
+			t3sbScrollToAnchor({t3sb:intval(number: sectionmenuAnchorOffset)}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
+			l.preventDefault();
 		});
 	});
-	if (!offcanvas) {
+	if (window.innerWidth < document.body.getAttribute('data-navbar-breakpointwidth')) {
 		const navLinks = document.querySelectorAll('.nav-item:not(.dropdown)');
 		const menuToggle = document.getElementById('navbarToggler');
-		const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
-		navLinks.forEach((l) => {
-			l.addEventListener('click', () => { bsCollapse.toggle() });
-		});
+		if (offcanvas) {
+			const bsOffcanvas = new bootstrap.Offcanvas(menuToggle, {toggle: false});
+			navLinks.forEach((l) => {
+				l.addEventListener('click', () => { bsOffcanvas.toggle() });
+			});
+		} else {		
+			const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
+			navLinks.forEach((l) => {
+				l.addEventListener('click', () => { bsCollapse.toggle() });
+			});
+		}
 	}
 }
 	</f:asset.script>
@@ -228,7 +223,6 @@ function t3sbExtraRow(vw, bp) {
 		if ( vw < bp ) {
 			extraRow.classList.add('flex-row','me-auto','mt-4','mb-0');
 			extraRow.classList.remove('ms-auto');
-
 		} else {
 			extraRow.classList.remove('flex-row','me-auto','mt-4','mb-0');
 			extraRow.classList.add('ms-auto');
@@ -287,18 +281,89 @@ function t3sbNavbarSearchbox(vw, bp) {
 </f:if>
 
 
-<f:if condition="{settings.config.darkMode}">
+<f:if condition="{settings.config.navbarDarkMode}">
 <f:asset.script identifier="darkMode_function">
 // Dark mode - Main.html
+/*!
+ * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+ * Copyright 2011-2022 The Bootstrap Authors
+ * Licensed under the Creative Commons Attribution 3.0 Unported License.
+ */
 function t3sbDarkMode() {
-	let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	let body = document.querySelector('body');
-	if (dark) {
-		body.classList.add('dark-mode');
-	} else {
-		body.classList.remove('dark-mode');
+
+	let themelink = document.querySelector('#bd-theme');
+	if (themelink) {
+		themelink.onclick = function (evt) {
+			evt.preventDefault();
+		}
 	}
+
+	const storedTheme = localStorage.getItem('theme');
+
+	const getPreferredTheme = () => {
+		if (storedTheme) {
+			return storedTheme;
+		}	
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	}
+
+	const setTheme = function (theme) {		
+		if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			document.documentElement.setAttribute('data-bs-theme', 'dark');
+		} else {
+			document.documentElement.setAttribute('data-bs-theme', theme);
+		}
+	}
+
+	setTheme(getPreferredTheme());
+
+	const showActiveTheme = theme => {
+		const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+		const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href');
+		const activeThemeIcon = document.querySelector('.theme-icon-active');
+
+		document.body.classList.remove('light', 'dark', 'auto');
+		document.body.classList.add(theme);
+			
+		if (theme === 'light') {
+			activeThemeIcon.classList.remove('bi-moon-stars-fill', 'bi-circle-half', 'fa-square-plus');
+			activeThemeIcon.classList.add('bi-brightness-high-fill');
+		} 
+		if (theme === 'dark') {
+			activeThemeIcon.classList.remove('bi-brightness-high-fill', 'bi-circle-half', 'fa-square-plus');
+			activeThemeIcon.classList.add('bi-moon-stars-fill');
+		}
+		if (theme === 'auto') {
+			activeThemeIcon.classList.remove('bi-brightness-high-fill', 'bi-moon-stars-fill', 'fa-square-plus');
+			activeThemeIcon.classList.add('bi-circle-half');
+		}
+
+		document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+			element.classList.remove('active');
+		})
+
+		btnToActive.classList.add('active');
+		activeThemeIcon.setAttribute('href', svgOfActiveBtn);
+	}
+
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+		if (storedTheme !== 'light' || storedTheme !== 'dark') {
+			setTheme(getPreferredTheme());
+		}
+	})
+
+	window.addEventListener('DOMContentLoaded', () => {
+	    showActiveTheme(getPreferredTheme());
+	    document.querySelectorAll('[data-bs-theme-value]')
+	      .forEach(toggle => {
+	        toggle.addEventListener('click', () => {
+	          const theme = toggle.getAttribute('data-bs-theme-value');
+	          localStorage.setItem('theme', theme);
+	          setTheme(theme);
+	          showActiveTheme(theme);
+	        })
+	    })
+	})
 }
 </f:asset.script>
 </f:if>
-

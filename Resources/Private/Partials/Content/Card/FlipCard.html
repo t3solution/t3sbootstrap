@@ -68,6 +68,7 @@ function t3sbflipCard(viewportWidth) {
 <f:section name="Image">
 <f:variable name="lazyload" value="{settings.lazyLoad}" />
 <f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 	<t3sb:media file="{file}"
 	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
@@ -84,4 +85,5 @@ function t3sbflipCard(viewportWidth) {
 	 ratio="{ratio}"
 	/>
 </figure>
+
 </f:section>

@@ -48,7 +48,7 @@ temp.jsCookieConsent >
 // preload GOOGLE FONTS
 [{$bootstrap.preloadGooleFonts} == 1]
 @import 'fileadmin/T3SB/Configuration/TypoScript/preloadGooleFonts.typoscript'
-[END]
+[global]
 
 # Bugfix for Safari browser if using webp with lazyload
 [browser('Safari') && {$bootstrap.extconf.webp} == 1 && {$bootstrap.extconf.lazyLoad} > 0]
@@ -56,7 +56,7 @@ page.cssInline {
 	124 = TEXT
 	124.value = picture img.lazy {opacity:1 !important;}
 }
-[END]
+[global]
 
 # Background Image
 [{$bootstrap.config.backgroundImageEnable} == 1]
@@ -64,7 +64,7 @@ page.cssInline {
 	5 = TEXT
 	5.value = body {background-repeat:no-repeat;background-position: center center;background-size: cover;background-attachment: fixed}
 }
-[END]
+[global]
 
 # load jquery into the header
 [{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 1]
@@ -75,7 +75,7 @@ page.includeJSLibs {
 	jqueryCDN.forceOnTop = 1
 	jqueryCDN.if.isFalse = {$bootstrap.disable.jquery}
 }
-[END]
+[global]
 
 [{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
 page.includeJSFooterlibs.jquery >
@@ -84,7 +84,12 @@ page.includeJSLibs {
 	jquery.forceOnTop = 1
 	jquery.if.isFalse = {$bootstrap.disable.jquery}
 }
-[END]
+[global]
+
+# Bootstrap color mode toggler in navbar
+[{$bootstrap.config.navbarDarkMode} == 1]
+page.includeCSS.bsicons = EXT:t3sbootstrap/Resources/Public/Contrib/BootstrapIsons/bootstrap-icons.css
+[global]
 
 ##########################################################################################################
 #
@@ -93,20 +98,20 @@ page.includeJSLibs {
 ##########################################################################################################
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 0]
 page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
-[END]
+[global]
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 1]
 page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
-[END]
+[global]
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 2]
 page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
-[END]
+[global]
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 3]
 page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome6Link.css
-[END]
+[global]
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 4]
 page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome6ProLink.css
-[END]
+[global]
 [{$bootstrap.config.faLinkIcons} == 0]
 page.includeCSS.t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
 page.includeCSS.t3sfontawesomeMin.if.isFalse = {$bootstrap.extconf.fontawesomeCss}
-[END]
+[global]

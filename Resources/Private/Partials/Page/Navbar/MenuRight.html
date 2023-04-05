@@ -1,0 +1,50 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+
+
+	<f:if condition="{settings.navbar.searchboxLink}">
+		<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search mx-3"></i></f:link.page>
+	</f:if>
+
+
+	<div class="nav-item dropdown {config.navbar.hover}">
+		<a class="nav-link dropdown-toggle ps-{settings.config.navbarBreakpoint}-3" id="right-menu"
+			 href="#" data-bs-toggle="{config.navbar.bstoggle}" role="button" aria-expanded="false">
+			<i class="fa-navlink fas fa-info-circle me-1"></i>
+		</a>
+		<f:if condition="{config.navbar.navbarPlusicon}">
+			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+				<i class="fa-solid fa-square-plus"></i>
+			</button>
+		</f:if>
+		<div class="dropdown-menu dropdown-menu-end mt-0 slideIn{config.navbar.dropdownAnimate}" aria-labelledby="right-menu">
+			<f:for each="{navbarMenuRight}" as="navbarItem">
+				<f:if condition="{navbarItem.spacer}">
+					<f:then>
+						<span class="nav-link">|</span>
+					</f:then>
+					<f:else>
+						<f:if condition="{navbarItem.children}">
+							<f:then>
+								<f:render section="Dropdown" arguments="{_all}" />
+							</f:then>
+							<f:else>
+								<f:link.typolink class="dropdown-item" parameter="{navbarItem.link}"
+								 title="{navbarItem.title}"
+								 target="{navbarItem.target}">
+									<f:render section="Title" arguments="{item: navbarItem}" />
+								</f:link.typolink>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:for>
+			</div>
+	</div>
+
+</html>
+
+
+<f:section name="Title">
+{item.faIcon -> f:format.raw()} {item.title -> f:format.raw()}
+</f:section>

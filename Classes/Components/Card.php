@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Components;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Service\FlexFormService;
@@ -97,7 +98,8 @@ class Card implements SingletonInterface
 			}
 		}
 		// block
-		if ( empty($processedData['data']['bodytext']) && empty($processedData['data']['tx_t3sbootstrap_bodytext']) && empty($processedData['data']['header']) && empty($processedData['data']['subheader']) ) {
+		if ( empty($processedData['data']['bodytext']) && empty($processedData['data']['tx_t3sbootstrap_bodytext'])
+			 && empty($processedData['data']['header']) && empty($processedData['data']['subheader']) ) {
 			$cardData['block']['enable'] = FALSE;
 		} else {
 			$cardData['block']['enable'] = TRUE;
@@ -127,8 +129,7 @@ class Card implements SingletonInterface
 		// list group
 		$cardData['list'] = [];
 		if (!empty($processedData['data']['tx_t3sbootstrap_list_item'])) {
-		
-			$connectionPool = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class);
+			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 			$queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
 			$listGroup = $queryBuilder
 					->select('listitem')
@@ -136,10 +137,10 @@ class Card implements SingletonInterface
 					->where(
 						$queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
 					)
-					->execute()
+					->executeQuery()
 					->fetchAll();
-		
-			$cardData['list'] = $listGroup;	
+
+			$cardData['list'] = $listGroup;
 		}
 
 		// profile card
@@ -179,7 +180,7 @@ class Card implements SingletonInterface
 			$cardClass .= ' border-'.$cardData['cardborderstyle'];
 		}
 		// parent equal Height
-		if ( !empty($parentflexconf['equalHeight']) ) {
+		if ( !empty($parentflexconf['equalHeight']) && isset($parentflexconf['card_wrapper']) && $parentflexconf['card_wrapper'] !== 'group' ) {
 			$cardClass .= ' h-100';
 		}
 

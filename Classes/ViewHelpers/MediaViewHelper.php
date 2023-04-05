@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 use TYPO3\CMS\Core\Resource\FileInterface;
@@ -8,8 +10,11 @@ use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper as CmsMediaViewHelper;
+
+#ConfigurationManagerInterface
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -19,7 +24,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
  *
  * 	taken from https://extensions.typo3.org/extension/sms_responsive_images/ and modified
  */
-class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
+class MediaViewHelper extends CmsMediaViewHelper
 {
 	/**
 	 * @var ResponsiveImagesUtility
@@ -31,6 +36,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	 */
 	protected $configurationManager;
 
+
 	/**
 	 * @param ResponsiveImagesUtility $responsiveImagesUtility
 	 */
@@ -38,6 +44,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 	{
 		$this->responsiveImagesUtility = $responsiveImagesUtility;
 	}
+
 
 	/**
 	 * @param ConfigurationManager $configurationManager
@@ -148,7 +155,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 					$lazyload = 1;
 				} elseif ($this->arguments['lazyload'] == 3) {
 					$lazyload = 3;
-					$this->tag->addAttribute('loading', 'auto');		
+					$this->tag->addAttribute('loading', 'auto');
 				} else {
 					if ($this->arguments['lazyload'] == 2 && $image->getProperty('tx_t3sbootstrap_lazy_load')) {
 						$lazyload = 2;
@@ -162,10 +169,10 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 		}
 
 		$placeholderSize = 0;
-		$placeholderInline = 0;
+		$placeholderInline = false;
 		if ($lazyload) {
-			$placeholderSize = $this->arguments['placeholderSize'] ?: 60;
-			$placeholderInline = $this->arguments['placeholderInline'] ?: 1;
+			$placeholderSize = !empty($this->arguments['placeholderSize']) ? $this->arguments['placeholderSize']: 60;
+			$placeholderInline = !empty($this->arguments['placeholderInline']) ? $this->arguments['placeholderInline'] : TRUE;
 		}
 
 		foreach( $this->arguments['breakpoints'] as $bpKey=>$breakpoint ) {
@@ -177,7 +184,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
 				} else {
 					$breakpointArr[$bpKey]['srcset'] .= $srcset;
-					break;			
+					break;
 				}
 			}
 		}
@@ -253,32 +260,32 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 			}
 		}
 
-		 $cropVariantCollection = CropVariantCollection::create((string)$cropString);
-		 $cropArea = $cropVariantCollection->getCropArea($cropVariant);
+		$cropVariantCollection = CropVariantCollection::create((string)$cropString);
+		$cropArea = $cropVariantCollection->getCropArea($cropVariant);
 		if ( $this->arguments['ratio'] ) {
 			$m = $cropArea->getHeight() / $cropArea->getWidth();
 			$height = ceil((float)$height * (float)$m);
 		}
 
-		 $processingInstructions = [
-			 'width' => $width,
-			 'height' => $height,
-			 'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
-		 ];
+		$processingInstructions = [
+			'width' => $width,
+			'height' => $height,
+			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
+		];
 
-		 if (!empty($fileExtension)) {
-			 $processingInstructions['fileExtension'] = $fileExtension;
-		 }
-		 $imageService = $this->getImageService();
-		 $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
+		if (!empty($fileExtension)) {
+			$processingInstructions['fileExtension'] = $fileExtension;
+		}
+		$imageService = $this->getImageService();
+		$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
-		$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$webpIsLoaded = (bool)$settings['page.']['10.']['settings.']['webp'];
+
 		if ( $webpIsLoaded ) {
 			$webpIdentifier = $processedImage->getIdentifier().'.webp';
 			$processedImage->setIdentifier($webpIdentifier);
 		}
-
 		$imageUri = $imageService->getImageUri($processedImage);
 
 		if (!$this->tag->hasAttribute('data-focus-area')) {
@@ -336,7 +343,7 @@ class MediaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					} else {
 						$cHeight = $image->getProperties()['height'] / $pxHeight;
-	
+
 						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
 						$cWidth = $pxWidth / $image->getProperties()['width'];
 						$cropObject->$cropVariant->cropArea->width = $cWidth;

@@ -48,9 +48,9 @@ page {
 			10.wrap = padding-top:|px;
 			if.isTrue = {$bootstrap.config.navbarHeight}
 
-			20 = TEXT
-			20.value = position:relative;
-			20.if.isTrue = {$bootstrap.config.navbarSectionmenu}
+#			20 = TEXT
+#			20.value = position:relative;
+#			20.if.isTrue = {$bootstrap.config.navbarSectionmenu}
 		}
 		40 = TEXT
 		40.value = {$bootstrap.config.navbarBreakpoint}
@@ -61,9 +61,14 @@ page {
 		50.if.isTrue = {$bootstrap.config.navbarBreakpointWidth}
 
 		60 = TEXT
-		60.value = {$bootstrap.config.sectionmenuScrollspyOffset}
-		60.noTrimWrap = | data-bs-spy="scroll" data-bs-target="#main-navbar" data-bs-offset="|" tabindex="0"|
+		60.value = {$bootstrap.config.sectionmenuScrollspyThreshold}
+		60.noTrimWrap = | data-bs-spy="scroll" data-bs-target="#main-navbar" data-bs-threshold="[|]" data-bs-smooth-scroll="true" tabindex="0"|
 		60.if.isTrue = {$bootstrap.config.navbarSectionmenu}
+
+		61 = TEXT
+		61.value = {$bootstrap.config.sectionmenuScrollspyRootMargin}
+		61.noTrimWrap = | data-bs-root-margin="|"|
+		61.if.isTrue = {$bootstrap.config.navbarSectionmenu}
 
 		70 = TEXT
 		70.value = true

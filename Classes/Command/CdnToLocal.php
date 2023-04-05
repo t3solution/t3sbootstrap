@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
+use TYPO3\CMS\Core\Http\RequestFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -320,7 +321,7 @@ class CdnToLocal extends CommandBase
 			foreach ( explode(',', $gooleFontsWeights) as $style ) {
 				$style = trim($style);
 				$zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
-				$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
+				$zipContent = GeneralUtility::makeInstance(RequestFactory::class)->request(self::zipFilePath . $zipFilename)->getBody()->getContents();
 				$fontArr[$fontFamily] = self::getGoogleFiles($zipContent, $localZipFile, $localZipPath);
 			}
 		}

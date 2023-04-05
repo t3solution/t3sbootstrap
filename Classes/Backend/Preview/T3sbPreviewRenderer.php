@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /*
@@ -31,25 +30,25 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 {
 
-    /**
-     * @var Registry
-     */
-    protected $tcaRegistry;
+	/**
+	 * @var Registry
+	 */
+	protected $tcaRegistry;
 
-    /**
-     * @var ContainerFactory
-     */
-    protected $containerFactory;
+	/**
+	 * @var ContainerFactory
+	 */
+	protected $containerFactory;
 
-    /**
-     * @var ContainerColumnConfigurationService
-     */
-    protected $containerColumnConfigurationService;
+	/**
+	 * @var ContainerColumnConfigurationService
+	 */
+	protected $containerColumnConfigurationService;
 
-    /**
-     * @var ContainerService
-     */
-    protected $containerService;
+	/**
+	 * @var ContainerService
+	 */
+	protected $containerService;
 
 
 	public function __construct(
@@ -117,17 +116,13 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 
 	public function renderPageModulePreviewContent(GridColumnItem $item): string
 	{
-		$typo3Version = new Typo3Version();
 		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-		if ($typo3Version->getMajorVersion() === 11) {
-			$pageRenderer->loadRequireJsModule(
-				 'TYPO3/CMS/T3sbootstrap/Bootstrap',
-				 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
-			);
-			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v11.css');
-		} else {
-			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v10.css');
-		}
+		$pageRenderer->loadRequireJsModule(
+			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
+			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
+		);
+		$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles.css');
+
 		$content = parent::renderPageModulePreviewContent($item);
 		$context = $item->getContext();
 		$record = $item->getRecord();
@@ -241,7 +236,9 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		if (!empty($flexconf['card_wrapper']) && $record['CType'] == 'card_wrapper') {
 			$out .= '<br />- Wrapper: Card '.$flexconf['card_wrapper'];
 			if ( !empty($flexconf['visibleCards']) ) {
-				$out .= '<br />- Visible Cards: '.$flexconf['visibleCards'];
+				if ($flexconf['card_wrapper'] !== 'flipper' && $flexconf['card_wrapper'] !== 'columns') {
+					$out .= '<br />- Visible Cards: '.$flexconf['visibleCards'];
+				}
 			}
 			if ( !empty($flexconf['interval']) ) {
 				$out .= '<br />- Interval: '.$flexconf['interval'];
@@ -355,11 +352,11 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			$rowObject = GeneralUtility::makeInstance(GridRow::class, $context);
 			foreach ($cols as $col) {
 				$newContentElementAtTopTarget = $this->containerService->getNewContentElementAtTopTargetInColumn($container, $col['colPos']);
-                if ($this->containerColumnConfigurationService->isMaxitemsReached($container, $col['colPos'])) {
-                    $columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, $newContentElementAtTopTarget, false);
-                } else {
-                    $columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, $newContentElementAtTopTarget);
-                }
+				if ($this->containerColumnConfigurationService->isMaxitemsReached($container, $col['colPos'])) {
+					$columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, $newContentElementAtTopTarget, false);
+				} else {
+					$columnObject = GeneralUtility::makeInstance(ContainerGridColumn::class, $context, $col, $container, $newContentElementAtTopTarget);
+				}
 				$rowObject->addColumn($columnObject);
 				if (!empty($col['colPos'])) {
 					$records = $container->getChildrenByColPos($col['colPos']);
@@ -383,7 +380,7 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		$view->assign('newContentTitleShort', parent::getLanguageService()->getLL('content'));
 		$view->assign('allowEditContent', parent::getBackendUser()->check('tables_modify', 'tt_content'));
 		$view->assign('containerGrid', $grid);
-		$view->assign('defaultRecordDirectory', $this->hasDefaultDirectory() ? 'RecordDefault' : 'Record');
+		$view->assign('defaultRecordDirectory', 'Record');
 
 		$rendered = $view->render();
 
@@ -394,15 +391,13 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-		$typo3Version = new Typo3Version();
-		$show = $typo3Version->getMajorVersion() == 10 ? 'in' : 'show';
 
 		if ($extconf['previewClosedCollapsible']) {
 			$newContent = '<p style="margin-top:8px;margin-left:5px"><a data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="false" aria-controls="collapseContainer-'.$record['uid'].'"><span class="icon icon-size-small icon-state-default"><span class="icon-markup"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color" style="color:red"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg></span></span></a></p>
 <div class="collapse" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
 		} else {
 			$newContent = '<p style="margin-top:8px;margin-left:5px"><a data-toggle="collapse" href="#collapseContainer-'.$record['uid'].'" role="button" aria-expanded="true" aria-controls="collapseContainer-'.$record['uid'].'"><span class="icon icon-size-small icon-state-default"><span class="icon-markup"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g class="icon-color" style="color:red"><path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"/></g></svg></span></span></a></p>
-<div class="collapse '.$show.'" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
+<div class="collapse show" id="collapseContainer-'.$record['uid'].'"><div class="card card-body p-3">'.$rendered.'</div></div>';
 		}
 
 		return $flexconfOut.$newContent;
@@ -420,27 +415,6 @@ class T3sbPreviewRenderer extends StandardContentPreviewRenderer
 			 }
 
 			 return $content;
-	}
-
-
-	/**
-	 * Check TYPO3 version to see whether the default record templates
-	 * are located in RecordDefault/ instead of Record/.
-	 * See: https://review.typo3.org/c/Packages/TYPO3.CMS/+/69769
-	 */
-	protected function hasDefaultDirectory(): bool
-	{
-		$typo3Version = new Typo3Version();
-
-		if ($typo3Version->getMajorVersion() === 10) {
-			return version_compare((new Typo3Version())->getVersion(), '10.4.17', '>');
-		}
-
-		if ($typo3Version->getMajorVersion() === 11) {
-			return version_compare((new Typo3Version())->getVersion(), '11.3.0', '>');
-		}
-
-		return false;
 	}
 
 }
