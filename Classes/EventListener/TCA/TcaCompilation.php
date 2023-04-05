@@ -19,93 +19,97 @@ class TcaCompilation
 	public function __invoke(AfterTcaCompilationEvent $event): void
 	{
 		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+		$tca = $event->getTca();
 
 		// tt_content
 
 		if (!empty($extconf['customFaIcons'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['customFaIcons']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['tt_content']['columns']['tx_t3sbootstrap_header_fontawesome']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
 		} else {
-			$tca = $event->getTca();
-			$defaultTCA = $tca['tt_content']['columns']['tx_t3sbootstrap_header_fontawesome']['config']['valuePicker']['items'];
-			$tca = $defaultTCA;
+			$tca = $tca['tt_content']['columns']['tx_t3sbootstrap_header_fontawesome']['config']['valuePicker']['items'];
 		}
 
 		if (!empty($extconf['customHeaderClass'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['customHeaderClass']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['tt_content']['columns']['tx_t3sbootstrap_header_class']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
+		} else {
+			$tca = $tca['tt_content']['columns']['tx_t3sbootstrap_header_class']['config']['valuePicker']['items'];
 		}
+
 
 		// pages
 
 		if (!empty($extconf['customFaIconsPages'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['customFaIconsPages']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['pages']['columns']['tx_t3sbootstrap_fontawesome_icon']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
+		} else {
+			$tca = $tca['pages']['columns']['tx_t3sbootstrap_fontawesome_icon']['config']['valuePicker']['items'];
 		}
 
+
 		if (!empty($extconf['customTitleColor'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['customTitleColor']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['pages']['columns']['tx_t3sbootstrap_titlecolor']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
+		} else {
+			$tca = $tca['pages']['columns']['tx_t3sbootstrap_titlecolor']['config']['valuePicker']['items'];
 		}
 
+
 		if (!empty($extconf['customSubtitleColor'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['customSubtitleColor']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['pages']['columns']['tx_t3sbootstrap_subtitlecolor']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
+		} else {
+			$tca = $tca['pages']['columns']['tx_t3sbootstrap_subtitlecolor']['config']['valuePicker']['items'];
 		}
+
 
 		// sys_file_reference
 
 		if (!empty($extconf['figureClass'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['figureClass']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['sys_file_reference']['columns']['tx_t3sbootstrap_extra_class']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
+		} else {
+			$tca = $tca['sys_file_reference']['columns']['tx_t3sbootstrap_extra_class']['config']['valuePicker']['items'];
 		}
 
+
 		if (!empty($extconf['imageClass'])) {
-			$tca = $event->getTca();
 			$newItems = [];
 			foreach ( explode(',',$extconf['imageClass']) as $custom) {
 				$key = trim(end(explode(' ', $custom)));
 				$newItems[] = [0 => $key, 1 => $custom];	
 			}
 			$tca['sys_file_reference']['columns']['tx_t3sbootstrap_extra_imgclass']['config']['valuePicker']['items'] = $newItems;
-			$event->setTca($tca);
+		} else {
+			$tca = $tca['sys_file_reference']['columns']['tx_t3sbootstrap_extra_imgclass']['config']['valuePicker']['items'];
 		}
+		
+		$event->setTca($tca);
 	}
 
 }
