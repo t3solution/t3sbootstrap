@@ -172,6 +172,13 @@ class Config extends AbstractEntity
 	 */
 	protected $navbarDropdownAnimate = '';
 
+	/**
+	 * navbarDarkMode
+	 *
+	 * @var string
+	 */
+	protected $navbarDarkMode = '';
+
 
 	/**
 	 * navbarBrand
@@ -810,12 +817,17 @@ class Config extends AbstractEntity
 	protected $sectionmenuAnchorOffset = 0;
 
 	/**
-	 * sectionmenuScrollspyOffset
+	 * sectionmenuScrollspyThreshold
 	 *
-	 * @var int
+	 * @var string
 	 */
-	protected $sectionmenuScrollspyOffset = 0;
-
+	protected $sectionmenuScrollspyThreshold = '';
+	/**
+	 * sectionmenuScrollspyRootMargin
+	 *
+	 * @var string
+	 */
+	protected $sectionmenuScrollspyRootMargin = '';
 	/**
 	 * sectionmenuStickyTop
 	 *
@@ -3606,24 +3618,45 @@ class Config extends AbstractEntity
 	}
 
 	/**
-	 * Returns the sectionmenuScrollspyOffset
+	 * Returns the sectionmenuScrollspyThreshold
 	 *
-	 * @return int $sectionmenuScrollspyOffset
+	 * @return string sectionmenuScrollspyThreshold
 	 */
-	public function getSectionmenuScrollspyOffset()
+	public function getSectionmenuScrollspyThreshold()
 	{
-		return $this->sectionmenuScrollspyOffset;
+		return $this->sectionmenuScrollspyThreshold;
+	}
+	
+	/**
+	 * Sets the sectionmenuScrollspyThreshold
+	 *
+	 * @param string $sectionmenuScrollspyThreshold
+	 * @return void
+	 */
+	public function setSectionmenuScrollspyThreshold($sectionmenuScrollspyThreshold)
+	{
+		$this->sectionmenuScrollspyThreshold = $sectionmenuScrollspyThreshold;
 	}
 
 	/**
-	 * Sets the sectionmenuScrollspyOffset
+	 * Returns the sectionmenuScrollspyRootMargin
 	 *
-	 * @param int $sectionmenuScrollspyOffset
+	 * @return string sectionmenuScrollspyRootMargin
+	 */
+	public function getSectionmenuScrollspyRootMargin()
+	{
+		return $this->sectionmenuScrollspyRootMargin;
+	}
+	
+	/**
+	 * Sets the sectionmenuScrollspyRootMargin
+	 *
+	 * @param string $sectionmenuScrollspyRootMargin
 	 * @return void
 	 */
-	public function setSectionmenuScrollspyOffset($sectionmenuScrollspyOffset)
+	public function setSectionmenuScrollspyRootMargin($sectionmenuScrollspyRootMargin)
 	{
-		$this->sectionmenuScrollspyOffset = $sectionmenuScrollspyOffset;
+		$this->sectionmenuScrollspyRootMargin = $sectionmenuScrollspyRootMargin;
 	}
 
 	/**
@@ -4004,5 +4037,28 @@ class Config extends AbstractEntity
 		$this->sectionmenuIcons = $sectionmenuIcons;
 	}
 
+
+
+	/**
+	 * Returns the navbarDarkMode
+	 *
+	 * @return string $navbarDarkMode
+	 */
+	public function getNavbarDarkMode()
+	{
+		return $this->navbarDarkMode;
+	}
+
+	/**
+	 * Sets the navbarDarkMode
+	 *
+	 * @param string $navbarDarkMode
+	 * @return void
+	 */
+	public function setNavbarDarkMode($navbarDarkMode)
+	{
+		$this->navbarDarkMode = $navbarDarkMode;
+	}
+	
 
 }

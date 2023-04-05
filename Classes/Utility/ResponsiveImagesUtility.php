@@ -7,11 +7,12 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -28,12 +29,14 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 */
 	protected $imageService;
 
+
 	/**
 	 * Configuration Manager
 	 *
 	 * @var ConfigurationManager
 	 */
 	protected $configurationManager;
+
 
 	/**
 	 * Default media breakpoint configuration
@@ -47,13 +50,17 @@ class ResponsiveImagesUtility implements SingletonInterface
 		'srcset' => []
 	];
 
+
 	/**
 	 * @param ImageService $imageService
 	 */
-	public function __construct(ImageService $imageService, ConfigurationManager $configurationManager)
+	 public function __construct(
+	 	ImageService $imageService,
+	 	ConfigurationManager $configurationManager
+	 )
 	{
-		 $this->imageService = $imageService;
-		 $this->configurationManager = $configurationManager;
+		$this->imageService = $imageService;
+		$this->configurationManager = $configurationManager;
 	}
 
 
@@ -94,7 +101,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$tag = $tag ?: GeneralUtility::makeInstance(TagBuilder::class, 'picture');
 		$fallbackTag = $fallbackTag ?: GeneralUtility::makeInstance(TagBuilder::class, 'img');
 
-		$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$webpIsLoaded = (bool)$settings['page.']['10.']['settings.']['webp'];
 
 		// Deal with file formats that can't be cropped separately
@@ -298,7 +305,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$fallbackImage = ($fallbackImage) ?: $originalImage;
 
 		// if lazyload enabled add data- prefix
-		$attributePrefix = $lazyload ? 'data-' : '';
+		#$attributePrefix = $lazyload ? 'data-' : '';
+		$attributePrefix = '';
 
 		// Set image source
 		$tag->addAttribute($attributePrefix . 'src',	$this->imageService->getImageUri($originalImage, $absoluteUri));
@@ -396,7 +404,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		if (!is_array($srcset)) {
 			$srcset = GeneralUtility::trimExplode(',', $srcset);
 		}
-
 
 		$images = [];
 		foreach ($srcset as $widthDescriptor) {
@@ -514,7 +521,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 				$srcsetString[] = $this->sanitizeSrcsetUrl($imageCandidate) . ' ' . $widthDescriptor;
 			}
 		}
-
 		return implode(', ', $srcsetString);
 	}
 
@@ -533,7 +539,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 			$breakpoint = [$breakpoint];
 		}
 			$breakpoint = array_replace($this->breakpointPrototype, $breakpoint);
-
 		}
 		ksort($breakpoints);
 
@@ -574,4 +579,3 @@ class ResponsiveImagesUtility implements SingletonInterface
 	}
 
 }
-

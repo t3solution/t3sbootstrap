@@ -64,7 +64,13 @@ class BootstrapProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration,	 array $processedData)
 	{
+
+		if ( empty($processedData['data']['CType']) ) {
+			return $processedData;
+		}
+
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
 		$cType = $processedData['data']['CType'];
 		$parentCType = '';
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
@@ -225,6 +231,7 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData = GeneralUtility::makeInstance(MasonryWrapper::class)
 				->getProcessedData($processedData, $flexconf);
 			}
+
 			if ( $cType == 'swiper_container' ) {
 				$processedData = GeneralUtility::makeInstance(SwiperContainer::class)
 				->getProcessedData($processedData, $flexconf);
@@ -258,7 +265,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		// media
 		if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
 			$mediaElementHelper = GeneralUtility::makeInstance(MediaElementHelper::class);
-			$processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint']);
+			$processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint'], $parentflexconf);
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = $fileRepository->findByRelation('tt_content ', 'assets', 875);
 			$fileParts = [];

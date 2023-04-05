@@ -68,35 +68,35 @@ function insertAfter(referenceNode, newNode) {
 </f:if>
 <f:comment> GRID CARD (DECK) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'deck'">
-		<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
-			{styleAttr -> f:format.raw()}{dataAnimate}>
-			<f:for each="{col_270}" as="card" iteration="cardIterator">
-				<div class="col{equalHeight}">
-					{card.renderedContent -> f:format.raw()}
-				</div>
-			</f:for>
-		</div>
+	<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
+		{styleAttr -> f:format.raw()}{dataAnimate}>
+		<f:for each="{col_270}" as="card" iteration="cardIterator">
+			<div class="col{equalHeight}">
+				{card.renderedContent -> f:format.raw()}
+			</div>
+		</f:for>
+	</div>
 </f:if>
 <f:comment> CARD COLUMNS (MASONRY) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'columns'">
-		<f:if condition="{settings.cdn}">
-			<f:then>
-				<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
-				 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
-			</f:then>
-			<f:else>
-				<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
-				 crossorigin="anonymous" async="async" />
-			</f:else>
-		</f:if>
-		<div class="row{class}"
-			{styleAttr -> f:format.raw()}{dataAnimate} data-masonry='{"percentPosition": true }'>
-			<f:for each="{col_270}" as="card" iteration="cardIterator">
-		<div class="col-sm-6 col-lg-4 mb-4">
-			{card.renderedContent -> f:format.raw()}
-		</div>
-			</f:for>
-		</div>
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
+			 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
+		</f:then>
+		<f:else>
+			<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
+			 crossorigin="anonymous" async="async" />
+		</f:else>
+	</f:if>
+	<div class="row{class}"
+		{styleAttr -> f:format.raw()}{dataAnimate} data-masonry='{"percentPosition": true }'>
+		<f:for each="{col_270}" as="card" iteration="cardIterator">
+			<div class="{colclass}">
+				{card.renderedContent -> f:format.raw()}
+			</div>
+		</f:for>
+	</div>
 </f:if>
 <f:comment> CARD SLIDER (SWIPER JS) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'slider'">
@@ -127,6 +127,11 @@ function insertAfter(referenceNode, newNode) {
 #swiper-{data.uid} .swiper-slide,
 #swiper-{data.uid} .swiper-wrapper {
 	height: auto !important;
+}
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: 0;
 }
 	</f:asset.css>
 	<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
@@ -183,8 +188,10 @@ function insertAfter(referenceNode, newNode) {
 	</f:asset.script>
 <div id="swiper-{data.uid}" class="swiper">
 	<div class="swiper-wrapper card-{card_wrapper_layout}{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
-		<f:for each="{cards}" as="card" iteration="iterator">
-			<f:render section="SwiperCard" arguments="{_all}" />
+		<f:for each="{col_270}" as="card" iteration="cardIterator">
+			<div class="swiper-slide">
+				{card.renderedContent -> f:format.raw()}
+			</div>
 		</f:for>
 	</div>
 	<f:if condition="{navigation}">
@@ -204,29 +211,6 @@ function insertAfter(referenceNode, newNode) {
 </f:if>
 </f:section>
 
-<f:section name="SwiperCard">
-<div class="swiper-slide">
-	<div class="card">
-		<f:if condition="{card.file}">
-			<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
-				<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file}', width: '{width}', swiper: 'true'}" />
-			</f:link.typolink>
-		</f:if>
-		<div class="card-body{card.header_position}">
-			<f:render section="CardTitle" arguments="{_all}" />
-			<f:if condition="{cropMaxCharacters}">
-				<f:then>
-					{card.bodytext -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
-				</f:then>
-				<f:else>
-					{card.bodytext -> f:format.html()}
-				</f:else>
-			</f:if>
-		</div>
-	</div>
- </div>
-</f:section>
-
 <f:section name="Flipper">
 <div class="row row-eq-height">
 	<f:for each="{cards}" as="card" iteration="cardIterator">
@@ -236,7 +220,8 @@ function insertAfter(referenceNode, newNode) {
 					<div class="frontside w-100">
 						<div class="card">
 							<f:if condition="{card.file -> f:count()}">
-								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}', width: '{card.imgwidth}'}" />
+								<f:variable name="width" value="{f:if(condition: '{card.imgwidth}', then: '{card.imgwidth}', else: '{flipper.width}')}" />
+								<f:render section="Image" arguments="{ratio: '{card.ratio}', file: '{card.file.0}', width: '{width}'}" />
 							</f:if>
 							<div class="card-body{card.header_position}">
 								<f:render section="CardTitle" arguments="{_all}" />
@@ -292,7 +277,6 @@ function insertAfter(referenceNode, newNode) {
 </f:section>
 
 <f:section name="Image">
-<f:variable name="lazyload" value="{f:if(condition: swiper, then: '0', else: '{settings.lazyLoad}')}" />
 <f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 	<t3sb:media file="{file}"

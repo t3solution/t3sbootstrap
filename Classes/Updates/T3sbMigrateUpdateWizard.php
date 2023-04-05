@@ -69,7 +69,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 						->select('uid', $field)
 						->from('tx_t3sbootstrap_domain_model_config')
-						->execute()
+						->executeQuery()
 						->fetchAll();
 				foreach ($statements as $statement) {
 					$recordId = (int)$statement['uid'];
@@ -83,7 +83,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 								$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
 							)
 							->set($field, str_replace($rename, $renameTo[$key], $statement[$field]))
-							->execute();
+							->executeQuery();
 					}
 				}
 			}
@@ -98,7 +98,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 					->select('uid', $field)
 					->from('sys_file_reference')
-					->execute()
+					->executeQuery()
 					->fetchAll();
 				foreach ($statements as $statement) {
 					$recordId = (int)$statement['uid'];
@@ -112,7 +112,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 								$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
 							)
 							->set($field, str_replace($rename, $renameTo[$key], $statement[$field]))
-							->execute();
+							->executeQuery();
 					}
 				}
 			}
@@ -127,7 +127,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 						->select('uid', $field)
 						->from('tt_content')
-						->execute()
+						->executeQuery()
 						->fetchAll();
 				foreach ($statements as $statement) {
 					$recordId = (int)$statement['uid'];
@@ -141,7 +141,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 								$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
 							)
 							->set($field, str_replace($rename, $renameTo[$key], $statement[$field]))
-							->execute();
+							->executeQuery();
 					}
 				}
 			}
@@ -158,7 +158,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 					->select('uid', $field)
 					->from('pages')
-					->execute()
+					->executeQuery()
 					->fetchAll();
 				foreach ($statements as $statement) {
 					$recordId = (int)$statement['uid'];
@@ -173,7 +173,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 								$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
 							)
 							->set($field, str_replace($rename, $renameTo[$key], $statement[$field]))
-							->execute();
+							->executeQuery();
 					}
 				}
 			}
@@ -188,7 +188,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 			->where(
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('t3sbs_carousel'))
 			)
-			->execute()
+			->executeQuery()
 			->fetchAll();
 
 		foreach ($statements as $statement) {
@@ -204,7 +204,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 					)
 					->set('assets', $imageAmount)
 					->set('image', 0)
-					->execute();
+					->executeQuery();
 
 				$queryBuilderSFR = $connectionPool->getQueryBuilderForTable('sys_file_reference');
 				$fileStatements = $queryBuilderSFR
@@ -213,7 +213,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 					->where(
 						$queryBuilderSFR->expr()->eq('uid_foreign', $queryBuilderSFR->createNamedParameter($recordId, \PDO::PARAM_INT))
 					)
-					->execute()
+					->executeQuery()
 					->fetchAll();
 
 				foreach ($fileStatements as $fileStatement) {
@@ -224,7 +224,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 							$queryBuilderSFR->expr()->eq('uid', $queryBuilderSFR->createNamedParameter($fileId, \PDO::PARAM_INT))
 						)
 						->set('fieldname', 'assets')
-						->execute();
+						->executeQuery();
 				}
 			}
 		}
@@ -285,7 +285,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 					->select('uid', $field)
 					->from('tx_t3sbootstrap_domain_model_config')
-					->execute()
+					->executeQuery()
 					->fetchAll();
 
 				foreach ($statements as $statement) {
@@ -311,7 +311,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 						 ->select('uid', $field)
 						 ->from('sys_file_reference')
-						 ->execute()
+						 ->executeQuery()
 						 ->fetchAll();
 				foreach ($statements as $statement) {
 					$pos = strpos((string)$statement[$field], $rename);
@@ -336,7 +336,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 						 ->select('uid', $field)
 						 ->from('pages')
-						 ->execute()
+						 ->executeQuery()
 						 ->fetchAll();
 				foreach ($statements as $statement) {
 					$check = strpos((string)$statement[$field], 'var(--bs-');
@@ -362,7 +362,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 				$statements = $queryBuilder
 						 ->select('uid', $field)
 						 ->from('tt_content')
-						 ->execute()
+						 ->executeQuery()
 						 ->fetchAll();
 				foreach ($statements as $statement) {
 					$pos = strpos((string)$statement[$field], $rename);
@@ -384,7 +384,7 @@ class T3sbMigrateUpdateWizard implements UpgradeWizardInterface
 			->where(
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('t3sbs_carousel'))
 			)
-			->execute()
+			->executeQuery()
 			->fetchAll();
 
 		foreach ($statements as $statement) {

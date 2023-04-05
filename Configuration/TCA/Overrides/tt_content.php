@@ -1,5 +1,4 @@
 <?php
-
 defined('TYPO3') || die();
 
 # Extension configuration
@@ -855,22 +854,6 @@ $tempContentColumns = [
 			'default' => 4
 		]
 	],
-	'tx_t3sbootstrap_galleryGutters' => [
-		'label' => 'Gallery gutters',
-		'exclude' => 1,
-		'config' => [
-			'type' => 'select',
-			'renderType' => 'selectSingle',
-			'items' => [
-				[1,1],
-				[2,2],
-				[3,3],
-				[4,4],
-				[5,5]
-			],
-			'default' => 4
-		]
-	],
 	'tx_t3sbootstrap_bgopacity' => [
 		 'label' => 'Opacity for Background color only',
 		'exclude' => 1,
@@ -944,6 +927,16 @@ $tempContentColumns = [
 	'tx_t3sbootstrap_inTextImgRowWidth' => [
 		'label' => 'Gallery row width in %',
 		'exclude' => 1,
+		'displayCond' => [
+			 'AND' => [
+				'FIELD:CType:=:textpic',
+				'FIELD:CType:=:textmedia',
+				'FIELD:CType:=:t3sbs_mediaobject',
+				'FIELD:CType:=:t3sbs_card',
+				'FIELD:CType:=:t3sbs_toast',
+				'FIELD:CType:=:t3sbs_gallery',
+			 ],
+		],
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
@@ -958,6 +951,58 @@ $tempContentColumns = [
 				['none','none']
 			],
 			'default' => 'auto'
+		]
+	],
+	'tx_t3sbootstrap_gutters' => [
+		'label' => 'Horizontal gutters',
+		'exclude' => 1,
+		'description' => 'INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters',
+		'displayCond' => [
+			 'OR' => [
+				'FIELD:CType:=:image',
+				'FIELD:CType:=:textpic',
+				'FIELD:CType:=:textmedia',
+				'FIELD:CType:=:t3sbs_gallery',
+			 ],
+		],
+		'config' => [
+			'type' => 'select',
+			'renderType' => 'selectSingle',
+			'items' => [
+				['gx-0 (no gutters)','gx-0'],
+				['gx-1','gx-1'],
+				['gx-2','gx-2'],
+				['gx-3','gx-3'],
+				['gx-4 (default)','gx-4'],
+				['gx-5','gx-5'],
+			],
+			'default' => 'gx-4'
+		]
+	],
+	'tx_t3sbootstrap_verticalgutters' => [
+		'label' => 'Vertical gutters',
+		'exclude' => 1,
+		'description' => 'INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#vertical-gutters',
+		'displayCond' => [
+			 'OR' => [
+				'FIELD:CType:=:image',
+				'FIELD:CType:=:textpic',
+				'FIELD:CType:=:textmedia',
+				'FIELD:CType:=:t3sbs_gallery',
+			 ],
+		],
+		'config' => [
+			'type' => 'select',
+			'renderType' => 'selectSingle',
+			'items' => [
+				['gy-0 (no gutters)','mb-0'],
+				['gy-1','mb-1'],
+				['gy-2','mb-2'],
+				['gy-3','mb-3'],
+				['gy-4 (default)','mb-4'],
+				['gy-5','mb-5'],
+			],
+			'default' => 'mb-4'
 		]
 	],
 	'tx_t3sbootstrap_bordercolor' => [
@@ -985,7 +1030,19 @@ $tempContentColumns = [
 	'tx_t3sbootstrap_image_ratio' => [
 		'label' => 'Image Ratio',
 		'exclude' => 1,
-		'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['ratio'],
+		'displayCond' => [
+			'AND' => [
+				'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['ratio'],
+				'OR' => [
+					'FIELD:CType:=:textpic',
+					'FIELD:CType:=:textmedia',
+					'FIELD:CType:=:t3sbs_mediaobject',
+					'FIELD:CType:=:t3sbs_card',
+					'FIELD:CType:=:t3sbs_toast',
+					'FIELD:CType:=:t3sbs_gallery',
+				]
+			]
+		],
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
@@ -1001,16 +1058,26 @@ $tempContentColumns = [
 			'default' => ''
 		]
 	],
-
 	'tx_t3sbootstrap_image_orig' => [
 		'exclude' => 1,
 		'label' => 'Use Original Image',
-		'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['origimage'],
+		'displayCond' => [
+			'AND' => [
+				'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['ratio'],
+				'OR' => [
+					'FIELD:CType:=:textpic',
+					'FIELD:CType:=:textmedia',
+					'FIELD:CType:=:t3sbs_mediaobject',
+					'FIELD:CType:=:t3sbs_card',
+					'FIELD:CType:=:t3sbs_toast',
+					'FIELD:CType:=:t3sbs_gallery',
+				]
+			]
+		],
 		'config' => [
 			'type' => 'check'
 		]
 	],
-
 	'tx_t3sbootstrap_animateCss' => [
 		'exclude' => 1,
 		'l10n_display' => 'hideDiff',
@@ -1405,22 +1472,34 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
-	'mediaAdjustments',
+	'imageSettings',
 	'tx_t3sbootstrap_image_ratio',
 	'after:tx_t3sbootstrap_bordercolor'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-	'tt_content',
-	'mediaAdjustments',
-	'tx_t3sbootstrap_image_orig',
-	'before:tx_t3sbootstrap_image_ratio'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
-	'mediaAdjustments',
+	'imageSettings',
+	'tx_t3sbootstrap_image_orig',
+	'before:tx_t3sbootstrap_image_ratio'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'imageSettings',
 	'tx_t3sbootstrap_inTextImgRowWidth',
 	'after:tx_t3sbootstrap_bordercolor'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'imageGutters',
+	'tx_t3sbootstrap_gutters',
+	'after:tx_t3sbootstrap_image_ratio'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'imageGutters',
+	'tx_t3sbootstrap_verticalgutters',
+	'after:tx_t3sbootstrap_gutters'
 );
 
 # add palette bootstrap etc
@@ -1448,6 +1527,21 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
 	'',
 	'after:layout'
 );
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'--palette--;T3SB Image Settings;imageSettings',
+	'',
+	'after:mediaAdjustments'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'--palette--;T3SB Image Gutters;imageGutters',
+	'',
+	'after:mediaAdjustments'
+);
+
+
 # add palette animate if EXT:content_animations is not loaded
 if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations') ) {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
@@ -1457,10 +1551,6 @@ if ( !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_anim
 		'after:layout'
 	);
 }
-
-$GLOBALS['TCA']['tt_content']['palettes']['bsRowWidth'] = [
-  'showitem' => 'tx_t3sbootstrap_image_ratio, tx_t3sbootstrap_inTextImgColumns, tx_t3sbootstrap_galleryGutters'
-];
 
 $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
   'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,

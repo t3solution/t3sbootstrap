@@ -11,7 +11,6 @@ use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -19,12 +18,14 @@ use Psr\Http\Message\ResponseInterface;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 
-/**
- * Abstract controller.
+/*
+ * This file is part of the TYPO3 extension t3sbootstrap.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
  */
 abstract class AbstractController extends ActionController
 {
-
 	protected $configRepository;
 	protected $isSiteroot;
 	protected $rootPageId;
@@ -32,12 +33,11 @@ abstract class AbstractController extends ActionController
 	protected $tcaColumns;
 	protected $isAdmin;
 	protected $rootConfig;
-	protected $version;
 	protected $rootTemplates;
 	protected $persistenceManager;
 
 	/**
-	 * Init all actions.
+	 * init all actions
 	 */
 	public function initializeAction()
 	{
@@ -48,8 +48,7 @@ abstract class AbstractController extends ActionController
 		$this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
 		$this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
 		$this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
- 		$typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
-		$this->version = (int)$typo3Version->getVersion();
+
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
 		$this->rootTemplates = $queryBuilder
 			 ->select('uid','pid', 'constants')
@@ -57,14 +56,10 @@ abstract class AbstractController extends ActionController
 			 ->where(
 				$queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 			 )
-			 ->execute()->fetchAll();
+			 ->executeQuery()->fetchAll();
 
 		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-		if ($typo3Version->getMajorVersion() === 11) {
-			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v11.css');
-		} else {
-			$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles-v10.css');
-		}
+		$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles.css');
 		$pageRenderer->loadRequireJsModule(
 			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
 			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
@@ -88,7 +83,7 @@ abstract class AbstractController extends ActionController
 			 	$queryBuilder->expr()->eq('sys_language_uid', 0),
 				$queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 			 )
-			 ->execute();
+			 ->executeQuery();
 
 		$siteroots = $result->fetchAll();
 		$customScssFileName = '';
@@ -184,7 +179,7 @@ abstract class AbstractController extends ActionController
 
 
 	/**
-	 * Compare config with rootconfig
+	 * compare config with rootconfig
 	 */
 	protected function compareConfig(Config $config): array
 	{
@@ -275,7 +270,6 @@ abstract class AbstractController extends ActionController
 			$breakpointWidth = $navbarBreakpoint == 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
 			$siteroots = [];
 			$filecontent = '';
-
 			foreach( $this->configRepository->findAll() as $config ) {
 				$page = GeneralUtility::makeInstance(PageRepository::class)->getPage($config->getPid());
 				if ( $page['hidden'] === 0 && $page['deleted'] === 0 ) {
@@ -548,9 +542,10 @@ abstract class AbstractController extends ActionController
 		$newConfig->setSubheaderColor( 'secondary' );
 		$newConfig->setFaLinkIcons(1);
 		$newConfig->setSectionmenuAnchorOffset(29);
-		$newConfig->setSectionmenuScrollspyOffset(130);
 		$newConfig->setSectionmenuScrollspy(1);
 		$newConfig->setNavbarLangFlags(1);
+		$newConfig->setSectionmenuScrollspyThreshold('0.1, 0.5, 1');
+		$newConfig->setSectionmenuScrollspyRootMargin('0px 0px -75%');
 
 		return $newConfig;
 	}
@@ -589,7 +584,7 @@ abstract class AbstractController extends ActionController
 					$queryBuilder->expr()->eq('sys_language_uid', 0),
 					QueryHelper::stripLogicalOperatorPrefix($permsClause)
 				)
-				->execute();
+				->executeQuery();
 			while ($row = $statement->fetch()) {
 				if ($begin <= 0) {
 					$theList .= ',' . $row['uid'];

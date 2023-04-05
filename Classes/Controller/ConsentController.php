@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -22,7 +23,7 @@ class ConsentController extends ActionController
 	 *
 	 * @return void
 	 */
-	public function indexAction(): void
+	public function indexAction(): ResponseInterface
 	{
 		$consentRecordUid = (int)$this->settings['consent']['contentByUid'];
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
@@ -63,6 +64,7 @@ class ConsentController extends ActionController
 		}
 
 		$this->view->assignMultiple($assignedValues);
+		return $this->htmlResponse();
 	}
 
 }

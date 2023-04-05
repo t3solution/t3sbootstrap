@@ -121,8 +121,8 @@ class GalleryHelper implements SingletonInterface
 		// In Text right or left (17,18)
 		if ( $imageorient == 17 || $imageorient == 18 ) {
 			$inTextImgColumns = empty($processedData['data']['tx_t3sbootstrap_inTextImgColumns']) ? 4 : $processedData['data']['tx_t3sbootstrap_inTextImgColumns'];
-			$galleryClass .= $imageorient == 17 ? ' col-md-'.$inTextImgColumns.' float-md-end mb-3 ms-md-3'
-			 : ' col-md-'.$inTextImgColumns.' float-md-start mb-3 me-md-3';
+			$galleryClass .= $imageorient == 17 ? ' col-md-'.$inTextImgColumns.' float-md-end ms-md-3'
+			 : ' col-md-'.$inTextImgColumns.' float-md-start me-md-3';
 			$galleryClass .= ' '.$rowwidth;
 		}
 		// Beside Text right or left (nowrap) (25,26)

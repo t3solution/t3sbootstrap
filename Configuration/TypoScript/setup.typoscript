@@ -147,7 +147,7 @@ page.jsInline.1.value (
 	})(window,document,'script','dataLayer','{$bootstrap.gtm}');
 )
 page.jsInline.1.if.isTrue = {$bootstrap.gtm}
-[END]
+[global]
 
 
 [applicationContext == "Development"]
@@ -159,4 +159,4 @@ config {
 	concatenateCss = 0
 	contentObjectExceptionHandler = 0
 }
-[END]
+[global]

@@ -100,12 +100,25 @@ class Carousel implements SingletonInterface
 				$processedData['controls'] = $flexconf['controls'];
 			}
 		}
+
+		$processedData['ratioCalc'] = '';
+
 		if ($parentflexconf['ratio']) {
 			$ratioArr = explode(':', $parentflexconf['ratio']);
-			$processedData['ratioCalc'] = $ratioArr[1] / $ratioArr[0];
+			$x = str_replace(':', 'x', $parentflexconf['ratio']);
+			$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
+			$processedData['ratioCalc'] .= '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
+			$processedData['videoRatio'] = str_replace(':', 'x', $parentflexconf['ratio']);
+			$processedData['videoStyle'] = '';
+			if ( $parentflexconf['ratio'] !== '16:9') {
+				$processedData['videoStyle'] .= 'object-fit: cover;';
+			}
 		} else {
 			$processedData['ratioCalc'] = 1;
+			$processedData['videRatio'] = '';
+			$processedData['videoStyle'] = '';
 		}
+
 		if ( empty($processedData['files']) && !$processedData['localVideoPath'] ) {
 			$ratio = $parentflexconf['ratio'] ? $parentflexconf['ratio'] : '16:9';
 			$noImgHeight = explode(':', (string) $ratio);
@@ -124,12 +137,18 @@ class Carousel implements SingletonInterface
 		}
 		$processedData['shift'] = '';
 		$processedData['videoShift'] = '';
+
 		if (!empty($flexconf['shift'])){
+			$processedData['videoStyle'] .= 'transform: translateY('.(int)$flexconf['shift'].'%);';
+			$negShift = (int)$flexconf['shift'] * -1;
+			$processedData['videoStyle'] .= 'top: '.$negShift.'% !important;';
 			$processedData['shift'] = (int)$flexconf['shift'] / 100;
 			$breakWidth = '576';
-			$processedData['videoShift'] = '@media(min-width: '.$breakWidth.'px){.carousel-item-'.$processedData['data']['uid'].' figure{margin-top:'.(int)$flexconf['shift'].'% !important}}';
-
 		}
+
+		$videoStyle = $processedData['videoStyle'];
+		$processedData['videoStyle'] = ' style="'.$videoStyle.'"';
+
 		if ( !empty($parentflexconf['swiperJs']) ) {
 			$processedData['swiper'] = TRUE;
 		}

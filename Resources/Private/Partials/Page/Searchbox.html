@@ -1,4 +1,17 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:kesearch="http://typo3.org/ns/Tpwd/KeSearch/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.kesearch.loaded}">
+	<f:then>
+		<f:cObject typoscriptObjectPath="lib.searchbox_html" />
+	</f:then>
+	<f:else>
+		<f:render section="Indexedsearch" arguments="{_all}" />
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="Indexedsearch">
 <f:form extensionName="indexedsearch" pluginName="pi2" controller="Search" action="search" method="post" id="searchbox" pageUid="{settings.indexedsearch.targetPid}" class="d-flex ms-{navbarBreakpoint}-3 mb-0{sbmauto}">
 	<div class="tx-indexedsearch-hidden-fields">
 		<f:form.hidden name="search[_sections]" value="0" />
@@ -28,4 +41,4 @@
 		</f:else>
 	</f:if>
 </f:form>
-</html>
+</f:section>

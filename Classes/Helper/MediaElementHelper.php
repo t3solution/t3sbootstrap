@@ -19,7 +19,7 @@ class MediaElementHelper implements SingletonInterface
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $extConf, $breakpoint): array
+	public function getProcessedData(array $processedData, array $extConf, $breakpoint, $parentflexconf): array
 	{
 		$cType = $processedData['data']['CType'];
 
@@ -27,11 +27,17 @@ class MediaElementHelper implements SingletonInterface
 		$processedData['addmedia']['imgclass'] .= $processedData['data']['imageborder'] ? ' border' :'';
 		$processedData['addmedia']['imgclass'] .= $processedData['data']['tx_t3sbootstrap_bordercolor'] && $processedData['data']['imageborder']
 		 ? ' border-'.$processedData['data']['tx_t3sbootstrap_bordercolor'] : '';
+
 		// lazyload
-		if ( $extConf['lazyLoad'] ) {
-			$processedData['addmedia']['imgclass'] .= $extConf['lazyLoad'] == 1 ? ' lazy' : '';
-			$processedData['addmedia']['lazyload'] = $extConf['lazyLoad'];
-			$processedData['lazyload'] = $extConf['lazyLoad'];
+		if ( $extConf['lazyLoad']) {
+			if (!empty($parentflexconf) && isset($parentflexconf['card_wrapper']) && $parentflexconf['card_wrapper'] === 'slider' ) {
+					$processedData['addmedia']['lazyload'] = 0;
+					$processedData['lazyload'] = 0;
+			} else {
+				$processedData['addmedia']['imgclass'] .= $extConf['lazyLoad'] == 1 ? ' lazy' : '';
+				$processedData['addmedia']['lazyload'] = $extConf['lazyLoad'];
+				$processedData['lazyload'] = $extConf['lazyLoad'];
+			}
 		}
 
 		$processedData['addmedia']['figureclass'] = !empty($processedData['addmedia']['figureclass']) ? ' '.trim($processedData['addmedia']['figureclass']) : '';
@@ -66,6 +72,5 @@ class MediaElementHelper implements SingletonInterface
 
 		return $processedData;
 	}
-
 
 }

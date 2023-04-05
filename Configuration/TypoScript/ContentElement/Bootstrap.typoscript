@@ -28,7 +28,8 @@ tt_content {
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 		}
@@ -70,7 +71,8 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 		}
@@ -101,7 +103,8 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	{$bootstrap.image.maxWidthToast}
 				disableAutoRow = {$bootstrap.image.disableAutoRow}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 
@@ -129,7 +132,8 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 

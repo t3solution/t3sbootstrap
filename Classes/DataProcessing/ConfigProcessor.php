@@ -62,8 +62,9 @@ class ConfigProcessor implements DataProcessorInterface
 		$company = $processedRecordVariables['company'];
 		$companyArr = GeneralUtility::trimExplode('|', $company);
 		$sysLanguageUid = $processedData['data']['sys_language_uid'];
+
 		if ( $sysLanguageUid && $company ) {
-			$company = $companyArr[$sysLanguageUid] ?: $company;
+			$company = !empty($companyArr[$sysLanguageUid]) ? $companyArr[$sysLanguageUid] : $company;
 		} else {
 			$company = $companyArr[0] ?: $company;
 		}
@@ -475,6 +476,10 @@ class ConfigProcessor implements DataProcessorInterface
 			if ($hasBgImages && !empty($processedRecordVariables['jumbotronBgimageratio'])) {
 				$processedData['config']['jumbotron']['noBgRatio'] = FALSE;
 				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
+				$ratioArr = explode('x', $processedRecordVariables['jumbotronBgimageratio']);
+				$x = $processedRecordVariables['jumbotronBgimageratio'];
+				$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
+				$processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
 			}
 		}
 
@@ -525,7 +530,6 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['sidebar']['stickTopClass'] = $processedRecordVariables['sectionmenuStickyTop'] ? ' sticky-top': '';
 				$topOffset = (int)$processedRecordVariables['sectionmenuAnchorOffset'] + (int)$processedRecordVariables['navbarHeight'];
 				$processedData['config']['sidebar']['stickTopOffset'] = $topOffset ? $topOffset.'px' : 0;
-				$processedData['config']['sidebar']['scrollspyOffset'] = $processedRecordVariables['sectionmenuScrollspyOffset'];
 				$processedData['config']['sidebar']['scrollspy'] = $processedRecordVariables['sectionmenuScrollspy'];
 			} else {
 				if (!empty($processedData['subNavigation']) && is_array($processedData['subNavigation'])) {
@@ -567,7 +571,7 @@ class ConfigProcessor implements DataProcessorInterface
 				->where(
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, \PDO::PARAM_INT))
 				)
-			->execute()
+			->executeQuery()
 			->fetchColumn();
 			$processedData['config']['expandedcontentTop']['enable'] = $numberOfTop ? $processedRecordVariables['expandedcontentEnabletop'] : 0;
 			$processedData['config']['expandedcontentTop']['slide'] = $processedRecordVariables['expandedcontentSlidetop'];
@@ -584,7 +588,7 @@ class ConfigProcessor implements DataProcessorInterface
 				->where(
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, \PDO::PARAM_INT))
 				)
-			->execute()
+			->executeQuery()
 			->fetchColumn();
 			$processedData['config']['expandedcontentBottom']['enable'] = $numberOfBottom ? $processedRecordVariables['expandedcontentEnablebottom'] : 0;
 			$processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontentSlidebottom'];
@@ -626,7 +630,7 @@ class ConfigProcessor implements DataProcessorInterface
 			->andWhere(
 				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, \PDO::PARAM_INT))
 			)
-			 ->execute();
+			 ->executeQuery();
 
 		$navbarColors = $result->fetchAll();
 		$navbarColorCSS = '';
@@ -699,7 +703,7 @@ class ConfigProcessor implements DataProcessorInterface
 					$queryBuilder->expr()->eq('sys_language_uid', 0),
 					QueryHelper::stripLogicalOperatorPrefix($permsClause)
 				)
-				->execute();
+				->executeQuery();
 			while ($row = $statement->fetch()) {
 				if ($begin <= 0) {
 					$theList .= ',' . $row['uid'];

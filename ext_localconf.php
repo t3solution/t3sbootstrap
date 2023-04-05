@@ -4,25 +4,6 @@ defined('TYPO3') || die();
 (function () {
 
 	/***************
-	 * Register Icons
-	 */
-	if (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class)->getMajorVersion() < 11) {
-		
-		if ( $GLOBALS['TYPO3_REQUEST'] ?? null && \TYPO3\CMS\Core\Http\ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
-	
-			$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-	
-			// FontawesomeIconProvider
-			$iconRegistry->registerIcon(
-				'buttongroup',
-				\TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-				['name' => 'bars']
-			);
-			unset($iconRegistry);
-		}
-	}
-
-	/***************
 	 * TsConfig
 	 */
 	 # Page
@@ -37,6 +18,7 @@ defined('TYPO3') || die();
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 0');
@@ -89,14 +71,16 @@ defined('TYPO3') || die();
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 1');
 	}
-	/*
 	# EXPERIMENTAL -  if ke_search is loaded
+	/*
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search') ) {
 		 # Setup
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('t3sbootstrap',
 			'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TypoScript/setup.typoscript"'
 		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 1');
+	 	# TsConfig
+	 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig"');
 	}
 	*/
 	# if indexed_search is loaded

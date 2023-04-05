@@ -144,14 +144,16 @@ if (!Object.prototype.forEach) {
 		// desctop view
 		var dropdowns = document.querySelectorAll('.navplusicon .dropdown');
 		dropdowns.forEach(function (dropdown, index) {
-			dropdown.addEventListener('show.bs.dropdown', event => {
-				event.target.children[0].classList.remove('fa-square-plus');
-				event.target.children[0].classList.add('fa-square-minus');
-			});
-			dropdown.addEventListener('hidden.bs.dropdown', event => {
-				event.target.children[0].classList.remove('fa-square-minus');
-				event.target.children[0].classList.add('fa-square-plus');
-			});
+			if (!dropdown.classList.contains('dm-toggler')) {
+				dropdown.addEventListener('show.bs.dropdown', event => {
+					event.target.children[0].classList.remove('fa-square-plus');
+					event.target.children[0].classList.add('fa-square-minus');
+				});
+				dropdown.addEventListener('hidden.bs.dropdown', event => {
+					event.target.children[0].classList.remove('fa-square-minus');
+					event.target.children[0].classList.add('fa-square-plus');
+				});
+			}
 		});
 	}
 	</f:asset.script>

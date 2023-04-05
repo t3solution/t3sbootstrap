@@ -1,4 +1,14 @@
 
+.t3-grid-table .t3js-page-column:first-child .t3-page-column-header  {
+  background: #eee0ff;
+  color: #7e00b4;
+} 
+
+.t3-grid-table .t3js-page-column:first-child .t3-page-ce .t3-page-column-header  {
+	background: #fff;
+	color: #999;
+} 
+ 
 .navbar-collapse.collapse.in .navbar-nav {
 	margin-bottom: .5rem;	
 }
@@ -35,9 +45,7 @@
 #accordionInfo	.card-title button {
 	color: black !important;
 }
-.module-body {
-	background-color: #dedede;
-}
+
 .text-secondary {
 	color: #808080;
 }

@@ -38,7 +38,7 @@ class CarouselContainer implements SingletonInterface
 			->where(
 				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
 			)
-			->execute()
+			->executeQuery()
 			->fetchAll();
 
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);

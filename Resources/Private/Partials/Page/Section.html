@@ -5,10 +5,10 @@
 			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true'}" />
 		</f:then>
 		<f:else>
-			<f:render partial="Page/Assets" arguments="{scrollspy:'true'}" />		
+			<f:render partial="Page/Assets" arguments="{stickytop:'false', scrollspy:'true'}" />		
 		</f:else>
 	</f:if>
-	<nav id="sectionmenu" class="list-group{config.sidebar.stickTopClass}" style="top:{config.sidebar.stickTopOffset}">
+	<div id="sectionmenu" class="list-group{config.sidebar.stickTopClass}" style="top:{config.sidebar.stickTopOffset}">
 		<f:for each="{sectionMenu.0.content}" as="element">
 			<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
 				<a class="list-group-item list-group-item-action" href="#c{element.data.uid}">
@@ -25,7 +25,7 @@
 				</a>
 			</f:if>
 		</f:for>	
-	</nav>
+	</div>
 </f:if>
 </html>
 

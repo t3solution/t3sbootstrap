@@ -1,12 +1,25 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment> Poster for the video - only if PNG- or JPG-image with the name of the video is availabe in fileadmin/user_upload/ </f:comment>
-<t3sb:media
-	class="{class}"
-	file="{file}"
-	width="{dimensions.width}"
-	height="{dimensions.height}"
-	alt="{file.alternative}"
-	title="{file.title}"
-	additionalAttributes="{poster: poster}" />
+<f:if condition="{poster}">
+	<f:then>
+		<t3sb:media
+			class="{class}"
+			file="{file}"
+			width="{dimensions.width}"
+			height="{dimensions.height}"
+			alt="{file.alternative}"
+			title="{file.title}"
+			additionalAttributes="{poster: poster}" />
+	</f:then>
+	<f:else>
+		<t3sb:media
+			class="{class}"
+			file="{file}"
+			width="{dimensions.width}"
+			height="{dimensions.height}"
+			alt="{file.alternative}"
+			title="{file.title}"
+	</f:else>
+</f:if>
 </html>

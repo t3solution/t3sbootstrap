@@ -10,7 +10,7 @@ page.1.newsTitle.cObject {
 	conf.tx_news_domain_model_news = TEXT
 	conf.tx_news_domain_model_news.field = title
 }
-[END]
+[global]
 
 
 

@@ -116,6 +116,7 @@
 		  onePageLayout = navbar.classList.contains('sectionMenu');
 
 	var fixedNavbar = false;
+
 	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
 		fixedNavbar = true;
 	}
@@ -154,10 +155,18 @@
 	};
 </f:asset.script>
 </f:if>
-<f:if condition="{settings.config.darkMode}">
+<f:comment> Dark Mode </f:comment>
+<f:if condition="{settings.config.navbarDarkMode}">
 <f:asset.script identifier="vanilla_darkMode">
 	// Dark mode - Main.html
 	t3sbDarkMode();
+</f:asset.script>
+</f:if>
+<f:comment> Cookie for viewport width </f:comment>
+<f:if condition="{settings.viewportWidthCookie}">
+<f:asset.script identifier="vanilla_widthCookie">
+	// Cookie for viewport width (usefull with fluid-container and image auto width) - Main.html
+	document.cookie = 'viewportWidth='+viewportWidth+'; path=/; max-age=${60 * 60 * 24 * 14};';
 </f:asset.script>
 </f:if>
 <f:comment> Lazyload </f:comment>

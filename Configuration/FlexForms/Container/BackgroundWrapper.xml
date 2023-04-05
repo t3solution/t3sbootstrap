@@ -90,6 +90,20 @@
 							</config>
 						</TCEforms>
 					</origImage>
+					<width>
+						<TCEforms>
+							<label>max. Image width</label>
+							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								<max>4</max>
+								<default>1296</default>
+								<eval>int</eval>
+								<checkbox>0</checkbox>
+							</config>
+						</TCEforms>
+					</width>
 					<bgAttachmentFixed>
 						<TCEforms>
 							<label>Background-attachment - fixed</label>

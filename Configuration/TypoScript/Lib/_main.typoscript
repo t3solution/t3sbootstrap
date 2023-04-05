@@ -92,30 +92,30 @@ lib.printButton {
 		10 = TEXT
 		10.value = &no_cache=1
 
-		20 = TEXT
-		20.data = GP:L
-		20.wrap = &L=|
-		20.required = 1
+	20 = TEXT
+	20.data = GP:L
+	20.wrap = &L=|
+	20.required = 1
 
-		30 = TEXT
-		30.data = GP:tx_news_pi1 | news
-		30.wrap = &tx_news_pi1[news]=|
-		30.required = 1
+	30 = TEXT
+	30.data = GP:tx_news_pi1 | news
+	30.wrap = &tx_news_pi1[news]=|
+	30.required = 1
 
-		40 = TEXT
-		40.data = GP:tx_news_pi1 | controller
-		40.wrap = &tx_news_pi1[controller]=|
-		40.required = 1
+	40 = TEXT
+	40.data = GP:tx_news_pi1 | controller
+	40.wrap = &tx_news_pi1[controller]=|
+	40.required = 1
 
-		50 = TEXT
-		50.data = GP:tx_news_pi1 | action
-		50.wrap = &tx_news_pi1[action]=|
-		50.required = 1
+	50 = TEXT
+	50.data = GP:tx_news_pi1 | action
+	50.wrap = &tx_news_pi1[action]=|
+	50.required = 1
 
-		60 = TEXT
-		60.data = GP:cHash
-		60.wrap = &cHash=|
-		60.required = 1
+	60 = TEXT
+	60.data = GP:cHash
+	60.wrap = &cHash=|
+	60.required = 1
 
 		70 = TEXT
 		70.value = &type=98

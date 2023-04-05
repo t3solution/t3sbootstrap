@@ -31,6 +31,17 @@
 		<div class="card-body">
 			<f:render section="ExtraTop" arguments="{ckey: colkey}" />
 			<f:for each="{columns}" as="field" key="ckey">
+
+<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
+	<f:then>
+
+<f:comment>
+	Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
+</f:comment>
+
+	</f:then>
+	<f:else>
+
 				<f:if condition="{field.noSub}">
 					<f:then>
 						<f:comment> - FORM FIELD - </f:comment>
@@ -70,6 +81,10 @@
 						</div>
 					</f:else>
 				</f:if>
+
+	</f:else>
+</f:if>
+
 			</f:for>
 		</div>
 	</div>
