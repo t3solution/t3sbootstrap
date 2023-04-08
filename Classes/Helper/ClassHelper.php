@@ -19,7 +19,7 @@ class ClassHelper implements SingletonInterface
 	/**
 	 * Returns the CSS-class for default elements
 	 */
-	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass): string
+	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass, string $sectionMenuClass): string
 	{
 	 	// class
 		if ( $cTypeClass ) {
@@ -145,7 +145,7 @@ class ClassHelper implements SingletonInterface
 			}
 		}
 
-		if ($data['sectionIndex']) {
+		if ($sectionMenuClass) {
 			$class .= ' section-index';	
 		}
 

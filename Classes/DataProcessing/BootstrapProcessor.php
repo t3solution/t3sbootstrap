@@ -109,9 +109,14 @@ class BootstrapProcessor implements DataProcessorInterface
 		$processedData['data']['configuid'] = (int)$processorConfiguration['configuid'];
 		$processedData['header_fontawesome'] = '';
 
+		$sectionMenuClass = '';
+		if (!empty($contentObjectConfiguration['settings.']['sectionMenuClass'])) {
+			$sectionMenuClass = $contentObjectConfiguration['settings.']['sectionMenuClass'];
+		}
+
 		// class
 		$classHelper = GeneralUtility::makeInstance(ClassHelper::class);
-		$class = $classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass']);
+		$class = $classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass'], $sectionMenuClass);
 		$processedData['class'] = !empty($processedData['class']) ? $processedData['class'].' '.$class : $class;
 
 		// header class
@@ -311,6 +316,16 @@ class BootstrapProcessor implements DataProcessorInterface
 			$processedData['class'] .= $classHelper->getContainerClass($parentflexconf, $flexconf);
 		}
 
+		$processedData['dataAttr'] = '';
+		if (!empty($processedData['data']['tx_content_animations_animation'])) {
+			$completeAnimationSettings = $this->generateAnimationAttributeSettingsFromAnimationsArray($processedData['data']);
+			$processedData['dataAttr'] = !empty($completeAnimationSettings) ? $completeAnimationSettings : '';
+			$processedData['dataAnimate'] = '';
+			$processedData['isAnimateCss'] = FALSE;
+			$processedData['animateCssRepeat'] = FALSE;
+			$flexconf['animate'] = '';
+		}
+
 		// container class
 		$defaultHelper = GeneralUtility::makeInstance(DefaultHelper::class);
 		$processedData = $defaultHelper->getContainerClass($processedData, $extConf['container']);
@@ -337,4 +352,30 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		return $processedData;
 	}
+
+
+
+	/**
+	 * @param array $animationSettingsArray
+	 * @return string
+	 */
+	private function generateAnimationAttributeSettingsFromAnimationsArray(array $animationSettingsArray)
+	{
+		$animationSettings = '';
+
+		foreach ($animationSettingsArray as $key => $value) {
+			if (str_starts_with($key, 'tx_content_animations_')) {
+				if ($key == 'tx_content_animations_animation' ) {
+					$newphrase = str_replace('tx_content_animations_animation', 'data-aos', $key);
+					$animationSettings .= $newphrase . '="' . $value . '" ';
+				} else {
+					$newphrase = str_replace('tx_content_animations_', 'data-aos-', $key);
+					$animationSettings .= $newphrase . '="' . $value . '" ';
+				}
+			}
+		}
+		return ' '.$animationSettings;
+	}
+
+
 }
