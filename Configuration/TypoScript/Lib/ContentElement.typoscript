@@ -95,6 +95,7 @@ lib.contentElement {
 		webp = {$bootstrap.extconf.webp}
 		btnSlideOutCorrection = 21
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
+		sectionMenuClass = {$bootstrap.config.sectionMenuClass}
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}

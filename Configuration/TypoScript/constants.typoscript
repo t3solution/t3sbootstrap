@@ -228,6 +228,8 @@ bootstrap.config.enableUtilityColors = 1
 # hints to increase the website speed in the BE Modul
 bootstrap.config.enableInfo = 1
 
+bootstrap.config.sectionMenuClass = 0
+
 # include print template
 bootstrap.print.enable = 0
 

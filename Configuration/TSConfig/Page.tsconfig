@@ -426,5 +426,32 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 		}
 	}
+	tx_content_animations_animation {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
+			t3sbs_button.disabled = 1
+		}
+	}
+	tx_content_animations_duration {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
+			t3sbs_button.disabled = 1
+		}
+	}
+	tx_content_animations_delay {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
+			t3sbs_button.disabled = 1
+		}
+	}
 
 }

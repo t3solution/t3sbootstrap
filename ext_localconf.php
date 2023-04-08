@@ -195,9 +195,9 @@ defined('TYPO3') || die();
 	// Optional lazyLoad
 	if (array_key_exists('lazyLoad', $extconf)) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = '.$extconf['lazyLoad']);
-	}
+	}	
 	// Optional animateCss
-	if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] > '0') {
+	if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] > '0' && !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations')) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.animateCss = '.$extconf['animateCss']);
 	}
 	// Optional select-field for a .container or .container-fluid class in any content element
