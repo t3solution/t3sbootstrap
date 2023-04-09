@@ -14,16 +14,17 @@ use TYPO3\CMS\Core\Core\Environment;
 class NewsFlexFormHook
 {
 
-   public function parseDataStructureByIdentifierPostProcess(array $dataStructure, array $identifier): array
-   {
+	public function parseDataStructureByIdentifierPostProcess(array $dataStructure, array $identifier): array
+	{
 
-	 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content' && $identifier['dataStructureKey'] === 'news_pi1,list') {
+	 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
+	 	 && ($identifier['dataStructureKey'] === 'news_pi1,list' || $identifier['dataStructureKey'] === '*,news_pi1') ) {
 		$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml';
 		$content = file_get_contents($file);
-		 if ($content) {
-			 $dataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
-		 }
-	 }
-	 return $dataStructure;
-   }
+		if ($content) {
+			$dataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
+		}
+	}
+	return $dataStructure;
+	}
 }
