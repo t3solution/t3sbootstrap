@@ -1,0 +1,24 @@
+
+<f:comment><!-- CSS --></f:comment>
+<f:if condition="{data.tx_t3sbootstrap_bodytext}">  
+	<f:asset.css identifier="t3sbsCSSassets_{data.uid}">
+/* t3sbs_assets_{data.uid} */
+{data.tx_t3sbootstrap_bodytext -> f:format.raw()}
+	</f:asset.css>
+</f:if>
+
+<f:comment><!-- JS --></f:comment>
+<f:if condition="{data.bodytext}">  
+	<f:if condition="{assets.jquery}">
+		<f:then>
+			<f:asset.script identifier="t3sbsJSassets_{data.uid}" priority="{assets.priority}">
+	{data.bodytext -> f:format.raw()}
+			</f:asset.script>
+		</f:then>
+		<f:else>
+			<f:asset.script identifier="vanilla_t3sbsJSassets_{data.uid}" priority="{assets.priority}">
+	{data.bodytext -> f:format.raw()}
+			</f:asset.script>
+		</f:else>
+	</f:if>
+</f:if>

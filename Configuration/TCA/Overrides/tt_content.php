@@ -481,6 +481,17 @@ $GLOBALS['TCA']['tt_content']['types']['toast_container']['showitem'] = $GLOBALS
 /***************
  * Add new CTypes
  */
+ \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
+   'tt_content',
+   'CType',
+	[
+		'Plain CSS or JavaScript inline',
+		't3sbs_assets',
+		'cssJsIcon',
+	],
+	'textmedia',
+	'after'
+);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
 	'tt_content',
 	'CType',
@@ -1247,6 +1258,47 @@ $tempContentColumns = [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content',$tempContentColumns);
 unset($tempContentColumns);
+
+
+/***************
+ * Assets Inline
+ */
+$GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
+	'showitem' => '
+	--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+		--palette--;;general,
+			header; Internal title (not displayed),
+	--div--;Java Script,
+		bodytext;JavaScript,
+		pi_flexform; Inline JavaScript Settings,
+	--div--;CSS,
+		tx_t3sbootstrap_bodytext;CSS,
+	--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+		--palette--;;hidden
+	',
+	'columnsOverrides' => [
+		'bodytext' => [
+			'config' => [
+				'format' => 'javascript',
+				'renderType' => 't3editor',
+				'wrap' => 'off',
+			],
+		],
+		'tx_t3sbootstrap_bodytext' => [
+			'config' => [
+				'format' => 'css',
+				'renderType' => 't3editor',
+				'wrap' => 'off',
+			],
+		],
+	],
+];
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+   '*',
+   'FILE:EXT:t3sbootstrap/Configuration/FlexForms/AssetInline.xml',
+   't3sbs_assets'
+);
 
 
 /***************

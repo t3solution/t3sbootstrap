@@ -4,6 +4,13 @@
 tt_content {
 
 	# **********************************************************
+	# Assets Inline
+	# **********************************************************
+    t3sbs_assets =< lib.contentElement
+    t3sbs_assets.templateName = AssetsInline
+	t3sbs_assets.stdWrap.editIcons = tt_content
+
+	# **********************************************************
 	# BOOTSTAP: Button
 	# **********************************************************
 	t3sbs_button =< lib.contentElement
