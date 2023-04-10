@@ -50,7 +50,7 @@ use T3SBS\T3sbootstrap\Wrapper\SwiperContainer;
 class BootstrapProcessor implements DataProcessorInterface
 {
 	const TX_CONTAINER_GRID = 'two_columns,three_columns,four_columns,six_columns,row_columns';
-	const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast';
+	const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast,t3sbs_assets';
 	const TX_CONTAINER = 'button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container,card_wrapper';
 
 	/**
@@ -156,6 +156,13 @@ class BootstrapProcessor implements DataProcessorInterface
 			if ( $cType == 't3sbs_toast' ) {
 				$processedData = GeneralUtility::makeInstance(Toast::class)
 				->getProcessedData($processedData, $flexconf);
+			}
+			if ( $cType == 't3sbs_assets' ) {
+				$pi_flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['pi_flexform']);
+				if (!empty($pi_flexconf)) {
+					$processedData['assets']['jquery'] = $pi_flexconf['settings']['jquery'];
+					$processedData['assets']['priority'] = $pi_flexconf['settings']['priority'];
+				}
 			}
 			#if ( $cType == 't3sbs_fluidtemplate' ) {}
 			#if ( $cType == 't3sbs_gallery' ) {}

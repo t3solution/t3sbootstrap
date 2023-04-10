@@ -7,6 +7,14 @@ mod.wizards {
 			common.elements {
 				textmedia.tt_content_defValues.imageorient = 0
 			}
+			special.elements {
+				t3sbsassets {
+					iconIdentifier = cssJsIcon
+					title = Plain CSS or JavaScript
+					description = With this element you can insert raw JS or CSS code on the page.
+					tt_content_defValues.CType = t3sbs_assets
+				}				
+			}
 			t3sbs {
 				header = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbs_contentelements
 				elements {
@@ -58,3 +66,5 @@ mod.wizards {
 		}
 	}
 }
+mod.wizards.newContentElement.wizardItems.special.show := addToList(t3sbsassets)
+

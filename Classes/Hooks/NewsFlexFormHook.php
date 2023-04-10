@@ -18,7 +18,8 @@ class NewsFlexFormHook
 	{
 
 	 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-	 	 && ($identifier['dataStructureKey'] === 'news_pi1,list' || $identifier['dataStructureKey'] === '*,news_pi1') ) {
+	 	 && ($identifier['dataStructureKey'] === 'news_pi1,list' || $identifier['dataStructureKey'] === '*,news_pi1'
+	 	  || $identifier['dataStructureKey'] === '*,news_newsdetail') ) {
 		$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml';
 		$content = file_get_contents($file);
 		if ($content) {

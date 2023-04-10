@@ -11,21 +11,35 @@ use TYPO3\CMS\Core\Core\Environment;
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
-class NewsFlexFormHook
+class FlexFormHook
 {
 
 	public function parseDataStructureByIdentifierPostProcess(array $dataStructure, array $identifier): array
 	{
+		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
-	 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-	 	 && ($identifier['dataStructureKey'] === 'news_pi1,list' || $identifier['dataStructureKey'] === '*,news_pi1'
-	 	  || $identifier['dataStructureKey'] === '*,news_newsdetail') ) {
-		$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml';
-		$content = file_get_contents($file);
-		if ($content) {
-			$dataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
+		$ffPath = '/fileadmin/T3SB/FlexForms/';
+
+		foreach ( $GLOBALS['TCA']['tt_content']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] as $key=>$flexForm ) {
+
+			$flexForms[$key] = substr($flexForm, 46, -4);
 		}
-	}
-	return $dataStructure;
+
+		if ( array_key_exists($identifier['dataStructureKey'],$flexForms) ) {
+
+			if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
+			&& $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey']) {
+
+				$file = Environment::getPublicPath() . $ffPath.$flexForms[$identifier['dataStructureKey']].'.xml';
+
+				$content = file_exists($file) ? file_get_contents($file) : '';
+
+				if ($content) {
+					$dataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
+				}
+			}
+		}
+
+		return $dataStructure;
 	}
 }
