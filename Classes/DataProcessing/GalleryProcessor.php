@@ -641,14 +641,16 @@ class GalleryProcessor implements DataProcessorInterface
 				if (is_array($fileObject)) {
 					$fileObject = $fileObject[0];
 				}
-				$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
-				 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
-				$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
-				$this->mediaDimensions[$key] = [
-					'width' => floor($mediaWidth),
-					'height' => $mediaHeight,
-					'ratio' => $ratio
-				];
+				if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+					$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
+					 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
+					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
+					$this->mediaDimensions[$key] = [
+						'width' => floor($mediaWidth),
+						'height' => $mediaHeight,
+						'ratio' => $ratio
+					];
+				}
 			}
 		}
 
