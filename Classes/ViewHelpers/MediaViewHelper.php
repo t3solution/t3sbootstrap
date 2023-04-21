@@ -179,7 +179,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
 			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
 			$breakpointArr[$bpKey]['srcset'] = '';
-			foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
+			foreach( explode(',', (string) $breakpoint['srcset']) as $key=>$srcset ) {
 				if ($width > (int)$srcset) {
 					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
 				} else {
