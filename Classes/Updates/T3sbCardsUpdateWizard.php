@@ -128,7 +128,7 @@ class T3sbCardsUpdateWizard implements UpgradeWizardInterface
 						->set('tx_t3sbootstrap_bodytext', $flexconf['text']['bottom'])
 						->set('tx_t3sbootstrap_cardfooter', $flexconf['footer']['text'])
 						->set('tx_t3sbootstrap_list_item', $count)
-						->executeQuery();
+						->executeStatement();
 				}
 
 			}
