@@ -24,12 +24,14 @@ page {
 	includeCSS {
         plyrCss = https://cdn.plyr.io/3.7.2/plyr.css
       	custom3Css = EXT:t3sbootstrap/Resources/Public/CmiFive/Css/custom3.css
-        swordCss = https://unpkg.com/spoken-word/css/style.css
+        #swordCss = https://unpkg.com/spoken-word/css/style.css
         bsicons = /fileadmin/bootstrap-icons/bootstrap-icons.css
 	}
 	includeJS {
-      	#main = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/main.js
+        JSZip = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/jszip.min.js
         cmi5Controller = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Controller-new.js
+        #xapiDashboard = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapidashboard.js
+        #xapiCollection = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapicollection.js
         cryptojs = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cryptojs_v3.1.2.js
         utf8TextEncoding = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/utf8-text-encoding.js
         activitytypes = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/activitytypes.js
@@ -38,7 +40,7 @@ page {
         xapistatement = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapistatement.js
         xapiUtil = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-util.js
         xapiLaunch = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/xapi-launch.js
-        lifecycle = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/lifecycle.es5.js
+        #lifecycle = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/lifecycle.es5.js
         cmi5Wrapper = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5Wrapper-new.js
         xmlwriter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/XMLWriter.js
         cmi5xml = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/cmi5xml.js
@@ -47,7 +49,7 @@ page {
         progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
        	plyrJs = https://cdn.plyr.io/3.7.2/plyr.js
         echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
-        swal = https://unpkg.com/sweetalert/dist/sweetalert.min.js
-        sword = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/spoken-word.js
+        swal = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/sweetalert.min.js
+        #sword = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/spoken-word.js
 	}
 }

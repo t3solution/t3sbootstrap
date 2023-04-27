@@ -1,4 +1,4 @@
-var cmi5Controller = (function() {
+var cmi5Controller = (function () {
   // **********************
   // Private variables
   // **********************
@@ -34,8 +34,8 @@ var cmi5Controller = (function() {
   this.launchParameters = "";
   this.returnURL = "";
   this.entitlementKey = {
-    "courseStructure": "",
-    "alternate": ""
+    courseStructure: "",
+    alternate: ""
   };
   this.languagePreference = "";
   this.audioPreference = "";
@@ -45,11 +45,7 @@ var cmi5Controller = (function() {
   // **********************
   function GetBasicStatement(verb_, object_) {
     // This function creates a basic xAPI statement with actor, verb and object.
-    var s = new ADL.XAPIStatement(
-      Agent_,
-      verb_,
-      object_
-    );
+    var s = new ADL.XAPIStatement(Agent_, verb_, object_);
 
     // cmi5 requires that the AU generate the Id.
     s.generateId();
@@ -65,8 +61,8 @@ var cmi5Controller = (function() {
   function SetConfig() {
     // Set LRS endpoint configuration
     endPointConfig = {
-      "endpoint": cmi5Controller.endPoint,
-      "auth": "Basic " + cmi5Controller.authToken
+      endpoint: cmi5Controller.endPoint,
+      auth: "Basic " + cmi5Controller.authToken
     };
   }
 
@@ -91,8 +87,9 @@ var cmi5Controller = (function() {
 
   function setStateDocument(r) {
     // This is the callback method referenced in call to cmi5Controller.getStateDocument()
-    if (r.response) {
+    if (r && r.response !== "xAPI Resource Not Found.") {
       // Parse the State document into an object.
+
       var obj = JSON.parse(r.response);
 
       // Get context activities
@@ -103,7 +100,7 @@ var cmi5Controller = (function() {
       contextExtensions = obj.contextTemplate.extensions;
 
       // Get returnUrl
-      var t = typeof(obj["returnURL"]);
+      var t = typeof obj["returnURL"];
       if (t === "string") {
         cmi5Controller.returnURL = obj["returnURL"];
         sessionStorage.setItem("returnurl", cmi5Controller.returnURL);
@@ -113,7 +110,10 @@ var cmi5Controller = (function() {
       cmi5Controller.masteryScore = obj["masteryScore"];
       cmi5Controller.launchMode = obj["launchMode"];
       cmi5Controller.launchMethod = obj["launchMethod"];
-      cmi5Controller.sessionId = contextExtensions["https://w3id.org/xapi/cmi5/context/extensions/sessionid"];
+      cmi5Controller.sessionId =
+        contextExtensions[
+          "https://w3id.org/xapi/cmi5/context/extensions/sessionid"
+        ];
       cmi5Controller.publisherId = contextActivities.grouping[0].id;
       cmi5Controller.launchParameters = obj["launchParameters"];
       cmi5Controller.entitlementKey = obj["entitlementKey"];
@@ -130,47 +130,48 @@ var cmi5Controller = (function() {
   // **********************
   return {
     // cmi5 controller initialization
-    startUp: function(callBack, errorCallBack) {
+    startUp: function (callBack, errorCallBack) {
       // This function fetches the authorization token, reads the State document into cmi5Controller propreties, and fetches the agent Profile.
       // Since the calls are async, they are performed in sequence by calling
       // 1) getAuthToken(), which in turn calls 2) getStateDocument(), which in turn calls 3) getAgentProfile().
       initializedCallback = callBack;
       cmi5Controller.object = {
-        "objectType": "Activity",
-        "id": cmi5Controller.activityId
+        objectType: "Activity",
+        id: cmi5Controller.activityId
       };
       cmi5Controller.getAuthToken(AuthTokenFetched, errorCallBack);
     },
-    getAUActivityId: function() {
+    getAUActivityId: function () {
       // "getter" for retrieving the AU's activityId passed from the LMS
       return cmi5Controller.activityId;
     },
-    getMasteryScore: function() {
+    getMasteryScore: function () {
       // "getter" for retrieving the masteryScore passed from the LMS
       return cmi5Controller.masteryScore;
     },
-    getReturnUrl: function() {
+    getReturnUrl: function () {
       // "getter" for retrieving the returnURL passed from the LMS
       return cmi5Controller.returnURL;
     },
-    getContextActivities: function() {
+    getContextActivities: function () {
       // "getter" for retrieving the contextActivities fetched from the State
       return contextActivities;
     },
-    getContextExtensions: function() {
+    getContextExtensions: function () {
       // "getter" for retrieving the contextExtensions fetched from the State
       return contextExtensions;
     },
-    getStartDateTime: function() {
+    getStartDateTime: function () {
       // "getter" for retrieving the time the AU was launched and cmi5Controller.startUp() was completed.
       return startDateTime;
     },
-    goLMS: function() {
+    goLMS: function () {
       // This function returns to the LMS if the returnURL property was provided.  If not, it attempts to close the browser.
       var returnUrl;
-      if (cmi5Controller.getReturnUrl()) returnUrl = cmi5Controller.getReturnUrl();
+      if (cmi5Controller.getReturnUrl())
+        returnUrl = cmi5Controller.getReturnUrl();
       else returnUrl = sessionStorage.getItem("returnurl");
-      if ((typeof returnUrl) == "string" && returnUrl.length > 0) {
+      if (typeof returnUrl == "string" && returnUrl.length > 0) {
         var href = decodeURIComponent(returnUrl);
         document.location.href = href;
         return false;
@@ -178,7 +179,7 @@ var cmi5Controller = (function() {
       self.close(); // Not allowed in FireFox
       return false;
     },
-    setEndPoint: function(endpoint) {
+    setEndPoint: function (endpoint) {
       // "setter" for the xAPI endpoint property
       if (endpoint) {
         cmi5Controller.endPoint = endpoint;
@@ -187,7 +188,7 @@ var cmi5Controller = (function() {
         console.log("Invalid value passed to setEndpoint()");
       }
     },
-    setFetchUrl: function(fetchUrl) {
+    setFetchUrl: function (fetchUrl) {
       // "setter" for the fetchUrl property
       // Note: This should not be used by the AU.  The fetchUrl is a command line property
       // that must not change.
@@ -198,7 +199,7 @@ var cmi5Controller = (function() {
         console.log("Invalid value passed to setFetchUrl()");
       }
     },
-    setObjectProperties: function(language_, type_, name_, description_) {
+    setObjectProperties: function (language_, type_, name_, description_) {
       // Set additional properties for the xAPI object.
       // The cmi5Controller already knows the object ID to use in cmi5-defined statements
       // since it is passed on the launch command.
@@ -222,7 +223,7 @@ var cmi5Controller = (function() {
         cmi5Controller.object.definition.description[language_] = description_;
       }
     },
-    setRegistration: function(registration) {
+    setRegistration: function (registration) {
       // "setter" for the registration property.
       // Note: This should not be used by the AU.  The registration is a command line property
       // that must not change.
@@ -233,7 +234,7 @@ var cmi5Controller = (function() {
         console.log("Invalid value passed to setRegistration()");
       }
     },
-    setActivityId: function(activityId) {
+    setActivityId: function (activityId) {
       // "setter" for the activityId property.
       // Note: This should not be used by the AU.  The value is a command line property
       // that must not change.
@@ -244,7 +245,7 @@ var cmi5Controller = (function() {
         console.log("Invalid value passed to setActivityId()");
       }
     },
-    setActor: function(actor) {
+    setActor: function (actor) {
       // "setter" for the activityId property.
       // Note: This should not be used by the AU.  The value is a command line property
       // that must not change.
@@ -259,7 +260,9 @@ var cmi5Controller = (function() {
           return;
         }
         if (!Agent_.account.homePage) {
-          console.log("In cmi5, the homePage property of an account is required.");
+          console.log(
+            "In cmi5, the homePage property of an account is required."
+          );
           return;
         }
         if (!Agent_.account.name) {
@@ -272,7 +275,7 @@ var cmi5Controller = (function() {
         console.log("Invalid value passed to setActor()");
       }
     },
-    getAuthToken: function(successCallback, tokenErrorCallBack) {
+    getAuthToken: function (successCallback, tokenErrorCallBack) {
       // getAuthToken() calls the fetch url to get the authorization token. Two callback functions
       // may be provided. The first is what to call upon success, the other when there is an error.
       // If cmi5Controller.startUp() is used, this method should not be called by the AU.
@@ -292,26 +295,34 @@ var cmi5Controller = (function() {
       var myRequest = new XMLHttpRequest();
       myRequest.open("POST", cmi5Controller.fetchUrl, true);
       //myRequest.withCredentials = true; // RK: "Cannot use wildcard in Access-Control-Allow-Origin when credentials flag is true.""
-      myRequest.onreadystatechange = function() {
+      myRequest.onreadystatechange = function () {
         if (this.readyState === 4) {
           if (this.status === 200) {
             var data = JSON.parse(myRequest.responseText);
 
             // Check for error
-            var e = typeof(data["error-code"]);
+            var e = typeof data["error-code"];
             if (e === "string") {
-              console.log("error-code " + data["error-code"] + ": " + data["error-text"]);
-              if (tokenErrorCallBack && typeof tokenErrorCallBack === "function") {
+              console.log(
+                "error-code " + data["error-code"] + ": " + data["error-text"]
+              );
+              if (
+                tokenErrorCallBack &&
+                typeof tokenErrorCallBack === "function"
+              ) {
                 tokenErrorCallBack("");
               }
             }
 
-            e = typeof(data["auth-token"]);
+            e = typeof data["auth-token"];
             if (e === "string") {
               cmi5Controller.authToken = data["auth-token"];
 
               // Store the token to sessionStorage
-              sessionStorage.setItem(cmi5Controller.fetchUrl, cmi5Controller.authToken);
+              sessionStorage.setItem(
+                cmi5Controller.fetchUrl,
+                cmi5Controller.authToken
+              );
 
               // Set the endPointConfig to use this auth token
               SetConfig();
@@ -320,32 +331,56 @@ var cmi5Controller = (function() {
               }
             } else {
               console.log("Invalid structure returned: " + data.toString());
-              if (tokenErrorCallBack && typeof tokenErrorCallBack === "function") tokenErrorCallBack("");
+              if (
+                tokenErrorCallBack &&
+                typeof tokenErrorCallBack === "function"
+              )
+                tokenErrorCallBack("");
             }
-          } else console.log("Call to fetchUrl failed with status " + this.status.toString());
+          } else
+            console.log(
+              "Call to fetchUrl failed with status " + this.status.toString()
+            );
         }
-      }
+      };
       myRequest.send();
     },
-    getAgentProfile: function(callback) {
+    getAgentProfile: function (callback) {
       // Retrieves the agent profile document and sets cmi5Controller properties accordingly.
       // If cmi5Controller.startUp() is used, this method should not be called by the AU.
       ADL.XAPIWrapper.changeConfig(endPointConfig);
-      ADL.XAPIWrapper.getAgentProfile(Agent_, "cmi5LearnerPreferences", null, callback);
+      ADL.XAPIWrapper.getAgentProfile(
+        Agent_,
+        "cmi5LearnerPreferences",
+        null,
+        callback
+      );
     },
-    getStateDocument: function(callback) {
+    getStateDocument: function (callback) {
       // Retrieves the cmi5 State document and sets cmi5Controller properties accordingly.
       // If cmi5Controller.startUp() is used, this method should not be called by the AU.
       ADL.XAPIWrapper.changeConfig(endPointConfig);
-      ADL.XAPIWrapper.getState(cmi5Controller.activityId, Agent_, "LMS.LaunchData", cmi5Controller.registration, null, callback);
+      ADL.XAPIWrapper.getState(
+        cmi5Controller.activityId,
+        Agent_,
+        "LMS.LaunchData",
+        cmi5Controller.registration,
+        null,
+        callback
+      );
     },
-    getcmi5AllowedStatement: function(verb_, object_, contextActivities_, contextExtensions_) {
+    getcmi5AllowedStatement: function (
+      verb_,
+      object_,
+      contextActivities_,
+      contextExtensions_
+    ) {
       // This method returns a basic "cmi5 allowed" statement that can be extended as needed by the AU.
       stmt_ = GetBasicStatement(verb_, object_);
 
       // Add registration
       stmt_.context = {
-        "registration": cmi5Controller.registration
+        registration: cmi5Controller.registration
       };
 
       // If context parms are not passed, use defaults from cmi5 State document.
@@ -370,9 +405,8 @@ var cmi5Controller = (function() {
       stmt_.context.extensions = contextExtensions_;
 
       return stmt_;
-
     },
-    getcmi5DefinedStatement: function(verb_, contextExtentions_) {
+    getcmi5DefinedStatement: function (verb_, contextExtentions_) {
       // This function builds a "cmi5 defined" statement
       stmt_ = GetBasicStatement(verb_, cmi5Controller.object);
 
@@ -383,7 +417,7 @@ var cmi5Controller = (function() {
 
       // Add registration
       stmt_.context = {
-        "registration": cmi5Controller.registration
+        registration: cmi5Controller.registration
       };
 
       // Context activities from State API
@@ -393,7 +427,7 @@ var cmi5Controller = (function() {
       // cmi5 Context activity
       stmt_.context.contextActivities.category = [];
       stmt_.context.contextActivities.category.push({
-        "id": "https://w3id.org/xapi/cmi5/context/categories/cmi5"
+        id: "https://w3id.org/xapi/cmi5/context/categories/cmi5"
       });
 
       // Extensions
@@ -401,34 +435,60 @@ var cmi5Controller = (function() {
 
       return stmt_;
     },
-    sendAllowedState: function(stateid_, statevalue_, matchHash_, noneMatchHash_, callback_) {
+    sendAllowedState: function (
+      stateid_,
+      statevalue_,
+      matchHash_,
+      noneMatchHash_,
+      callback_
+    ) {
       // This function may be used to write an xAPI State document
       ADL.XAPIWrapper.changeConfig(endPointConfig);
       //ADL.XAPIWrapper.sendState(cmi5Controller.activityId, stateid_, statevalue_, matchHash_, noneMatchHash_, callback_);
       // RK: Fehler in "sendAllowedState" behoben!
       //ADL.XAPIWrapper.sendState(cmi5Controller.activityId, stateid_, statevalue_, matchHash_, noneMatchHash_, callback_);
-      ADL.XAPIWrapper.sendState(cmi5Controller.activityId, Agent_, stateid_, cmi5Controller.registration, statevalue_, matchHash_, noneMatchHash_, callback_);
+      ADL.XAPIWrapper.sendState(
+        cmi5Controller.activityId,
+        Agent_,
+        stateid_,
+        cmi5Controller.registration,
+        statevalue_,
+        matchHash_,
+        noneMatchHash_,
+        callback_
+      );
     },
-    getAllowedState: function(stateid_, since_, callback_) {
+    getAllowedState: function (stateid_, since_, callback_) {
       // This function retrieves an xAPI State document created by the AU.
       ADL.XAPIWrapper.changeConfig(endPointConfig);
       // RK: "return" ergänzt!
       // ADL.XAPIWrapper.getState(cmi5Controller.activityId, Agent_, stateid_, cmi5Controller.registration, since_, callback_);
-      return ADL.XAPIWrapper.getState(cmi5Controller.activityId, Agent_, stateid_, cmi5Controller.registration, since_, callback_);
+      return ADL.XAPIWrapper.getState(
+        cmi5Controller.activityId,
+        Agent_,
+        stateid_,
+        cmi5Controller.registration,
+        since_,
+        callback_
+      );
     },
-    sendStatement: function(statement_, callback_) {
+    sendStatement: function (statement_, callback_) {
       // Send an xAPI statement.  Option paremeter to have a callback function.  This is mostly a passthrough to the xAPIWrapper's
       // sendStatement() method.  However, if an array of statements named "statementsSent is defined in the AU, the statement
       // will be pushed to that array.
 
       // If array statementsSent is defined, push statements to the array.
-      if (window.statementsSent && typeof(window.statementsSent) === "object" && Array.isArray(window.statementsSent)) {
+      if (
+        window.statementsSent &&
+        typeof window.statementsSent === "object" &&
+        Array.isArray(window.statementsSent)
+      ) {
         window.statementsSent.push(statement_);
       }
       ADL.XAPIWrapper.changeConfig(endPointConfig);
       ADL.XAPIWrapper.sendStatement(statement_, callback_);
     },
-    sendStatements: function(statements_, callback_) {
+    sendStatements: function (statements_, callback_) {
       ADL.XAPIWrapper.changeConfig(endPointConfig);
       ADL.XAPIWrapper.sendStatements(statements_, callback_);
     }

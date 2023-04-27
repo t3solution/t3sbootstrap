@@ -1,15 +1,14 @@
 function saveFileAs() {
-  if (promptFilename = prompt("Datei speichern", "cmi5.xml")) {
-    var textBlob = new Blob([document.querySelector(".parsedxml").value], {
-      type: 'text/plain'
+  let zipName = document.querySelector(".page-title h1").innerHTML.trim();
+  zipName = deUmlaut(zipName.substring(0, zipName.indexOf(" (Lerngruppe")));
+  if (promptFilename = prompt("Datei speichern", zipName + "_cmi5.zip")) {
+    let zip = new JSZip();
+    zip.file("cmi5.xml", document.querySelector(".parsedxml").value);
+    zip.generateAsync({
+      type: "blob"
+    }).then(function(blob) {
+      saveAs(blob, promptFilename);
     });
-    var downloadLink = document.createElement("a");
-    downloadLink.download = promptFilename;
-    downloadLink.innerHTML = "Download File";
-    downloadLink.href = window.URL.createObjectURL(textBlob);
-    downloadLink.click();
-    delete downloadLink;
-    delete textBlob;
   }
 }
 
@@ -73,20 +72,6 @@ function cmi5Xml(settings) {
     document.querySelector('.parsedxml').value = generateXml(pageTitle);
   });
 
-  function deUmlaut(value) {
-    value = value.toLowerCase();
-    value = value.replace(/ä/g, 'ae');
-    value = value.replace(/ö/g, 'oe');
-    value = value.replace(/ü/g, 'ue');
-    value = value.replace(/ß/g, 'ss');
-    value = value.replace(/ /g, '-');
-    value = value.replace(/\./g, '');
-    value = value.replace(/,/g, '');
-    value = value.replace(/\(/g, '');
-    value = value.replace(/\)/g, '');
-    return value;
-  }
-
   function generateXml(pageTitle) {
     xw.formatting = 'indented';
     xw.indentChar = ' ';
@@ -133,5 +118,44 @@ function cmi5Xml(settings) {
     xw.writeEndElement();
     xw.writeEndDocument();
     return xw.flush();
+  }
+}
+
+function deUmlaut(value) {
+  value = value.toLowerCase();
+  value = value.replace(/ä/g, 'ae');
+  value = value.replace(/ö/g, 'oe');
+  value = value.replace(/ü/g, 'ue');
+  value = value.replace(/ß/g, 'ss');
+  value = value.replace(/ /g, '-');
+  value = value.replace(/\./g, '');
+  value = value.replace(/,/g, '');
+  value = value.replace(/\(/g, '');
+  value = value.replace(/\)/g, '');
+  return value;
+}
+
+function saveAs(blob, filename) {
+  if (typeof navigator.msSaveOrOpenBlob !== 'undefined') {
+    return navigator.msSaveOrOpenBlob(blob, fileName);
+  } else if (typeof navigator.msSaveBlob !== 'undefined') {
+    return navigator.msSaveBlob(blob, fileName);
+  } else {
+    let elem = window.document.createElement('a');
+    elem.href = window.URL.createObjectURL(blob);
+    elem.download = filename;
+    elem.style = 'display:none;opacity:0;color:transparent;';
+    (document.body || document.documentElement).appendChild(elem);
+    if (typeof elem.click === 'function') {
+      elem.click();
+    } else {
+      elem.target = '_blank';
+      elem.dispatchEvent(new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true
+      }));
+    }
+    URL.revokeObjectURL(elem.href);
   }
 }
