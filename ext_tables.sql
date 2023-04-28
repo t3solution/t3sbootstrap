@@ -202,13 +202,6 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_list_item varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
 	tx_t3sbootstrap_verticalgutters varchar(5) DEFAULT 'mb-4' NOT NULL,
-);
-
-
-CREATE TABLE tx_t3sbootstrap_list_item_inline (
-    parentid int(11) DEFAULT '0' NOT NULL,
-    parenttable text,
-    listitem varchar(255) DEFAULT '' NOT NULL,
 	###### cmi5 ######
 	tx_t3sbootstrap_cmi5_select_statement varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_cmi5_send_statement tinyint(1) unsigned DEFAULT '0' NOT NULL,
