@@ -728,7 +728,7 @@ statesController.prototype = {
     return (result = [objectId, h5pPage]);
   },
   handleStatements: function (statements) {
-    console.log(statements);
+    //console.log(statements);
     //sessionStorage.setItem("statements", JSON.stringify(statements));
   }
 };
@@ -1125,46 +1125,48 @@ function customizeTemplate() {
       // if (parseInt(sessionStorage.getItem("courseLoggedIn")) > 0 && document.querySelectorAll('.video iframe').length > 0) {
 
       // add and update progress circles to index items in menu
-      navbarToggler.addEventListener("click", function () {
-        let cl = sessionStorage.getItem("mItemCurrentPage");
-        cl = cl.split(" ");
-        let pn = document.querySelector("." + cl[0] + "." + cl[1]).parentNode;
-        pn.classList.add("show");
-        pn.parentNode
-          .querySelector("#" + pn.parentNode.id + " > a.dropdown-toggle")
-          .setAttribute("aria-expanded", "true");
+      if (navbarToggler) {
+        navbarToggler.addEventListener("click", function () {
+          let cl = sessionStorage.getItem("mItemCurrentPage");
+          cl = cl.split(" ");
+          let pn = document.querySelector("." + cl[0] + "." + cl[1]).parentNode;
+          pn.classList.add("show");
+          pn.parentNode
+            .querySelector("#" + pn.parentNode.id + " > a.dropdown-toggle")
+            .setAttribute("aria-expanded", "true");
 
-        let mi = document.querySelector("." + cl[0] + "." + cl[1]),
-          pColor = "red",
-          pc1 =
-            '<progress-circle color="#fff" value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="100" radius="50" stroke="' +
-            pColor +
-            '" fill=',
-          pc1_ = '"transparent"',
-          pc1b =
-            '><!--No label--></slice><slice part="circle" x="438" y="64" size="',
-          pc2 = '" stroke-width="',
-          pc3 =
-            '" radius="50" stroke="' +
-            pColor +
-            '"><!--No label--></slice><style>',
-          pc3_ = '[part="background"]{opacity:0.3}',
-          pc3b =
-            'text {font-size: 28em; transform: translate(0, 170px); font-weight: 900;}</style><slice size="190%" stroke-width="0"><tspan x="50%" y="50%">',
-          pc4 = "</slice></tspan></progress-circle>",
-          p = document.querySelector(".page-progress-bar").style.width;
+          let mi = document.querySelector("." + cl[0] + "." + cl[1]),
+            pColor = "red",
+            pc1 =
+              '<progress-circle color="#fff" value="" offset="top" pull="-150" part="chart"><slice part="background" size="100%" stroke-width="100" radius="50" stroke="' +
+              pColor +
+              '" fill=',
+            pc1_ = '"transparent"',
+            pc1b =
+              '><!--No label--></slice><slice part="circle" x="438" y="64" size="',
+            pc2 = '" stroke-width="',
+            pc3 =
+              '" radius="50" stroke="' +
+              pColor +
+              '"><!--No label--></slice><style>',
+            pc3_ = '[part="background"]{opacity:0.3}',
+            pc3b =
+              'text {font-size: 28em; transform: translate(0, 170px); font-weight: 900;}</style><slice size="190%" stroke-width="0"><tspan x="50%" y="50%">',
+            pc4 = "</slice></tspan></progress-circle>",
+            p = document.querySelector(".page-progress-bar").style.width;
 
-        mi.querySelector("progress-circle").remove();
-        if (parseFloat(p, 10) >= 100) {
-          pc4 = "✓</slice></tspan></progress-circle>";
-          pc1_ = '"' + pColor + '"';
-          pc3_ = '[part="background"]{opacity:1}';
-        }
-        mi.insertAdjacentHTML(
-          "afterbegin",
-          pc1 + pc1_ + pc1b + p + pc2 + 100 + pc3 + pc3_ + pc3b + pc4
-        );
-      });
+          mi.querySelector("progress-circle").remove();
+          if (parseFloat(p, 10) >= 100) {
+            pc4 = "✓</slice></tspan></progress-circle>";
+            pc1_ = '"' + pColor + '"';
+            pc3_ = '[part="background"]{opacity:1}';
+          }
+          mi.insertAdjacentHTML(
+            "afterbegin",
+            pc1 + pc1_ + pc1b + p + pc2 + 100 + pc3 + pc3_ + pc3b + pc4
+          );
+        });
+      }
       if (sessionStorage.getItem("videostatements")) {
         cmi5Controller.sendStatements(
           JSON.parse(sessionStorage.getItem("videostatements"))
