@@ -2414,105 +2414,109 @@ var handleH5P = function (event) {
     ),
     stmtObject = JSON.parse(sessionStorage.getItem("stmtObject")),
     stmtObjectParent = JSON.parse(sessionStorage.getItem("stmtObject"));
-  if (cmi5Controller.getContextExtensions()) {
-    // get h5p library type
-    h5pLib = this.libraryInfo.versionedNameNoSpaces;
-    // extend cmi5 activity ID
-    stmtObject.id +=
-      "/objectid/" +
-      location.hostname +
-      location.pathname +
-      "/h5pcid_" +
-      cid +
-      H5PXapiStmt.object.id;
-    H5PXapiStmt.object.id = stmtObject.id;
-    if (!H5PXapiStmt.verb["id"].includes("completed"))
-      sessionStorage.setItem(
-        "h5p-obj-id___" + location.pathname + "/h5pcid_" + cid,
-        H5PXapiStmt.object.id
+  // exclude any statements on "interacted"
+  if (!H5PXapiStmt.verb["id"].includes("interacted")) {
+    if (cmi5Controller.getContextExtensions()) {
+      // get h5p library type
+      h5pLib = this.libraryInfo.versionedNameNoSpaces;
+      // extend cmi5 activity ID
+      stmtObject.id +=
+        "/objectid/" +
+        location.hostname +
+        location.pathname +
+        "/h5pcid_" +
+        cid +
+        H5PXapiStmt.object.id;
+      H5PXapiStmt.object.id = stmtObject.id;
+      if (!H5PXapiStmt.verb["id"].includes("completed"))
+        sessionStorage.setItem(
+          "h5p-obj-id___" + location.pathname + "/h5pcid_" + cid,
+          H5PXapiStmt.object.id
+        );
+
+      sessionStorage.setItem("h5ppage", location.pathname);
+      // add cmi5 description: "name of content type" at "name of page"
+      H5PXapiStmt.object.definition.name = {
+        [cmi5Controller.dLang]:
+          cmi5Controller.dTitle +
+          ': "' +
+          h5pLib +
+          " cid: " +
+          cid +
+          '"' +
+          " at page " +
+          '"' +
+          bm.pageTitle +
+          '"'
+      };
+      // create cmi5 allowed statement
+      stmt = cmi5Controller.getcmi5AllowedStatement(
+        H5PXapiStmt.verb,
+        H5PXapiStmt.object,
+        cmi5Controller.getContextActivities(),
+        cmi5Controller.getContextExtensions()
       );
 
-    sessionStorage.setItem("h5ppage", location.pathname);
-    // add cmi5 description: "name of content type" at "name of page"
-    H5PXapiStmt.object.definition.name = {
-      [cmi5Controller.dLang]:
-        cmi5Controller.dTitle +
-        ': "' +
-        h5pLib +
-        " cid: " +
-        cid +
-        '"' +
-        " at page " +
-        '"' +
-        bm.pageTitle +
-        '"'
-    };
-    // create cmi5 allowed statement
-    stmt = cmi5Controller.getcmi5AllowedStatement(
-      H5PXapiStmt.verb,
-      H5PXapiStmt.object,
-      cmi5Controller.getContextActivities(),
-      cmi5Controller.getContextExtensions()
-    );
-    // add h5p library type to extensions object
-    stmt.context.extensions["https://h5p.org/libraries"] = h5pLib;
-    // add parent to contextActivities object
-    stmt.context.contextActivities.parent = [
-      {
-        id: (stmtObjectParent.id +=
-          "/parentid/" + location.hostname + location.pathname),
-        definition: {
-          name: {
-            [cmi5Controller.dLang]:
-              cmi5Controller.dTitle + " at page " + '"' + bm.pageTitle + '"'
+      // add h5p library type to extensions object
+      stmt.context.extensions["https://h5p.org/libraries"] = h5pLib;
+      // add parent to contextActivities object
+      stmt.context.contextActivities.parent = [
+        {
+          id: (stmtObjectParent.id +=
+            "/parentid/" + location.hostname + location.pathname),
+          definition: {
+            name: {
+              [cmi5Controller.dLang]:
+                cmi5Controller.dTitle + " at page " + '"' + bm.pageTitle + '"'
+            },
+            type: "http://id.tincanapi.com/activitytype/page"
           },
-          type: "http://id.tincanapi.com/activitytype/page"
-        },
-        objectType: "Activity"
-      }
-    ];
-    stmt.context.contextActivities.grouping[0].id = JSON.parse(
-      sessionStorage.getItem("stmtObject")
-    ).id;
-    // add result to statement if applicable
-    if (H5PXapiStmt.result) {
-      stmt.result = H5PXapiStmt.result;
-      sessionStorage.setItem("h5presult", H5PXapiStmt.result["success"]);
-      if (
-        H5PXapiStmt.result.completion
-        //&& cmi5Controller.masteryScore &&
-        //!sessionStorage.getItem("passed") &&
-        //!sessionStorage.getItem("failed")
-      ) {
-        sessionStorage.setItem("score", H5PXapiStmt.result.score.scaled);
-        /*if (
+          objectType: "Activity"
+        }
+      ];
+      stmt.context.contextActivities.grouping[0].id = JSON.parse(
+        sessionStorage.getItem("stmtObject")
+      ).id;
+      // add result to statement if applicable
+      if (H5PXapiStmt.result) {
+        stmt.result = H5PXapiStmt.result;
+        sessionStorage.setItem("h5presult", H5PXapiStmt.result["success"]);
+        if (
+          H5PXapiStmt.result.completion
+          //&& cmi5Controller.masteryScore &&
+          //!sessionStorage.getItem("passed") &&
+          //!sessionStorage.getItem("failed")
+        ) {
+          sessionStorage.setItem("score", H5PXapiStmt.result.score.scaled);
+          /*if (
           parseFloat(H5PXapiStmt.result.score.scaled) >=
           parseFloat(cmi5Controller.masteryScore)
         )
           sessionStorage.setItem("passed", true);
         else sessionStorage.setItem("failed", true);*/
 
-        // sendDefinedStatementWrapper("Passed", "", this.attemptDuration);
+          // sendDefinedStatementWrapper("Passed", "", this.attemptDuration);
+        }
       }
-    }
-    cmi5Controller.h5pstmts.push(stmt);
-    // console.log(cmi5Controller.h5pstmts);
-    sessionStorage.setItem(
-      "h5pstatements",
-      JSON.stringify(cmi5Controller.h5pstmts)
-    );
-    if (
-      H5PXapiStmt.verb["id"].includes("answered") ||
-      H5PXapiStmt.verb["id"].includes("completed")
-    ) {
-      if (sessionStorage.getItem("h5pstatements")) {
-        cmi5Controller.sendStatements(
-          JSON.parse(sessionStorage.getItem("h5pstatements"))
-        );
-        sessionStorage.removeItem("h5pstatements");
+      cmi5Controller.h5pstmts.push(stmt);
+      // console.log(cmi5Controller.h5pstmts);
+      sessionStorage.setItem(
+        "h5pstatements",
+        JSON.stringify(cmi5Controller.h5pstmts)
+      );
+      if (
+        H5PXapiStmt.verb["id"].includes("answered") ||
+        H5PXapiStmt.verb["id"].includes("completed")
+      ) {
+        if (sessionStorage.getItem("h5pstatements")) {
+          cmi5Controller.sendStatements(
+            JSON.parse(sessionStorage.getItem("h5pstatements"))
+          );
+          sessionStorage.removeItem("h5pstatements");
+        }
       }
+      // cmi5Controller.sendStatement(stmt);
     }
-    // cmi5Controller.sendStatement(stmt);
   }
 };
 // function: read H5P state object from LRS via State API and re-store sessionStorage
