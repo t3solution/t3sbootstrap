@@ -22,7 +22,7 @@ config {
 
 page {
 	includeCSS {
-        plyrCss = https://cdn.plyr.io/3.7.2/plyr.css
+        plyrCss = https://cdn.plyr.io/3.7.8/plyr.css
       	custom3Css = EXT:t3sbootstrap/Resources/Public/CmiFive/Css/custom3.css
         #swordCss = https://unpkg.com/spoken-word/css/style.css
         bsicons = /fileadmin/bootstrap-icons/bootstrap-icons.css
@@ -47,7 +47,7 @@ page {
         echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
         textHighlighter = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/TextHighlighter.js
         progressCircle = https://pie-meister.github.io/PieMeister-with-Progress.min.js
-       	plyrJs = https://cdn.plyr.io/3.7.2/plyr.js
+       	plyrJs = https://cdn.plyr.io/3.7.8/plyr.js
         echarts = https://cdn.jsdelivr.net/npm/echarts@5.3.0-rc.1/dist/echarts.min.js
         swal = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/sweetalert.min.js
         #sword = EXT:t3sbootstrap/Resources/Public/CmiFive/Js/spoken-word.js
