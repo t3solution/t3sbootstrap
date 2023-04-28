@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
+use TYPO3\CMS\Core\Http\RequestFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -90,7 +91,7 @@ class CustomScss extends CommandBase
 				  	 $queryBuilder->expr()->eq('sys_language_uid', 0),
 					 $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 				  )
-				  ->execute();
+				  ->executeQuery();
 			$siteroots = $result->fetchAll();
 
 			foreach ($siteroots as $key=>$siteroot) {
@@ -246,7 +247,7 @@ class CustomScss extends CommandBase
 		mkdir($localZipPath, 0777, true);
 		$localZipFile = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
 		$zipFilename = 'v'.$bootstrapVersion.'.zip';
-		$zipContent = GeneralUtility::getURL(self::zipFilePath . $zipFilename);
+		$zipContent = GeneralUtility::makeInstance(RequestFactory::class)->request(self::zipFilePath . $zipFilename)->getBody()->getContents();
 		if ($zipContent) {
 			GeneralUtility::writeFile($localZipFile, $zipContent);
 			$extractTo = $localZipPath;

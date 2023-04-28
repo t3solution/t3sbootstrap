@@ -1,0 +1,11 @@
+# **********************************************************
+#	EXT:ke_search
+# **********************************************************
+
+TCEFORM {
+   tt_content {
+      pi_flexform.ke_search_pi1.view.templateLayout.addItems {
+         20 = T3S Bootstrap Template
+      }
+   }
+}

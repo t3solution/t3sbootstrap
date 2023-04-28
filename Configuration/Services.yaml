@@ -27,3 +27,11 @@ services:
       - name: event.listener
         identifier: 't3sbootstrap/AssetPostProcessing'
         event: TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent
+
+
+  T3SBS\T3sbootstrap\EventListener\TCA\TcaCompilation:
+    tags:
+      - name: event.listener
+        identifier: 't3sbootstrap/TcaPostProcessing'
+        event:  TYPO3\CMS\Core\Configuration\Event\AfterTcaCompilationEvent
+        

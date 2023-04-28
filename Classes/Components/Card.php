@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Components;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Service\FlexFormService;
@@ -25,9 +26,6 @@ class Card implements SingletonInterface
 	{
 		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
 		$flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
-		$pi_flexform = $flexformService->convertFlexFormContentToArray($processedData['data']['pi_flexform']);
-		$pi_flexform = $flexformHelper->addMissingElements($pi_flexform, 't3sbs_card', TRUE);
-		$flexconf = array_merge ($pi_flexform, $flexconf);
 		$parentflexconf = [];
 		$parentUid = $processedData['data']['tx_container_parent'];
 		if ($parentUid) {
@@ -53,9 +51,9 @@ class Card implements SingletonInterface
 			$cardData['title']['position'] = 'default';
 		}
 		// button
-		if ( !empty($cardData['text']['top']) && $cardData['text']['bottom'] ) {
+		if ( !empty($processedData['data']['bodytext']) && !empty($processedData['data']['tx_t3sbootstrap_bodytext']) ) {
 			$cardData['button']['position'] = 'bottom';
-		} elseif ( !empty($cardData['text']['top']) ) {
+		} elseif ( !empty($processedData['data']['tx_t3sbootstrap_bodytext']) ) {
 			$cardData['button']['position'] = 'top';
 		} else {
 			$cardData['button']['position'] = 'bottom';
@@ -86,13 +84,13 @@ class Card implements SingletonInterface
 				$cardData['mobile']['overlay'] = 'img-overlay';
 			}
 			if ( $processedData['data']['imageorient'] == 'top' ) {
-				if ( !empty($cardData['title']['onTop']) || !empty($cardData['header']['text']) ) {
+				if ( !empty($cardData['title']['onTop']) || !empty($processedData['data']['tx_t3sbootstrap_cardheader']) ) {
 					$cardData['image']['class'] = 'img-fluid';
 				} else {
 					$cardData['image']['class'] = 'card-img-top img-fluid';
 				}
 			} else {
-				if ( $cardData['footer']['text'] ) {
+				if ( $processedData['data']['tx_t3sbootstrap_cardfooter'] ) {
 					$cardData['image']['class'] = 'img-fluid';
 				} else {
 					$cardData['image']['class'] = 'card-img-bottom img-fluid';
@@ -100,7 +98,8 @@ class Card implements SingletonInterface
 			}
 		}
 		// block
-		if ( empty($cardData['text']['top']) && empty($cardData['text']['bottom']) && empty($processedData['data']['header']) && empty($processedData['data']['subheader']) ) {
+		if ( empty($processedData['data']['bodytext']) && empty($processedData['data']['tx_t3sbootstrap_bodytext'])
+			 && empty($processedData['data']['header']) && empty($processedData['data']['subheader']) ) {
 			$cardData['block']['enable'] = FALSE;
 		} else {
 			$cardData['block']['enable'] = TRUE;
@@ -128,11 +127,19 @@ class Card implements SingletonInterface
 			$cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position']:'';
 		}
 		// list group
-		if ( !empty($flexconf['list']['container']) && is_array($flexconf['list']['container']) ) {
-			foreach( $flexconf['list'] as $container ) {
-				foreach ($container as $list)
-					$listGroup[] = $list['list']['group'];
-			}
+		$cardData['list'] = [];
+		if (!empty($processedData['data']['tx_t3sbootstrap_list_item'])) {
+			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+			$queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
+			$listGroup = $queryBuilder
+					->select('listitem')
+					->from('tx_t3sbootstrap_list_item_inline')
+					->where(
+						$queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+					)
+					->executeQuery()
+					->fetchAll();
+
 			$cardData['list'] = $listGroup;
 		}
 
@@ -173,7 +180,7 @@ class Card implements SingletonInterface
 			$cardClass .= ' border-'.$cardData['cardborderstyle'];
 		}
 		// parent equal Height
-		if ( !empty($parentflexconf['equalHeight']) ) {
+		if ( !empty($parentflexconf['equalHeight']) && isset($parentflexconf['card_wrapper']) && $parentflexconf['card_wrapper'] !== 'group' ) {
 			$cardClass .= ' h-100';
 		}
 

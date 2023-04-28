@@ -19,7 +19,7 @@ class ClassHelper implements SingletonInterface
 	/**
 	 * Returns the CSS-class for default elements
 	 */
-	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass): string
+	public function getDefaultClass(array $data, array $flexconf, string $cTypeClass, string $sectionMenuClass): string
 	{
 	 	// class
 		if ( $cTypeClass ) {
@@ -70,11 +70,16 @@ class ClassHelper implements SingletonInterface
 			$layoutClasses = '';
 			$layoutAltLabels = '';
 
-			if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.'])) {
+			if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'])) {
 				$layoutAddItems = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'];
+			}
+			if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'])) {
 				$layoutClasses = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'];
+			}
+			if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'])) {
 				$layoutAltLabels = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'];
 			}
+
 			if (isset($layoutAddItems) && isset($layoutAddItems) === $layout) {
 				$class .= ' layout-'.$layout;
 			} elseif (isset($layoutAltLabels) && !empty($layoutAltLabels[$layout])) {
@@ -138,6 +143,10 @@ class ClassHelper implements SingletonInterface
 			if ( $imageorient == 10 || $imageorient == 17 || $imageorient == 18 ) {
 				$class .= ' clearfix';
 			}
+		}
+
+		if ($sectionMenuClass) {
+			$class .= ' section-index';	
 		}
 
 		return ' '.trim($class);

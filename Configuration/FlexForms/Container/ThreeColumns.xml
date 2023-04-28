@@ -28,7 +28,7 @@
 					<horizontalGutters>
 						<TCEforms>
 							<label>Horizontal gutters</label>
-							<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#horizontal-gutters</description>
+							<description>INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters</description>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -65,7 +65,7 @@
 					<verticalGutters>
 						<TCEforms>
 							<label>Vertical gutters</label>
-							<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#vertical-gutters</description>
+							<description>INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#vertical-gutters</description>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
@@ -139,7 +139,7 @@
 		<xxl>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>Col-xl-*</sheetTitle>
+					<sheetTitle>Col-xxl-*</sheetTitle>
 				</TCEforms>
 				<el>
 					<xxl_one>
@@ -236,7 +236,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -306,7 +305,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -385,7 +383,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -455,7 +452,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -525,7 +521,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -604,7 +599,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -674,7 +668,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -744,7 +737,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -823,7 +815,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -893,7 +884,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -963,7 +953,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -1042,7 +1031,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -1112,7 +1100,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -1182,7 +1169,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -1261,7 +1247,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -1331,7 +1316,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>
@@ -1401,7 +1385,6 @@
 											<numIndex index="0">3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
-
 										<numIndex index="4" type="array">
 											<numIndex index="0">4</numIndex>
 											<numIndex index="1">4</numIndex>

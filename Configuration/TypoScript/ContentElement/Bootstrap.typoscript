@@ -4,6 +4,13 @@
 tt_content {
 
 	# **********************************************************
+	# Assets Inline
+	# **********************************************************
+    t3sbs_assets =< lib.contentElement
+    t3sbs_assets.templateName = AssetsInline
+	t3sbs_assets.stdWrap.editIcons = tt_content
+
+	# **********************************************************
 	# BOOTSTAP: Button
 	# **********************************************************
 	t3sbs_button =< lib.contentElement
@@ -28,7 +35,8 @@ tt_content {
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 		}
@@ -70,7 +78,8 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 		}
@@ -101,7 +110,8 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	{$bootstrap.image.maxWidthToast}
 				disableAutoRow = {$bootstrap.image.disableAutoRow}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 
@@ -129,7 +139,8 @@ tt_content {
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
 				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				disableAutoRow =  {$bootstrap.image.disableAutoRow}
-				overrideSmallColumns = {$pages.override.smallColumns}
+				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
+				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
 

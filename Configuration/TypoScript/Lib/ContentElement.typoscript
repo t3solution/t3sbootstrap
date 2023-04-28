@@ -85,7 +85,6 @@ lib.contentElement {
 		cdnEnable = {$bootstrap.cdn.enable}
 		containerError = {$bootstrap.config.containerError}
 		sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
-		sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
 		sectionmenuScrollspy = {$bootstrap.config.sectionmenuScrollspy}
 		sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
 		breakpoint = {$bootstrap.config.navbarBreakpoint}
@@ -96,10 +95,14 @@ lib.contentElement {
 		webp = {$bootstrap.extconf.webp}
 		btnSlideOutCorrection = 21
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
+		sectionMenuClass = {$bootstrap.config.sectionMenuClass}
 		// used also with config
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
-			sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
+			sectionmenuScrollspyRootMargin = {$bootstrap.config.sectionmenuScrollspyRootMargin}
+			sectionmenuScrollspyThreshold = {$bootstrap.config.sectionmenuScrollspyThreshold}
+			sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
+			navbarBreakpointWidth = {$bootstrap.config.navbarBreakpointWidth}
 		}
 		navbarEnable = {$bootstrap.config.navbarEnable}
 		navbar {
@@ -108,7 +111,7 @@ lib.contentElement {
 			lg = {$bootstrap.navbar.breakpoint.lg}
 			xl = {$bootstrap.navbar.breakpoint.xl}
 			xxl = {$bootstrap.navbar.breakpoint.xxl}
-		}		
+		}
 	}
 	variables {
 		be_layout = TEXT

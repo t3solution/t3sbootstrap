@@ -1,0 +1,33 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<type>array</type>
+				<TCEforms>
+					<sheetTitle>Inline JavaScript Settings</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>		
+					<settings.jquery>
+						<TCEforms>
+							<label>jQuery Framework</label>
+							<description>Enable if you use jquery.</description>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</settings.jquery>
+					<settings.priority>
+						<TCEforms>
+							<label>Priority</label>
+							<description>Define whether the JavaScript should be put in the &lt;head&gt; tag above-the-fold or somewhere in the body part.</description>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</settings.priority>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

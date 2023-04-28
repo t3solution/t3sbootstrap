@@ -120,7 +120,7 @@
 		parameter="{data.header_link}"
 		class="{trimClass} dropdown-toggle"
 		title="{linkTitle}"
-		additionalAttributes="{id: 'c{data.uid}', role: 'button', data-bs-toggle: 'dropdown', aria-expanded: 'false', type: 'button'}">
+		additionalAttributes="{id: 'c{data.uid}', role: 'button', data-bs-toggle: 'dropdown', aria-expanded: 'false'}">
 		{headerFontawesome -> f:format.raw()} {data.header -> f:format.raw()}
 	</f:link.typolink>
 	<ul class="dropdown-menu" aria-labelledby="c{data.uid}">

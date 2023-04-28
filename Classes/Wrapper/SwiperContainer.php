@@ -22,7 +22,6 @@ class SwiperContainer implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-
 		$filesFromRepository = [];
 
 		$processedData['swiperCss'] = !empty($flexconf['swiperCss']) ? $flexconf['swiperCss'] : '';
@@ -42,10 +41,7 @@ class SwiperContainer implements SingletonInterface
 		$processedData['pagination'] = (int)$flexconf['pagination'];
 		$processedData['autoplay'] = (int)$flexconf['autoplay'];
 		$processedData['delay'] = !empty($flexconf['autoplay']) ? (int)$flexconf['delay'] : 99999999;
-
-
-$processedData['origImage'] = $flexconf['origImage'] ?? '';
-
+		$processedData['origImage'] = $flexconf['origImage'] ? $flexconf['origImage'] : '';
 
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
@@ -55,8 +51,9 @@ $processedData['origImage'] = $flexconf['origImage'] ?? '';
 			->where(
 				$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
 			)
-			->execute()
+			->executeQuery()
 			->fetchAll();
+
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		foreach($statement as $element) {
 			$filesFromRepository[$element['uid']] = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);

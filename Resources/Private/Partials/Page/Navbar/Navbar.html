@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{config.navbar.enable} != 'none'">
+<f:if condition="{config.navbar.enable} && {config.navbar.enable} != 'none'">
 	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
 	<f:if condition="{config.navbar.navColorCSS}">
 		<div class="container my-5">
@@ -114,6 +114,7 @@
 </f:section>
 
 <f:section name="RightMenu">
+<f:if condition="{config.navbar.searchbox} || {languageNavigation} || {navbarMenuRight -> f:count()} || {settings.config.navbarDarkMode}">
 	<f:if condition="{config.navbar.searchbox}">
 		<f:then>
 			<f:render partial="Page/Searchbox" arguments="{_all}" />
@@ -124,53 +125,34 @@
 			</f:if>
 		</f:else>
 	</f:if>
-	<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
-		<f:render partial="Page/Navbar/Language" arguments="{_all}" />
-	</f:if>
-	<f:if condition="{navbarMenuRight -> f:count()}">
-		<div class="navbar-nav mb-2 mb-lg-0">
-			<f:if condition="{settings.navbar.searchboxLink}">
-				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search mx-3"></i></f:link.page>
+	<div class="navbar-nav flex-row flex-wrap ms-md-auto">
+		<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
+			<f:render partial="Page/Navbar/Language" arguments="{_all}" />
+			<f:if condition="{navbarMenuRight -> f:count()}">
+				<div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+					<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+					<hr class="d-lg-none my-2 text-white-50">
+				</div>
 			</f:if>
-			<div class="nav-item dropdown {config.navbar.hover}">
-				<a class="nav-link dropdown-toggle ps-{settings.config.navbarBreakpoint}-3" id="right-menu"
-					 href="#" data-bs-toggle="{config.navbar.bstoggle}" role="button" aria-expanded="false">
-					<i class="fa-navlink fas fa-info-circle me-1"></i>
-				</a>
-				<f:if condition="{config.navbar.navbarPlusicon}">
-					<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-						<i class="fa-solid fa-square-plus"></i>
-					</button>
-				</f:if>
-				<div class="dropdown-menu dropdown-menu-end mt-0 slideIn{config.navbar.dropdownAnimate}" aria-labelledby="right-menu">
-					<f:for each="{navbarMenuRight}" as="navbarItem">
-						<f:if condition="{navbarItem.spacer}">
-							<f:then>
-								<span class="nav-link">|</span>
-							</f:then>
-							<f:else>
-								<f:if condition="{navbarItem.children}">
-									<f:then>
-										<f:render section="Dropdown" arguments="{_all}" />
-									</f:then>
-									<f:else>
-										<f:link.typolink class="dropdown-item" parameter="{navbarItem.link}"
-										 title="{navbarItem.title}"
-										 target="{navbarItem.target}">
-											<f:render section="Title" arguments="{item: navbarItem}" />
-										</f:link.typolink>
-									</f:else>
-								</f:if>
-							</f:else>
-						</f:if>
-					</f:for>
- 				</div>
-			</div>
-		</div>
-	</f:if>
+		</f:if>
+		<f:if condition="{navbarMenuRight -> f:count()}">
+			<f:render partial="Page/Navbar/MenuRight" arguments="{_all}" />
+			<f:if condition="{settings.config.navbarDarkMode}">
+				<div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+					<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+					<hr class="d-lg-none my-2 text-white-50">
+				</div>
+			</f:if>
+		</f:if>
+		<f:if condition="{settings.config.navbarDarkMode}">
+			<f:render partial="Page/Navbar/DarkModeToggler" arguments="{_all}" />
+		</f:if>
+	</div>
+</f:if>
 </f:section>
 
 <f:section name="Brand">
+<f:if condition="{config.navbar.brand}">
 	<f:switch expression="{config.navbar.brand}">
 		<f:case value="imgText">
 			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}">
@@ -192,6 +174,7 @@
 			</f:link.typolink>
 		</f:defaultCase>
 	</f:switch>
+</f:if>
 </f:section>
 
 <f:section name="BrandImage">
@@ -272,7 +255,7 @@
 	<f:for each="{sectionMenu.0.content}" as="element">
 		<f:if condition="{element.data.header} && {element.data.colPos} != 4">
 			<div id="section-item-{element.data.uid}" class="nav-item">
-				<a class="nav-link js-scroll-trigger" href="{page.link}#c{element.data.uid}" target="{page.target}"{config.navbar.sectionMenuDataAttr}>
+				<a class="nav-link js-scroll-trigger" href="{page.link}#c{element.data.uid}" target="{element.data.target}"{config.navbar.sectionMenuDataAttr}>
 					<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 						<f:then>
 							<span>{element.data.tx_t3sbootstrap_header_sectionMenu}</span>

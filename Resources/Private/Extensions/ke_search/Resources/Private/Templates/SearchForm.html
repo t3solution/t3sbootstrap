@@ -1,0 +1,129 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:kesearch="http://typo3.org/ns/Tpwd/KeSearch/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+
+<f:layout name="General" />
+<!--
+=====================
+Templates/SearchForm.html
+
+modified by EXT:t3sbootstrap
+-->
+<f:section name="content">
+	<f:if condition="{conf.templateLayout} == 10">
+		<f:render section="defaultLayout" arguments="{_all}"/>
+	</f:if>
+	<f:if condition="{conf.templateLayout} == 20">
+		<f:render section="customLayout" arguments="{_all}"/>
+	</f:if>
+</f:section>
+</html>
+
+
+<f:section name="defaultLayout">
+	<form method="get" id="form_kesearch_pi1" name="form_kesearch_pi1"	 action="{f:uri.page(pageUid: targetpage)}">
+		<f:comment><!-- Replace the URL with the speaking URL --></f:comment>
+		<f:if condition="{isEmptySearch} == FALSE ">
+			<f:if condition="{conf.searchWordParameter} == 'tx_kesearch_pi1[sword]'">
+				<f:format.raw><script>history.replaceState(null,'','</f:format.raw><kesearch:link keepPiVars="1" uriOnly="1" /><f:format.raw>');</script></f:format.raw>
+			</f:if>
+		</f:if>
+		<fieldset class="kesearch_searchbox">
+			<f:if condition="{lparam}">
+				<input type="hidden" name="L" value="{lparam}" />
+			</f:if>
+			<f:if condition="{mpparam}">
+				<input type="hidden" name="MP" value="{mpparam}" />
+			</f:if>
+			<f:if condition="{typeparam}">
+				<input type="hidden" name="type" value="{typeparam}" />
+			</f:if>
+			<div class="kesearchbox">
+				<input type="search" id="ke_search_sword" name="{conf.searchWordParameter}" value="{searchword -> f:format.raw()}" placeholder="{searchwordDefault}" {f:if(condition: '{extConf.allowEmptySearch} == 0', then: 'required')} minlength="{extConf.searchWordLength}" />
+				<div class="clearer">&nbsp;</div>
+			</div>
+			<f:if condition="{page}">
+				<input id="kesearchpagenumber" type="hidden" name="tx_kesearch_pi1[page]" value="{page}" />
+			</f:if>
+			<input id="resetFilters" type="hidden" name="tx_kesearch_pi1[resetFilters]" value="0" />
+			<f:if condition="{sortByField}">
+				<input id="sortByField" type="hidden" name="tx_kesearch_pi1[sortByField]" value="{sortByField}" />
+			</f:if>
+			<f:if condition="{sortByDir}">
+				<input id="sortByDir" type="hidden" name="tx_kesearch_pi1[sortByDir]" value="{sortByDir}" />
+			</f:if>
+			<f:if condition="{filters}">
+				<div id="kesearch_filters"><f:render partial="Filters" arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, filters: filters}" /></div>
+			</f:if>
+			<span class="resetbutt"><a href="{resetUrl}" class="resetButton"><span><f:translate key="LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:reset_button" /></span></a></span>
+			<span class="submitbutt"><input type="submit" value="{f:translate(key: 'LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:submit')}" /></span>
+		</fieldset>
+	</form>
+</f:section>
+
+
+<f:section name="customLayout">
+
+<f:asset.css identifier="searchFormCss">
+#search-box{border-radius:30px 0 0}#ke_search_sword{border-radius:10px 0 0}#submit-button{border-radius:0}.search-hits--large{font-size:50px;font-weight:700;text-align:center;margin-bottom:20px}.search-label--large{font-size:20px;font-weight:700;text-align:center}#kesearch_pagebrowser_bottom,.kesearch_pagebrowser{margin-top:30px}.kesearch_pagebrowser ul{--bs-pagination-padding-x:.75rem;--bs-pagination-padding-y:.375rem;--bs-pagination-font-size:1rem;--bs-pagination-color:var(--bs-link-color);--bs-pagination-bg:#fff;--bs-pagination-border-width:1px;--bs-pagination-border-color:#dee2e6;--bs-pagination-border-radius:.375rem;--bs-pagination-hover-color:var(--bs-link-hover-color);--bs-pagination-hover-bg:#e9ecef;--bs-pagination-hover-border-color:#dee2e6;--bs-pagination-focus-color:var(--bs-link-hover-color);--bs-pagination-focus-bg:#e9ecef;--bs-pagination-focus-box-shadow:0 0 0 .25rem rgba(13,110,253,0.25);--bs-pagination-active-color:#fff;--bs-pagination-active-bg:#0d6efd;--bs-pagination-active-border-color:#0d6efd;--bs-pagination-disabled-color:#6c757d;--bs-pagination-disabled-bg:#fff;--bs-pagination-disabled-border-color:#dee2e6;display:flex;padding-left:0;list-style:none}.kesearch_pagebrowser ul li a{position:relative;display:block;padding:var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);font-size:var(--bs-pagination-font-size);color:var(--bs-pagination-color);text-decoration:none;background-color:var(--bs-pagination-bg);border:var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out}.kesearch_pagebrowser ul li a.current{z-index:3;color:var(--bs-pagination-active-color);background-color:var(--bs-primary);border-color:var(--bs-primary)}.tx-kesearch-pi1 {margin-top:2rem;}
+</f:asset.css>
+
+<div class="row gx-4">
+	<div class="col-12 col-md-8">
+		<div id="search-box" class="bg-secondary text-light px-4 pt-4 h-100">
+			<form method="get" id="form_kesearch_pi1" name="form_kesearch_pi1"  action="{f:uri.page(pageUid: targetpage)}">
+				<f:comment><!-- Replace the URL with the speaking URL --></f:comment>
+				<f:if condition="{isEmptySearch} == FALSE">
+					<f:format.raw><script>history.replaceState(null,'','</f:format.raw><kesearch:link keepPiVars="1" uriOnly="1" /><f:format.raw>');</script></f:format.raw>
+				</f:if>
+				<fieldset class="kesearch_searchbox">
+					<f:if condition="{lparam}">
+						<input type="hidden" name="L" value="{lparam}" />
+					</f:if>
+					<f:if condition="{mpparam}">
+						<input type="hidden" name="MP" value="{mpparam}" />
+					</f:if>
+					<f:if condition="{typeparam}">
+						<input type="hidden" name="type" value="{typeparam}" />
+					</f:if>
+					<div class="kesearchbox mb-4">
+						<div class="d-inline-flex w-100">
+							<div class="d-block w-100">
+								<input type="search" id="ke_search_sword" class="form-control d-inline-block"
+								 name="tx_kesearch_pi1[sword]" value="{searchword -> f:format.raw()}"
+								 placeholder="Suchbegriff" {f:if(condition: '{extConf.allowEmptySearch} == 0', then: 'required')} minlength="{extConf.searchWordLength}" />
+							</div>
+								<button id="submit-button" type="submit" class="btn btn-primary d-inline-block">
+									<i class="fas fa-search"></i>
+								</button>
+							</div>
+						</div>
+					<f:if condition="{page}">
+						<input id="kesearchpagenumber" type="hidden" name="tx_kesearch_pi1[page]" value="{page}" />
+					</f:if>
+					<input id="resetFilters" type="hidden" name="tx_kesearch_pi1[resetFilters]" value="0" />
+					  <f:if condition="{sortByField}">
+						<input id="sortByField" type="hidden" name="tx_kesearch_pi1[sortByField]" value="{sortByField}" />
+					</f:if>
+					<f:if condition="{sortByDir}">
+						<input id="sortByDir" type="hidden" name="tx_kesearch_pi1[sortByDir]" value="{sortByDir}" />
+					</f:if>
+					<f:if condition="{filters}">
+						<div id="kesearch_filters"><f:render partial="T3SB/Filters"
+							 arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, filters: filters}" /></div>
+					</f:if>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<div class="col-12	col-md-4">
+		<f:if condition="{searchword}">
+			<div class="d-flex bg-light text-dark p-3 h-100">
+				<div class="align-self-center text-center w-100">
+					<p id="searchword" class="lead text-center">Suche nach<br /><strong>{f:if(condition: searchword, then: '{searchword -> f:format.raw()}')}</strong></p>
+				</div>
+			</div>
+		</f:if>
+	</div>
+  </div>
+</f:section>

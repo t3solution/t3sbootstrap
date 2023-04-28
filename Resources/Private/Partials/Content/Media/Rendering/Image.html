@@ -7,53 +7,47 @@
 <f:variable name="ratio" value="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}" />
 
 
-<f:if condition="{addmedia.origImg}">
-	<f:then>
-		<f:image class="img-fluid{extraImgClass}" src="fileadmin/{file.identifier}" />
-	</f:then>
-	<f:else>
-		<f:if condition="{file.properties.tx_t3sbootstrap_imgtag}">
-			<f:then>
-				<t3sb:media
-					file="{file}"
-					title="{f:if(condition: notitle, then: '', else: '{imgTitle}')}"
-					alt="{altText}"
-					class="{addmedia.imgclass}{extraImgClass}{lazyClass}"
-					width="{dimensions.width}"
-					height="{dimensions.height}"
-					breakpoints=""
-					imgtag="true"
-					picturefill="{settings.picturefill}"
-					lazyload="{settings.lazyLoad}"
-					ratio="{ratio}"
-				/>
-			</f:then>
-			<f:else>
-				<t3sb:media
-					file="{file}"
-					title="{f:if(condition: notitle, then: '', else: '{imgTitle}')}"
-					alt="{altText}"
-					class="{addmedia.imgclass}{extraImgClass}{lazyClass}"
-					width="{dimensions.width}"
-					height="{dimensions.height}"
-					breakpoints="{
-					0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
-					1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-					2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-					}"
-					imgtag="false"
-					picturefill="{settings.picturefill}"
-					lazyload="{settings.lazyLoad}"
-					ratio="{ratio}"
-				/>
-			</f:else>
-		</f:if>
-	</f:else>
-</f:if>
+	<f:if condition="{addmedia.origImg}">
+		<f:then>
+			<f:image class="img-fluid{extraImgClass}" alt="{altText}" src="fileadmin/{file.identifier}" />
+		</f:then>
+		<f:else>
+			<f:if condition="{file.properties.tx_t3sbootstrap_imgtag}">
+				<f:then>
+					<t3sb:media
+						file="{file}"
+						title="{f:if(condition: notitle, then: '', else: '{imgTitle}')}"
+						alt="{altText}"
+						class="{addmedia.imgclass}{extraImgClass}{lazyClass}"
+						width="{dimensions.width}"
+						height="{dimensions.height}"
+						breakpoints=""
+						imgtag="true"
+						picturefill="{settings.picturefill}"
+						lazyload="{settings.lazyLoad}"
+						ratio="{ratio}"
+					/>
+				</f:then>
+				<f:else>
+					<t3sb:media
+						file="{file}"
+						title="{f:if(condition: notitle, then: '', else: '{imgTitle}')}"
+						alt="{altText}"
+						class="{addmedia.imgclass}{extraImgClass}{lazyClass}"
+						width="{dimensions.width}"
+						height="{dimensions.height}"
+						breakpoints="{
+						0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+						1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+						2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+						}"
+						imgtag="false"
+						picturefill="{settings.picturefill}"
+						lazyload="{settings.lazyLoad}"
+						ratio="{ratio}"
+					/>
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
 </html>
-
-
-
-<f:comment>
-loading="{settings.media.lazyLoading}"
-</f:comment>

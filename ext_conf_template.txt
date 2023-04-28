@@ -3,7 +3,9 @@
 # customcategory=dif=Different
 # customcategory=flexform=Flexform
 # customcategory=preview=Preview
+# customcategory=presets=Presets
 # customsubcategory=a-config=Bootstrap SCSS variables!
+# customsubcategory=b-config=Custom Presets for used value pickers - (clear cache)
 
 # cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache).
 preview = 1
@@ -82,3 +84,18 @@ lazyLoad = 0
 cookieconsent = 0
 # cat=advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache).
 extNews = 1
+
+# cat=presets/b-config/10; type=string; label=Custom "FA Icons" for table tt_content field tx_t3sbootstrap_header_fontawesome: comma separated list is expected e.g.: fa-solid fa-bug, fa-solid fa-mosquito
+customFaIcons = 
+# cat=presets/b-config/20; type=string; label=Custom "Extra Classes" for table tt_content field tx_t3sbootstrap_header_class: comma separated list is expected
+customHeaderClass =
+# cat=presets/b-config/30; type=string; label=Custom "FA Icons" for table pages field tx_t3sbootstrap_fontawesome_icon: comma separated list is expected
+customFaIconsPages =
+# cat=presets/b-config/40; type=string; label=Custom "Page Title Color" for table pages field tx_t3sbootstrap_titlecolor: comma separated list is expected
+customTitleColor =
+# cat=presets/b-config/50; type=string; label=Custom "Page Subtitle Color" for table pages field tx_t3sbootstrap_subtitlecolor: comma separated list is expected
+customSubtitleColor =
+# cat=presets/b-config/60; type=string; label=Custom "Extra Class - figure-tag" for table sys_file_reference field tx_t3sbootstrap_extra_class: comma separated list is expected
+figureClass =
+# cat=presets/b-config/70; type=string; label=Custom "Extra Class - image-tag" for table sys_file_reference field tx_t3sbootstrap_extra_imgclass: comma separated list is expected
+imageClass =

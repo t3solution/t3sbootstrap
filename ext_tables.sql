@@ -51,7 +51,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_color varchar(40) DEFAULT '' NOT NULL,
 	navbar_background varchar(255) DEFAULT '' NOT NULL,
 	navbar_transparent tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	navbar_container varchar(12) DEFAULT '' NOT NULL,
+	navbar_container varchar(15) DEFAULT '' NOT NULL,
 	navbar_innercontainer varchar(15) DEFAULT '' NOT NULL,
 	navbar_placement varchar(12) DEFAULT '' NOT NULL,
 	navbar_alignment varchar(9) DEFAULT '' NOT NULL,
@@ -134,7 +134,8 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	lightbox_selection varchar(255) DEFAULT '' NOT NULL,
 	magnifying tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	sectionmenu_anchor_offset int(11) DEFAULT '0' NOT NULL,
-	sectionmenu_scrollspy_offset int(11) DEFAULT '0' NOT NULL,
+	sectionmenu_scrollspy_threshold varchar(255) DEFAULT '0' NOT NULL,
+	sectionmenu_scrollspy_root_margin varchar(255) DEFAULT '0' NOT NULL,
 	sectionmenu_scrollspy tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	sectionmenu_sticky_top tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	sectionmenu_icons tinyint(1) unsigned DEFAULT '0' NOT NULL,
@@ -150,6 +151,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	card_flipper_on_Click tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	last_modified_content_element tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	recently_updated_content_elements tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	navbar_dark_mode  tinyint(1) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -185,7 +187,6 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_flexform mediumtext,
 	tx_t3sbootstrap_inTextImgRowWidth varchar(5) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_inTextImgColumns tinyint(2) unsigned DEFAULT '0' NOT NULL,
-	tx_t3sbootstrap_galleryGutters tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_bordercolor varchar(9) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_image_ratio varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_celink tinyint(1) unsigned DEFAULT '0' NOT NULL,
@@ -195,6 +196,19 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_animateCssDelay varchar(2) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_extra_style varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_image_orig varchar(4) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_cardheader varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_bodytext mediumtext,
+	tx_t3sbootstrap_cardfooter varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_list_item varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
+	tx_t3sbootstrap_verticalgutters varchar(5) DEFAULT 'mb-4' NOT NULL,
+);
+
+
+CREATE TABLE tx_t3sbootstrap_list_item_inline (
+    parentid int(11) DEFAULT '0' NOT NULL,
+    parenttable text,
+    listitem varchar(255) DEFAULT '' NOT NULL,
 	###### cmi5 ######
 	tx_t3sbootstrap_cmi5_select_statement varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_cmi5_send_statement tinyint(1) unsigned DEFAULT '0' NOT NULL,

@@ -149,6 +149,7 @@ class DefaultHelper implements SingletonInterface
 			$processedData['data']['image_zoom'] = '';
 			$processedData['addmedia']['imagezoom'] = '';
 		}
+
 		// animate css for all CEs exept t3sbs_carousel & collapsible_accordion
 		if ($animateCss && (!empty($processedData['data']['tx_t3sbootstrap_animateCss']) || !empty($flexconf['animate']))
 		 && $cType != 't3sbs_carousel' && $cType != 'collapsible_accordion')

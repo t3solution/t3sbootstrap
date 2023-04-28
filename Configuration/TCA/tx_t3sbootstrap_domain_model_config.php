@@ -249,12 +249,22 @@ return [
 				'type' => 'input'
 			]
 		],
-		'sectionmenu_scrollspy_offset' => [
+		'sectionmenu_scrollspy_threshold' => [
 			'exclude' => false,
-			'label' => 'Scrollspy offset (int)',
+			'label' => 'Scrollspy threshold (string)',
 			'accordion_id' => 1,
 			'accordion_sub' => '1-5',
-			'info' => 'in px - to activate the menu item - (default 130)',
+			'info' => 'https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#threshold - (default: 0.1, 0.5, 1)',
+			'config' => [
+				'type' => 'input'
+			]
+		],	
+		'sectionmenu_scrollspy_root_margin' => [
+			'exclude' => false,
+			'label' => 'Scrollspy rootMargin (string)',
+			'accordion_id' => 1,
+			'accordion_sub' => '1-5',
+			'info' => 'https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin - (default: 0px 0px -25%)',
 			'config' => [
 				'type' => 'input'
 			]
@@ -549,6 +559,20 @@ return [
 			'info' => 'Comma-separated list of uid`s (pages) for a right menu in the navbar.',
 			'config' => [
 				'type' => 'input'
+			]
+		],
+		'navbar_dark_mode' => [
+			'exclude' => false,
+			'label' => 'Color mode toggler',
+			'info' => 'To allow visitors or users to toggle color modes.',
+			'accordion_id' => 3,
+			'config' => [
+				'type' => 'check',
+					'items' => [
+					'1' => [
+						'0' => 'Enable as right menu dropdown'
+					]
+				]
 			]
 		],
 		'navbar_sectionmenu' => [
@@ -1544,7 +1568,6 @@ return [
 				]
 			]
 		],
-
 		'expandedcontent_enabletop' => [
 			'exclude' => false,
 			'label' => 'Enable',

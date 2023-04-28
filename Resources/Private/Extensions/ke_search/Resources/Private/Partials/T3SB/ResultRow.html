@@ -1,0 +1,69 @@
+<!--
+	=====================
+	Partials/ResultRow.html
+
+	modified by EXT:t3sbootstrap
+-->
+
+<f:asset.css identifier="searchResult">
+.card {
+	border-radius: 0;
+  border-top-left-radius: 30px;
+  behavior:url(border-radius.htc);
+}
+
+.hit {
+background: rgba(0, 0, 0, 0.05);
+font-weight: 700;
+color: var(--bs-primary)
+}
+</f:asset.css>
+
+<div class="col d-flex align-items-stretch result-list-item-type-{resultrow.type}">
+<div class="card above h-100 w-100">
+<div class="card-body">
+  <div class="row">
+	<div class="col-md-6">
+		<p><span class="teaser_icon">
+		<f:render
+			section="typeIconOrPreviewImage"
+			arguments="{icon: resultrow.typeIconPath, filePreviewId: resultrow.filePreviewId, treatIdAsReference:resultrow.treatIdAsReference, iconConf: conf.showTypeIcon}"
+		/>
+		</span>{resultrow.type}</p>
+	</div>
+	<div class="col-md-6 text-end">
+		<f:if condition="{resultrow.type} == 'cal'">
+			<f:then>
+				<f:comment><!-- Special cal date rendering --></f:comment>
+				<f:render partial="T3SB/CalDate" arguments="{resultrow: resultrow}" />
+			</f:then>
+			<f:else>
+				<f:comment><!-- Default date rendering --></f:comment>
+				<f:if condition="{conf.showDate}">
+					<f:format.date>{resultrow.date_timestamp}</f:format.date>
+				</f:if>
+			</f:else>
+		</f:if>
+	</div>
+  </div>
+<header>
+	<h5 class="result-title">
+		<f:format.raw>{resultrow.title}</f:format.raw>
+	</h5>
+</header>
+<div class="card-text">
+	<span class="result-teaser">{resultrow.teaser -> f:format.raw()}</span>
+</div>
+</div>
+  <div class="card-footer">
+	  <i class="fa-solid fa-tags me-1"></i>{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}
+  </div>
+</div>
+</div>
+
+
+<f:section name="typeIconOrPreviewImage">
+	<f:if condition="{iconConf}">
+		<f:image class="me-1" src="{icon}" maxWidth="16" maxHeight="16" />
+	</f:if>
+</f:section>

@@ -1,3 +1,15 @@
+
+#-------------------------------------------------------------------------------
+#	Include
+#-------------------------------------------------------------------------------
+mod.web_layout {
+  tt_content {
+    preview {
+      t3sbs_assets = EXT:t3sbootstrap/Resources/Private/Templates/Preview/t3sbs_assets.html
+    }
+  }
+}
+
 #-------------------------------------------------------------------------------
 #	Include
 #-------------------------------------------------------------------------------
@@ -13,7 +25,7 @@ TCAdefaults.pages.tx_t3sbootstrap_container = container
 TCEFORM.pages.tx_t3sbootstrap_dropdownRight.disabled = 1
 [END]
 
-[page["doktype"] == 198]
+[traverse(page, "doktype") == 198]
 TCEFORM.pages.subtitle.disabled = 1
 TCEFORM.pages.nav_title.disabled = 1
 TCEFORM.pages.crdate.disabled = 1
@@ -27,13 +39,13 @@ TCEFORM.tt_content {
 	linkToTop.disabled = 1
 	table_class.disabled = 1
 	space_before_class.disabled = 1
-	space_after_class.disabled = 1
-
+	space_after_class.disabled = 1	
 	tx_t3sbootstrap_header_celink {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_carousel.disabled = 1
+			t3sbs_gallery.disabled = 1
 			two_columns.disabled = 1
 			three_columns.disabled = 1
 			four_columns.disabled = 1
@@ -67,9 +79,9 @@ TCEFORM.tt_content {
 		types {
 			collapsible_accordion.disabled = 1
 			t3sbs_toast.disabled = 1
-		}		
+		}
 	}
-	
+
 	pi_flexform {
 		types {
 			two_columns.disabled = 1
@@ -89,6 +101,7 @@ TCEFORM.tt_content {
 			tabs_container.disabled = 1
 			tabs_tab.disabled = 1
 			listGroup_wrapper.disabled = 1
+			t3sbs_card.disabled = 1
 		}
 	}
 	header {
@@ -140,6 +153,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	header_position {
@@ -164,7 +178,6 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_mediaobject.disabled = 1
 			t3sbs_carousel.disabled = 1
-			collapsible_accordion.disabled = 1
 			t3sbs_card {
 				label.default = Card subtitle
 				label.de = Card Untertitel
@@ -234,7 +247,6 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_image_ratio {
 		types {
 			t3sbs_toast.disabled = 1
-			t3sbs_mediaobject.disabled = 1
 			two_columns.disabled = 1
 			three_columns.disabled = 1
 			four_columns.disabled = 1
@@ -287,18 +299,20 @@ TCEFORM.tt_content {
 		types {
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-		}		
+		}
 	}
 	tx_t3sbootstrap_header_class {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_bgcolor {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
+			t3sbs_assets.disabled = 1
 			t3sbs_carousel {
 				label.default = Caption background color (use with opacity - image link and zoom did not work)
 				label.de = Caption background color (use with opacity - image link and zoom did not work)
@@ -308,12 +322,14 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_header_fontawesome {
 		types {
 			t3sbs_toast.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_bgopacity {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
+			t3sbs_assets.disabled = 1
 			t3sbs_carousel {
 				label.default = Opacity for Caption background color
 				label.de = Opacity for Caption background color
@@ -325,6 +341,7 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 
@@ -332,11 +349,18 @@ TCEFORM.tt_content {
 		types {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
+			t3sbs_assets.disabled = 1
 			t3sbs_carousel {
 				label.default = Text color for caption
 				label.de = Text color for caption
 			}
 		}
+	}
+	
+	tx_t3sbootstrap_extra_class {
+		types {
+			t3sbs_assets.disabled = 1
+		}		
 	}
 
 	tx_t3sbootstrap_padding_sides {
@@ -344,6 +368,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_padding_size {
@@ -351,6 +376,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_margin_sides {
@@ -358,6 +384,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_margin_size {
@@ -365,6 +392,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_container {
@@ -372,7 +400,13 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
+			t3sbs_assets.disabled = 1
 		}
+	}
+	tx_t3sbootstrap_flexform {
+		types {
+			t3sbs_assets.disabled = 1
+		}		
 	}
 	tx_t3sbootstrap_inTextImgRowWidth {
 		types {
@@ -426,6 +460,48 @@ TCEFORM.tt_content {
 			collapsible_accordion.disabled = 1
 			t3sbs_carousel.disabled = 1
 		}
+	}
+	tx_content_animations_animation {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
+			t3sbs_button.disabled = 1
+		}
+	}
+	tx_content_animations_duration {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
+			t3sbs_button.disabled = 1
+		}
+	}
+	tx_content_animations_delay {
+		types {
+			collapsible_accordion.disabled = 1
+			t3sbs_carousel.disabled = 1
+			tabs_tab.disabled = 1
+			listGroup_wrapper.disabled = 1
+			t3sbs_button.disabled = 1
+		}
+	}
+	tx_content_animations_animation {
+		types {
+			t3sbs_assets.disabled = 1
+		}		
+	}
+	tx_content_animations_duration {
+		types {
+			t3sbs_assets.disabled = 1
+		}		
+	}
+	tx_content_animations_delay {
+		types {
+			t3sbs_assets.disabled = 1
+		}		
 	}
 
 }

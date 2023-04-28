@@ -46,11 +46,8 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		if ($record['CType'] === 't3sbs_card') {
-			$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-			$flexconf = $flexformService->convertFlexFormContentToArray($record['pi_flexform']);
-
-			if ( !empty($flexconf['header']['text']) ) {
-				 $outHeader .= parent::linkEditContent(parent::renderText($flexconf['header']['text']), $record) . '<br />';
+			if ( !empty($record['tx_t3sbootstrap_cardheader']) ) {
+				 $outHeader .= parent::linkEditContent(parent::renderText($record['tx_t3sbootstrap_cardheader']), $record) . '<br />';
 			}
 		}
 
@@ -130,30 +127,28 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 			if ($record['CType'] == 't3sbs_gallery') {
 				$out .= 'Columns: '.$record['imagecols'];
 				if ( !empty($record['tx_t3sbootstrap_image_ratio'])) {
-					$out .= '<br />Aspect ratio: '.$record['tx_t3sbootstrap_image_ratio'];	
+					$out .= '<br />Aspect ratio: '.$record['tx_t3sbootstrap_image_ratio'];
 				}
 				if ( !empty($record['file_collections'])) {
-					$out .= '<br />File collection UID(s): '.$record['file_collections'];	
+					$out .= '<br />File collection UID(s): '.$record['file_collections'];
 				}
 			}
 			if ($record['CType'] === 't3sbs_card') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['pi_flexform']);
-				if ( !empty($flexconf['text']['top']) ) {
+				if ( !empty($record['bodytext']) ) {
 					if ($extconf['previewCrop']) {
 						$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-						$text = $contentObject->cropHTML($flexconf['text']['top'], $maxCharacters . '|' . $append . '|' . true);
+						$text = $contentObject->cropHTML($record['bodytext'], $maxCharacters . '|' . $append . '|' . true);
 					} else {
-						$text = $flexconf['text']['top'];
+						$text = $record['bodytext'];
 					}
 					$out .= parent::linkEditContent(parent::renderText($text), $record) . '<br />';
 				}
-				if ( !empty($flexconf['text']['bottom']) ) {
+				if ( !empty($record['tx_t3sbootstrap_bodytext']) ) {
 					if ($extconf['previewCrop']) {
 						$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-						$text = $contentObject->cropHTML($flexconf['text']['bottom'], $maxCharacters . '|' . $append . '|' . true);
+						$text = $contentObject->cropHTML($record['tx_t3sbootstrap_bodytext'], $maxCharacters . '|' . $append . '|' . true);
 					} else {
-						$text = $flexconf['text']['bottom'];
+						$text = $record['tx_t3sbootstrap_bodytext'];
 					}
 					$out .= parent::linkEditContent(parent::renderText($text), $record) . '<br />';
 				}

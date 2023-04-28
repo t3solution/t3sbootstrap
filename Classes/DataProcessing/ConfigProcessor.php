@@ -62,8 +62,9 @@ class ConfigProcessor implements DataProcessorInterface
 		$company = $processedRecordVariables['company'];
 		$companyArr = GeneralUtility::trimExplode('|', $company);
 		$sysLanguageUid = $processedData['data']['sys_language_uid'];
+
 		if ( $sysLanguageUid && $company ) {
-			$company = $companyArr[$sysLanguageUid] ?: $company;
+			$company = !empty($companyArr[$sysLanguageUid]) ? $companyArr[$sysLanguageUid] : $company;
 		} else {
 			$company = $companyArr[0] ?: $company;
 		}
@@ -171,29 +172,32 @@ class ConfigProcessor implements DataProcessorInterface
 		if ( $processedRecordVariables['navbarEnable'] ) {
 			// navbar menu
 			$mainMenu = [];
-			foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
-				$mainMenu[$key] = $navbarMenu;
-				if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
-					$mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
-				}
-				if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
-					$mainMenu[$key]['title'] = '';
-				}
-				$mainMenu[$key]['target'] = $navbarMenu['data']['target'] ? $navbarMenu['data']['target'] : '_self';
-				if (!empty($navbarMenu['data']['tx_t3sbootstrap_dropdownRight'])) {
-					$mainMenu[$key]['dropdownRightClass'] = ' dropdown-menu-end';
-				}
-				if (!empty($navbarMenu['current']) && !empty($navbarMenu['active'])) {
-					$mainMenu[$key]['active'] = 0;
-					$mainMenu[$key]['activeClass'] = ' active';
-				} elseif (!empty($navbarMenu['active'])) {
-					$mainMenu[$key]['activeClass'] = '  parent-active';
-				} else {
-					$mainMenu[$key]['activeClass'] = '';
-				}
-				if (!empty($navbarMenu['children'][0])) {	
-					if (self::getChildItems($navbarMenu['children'])) {
-						$mainMenu[$key]['children'] = self::getChildItems($navbarMenu['children']);
+
+			if (!empty($processedData['navbarMenu'])) {
+				foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
+					$mainMenu[$key] = $navbarMenu;
+					if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
+						$mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
+					}
+					if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
+						$mainMenu[$key]['title'] = '';
+					}
+					$mainMenu[$key]['target'] = $navbarMenu['data']['target'] ? $navbarMenu['data']['target'] : '_self';
+					if (!empty($navbarMenu['data']['tx_t3sbootstrap_dropdownRight'])) {
+						$mainMenu[$key]['dropdownRightClass'] = ' dropdown-menu-end';
+					}
+					if (!empty($navbarMenu['current']) && !empty($navbarMenu['active'])) {
+						$mainMenu[$key]['active'] = 0;
+						$mainMenu[$key]['activeClass'] = ' active';
+					} elseif (!empty($navbarMenu['active'])) {
+						$mainMenu[$key]['activeClass'] = '  parent-active';
+					} else {
+						$mainMenu[$key]['activeClass'] = '';
+					}
+					if (!empty($navbarMenu['children'][0])) {	
+						if (self::getChildItems($navbarMenu['children'])) {
+							$mainMenu[$key]['children'] = self::getChildItems($navbarMenu['children']);
+						}
 					}
 				}
 			}
@@ -386,8 +390,10 @@ class ConfigProcessor implements DataProcessorInterface
 			// color
 			$processedData['config']['navbar']['colorschemes'] = explode(' ', $processedRecordVariables['navbarColor'])[0];
 			$processedData['config']['navbar']['gradient'] = '';
-			if ( explode(' ', $processedRecordVariables['navbarColor'])[1] ) {
-				$processedData['config']['navbar']['gradient'] = explode(' ', $processedRecordVariables['navbarColor'])[1];
+			if (!empty($processedRecordVariables['navbarColor'])) {
+				if (!empty(explode(' ', $processedRecordVariables['navbarColor'])[1])) {
+					$processedData['config']['navbar']['gradient'] = explode(' ', $processedRecordVariables['navbarColor'])[1];
+				}
 			}
 
 			// content only on rootpage
@@ -470,6 +476,10 @@ class ConfigProcessor implements DataProcessorInterface
 			if ($hasBgImages && !empty($processedRecordVariables['jumbotronBgimageratio'])) {
 				$processedData['config']['jumbotron']['noBgRatio'] = FALSE;
 				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
+				$ratioArr = explode('x', $processedRecordVariables['jumbotronBgimageratio']);
+				$x = $processedRecordVariables['jumbotronBgimageratio'];
+				$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
+				$processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
 			}
 		}
 
@@ -520,7 +530,6 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['sidebar']['stickTopClass'] = $processedRecordVariables['sectionmenuStickyTop'] ? ' sticky-top': '';
 				$topOffset = (int)$processedRecordVariables['sectionmenuAnchorOffset'] + (int)$processedRecordVariables['navbarHeight'];
 				$processedData['config']['sidebar']['stickTopOffset'] = $topOffset ? $topOffset.'px' : 0;
-				$processedData['config']['sidebar']['scrollspyOffset'] = $processedRecordVariables['sectionmenuScrollspyOffset'];
 				$processedData['config']['sidebar']['scrollspy'] = $processedRecordVariables['sectionmenuScrollspy'];
 			} else {
 				if (!empty($processedData['subNavigation']) && is_array($processedData['subNavigation'])) {
@@ -562,7 +571,7 @@ class ConfigProcessor implements DataProcessorInterface
 				->where(
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, \PDO::PARAM_INT))
 				)
-			->execute()
+			->executeQuery()
 			->fetchColumn();
 			$processedData['config']['expandedcontentTop']['enable'] = $numberOfTop ? $processedRecordVariables['expandedcontentEnabletop'] : 0;
 			$processedData['config']['expandedcontentTop']['slide'] = $processedRecordVariables['expandedcontentSlidetop'];
@@ -579,7 +588,7 @@ class ConfigProcessor implements DataProcessorInterface
 				->where(
 					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, \PDO::PARAM_INT))
 				)
-			->execute()
+			->executeQuery()
 			->fetchColumn();
 			$processedData['config']['expandedcontentBottom']['enable'] = $numberOfBottom ? $processedRecordVariables['expandedcontentEnablebottom'] : 0;
 			$processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontentSlidebottom'];
@@ -621,7 +630,7 @@ class ConfigProcessor implements DataProcessorInterface
 			->andWhere(
 				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, \PDO::PARAM_INT))
 			)
-			 ->execute();
+			 ->executeQuery();
 
 		$navbarColors = $result->fetchAll();
 		$navbarColorCSS = '';
@@ -694,7 +703,7 @@ class ConfigProcessor implements DataProcessorInterface
 					$queryBuilder->expr()->eq('sys_language_uid', 0),
 					QueryHelper::stripLogicalOperatorPrefix($permsClause)
 				)
-				->execute();
+				->executeQuery();
 			while ($row = $statement->fetch()) {
 				if ($begin <= 0) {
 					$theList .= ',' . $row['uid'];
@@ -720,7 +729,7 @@ class ConfigProcessor implements DataProcessorInterface
 	{
 		$res = [];
 		foreach ($subNavigation as $supNav ) {
-			if ( is_array($supNav['children'])) {
+			if ( !empty($supNav['children']) && is_array($supNav['children'])) {
 				self::getSubNavigation($supNav['children'], $navbarClickableparent);
 				if ( $navbarClickableparent === 0 ) {
 					$supNav['link'] = '#';

@@ -1,0 +1,102 @@
+<f:layout name="General" />
+<!--
+=====================
+Templates/ResultList.html
+
+Settings are available via
+{conf}
+{extConf}
+{extConfPremium}
+
+modified by t3solution
+-->
+<f:section name="content">
+	<f:if condition="{conf.templateLayout} == 10">
+		<f:render section="defaultLayout" arguments="{_all}"/>
+	</f:if>
+	<f:if condition="{conf.templateLayout} == 20">
+		<f:render section="customLayout" arguments="{_all}"/>
+	</f:if>
+</f:section>
+
+
+<f:section name="defaultLayout">
+	<f:if condition="{wordsTooShort}">
+		<div class="messsage">{f:translate(key: 'LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:searchword_length_error', arguments: {0: extConf.searchWordLength})}</div>
+	</f:if>
+	<f:if condition="{resultListAdditionalRawContent}">
+		<f:format.raw>{resultListAdditionalRawContent}</f:format.raw>
+	</f:if>
+	<f:if condition="{isEmptySearch}">
+		<f:then>
+			<f:if condition="{conf.showTextInsteadOfResults}">
+				<f:then>
+					<f:format.raw>{conf.textForResults}</f:format.raw>
+				</f:then>
+				<f:else>
+					<f:render partial="ResultRows" arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, sortingLinks: sortingLinks, pagebrowser:pagebrowser, queryTime:queryTime, queryTimeText:queryTimeText}" />
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{numberofresults} == 0">
+				<f:then>
+					<f:render partial="NoResults" arguments="{conf: conf, noResultsText: noResultsText}" />
+				</f:then>
+				<f:else>
+					<f:render partial="ResultRows" arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, sortingLinks: sortingLinks, pagebrowser:pagebrowser, queryTime:queryTime, queryTimeText:queryTimeText}" />
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+	<f:if condition="errors">
+		<f:for each="{errors}" as="error">
+			<div class="ke_search-error">{error}</div>
+		</f:for>
+	</f:if>
+</f:section>
+
+
+<f:section name="customLayout">
+<f:if condition="{numberofresults}">
+<f:asset.script identifier="vanilla_searchResultJs">
+var numberofresults = '<div class="search-hits--large">{numberofresults}</div><div class="search-label--large">{f:translate(key: 'LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:num_results_plain')}</div>';
+var sword = document.getElementById('searchword');
+sword.insertAdjacentHTML('afterend', numberofresults);
+</f:asset.script>
+</f:if>
+
+<f:if condition="{wordsTooShort}">
+	<div class="messsage">{f:translate(key: 'LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:searchword_length_error', arguments: {0: extConf.searchWordLength})}</div>
+</f:if>
+<f:if condition="{resultListAdditionalRawContent}">
+	<f:format.raw>{resultListAdditionalRawContent}</f:format.raw>
+</f:if>
+<f:if condition="{isEmptySearch}">
+	<f:then>
+		<f:if condition="{conf.showTextInsteadOfResults}">
+			<f:then>
+				<f:format.raw>{conf.textForResults}</f:format.raw>
+			</f:then>
+			<f:else>
+				<f:render partial="T3SB/ResultRows" arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, sortingLinks: sortingLinks, pagebrowser:pagebrowser, queryTime:queryTime, queryTimeText:queryTimeText}" />
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{numberofresults} == 0">
+			<f:then>
+				<f:render partial="NoResults" arguments="{conf: conf, noResultsText: noResultsText}" />
+			</f:then>
+			<f:else>
+				<f:render partial="T3SB/ResultRows" arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, sortingLinks: sortingLinks, pagebrowser:pagebrowser, queryTime:queryTime, queryTimeText:queryTimeText}" />
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+<f:if condition="errors">
+	<f:for each="{errors}" as="error">
+		<div class="ke_search-error">{error}</div>
+	</f:for>
+</f:if>
+</f:section>

@@ -19,7 +19,7 @@ function t3sbflipCard(viewportWidth) {
 		back.style.width = width+'px';
 		back.style.height = width+'px';
 	});
-}		
+}
 </f:asset.script>
 <f:asset.script identifier="vanilla_cardwrapper">
 	// Flip Card rotate on hover - Card.html
@@ -34,23 +34,23 @@ function t3sbflipCard(viewportWidth) {
 		<f:if condition="{files -> f:count()}">
 			<f:render section="Image" arguments="{ratio: '{data.tx_t3sbootstrap_image_ratio}', file: '{files.0}', width: '{gallery.width}', height: '{gallery.height}'}" />
 		</f:if>
-		<f:if condition="{card.text.bottom}">
+		<f:if condition="{data.tx_t3sbootstrap_bodytext}">
 		<div class="align-items-center card-img-overlay d-flex border-0 bg-transparent">
 			<div class="card-text text-white text-center w-100">
-				{card.text.bottom -> f:format.html()}
+				{data.tx_t3sbootstrap_bodytext -> f:format.html()}
 			</div>
 		</div>
 		</f:if>
 	</div>
 	<div class="flip-card-back position-absolute d-flex{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}{f:if(condition: backclass, then: ' {backclass}')}"{f:if(condition: backstyle, then: ' style="background-color: {backstyle}"')}>
-		<f:if condition="{card.text.top}">
+		<f:if condition="{data.bodytext}">
 			<f:then>
 				<div class="card-body align-self-center">
 					<div class="card-text">
 						<f:if condition="({data.header} || {data.subheader}) ">
 							<f:render partial="Header/All" arguments="{_all}"/>
 						</f:if>
-						{card.text.top -> f:format.html()}
+						{data.bodytext -> f:format.html()}
 					</div>
 				</div>
 			</f:then>
@@ -68,6 +68,7 @@ function t3sbflipCard(viewportWidth) {
 <f:section name="Image">
 <f:variable name="lazyload" value="{settings.lazyLoad}" />
 <f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 	<t3sb:media file="{file}"
 	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
@@ -84,4 +85,5 @@ function t3sbflipCard(viewportWidth) {
 	 ratio="{ratio}"
 	/>
 </figure>
+
 </f:section>

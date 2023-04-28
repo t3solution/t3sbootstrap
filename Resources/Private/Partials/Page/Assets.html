@@ -15,30 +15,6 @@
 </f:if>
 <f:if condition="{fixedbutton}">
 	<f:asset.script identifier="fixedbutton_function">
-						<f:asset.script identifier="objectprototypeforEach_function">
-/**
- * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT etc) polyfill
- * https://gomakethings.com/looping-through-objects-with-es6/
- * @author Chris Ferdinandi
- * @license MIT
- */
-if (!Object.prototype.forEach) {
-	Object.defineProperty(Object.prototype, 'forEach', {
-		value: function (callback, thisArg) {
-			if (this == null) {
-				throw new TypeError('Not an object');
-			}
-			thisArg = thisArg || window;
-			for (var key in this) {
-				if (this.hasOwnProperty(key)) {
-					callback.call(thisArg, this[key], key, this);
-				}
-			}
-		}
-	});
-}						
-						</f:asset.script>
-
 
 // Fixed button on left or right browser edge - Page/Assets.html
 function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {
@@ -133,9 +109,6 @@ function t3sbFadeInEffect(fadeTarget) {
 	<f:if condition="{btnGroup} && {slideIn}">
 		<f:then>
 	<f:asset.script identifier="vanilla_fixedbuttonGroup">
-
-
-
 	// Fixed button group on left or right browser edge - Page/Assets.html
 	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
 	var visiblePart = {visiblePart};
@@ -161,31 +134,31 @@ function t3sbFadeInEffect(fadeTarget) {
 	<f:comment>Page/Section.html, Page/MenuSection.html</f:comment>
 	<f:asset.script identifier="vanilla_scrollspy">
 	// Sectionmenu scrollspy - Page/Assets.html
-	document.body.setAttribute('data-bs-spy', 'scroll');
-	document.body.setAttribute('data-bs-target', '#sectionmenu');
-	document.body.setAttribute('data-bs-offset', {settings.config.sectionmenuScrollspyOffset});
-	document.body.setAttribute('tabindex', '0');
-	//document.body.style.position = 'relative';
-	if (document.body.style.overflowY) {
-		document.body.style.overflowY = 'unset';
-	}
-	var sectionmenu = document.getElementById('sectionmenu');
-	sectionmenu.querySelectorAll('a').forEach( link => {
-		link.addEventListener('click', function(l) {
-			if (document.body.style.overflowY) {
-				document.body.style.overflowY = 'unset';
-			}
-			event.preventDefault();
-			t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
+	const sectionmenu = document.getElementById('sectionmenu');
+	var sidebarSectionMobile = {settings.config.sidebarSectionMobile};
+	var sidebarSectionMobile2222 = {settings.config.sidebarSectionMobile};
+	if ( !sidebarSectionMobile && window.innerWidth < {settings.config.navbarBreakpointWidth} ) {
+		sectionmenu.parentNode.removeChild(sectionmenu);
+	} else {
+		document.body.setAttribute('data-bs-spy', 'scroll');
+		document.body.setAttribute('data-bs-target', '#sectionmenu');
+		document.body.setAttribute('data-bs-smooth-scroll', 'true');
+		document.body.setAttribute('data-bs-root-margin', '{settings.config.sectionmenuScrollspyRootMargin}');
+		document.body.setAttribute('data-bs-threshold', '[{settings.config.sectionmenuScrollspyThreshold}]');
+		document.body.setAttribute('tabindex', '0');
+		sectionmenu.querySelectorAll('a').forEach( link => {
+			link.addEventListener('click', function(l) {
+				t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
+			});
 		});
-	});
+	}
 	</f:asset.script>
 </f:if>
 
 <f:if condition="{contentElement} && {settings.sectionmenuStickyTop}">
 <f:asset.script identifier="vanilla_stickyTop">
 	window.onscroll = function() {stickyFunction()};
-	var sticky = sectionmenu.offsetTop;
+	var sticky = {settings.config.sectionmenuAnchorOffset};
 	var maincontent = document.getElementsByClassName('main-content');
 	function stickyFunction() {
 		if (window.pageYOffset + navbarHeight >= sticky) {
@@ -198,4 +171,29 @@ function t3sbFadeInEffect(fadeTarget) {
 	}
 </f:asset.script>
 </f:if>
+
+<f:asset.script identifier="objectprototypeforEach_function">
+/**
+ * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT etc) polyfill
+ * https://gomakethings.com/looping-through-objects-with-es6/
+ * @author Chris Ferdinandi
+ * @license MIT
+ */
+if (!Object.prototype.forEach) {
+	Object.defineProperty(Object.prototype, 'forEach', {
+		value: function (callback, thisArg) {
+			if (this == null) {
+				throw new TypeError('Not an object');
+			}
+			thisArg = thisArg || window;
+			for (var key in this) {
+				if (this.hasOwnProperty(key)) {
+					callback.call(thisArg, this[key], key, this);
+				}
+			}
+		}
+	});
+}						
+</f:asset.script>
+
 </html>

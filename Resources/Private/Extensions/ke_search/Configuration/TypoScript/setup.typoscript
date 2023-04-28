@@ -1,0 +1,25 @@
+
+plugin.tx_kesearch_pi1 {
+	view {
+		templateRootPaths {
+			55 = EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Resources/Private/Templates/
+		}
+		partialRootPaths {
+			55 = EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Resources/Private/Partials/
+		}
+	}
+}
+
+plugin.tx_kesearch_pi1.cssFile =
+plugin.tx_kesearch_pi2.cssFile =
+plugin.tx_kesearch_pi2.includeFilters = 1
+
+lib.searchbox_html = TEXT
+lib.searchbox_html.value (
+<form method="get" id="form_kesearch_searchfield" name="form_kesearch_searchfield" action="/suchen/">
+  <input class="form-control" type="text" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Suchbegriff" />
+</form>
+)
+
+// The action “/suchen/” ist the slug of the page you created with your result list plugin.
+

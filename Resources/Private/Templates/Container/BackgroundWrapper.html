@@ -66,7 +66,7 @@ if (!Object.prototype.forEach) {
 			}
 		}
 	});
-}						
+}
 						</f:asset.script>
 						<f:asset.script identifier="autoheight_function">
 // Autoheight for backgroundimages - BackgroundWrapper.html
@@ -194,27 +194,27 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, {localVideo.controls}, videoElement );
 											</f:asset.script>
 											<f:asset.css identifier="lovalvideocss-{data.uid}">
-{localVideo.inlineCSS -> f:format.raw()}
+{localVideo.inlineCSS -> f:format.raw()}{ratioCalcCss -> f:format.raw()}
 											</f:asset.css>
 											<f:render partial="Media/Type/Video" arguments="{file: file, dimensions: dimensions,
 											 class: class, border: border, addmedia: addmedia, position: position}" />
 										</f:then>
 										<f:else>
 										<f:comment> Real image </f:comment>
-											<figure>
+											<figure style="margin: 0 auto;">
 												<f:if condition="{settings.lazyLoadBgWrapperImage}">
 													<f:then>
-														<t3sb:media file="{file}" width="2560" height="auto"
+														<t3sb:media file="{file}" width="{ingWidth}" height="auto"
 															class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load}
 															 && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}"
 															breakpoints="{
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
 															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '575'}
+															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 														}" picturefill="{settings.picturefill}" lazyload="{settings.lazyLoad}" ratio="0" style="{style}" />
 													</f:then>
 													<f:else>
-														<t3sb:media file="{file}" width="2560" height="auto"
+														<t3sb:media file="{file}" width="{ingWidth}" height="auto"
 															class="img-fluid orig-img"
 															breakpoints="{
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
@@ -268,7 +268,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 
 <f:section name="SectionOverlayInner">
 <f:if condition="{col_273 -> f:count()}">
-	<div class="card-img-overlay d-flex{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
+	<div class="card-img-overlay d-flex px-0{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
 		<f:if condition="{container}">
 			<f:then>
 				<div class="{container} d-flex">

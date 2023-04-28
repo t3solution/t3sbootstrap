@@ -45,8 +45,7 @@ class BackgroundImageUtility implements SingletonInterface
 		bool $body=FALSE,
 		int $currentUid=0,
 		bool $webp=FALSE,
-		string $bgMediaQueries='2560,1920,1200,992,768,576',
-		int $divideBy=1
+		string $bgMediaQueries='2560,1920,1200,992,768,576'
 	)
 	{
 		$request = $GLOBALS['TYPO3_REQUEST'];
@@ -109,7 +108,7 @@ class BackgroundImageUtility implements SingletonInterface
 						}
 						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					} else {
-						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries, $divideBy);
+						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					}
 				}
 				$bgImages = $this->generateSrcsetImages($file, $image);
@@ -147,8 +146,7 @@ class BackgroundImageUtility implements SingletonInterface
 		bool $webp,
 		array $flexconf=[],
 		bool $body=FALSE,
-		string $bgMediaQueries='2560,1920,1200,992,768,576',
-		int $divideBy=1
+		string $bgMediaQueries='2560,1920,1200,992,768,576'
 	): string
 	{
 		$imageRaster = !empty($flexconf['imageRaster']) ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
@@ -171,7 +169,7 @@ class BackgroundImageUtility implements SingletonInterface
 			$cropArea = $cropVariantCollection->getCropArea($cropVariant);
 
 			$processingInstructions = [
-				'width' => (int)$querie/$divideBy,
+				'width' => (int)$querie,
 				'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 			];
 			$processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);

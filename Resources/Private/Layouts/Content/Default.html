@@ -15,7 +15,7 @@
 		<f:link.typolink parameter="{celink}" class="ce-link{f:if(condition: '{parentCType} == listGroup_wrapper', then: ' list-group-item list-group-item-action')}">
 			<f:if condition="{isTxContainer}">
 			<f:then>
-				<div id="c{data.uid}" data-cmi5="{data.tx_t3sbootstrap_cmi5_select_statement} {data.tx_t3sbootstrap_cmi5_send_statement}">
+				<div id="c{data.uid}" data-cmi5="{data.tx_t3sbootstrap_cmi5_select_statement} {data.tx_t3sbootstrap_cmi5_send_statement}"{dataAttr -> f:format.raw()}>
 					<f:render section="Header" optional="true">
 						<f:render partial="Header/All" arguments="{_all}" />
 					</f:render>
@@ -23,7 +23,7 @@
 				</div>
 			</f:then>
 			<f:else>
-				<div id="c{data.uid}" data-cmi5="{data.tx_t3sbootstrap_cmi5_select_statement} {data.tx_t3sbootstrap_cmi5_send_statement}" {f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate -> f:format.raw()}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
+				<div id="c{data.uid}" data-cmi5="{data.tx_t3sbootstrap_cmi5_select_statement} {data.tx_t3sbootstrap_cmi5_send_statement}" {f:if(condition: '{class}',then: ' class="{class}"')}{f:if(condition: '{style}',then: ' style="{style}"')}{dataAnimate -> f:format.raw()}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}{dataAttr -> f:format.raw()}')}>
 					<f:render section="Header" optional="true">
 						<f:render partial="Header/All" arguments="{_all}" />
 					</f:render>

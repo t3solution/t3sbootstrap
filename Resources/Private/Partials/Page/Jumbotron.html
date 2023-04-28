@@ -147,6 +147,11 @@
 <f:section name="Div">
 	<f:if condition="{config.jumbotron.bgImage}">
 		<f:then>
+			<f:if condition="{ratioCalcCss}">
+				<f:asset.css identifier="jumbotronRatioCss-{data.uid}">
+{ratioCalcCss -> f:format.raw()}
+				</f:asset.css>
+			</f:if>
 			<div id="s{data.uid}" class="jumbotron background-image{config.jumbotron.class}">
 		</f:then>
 		<f:else>

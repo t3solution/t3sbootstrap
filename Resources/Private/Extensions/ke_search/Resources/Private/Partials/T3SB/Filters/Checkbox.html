@@ -1,0 +1,16 @@
+<!--
+	=====================
+	Partials/Filters/Checkbox.html
+
+modified by EXT:t3sbootstrap
+-->
+<div class="list small" id="list_{filter.id}">
+	<f:for each="{filter.checkboxOptions}" as="option">
+		<div class="mb-3 form-check form-check-inline optionCheckBox optionCheckBox{filter.uid} optionCheckBox{filter_uid}_{option.value}">
+			<input class="form-check-input" type="checkbox" name="{option.key}" value="{option.tag}" id="{option.id}" {f:if(condition: '{option.selected}', then: ' checked="checked"')} {f:if(condition: '{option.disabled}', then: 'disabled = "disabled"')}>
+			<label for="{option.id}" class="form-check-label">
+				{option.title}<f:if condition="{filter.shownumberofresults} && {option.results}"> ({option.results})</f:if>
+			</label>
+		</div>
+	</f:for>
+</div>

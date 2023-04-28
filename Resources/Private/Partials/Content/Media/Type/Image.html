@@ -5,7 +5,7 @@
 		<f:render partial="Media/Effects" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio}" />
 	</f:then>
 	<f:else>
-		<figure class="image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+		<figure class="m-0 image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 			<f:if condition="{file.link}">
 				<f:then>
 					<f:link.typolink parameter="{file.link}" title="{file.title}">
@@ -83,7 +83,7 @@ function t3sbCopyright() {
 	</f:asset.script>
 	<f:asset.script identifier="vanilla_imgcopyright">
 		// Image copyright on click - Media/Type/Image.html
-		t3sbCopyright();	
+		t3sbCopyright();
 	</f:asset.script>
 	<span class="img-copyright {file.properties.tx_t3sbootstrap_copyright_color}">
 		 <i class="far fa-copyright fa-lg"></i>
@@ -96,12 +96,9 @@ function t3sbCopyright() {
 		<div class="toast-body text-start">
 			{file.properties.tx_t3sbootstrap_copyright}
 			<f:if condition="{file.properties.tx_t3sbootstrap_copyright_source}">
-				<br />
-				<nobr>
-				<f:link.typolink parameter="{file.properties.tx_t3sbootstrap_copyright_source}" target="_blank">
-					{file.properties.tx_t3sbootstrap_copyright_source}
-				</f:link.typolink>
-				</nobr>
+			<f:link.typolink parameter="{file.properties.tx_t3sbootstrap_copyright_source}" target="_blank" class="d-block">
+				Weblink
+			</f:link.typolink>
 			</f:if>
 		</div>
 	</div>
@@ -115,4 +112,3 @@ function t3sbCopyright() {
 	</span>
 </f:if>
 </f:section>
-

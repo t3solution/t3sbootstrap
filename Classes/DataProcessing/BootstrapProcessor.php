@@ -6,6 +6,7 @@ namespace T3SBS\T3sbootstrap\DataProcessing;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -49,7 +50,7 @@ use T3SBS\T3sbootstrap\Wrapper\SwiperContainer;
 class BootstrapProcessor implements DataProcessorInterface
 {
 	const TX_CONTAINER_GRID = 'two_columns,three_columns,four_columns,six_columns,row_columns';
-	const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast';
+	const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast,t3sbs_assets';
 	const TX_CONTAINER = 'button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container,card_wrapper';
 
 	/**
@@ -63,7 +64,13 @@ class BootstrapProcessor implements DataProcessorInterface
 	 */
 	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration,	 array $processedData)
 	{
+
+		if ( empty($processedData['data']['CType']) ) {
+			return $processedData;
+		}
+
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
 		$cType = $processedData['data']['CType'];
 		$parentCType = '';
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
@@ -102,9 +109,14 @@ class BootstrapProcessor implements DataProcessorInterface
 		$processedData['data']['configuid'] = (int)$processorConfiguration['configuid'];
 		$processedData['header_fontawesome'] = '';
 
+		$sectionMenuClass = '';
+		if (!empty($contentObjectConfiguration['settings.']['sectionMenuClass'])) {
+			$sectionMenuClass = $contentObjectConfiguration['settings.']['sectionMenuClass'];
+		}
+
 		// class
 		$classHelper = GeneralUtility::makeInstance(ClassHelper::class);
-		$class = $classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass']);
+		$class = $classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass'], $sectionMenuClass);
 		$processedData['class'] = !empty($processedData['class']) ? $processedData['class'].' '.$class : $class;
 
 		// header class
@@ -145,6 +157,13 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData = GeneralUtility::makeInstance(Toast::class)
 				->getProcessedData($processedData, $flexconf);
 			}
+			if ( $cType == 't3sbs_assets' ) {
+				$pi_flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['pi_flexform']);
+				if (!empty($pi_flexconf)) {
+					$processedData['assets']['jquery'] = $pi_flexconf['settings']['jquery'];
+					$processedData['assets']['priority'] = $pi_flexconf['settings']['priority'];
+				}
+			}
 			#if ( $cType == 't3sbs_fluidtemplate' ) {}
 			#if ( $cType == 't3sbs_gallery' ) {}
 		}
@@ -174,7 +193,6 @@ class BootstrapProcessor implements DataProcessorInterface
 				->getProcessedData($processedData, $flexconf);
 			}
 		}
-
 
 		#
 		# Container/Wrapper
@@ -225,6 +243,7 @@ class BootstrapProcessor implements DataProcessorInterface
 				$processedData = GeneralUtility::makeInstance(MasonryWrapper::class)
 				->getProcessedData($processedData, $flexconf);
 			}
+
 			if ( $cType == 'swiper_container' ) {
 				$processedData = GeneralUtility::makeInstance(SwiperContainer::class)
 				->getProcessedData($processedData, $flexconf);
@@ -238,17 +257,14 @@ class BootstrapProcessor implements DataProcessorInterface
 			#if ( $cType == 'listGroup_wrapper' ) {}
 		}
 
-
 		#
 		# default content elements
 		#
 		if ( !str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) ) {
 			if ( substr($cType, 0, 4) == 'menu' ) {
-
 				$processedData = GeneralUtility::makeInstance(Menu::class)->getProcessedData($processedData, $flexconf, $cType);
 			}
 			if ( $cType == 'table' ) {
-
 				$processedData = GeneralUtility::makeInstance(Table::class)->getProcessedData($processedData, $flexconf);
 			}
 		}
@@ -261,7 +277,25 @@ class BootstrapProcessor implements DataProcessorInterface
 		// media
 		if ( $processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] ) {
 			$mediaElementHelper = GeneralUtility::makeInstance(MediaElementHelper::class);
-			$processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint']);
+			$processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint'], $parentflexconf);
+			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+			$fileObjects = $fileRepository->findByRelation('tt_content ', 'assets', 875);
+			$fileParts = [];
+			foreach ($fileObjects as $key=>$fileObject) {
+				if ( $fileObject->getType() === 4 ) {
+					$fileConfig = $fileObject->getStorage()->getConfiguration();
+					$filePath = substr($fileConfig['basePath'], 0, -1).explode('.', $fileObject->getIdentifier())[0];
+					if (file_exists($filePath.'.png')) {
+						$fileParts[$key]['poster'] = $filePath.'.png';
+					} elseif (file_exists($filePath.'.jpg')) {
+						$fileParts[$key]['poster'] = $filePath.'.jpg';
+					} else {
+						$fileParts[$key]['poster'] = '';
+					}
+				}
+			}
+			$processedData['posters'] = $fileParts;
+
 			if (!empty($flexconf['zoom']) || !empty($parentflexconf['zoom'])) {
 				$processedData['lightBox'] = TRUE;
 			}
@@ -287,6 +321,16 @@ class BootstrapProcessor implements DataProcessorInterface
 		// child of container
 		if ( $parentCType === 'container' ) {
 			$processedData['class'] .= $classHelper->getContainerClass($parentflexconf, $flexconf);
+		}
+
+		$processedData['dataAttr'] = '';
+		if (!empty($processedData['data']['tx_content_animations_animation'])) {
+			$completeAnimationSettings = $this->generateAnimationAttributeSettingsFromAnimationsArray($processedData['data']);
+			$processedData['dataAttr'] = !empty($completeAnimationSettings) ? $completeAnimationSettings : '';
+			$processedData['dataAnimate'] = '';
+			$processedData['isAnimateCss'] = FALSE;
+			$processedData['animateCssRepeat'] = FALSE;
+			$flexconf['animate'] = '';
 		}
 
 		// container class
@@ -315,4 +359,30 @@ class BootstrapProcessor implements DataProcessorInterface
 
 		return $processedData;
 	}
+
+
+
+	/**
+	 * @param array $animationSettingsArray
+	 * @return string
+	 */
+	private function generateAnimationAttributeSettingsFromAnimationsArray(array $animationSettingsArray)
+	{
+		$animationSettings = '';
+
+		foreach ($animationSettingsArray as $key => $value) {
+			if (str_starts_with($key, 'tx_content_animations_')) {
+				if ($key == 'tx_content_animations_animation' ) {
+					$newphrase = str_replace('tx_content_animations_animation', 'data-aos', $key);
+					$animationSettings .= $newphrase . '="' . $value . '" ';
+				} else {
+					$newphrase = str_replace('tx_content_animations_', 'data-aos-', $key);
+					$animationSettings .= $newphrase . '="' . $value . '" ';
+				}
+			}
+		}
+		return ' '.$animationSettings;
+	}
+
+
 }

@@ -53,19 +53,21 @@
 </f:section>
 
 <f:section name="Media">
-		<f:for each="{gallery.rows}" as="row" iteration="rowiterator">
-			<div class="row">
-				<f:for each="{row.columns}" as="column" iteration="iterator">
-					<f:if condition="{column.media}">
-						<div class="col-sm text-center{f:if(condition: iterator.isFirst, then: ' first-figure')}{f:if(condition: iterator.isLast, then: ' last-figure')}">
-							<f:render partial="Media/Type" arguments="{
-								file: column.media,
-								dimensions: column.dimensions,
-								addmedia: addmedia,
-								celink: celink}" />
-						</div>
-					</f:if>
-				</f:for>
-			</div>
-		</f:for>
+	<f:for each="{gallery.rows}" as="row" iteration="rowiterator">
+		<div class="row {data.tx_t3sbootstrap_gutters} {data.tx_t3sbootstrap_verticalgutters}">
+			<f:for each="{row.columns}" as="column" iteration="iterator">
+				<f:if condition="{column.media}">
+					<f:variable name="poster">/{posters.{rowiterator.index}.poster}</f:variable>
+					<div class="col-sm text-center{f:if(condition: iterator.isFirst, then: ' first-figure')}{f:if(condition: iterator.isLast, then: ' last-figure')}">
+						<f:render partial="Media/Type" arguments="{
+							file: column.media,
+							dimensions: column.dimensions,
+							addmedia: addmedia,
+							celink: celink,
+							poster: poster}" />
+					</div>
+				</f:if>
+			</f:for>
+		</div>
+	</f:for>
 </f:section>

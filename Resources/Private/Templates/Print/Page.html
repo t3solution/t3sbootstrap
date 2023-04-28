@@ -1,8 +1,10 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="page">
-	<div class="jumbotron p-3	border-bottom">
-		<f:render partial="Page/Title" arguments="{_all}" />
+<f:comment>
+	<div class="jumbotron p-3 mb-3 border-bottom">
+		<h1 class="text-{settings.config.pageTitlealign}">{data.title}</h1>
 	</div>
+</f:comment>
 	<f:if condition="{data.content_from_pid}">
 		<f:then>
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.content_from_pid}', colPos: '0'}"/>
@@ -11,18 +13,5 @@
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '0'}"/>
 		</f:else>
 	</f:if>
-	<div id="footer" class="mt-5 text-center border-top">
-		<div class="row g-0 my-5">
-			<div class="col-sm">
-				<p>Druckansicht</p>
-			</div>
-			<div class="col-sm">
-				<p>{daten -> f:cObject(typoscriptObjectPath:'lib.currentDomain')}</p>
-			</div>
-			<div class="col-sm">
-				<p>{daten -> f:cObject(typoscriptObjectPath:'lib.currentDate')}</p>
-			</div>
-		</div>
-	</div>
 </div>
 </html>

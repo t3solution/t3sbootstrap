@@ -35,12 +35,14 @@ page {
 			fontawesome.6latest = {$bootstrap.cdn.fontawesome6latest}
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			fontawesome.fontawesomeCss = {$bootstrap.extconf.fontawesomeCss}
-			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}		
+			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}
 			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			codesnippet = {$bootstrap.extconf.codesnippet}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
 			webp = {$bootstrap.extconf.webp}
+			indexedsearch.loaded = {$bootstrap.ext.indexedsearch}
+			kesearch.loaded = {$bootstrap.ext.kesearch}
 			cookieconsent = {$bootstrap.extconf.cookieconsent}
 			cdn = {$bootstrap.cdn.enable}
 			googlefonts = {$bootstrap.cdn.googlefonts}
@@ -53,6 +55,7 @@ page {
 			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 			submenu.styleOne = {$bootstrap.submenu.styleOne}
+			viewportWidthCookie = {$bootstrap.image.viewportWidthCookie}
 			navbar {
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}
@@ -89,7 +92,6 @@ page {
 				}
 			}
 			config {
-				darkMode = {$bootstrap.config.darkMode}
 				jqueryHeader = {$bootstrap.config.jqueryHeader}
 				navbarPlusicon = {$bootstrap.config.navbarPlusicon}
 			}
@@ -251,7 +253,6 @@ page {
 				excludeUidList.cObject.value = {$bootstrap.config.homepageUid}
 				levels = 1
 				as = metaNavigation
-
 			}
 			50.if.isTrue = {$bootstrap.config.metaEnable}
 
@@ -333,7 +334,7 @@ page {
 }
 
 # prevent error: Undefined array key "breadcrumb."
-config.pageTitleProviders.breadcrumb.provider = 
+config.pageTitleProviders.breadcrumb.provider =
 
 # Language in Toast
 lib.t3sbs.close = TEXT
@@ -342,13 +343,9 @@ lib.t3sbs.close.value = Schließen
 lib.t3sbs.dispose = TEXT
 lib.t3sbs.dispose.value = Nicht mehr anzeigen
 
-
 [loaded('indexed_search')]
 page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
-[ELSE]
-page.10.settings.indexedsearch.targetPid = 0
-[END]
-
+[global]
 
 plugin.tx_felogin_login {
 	view {
@@ -360,3 +357,7 @@ plugin.tx_felogin_login {
 
 // import outsourced setup
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript'
+
+['{$bootstrap.cdn.bootstrap}' < '5.3']
+page.10.settings.config.navbarDarkMode = 0
+[global]

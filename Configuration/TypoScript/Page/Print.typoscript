@@ -2,7 +2,7 @@
 print = PAGE
 print {
 	typeNum = 98
-	bodyTag = <body onload="javascript:window.print()">
+	bodyTag = <body id="print-page" onload="javascript:window.print()">
 	config.index_enable = 0
 	headerData.123 = TEXT
 	headerData.123.value = <meta name="robots" content="noindex, nofollow" />
@@ -13,24 +13,13 @@ print {
 	}
 
 	includeCSS {
-
-		bootstrapCDN = https://stackpath.bootstrapcdn.com/bootstrap/{$bootstrap.cdn.bootstrap}/css/bootstrap.min.css
+		bootstrapCDN = https://cdn.jsdelivr.net/npm/bootstrap@{$bootstrap.cdn.bootstrap}/dist/css/bootstrap.min.css
+		bootstrapCDN.integrity = sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65
 		bootstrapCDN.external = 1
 		bootstrapCDN.forceOnTop = 1
-		bootstrapCDN.if {
-			isFalse = {$bootstrap.cdn.bootswatch}
-			isTrue = {$bootstrap.cdn.enable}
-		}
-
-		t3sfontawesomeCDN = https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
-		t3sfontawesomeCDN.external = 1
-
 		t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
-
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
-
 		t3sprint = EXT:t3sbootstrap/Resources/Public/Styles/t3sprint.css
-
 	}
 
 	includeJSFooterlibs {
@@ -60,6 +49,8 @@ print {
 			be_layout = TEXT
 			be_layout.value < temp.pagelayout
 		}
+
+
 		settings {
 			// EM config
 			expandedContent = {$bootstrap.extconf.expandedContent}
@@ -196,7 +187,6 @@ print {
 				lightboxSelection = {$bootstrap.config.lightboxSelection}
 				magnifying = {$bootstrap.config.magnifying}
 				sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
-				sectionmenuScrollspyOffset = {$bootstrap.config.sectionmenuScrollspyOffset}
 				sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
 				backgroundImageEnable = {$bootstrap.config.backgroundImageEnable}
 				backgroundImageSlide = {$bootstrap.config.backgroundImageSlide}
@@ -213,10 +203,11 @@ print {
 			}
 			lazyLoad = 0
 		}
-		dataProcessing.90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
-		dataProcessing.90 {
-			navbarExtraRow = {$bootstrap.config.navbarExtraRow}
-			rootline = {$bootstrap.config.generalRootline}
-		}
+
+#		dataProcessing.90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
+#		dataProcessing.90 {
+#			navbarExtraRow = {$bootstrap.config.navbarExtraRow}
+#			rootline = {$bootstrap.config.generalRootline}
+#		}
 	}
 }

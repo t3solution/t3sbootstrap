@@ -4,25 +4,6 @@ defined('TYPO3') || die();
 (function () {
 
 	/***************
-	 * Register Icons
-	 */
-	if (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class)->getMajorVersion() < 11) {
-		
-		if ( $GLOBALS['TYPO3_REQUEST'] ?? null && \TYPO3\CMS\Core\Http\ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend() ) {
-	
-			$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-	
-			// FontawesomeIconProvider
-			$iconRegistry->registerIcon(
-				'buttongroup',
-				\TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-				['name' => 'bars']
-			);
-			unset($iconRegistry);
-		}
-	}
-
-	/***************
 	 * TsConfig
 	 */
 	 # Page
@@ -37,6 +18,7 @@ defined('TYPO3') || die();
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 0');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 0');
@@ -89,12 +71,23 @@ defined('TYPO3') || die();
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 1');
 	}
-
+	# EXPERIMENTAL -  if ke_search is loaded
+	/*
+	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search') ) {
+		 # Setup
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('t3sbootstrap',
+			'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TypoScript/setup.typoscript"'
+		);
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 1');
+	 	# TsConfig
+	 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig"');
+	}
+	*/
 	# if indexed_search is loaded
 	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('indexed_search') ) {
 		 # Setup
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('t3sbootstrap',
-			'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript"','defaultContentRendering'
+			'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript"'
 		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 1');
 	}
@@ -103,7 +96,7 @@ defined('TYPO3') || die();
 	 	# TsConfig
 	 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('@import "EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig"');
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('t3sbootstrap',
-				 'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TypoScript/setup.typoscript"','defaultContentRendering'
+				 'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TypoScript/setup.typoscript"'
 		);
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 1');
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.newsVersion = '.(int)\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExtensionVersion('news'));
@@ -202,9 +195,9 @@ defined('TYPO3') || die();
 	// Optional lazyLoad
 	if (array_key_exists('lazyLoad', $extconf)) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = '.$extconf['lazyLoad']);
-	}
+	}	
 	// Optional animateCss
-	if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] > '0') {
+	if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] > '0' && !\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('content_animations')) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.animateCss = '.$extconf['animateCss']);
 	}
 	// Optional select-field for a .container or .container-fluid class in any content element
@@ -276,16 +269,18 @@ defined('TYPO3') || die();
 	 * Registering wizards
 	 */
 	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbMigrateUpdateWizard'] = \T3SBS\T3sbootstrap\Updates\T3sbMigrateUpdateWizard::class;
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['t3sbCardsUpdateWizard'] = \T3SBS\T3sbootstrap\Updates\T3sbCardsUpdateWizard::class;
 
 	/***************
 	 * Parser
 	 */
 	// Register css processing parser
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'][\T3SBS\T3sbootstrap\Parser\ScssParser::class] = \T3SBS\T3sbootstrap\Parser\ScssParser::class;
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/t3sbootstrap/css']['parser'][\T3SBS\T3sbootstrap\Parser\ScssParser::class] =
+	 \T3SBS\T3sbootstrap\Parser\ScssParser::class;
 	if (array_key_exists('customScss', $extconf) && $extconf['customScss'] === '1') {
 		// Register css processing hooks
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][\T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook::class]
-		 = \T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook::class . '->execute';
+		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][\T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook::class] = 
+		 \T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook::class . '->execute';
 	}
 
 })();

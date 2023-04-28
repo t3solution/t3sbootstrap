@@ -51,7 +51,6 @@ class LastModifiedProcessor implements DataProcessorInterface
 		if (!empty($processorConfiguration['recentlyUpdatedContentElements'])) {
 
 			$setMaxResults = $processorConfiguration['setMaxResults'] ?: 10;
-
 			if (self::isMenuRecentlyUpdatedOnPage()) {
 				$processedData['recentlyUpdatedContentElements'] = self::getRecentlyUpdated((int) $setMaxResults);
 			}
@@ -106,7 +105,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 				$queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), \PDO::PARAM_INT))
 			 )
 			 ->setMaxResults($setMaxResults)
-			 ->execute()
+			 ->executeQuery()
 			 ->fetchAll();
 
 		$mdtm = [];
@@ -143,10 +142,10 @@ class LastModifiedProcessor implements DataProcessorInterface
 					$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)),
 					$queryBuilder->expr()->eq('doktype', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
 				 )
-				 ->execute()
+				 ->executeQuery()
 				 ->fetch();
 
-			$pageTitle = $result['nav_title'] ?: $result['title'];
+			$pageTitle = !empty($result['nav_title']) ? $result['nav_title'] : $result['title'];
 		}
 
 		return (string)$pageTitle;
@@ -159,7 +158,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 	 * @return int
 	 */
 	protected function getCurrentUid(): int
-	{		
+	{
 		return (int) $GLOBALS['TSFE']->id;
 	}
 

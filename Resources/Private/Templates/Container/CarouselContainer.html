@@ -26,7 +26,7 @@
 function t3sbLocalCarouselVideo(videoCarousel) {
 	videoCarousel.addEventListener('slide.bs.carousel', function (el) {
 		let slides = this.getElementsByClassName('carousel-item');
-		slides.forEach( carouselItem => {
+		Array.from(slides).forEach( carouselItem => {
 			if ( carouselItem.classList.contains('active') ) {
 				if ( carouselItem.classList.contains('carousel-video') ) {
 					carouselItem.getElementsByTagName('video')[0].play();
