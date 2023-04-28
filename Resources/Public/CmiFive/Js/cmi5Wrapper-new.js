@@ -1060,6 +1060,7 @@ function customizeTemplate() {
           ".jumbotron.background-image"
         ),
         spokenWord_ = document.querySelectorAll(".spoken-word"),
+        frontendEditing = document.querySelectorAll(".t3-frontend-editing__ce"),
         navbarToggler = document.querySelector(".navbar-toggler");
 
       // style jumbotron image at start page
@@ -1213,7 +1214,11 @@ function customizeTemplate() {
           });
         }
       }
-      if (navbarContainer.length > 0 && !jumbotron)
+      if (
+        navbarContainer.length > 0 &&
+        !jumbotron &&
+        frontendEditing.length < 1
+      )
         textHightlighting(pageContent, notesAuButton);
 
       if (jumbotron) bm.pageTitle = "Start";
