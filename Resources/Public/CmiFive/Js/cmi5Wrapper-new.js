@@ -2414,11 +2414,15 @@ var handleH5P = function (event) {
     ),
     stmtObject = JSON.parse(sessionStorage.getItem("stmtObject")),
     stmtObjectParent = JSON.parse(sessionStorage.getItem("stmtObject"));
-  // exclude any statements on "interacted"
-  if (!H5PXapiStmt.verb["id"].includes("interacted")) {
-    if (cmi5Controller.getContextExtensions()) {
-      // get h5p library type
-      h5pLib = this.libraryInfo.versionedNameNoSpaces;
+
+  if (cmi5Controller.getContextExtensions()) {
+    // get h5p library type
+    h5pLib = this.libraryInfo.versionedNameNoSpaces;
+    // exclude any statements on "interacted" except for the type Questionnaire
+    if (
+      !H5PXapiStmt.verb["id"].includes("interacted") ||
+      h5pLib.includes("Questionnaire")
+    ) {
       // extend cmi5 activity ID
       stmtObject.id +=
         "/objectid/" +
