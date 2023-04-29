@@ -175,7 +175,7 @@ class Config extends AbstractEntity
 	/**
 	 * navbarDarkMode
 	 *
-	 * @var string
+	 * @var bool
 	 */
 	protected $navbarDarkMode = '';
 
@@ -4042,7 +4042,7 @@ class Config extends AbstractEntity
 	/**
 	 * Returns the navbarDarkMode
 	 *
-	 * @return string $navbarDarkMode
+	 * @return bool $navbarDarkMode
 	 */
 	public function getNavbarDarkMode()
 	{
@@ -4052,7 +4052,7 @@ class Config extends AbstractEntity
 	/**
 	 * Sets the navbarDarkMode
 	 *
-	 * @param string $navbarDarkMode
+	 * @param bool $navbarDarkMode
 	 * @return void
 	 */
 	public function setNavbarDarkMode($navbarDarkMode)
