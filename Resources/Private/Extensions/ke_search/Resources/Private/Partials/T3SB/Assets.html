@@ -1,0 +1,130 @@
+
+<f:asset.css identifier="searchFormCss">
+#ke_search_sword {
+  font-size: 20px;
+  font-size: 1.25rem;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  color: #000;
+  padding: 13px 10px 10px 10px;
+  background-color: #fff;
+  line-height: 1.4;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+#ke_search_sword::placeholder {
+  opacity: .3;
+}
+
+#kesearch_filters select {
+	font-size: 20px;
+	font-size: 1.25rem;
+	transition: opacity 0.6s cubic-bezier(0.165,0.84,0.44,1);
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	color: #000;
+	padding: 13px 45px 10px 10px;
+	background-color: #fff;
+	line-height: 1.4;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #000;
+	border-radius: 4px;
+	text-decoration: none;
+	font-weight: 400;
+	margin-bottom: 0;
+	opacity: 1;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+
+#kesearch_filters::before {
+display: inline-block;
+margin-left: 270px;
+vertical-align: 0.255em;
+content: "";
+border-top: 0.6em solid;
+border-right: 0.6em solid transparent;
+border-bottom: 0;
+border-left: 0.6em solid transparent;
+position: relative;
+top: 45px;
+}
+#kesearch_filters {
+	margin-top: -20px;
+}
+
+
+.kesearch-form__button-wrapper > * {
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  text-align: center;
+}	
+
+
+.kesearch-form__button-wrapper .button {
+  transition: background-color 0.3s cubic-bezier(0.19,1,0.22,1),color 0.3s cubic-bezier(0.19,1,0.22,1);
+  display: inline-block;
+  padding: 10px 20px;
+  color: #000;
+  background-color: #fff;
+  line-height: 1.4;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.kesearch-form__button-wrapper > :last-child {
+  margin-left: 5px;
+}
+
+
+.down {
+  content: ' ';
+  position: relative;
+  bottom: 2px;
+  right: -4px;
+  border-color: var(--bs-secondary) transparent;
+  border-style: solid solid none;
+  border-width: 5px 5px 0;
+  display: inline-block;
+  height: 0;
+  width: 0;
+  display: inline-block;
+}
+
+.up {
+  content: ' ';
+  position: relative;
+  bottom: 2px;
+  right: -4px;
+  content: ' ';
+  border-color: var(--bs-secondary) transparent;
+  border-style: none solid solid solid;
+  border-width: 0 5px 5px;
+  display: inline-block;
+  height: 0;
+  width: 0;
+}
+
+.pagination {
+  display: inline-flex;
+  margin-top: 1rem;
+}
+</f:asset.css>
+
+

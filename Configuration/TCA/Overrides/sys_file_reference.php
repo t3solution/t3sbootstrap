@@ -166,7 +166,42 @@ $tempSysFileReferenceColumns = [
 			'type' => 'check'
 		]
 	],
-
+	'tx_t3sbootstrap_shift_vertical' => [
+		'label' => 'Vertical shift - if the original image is higher than wide',
+		'description' => 'only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected',
+		'config' => [
+			'type' => 'input',
+			'size' => 5,
+			'eval' => 'trim,int',
+			'range' => [
+				'lower' => 0,
+				'upper' => 50
+			],
+			'default' => 0,
+			'slider' => [
+				'step' => 1,
+				'width' => 200,
+			]
+		],
+	],
+	'tx_t3sbootstrap_shift_horizontal' => [
+		'label' => 'Horizontal shift - if the original is wider than high',
+		'description' => 'only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected',
+		'config' => [
+			'type' => 'input',
+			'size' => 5,
+			'eval' => 'trim,int',
+			'range' => [
+				'lower' => 0,
+				'upper' => 50
+			],
+			'default' => 0,
+			'slider' => [
+				'step' => 1,
+				'width' => 200,
+			]
+		],
+	],
 ];
 
 
@@ -202,3 +237,7 @@ if (array_key_exists('imgtag', $extconf) && $extconf['imgtag']) {
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_imgtag','after:tx_t3sbootstrap_description_align');
 }
 
+if (array_key_exists('ratio', $extconf) && $extconf['ratio']) {
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_shift_vertical','after:tx_t3sbootstrap_description_align');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_shift_horizontal','after:tx_t3sbootstrap_shift_vertical');
+}

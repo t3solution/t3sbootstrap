@@ -83,7 +83,7 @@ class ClassHelper implements SingletonInterface
 			if (isset($layoutAddItems) && isset($layoutAddItems) === $layout) {
 				$class .= ' layout-'.$layout;
 			} elseif (isset($layoutAltLabels) && !empty($layoutAltLabels[$layout])) {
-				if (isset($layoutClasses) && $layoutClasses[$layout]) {
+				if (isset($layoutClasses) && !empty($layoutClasses[$layout])) {
 					$class .= ' '.strtolower($layoutClasses[$layout]);
 				} else {
 					$class .= ' layout-'.str_replace(' ', '-', strtolower($layoutAltLabels[$layout]));

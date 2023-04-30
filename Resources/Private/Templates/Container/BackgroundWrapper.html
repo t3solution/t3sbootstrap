@@ -45,29 +45,6 @@ function t3sbBackgroundVideo(div, params) {
 			<f:then>
 				<f:if condition="{enableAutoheight} && {addHeight} ">
 					<f:then>
-						<f:asset.script identifier="objectprototypeforEach_function">
-/**
- * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT etc) polyfill
- * https://gomakethings.com/looping-through-objects-with-es6/
- * @author Chris Ferdinandi
- * @license MIT
- */
-if (!Object.prototype.forEach) {
-	Object.defineProperty(Object.prototype, 'forEach', {
-		value: function (callback, thisArg) {
-			if (this == null) {
-				throw new TypeError('Not an object');
-			}
-			thisArg = thisArg || window;
-			for (var key in this) {
-				if (this.hasOwnProperty(key)) {
-					callback.call(thisArg, this[key], key, this);
-				}
-			}
-		}
-	});
-}
-						</f:asset.script>
 						<f:asset.script identifier="autoheight_function">
 // Autoheight for backgroundimages - BackgroundWrapper.html
 function t3sbAddHeight(TYPO3, objKey) {
@@ -75,13 +52,13 @@ function t3sbAddHeight(TYPO3, objKey) {
 	if (overlay) {
 		var totalHeight = 0;
 		var addHeight = 0;
-		TYPO3.settings.ADDHEIGHT.forEach(function(value, key) {
-			if (objKey == 'bg-img-'+key) {
-				addHeight = parseInt(value);
+		Object.keys(TYPO3.settings.ADDHEIGHT).forEach(function (item) {
+			if (objKey == 'bg-img-'+item) {
+				addHeight = parseInt(TYPO3.settings.ADDHEIGHT[item]);
 			}
 		});
 		if ( overlay.querySelector('.container') ) {
-			overlay.getElementsByClassName('container')[0].children.forEach( bgwContent => {
+			Array.from(overlay.getElementsByClassName('container')[0].children).forEach( bgwContent => {
 				totalHeight = bgwContent.clientHeight;
 			});
 			totalHeight = totalHeight + addHeight;

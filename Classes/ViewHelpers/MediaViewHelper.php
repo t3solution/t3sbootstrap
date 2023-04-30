@@ -74,7 +74,8 @@ class MediaViewHelper extends CmsMediaViewHelper
 		$this->registerArgument('lazyload', 'int', 'Generate markup that supports lazyloading', false, 0);
 		$this->registerArgument('ratio', 'string', 'Image ratio', false, '');
 		$this->registerArgument('mobileNoRatio', 'bool', 'no aspect ratio for mobile', false, '');
-		$this->registerArgument('shift', 'string', 'Image shift', false, '');
+		$this->registerArgument('shift', 'string', 'Image vertical shift', false, '');
+		$this->registerArgument('hshift', 'string', 'Image horizontal shift', false, '');
 		$this->registerArgument('columns', 'int', 'Columns for Image Gallery', false, 0);
 		$this->registerArgument('placeholderSize', 'int', 'Size of the placeholder image for lazyloading (0 = disabled)', false, 0);
 		$this->registerArgument('placeholderInline', 'bool', 'Embed placeholder image for lazyloading inline as data uri', false, false);
@@ -330,11 +331,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 				$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
 				$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
 				$rArr = explode(':',$this->arguments['ratio']);
-				if ( $this->arguments['shift'] ) {
-					$shift = $this->arguments['shift'] > 0 ? $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']
-					 : $cropObject->$cropVariant->cropArea->y - ($this->arguments['shift'] * -1);
-					$cropObject->$cropVariant->cropArea->y = $shift;
-				}
+
 				if ( $rArr[0] > $rArr[1] ) {
 					// landscape
 					$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];
@@ -343,7 +340,6 @@ class MediaViewHelper extends CmsMediaViewHelper
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					} else {
 						$cHeight = $image->getProperties()['height'] / $pxHeight;
-
 						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
 						$cWidth = $pxWidth / $image->getProperties()['width'];
 						$cropObject->$cropVariant->cropArea->width = $cWidth;
@@ -372,6 +368,32 @@ class MediaViewHelper extends CmsMediaViewHelper
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					}
 				}
+
+				if ( $this->arguments['shift'] || $this->arguments['hshift'] ) {
+					if ( $cropedWidth > $cropedHeight ) {
+						// landscape
+						$shift = $cropObject->$cropVariant->cropArea->x + $this->arguments['hshift']/100;
+						if ( 1-$cropObject->$cropVariant->cropArea->width <= $shift ) {
+							$shift = 1-$cropObject->$cropVariant->cropArea->width;
+						}
+						$cropObject->$cropVariant->cropArea->x = $shift;
+					} elseif ( $cropedWidth < $cropedHeight ) {
+						// portrait
+						$shift = $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']/100;
+						if ( 1-$cropObject->$cropVariant->cropArea->height <= $shift ) {
+							$shift = 1-$cropObject->$cropVariant->cropArea->height;
+						}
+						$cropObject->$cropVariant->cropArea->y = $shift;
+					} else {
+						// square
+						$shift = $this->arguments['hshift'] ? $this->arguments['hshift'] : $this->arguments['shift'];
+						if ( 1-$cropObject->$cropVariant->cropArea->width <= $shift ) {
+							$shift = 1-$cropObject->$cropVariant->cropArea->width;
+						}
+						$cropObject->$cropVariant->cropArea->x = $shift;
+					}
+				}
+
 			}
 		}
 

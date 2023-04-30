@@ -807,7 +807,7 @@ class GalleryProcessor implements DataProcessorInterface
 			 ->where(
 			 $queryBuilder->expr()->eq($equal, $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
 			 )
-			 ->executeQuery()->fetchColumn();
+			 ->executeQuery()->fetchOne();
 
 		return $result;
 	}

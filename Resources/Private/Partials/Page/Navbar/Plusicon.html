@@ -67,29 +67,6 @@
 	}
 }
 	</f:asset.css>
-	<f:asset.script identifier="objectprototypeforEach_function">
-/**
- * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT etc) polyfill
- * https://gomakethings.com/looping-through-objects-with-es6/
- * @author Chris Ferdinandi
- * @license MIT
- */
-if (!Object.prototype.forEach) {
-	Object.defineProperty(Object.prototype, 'forEach', {
-		value: function (callback, thisArg) {
-			if (this == null) {
-				throw new TypeError('Not an object');
-			}
-			thisArg = thisArg || window;
-			for (var key in this) {
-				if (this.hasOwnProperty(key)) {
-					callback.call(thisArg, this[key], key, this);
-				}
-			}
-		}
-	});
-}						
-	</f:asset.script>
 	<f:asset.script identifier="vanilla_navbarPlusicon">
 
 	// Navbar with plusicon
@@ -114,7 +91,7 @@ if (!Object.prototype.forEach) {
 					var dItem = toggleSplit.nextElementSibling.firstChild.firstChild;
 					if ( toggleSplit.nextElementSibling.firstChild != null ) {
 						if ( toggleSplit.nextElementSibling.firstChild.children != null ) {
-							toggleSplit.nextElementSibling.firstChild.children.forEach(function(child) {
+							Array.from(toggleSplit.nextElementSibling.firstChild.children).forEach(function(child) {
 								if ( child.classList.contains('text-nowrap') ) {
 									child.classList.add('has-submenu', 'dropdown-item');
 									child.classList.remove('ps-3', 'py-1', 'text-nowrap', 'text-start');
