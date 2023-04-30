@@ -208,7 +208,9 @@ CREATE TABLE sys_file_reference (
 	tx_t3sbootstrap_copyright_source varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_imgtag tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_picture_variants int(11) default '0' not null,
-	tx_t3sbootstrap_media_width varchar(255) default '' not null
+	tx_t3sbootstrap_media_width varchar(255) default '' not null,
+	tx_t3sbootstrap_shift_vertical int(2) DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_shift_horizontal int(2) DEFAULT '0' NOT NULL,
 );
 
 #

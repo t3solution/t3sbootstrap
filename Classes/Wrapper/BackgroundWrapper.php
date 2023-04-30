@@ -81,7 +81,7 @@ class BackgroundWrapper implements SingletonInterface
 									$queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
 								)
 							 ->executeQuery()
-							 ->fetchColumn(0);
+							 ->fetchOne();
 
 						$autoplay = $file->getProperties()['autoplay'];
 						$loop = $flexconf['loop'];

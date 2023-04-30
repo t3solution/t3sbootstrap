@@ -73,7 +73,7 @@ defined('TYPO3') || die();
 	}
 	# EXPERIMENTAL -  if ke_search is loaded
 	/*
-	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search') ) {
+	if ( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search') || \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search_premium') ) {
 		 # Setup
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript('t3sbootstrap',
 			'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TypoScript/setup.typoscript"'

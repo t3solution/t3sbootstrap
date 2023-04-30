@@ -15,7 +15,6 @@
 </f:if>
 <f:if condition="{fixedbutton}">
 	<f:asset.script identifier="fixedbutton_function">
-
 // Fixed button on left or right browser edge - Page/Assets.html
 function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {
 	fixedButtons.forEach( fixedButton => {
@@ -50,7 +49,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBt
 							boxWidth = fixedButton.clientWidth,
 							boxHalfHeight = fixedButton.clientHeight / 2;
 						if (isBtnGroup) {
-							slideInButtons.children.forEach( slideInButton => {
+							Array.from(slideInButtons.children).forEach( slideInButton => {
 								if ( typeof slideInButton.firstChild !== 'undefined' ) {
 									slideIn = boxWidth - visiblePart;
 									var	icon = slideInButton.querySelector('i');
@@ -171,29 +170,5 @@ function t3sbFadeInEffect(fadeTarget) {
 	}
 </f:asset.script>
 </f:if>
-
-<f:asset.script identifier="objectprototypeforEach_function">
-/**
- * Object.prototype.forEach(TYPO3.settings.ADDHEIGHT etc) polyfill
- * https://gomakethings.com/looping-through-objects-with-es6/
- * @author Chris Ferdinandi
- * @license MIT
- */
-if (!Object.prototype.forEach) {
-	Object.defineProperty(Object.prototype, 'forEach', {
-		value: function (callback, thisArg) {
-			if (this == null) {
-				throw new TypeError('Not an object');
-			}
-			thisArg = thisArg || window;
-			for (var key in this) {
-				if (this.hasOwnProperty(key)) {
-					callback.call(thisArg, this[key], key, this);
-				}
-			}
-		}
-	});
-}						
-</f:asset.script>
 
 </html>

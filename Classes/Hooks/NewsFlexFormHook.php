@@ -16,10 +16,13 @@ class NewsFlexFormHook
 
 	public function parseDataStructureByIdentifierPostProcess(array $dataStructure, array $identifier): array
 	{
-
-	 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-	 	 && ($identifier['dataStructureKey'] === 'news_pi1,list' || $identifier['dataStructureKey'] === '*,news_pi1'
-	 	  || $identifier['dataStructureKey'] === '*,news_newsdetail') ) {
+		if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
+			 && ($identifier['dataStructureKey'] === 'news_pi1,list'
+			  || $identifier['dataStructureKey'] === '*,news_pi1'
+			  || $identifier['dataStructureKey'] === '*,news_newsdetail'
+			  || $identifier['dataStructureKey'] === '*,news_newssearchresult'
+			  || $identifier['dataStructureKey'] === '*,news_newsselectedlist'
+			  || $identifier['dataStructureKey'] === '*,news_newsliststicky') ) {
 		$file = Environment::getPublicPath() . '/typo3conf/ext/t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml';
 		$content = file_get_contents($file);
 		if ($content) {
