@@ -1195,14 +1195,17 @@ function customizeTemplate() {
       if (vimeoOrYt.length > 0) {
         let yvPlayer = [];
         for (let i = 0; i < vimeoOrYt.length; i++) {
-          if (!vimeoOrYt[i].src.includes("youtube")) {
-            yvPlayer[i] = new Plyr(vimeoOrYt[i].parentNode);
-            yvPlayer[i].on("ready", (event) => {
-              if (yvPlayer[i].embed) {
-                trackVideoEvents(yvPlayer[i].embed.element, context);
-              }
-            });
-          }
+          //if (!vimeoOrYt[i].src.includes("youtube")) {
+          yvPlayer[i] = new Plyr(vimeoOrYt[i].parentNode);
+          yvPlayer[i].on("ready", (event) => {
+            console.log(yvPlayer);
+            if (yvPlayer[i].embed) {
+              if (yvPlayer[i].embed.g)
+                trackVideoEvents(yvPlayer[i].embed.g, context);
+              else trackVideoEvents(yvPlayer[i].embed.element, context);
+            }
+          });
+          //}
         }
       }
       if (localVideo.length > 0) {
@@ -1889,12 +1892,11 @@ function trackVideoEvents(videoObj, cExtentions) {
 
     function onMessageReceived(event) {
       let data = JSON.parse(event.data);
-      if ("info" in data) {
-        // console.log(data.info);
+      if (data.hasOwnProperty("info")) {
+        //console.log(data.info);
         if (data.info) {
-          if ("currentTime" in data.info) onSeeked(data.info);
-
-          if ("playerState" in data.info) {
+          if (data.info.hasOwnProperty("currentTime")) onSeeked(data.info);
+          if (data.info.hasOwnProperty("playerState")) {
             switch (data.info.playerState) {
               case 2:
                 onPause(data.info);

@@ -208,6 +208,12 @@ CREATE TABLE tt_content (
 	###### cmi5 ######
 );
 
+CREATE TABLE tx_t3sbootstrap_list_item_inline (
+    parentid int(11) DEFAULT '0' NOT NULL,
+    parenttable text,
+    listitem varchar(255) DEFAULT '' NOT NULL,
+);
+
 #
 # Table structure for table 'sys_file_reference'
 #
