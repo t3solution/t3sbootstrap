@@ -109,6 +109,8 @@
 		picturefill="{settings.picturefill}"
 		lazyload="{settings.lazyLoad}"
 		ratio="{settings.detail.imageRatio}"
+		shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
+		hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
 	/>
 	<f:if condition="{settings.detail.lightbox.enabled} && {settings.magnifying}">
 		<div class="zoom-overlay{f:if(condition: file.description, then: ' description')}" style="max-width: {width}px;">

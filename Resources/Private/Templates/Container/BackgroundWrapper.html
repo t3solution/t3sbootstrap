@@ -188,7 +188,11 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
 															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-														}" picturefill="{settings.picturefill}" lazyload="{settings.lazyLoad}" ratio="0" style="{style}" />
+														}" picturefill="{settings.picturefill}" lazyload="{settings.lazyLoad}" ratio="0"
+														 style="{style}"
+														 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
+														 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
+														 />
 													</f:then>
 													<f:else>
 														<t3sb:media file="{file}" width="{ingWidth}" height="auto"
@@ -197,7 +201,11 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
 															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-														}" picturefill="{settings.picturefill}" lazyload="0" ratio="0" style="{style}" />
+														}" picturefill="{settings.picturefill}" lazyload="0" ratio="0"
+														 style="{style}"
+														 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
+														 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
+														 />
 													</f:else>
 												</f:if>
 											</figure>

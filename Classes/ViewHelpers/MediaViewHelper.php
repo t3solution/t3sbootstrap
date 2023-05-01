@@ -370,6 +370,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 				}
 
 				if ( $this->arguments['shift'] || $this->arguments['hshift'] ) {
+
 					if ( $cropedWidth > $cropedHeight ) {
 						// landscape
 						$shift = $cropObject->$cropVariant->cropArea->x + $this->arguments['hshift']/100;

@@ -503,8 +503,10 @@ class GalleryProcessor implements DataProcessorInterface
 						$mediaHeight = '';
 					} else {
 						$ratio = '';
-						$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
-						 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
+						if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+							$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
+							 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
+						}
 					}
 
 					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
@@ -523,9 +525,10 @@ class GalleryProcessor implements DataProcessorInterface
 							$fileObject = $fO;
 						}
 					}
-					$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
-					 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
-
+					if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+						$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
+						* ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
+					}
 					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 					$this->mediaDimensions[$key] = [
 						'width' => floor($mediaWidth),
@@ -544,9 +547,10 @@ class GalleryProcessor implements DataProcessorInterface
 				if (is_array($fileObject)) {
 					$fileObject = $fileObject[0];
 				}
-				$mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
-				 * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
-
+				if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+					$mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
+					 * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
+				}
 				$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 				$this->mediaDimensions[$key] = [
 					'width' => floor($mediaWidth),
@@ -644,13 +648,13 @@ class GalleryProcessor implements DataProcessorInterface
 				if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
 					$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
 					 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
-					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
-					$this->mediaDimensions[$key] = [
-						'width' => floor($mediaWidth),
-						'height' => $mediaHeight,
-						'ratio' => $ratio
-					];
 				}
+				$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
+				$this->mediaDimensions[$key] = [
+					'width' => floor($mediaWidth),
+					'height' => $mediaHeight,
+					'ratio' => $ratio
+				];
 			}
 		}
 
