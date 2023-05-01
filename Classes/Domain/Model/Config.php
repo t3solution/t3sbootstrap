@@ -177,7 +177,7 @@ class Config extends AbstractEntity
 	 *
 	 * @var bool
 	 */
-	protected $navbarDarkMode = '';
+	protected $navbarDarkMode = false;
 
 
 	/**

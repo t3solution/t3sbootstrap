@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "t3sbootstrap".
  *
- * Auto generated 17-04-2023 18:48
+ * Auto generated 01-05-2023 20:40
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = array (
   'title' => 'Bootstrap Components',
   'description' => 'Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: www.t3sbootstrap.de',
   'category' => 'templates',
-  'version' => '5.2.12',
+  'version' => '5.2.13',
   'state' => 'stable',
   'uploadfolder' => false,
   'clearcacheonload' => true,
