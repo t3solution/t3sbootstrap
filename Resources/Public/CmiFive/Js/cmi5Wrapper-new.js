@@ -1540,7 +1540,6 @@ function trackVideoEvents(videoObj, cExtentions) {
     prevTime = 0.0,
     preSeek = [0, 0, 0, 0, 0],
     preSeekPrev = 0.0,
-    curTime = 0.0,
     visited = [],
     seeked = false,
     vDuration = 0;
@@ -1647,7 +1646,7 @@ function trackVideoEvents(videoObj, cExtentions) {
       t1: parseFloat(prevTimeSec),
       t2: parseFloat(curTimeSec)
     });
-    // console.log(visitedSec);
+    console.log(visitedSec);
     duration = parseFloat(duration);
     visitedSec.sort(function (a, b) {
       return a.t1 - b.t1;
@@ -1781,10 +1780,11 @@ function trackVideoEvents(videoObj, cExtentions) {
   function onTimeupdate(e) {
     let ct;
     if (e.seconds) ct = parseFloat(e.seconds).toFixed(2);
-    else ct = parseFloat(e.target.currentTime).toFixed(2);
+    else if (e.currentTime) ct = parseFloat(e.currentTime).toFixed(2);
+    else if (e.target) ct = parseFloat(e.target.currentTime).toFixed(2);
+    else return;
     preSeek.push(ct);
     if (preSeek.length > 5) preSeek.shift();
-
     let p3 = parseFloat(preSeek[3]),
       p4 = parseFloat(preSeek[4]);
     if (p4 > p3 + 1.5 || p4 < p3) onSeeked();
@@ -1808,10 +1808,9 @@ function trackVideoEvents(videoObj, cExtentions) {
   }
 
   function onPause(e) {
-    let duration, curtime_;
+    let duration, curTime_;
     if (e.duration) duration = parseFloat(e.duration).toFixed(2);
     else duration = parseFloat(e.target.duration).toFixed(2);
-
     if (seeked) {
       curTime_ = prevTime;
       prevTime = preSeekPrev;
@@ -1819,8 +1818,6 @@ function trackVideoEvents(videoObj, cExtentions) {
     visited = vSections(visited, prevTime, curTime_, duration);
     visitedVideoSections(vSource, visited, duration);
     if (!seeked) sendPaused(curTime_, duration, visited);
-
-    // console.log(vSource);
     seeked = false;
   }
 
@@ -1871,31 +1868,15 @@ function trackVideoEvents(videoObj, cExtentions) {
       // videoObj.src = videoObj.src.replace("-nocookie", "");
       // videoObj.src = videoObj.src.replace("&origin=https%3A%2F%2Fcms2.cmifive.io", "");
     }
-    var ytProgress = "",
-      ytTotal = 0.0,
-      ytStartVideo = "",
-      ytPrevTime = 0.0,
-      ytCurTime = 0.0,
-      ytCurTime_ = 0.0,
-      ytDuration = 0.0,
-      ytPS = [],
-      ytPreSeek = [0, 0, 0, 0, 0],
-      ytSeekTemp = {},
-      ytPrevTimePrev = [],
-      ytVisited = [],
-      message = function () {
-        return JSON.stringify({ event: "listening", func: "info", args: [] });
-      };
-    videoObj.contentWindow.postMessage(message(), "*");
+    // Listen for messages from the player
     window.addEventListener("message", onMessageReceived, false);
-    observer.observe(videoObj);
-
+    observer.observe(videoObj.closest(".plyr"));
+    // Handle messages received from the player
     function onMessageReceived(event) {
       let data = JSON.parse(event.data);
       if (data.hasOwnProperty("info")) {
-        //console.log(data.info);
         if (data.info) {
-          if (data.info.hasOwnProperty("currentTime")) onSeeked(data.info);
+          if (data.info.hasOwnProperty("muted")) return;
           if (data.info.hasOwnProperty("playerState")) {
             switch (data.info.playerState) {
               case 2:
@@ -1908,54 +1889,9 @@ function trackVideoEvents(videoObj, cExtentions) {
                 onPlay(data.info);
                 break;
             }
-          }
+          } else onTimeupdate(data.info);
         }
       }
-    }
-
-    function onPause_(data) {
-      if (ytDuration == 0.0) ytDuration = parseFloat(data.duration).toFixed(2);
-
-      ytCurTime_ = ytCurTime;
-      if (ytPS.length > 1 && ytPS[0] == "played") ytCurTime_ = ytSeekTemp[0];
-
-      if (ytPrevTime == ytCurTime_) ytPrevTime = ytPrevTimePrev[0];
-
-      ytProgress += ytPrevTime + " - " + ytCurTime_ + ", ";
-      ytTotal += ytCurTime_ - ytPrevTime;
-      sendPaused(ytCurTime_, ytTotal, ytDuration, ytProgress);
-      ytVisited = vSections(ytVisited, ytPrevTime, ytCurTime_, ytDuration);
-      ytPS = [];
-    }
-
-    function onPlay_(data) {
-      ytPS.push("played");
-      ytPrevTime = ytPreSeek[3];
-      ytPrevTimePrev.push(ytPrevTime);
-      if (ytPrevTimePrev.length > 2) ytPrevTimePrev.shift();
-
-      if (ytStartVideo !== null) {
-        let DateTime = new Date();
-        ytStartVideo = DateTime.getTime();
-      }
-      sendPlayed(ytCurTime);
-    }
-
-    function onSeek_(data) {
-      ytPreSeek.push(parseFloat(data.currentTime).toFixed(2));
-      if (ytPreSeek.length > 5) ytPreSeek.shift();
-
-      // console.log(ytPreSeek);
-      ytCurTime = ytPreSeek[4];
-      if (Math.abs(ytPreSeek[4] - ytPreSeek[3]) > 1) {
-        ytPrevTime = ytPreSeek[3];
-        ytSeekTemp = sendSeeked(ytPrevTime, ytCurTime);
-        ytPS.push("seeked");
-      }
-    }
-
-    function onFinish_(data) {
-      sendFinished(ytStartVideo);
     }
     return;
   }
