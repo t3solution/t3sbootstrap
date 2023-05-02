@@ -630,8 +630,6 @@ statesController.prototype = {
       endpoint: cmi5Controller.endPoint,
       auth: "Basic " + cmi5Controller.authToken
     });
-    //var selDash = sessions;
-    //fetchAllStatements(selDash, processData);
 
     sessions_ = ADL.XAPIWrapper.getStatements(sessions);
     if (sessions_.statements.length < 1) {
@@ -640,7 +638,6 @@ statesController.prototype = {
     } else sessions = sessions_;
 
     function getSessions(s) {
-      console.log(s.more);
       s.more = "/Modules/CmiXapi/xapiproxy.php" + s.more.slice(10);
       let moreStatements = ADL.XAPIWrapper.getStatements("", s.more);
       return moreStatements;
@@ -655,32 +652,12 @@ statesController.prototype = {
       } else return (s.more = "");
     }
     if (more && sessions.more && sessions.more !== "") {
-      console.log(sessions.more);
       sessions_ = getSessions(sessions);
       sessions.statements.push(...sessions_.statements);
       do sessions_ = getMoreSessions(sessions_);
       while (sessions_.more && sessions_.more !== "");
     }
     sessions = sessions.statements;
-    /*var self = [];
-    function fetchAllStatements(query, cb) {
-      //var self = this;
-      ADL.XAPIWrapper.getStatements(query, null, function getMore(r) {
-        var response = JSON.parse(r.response);
-        self.push(...response.statements);
-        if (response.more) {
-          response.more =
-            "/Modules/CmiXapi/xapiproxy.php" + response.more.slice(10);
-          ADL.XAPIWrapper.getStatements(null, response.more, getMore);
-        } else {
-          cb(self);
-        }
-      });
-    }
-    function processData(selection) {
-      console.log(selection);
-      sessions = selection;
-    }*/
 
     if (extensionsActivityId) {
       let match,
@@ -1195,17 +1172,14 @@ function customizeTemplate() {
       if (vimeoOrYt.length > 0) {
         let yvPlayer = [];
         for (let i = 0; i < vimeoOrYt.length; i++) {
-          //if (!vimeoOrYt[i].src.includes("youtube")) {
           yvPlayer[i] = new Plyr(vimeoOrYt[i].parentNode);
           yvPlayer[i].on("ready", (event) => {
-            console.log(yvPlayer);
             if (yvPlayer[i].embed) {
               if (yvPlayer[i].embed.g)
                 trackVideoEvents(yvPlayer[i].embed.g, context);
               else trackVideoEvents(yvPlayer[i].embed.element, context);
             }
           });
-          //}
         }
       }
       if (localVideo.length > 0) {
@@ -1567,13 +1541,13 @@ function trackVideoEvents(videoObj, cExtentions) {
         if (vSource)
           window.addEventListener("message", onMessageReceived, false);
 
-        console.log("added :" + vSource);
+        //console.log("added :" + vSource);
         cmi5Controller.stmts = [];
         sessionStorage.removeItem("videostatements");
         return;
       }
       window.removeEventListener("message", onMessageReceived, false);
-      console.log("removed :" + vSource);
+      //console.log("removed :" + vSource);
       if (cmi5Controller.stmts) {
         cmi5Controller.sendStatements(cmi5Controller.stmts);
         cmi5Controller.stmts = [];
@@ -1646,7 +1620,6 @@ function trackVideoEvents(videoObj, cExtentions) {
       t1: parseFloat(prevTimeSec),
       t2: parseFloat(curTimeSec)
     });
-    console.log(visitedSec);
     duration = parseFloat(duration);
     visitedSec.sort(function (a, b) {
       return a.t1 - b.t1;
@@ -1712,7 +1685,6 @@ function trackVideoEvents(videoObj, cExtentions) {
   }
 
   function sendPaused(curTime, duration, visited) {
-    // console.log("paused");
     let p = 0,
       ps = "";
     for (let i = 0; i < visited.length; i++) {
@@ -1731,23 +1703,19 @@ function trackVideoEvents(videoObj, cExtentions) {
         "https://w3id.org/xapi/video/extensions/played-segments": ps
       }
     };
-    // console.log(result);
     sendVideoStatement("paused", videoObj, result, cExtentions);
   }
 
   function sendPlayed(curTime) {
-    // console.log("played");
     let result = {
       extensions: {
         "https://w3id.org/xapi/video/extensions/current-time": curTime
       }
     };
-    // console.log(result);
     sendVideoStatement("played", videoObj, result, cExtentions);
   }
 
   function sendFinished(startVideo) {
-    // console.log("finished");
     let result = {
       score: {
         scaled: 1,
@@ -1760,21 +1728,17 @@ function trackVideoEvents(videoObj, cExtentions) {
       response: "",
       duration: ISO8601_time(startVideo)
     };
-    // console.log(result);
     sendVideoStatement("ended", videoObj, result, cExtentions);
   }
 
   function sendSeeked(prevTime, curTime) {
-    // console.log("seeked");
     let result = {
       extensions: {
         "https://w3id.org/xapi/video/extensions/time-from": prevTime,
         "https://w3id.org/xapi/video/extensions/time-to": curTime
       }
     };
-    // console.log(result);
     sendVideoStatement("seeked", videoObj, result, cExtentions);
-    // return [prevTime, curTime];
   }
 
   function onTimeupdate(e) {
