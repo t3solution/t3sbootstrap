@@ -1616,6 +1616,21 @@ function trackVideoEvents(videoObj, cExtentions) {
   }
 
   function vSections(visitedSec, prevTimeSec, curTimeSec, duration) {
+    prevTimeSec = parseFloat(prevTimeSec);
+    visitedSec.sort(function (a, b) {
+      return a.t1 - b.t1;
+    });
+    if (visitedSec.length > 0) {
+      for (let i = 0; i < visitedSec.length; i++) {
+        if (
+          visitedSec[i]["t2"] <= prevTimeSec &&
+          prevTimeSec <= visitedSec[i]["t2"] + 0.3
+        ) {
+          prevTimeSec = visitedSec[i]["t2"];
+          break;
+        }
+      }
+    }
     visitedSec.push({
       t1: parseFloat(prevTimeSec),
       t2: parseFloat(curTimeSec)
@@ -1672,13 +1687,6 @@ function trackVideoEvents(videoObj, cExtentions) {
     }
     done = (duration - rest).toFixed(2);
     rest = rest.toFixed(2);
-
-    // console.log(visitedSec);
-    // console.log(notVisited);
-    // console.log("visited_");
-    // console.log(visited_);
-    // console.log(rest);
-    // console.log(done);
 
     displayVisited(visited_, duration);
     return visited_;
