@@ -7,7 +7,4 @@ editor:
   config:
     contentsCss:
     - "EXT:t3sbootstrap/Resources/Public/Backend/t3sbootstrap.css"
-    - "../../../../../../fileadmin/T3SB/FA5Pro/css/all.min.css"
-
-    extraPlugins:
-      - codesnippet
+    - "../../../../../../fileadmin/T3SB/FA6Pro/css/all.min.css"

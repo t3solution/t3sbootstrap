@@ -148,7 +148,8 @@
 		<f:image class="img-fluid d-block{imgClass}" src="fileadmin/{file.identifier}" width="{width}" height="auto" />
 	</f:then>
 	<f:else>
-		<t3sb:media file="{file}"
+		<t3sb:media
+		 file="{file}"
 		 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
 		 class="img-fluid d-block{imgClass}"
 		 width="{width}"
@@ -162,7 +163,7 @@
 		 lazyload="0"
 		 ratio="{ratio}"
 		 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
-		 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
+		 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"		
 		/>
 	</f:else>
 </f:if>

@@ -1,199 +1,184 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Content</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Content</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Hiding / Display Elements</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Hidden only on xs</numIndex>
+									<numIndex index="value">d-none d-sm-block</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Hidden on sm and down</numIndex>
+									<numIndex index="value">d-none d-md-block</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Hidden on md and down</numIndex>
+									<numIndex index="value">d-none d-lg-block</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Hidden on lg and down</numIndex>
+									<numIndex index="value">d-none d-xl-block</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Hidden only on xl</numIndex>
+									<numIndex index="value">d-xl-none</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Visible only on xs</numIndex>
+									<numIndex index="value">d-block d-sm-none</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Visible sm and down</numIndex>
+									<numIndex index="value">d-block d-md-none</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Visible md and down</numIndex>
+									<numIndex index="value">d-block d-lg-none</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Visible lg and down</numIndex>
+									<numIndex index="value">d-block d-xl-none</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</hidden>
 					<vertical>
-						<TCEforms>
-							<label>Vertical variation</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Vertical variation</label>
+						<config>
+							<type>check</type>
+						</config>
 					</vertical>
 					<btnsize>
-						<TCEforms>
-							<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-										<numIndex index="1">null</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</numIndex>
-										<numIndex index="1">btn-group-sm</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:large</numIndex>
-										<numIndex index="1">btn-group-lg</numIndex>
-									</numIndex>
-								</items>
-								<default>null</default>
-							</config>
-						</TCEforms>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
+									<numIndex index="value">null</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</numIndex>
+									<numIndex index="value">btn-group-sm</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:large</numIndex>
+									<numIndex index="value">btn-group-lg</numIndex>
+								</numIndex>
+							</items>
+							<default>null</default>
+						</config>
 					</btnsize>
 					<align>
-						<TCEforms>
-							<label>Button Group Alignment</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Center</numIndex>
-										<numIndex index="1">text-center</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Right</numIndex>
-										<numIndex index="1">text-end</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Left</numIndex>
-										<numIndex index="1">text-start</numIndex>
-									</numIndex>
-								</items>
-								<default></default>
-							</config>
-						</TCEforms>
+						<label>Button Group Alignment</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Center</numIndex>
+									<numIndex index="value">text-center</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Right</numIndex>
+									<numIndex index="value">text-end</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Left</numIndex>
+									<numIndex index="value">text-start</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
 					</align>
 					<fixedPosition>
-						<TCEforms>
-							<label>Fixed position</label>
-							<onChange>reload</onChange>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Left browser edge</numIndex>
-										<numIndex index="1">left</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Right browser edge</numIndex>
-										<numIndex index="1">right</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Fixed position</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Left browser edge</numIndex>
+									<numIndex index="value">left</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Right browser edge</numIndex>
+									<numIndex index="value">right</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</fixedPosition>
 					<rotate>
-						<TCEforms>
-							<label>Rotate the Button</label>
-							<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">0 degree</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">+ 90 degree</numIndex>
-										<numIndex index="1">plus</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">- 90 degree</numIndex>
-										<numIndex index="1">minus</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Rotate the Button</label>
+						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0 degree</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">+ 90 degree</numIndex>
+									<numIndex index="value">plus</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">- 90 degree</numIndex>
+									<numIndex index="value">minus</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</rotate>
 					<slideIn>
-						<TCEforms>
-							<label>Slide In / Slide Out</label>
-							<onChange>reload</onChange>
-							<description>With "Fixed position = Right browser edge", Vertical variation &amp; FA icon in t3sbs_button</description>
-							<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Slide In / Slide Out</label>
+						<onChange>reload</onChange>
+						<description>With "Fixed position = Right browser edge", Vertical variation &amp; FA icon in t3sbs_button</description>
+						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</slideIn>
 					<visiblePart>
-						<TCEforms>
-							<label>Visible part of the button</label>
-							<description>offset to the left specified in px</description>
-							<displayCond>FIELD:sDEF.slideIn:=:1</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>4</max>
-								<default>33</default>
-								<checkbox>0</checkbox>
-								<eval>required,int</eval>
-							</config>
-						</TCEforms>
+						<label>Visible part of the button</label>
+						<description>offset to the left specified in px</description>
+						<displayCond>FIELD:sDEF.slideIn:=:1</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>4</max>
+							<default>33</default>
+							<checkbox>0</checkbox>
+							<eval>required,int</eval>
+						</config>
 					</visiblePart>
 				</el>
 			</ROOT>

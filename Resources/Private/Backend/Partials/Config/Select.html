@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<div class="form-group row">
-	<label for="{field.property}" class="col-sm-3 col-form-label">
+<div class="mb-3 row">
+	<label for="{field.property}" class="col-sm-3 col-form-label" style="font-weight: 600;">
 		{field.label}
 		<f:if condition="{compare.{field.property}}">
 			<br/><small class="text-primary">{compare.{field.property}}</small>
@@ -12,7 +12,7 @@
 	<div class="col-sm-9">
 		<f:form.select
 			id="{field.property}"
-			class="form-control"
+			class="form-select"
 			property="{field.property}"
 			options="{{field.property}Options}"
 			optionValueField="key"

@@ -1,374 +1,336 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Card Wrapper</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Card Wrapper</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Hiding / Display Elements</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Hidden only on xs</numIndex>
+									<numIndex index="value">d-none d-sm-block</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Hidden on sm and down</numIndex>
+									<numIndex index="value">d-none d-md-block</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Hidden on md and down</numIndex>
+									<numIndex index="value">d-none d-lg-block</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Hidden on lg and down</numIndex>
+									<numIndex index="value">d-none d-xl-block</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Hidden only on xl</numIndex>
+									<numIndex index="value">d-xl-none</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Visible only on xs</numIndex>
+									<numIndex index="value">d-block d-sm-none</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Visible sm and down</numIndex>
+									<numIndex index="value">d-block d-md-none</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Visible md and down</numIndex>
+									<numIndex index="value">d-block d-lg-none</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Visible lg and down</numIndex>
+									<numIndex index="value">d-block d-xl-none</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</hidden>
 
 					<!-- card wrapper: columns,group or deck  -->
 					<card_wrapper>
-						<TCEforms>
-							<label>Groups, Decks, or Columns</label>
-							<onChange>reload</onChange>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">Group</numIndex>
-										<numIndex index="1">group</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Grid Cards (Deck)</numIndex>
-										<numIndex index="1">deck</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Masonry (Columns)</numIndex>
-										<numIndex index="1">columns</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Slider (swiper)</numIndex>
-										<numIndex index="1">slider</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Flipper</numIndex>
-										<numIndex index="1">flipper</numIndex>
-									</numIndex>
-								</items>
-								<default>group</default>
-							</config>
-						</TCEforms>
+						<label>Groups, Decks, or Columns</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">Group</numIndex>
+									<numIndex index="value">group</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Grid Cards (Deck)</numIndex>
+									<numIndex index="value">deck</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Masonry (Columns)</numIndex>
+									<numIndex index="value">columns</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Slider (swiper)</numIndex>
+									<numIndex index="value">slider</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Flipper</numIndex>
+									<numIndex index="value">flipper</numIndex>
+								</numIndex>
+							</items>
+							<default>group</default>
+						</config>
 					</card_wrapper>
 
 					<colclass>
-						<TCEforms>
-							<label>Column class</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:columns</displayCond>
-							<description>default - 3 columns: "col-sm-6 col-lg-4 mb-4"</description>
-							<config>
-								 <type>input</type>
-								 <size>40</size>
-								 <default>col-sm-6 col-lg-4 mb-4</default>
-								 <eval>trim</eval>
-							</config>
-						</TCEforms>
+						<label>Column class</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:columns</displayCond>
+						<description>default - 3 columns: "col-sm-6 col-lg-4 mb-4"</description>
+						<config>
+							 <type>input</type>
+							 <size>40</size>
+							 <default>col-sm-6 col-lg-4 mb-4</default>
+							 <eval>trim</eval>
+						</config>
 					</colclass>
 
-
 					<visibleCards>
-						<TCEforms>
-							<label>Visible Cards</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">1</numIndex>
-										<numIndex index="1">1</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">2</numIndex>
-										<numIndex index="1">2</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">3</numIndex>
-										<numIndex index="1">3</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">4</numIndex>
-										<numIndex index="1">4</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">5</numIndex>
-										<numIndex index="1">5</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">6</numIndex>
-										<numIndex index="1">6</numIndex>
-									</numIndex>
-								</items>
-								<default>3</default>
-							</config>
-						</TCEforms>
+						<label>Visible Cards</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+							</items>
+							<default>3</default>
+						</config>
 					</visibleCards>
 
 					<gutter>
-						<TCEforms>
-							<label>Gutters (padding between your columns)</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">0</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">1</numIndex>
-										<numIndex index="1">1</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">2</numIndex>
-										<numIndex index="1">2</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">3</numIndex>
-										<numIndex index="1">3</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">4</numIndex>
-										<numIndex index="1">4</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">5</numIndex>
-										<numIndex index="1">5</numIndex>
-									</numIndex>
-								</items>
-								<default>4</default>
-							</config>
-						</TCEforms>
+						<label>Gutters (padding between your columns)</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+							</items>
+							<default>4</default>
+						</config>
 					</gutter>
 
 					<width>
-						<TCEforms>
-							<label>max. Image width</label>
-							<description>if "0" the cards width is used - or auto-width if the cards width is also empty (best practies)</description>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>4</max>
-								<default>576</default>
-								<eval>int</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>max. Image width</label>
+						<description>if "0" the cards width is used - or auto-width if the cards width is also empty (best practies)</description>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>4</max>
+							<default>576</default>
+							<eval>int</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</width>
 
 					<ratio>
-						<TCEforms>
-							<label>Image ratio - e.g.: 37:9</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>5</max>
-								<default>16:9</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Image ratio - e.g.: 37:9</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>5</max>
+							<default>16:9</default>
+							<checkbox>0</checkbox>
+						</config>
 					</ratio>
 
 					<slidesPerView>
-						<TCEforms>
-							<label>Slides per view</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>4</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>4</default>
+							<checkbox>0</checkbox>
+						</config>
 					</slidesPerView>
 
 					<breakpoints576>
-						<TCEforms>
-							<label>Slides per view - breakpoint > 576px</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>2</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view - breakpoint > 576px</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>2</default>
+							<checkbox>0</checkbox>
+						</config>
 					</breakpoints576>
 					<breakpoints768>
-						<TCEforms>
-							<label>Slides per view - breakpoint > 768px</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>3</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view - breakpoint > 768px</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>3</default>
+							<checkbox>0</checkbox>
+						</config>
 					</breakpoints768>
 					<breakpoints992>
-						<TCEforms>
-							<label>Slides per view - breakpoint > 992px</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>4</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view - breakpoint > 992px</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>4</default>
+							<checkbox>0</checkbox>
+						</config>
 					</breakpoints992>
 
 					<slidesPerGroup>
-						<TCEforms>
-							<label>Slides per group</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>1</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per group</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>1</default>
+							<checkbox>0</checkbox>
+						</config>
 					</slidesPerGroup>
 
 					<spaceBetween>
-						<TCEforms>
-							<label>Space between</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>20</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Space between</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>20</default>
+							<checkbox>0</checkbox>
+						</config>
 					</spaceBetween>
 
 					<loop>
-						<TCEforms>
-							<label>Loop</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Loop</label>
+						<description>Amount of slides in loop mode should be at least 2x of "slidesPerView" value.</description>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</loop>
 
 					<navigation>
-						<TCEforms>
-							<label>Navigation</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Navigation</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</navigation>
+
 					<pagination>
-						<TCEforms>
-							<label>Pagination</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Pagination</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</pagination>
 
 					<autoplay>
-						<TCEforms>
-							<label>Autoplay</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
-							<onChange>reload</onChange>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Autoplay</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+						</config>
 					</autoplay>
 
 					<delay>
-						<TCEforms>
-							<label>Delay between transitions (in ms)</label>
-							<displayCond>
-								<and>
-									<value1>FIELD:sDEF.card_wrapper:=:slider</value1>
-									<value2>FIELD:sDEF.autoplay:=:1</value2>
-								</and>
-							</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>5000</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Delay between transitions (in ms)</label>
+						<displayCond>
+							<and>
+								<value1>FIELD:sDEF.card_wrapper:=:slider</value1>
+								<value2>FIELD:sDEF.autoplay:=:1</value2>
+							</and>
+						</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>5000</default>
+							<checkbox>0</checkbox>
+						</config>
 					</delay>
 
 					<cropMaxCharacters>
-						<TCEforms>
-							<label>Length of card-bodytext (in chars)</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<eval>num</eval>
-							</config>
-						</TCEforms>
+						<label>Length of card-bodytext (in chars)</label>
+						<config>
+							<type>input</type>
+							<size>5</size>
+							<eval>num</eval>
+						</config>
 					</cropMaxCharacters>
 
 					<equalHeight>
-						<TCEforms>
-							<label>Equal Height</label>
-							<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Equal Height</label>
+						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</equalHeight>
 				</el>
 			</ROOT>

@@ -42,7 +42,7 @@ class CardWrapper implements SingletonInterface
 			->fetchAll();
 
 		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-		$processedData['colclass'] = $flexconf['colclass'];
+		$processedData['colclass'] = !empty($flexconf['colclass']) ? $flexconf['colclass'] : '';
 		$processedData['cropMaxCharacters'] = $flexconf['cropMaxCharacters'];
 
 		if (count($children)) {

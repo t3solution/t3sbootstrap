@@ -23,11 +23,13 @@ class DefaultHelper implements SingletonInterface
 	 */
 	public function getContainerClass(array $processedData, string $extConfContainer): array
 	{
+
+
 		$container = '';
 		if ($extConfContainer && $processedData['data']['tx_t3sbootstrap_container']) {
 			if ( $processedData['data']['tx_container_parent'] === 0 ) {
 				$t3sbconfig = self::getConfig();
-				if ( $t3sbconfig['footer_pid'] === $processedData['data']['pid'] ) {
+				if ( (int)$t3sbconfig['footer_pid'] === $processedData['data']['pid'] ) {
 					if ( $t3sbconfig['footer_container'] === 'none' && $processedData['data']['colPos'] === 0 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
@@ -51,6 +53,7 @@ class DefaultHelper implements SingletonInterface
 				}
 			}
 		}
+
 		if ($container) {
 			$processedData['containerPre'] = '<div class="'.trim($container).'">';
 			$processedData['containerPost'] = '</div>';

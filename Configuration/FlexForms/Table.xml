@@ -1,204 +1,192 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<type>array</type>
-				<TCEforms>
-					<sheetTitle>Bootstrap Settings</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Bootstrap Settings</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Hiding / Display Elements</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Hidden only on xs</numIndex>
+									<numIndex index="value">d-none d-sm-block</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Hidden on sm and down</numIndex>
+									<numIndex index="value">d-none d-md-block</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Hidden on md and down</numIndex>
+									<numIndex index="value">d-none d-lg-block</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Hidden on lg and down</numIndex>
+									<numIndex index="value">d-none d-xl-block</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Hidden only on xl</numIndex>
+									<numIndex index="value">d-xl-none</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Visible only on xs</numIndex>
+									<numIndex index="value">d-block d-sm-none</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Visible sm and down</numIndex>
+									<numIndex index="value">d-block d-md-none</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Visible md and down</numIndex>
+									<numIndex index="value">d-block d-lg-none</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Visible lg and down</numIndex>
+									<numIndex index="value">d-block d-xl-none</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</hidden>
 
 					<tableClass>
-						<TCEforms>
-							<label>Table class</label>
-							<config>
-								<type>select</type>
-								<renderType>selectMultipleSideBySide</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-										<numIndex index="1">table</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.striped</numIndex>
-										<numIndex index="1">table table-striped</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.bordered</numIndex>
-										<numIndex index="1">table table-bordered</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.hover</numIndex>
-										<numIndex index="1">table table-hover</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.small</numIndex>
-										<numIndex index="1">table table-sm</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Table dark</numIndex>
-										<numIndex index="1">table table-dark</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Table borderless</numIndex>
-										<numIndex index="1">table table-borderless</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Border primary</numIndex>
-										<numIndex index="1">table border-primary</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Border secondary</numIndex>
-										<numIndex index="1">table border-secondary</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Border success</numIndex>
-										<numIndex index="1">table border-success</numIndex>
-									</numIndex>
-									<numIndex index="10" type="array">
-										<numIndex index="0">Border info</numIndex>
-										<numIndex index="1">table border-info</numIndex>
-									</numIndex>
-									<numIndex index="11" type="array">
-										<numIndex index="0">Border warning</numIndex>
-										<numIndex index="1">table border-warning</numIndex>
-									</numIndex>
-									<numIndex index="12" type="array">
-										<numIndex index="0">Border danger</numIndex>
-										<numIndex index="1">table border-danger</numIndex>
-									</numIndex>
-									<numIndex index="13" type="array">
-										<numIndex index="0">Border light</numIndex>
-										<numIndex index="1">table border-light</numIndex>
-									</numIndex>
-									<numIndex index="14" type="array">
-										<numIndex index="0">Border dark</numIndex>
-										<numIndex index="1">table border-dark</numIndex>
-									</numIndex>
-									<numIndex index="15" type="array">
-										<numIndex index="0">Vertical align top</numIndex>
-										<numIndex index="1">table align-top</numIndex>
-									</numIndex>
-									<numIndex index="16" type="array">
-										<numIndex index="0">Vertical align middle</numIndex>
-										<numIndex index="1">table align-middle</numIndex>
-									</numIndex>
-									<numIndex index="17" type="array">
-										<numIndex index="0">Vertical align bottom</numIndex>
-										<numIndex index="1">table align-bottom</numIndex>
-									</numIndex>
-								</items>
-								<enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
-								<default>table</default>
-							</config>
-						</TCEforms>
+						<label>Table class</label>
+						<config>
+							<type>select</type>
+							<renderType>selectMultipleSideBySide</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
+									<numIndex index="value">table</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.striped</numIndex>
+									<numIndex index="value">table table-striped</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.bordered</numIndex>
+									<numIndex index="value">table table-bordered</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.hover</numIndex>
+									<numIndex index="value">table table-hover</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.small</numIndex>
+									<numIndex index="value">table table-sm</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Table dark</numIndex>
+									<numIndex index="value">table table-dark</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Table borderless</numIndex>
+									<numIndex index="value">table table-borderless</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Border primary</numIndex>
+									<numIndex index="value">table border-primary</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Border secondary</numIndex>
+									<numIndex index="value">table border-secondary</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Border success</numIndex>
+									<numIndex index="value">table border-success</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">Border info</numIndex>
+									<numIndex index="value">table border-info</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">Border warning</numIndex>
+									<numIndex index="value">table border-warning</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">Border danger</numIndex>
+									<numIndex index="value">table border-danger</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">Border light</numIndex>
+									<numIndex index="value">table border-light</numIndex>
+								</numIndex>
+								<numIndex index="14" type="array">
+									<numIndex index="label">Border dark</numIndex>
+									<numIndex index="value">table border-dark</numIndex>
+								</numIndex>
+								<numIndex index="15" type="array">
+									<numIndex index="label">Vertical align top</numIndex>
+									<numIndex index="value">table align-top</numIndex>
+								</numIndex>
+								<numIndex index="16" type="array">
+									<numIndex index="label">Vertical align middle</numIndex>
+									<numIndex index="value">table align-middle</numIndex>
+								</numIndex>
+								<numIndex index="17" type="array">
+									<numIndex index="label">Vertical align bottom</numIndex>
+									<numIndex index="value">table align-bottom</numIndex>
+								</numIndex>
+							</items>
+							<enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
+							<default>table</default>
+						</config>
 					</tableClass>
 
 					<theadClass>
-						<TCEforms>
-							<label>Table head</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">None</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Light</numIndex>
-										<numIndex index="1">table-light</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Dark</numIndex>
-										<numIndex index="1">table-dark</numIndex>
-									</numIndex>
-								</items>
-								<default>table-dark</default>
-							</config>
-						</TCEforms>
+						<label>Table head</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">None</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Light</numIndex>
+									<numIndex index="value">table-light</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Dark</numIndex>
+									<numIndex index="value">table-dark</numIndex>
+								</numIndex>
+							</items>
+							<default>table-dark</default>
+						</config>
 					</theadClass>
 
 					<tableInverse>
-						<TCEforms>
-							<label>Table inverse/dark</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Table inverse/dark</label>
+						<config>
+							<type>check</type>
+						</config>
 					</tableInverse>
 
 					<tableResponsive>
-						<TCEforms>
-							<label>Responsive table</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Responsive table</label>
+						<config>
+							<type>check</type>
+						</config>
 					</tableResponsive>
 
 					<tableResponsiveVariant>
-						<TCEforms>
-							<label>Responsive table variant</label>
-							<description>INFO: https://www.t3sbootstrap.de/demo/tabellen</description>
-							<displayCond>FIELD:sDEF.tableResponsive:=:1</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Responsive table variant</label>
+						<description>INFO: https://www.t3sbootstrap.de/demo/tabellen</description>
+						<displayCond>FIELD:sDEF.tableResponsive:=:1</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</tableResponsiveVariant>
 				</el>
 			</ROOT>

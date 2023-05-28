@@ -28,12 +28,12 @@ class CollapsibleAccordion implements SingletonInterface
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']);
 		if (!empty($file)) {$file = $file[0];}
 		$processedData['appearance'] = $parentflexconf['appearance'];
-		$processedData['show'] = $flexconf['active'] ? ' show' : '';
-		$processedData['collapsed'] = $flexconf['active'] ? '' : ' collapsed';
-		$processedData['expanded'] = $flexconf['active'] ? 'true' : 'false';
-		$processedData['alwaysOpen'] = $parentflexconf['alwaysOpen'] ? 'true' : 'false';
+		$processedData['show'] = !empty($flexconf['active']) ? ' show' : '';
+		$processedData['collapsed'] = !empty($flexconf['active']) ? '' : ' collapsed';
+		$processedData['expanded'] = !empty($flexconf['active']) ? 'true' : 'false';
+		$processedData['alwaysOpen'] = !empty($parentflexconf['alwaysOpen']) ? 'true' : 'false';
 		$processedData['buttonstyle'] = !empty($flexconf['style']) ? $flexconf['style'] : 'primary';
-		$processedData['collapsibleByPid'] = $flexconf['collapsibleByPid'] ?: '';
+		$processedData['collapsibleByPid'] = !empty($flexconf['collapsibleByPid']) ? $flexconf['collapsibleByPid'] : '';
 		$processedData['media'] = $file ? $file : '';
 
 		$processedData['appearance'] = $parentflexconf['appearance'];

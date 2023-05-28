@@ -8,7 +8,6 @@ tx_news.templateLayouts {
 	73 = BS5: Card Groups (list view)
 	74 = BS5: Masonry (list view)
 	75 = BS5: 2 Columns (list view)
-
 	81 = BS5: Detail view
 
 	// Custom List Templates

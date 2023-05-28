@@ -26,7 +26,7 @@ class CollapsibleContainer implements SingletonInterface
 
 		$processedData['appearance'] = $flexconf['appearance'];
 		if ($flexconf['appearance'] == 'accordion') {
-			$processedData['flush'] = $flexconf['flush'] ? ' accordion-flush' : '';
+			$processedData['flush'] = !empty($flexconf['flush']) ? ' accordion-flush' : '';
 		}
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');

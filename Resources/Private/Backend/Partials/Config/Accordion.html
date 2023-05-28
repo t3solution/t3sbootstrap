@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment> - ACCORDION - </f:comment>
-<div class="accordion" id="accordion">
+<div class="panel-group accordion" id="accordion">
 	<f:for each="{tcaColumns}" as="columns" key="colkey">
 		<f:if condition="{colkey} == 8 || {colkey} == 9">
 			<f:then>
@@ -18,76 +18,60 @@
 
 
 <f:section name="Card">
-<div class="card">
-	<div class="card-header" id="header-{colkey}" style="padding: 0 !important;">
-		<h4 class="mb-0">
-			<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-			 data-target="#collapse-{colkey}" aria-expanded="true" aria-controls="collapse-{colkey}" >
+<div class="panel panel-default">
+	<div class="panel-heading" style="background-color:#6a10f3; color:#fff;">
+		<h3 class="panel-title" id="header-{colkey}">
+			<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-{colkey}" aria-expanded="false" aria-controls="collapse-{colkey}">
+				<span class="caret" style="border-top: .25rem dashed #fff; margin-top: -3px;"></span>
 				<f:translate key="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:accordion_{colkey}" />
-			</button>
-		</h4>
+			</a>
+		</h3>
 	</div>
-	<div id="collapse-{colkey}" class="collapse" aria-labelledby="header-{colkey}" data-parent="#accordion">
-		<div class="card-body">
-			<f:render section="ExtraTop" arguments="{ckey: colkey}" />
-			<f:for each="{columns}" as="field" key="ckey">
-
-<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
-	<f:then>
-
-<f:comment>
-	Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
-</f:comment>
-
-	</f:then>
-	<f:else>
-
-				<f:if condition="{field.noSub}">
-					<f:then>
-						<f:comment> - FORM FIELD - </f:comment>
-						<f:if condition="{isSiteroot}">
-							<f:then>
-								<f:render partial="Config/{field.type}" arguments="{_all}" />
-							</f:then>
-							<f:else>
-								<f:if condition="{field.property} != 'contentOnlyOnRootpage'">
-									<f:render partial="Config/{field.type}" arguments="{_all}" />
-								</f:if>
-							</f:else>
-						</f:if>
-					</f:then>
-					<f:else>
-						<f:comment> - NESTED ACCORDION - </f:comment>
-						<div class="accordion accordion-sub" id="accordion-{ckey}">
-							<div class="card">
-								<div class="card-header" id="header-{ckey}" style="background-color: #1aa3b9 !important;padding: 0 !important;">
-									<h4 class="mb-0">
-										<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-										 data-target="#collapse-{ckey}" aria-expanded="true" aria-controls="collapse-{ckey}">
-											<f:translate key="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:accordion_{ckey}" />
-										</button>
-									</h4>
-								</div>
-								<div id="collapse-{ckey}" class="collapse" aria-labelledby="header-{ckey}" data-parent="#accordion-{ckey}">
-									<div class="card-body" style="background-color: #f8f8f8;">
-										<f:render section="ExtraSubTop" arguments="{ckey: ckey}" />
-										<f:for each="{field}" as="field">
+	<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
+		<f:then>
+			<f:comment>
+				Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
+			</f:comment>
+		</f:then>
+		<f:else>
+			<div id="collapse-{colkey}" class="accordion-collapse collapse" aria-labelledby="header-{colkey}" data-bs-parent="#accordion">
+				<div class="panel-body">
+					<div class="panel-group accordion accordion-sub" id="accordion-{colkey}" style="box-shadow: none;">
+						<f:for each="{columns}" as="field" key="ckey">
+							<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
+								<f:then>
+									<f:comment>
+										Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
+									</f:comment>
+								</f:then>
+								<f:else>
+									<f:if condition="{field.noSub}">
+										<f:then>
 											<f:comment> - FORM FIELD - </f:comment>
-											<f:render partial="Config/{field.type}" arguments="{_all}" />
-										</f:for>
-									</div>
-								</div>
-							</div>
-						</div>
-					</f:else>
-				</f:if>
-
-	</f:else>
-</f:if>
-
-			</f:for>
-		</div>
-	</div>
+											<f:if condition="{isSiteroot}">
+												<f:then>
+													<f:render partial="Config/{field.type}" arguments="{_all}" />
+												</f:then>
+												<f:else>
+													<f:if condition="{field.property} != 'contentOnlyOnRootpage'">
+														<f:render partial="Config/{field.type}" arguments="{_all}" />
+													</f:if>
+												</f:else>
+											</f:if>
+										</f:then>
+										<f:else>
+											<f:comment> - NESTED ACCORDION - </f:comment>
+											<f:render section="Nested" arguments="{_all}" />
+										</f:else>
+									</f:if>
+								</f:else>
+							</f:if>
+						</f:for>
+					</div>
+				</div>
+			</div>
+		</f:else>
+	</f:if>
 </div>
 </f:section>
 
@@ -108,4 +92,26 @@
 		</div>
 	</div>
 </f:if>
+</f:section>
+
+<f:section name="Nested">
+<div class="panel panel-default">
+	<div class="panel-heading" style="background-color: #17a2b8; border-color: #17a2b8; color: #fff;">
+		<h3 class="panel-title" id="header-{ckey}">
+			<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-{ckey}" aria-expanded="false" aria-controls="collapse-{ckey}">
+				<span class="caret" style="border-top: .25rem dashed #fff; margin-top: -3px;"></span>
+				<f:translate key="LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:accordion_{ckey}" />
+			</a>
+		</h3>
+	</div>
+	<div id="collapse-{ckey}" class="accordion-collapse collapse" aria-labelledby="header-{ckey}" data-bs-parent="#accordion-{colkey}">
+		<div class="panel-body">
+			<f:render section="ExtraSubTop" arguments="{ckey: ckey}" />
+			<f:for each="{field}" as="field">
+				<f:comment> - FORM FIELD - </f:comment>
+				<f:render partial="Config/{field.type}" arguments="{_all}" />
+			</f:for>
+		</div>
+	</div>
+</div>
 </f:section>

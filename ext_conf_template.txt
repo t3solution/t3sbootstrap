@@ -1,12 +1,3 @@
-# customcategory=custom=Custom-SCSS
-# customcategory=t3sb=T3SB
-# customcategory=dif=Different
-# customcategory=flexform=Flexform
-# customcategory=preview=Preview
-# customcategory=presets=Presets
-# customsubcategory=a-config=Bootstrap SCSS variables!
-# customsubcategory=b-config=Custom Presets for used value pickers - (clear cache)
-
 # cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache).
 preview = 1
 # cat=preview/enable/20; type=boolean; label=Crop bodytext: Crop bodytext by "maxCharacters" (clear cache).
@@ -40,13 +31,13 @@ fontawesomepagetitle = 1
 # cat=page/enable/30; type=boolean; label=Navigation color: Enable various colors for submenu nav-items in dropdown-menus (clear cache).
 navigationColor = 0
 
-# cat=custom/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
+# cat=custom scss/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
 customScss = 0
-# cat=custom/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
+# cat=custom scss/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
 bootswatch = none
-# cat=custom/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache).
+# cat=custom scss/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache).
 editScss = 0
-# cat=custom/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables in custom-variables.scss and custom-variables.scss if run the Scheduler (clear cache).
+# cat=custom scss/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables in custom-variables.scss and custom-variables.scss if run the Scheduler (clear cache).
 keepVariables = 0
 
 # cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache).
@@ -54,25 +45,24 @@ flexformExtend = 0
 # cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache).
 flexformModify = 0
 
-# cat=t3sb/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
+# cat=t3SB/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache).
 expandedContent = 0
-# cat=t3sb/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
+# cat=t3SB/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache).
 cTypeClass = 0
-# cat=t3sb/enable/60; type=boolean; label=Content Consent Plug-In: Currently only for YouTube videos.
-contentconsent = 0
-# cat=t3sb/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Concatenate CSS and JS files - best with "Compress" in T3SB config (clear cache).
+# cat=t3SB/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Concatenate CSS and JS files - best with "Compress" in T3SB config (clear cache).
 t3sbconcatenate = 0
-# cat=t3sb/enable/80; type=boolean; label=Minify CSS- and JS files from t3sbootstrap - EXPERIMENTAL: Minify CSS and JS with "toptal.com" if no error message is generated (clear cache).
+# cat=t3SB/enable/80; type=boolean; label=Minify CSS- and JS files from t3sbootstrap - EXPERIMENTAL: Minify CSS and JS with "toptal.com" if no error message is generated (clear cache).
 t3sbminify = 0
 
-# cat=dif/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" (clear cache).
+# cat=different/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" - not available with TYPO3 v12.
 codesnippet = 0
-# cat=dif/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache).
+
+# cat=different/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache).
 imgCopyright = 0
-# cat=dif/enable/20; type=boolean; label=Custom translations:(clear cache).
+# cat=different/enable/20; type=boolean; label=Custom translations:(clear cache).
 customTranslations = 0
 
-# cat=advanced/enable/10; type=options[none=0, FA 5 free=1, FA 5 pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=2, FA 6 free=3, FA 6 pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=4]; label=Font Awesome: include Font Awesome SCSS - if deactivated, only some required icons are loaded (check the version in the constant editor and clear cache).
+# cat=advanced/enable/10; type=options[none=0, FA 6 free=3, FA 6 pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=4]; label=Font Awesome: include Font Awesome SCSS - if deactivated, only some required icons are loaded (check the version in the constant editor and clear cache).
 fontawesomeCss = 0
 # cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache).
 animateCss = 0

@@ -23,17 +23,13 @@ class FlexFormManipulation implements FormDataProviderInterface
 	public function addData(array $result): array
 	{
 		$configurationManager =GeneralUtility::makeInstance(BackendConfigurationManager::class);
-		$configurationManager->getDefaultBackendStoragePid();
 		$setup = $configurationManager->getTypoScriptSetup();
-
 		$flexforms = $setup['plugin.']['tx_t3sbootstrap.']['flexform.'];
 
 		# if FlexFormManipulation
-		if ( !empty($flexforms) ) {
+		if ( !empty($flexforms) && !empty($result['databaseRow']['CType']) ) {
 
-			$cType = $result['databaseRow']['CType'];
-
-			switch ($cType) {
+			switch ($result['databaseRow']['CType']) {
 				   case 't3sbs_card':
 					$flexformFile = 'cardSetting.';
 						break;
@@ -101,23 +97,30 @@ class FlexFormManipulation implements FormDataProviderInterface
 					  $flexformFile = 'bootstrap.';
 			}
 
-			$dataStructure = $result['processedTca']['columns']['tx_t3sbootstrap_flexform']['config']['ds'];
+			$dataStructure = [];
 
-			foreach ($flexforms as $file=>$fields) {
-				if ( $file == $flexformFile ) {
-					foreach ($fields as $field=>$mod) {
-						if ( !empty($mod['add']) ) {
-							foreach (explode(',',$mod['add']) as $add) {
-								if (!empty($dataStructure['sheets'])) {
-									foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
-										foreach ($fieldsInSheet as $fieldArr) {
-											foreach ($fieldArr as $fieldName) {
-												if (!empty($fieldName) && is_array($fieldName)) {
-													foreach ($fieldName as $key=>$name) {
-														if ($name['config']['type'] == 'select') {
-															if (substr($field, 0, -1) == $key) {
-																array_push($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'],
-																 [trim($add),lcfirst(GeneralUtility::underscoredToUpperCamelCase(trim($add)))]);
+			if (!empty($result['processedTca']['columns']['tx_t3sbootstrap_flexform'])) {
+
+				$dataStructure = $result['processedTca']['columns']['tx_t3sbootstrap_flexform']['config']['ds'];
+	
+				$addArr = [];
+	
+				foreach ($flexforms as $file=>$fields) {
+					if ( $file == $flexformFile ) {
+						foreach ($fields as $field=>$mod) {
+							if ( !empty($mod['add']) ) {
+								foreach (explode(',',$mod['add']) as $add) {
+									if (!empty($dataStructure['sheets'])) {
+										foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
+											foreach ($fieldsInSheet as $fieldArr) {
+												foreach ($fieldArr as $fieldName) {
+													if (!empty($fieldName) && $fieldName !== 'array' && is_array($fieldName)) {
+														foreach ($fieldName as $key=>$name) {
+															if (!empty($name['config']['type']) && $name['config']['type'] == 'select') {
+																if (substr($field, 0, -1) == $key) {
+																	$addArr = ['label' => trim($add), 'value' => lcfirst(GeneralUtility::underscoredToUpperCamelCase(trim($add)))];
+																	array_push($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'], $addArr);
+																}
 															}
 														}
 													}
@@ -127,20 +130,20 @@ class FlexFormManipulation implements FormDataProviderInterface
 									}
 								}
 							}
-						}
-						if ($mod['reduce']) {
-							foreach( explode(',',$mod['reduce']) as $reduce ) {
-								if (!empty($dataStructure['sheets'])) {
-									foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
-										foreach ($fieldsInSheet as $fieldArr) {
-											foreach ($fieldArr as $fieldName) {
-												if (!empty($fieldName) && is_array($fieldName)) {
-													foreach ($fieldName as $key=>$name) {
-														if ($name['config']['type'] == 'select') {
-															if (substr($field, 0, -1) == $key) {
-																foreach ($name['config']['items'] as $k=>$item ) {
-																	if (trim($item[1]) == trim($reduce)) {
-																		unset($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'][$k]);
+							if ($mod['reduce']) {
+								foreach( explode(',',$mod['reduce']) as $reduce ) {
+									if (!empty($dataStructure['sheets'])) {
+										foreach ($dataStructure['sheets'] as $sheetName=>$fieldsInSheet) {
+											foreach ($fieldsInSheet as $fieldArr) {
+												foreach ($fieldArr as $fieldName) {
+													if (!empty($fieldName) && $fieldName !== 'array' && is_array($fieldName)) {
+														foreach ($fieldName as $key=>$name) {
+															if (!empty($name['config']['type']) && $name['config']['type'] == 'select') {
+																if (substr($field, 0, -1) == $key) {
+																	foreach ($name['config']['items'] as $k=>$item ) {
+																		if (!empty($item['value']) && trim($item['value']) == trim($reduce)) {
+																			unset($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'][$k]);
+																		}
 																	}
 																}
 															}
@@ -156,7 +159,6 @@ class FlexFormManipulation implements FormDataProviderInterface
 					}
 				}
 			}
-
 			$result['processedTca']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] = $dataStructure;
 		}
 

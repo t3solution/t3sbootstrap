@@ -159,7 +159,7 @@ class BootstrapProcessor implements DataProcessorInterface
 			}
 			if ( $cType == 't3sbs_assets' ) {
 				$pi_flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['pi_flexform']);
-				if (!empty($pi_flexconf) && isset($pi_flexconf['settings'])) {
+				if (!empty($pi_flexconf)) {
 					$processedData['assets']['jquery'] = $pi_flexconf['settings']['jquery'];
 					$processedData['assets']['priority'] = $pi_flexconf['settings']['priority'];
 				}

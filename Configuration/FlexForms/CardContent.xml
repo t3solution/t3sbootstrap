@@ -1,34 +1,31 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Content</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Content</sheetTitle>
 				<type>array</type>
 				<el>
 					<header.text>
-						<TCEforms>
-							<label>Card Header</label>
-							<config>
-								<type>input</type>
-								<size>48</size>
-								<max>99</max>
-								<eval>trim</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Card Header</label>
+						<config>
+							<type>input</type>
+							<size>48</size>
+							<max>99</max>
+							<eval>trim</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</header.text>
 					<text.top>
-						<TCEforms>
-							<label>Text Top</label>
-							<config>
-								 <type>text</type>
-								 <cols>int,trim</cols>
-								 <rows>3</rows>
-								 <enableRichtext>true</enableRichtext>
-							</config>
-						</TCEforms>
+						<label>Text Top</label>
+						<config>
+							 <type>text</type>
+							 <cols>int,trim</cols>
+							 <rows>3</rows>
+							 <enableRichtext>true</enableRichtext>
+						</config>
 					</text.top>
 					<list.container>
 						<section>1</section>
@@ -39,40 +36,34 @@
 								<type>array</type>
 								<el>
 									<group>
-										<TCEforms>
-											<label>List Group</label>
-											<config>
-												<type>input</type>
-												<size>48</size>
-											</config>
-										</TCEforms>
+										<label>List Group</label>
+										<config>
+											<type>input</type>
+											<size>48</size>
+										</config>
 									</group>
 								</el>
 							</list>
 						</el>
 					</list.container>
 					<text.bottom>
-						<TCEforms>
-							<label>Text Bottom (optional: new .card-block)</label>
-							<config>
-								 <type>text</type>
-								 <cols>int,trim</cols>
-								 <rows>3</rows>
-								 <enableRichtext>true</enableRichtext>
-							</config>
-						</TCEforms>
+						<label>Text Bottom (optional: new .card-block)</label>
+						<config>
+							 <type>text</type>
+							 <cols>int,trim</cols>
+							 <rows>3</rows>
+							 <enableRichtext>true</enableRichtext>
+						</config>
 					</text.bottom>
 					<footer.text>
-						<TCEforms>
-							<label>Card Footer</label>
-							<config>
-								<type>input</type>
-								<size>48</size>
-								<max>99</max>
-								<eval>trim</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Card Footer</label>
+						<config>
+							<type>input</type>
+							<size>48</size>
+							<max>99</max>
+							<eval>trim</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</footer.text>
 				</el>
 			</ROOT>

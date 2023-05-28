@@ -1,280 +1,244 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<general>
 			<ROOT>
+				<sheetTitle>General</sheetTitle>
 				<type>array</type>
-				<TCEforms>
-					<sheetTitle>General</sheetTitle>
-				</TCEforms>
 				<el>
 					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Hiding / Display Elements</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Hidden only on xs</numIndex>
+									<numIndex index="value">d-none d-sm-block</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Hidden on sm and down</numIndex>
+									<numIndex index="value">d-none d-md-block</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Hidden on md and down</numIndex>
+									<numIndex index="value">d-none d-lg-block</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Hidden on lg and down</numIndex>
+									<numIndex index="value">d-none d-xl-block</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Hidden only on xl</numIndex>
+									<numIndex index="value">d-xl-none</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Visible only on xs</numIndex>
+									<numIndex index="value">d-block d-sm-none</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Visible sm and down</numIndex>
+									<numIndex index="value">d-block d-md-none</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Visible md and down</numIndex>
+									<numIndex index="value">d-block d-lg-none</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Visible lg and down</numIndex>
+									<numIndex index="value">d-block d-xl-none</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</hidden>
 					<sliderStyle>
-						<TCEforms>
-							<label>Slider Style</label>
-							<onChange>reload</onChange>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">Default</numIndex>
-										<numIndex index="1">Default</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Custom one</numIndex>
-										<numIndex index="1">CustomOne</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Custom two</numIndex>
-										<numIndex index="1">CustomTwo</numIndex>
-									</numIndex>
-								</items>
-								<default>Default</default>
-							</config>
-						</TCEforms>
+						<label>Slider Style</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">Default</numIndex>
+									<numIndex index="value">Default</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Custom one</numIndex>
+									<numIndex index="value">CustomOne</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Custom two</numIndex>
+									<numIndex index="value">CustomTwo</numIndex>
+								</numIndex>
+							</items>
+							<default>Default</default>
+						</config>
 					</sliderStyle>
 					<width>
-						<TCEforms>
-							<label>max. Image width</label>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>4</max>
-								<default>576</default>
-								<eval>int</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>max. Image width</label>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>4</max>
+							<default>576</default>
+							<eval>int</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</width>
 					<origImage>
-						<TCEforms>
-							<label>Use Original Image</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Use Original Image</label>
+						<config>
+							<type>check</type>
+						</config>
 					</origImage>
 					<ratio>
-						<TCEforms>
-							<label>Image ratio - e.g.: 37:9</label>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>5</max>
-								<default>16:9</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Image ratio - e.g.: 37:9</label>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>5</max>
+							<default>16:9</default>
+							<checkbox>0</checkbox>
+						</config>
 					</ratio>
 					<slidesPerView>
-						<TCEforms>
-							<label>Slides per view</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>4</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>4</default>
+							<checkbox>0</checkbox>
+						</config>
 					</slidesPerView>
 					<breakpoints576>
-						<TCEforms>
-							<label>Slides per view - breakpoint > 576px</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>2</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view - breakpoint > 576px</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>2</default>
+							<checkbox>0</checkbox>
+						</config>
 					</breakpoints576>
 					<breakpoints768>
-						<TCEforms>
-							<label>Slides per view - breakpoint > 768px</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>3</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view - breakpoint > 768px</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>3</default>
+							<checkbox>0</checkbox>
+						</config>
 					</breakpoints768>
 					<breakpoints992>
-						<TCEforms>
-							<label>Slides per view - breakpoint > 992px</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>4</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per view - breakpoint > 992px</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>4</default>
+							<checkbox>0</checkbox>
+						</config>
 					</breakpoints992>
 					<slidesPerGroup>
-						<TCEforms>
-							<label>Slides per group</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>1</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Slides per group</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>1</default>
+							<checkbox>0</checkbox>
+						</config>
 					</slidesPerGroup>
 					<spaceBetween>
-						<TCEforms>
-							<label>Space between</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>20</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Space between</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>20</default>
+							<checkbox>0</checkbox>
+						</config>
 					</spaceBetween>
 					<loop>
-						<TCEforms>
-							<label>Loop</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Loop</label>
+						<description>Amount of slides in loop mode should be at least 2x of slidesPerView value.</description>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</loop>
 					<navigation>
-						<TCEforms>
-							<label>Navigation</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Navigation</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</navigation>
 					<pagination>
-						<TCEforms>
-							<label>Pagination</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Pagination</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</pagination>
 					<autoplay>
-						<TCEforms>
-							<label>Autoplay</label>
-							<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
-							<onChange>reload</onChange>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Autoplay</label>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+						</config>
 					</autoplay>
 					<delay>
-						<TCEforms>
-							<label>Delay between transitions (in ms)</label>
-							<displayCond>
-								<and>
-									<value1>FIELD:general.sliderStyle:=:Default</value1>
-									<value2>FIELD:general.autoplay:=:1</value2>
-								</and>
-							</displayCond>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<default>5000</default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Delay between transitions (in ms)</label>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.autoplay:=:1</value2>
+							</and>
+						</displayCond>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<default>5000</default>
+							<checkbox>0</checkbox>
+						</config>
 					</delay>
 					<swiperCss>
-						<TCEforms>
-							<label>Swiper Css</label>
-							<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
-							<config>
-								<type>text</type>
-								<size>500</size>
-								<max>9999</max>
-								<default></default>
-							</config>
-						</TCEforms>
+						<label>Swiper Css</label>
+						<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
+						<config>
+							<type>text</type>
+							<size>500</size>
+							<max>9999</max>
+							<default></default>
+						</config>
 					</swiperCss>
 					<swiperJs>
-						<TCEforms>
-							<label>Swiper JS</label>
-							<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
-							<config>
-								<type>text</type>
-								<size>500</size>
-								<max>9999</max>
-								<default></default>
-							</config>
-						</TCEforms>
+						<label>Swiper JS</label>
+						<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
+						<config>
+							<type>text</type>
+							<size>500</size>
+							<max>9999</max>
+							<default></default>
+						</config>
 					</swiperJs>
 					<zoom>
-						<TCEforms>
-							<label>Enable open in lightbox</label>
-							<description>Not working with a link inside the carousel content.</description>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Enable open in lightbox</label>
+						<description>Not working with a link inside the carousel content.</description>
+						<config>
+							<type>check</type>
+						</config>
 					</zoom>
 				</el>
 			</ROOT>

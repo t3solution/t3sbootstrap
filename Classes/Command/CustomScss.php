@@ -211,7 +211,7 @@ class CustomScss extends CommandBase
 			}
 			$customContent = $name == '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' :	 '// Your own SCSS';
 			if ( $settings['bootswatch'] ) {
-				$customContent = file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
+				$customContent = @file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
 				if ($name == '_variables') {
 					$customContent = str_replace(' !default', '', $customContent);
 				}

@@ -1,147 +1,88 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
+				<sheetTitle>Settings</sheetTitle>
 				<type>array</type>
-				<TCEforms>
-					<sheetTitle>Settings</sheetTitle>
-				</TCEforms>
 				<el>
-<!--
-					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
-					</hidden>
--->
 					<active>
-						<TCEforms>
-							<label>Active</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Active</label>
+						<config>
+							<type>check</type>
+						</config>
 					</active>
 
 					<style>
-						<TCEforms>
-							<label>Button Style</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isButton</displayCond>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-										<numIndex index="1">primary</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
-										<numIndex index="1">secondary</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-										<numIndex index="1">success</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-										<numIndex index="1">info</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-										<numIndex index="1">warning</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-										<numIndex index="1">danger</numIndex>
-									</numIndex>
+						<label>Button Style</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isButton</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
+									<numIndex index="value">primary</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
+									<numIndex index="value">secondary</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
+									<numIndex index="value">success</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
+									<numIndex index="value">info</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
+									<numIndex index="value">warning</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
+									<numIndex index="value">danger</numIndex>
+								</numIndex>
 
-									<numIndex index="6" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:light</numIndex>
-										<numIndex index="1">light</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:dark</numIndex>
-										<numIndex index="1">dark</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:link</numIndex>
-										<numIndex index="1">link</numIndex>
-									</numIndex>
-								</items>
-								<default>primary</default>
-							</config>
-						</TCEforms>
+								<numIndex index="6" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:light</numIndex>
+									<numIndex index="value">light</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:dark</numIndex>
+									<numIndex index="value">dark</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:link</numIndex>
+									<numIndex index="value">link</numIndex>
+								</numIndex>
+							</items>
+							<default>primary</default>
+						</config>
 					</style>
 
 					<collapsibleByPid>
-						<TCEforms>
-							<label>Page for the Collapsible Element content (colPos=0)</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>3</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-										<default>
-											<searchWholePhrase>1</searchWholePhrase>
-										</default>
-									</suggest>
-								</wizards>
-							</config>
-						</TCEforms>
+						<label>Page for the Collapsible Element content (colPos=0)</label>
+						<config>
+							<type>group</type>
+							<internal_type>db</internal_type>
+							<allowed>pages</allowed>
+							<size>3</size>
+							<maxitems>1</maxitems>
+							<minitems>0</minitems>
+							<show_thumbs>1</show_thumbs>
+							<wizards>
+								<suggest>
+									<type>suggest</type>
+									<default>
+										<searchWholePhrase>1</searchWholePhrase>
+									</default>
+								</suggest>
+							</wizards>
+						</config>
 					</collapsibleByPid>
 				</el>
 			</ROOT>

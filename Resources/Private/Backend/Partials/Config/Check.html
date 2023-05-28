@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<div class="form-group row">
+<div class="row mb-3">
 	<div class="col-sm-3">
-		{field.label}
+<span  style="font-weight: 600;">{field.label}</span>
 		<f:if condition="{compare.{field.property}}">
 			<br/><small class="text-primary">{compare.{field.property}}</small>
 		</f:if>
@@ -12,9 +12,9 @@
 	<div class="col-sm-9">
 		<div class="form-check">
 			<f:form.checkbox id="{field.property}" class="form-check-input" property="{field.property}" value="1" />
-			<f:if condition="{field.config.items.1.0}">
+			<f:if condition="{field.config.items.0.label}">
 				<label class="form-check-label" for="{field.property}" style="display: inline; font-weight: normal;">
-					{field.config.items.1.0 -> f:format.raw()}
+					{field.config.items.0.label -> f:format.raw()}
 				</label>
 			</f:if>
 			<br />

@@ -236,10 +236,6 @@ html {
 </f:asset.script>
 </f:if>
 
-<f:if condition="{settings.webp}">
-	<f:asset.script identifier="t3sbmodernizr" src="EXT:t3sbootstrap/Resources/Public/Contrib/Modernizr/modernizr.js" />
-</f:if>
-
 <f:if condition="!{settings.fontawesome.cdn}">
 	<f:if condition="{settings.fontawesome.extconf} == '1' || {settings.fontawesome.extconf} == '3' ">
 		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" />

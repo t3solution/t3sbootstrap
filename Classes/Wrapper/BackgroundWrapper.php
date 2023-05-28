@@ -35,7 +35,6 @@ class BackgroundWrapper implements SingletonInterface
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$files = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']);
 		$file = !empty($files) && is_array($files) ? $files[0] : '';
-
 		// media
 		if ( $file ) {
 			// VIDEO type
@@ -95,7 +94,7 @@ class BackgroundWrapper implements SingletonInterface
 						$ratio = end(explode('/', $flexconf['aspectRatio'])).'x9';
 						$ratioArr = explode('x', $ratio);
 						$x = $ratio;
-						$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
+						$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';
 						$processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
 						$processedData['localVideo']['class'] = ' ratio ratio-'.$ratio;
 						$processedData['localVideo']['overlayChild'] = $overlayChild;
@@ -108,23 +107,25 @@ class BackgroundWrapper implements SingletonInterface
 
 			} elseif ( $file->getType() === 2 ) {
 			// IMAGE
+
+
 				// orig. image option in flexform
-				if ($flexconf['origImage']) {
+				if (!empty($flexconf['origImage'])) {
 					$processedData['file'] = $file;
 					$processedData['ingWidth'] = $flexconf['width'] ? $flexconf['width'] : 1296;
 				} else {
 					$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp, $bgMediaQueries);
 					$processedData['bgImage'] = $bgImage;
-					if ($flexconf['paddingTopBottom']) {
+					if (!empty($flexconf['paddingTopBottom'])) {
 						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 0;';
 					}
 				}
 				// align content items
-				$processedData['alignItem'] = $flexconf['alignItem'] ? ' '.$flexconf['alignItem'] :'';
+				$processedData['alignItem'] = !empty($flexconf['alignItem']) ? ' '.$flexconf['alignItem'] :'';
 
 				// image raster
-				$processedData['imageRaster'] = $flexconf['imageRaster'] ? 'multiple-' : '';
+				$processedData['imageRaster'] = !empty($flexconf['imageRaster']) ? 'multiple-' : '';
 
 				// Text color - overlay (
 				if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
@@ -134,9 +135,9 @@ class BackgroundWrapper implements SingletonInterface
 				$styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
 				$processedData['bgColorOverlay'] = $styleHelper->getBgColor($processedData['data'], FALSE);
 
-				$filter = $flexconf['imgGrayscale'] ? ' grayscale('.$flexconf['imgGrayscale'].'%) ' : '';
-				$filter .= $flexconf['imgSepia'] ? ' sepia('.$flexconf['imgSepia'].'%) ' : '';
-				$filter .= $flexconf['imgOpacity'] && $flexconf['imgOpacity'] != 100 ? ' opacity('.$flexconf['imgOpacity'].'%) ' : '';
+				$filter = !empty($flexconf['imgGrayscale']) ? ' grayscale('.$flexconf['imgGrayscale'].'%) ' : '';
+				$filter .= !empty($flexconf['imgSepia']) ? ' sepia('.$flexconf['imgSepia'].'%) ' : '';
+				$filter .= !empty($flexconf['imgOpacity']) && $flexconf['imgOpacity'] != 100 ? ' opacity('.$flexconf['imgOpacity'].'%) ' : '';
 
 				if ($filter)
 				$processedData['style'] .= 'filter: '.trim($filter).';';

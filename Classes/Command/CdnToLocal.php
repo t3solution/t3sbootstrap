@@ -61,15 +61,12 @@ class CdnToLocal extends CommandBase
 		# check FA version & settings
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 		if ( !empty($extConf['fontawesomeCss']) ) {
-			if ( (int)$extConf['fontawesomeCss'] < 3 ) {
-				# v5
-				if ( (int)$settings['cdn']['fontawesome'] > 5 ) {
-					$settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome5latest'];
-				}
-			} elseif ( (int)$extConf['fontawesomeCss'] > 2 ) {
+			if ( (int)$extConf['fontawesomeCss'] > 2 ) {
 				# v6
 				if ( (int)$settings['cdn']['fontawesome'] < 6 ) {
 					$settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome6latest'];
+				} else {
+					$settings['cdn']['fontawesome'] = (int)$settings['cdn']['fontawesome'];					
 				}
 			}
 		} else {

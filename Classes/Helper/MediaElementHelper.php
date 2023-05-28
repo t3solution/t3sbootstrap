@@ -62,6 +62,7 @@ class MediaElementHelper implements SingletonInterface
 			// Gallery row with 25, 33, 50, 66, 75 or 100%
 			$processedData = $galleryUtility->getGalleryRowWidth( $processedData );
 			$processedData = $galleryUtility->getGalleryClasses( $processedData, $breakpoint );
+
 		} else {
 			$processedData['addmedia']['figureclass'] .= !empty($processedData['data']['image_zoom']) ? ' gallery' : '';
 		}

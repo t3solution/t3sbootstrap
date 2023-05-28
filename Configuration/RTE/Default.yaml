@@ -1,211 +1,115 @@
+# Load default processing options
 imports:
-    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
-    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
-    - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+    - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Processing.yaml' }
+    - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml' }
+    - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml' }
 
+
+
+
+# Add configuration for the editor
+# For complete documentation see https://ckeditor.com/docs/ckeditor5/latest/features/index.html
 editor:
 
   config:
-    contentsCss: "EXT:t3sbootstrap/Resources/Public/Backend/t3sbootstrap.css"
 
-    allowedContent: true
+    contentsCss: 'EXT:t3sbootstrap/Resources/Public/Backend/RTE/t3sbootstrap.css'
 
-    extraAllowedContent:
-      - dd
-      - dl
-      - dt
+    toolbar:
+      items:
+        - selectAll
+        - '|'
+        - undo
+        - redo
+        - '|'
+        - bold
+        - italic
+        - subscript
+        - superscript
+        - softhyphen
+        - '|'
+        - bulletedList
+        - numberedList
+        - blockQuote
+        - '|'
+        - link
+        - '|'
+        - removeFormat
+        - undo
+        - redo
+        - '|'
+        - horizontalLine
+        - sourceEditing
+        - '-'
+        - style
+        - heading
+        - '|'
+        - alignment
+        - findAndReplace
+        - insertTable
+        - specialCharacters
+        - fontFamily
+        - essentials
+        - autoformat
 
-    stylesSet:
-      # Blockstile
-      - { name: "Size: Lead", element: "p", attributes: { 'class': 'lead' } }
-      - { name: "Size: Small", element: "p", attributes: { 'class': 'small' } }
-      - { name: "Nowrap", element: "p", attributes: { 'class': 'text-nowrap' } }
-
-      - { name: "h2-style", element: "p", attributes: { 'class': 'h2' } }
-      - { name: "h3-style", element: "p", attributes: { 'class': 'h3' } }
-      - { name: "h4-style", element: "p", attributes: { 'class': 'h4' } }
-      - { name: "h5-style", element: "p", attributes: { 'class': 'h5' } }
-      - { name: "h6-style", element: "p", attributes: { 'class': 'h6' } }
-
-      # Textstile
-      - { name: "Text: small", element: "span", attributes: { 'class': 'small' } }
-      - { name: "Text: Mark", element: "mark" }
-      - { name: "Text: Del", element: "del" }
-      - { name: "Text: Ins", element: "ins" }
-      - { name: "Text: Code", element: "code" }
-      - { name: "Text: Primary", element: "span", attributes: { 'class': 'text-primary' } }
-      - { name: "Text: Secondary", element: "span", attributes: { 'class': 'text-secondary' } }
-      - { name: "Text: Success", element: "span", attributes: { 'class': 'text-success' } }
-      - { name: "Text: Danger", element: "span", attributes: { 'class': 'text-danger' } }
-      - { name: "Text: Warning", element: "span", attributes: { 'class': 'text-warning' } }
-      - { name: "Text: Info", element: "span", attributes: { 'class': 'text-info' } }
-      - { name: "Text: Light", element: "span", attributes: { 'class': 'text-light' } }
-      - { name: "Text: Dark", element: "span", attributes: { 'class': 'text-dark' } }
-      - { name: "Address", element: "address" }
-      - { name: "Text: Zitat", element: "blockquote" ,attributes: { 'class': 'blockquote' }}
-      - { name: "Text: Zitat center", element: "blockquote" ,attributes: { 'class': 'blockquote text-center' }}
-      - { name: "Text: Zitat right", element: "blockquote" ,attributes: { 'class': 'blockquote text-end' }}
-
-      - { name: "Text: fw-bold", element: "span", attributes: { 'class': 'fw-bold' } }
-      - { name: "Text: fw-bolder", element: "span", attributes: { 'class': 'fw-bolder' } }
-      - { name: "Text: fw-semibold", element: "span", attributes: { 'class': 'fw-semibold' } }
-      - { name: "Text: fw-normal", element: "span", attributes: { 'class': 'fw-normal' } }
-      - { name: "Text: fw-light", element: "span", attributes: { 'class': 'fw-light' } }
-      - { name: "Text: fw-lighter", element: "span", attributes: { 'class': 'fw-lighter' } }
-      - { name: "Text: fst-italic", element: "span", attributes: { 'class': 'fst-italic' } }
-      - { name: "Text: fst-normal", element: "span", attributes: { 'class': 'fst-normal' } }
-
-      - { name: "Text: h2-style", element: "span", attributes: { 'class': 'h2' } }
-      - { name: "Text: h3-style", element: "span", attributes: { 'class': 'h3' } }
-      - { name: "Text: h4-style", element: "span", attributes: { 'class': 'h4' } }
-      - { name: "Text: h5-style", element: "span", attributes: { 'class': 'h5' } }
-      - { name: "Text: h6-style", element: "span", attributes: { 'class': 'h6' } }
-
-      - { name: "Lowercase", element: "p", attributes: { 'class': 'text-lowercase' } }
-      - { name: "Uppercase", element: "p", attributes: { 'class': 'text-uppercase' } }
-      - { name: "Capitalize", element: "p", attributes: { 'class': 'text-capitalize' } }
-
-      - { name: "Lowercase", element: "p", attributes: { 'class': 'text-lowercase' } }
-      - { name: "Uppercase", element: "p", attributes: { 'class': 'text-uppercase' } }
-      - { name: "Capitalize", element: "p", attributes: { 'class': 'text-capitalize' } }
-
-      - { name: "Color: Primary", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-primary' } }
-      - { name: "Color: Secondary", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-secondary' } }
-      - { name: "Color: Success", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-success' } }
-      - { name: "Color: Danger", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-danger' } }
-      - { name: "Color: Warning", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-warning' } }
-      - { name: "Color: Info", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-info' } }
-      - { name: "Color: Light", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-light' } }
-      - { name: "Color: Dark", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'text-dark' } }
-
-      - { name: "Line height: lh-1", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-1' } }
-      - { name: "Line height: lh-sm", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-sm' } }
-      - { name: "Line height: lh-base", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-base' } }
-      - { name: "Line height: lh-lg", element: ['h2', 'h3', 'h4', 'h5', 'p', 'td', 'th', 'div'], attributes: { 'class': 'lh-lg' } }
-
-      #Tabellen
-      - { name: "Table: Hover", element: "table", attributes: { 'class': 'table table-hover' } }
-      - { name: "Table: Striped", element: "table", attributes: { 'class': 'table table-striped' } }
-      - { name: "Table: Bordered", element: "table", attributes: { 'class': 'table table-bordered' } }
-      - { name: "Table: Small", element: "table", attributes: { 'class': 'table table-sm' } }
-      - { name: "Table: Inverse", element: "table", attributes: { 'class': 'table table-inverse' } }
-
-      # Tabellen-Zeilen
-      - { name: "Row: Active", element: "tr", attributes: { 'class': 'table-active' } }
-      - { name: "Row: Primary", element: "tr", attributes: { 'class': 'table-primary' } }
-      - { name: "Row: Secondary", element: "tr", attributes: { 'class': 'table-secondary' } }
-      - { name: "Row: Success", element: "tr", attributes: { 'class': 'table-success' } }
-      - { name: "Row: Danger", element: "tr", attributes: { 'class': 'table-danger' } }
-      - { name: "Row: Warning", element: "tr", attributes: { 'class': 'table-warning' } }
-      - { name: "Row: Info", element: "tr", attributes: { 'class': 'table-info' } }
-      - { name: "Row: Light", element: "tr", attributes: { 'class': 'table-light' } }
-      - { name: "Row: Dark", element: "tr", attributes: { 'class': 'table-dark' } }
-
-      # Alerts
-      - { name: "Alert: Primary", element: "div", attributes: { 'class': 'alert alert-primary' } }
-      - { name: "Alert: Secondary", element: "div", attributes: { 'class': 'alert alert-secondary' } }
-      - { name: "Alert: Success", element: "div", attributes: { 'class': 'alert alert-success' } }
-      - { name: "Alert: Danger", element: "div", attributes: { 'class': 'alert alert-danger' } }
-      - { name: "Alert: Warning", element: "div", attributes: { 'class': 'alert alert-warning' } }
-      - { name: "Alert: Info", element: "div", attributes: { 'class': 'alert alert-info' } }
-      - { name: "Alert: Light", element: "div", attributes: { 'class': 'alert alert-light' } }
-      - { name: "Alert: Dark", element: "div", attributes: { 'class': 'alert alert-dark' } }
-
-      # Buttons
-      - { name: "Button: Primary", element: "a", attributes: { 'class': 'btn btn-primary' } }
-      - { name: "Button: Secondary", element: "a", attributes: { 'class': 'btn btn-secondary' } }
-      - { name: "Button: Success", element: "a", attributes: { 'class': 'btn btn-success' } }
-      - { name: "Button: Danger", element: "a", attributes: { 'class': 'btn btn-danger' } }
-      - { name: "Button: Warning", element: "a", attributes: { 'class': 'btn btn-warning' } }
-      - { name: "Button: Info", element: "a", attributes: { 'class': 'btn btn-info' } }
-      - { name: "Button: Light", element: "a", attributes: { 'class': 'btn btn-light' } }
-      - { name: "Button: Dark", element: "a", attributes: { 'class': 'btn btn-dark' } }
-
-      # Badges
-      - { name: "Badge: Primary", element: "span", attributes: { 'class': 'badge bg-primary' } }
-      - { name: "Badge: Secondary", element: "span", attributes: { 'class': 'badge bg-secondary' } }
-      - { name: "Badge: Success", element: "span", attributes: { 'class': 'badge bg-success' } }
-      - { name: "Badge: Danger", element: "span", attributes: { 'class': 'badge bg-danger' } }
-      - { name: "Badge: Warning", element: "span", attributes: { 'class': 'badge bg-warning' } }
-      - { name: "Badge: Info", element: "span", attributes: { 'class': 'badge bg-info' } }
-      - { name: "Badge: Light", element: "span", attributes: { 'class': 'badge bg-light' } }
-      - { name: "Badge: Dark", element: "span", attributes: { 'class': 'badge bg-dark' } }
-
-      # Pill badges
-      - { name: "Pill badge: Primary", element: "span", attributes: { 'class': 'badge rounded-pill bg-primary' } }
-      - { name: "Pill badge: Secondary", element: "span", attributes: { 'class': 'badge rounded-pill bg-secondary' } }
-      - { name: "Pill badge: Success", element: "span", attributes: { 'class': 'badge rounded-pill bg-success' } }
-      - { name: "Pill badge: Danger", element: "span", attributes: { 'class': 'badge rounded-pill bg-danger' } }
-      - { name: "Pill badge: Warning", element: "span", attributes: { 'class': 'badge rounded-pill bg-warning' } }
-      - { name: "Pill badge: Info", element: "span", attributes: { 'class': 'badge rounded-pill bg-info' } }
-      - { name: "Pill badge: Light", element: "span", attributes: { 'class': 'badge rounded-pill bg-light' } }
-      - { name: "Pill badge: Dark", element: "span", attributes: { 'class': 'badge rounded-pill bg-dark' } }
-
-     # Listen
-      - { name: 'List: Unstyled', element: "ul", attributes: { 'class': 'list-unstyled' } }
-      - { name: 'List: Inline', element: "ul", attributes: { 'class': 'list-inline' } }
-      - { name: 'List: Disc', element: "ul", attributes: { 'style': 'list-style-type:disc' } }
-      - { name: 'List: Circle', element: "ul", attributes: { 'style': 'list-style-type:circle' } }
-      - { name: 'List: Square', element: "ul", attributes: { 'style': 'list-style-type:square' } }
-
-      - { name: 'List: Decimal', element: "ol", attributes: { 'style': 'list-style-type:decimal' } }
-      - { name: 'List: Decimal leading zero', element: "ol", attributes: { 'style': 'list-style-type:decimal-leading-zero' } }
-      - { name: 'List: Latin lower', element: "ol", attributes: { 'style': 'list-style-type:lower-latin' } }
-      - { name: 'List: Latin upper', element: "ol", attributes: { 'style': 'list-style-type:upper-latin' } }
-      - { name: 'List: Roman lower', element: "ol", attributes: { 'style': 'list-style-type:lower-roman' } }
-      - { name: 'List: Roman upper', element: "ol", attributes: { 'style': 'list-style-type:upper-roman' } }
-      - { name: 'List: Greek lower', element: "ol", attributes: { 'style': 'list-style-type:lower-greek' } }
-
-      - { name: 'List: Definition', element: "dl", attributes: { 'class': 'row' } }
-      - { name: 'List: Definition Terms', element: "dt", attributes: { 'class': 'col-sm-3' } }
-      - { name: 'List: Definition Descriptons', element: "dd", attributes: { 'class': 'col-sm-9' } }
+    heading:
+      options:
+        - { model: 'paragraph', title: 'Paragraph' }
+        - { model: 'heading2', view: 'h2', title: 'Heading 2' }
+        - { model: 'heading3', view: 'h3', title: 'Heading 3' }
+        - { model: 'heading4', view: 'h4', title: 'Heading 4' }
+        - { model: 'heading5', view: 'h5', title: 'Heading 5' }
+        - { model: 'heading6', view: 'h6', title: 'Heading 6' }
+        - { model: 'formatted', view: 'pre', title: 'Pre-Formatted Text' }
+        - { model: 'div', view: 'div', title: 'Div' }
 
 
-    format_tags: "p;h2;h3;h4;h5;h6;pre;div"
+    style:
+      definitions:
+        - { name: 'Small', element: 'small', classes: [] }
+        - { name: 'Color primary', element: 'span', classes: ['text-primary']  }
+        - { name: 'Color secondary', element: 'span', classes: ['text-secondary']  }
+        - { name: 'Color success', element: 'span', classes: ['text-success']  }
+        - { name: 'Color info', element: 'span', classes: ['text-info']  }
+        - { name: 'Color danger', element: 'span', classes: ['text-danger']  }
+        - { name: 'Color warning', element: 'span', classes: ['text-warning']  }
 
-    toolbarGroups:
-      - { name: clipboard, groups: [clipboard, undo] }
-      - { name: editing,   groups: [find, selection, spellchecker] }
-      - { name: links }
-      - { name: insert }
-      - { name: tools }
-      - { name: table }
-      - { name: tabletools }
-      - { name: document,  groups: [ mode, document, doctools ] }
-      - { name: others }
-      - "/"
-      - { name: basicstyles, groups: [ basicstyles, cleanup ] }
-      - { name: paragraph,   groups: [ list, indent, blocks, align, showborders ] }
-      - "/"
-      - { name: styles }
+        - { name: 'Lead', element: 'p', classes: ['lead'] }
 
-    justifyClasses:
-      - text-start
-      - text-center
-      - text-end
-      - text-justify
+        - { name: 'Color primary', element: 'p', classes: ['text-primary']  }
+        - { name: 'Color secondary', element: 'p', classes: ['text-secondary']  }
+        - { name: 'Color success', element: 'p', classes: ['text-success']  }
+        - { name: 'Color info', element: 'p', classes: ['text-info']  }
+        - { name: 'Color danger', element: 'p', classes: ['text-danger']  }
+        - { name: 'Color warning', element: 'p', classes: ['text-warning']  }
 
-    extraPlugins:
-      - justify
-      - find
-      - copyformatting
-      - specialchar
-      - showblocks
+    alignment:
+      options:
+        - { name: 'left', className: 'text-left' }
+        - { name: 'center', className: 'text-center' }
+        - { name: 'right', className: 'text-right' }
+        - { name: 'justify', className: 'text-justify' }
 
-    removePlugins:
-      - image
+    table:
+      defaultHeadings: { rows: 1 }
+      contentToolbar:
+        - tableColumn
+        - tableRow
+        - mergeTableCells
+        - tableProperties
+        - tableCellProperties
+
+    fontfamily:
+      options:
+        - 'default'
+        - 'Arial, Helvetica, sans-serif'
+      supportAllValues: true
 
     removeButtons:
       - Anchor
+      - Underline
+      - Strike
 
-    forcePasteAsPlainText: true
-
-    processing:
-      allowTags:
-        - s
-        - u
-        - mark
-
-      HTMLparser_db:
-        noAttrib:
-
+    removePlugins:
+      - image
+       

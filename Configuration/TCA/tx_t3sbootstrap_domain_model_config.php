@@ -5,11 +5,13 @@ return [
 		'label' => 'homepage_uid',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
 		'enablecolumns' => [],
 		'hideTable' => 1,
 		'searchFields' => '',
-		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif'
+		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
 	],
 	'types' => [
 		'1' => ['showitem' => ''],
@@ -30,10 +32,8 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Use configuration from rootline (slide) if enabled or from rootpage if disabled.
-						<br /> If your installation only needs one configuration, this should be disabled!'
-					]
+                    ['label' => 'Use configuration from rootline (slide) if enabled or from rootpage if disabled.
+						<br /> If your installation only needs one configuration, this should be disabled!',],
 				]
 			]
 		],
@@ -44,10 +44,8 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'The configuration from rootline (slide) if enabled or from rootpage will be overwritten.
-						<br /> This option is only needed in rare cases on subpages only!'
-					]
+                    ['label' => 'The configuration from rootline (slide) if enabled or from rootpage will be overwritten.
+						<br /> This option is only needed in rare cases on subpages only!',],
 				]
 			]
 		],
@@ -58,9 +56,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled'
-					]
+                    ['label' => 'disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled',],
 				]
 			]
 		],
@@ -71,9 +67,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'compress and concatenate JS and CSS - did not work with CDN'
-					]
+                    ['label' => 'compress and concatenate JS and CSS - did not work with CDN',],
 				]
 			]
 		],
@@ -84,9 +78,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'if set, the stdWrap property prefixComment will be disabled'
-					]
+                    ['label' => 'if set, the stdWrap property prefixComment will be disabled',],
 				]
 			]
 		],
@@ -97,9 +89,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'shows an error message if a container is expected but no container has been selected'
-					]
+                    ['label' => 'shows an error message if a container is expected but no container has been selected',],
 				]
 			]
 		],
@@ -143,12 +133,12 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['pt-1', 'pt-1'],
-					['pt-2', 'pt-2'],
-					['pt-3', 'pt-3'],
-					['pt-4', 'pt-4'],
-					['pt-5', 'pt-5'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'pt-1', 'value' => 'pt-1',],
+					['label' => 'pt-2', 'value' => 'pt-2',],
+					['label' => 'pt-3', 'value' => 'pt-3',],
+					['label' => 'pt-4', 'value' => 'pt-4',],
+					['label' => 'pt-5', 'value' => 'pt-5',],
 				],
 			]
 		],
@@ -162,12 +152,12 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['mt-1', 'mt-1'],
-					['mt-2', 'mt-2'],
-					['mt-3', 'mt-3'],
-					['mt-4', 'mt-4'],
-					['mt-5', 'mt-5'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'mt-1', 'value' => 'mt-1',],
+					['label' => 'mt-2', 'value' => 'mt-2',],
+					['label' => 'mt-3', 'value' => 'mt-3',],
+					['label' => 'mt-4', 'value' => 'mt-4',],
+					['label' => 'mt-5', 'value' => 'mt-5',],	
 				],
 			]
 		],
@@ -181,9 +171,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['Border spinner [border]', 'border'],
-					['Growing spinner [grow]', 'grow'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'Border spinner [border]', 'value' => 'border',],
+					['label' => 'Growing spinner [grow]', 'value' => 'grow',],
 				],
 			]
 		],
@@ -197,15 +187,15 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['current color', ''],
-					['primary', 'primary'],
-					['secondary', 'secondary'],
-					['success', 'success'],
-					['danger', 'danger'],
-					['warning', 'warning'],
-					['info', 'info'],
-					['light', 'light'],
-					['dark', 'dark'],
+					['label' => 'current color', 'value' => '',],
+					['label' => 'primary', 'value' => 'primary',],
+					['label' => 'secondary', 'value' => 'secondary',],
+					['label' => 'success', 'value' => 'success',],
+					['label' => 'danger', 'value' => 'danger',],
+					['label' => 'warning', 'value' => 'warning',],
+					['label' => 'info', 'value' => 'info',],
+					['label' => 'light', 'value' => 'light',],
+					['label' => 'dark', 'value' => 'dark',],
 				],
 			]
 		],
@@ -218,10 +208,10 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 0],
-					['Baguettbox [1]', 1],
-					['Halkabox [2]', 2],
-					['GLightbox [3]', 3],
+					['label' => 'none', 'value' => '',],
+					['label' => 'Baguettbox', 'value' => 1,],
+					['label' => 'Halkabox [1]', 'value' => 2,],
+					['label' => 'GLightbox [1]', 'value' => 3,],
 				],
 			]
 		],
@@ -233,9 +223,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'in the center of an image on hover'
-					]
+                    ['label' => 'in the center of an image on hover',],
 				]
 			]
 		],
@@ -277,9 +265,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'activate/deaktivate scrollspy'
-					]
+                    ['label' => 'activate/deaktivate scrollspy',],
 				]
 			]
 		],
@@ -291,9 +277,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'for #sectionmenu, .submenu or .make-me-sticky'
-					]
+                    ['label' => 'for #sectionmenu, .submenu or .make-me-sticky',],
 				]
 			]
 		],
@@ -305,9 +289,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Shows FA icons in section menu'
-					]
+                    ['label' => 'Shows FA icons in section menu',],
 				]
 			]
 		],
@@ -319,9 +301,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Shows the section menu also in the mobile if enabled'
-					]
+                    ['label' => 'Shows the section menu also in the mobile if enabled',],
 				]
 			]
 		],
@@ -333,9 +313,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'first image from pages media'
-					]
+                    ['label' => 'first image from pages media',],
 				]
 			]
 		],
@@ -347,9 +325,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'rootline sliding for the background image'
-					]
+                    ['label' => 'rootline sliding for the background image',],
 				]
 			]
 		],
@@ -363,15 +339,15 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['current color', ''],
-					['primary', 'primary'],
-					['secondary', 'secondary'],
-					['success', 'success'],
-					['danger', 'danger'],
-					['warning', 'warning'],
-					['info', 'info'],
-					['light', 'light'],
-					['dark', 'dark'],
+					['label' => 'current color', 'value' => '',],
+					['label' => 'primary', 'value' => 'primary',],
+					['label' => 'secondary', 'value' => 'secondary',],
+					['label' => 'success', 'value' => 'success',],
+					['label' => 'danger', 'value' => 'danger',],
+					['label' => 'warning', 'value' => 'warning',],
+					['label' => 'info', 'value' => 'info',],
+					['label' => 'light', 'value' => 'light',],
+					['label' => 'dark', 'value' => 'dark',],
 				],
 			]
 		],
@@ -403,9 +379,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'loads the required CSS-style for links set in the RTE or used global if activated'
-					]
+                    ['label' => 'loads the required CSS-style for links set in the RTE or used global if activated',],
 				]
 			]
 		],
@@ -417,9 +391,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'rotate the cards on click (not on hover) if activated'
-					]
+                    ['label' => 'rotate the cards on click (not on hover) if activated',],
 				]
 			]
 		],
@@ -431,9 +403,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'display the date of the last modified content on current page in the footer'
-					]
+                    ['label' => 'display the date of the last modified content on current page in the footer',],
 				]
 			]
 		],
@@ -445,9 +415,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'better solution in the Template MenuRecentlyUpdated.html if enabled'
-					]
+                    ['label' => 'better solution in the Template MenuRecentlyUpdated.html if enabled',],
 				]
 			]
 		],
@@ -459,10 +427,10 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['Left align [start]', 'start'],
-					['Right align [end]', 'end'],
-					['Nav-scroller (only left align) [scroller]', 'scroller'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'Left align [start]', 'value' => 'start',],
+					['label' => 'Right align [end]', 'value' => 'end',],
+					['label' => 'Nav-scroller (only left align) [scroller]', 'value' => 'scroller',],
 				]
 			]
 		],
@@ -483,14 +451,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -521,9 +489,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['navbar-dark [dark]', 'dark'],
-					['navbar-light [light]', 'light'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'navbar-dark [dark]', 'value' => 'dark',],
+					['label' => 'navbar-light [light]', 'value' => 'light',],
 				]
 			]
 		],
@@ -568,10 +536,8 @@ return [
 			'accordion_id' => 3,
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Enable as right menu dropdown'
-					]
+				'items' => [
+                    ['label' => 'Enable as right menu dropdown',],
 				]
 			]
 		],
@@ -582,10 +548,8 @@ return [
 			'accordion_sub' => '3-1',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Enable for "One Page Layout"'
-					]
+				'items' => [
+                    ['label' => 'Enable for "One Page Layout"',],
 				]
 			]
 		],
@@ -596,10 +560,8 @@ return [
 			'accordion_sub' => '3-1',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Info: https://www.t3sbootstrap.de/demo/mega-menu/'
-					]
+				'items' => [
+                    ['label' => 'Info: https://www.t3sbootstrap.de/demo/mega-menu/',],
 				]
 			]
 		],
@@ -611,9 +573,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Enable spacer in dropdown'
-					]
+                    ['label' => 'Enable spacer in dropdown',],
 				]
 			]
 		],
@@ -624,10 +584,8 @@ return [
 			'accordion_sub' => '3-1',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Open dropdown on hover'
-					]
+				'items' => [
+                    ['label' => 'Open dropdown on hover',],
 				]
 			]
 		],
@@ -638,10 +596,8 @@ return [
 			'accordion_sub' => '3-1',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Clickable parent if dropdown menu is open'
-					]
+				'items' => [
+                    ['label' => 'Clickable parent if dropdown menu is open',],
 				]
 			]
 		],
@@ -653,10 +609,8 @@ return [
 			'info' => 'Hover is disabled by default if activated!',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Extra plus icon to open dropdown'
-					]
+				'items' => [
+                    ['label' => 'Extra plus icon to open dropdown',],
 				]
 			]
 		],
@@ -669,9 +623,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none [0]', 0],
-					['Slide In [1]', 1],
-					['Fade [2]', 2],
+					['label' => 'none', 'value' => 0,],
+					['label' => 'Slide In [1]', 'value' => 1,],
+					['label' => 'Fade [2]', 'value' => 2,],
 				]
 			]
 		],
@@ -682,10 +636,8 @@ return [
 			'accordion_sub' => '3-1',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Enable extra row(s) in the navbar - (fileadmin)/Resources/Private/Partials/Page/NavbarExtraRow.html'
-					]
+				'items' => [
+                    ['label' => 'Enable extra row(s) in the navbar - (fileadmin)/Resources/Private/Partials/Page/NavbarExtraRow.html',],
 				]
 			]
 		],
@@ -698,11 +650,11 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['As a link [link]', 'link'],
-					['As a heading [heading]', 'heading'],
-					['Just an image [image]', 'image'],
-					['Image and text [imgText]', 'imgText'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'As a link [link]', 'value' => 'link',],
+					['label' => 'As a heading [heading]', 'value' => 'heading',],
+					['label' => 'Just an image [image]', 'value' => 'image',],
+					['label' => 'Image and text [imgText]', 'value' => 'imgText',],
 				]
 			]
 		],
@@ -715,8 +667,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['left', 'left'],
-					['right', 'right'],
+					['label' => 'left', 'value' => 'left',],
+					['label' => 'right', 'value' => 'right',],					
 				]
 			]
 		],
@@ -749,26 +701,26 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['bg-light', 'light'],
-					['bg-light bg-gradient', 'light bg-gradient'],
-					['bg-dark', 'dark'],
-					['bg-dark bg-gradient', 'dark bg-gradient'],
-					['bg-primary', 'primary'],
-					['bg-primary bg-gradient', 'primary bg-gradient'],
-					['bg-secondary', 'secondary'],
-					['bg-secondary bg-gradient', 'secondary bg-gradient'],
-					['bg-success', 'success'],
-					['bg-success bg-gradient', 'success bg-gradient'],
-					['bg-danger', 'danger'],
-					['bg-danger bg-gradient', 'danger bg-gradient'],
-					['bg-warning', 'warning'],
-					['bg-warning bg-gradient', 'warning bg-gradient'],
-					['bg-info', 'info'],
-					['bg-info bg-gradient', 'info'],
-					['bg-white', 'white'],
-					['bg-body', 'body'],
-					['bg-transparent', 'transparent'],
-					['bg-color', 'color'],
+					['label' => 'bg-light', 'value' => 'light',],
+					['label' => 'bg-light bg-gradient', 'value' => 'light bg-gradient',],
+					['label' => 'bg-dark', 'value' => 'dark',],
+					['label' => 'bg-dark bg-gradient', 'value' => 'dark bg-gradient',],
+					['label' => 'bg-primary', 'value' => 'primary',],
+					['label' => 'bg-primary bg-gradient', 'value' => 'primary bg-gradient',],
+					['label' => 'bg-secondary', 'value' => 'secondary',],
+					['label' => 'bg-secondary bg-gradient', 'value' => 'bg-secondary bg-gradient',],
+					['label' => 'bg-success ', 'value' => 'success',],
+					['label' => 'bg-success bg-gradient', 'value' => 'success bg-gradient',],
+					['label' => 'bg-danger ', 'value' => 'danger',],
+					['label' => 'bg-danger bg-gradient', 'value' => 'danger bg-gradient',],
+					['label' => 'bg-warning ', 'value' => 'warning',],
+					['label' => 'bg-warning bg-gradient', 'value' => 'warning bg-gradient',],
+					['label' => 'bg-info ', 'value' => 'info',],
+					['label' => 'bg-info bg-gradient', 'value' => 'info bg-gradient',],
+					['label' => 'bg-white', 'value' => 'white',],
+					['label' => 'bg-body', 'value' => 'body',],
+					['label' => 'bg-transparent', 'value' => 'transparent',],
+					['label' => 'bg-color', 'value' => 'color',],
 				]
 			]
 		],
@@ -791,9 +743,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'create a transparent navbar which changes its style on scroll'
-					]
+                    ['label' => 'create a transparent navbar which changes its style on scroll',],           
 				]
 			]
 		],
@@ -806,35 +756,33 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none','value' => '',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
 		'navbar_innercontainer' => [
 			'exclude' => false,
 			'label' => 'Inner-Container',
-
-					'accordion_id' => 3,
-					'accordion_sub' => '3-4',
-
+			'accordion_id' => 3,
+			'accordion_sub' => '3-4',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				],
 				'size' => 1,
 				'maxitems' => 1
@@ -849,10 +797,10 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['default', ''],
-					['fixed-top', 'fixed-top'],
-					['fixed-bottom', 'fixed-bottom'],
-					['sticky-top', 'sticky-top'],
+					['label' => 'default','value' => '',],
+					['label' => 'fixed-top', 'value' => 'fixed-top',],
+					['label' => 'fixed-bottom', 'value' => 'fixed-bottom',],
+					['label' => 'sticky-top', 'value' => 'sticky-top',],
 				]
 			]
 		],
@@ -865,11 +813,11 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['left', 'left'],
-					['right', 'right'],
-					['center', 'center'],
-					['fill (every nav item will be the same width)', 'fill'],
-					['justified (all horizontal space will be occupied by nav links)', 'justified'],
+					['label' => 'left','value' => 'left',],
+					['label' => 'right','value' => 'right',],
+					['label' => 'center','value' => 'center',],
+					['label' => 'fill (every nav item will be the same width)','value' => 'fill',],
+					['label' => 'justified (all horizontal space will be occupied by nav links)','value' => 'justified',],
 				]
 			]
 		],
@@ -902,9 +850,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['Form only [form]', 'form'],
-					['Form & Button [button]', 'button'],
+					['label' => 'none','value' => '',],
+					['label' => 'Form only [form]','value' => 'form',],
+					['label' => 'Form & Button [button]','value' => 'button',],
 				]
 			]
 		],
@@ -918,9 +866,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['navbar-dark [dark]', 'dark'],
-					['navbar-light [light]', 'light'],
+					['label' => 'none','value' => '',],
+					['label' => 'navbar-dark [dark]','value' => 'dark',],
+					['label' => 'navbar-light [light]','value' => 'light',],
 				]
 			]
 		],
@@ -933,25 +881,25 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['bg-light', 'light'],
-					['bg-light bg-gradient', 'light bg-gradient'],
-					['bg-dark', 'dark'],
-					['bg-dark bg-gradient', 'dark bg-gradient'],
-					['bg-primary', 'primary'],
-					['bg-primary bg-gradient', 'primary bg-gradient'],
-					['bg-secondary', 'secondary'],
-					['bg-secondary bg-gradient', 'secondary bg-gradient'],
-					['bg-success', 'success'],
-					['bg-success bg-gradient', 'success bg-gradient'],
-					['bg-danger', 'danger'],
-					['bg-danger bg-gradient', 'danger bg-gradient'],
-					['bg-warning', 'warning'],
-					['bg-warning bg-gradient', 'warning bg-gradient'],
-					['bg-info', 'info'],
-					['bg-info bg-gradient', 'info'],
-					['bg-white', 'white'],
-					['bg-body', 'body'],
-					['bg-transparent', 'transparent'],
+					['label' => 'bg-light', 'value' => 'light',],
+					['label' => 'bg-light bg-gradient', 'value' => 'light bg-gradient',],
+					['label' => 'bg-dark', 'value' => 'dark',],
+					['label' => 'bg-dark bg-gradient', 'value' => 'dark bg-gradient',],
+					['label' => 'bg-primary', 'value' => 'primary',],
+					['label' => 'bg-primary bg-gradient', 'value' => 'primary bg-gradient',],
+					['label' => 'bg-secondary', 'value' => 'secondary',],
+					['label' => 'bg-secondary bg-gradient', 'value' => 'bg-secondary bg-gradient',],
+					['label' => 'bg-success ', 'value' => 'success',],
+					['label' => 'bg-success bg-gradient', 'value' => 'success bg-gradient',],
+					['label' => 'bg-danger ', 'value' => 'danger',],
+					['label' => 'bg-danger bg-gradient', 'value' => 'danger bg-gradient',],
+					['label' => 'bg-warning ', 'value' => 'warning',],
+					['label' => 'bg-warning bg-gradient', 'value' => 'warning bg-gradient',],
+					['label' => 'bg-info ', 'value' => 'info',],
+					['label' => 'bg-info bg-gradient', 'value' => 'info bg-gradient',],
+					['label' => 'bg-white', 'value' => 'white',],
+					['label' => 'bg-body', 'value' => 'body',],
+					['label' => 'bg-transparent', 'value' => 'transparent',],
 				]
 			]
 		],
@@ -965,12 +913,12 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['py-1', '1'],
-					['py-2', '2'],
-					['py-3', '3'],
-					['py-4', '4'],
-					['py-5', '5'],
-					['py-x', 'x'],
+					['label' => 'py-1', 'value' => '1',],
+					['label' => 'py-2', 'value' => '2',],
+					['label' => 'py-3', 'value' => '3',],
+					['label' => 'py-4', 'value' => '4',],
+					['label' => 'py-5', 'value' => '5',],
+					['label' => 'py-x', 'value' => 'x',],
 				],
 			]
 		],
@@ -983,8 +931,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['left', 'left'],
-					['right', 'right'],
+					['label' => 'left', 'value' => 'left',],
+					['label' => 'right', 'value' => 'right',],
+
 				]
 			]
 		],
@@ -995,10 +944,8 @@ return [
 			'label' => 'Animated Toggler',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Doing it with plain HTML and pure CSS - does not work with "Offcanvas"'
-					]
+				'items' => [
+                   ['label' => 'Doing it with plain HTML and pure CSS - does not work with "Offcanvas"',],  
 				]
 			]
 		],
@@ -1012,12 +959,12 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['Small (<= 576px) [sm]', 'sm'],
-					['Medium (<= 768px [md])', 'md'],
-					['Large (<= 992px) [lg]', 'lg'],
-					['Extra large (<= 1200px) [xl]', 'xl'],
-					['Extra extra large (<= 1400px) [xxl]', 'xxl'],
-					['Never expand [no]', 'no'],
+					['label' => 'Small (<= 576px) [sm]', 'value' => 'sm',],
+					['label' => 'Medium (<= 768px [md]', 'value' => 'md',],
+					['label' => 'Large (<= 992px) [lg]', 'value' => 'lg',],
+					['label' => 'Extra extra large (<= 1400px) [xxl]', 'value' => 'xl',],
+					['label' => 'Extra extra large (<= 1400px) [xxl]', 'value' => 'xxl',],
+					['label' => 'Never expand [no]', 'value' => 'no',],
 				]
 			]
 		],
@@ -1028,10 +975,8 @@ return [
 			'label' => 'Offcanvas',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Change navbar collapse to offcanvas on mobile screen'
-					]
+				'items' => [
+                   ['label' => 'Change navbar collapse to offcanvas on mobile screen',],  
 				]
 			]
 		],
@@ -1042,10 +987,8 @@ return [
 			'accordion_sub' => '3-7',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Setting is taken from the site configuration'
-					]
+				'items' => [
+                   ['label' => 'Setting is taken from the site configuration',],
 				]
 			]
 		],
@@ -1056,10 +999,8 @@ return [
 			'accordion_sub' => '3-7',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Fontawesome icon (globe) or current language with flag if enabled'
-					]
+				'items' => [
+                   ['label' => 'Fontawesome icon (globe) or current language with flag if enabled',],
 				]
 			]
 		],
@@ -1071,10 +1012,8 @@ return [
 			'accordion_sub' => '3-7',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => 'Show flags in the language menu if enabled'
-					]
+				'items' => [
+                   ['label' => 'Show flags in the language menu if enabled',],
 				]
 			]
 		],
@@ -1085,9 +1024,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => ''
-					]
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1100,9 +1037,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['only on this page [page]', 'page'],
-					['on this and all child pages (slide) [root]', 'root'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'only on this page [page]', 'value' => 'page',],
+					['label' => 'on this and all child pages (slide) [root]', 'value' => 'root',],
 				]
 			]
 		],
@@ -1115,13 +1052,13 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['67:9', '67x9'],
-					['56:9', '56x9'],
-					['46:9', '46x9'],
-					['37:9', '37x9'],
-					['29:9', '29x9'],
-					['21:9', '21x9'],
+					['label' => 'none', 'value' => '',],
+					['label' => '67:9', 'value' => '67x9',],
+					['label' => '56:9', 'value' => '56x9',],
+					['label' => '46:9', 'value' => '46x9',],
+					['label' => '37:9', 'value' => '37x9',],
+					['label' => '29:9', 'value' => '29x9',],
+					['label' => '21:9', 'value' => '21x9',],
 				]
 			]
 		],
@@ -1134,12 +1071,12 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['start', 'start'],
-					['end', 'end'],
-					['center', 'center'],
-					['baseline', 'baseline'],
-					['stretch', 'stretch'],
+					['label' => 'none', 'value' => '',],
+					['label' => 'start', 'value' => 'start',],
+					['label' => 'end', 'value' => 'end',],
+					['label' => 'center', 'value' => 'center',],
+					['label' => 'baseline', 'value' => 'baseline',],
+					['label' => 'stretch', 'value' => 'stretch',],
 				]
 			]
 		],
@@ -1150,11 +1087,11 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', '0'],
-					['rounded', 'rounded'],
-					['rounded-top', 'rounded-top'],
-					['rounded-bottom', 'rounded-bottom'],
-					['rounded-pill', 'rounded-pill'],
+					['label' => 'none', 'value' => '0',],
+					['label' => 'rounded', 'value' => 'rounded',],
+					['label' => 'rounded-top', 'value' => 'rounded-top',],
+					['label' => 'rounded-bottom', 'value' => 'rounded-bottom',],
+					['label' => 'rounded-pill', 'value' => 'rounded-pill',],
 				],
 				'size' => 1,
 				'maxitems' => 1
@@ -1167,9 +1104,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Content of Jumbotron "slide" through the rootline'
-					]
+                   ['label' => 'Content of Jumbotron "slide" through the rootline',],
 				]
 			]
 		],
@@ -1181,8 +1116,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['Above the NavBar [above]', 'above'],
-					['Below the NavBar [below]', 'below'],
+					['label' => 'Above the NavBar [above]', 'value' => 'above',],
+					['label' => 'Below the NavBar [below]', 'value' => 'below',],
 				]
 			]
 		],
@@ -1194,14 +1129,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -1214,8 +1149,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['inside [Inside]', 'Inside'],
-					['outside [Outside]', 'Outside'],
+					['label' => 'inside [Inside]', 'value' => 'Inside',],
+					['label' => 'outside [Outside]','value' => 'Outside',],
 				]
 			]
 		],
@@ -1244,10 +1179,8 @@ return [
 			'accordion_sub' => '4-1',
 			'config' => [
 				'type' => 'check',
-					'items' => [
-					'1' => [
-						'0' => ''
-					]
+				'items' => [
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1260,12 +1193,12 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none (bad solution)', ''],
-					['in the Jumbotron [jumbotron]', 'jumbotron'],
-					['in the Main Content [content]', 'content'],
-					['above the Breadcrumb [breadcrumb]', 'breadcrumb'],
-					['Image replacement [replace]', 'replace'],
-					['in the Expanded top content (if enabled) [expanded]', 'expanded'],
+					['label' => 'none (bad solution)','value' => '',],
+					['label' => 'in the Jumbotron [jumbotron]','value' => 'jumbotron',],
+					['label' => 'in the Main Content [content]','value' => 'content',],
+					['label' => 'above the Breadcrumb [breadcrumb]','value' => 'breadcrumb',],
+					['label' => 'Image replacement [replace]','value' => 'replace',],
+					['label' => 'in the Expanded top content (if enabled) [expanded]','value' => 'expanded',],
 				]
 			]
 		],
@@ -1277,10 +1210,10 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['default', ''],
-					['center', 'center'],
-					['right', 'right'],
-					['left', 'left'],
+					['label' => 'default','value' => '',],
+					['label' => 'center','value' => 'center',],
+					['label' => 'right','value' => 'right',],
+					['label' => 'left','value' => 'left',],
 				]
 			]
 		],
@@ -1292,14 +1225,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -1321,9 +1254,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'indicate the current page’s location within a navigational hierarchy'
-					]
+                   ['label' => 'indicate the current page’s location within a navigational hierarchy',],
 				]
 			]
 		],
@@ -1334,9 +1265,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Not on rootpage if enabled'
-					]
+                   ['label' => 'Not on rootpage if enabled',],
 				]
 			]
 		],
@@ -1347,9 +1276,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'FA icon instead of text for level=0 only if enabled'
-					]
+                   ['label' => 'FA icon instead of text for level=0 only if enabled',],
 				]
 			]
 		],
@@ -1360,9 +1287,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'To make the breadcrumb without rounded corners'
-					]
+                   ['label' => 'To make the breadcrumb without rounded corners',],
 				]
 			]
 		],
@@ -1373,9 +1298,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Show the breadcrumb menu below the content (only or also)'
-					]
+                   ['label' => 'Show the breadcrumb menu below the content (only or also)',],
 				]
 			]
 		],
@@ -1387,10 +1310,10 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['Above the NavBar [aboveNav]', 'aboveNav'],
-					['Below the NavBar [belowNav]', 'belowNav'],
-					['Above the Jumbotron [aboveJum]', 'aboveJum'],
-					['Below the Jumbotron [belowJum]', 'belowJum'],
+					['label' => 'Above the NavBar [aboveNav]', 'value' => 'aboveNav',],
+					['label' => 'Below the NavBar [belowNav]','value' => 'belowNav',],
+					['label' => 'Above the Jumbotron [aboveJum]', 'value' => 'aboveJum',],
+					['label' => 'Below the Jumbotron [belowJum]', 'value' => 'belowJum',],
 				]
 			]
 		],
@@ -1402,15 +1325,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
-
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -1422,8 +1344,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['inside', 'inside'],
-					['outside', 'outside'],
+					['label' => 'inside', 'value' => 'inside',],
+					['label' => 'outside', 'value' => 'outside',],
 				]
 			]
 		],
@@ -1445,9 +1367,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['submenu [Sub]', 'Sub'],
-					['sectionmenu [Section]', 'Section']
+					['label' => 'none', 'value' => '',],
+					['label' => 'submenu [Sub]','value' => 'Sub',],
+					['label' => 'sectionmenu [Section]', 'value' => 'Section',],
 				]
 			]
 		],
@@ -1460,9 +1382,9 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', ''],
-					['submenu [Sub]', 'Sub'],
-					['sectionmenu [Section]', 'Section']
+					['label' => 'none', 'value' => '',],
+					['label' => 'submenu [Sub]','value' => 'Sub',],
+					['label' => 'sectionmenu [Section]', 'value' => 'Section',],
 				]
 			]
 		],
@@ -1499,9 +1421,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Enable spacer'
-					]
+                   ['label' => 'Enable spacer',],
 				]
 			]
 		],
@@ -1512,9 +1432,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'content slide for colPos=1 if enabled'
-					]
+                   ['label' => 'content slide for colPos=1 if enabled',],
 				]
 			]
 		],
@@ -1525,9 +1443,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'content slide for colPos=2 if enabled'
-					]
+                   ['label' => 'content slide for colPos=2 if enabled',],
 				]
 			]
 		],
@@ -1549,8 +1465,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['above', 'above'],
-					['below', 'below']
+					['label' => 'above', 'value' => 'above',],
+					['label' => 'below','value' => 'below',],
 				],
 			]
 		],
@@ -1562,9 +1478,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'position the submenu at the top of the viewport'
-					]
+                   ['label' => 'position the submenu at the top of the viewport',],
 				]
 			]
 		],
@@ -1575,9 +1489,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => ''
-					]
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1588,9 +1500,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => ''
-					]
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1602,14 +1512,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -1621,8 +1531,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['inside [Inside]', 'Inside'],
-					['outside [Outside]', 'Outside'],
+					['label' => 'inside [Inside]', 'value' => 'Inside',],
+					['label' => 'outside [Outside]','value' => 'Outside',],
 				]
 			]
 		],
@@ -1642,9 +1552,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => ''
-					]
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1655,9 +1563,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Content of Expanded Content Bottom "slide" through the rootline'
-					]
+                   ['label' => 'Content of Expanded Content Bottom "slide" through the rootline',],
 				]
 			]
 		],
@@ -1669,14 +1575,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -1688,8 +1594,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['inside [Inside]', 'Inside'],
-					['outside [Outside]', 'Outside'],
+					['label' => 'inside [Inside]', 'value' => 'Inside',],
+					['label' => 'outside [Outside]', 'value' => 'Outside',],
 				]
 			]
 		],
@@ -1709,9 +1615,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => ''
-					]
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1722,9 +1626,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => ''
-					]
+                   ['label' => '',],
 				]
 			]
 		],
@@ -1735,9 +1637,7 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					'1' => [
-						'0' => 'Content of Footer "slide" through the rootline'
-					]
+                   ['label' => 'Content of Footer "slide" through the rootline',],
 				]
 			]
 		],
@@ -1749,14 +1649,14 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['none', 'none'],
-					['container', 'container'],
-					['container-sm (< 576px)', 'container-sm'],
-					['container-md (≥ 576px)', 'container-md'],
-					['container-lg (≥ 768px)', 'container-lg'],
-					['container-xl (≥ 992px)', 'container-xl'],
-					['container-xxl (≥ 1200px)', 'container-xxl'],
-					['container-fluid (≥ 1400px)', 'container-fluid']
+					['label' => 'none', 'value' => 'none',],
+					['label' => 'container','value' => 'container',],
+					['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+					['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+					['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+					['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+					['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+					['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 				]
 			]
 		],
@@ -1769,8 +1669,8 @@ return [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'items' => [
-					['inside [Inside]', 'Inside'],
-					['outside [Outside]', 'Outside'],
+					['label' => 'inside [Inside]', 'value' => 'Inside',],
+					['label' => 'outside [Outside]', 'value' => 'Outside',],
 				]
 			]
 		],

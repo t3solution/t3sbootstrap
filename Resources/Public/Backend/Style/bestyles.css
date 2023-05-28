@@ -1,0 +1,18 @@
+
+.t3-grid-table .t3js-page-column .t3-page-column-header  {
+	background: #eee0ff;
+	color: #7e00b4;
+	margin: 0;
+	padding: .75rem;
+} 
+
+.t3-grid-table .t3js-page-column:first-child .t3-page-ce .t3-page-column-header  {
+	background: #fff;
+	color: #999;
+} 
+ 
+.ck-content.ck-button.ck-off,
+.ck-content .ck-button.ck-off {
+	display: none;
+}
+

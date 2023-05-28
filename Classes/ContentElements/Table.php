@@ -36,7 +36,7 @@ class Table implements SingletonInterface
 		$processedData['tableclass'] = trim($tableclass);
 		$processedData['theadclass'] = !empty($flexconf['theadClass']) ? $flexconf['theadClass'] : '';
 		$processedData['tableResponsive'] = $flexconf['tableResponsive'] ? TRUE : FALSE;
-		$processedData['tableResponsiveVariant'] = isset($flexconf['tableResponsiveVariant']) ? TRUE : FALSE;
+		$processedData['tableResponsiveVariant'] = !empty($flexconf['tableResponsiveVariant']) ? TRUE : FALSE;
 
 		return $processedData;
 	}

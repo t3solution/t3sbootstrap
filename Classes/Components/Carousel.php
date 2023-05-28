@@ -90,14 +90,15 @@ class Carousel implements SingletonInterface
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
 			}
 			$processedData['autoplay'] = $file->getProperties()['autoplay'];
-			$processedData['loop'] = $flexconf['loop'];
-			$processedData['muted'] = $file->getProperties()['autoplay'] ? 1 : $flexconf['muted'];
-			$processedData['playsinline'] = $flexconf['playsinline'];
+			$processedData['loop'] = !empty($flexconf['loop']) ? $flexconf['loop'] : FALSE;
+			$muted = !empty($flexconf['muted']) ? $flexconf['muted'] : FALSE;
+			$processedData['muted'] = !empty($file->getProperties()['autoplay']) ? TRUE : $muted;
+			$processedData['playsinline'] = !empty($flexconf['playsinline']) ? TRUE : FALSE;
 			if ($processedData['data']['header'] || $processedData['data']['bodytext']
 			 || ( $processedData['data']['header_link'] && $parentflexconf['link'] == 'button') ) {
 				$processedData['controls'] = 0;
 			} else {
-				$processedData['controls'] = $flexconf['controls'];
+				$processedData['controls'] = !empty($flexconf['controls']) ? $flexconf['controls'] : 0;
 			}
 		}
 

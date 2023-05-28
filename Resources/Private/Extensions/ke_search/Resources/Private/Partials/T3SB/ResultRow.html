@@ -6,7 +6,6 @@
 -->
 
 <f:asset.css identifier="searchResult">
-/*
 .card {
 	border-radius: 0;
   border-top-left-radius: 30px;
@@ -18,49 +17,49 @@ background: rgba(0, 0, 0, 0.05);
 font-weight: 700;
 color: var(--bs-primary)
 }
-*/
-
-.result-callout {
-	padding: 15px;
-	border: 1px solid #eee;
-	position: relative;
-}
-
-.result-callout:hover {
-	background-color: rgba(0, 0, 0, 0.05);
-}
-
-a.stretched-link {
-	text-decoration: none;
-	color: inherit;
-}
-
 </f:asset.css>
 
-
-<div class="result-callout mb-2">
-	<div class="row mb-2">
-		<div class="col-12 col-md-6">
-			<h5 class="result-title mb-0">
-				<span class="teaser_icon">
-					<f:render section="typeIconOrPreviewImage"
-					arguments="{icon: resultrow.typeIconPath, filePreviewId: resultrow.filePreviewId, treatIdAsReference:resultrow.treatIdAsReference, iconConf: conf.showTypeIcon}"/>
-				</span>
-				<f:format.raw>{resultrow.title}</f:format.raw>
-			</h5>
-		</div>
-		<div class="col-12 col-md-6">		
-			<p class="text-end mb-0"><f:format.date format="d.m.Y">{resultrow.date_timestamp}</f:format.date></p>
-		</div>
+<div class="col d-flex align-items-stretch result-list-item-type-{resultrow.type}">
+<div class="card above h-100 w-100">
+<div class="card-body">
+  <div class="row">
+	<div class="col-md-6">
+		<p><span class="teaser_icon">
+		<f:render
+			section="typeIconOrPreviewImage"
+			arguments="{icon: resultrow.typeIconPath, filePreviewId: resultrow.filePreviewId, treatIdAsReference:resultrow.treatIdAsReference, iconConf: conf.showTypeIcon}"
+		/>
+		</span>{resultrow.type}</p>
 	</div>
-	<div class="result-teaser mb-2">{resultrow.teaser -> f:format.raw()}</div>	
-	<p class="mb-0"><i class="fa-solid fa-tags me-1"></i> {f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'ohne Tag')}</p>
+	<div class="col-md-6 text-end">
+		<f:if condition="{resultrow.type} == 'cal'">
+			<f:then>
+				<f:comment><!-- Special cal date rendering --></f:comment>
+				<f:render partial="T3SB/CalDate" arguments="{resultrow: resultrow}" />
+			</f:then>
+			<f:else>
+				<f:comment><!-- Default date rendering --></f:comment>
+				<f:if condition="{conf.showDate}">
+					<f:format.date>{resultrow.date_timestamp}</f:format.date>
+				</f:if>
+			</f:else>
+		</f:if>
+	</div>
+  </div>
+<header>
+	<h5 class="result-title">
+		<f:format.raw>{resultrow.title}</f:format.raw>
+	</h5>
+</header>
+<div class="card-text">
+	<span class="result-teaser">{resultrow.teaser -> f:format.raw()}</span>
 </div>
-
-
-
-
-
+</div>
+  <div class="card-footer">
+	  <i class="fa-solid fa-tags me-1"></i>{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}
+  </div>
+</div>
+</div>
 
 
 <f:section name="typeIconOrPreviewImage">

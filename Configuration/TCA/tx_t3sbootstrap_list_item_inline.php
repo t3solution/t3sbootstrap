@@ -11,6 +11,9 @@ return [
 		'hideTable' => 1,
 		'searchFields' => '',
 		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
 	],
 
 	'columns' => [
@@ -18,8 +21,8 @@ return [
 			'config' => [
 				'type' => 'check',
 				'items' => [
-					['Disable'],
-				],
+                    ['label' => 'Disable',],
+				]
 			],
 		],
 		'sys_language_uid' => [
