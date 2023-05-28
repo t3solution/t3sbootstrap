@@ -23,7 +23,7 @@ class FlexformHelper implements SingletonInterface
 		$flexconfEl = [];
 		$dataStructure = [];
 		$file = '';
-		$flexfomrsFolderPath = '/typo3conf/ext/t3sbootstrap/Configuration/FlexForms/';
+		$flexfomrsFolderPath = 'EXT:t3sbootstrap/Configuration/FlexForms/';
 
 		if ( $t3sbsElement === FALSE ) {
 			$file = Environment::getPublicPath().$flexfomrsFolderPath . 'Bootstrap.xml';
@@ -116,11 +116,12 @@ class FlexformHelper implements SingletonInterface
 		}
 
 		if ( !empty($file) ) {
-			$content = file_get_contents($file);
+			$content = @file_get_contents($file);
 			if ($content) {
 				$dataStructure = GeneralUtility::xml2array($content);
 			}
-			if ( count($dataStructure['sheets']) ) {
+
+			if ( !empty($dataStructure) && count($dataStructure['sheets']) ) {
 				foreach ( $dataStructure['sheets'] as $tab=>$sheet ) {
 					if ( is_array($dataStructure['sheets'][$tab]['ROOT']['el']) ) {
 						foreach($dataStructure['sheets'][$tab]['ROOT']['el'] as $key=>$el) {

@@ -48,7 +48,8 @@ Example from Default.html:
 
 <f:section name="Image">
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
-	<t3sb:media file="{file}"
+	<t3sb:media 
+	 file="{file}"
 	 title="{file.title}" alt="{f:if(condition: file.alternative, then: '{file.alternative}', else: 'image-{file.uid}')}"
 	 class="img-fluid d-block{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}"
 	 width="{width}"
@@ -62,7 +63,7 @@ Example from Default.html:
 	 lazyload="0"	 
 	 ratio="{ratio}"
 	 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
-	 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
+	 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"		
 	/>
 </figure>
 </f:section>

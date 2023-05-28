@@ -50,7 +50,6 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				 $outHeader .= parent::linkEditContent(parent::renderText($record['tx_t3sbootstrap_cardheader']), $record) . '<br />';
 			}
 		}
-
 		if (!empty($record['header'])) {
 			$infoArr = [];
 			parent::getProcessedValue($item, 'header_position,header_layout,header_link', $infoArr);
@@ -67,12 +66,85 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 				. $hiddenHeaderNote . '</strong><br />';
 		}
 
-		$contentTypeLabels = $item->getContext()->getContentTypeLabels();
-		$contentType = $contentTypeLabels[$record['CType']];
-		$info = '<div style="padding:5px; border: 1px solid #563d7c; color:#563d7c; margin-bottom:5px" >'.$contentType.'</div>';
 
-		return $info.$outHeader;
+		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+		$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
 
+		$flexconfSettings = '';
+
+		if ($record['CType'] === 't3sbs_card') {
+			if (!empty($flexconf['effect'])) {
+				$flexconfSettings .= 'hover_effect=1, ';
+			}
+			if (!empty($flexconf['title']['onTop'])) {
+				$flexconfSettings .= 'title_onTop=1, ';
+			}
+			if (!empty($flexconf['button']['enable'])) {
+				$flexconfSettings .= 'button_link=1, ';
+			}
+			if (!empty($flexconf['cardborder'])) {
+				$flexconfSettings .= 'border=1, ';
+			}
+		}
+
+		if ($record['CType'] === 't3sbs_button') {
+
+			if ( !empty($flexconf['style']) ) {
+				$flexconfSettings .= 'style='.$flexconf['style'].', ';
+			}
+			if ( !empty($flexconf['size']) ) {
+				$flexconfSettings .= 'size='.$flexconf['size'].', ';
+			}
+			if ( !empty($flexconf['block']) ) {
+				$flexconfSettings .= 'block='.$flexconf['block'].', ';
+			}
+			if ( !empty($flexconf['outline']) ) {
+				$flexconfSettings .= 'outline=1, ';
+			}
+		}
+
+		if ($record['CType'] == 't3sbs_gallery') {
+			$flexconfSettings .= 'columns='.$record['imagecols'].', ';
+			if ( !empty($record['tx_t3sbootstrap_image_ratio'])) {
+				$flexconfSettings .= 'ratio='.$record['tx_t3sbootstrap_image_ratio'].', ';
+			}
+			if ( !empty($record['file_collections'])) {
+				$flexconfSettings .= 'file_collection_uids='.$record['file_collections'].', ';
+			}
+		}
+
+		if ($record['CType'] === 't3sbs_carousel') {
+			if ( !empty($flexconf['shift']) ) {
+				$flexconfOut .= 'shift='.$flexconf['shift'].', ';
+			}
+			if ( !empty($flexconf['bgOverlay']) ) {
+				$flexconfOut .= 'bgOverlay=1, ';
+			}
+		}
+
+		if ($record['CType'] === 't3sbs_toast') {
+			if ( !empty($flexconf['animation']) ) {
+				$flexconfOut .= 'animation=1, ';
+			}
+			if ( !empty($flexconf['autohide']) ) {
+				$flexconfOut .= 'autohide=1';
+			}
+			if ( !empty($flexconf['delay']) ) {
+				$flexconfOut .= 'delay='.$flexconf['delay'].', ';
+			}
+			if ( !empty($flexconf['placement']) ) {
+				$flexconfOut .= 'placement='.$flexconf['placement'].', ';
+			}
+			if ( !empty($flexconf['cookie']) ) {
+				$flexconfOut .= 'cookie ('.$flexconf['expires'].') days, ';
+			}
+		}
+
+		if (!empty($flexconfSettings)) {
+			$flexconfSettings = '<div style="padding:1rem;color:#7e00b4;border: 1px solid #7e00b4;display:block;margin-bottom:.75rem;"><strong>Settings:</strong> ' . rtrim($flexconfSettings, ', ') . '</div>';
+		}
+
+		return $flexconfSettings.$outHeader;
 	}
 
 
@@ -82,7 +154,8 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 	*/
 	public function renderPageModulePreviewContent(GridColumnItem $item): string
 	{
-		$out = '';
+
+		$preview = '';
 		$record = $item->getRecord();
 		$content = parent::renderPageModulePreviewContent($item);
 
@@ -100,125 +173,41 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		$contentTypeLabels = $item->getContext()->getContentTypeLabels();
-		$languageService = parent::getLanguageService();
-
 		$contentType = $contentTypeLabels[$record['CType']];
 		if (!empty($contentType)) {
-
-			$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-
-			$maxCharacters = $extconf['previewCropMaxCharacters'];
-			$append = ' ...';
-			$flexconfOut = '';
-
 			if (!empty($record['subheader'])) {
-				$out .= parent::linkEditContent(parent::renderText($record['subheader']), $record) . '<br />';
+				$preview .= parent::linkEditContent(parent::renderText($record['subheader']), $record) . '<br />';
 			}
 			if (!empty($record['bodytext'])) {
+				$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+				$maxCharacters = $extconf['previewCropMaxCharacters'];
+				$append = ' ...';
 				if (!empty($extconf['previewCrop'])) {
 					$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 					$text = $contentObject->cropHTML($record['bodytext'], $maxCharacters . '|' . $append . '|' . true);
 				} else {
 					$text = $record['bodytext'];
 				}
-				$out .= parent::linkEditContent(parent::renderText($text), $record);
+				$preview .= parent::linkEditContent(parent::renderText($text), $record);
 			}
-
-			if ($record['CType'] == 't3sbs_gallery') {
-				$out .= 'Columns: '.$record['imagecols'];
-				if ( !empty($record['tx_t3sbootstrap_image_ratio'])) {
-					$out .= '<br />Aspect ratio: '.$record['tx_t3sbootstrap_image_ratio'];
-				}
-				if ( !empty($record['file_collections'])) {
-					$out .= '<br />File collection UID(s): '.$record['file_collections'];
-				}
-			}
-			if ($record['CType'] === 't3sbs_card') {
-				if ( !empty($record['bodytext']) ) {
-					if ($extconf['previewCrop']) {
-						$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-						$text = $contentObject->cropHTML($record['bodytext'], $maxCharacters . '|' . $append . '|' . true);
-					} else {
-						$text = $record['bodytext'];
-					}
-					$out .= parent::linkEditContent(parent::renderText($text), $record) . '<br />';
-				}
-				if ( !empty($record['tx_t3sbootstrap_bodytext']) ) {
-					if ($extconf['previewCrop']) {
-						$contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-						$text = $contentObject->cropHTML($record['tx_t3sbootstrap_bodytext'], $maxCharacters . '|' . $append . '|' . true);
-					} else {
-						$text = $record['tx_t3sbootstrap_bodytext'];
-					}
-					$out .= parent::linkEditContent(parent::renderText($text), $record) . '<br />';
-				}
-			}
-			if ($record['CType'] === 't3sbs_carousel') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
-	  			if ( !empty($flexconf['shift']) ) {
-					$flexconfOut .= '<br />- Shift: '.$flexconf['shift'];
-				}
-	  			if ( !empty($flexconf['bgOverlay']) ) {
-					$flexconfOut .= '<br />- Background-Overlay';
-				}
-			}
-			if ($record['CType'] === 't3sbs_button') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
-
-				if ( !empty($flexconf['style']) ) {
-					$flexconfOut .= '<br />- Style: '.$flexconf['style'];
-				}
-				if ( !empty($flexconf['size']) ) {
-					$flexconfOut .= '<br />- Size: '.$flexconf['size'];
-				}
-				if ( !empty($flexconf['block']) ) {
-					$flexconfOut .= '<br />- Block: '.$flexconf['block'];
-				}
-				if ( !empty($flexconf['outline']) ) {
-					$flexconfOut .= '<br />- Outline';
-				}
-			}
-			if ($record['CType'] === 't3sbs_toast') {
-				$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-				$flexconf = $flexformService->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
-
-				if ( !empty($flexconf['animation']) ) {
-					$flexconfOut .= '<br />- Animation';
-				}
-				if ( !empty($flexconf['autohide']) ) {
-					$flexconfOut .= '<br />- Autohide';
-				}
-				if ( !empty($flexconf['delay']) ) {
-					$flexconfOut .= '<br />- Delay: '.$flexconf['delay'];
-				}
-				if ( !empty($flexconf['placement']) ) {
-					$flexconfOut .= '<br />- Placement: '.$flexconf['placement'];
-				}
-				if ( !empty($flexconf['cookie']) ) {
-					$flexconfOut .= '<br />- Cookie is set ('.$flexconf['expires'].') days';
-				}
-			}
-
-			if (!empty($flexconfOut))
-			$out = $out.substr($flexconfOut, 6);
 
 			$media = !empty($record['assets']) ?: $record['image'];
 			if ($media) {
 				$field = !empty($record['assets']) ? 'assets' : 'image';
-				$out .= '<div style="margin:5px 5px 5px 0">'. parent::linkEditContent($this->getThumbCodeUnlinked($record, 'tt_content', $field), $record) . '</div>';
+				$preview .= '<div style="margin:5px 5px 5px 0">'.
+				 parent::linkEditContent($this->getThumbCodeUnlinked($record, 'tt_content', $field), $record) . '</div>';
 			}
 
 		} else {
+			$languageService = parent::getLanguageService();
 			$message = sprintf(
-				 $languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.noMatchingValue'),
-				 $record['CType']
+				$languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.noMatchingValue'),
+				$record['CType']
 			);
-			$out .= '<span class="label label-warning">' . htmlspecialchars($message) . '</span>';
+			$preview .= '<span class="label label-warning">' . htmlspecialchars($message) . '</span>';
 		}
 
-		return $out;
+		return $preview;
 	}
 
 

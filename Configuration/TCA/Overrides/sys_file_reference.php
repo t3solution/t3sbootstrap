@@ -68,17 +68,50 @@ $tempSysFileReferenceColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['none',''],
-				['Effect 1','snip1273'],
-				['Effect 2','snip1321'],
-				['Effect 3','snip1577'],
-				['Effect 4','snip0015'],
-				['Effect 5 (title only)','snip1573'],
-				['Effect 6','snip1477'],
-				['Effect 7','snip1361'],
-				['Effect 8','snip1206'],
-				['Effect 9','snip1190'],
-				['Effect 10','snip0016']
+				[
+					'label' => 'none',
+					'value' => '',
+				],
+				[
+					'label' => 'Effect 1',
+					'value' => 'snip1273',
+				],
+				[
+					'label' => 'Effect 2',
+					'value' => 'snip1321',
+				],
+				[
+					'label' => 'Effect 3',
+					'value' => 'snip1577',
+				],
+				[
+					'label' => 'Effect 4',
+					'value' => 'snip0015',
+				],
+				[
+					'label' => 'Effect 5 (title only)',
+					'value' => 'snip1573',
+				],
+				[
+					'label' => 'Effect 6',
+					'value' => 'snip1477',
+				],
+				[
+					'label' => 'Effect 7',
+					'value' => 'snip1361',
+				],
+				[
+					'label' => 'Effect 8',
+					'value' => 'snip1206',
+				],
+				[
+					'label' => 'Effect 9',
+					'value' => 'snip1190',
+				],
+				[
+					'label' => 'Effect 10',
+					'value' => 'snip0016',
+				],
 			],
 			'default' => ''
 		]
@@ -105,9 +138,18 @@ $tempSysFileReferenceColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['left','start'],
-				['center','center'],
-				['right','end']
+				[
+					'label' => 'left',
+					'value' => 'start',
+				],
+				[
+					'label' => 'center',
+					'value' => 'center',
+				],
+				[
+					'label' => 'right',
+					'value' => 'end',
+				],
 			],
 			'default' => 'start'
 		]
@@ -128,15 +170,42 @@ $tempSysFileReferenceColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['light', 'text-light'],
-				['dark', 'text-dark'],
-				['primary', 'text-primary'],
-				['secondary', 'text-secondary'],
-				['success', 'text-success'],
-				['danger', 'text-danger'],
-				['warning', 'text-warning'],
-				['info', 'text-info'],
-				['white', 'text-white'],
+				[
+					'label' => 'light',
+					'value' => 'text-light',
+				],
+				[
+					'label' => 'dark',
+					'value' => 'text-dark',
+				],
+				[
+					'label' => 'primary',
+					'value' => 'text-primary',
+				],
+				[
+					'label' => 'secondary',
+					'value' => 'text-secondary',
+				],
+				[
+					'label' => 'success',
+					'value' => 'text-success',
+				],
+				[
+					'label' => 'danger',
+					'value' => 'text-danger',
+				],
+				[
+					'label' => 'warning',
+					'value' => 'text-warning',
+				],
+				[
+					'label' => 'info',
+					'value' => 'text-info',
+				],
+				[
+					'label' => 'white',
+					'value' => 'text-white',
+				],
 			],
 			'default' => 'text-dark',
 			'size' => 1,
@@ -169,8 +238,14 @@ $tempSysFileReferenceColumns = [
 	'tx_t3sbootstrap_shift_vertical' => [
 		'label' => 'Vertical shift - if the original image is higher than wide',
 		'description' => 'only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected',
+		'displayCond' => [
+			 'AND' => [
+				'FIELD:tablenames:=:tt_content',
+				'FIELD:fieldname:=:assets',
+			 ]
+		],
 		'config' => [
-			'type' => 'input',
+			'type' => 'number',
 			'size' => 5,
 			'eval' => 'trim,int',
 			'range' => [
@@ -187,8 +262,14 @@ $tempSysFileReferenceColumns = [
 	'tx_t3sbootstrap_shift_horizontal' => [
 		'label' => 'Horizontal shift - if the original is wider than high',
 		'description' => 'only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected',
+		'displayCond' => [
+			 'AND' => [
+				'FIELD:tablenames:=:tt_content',
+				'FIELD:fieldname:=:assets',
+			 ]
+		],
 		'config' => [
-			'type' => 'input',
+			'type' => 'number',
 			'size' => 5,
 			'eval' => 'trim,int',
 			'range' => [
@@ -202,6 +283,7 @@ $tempSysFileReferenceColumns = [
 			]
 		],
 	],
+
 ];
 
 

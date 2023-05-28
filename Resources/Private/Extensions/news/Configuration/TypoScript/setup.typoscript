@@ -17,7 +17,6 @@ plugin.tx_news {
 	}
 
 	settings {
-		version = {$bootstrap.ext.newsVersion}
 		cssFile =
 		detail.lightbox.selection = {$bootstrap.config.lightboxSelection}
 		media.minWidth = {$bootstrap.image.minimumWidth}

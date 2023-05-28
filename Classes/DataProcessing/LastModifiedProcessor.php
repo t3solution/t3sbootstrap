@@ -50,7 +50,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 
 		if (!empty($processorConfiguration['recentlyUpdatedContentElements'])) {
 
-			$setMaxResults = $processorConfiguration['setMaxResults'] ?: 10;
+			$setMaxResults = !empty($processorConfiguration['setMaxResults']) ? $processorConfiguration['setMaxResults'] : 10;
 			if (self::isMenuRecentlyUpdatedOnPage()) {
 				$processedData['recentlyUpdatedContentElements'] = self::getRecentlyUpdated((int) $setMaxResults);
 			}
@@ -78,7 +78,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), \PDO::PARAM_INT)),
 				$queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('menu_recently_updated'))
 			 )
-			 ->execute()
+			 ->executeQuery()
 			 ->fetchAll();
 
 		return empty($result) ? FALSE : TRUE;
@@ -145,7 +145,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 				 ->executeQuery()
 				 ->fetch();
 
-			$pageTitle = !empty($result['nav_title']) ? $result['nav_title'] : $result['title'];
+				$pageTitle = !empty($result['nav_title']) ? $result['nav_title'] : '';
 		}
 
 		return (string)$pageTitle;

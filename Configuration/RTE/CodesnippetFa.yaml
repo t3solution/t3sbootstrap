@@ -1,9 +1,0 @@
-imports:
-    - { resource: "EXT:t3sbootstrap/Configuration/RTE/Default.yaml" }
-    - { resource: "EXT:rte_ckeditor_fontawesome/Configuration/RTE/PluginFA5.yaml" }
-
-editor:
-
-  config:
-    extraPlugins:
-      - codesnippet

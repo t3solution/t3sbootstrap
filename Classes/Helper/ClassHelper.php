@@ -65,7 +65,6 @@ class ClassHelper implements SingletonInterface
 		if ($data['layout']) {
 			$pagesTSconfig = self::getFrontendController()->getPagesTSconfig();
 			$layout = $data['layout'];
-
 			$layoutAddItems = '';
 			$layoutClasses = '';
 			$layoutAltLabels = '';
@@ -83,7 +82,7 @@ class ClassHelper implements SingletonInterface
 			if (isset($layoutAddItems) && isset($layoutAddItems) === $layout) {
 				$class .= ' layout-'.$layout;
 			} elseif (isset($layoutAltLabels) && !empty($layoutAltLabels[$layout])) {
-				if (isset($layoutClasses) && !empty($layoutClasses[$layout])) {
+				if (isset($layoutClasses) && $layoutClasses[$layout]) {
 					$class .= ' '.strtolower($layoutClasses[$layout]);
 				} else {
 					$class .= ' layout-'.str_replace(' ', '-', strtolower($layoutAltLabels[$layout]));
@@ -175,14 +174,15 @@ class ClassHelper implements SingletonInterface
 		 */
 		if ( $data['CType'] == 'autoLayout_row' ) {
 
-			if ($flexconf['verticalGutters'] == 'gy-0') $flexconf['verticalGutters'] = 0;
-
-			if ( is_string($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
+			if ( !empty($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
 				$class .= $flexconf['horizontalGutters'] ? ' '.$flexconf['horizontalGutters'] : '';
 			}
 
-
 			if (!empty($flexconf['verticalGutters'])) {
+
+				if ($flexconf['verticalGutters'] == 'gy-0') $flexconf['verticalGutters'] = 0;
+
+
 				$class .= !empty($flexconf['verticalGutters']) ? ' '.$flexconf['verticalGutters'] : '';
 			}
 

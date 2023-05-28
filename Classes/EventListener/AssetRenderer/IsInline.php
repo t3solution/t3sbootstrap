@@ -36,6 +36,7 @@ class IsInline
 			't3sbootstrap',
 			'm1'
 		);
+
 		$t3sbconcatenate = $settings['t3sbconcatenate'];
 
 		if ( $event->isInline() == FALSE ) {

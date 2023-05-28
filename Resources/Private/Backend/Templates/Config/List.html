@@ -1,6 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="content">
+
 <f:if condition="{deleted}">
 	<f:asset.script identifier="identifiertest">
 		require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
@@ -26,7 +27,7 @@
 <div class="card">
 	<div class="card-header card-header-light">
 		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
-			<h2><em class="fa fas fa-cogs" aria-hidden="true"></em> Configuration</h2>
+			<h2><f:render section="Gear" /> Configuration</h2>
 		</div>
 	</div>
 	<div class="card-body">
@@ -34,41 +35,51 @@
 			<f:then>
 				<f:if condition="{config}">
 					<f:then>
-						<f:link.action action="edit" arguments="{config : config}" class="btn btn-primary btn-block edit-btn">
+						<f:link.action action="edit" arguments="{config : config}" class="btn btn-block edit-btn mb-3" style="background-color: #6a10f3;
+color: #fff;">
 							Edit this configuration
 						</f:link.action>
 						<f:if condition="{isSiteroot}">
 							<f:then>
-								<f:if condition="{admin} && {settings.enableInfo}">
-									<f:render section="Hints" arguments="{_all}" />
-								</f:if>								
-								<f:if condition="{utilColors} && {settings.enableUtilityColors}">
-									<f:render section="UtilityColors" arguments="{_all}" />
-								</f:if>
-									<button class="btn btn-info bg-gradient page-conf-btn d-block mb-2" type="button" data-toggle="collapse"
-									 data-target="#allPages" aria-expanded="false" aria-controls="allPages" style="width: 300px;">
-										Pages with T3SB Configuration
-									</button>
-								<div class="collapse mb-2" id="allPages">
-									<div class="card card-body mb-0" style="padding: 0 !important">
-										<table class="table table-striped">
-											<thead class="thead-default text-white">
-											<tr>
-												<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">uid</th>
-												<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">page uid</th>
-												<th style="background-color: #17a2b8 !important;border-color: #17a2b8 !important;">page title</th>
-											</tr>
-											</thead>
-											<tbody>
-												<f:for each="{allConfig}" as="config" iteration="iterator">
+								<div class="panel-group" id="accordionList">
+									<f:if condition="{admin} && {settings.enableInfo}">
+										<f:render section="Hints" arguments="{_all}" />
+									</f:if>								
+									<f:if condition="{utilColors} && {settings.enableUtilityColors}">
+										<f:render section="UtilityColors" arguments="{_all}" />
+									</f:if>
+
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title" id="pages-heading-panel">
+												<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#pages-panel" aria-expanded="false" aria-controls="pages-panel">
+													<span class="caret"></span>
+													Pages with T3SB Configuration
+												</a>
+											</h3>
+										</div>
+										<div id="pages-panel" class="collapse" aria-labelledby="pages-heading-panel" data-bs-parent="#accordionList">
+											<div class="panel-body">
+												<table class="table table-striped">
+													<thead class="thead-default text-white">
 													<tr>
-														<th scope="row">{config.confUid}</th>
-														<td>{config.uid}</td>
-														<td>{config.title}</td>
+														<th style="background-color: #17a2b8;border-color: #17a2b8;">uid</th>
+														<th style="background-color: #17a2b8;border-color: #17a2b8;">page uid</th>
+														<th style="background-color: #17a2b8;border-color: #17a2b8;">page title</th>
 													</tr>
-												</f:for>
-											</tbody>
-										</table>
+													</thead>
+													<tbody>
+														<f:for each="{allConfig}" as="config" iteration="iterator">
+															<tr>
+																<th scope="row">{config.confUid}</th>
+																<td>{config.uid}</td>
+																<td>{config.title}</td>
+															</tr>
+														</f:for>
+													</tbody>
+												</table>
+											</div>
+										</div>
 									</div>
 								</div>
 								<f:if condition="{pagesOverride}">
@@ -129,8 +140,7 @@
 			<f:if condition="{customScss}">
 				<f:then>
 					<div class="text-center">
-						<span class="badge badge-success lead"
-						 style="margin-top:2rem; padding:1rem; font-weight: 300; opacity: .7; font-size: 100%;">Custom scss is activated!</span>
+						<span class="lead mt-3 d-block" style="color: #107c10; font-size: 1.25rem;">Custom scss is activated!</span>
 					</div>
 					<f:if condition="{settings.editScss} && {isSiteroot}">
 						<f:then>
@@ -198,113 +208,144 @@
 
 
 <f:section name="UtilityColors">
-	<button class="btn btn-info bg-gradient util-color-btn mb-2" type="button" data-toggle="collapse"
-	 data-target="#util-color" aria-expanded="false" aria-controls="util-color" style="width: 300px;">
-		Utility Colors
-	</button>
-	<div class="collapse" id="util-color">
-		<div class="card card-body mb-0" style="padding: 0 !important">
-			<p>Currently available utility colors:</p>
-			<table class="table table-striped util-table">
-				<f:for each="{utilColors}" as="color" key="colorkey">
-					<tr>
-					  <th style="background-color: {color} !important;"></th>
-					  <td>{colorkey}</td>
-					  <td>{color}</td>
-					</tr>
-				</f:for>
-			</table>
-			<p class="mb-4 text-secondary">Set the following constant to disable the "Utility Colors":<br />
-				<code>bootstrap.config.enableUtilityColors = 0</code></p>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="utility-heading-panel">
+				<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#utility-panel" aria-expanded="false" aria-controls="utility-panel">
+					<span class="caret"></span>
+					Utility Colors
+				</a>
+			</h3>
 		</div>
-	</div>
-</f:section>
+		<div id="utility-panel" class="collapse" aria-labelledby="utility-heading-panel" data-bs-parent="#accordionList">
+			<div class="panel-body">
 
-<f:section name="Hints">
-	<button class="btn btn-info bg-gradient page-conf-btn mb-2 d-block" type="button" data-toggle="collapse"
-	 data-target="#hints" aria-expanded="false" aria-controls="hints" style="width: 300px;">
-		Hints to increase the Website speed
-	</button>
-	<div class="collapse" id="hints">
-		<div class="card card-body mb-0 p-0 pt-2">
-			<f:if condition="{settings.webp} || {webpIsLoaded}">
-				<f:then>
-					<f:if condition="{settings.webp}">
-						<f:then>
-							<p class="text-success"><i class="fa fa-check text-success mr-1"></i> WebP Support is enabled</p>						
-						</f:then>
-						<f:else>
-							<p class="text-success"><i class="fa fa-check text-success mr-1"></i>
-								 WebP Support is enabled for use the default EXT:webp .htaccess configuration
-							</p>
-						</f:else>
-					</f:if>
-				</f:then>
-				<f:else>
-					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> WebP Support is disabled</p>
-				</f:else>
-			</f:if>
-			<f:if condition="{settings.lazyLoad}">
-				<f:then>
-					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> EM config: T3SB lazyLoad is enabled</p>
-				</f:then>
-				<f:else>
-					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> EM config: T3SB lazyLoad is disabled</p>
-				</f:else>
-			</f:if>
-			<f:if condition="{settings.t3sbconcatenate}">
-				<f:then>
-					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> EM config: T3SB concatenate is enabled</p>
-				</f:then>
-				<f:else>
-					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> EM config: T3SB concatenate is disabled</p>
-				</f:else>
-			</f:if>
-			<f:if condition="{settings.t3sbminify}">
-				<f:then>
-					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> EM config: T3SB minify is enabled</p>
-				</f:then>
-				<f:else>
-					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> EM config: T3SB minify is disabled</p>
-				</f:else>
-			</f:if>
-			<f:if condition="{compress}">
-				<f:then>
-					<p class="text-success"><i class="fa fa-check text-success mr-1"></i> BE Modul: T3SB compress is enabled</p>
-				</f:then>
-				<f:else>
-					<p class="text-danger"><i class="fa fa-times text-danger mr-1"></i> BE Modul: T3SB compress is disabled</p>
-				</f:else>
-			</f:if>
-			<f:if condition="{settings.cdn.enable}">
-				<f:then>
-					<p class="text-info mt-2"><i class="fa fa-info text-info mr-1"></i> Konstanten-Editor: CDN is enabled</p>
-				</f:then>
-				<f:else>
-					<p class="text-info mt-2"><i class="fa fa-info text-info mr-1"></i> Konstanten-Editor: CDN is disabled</p>
-				</f:else>
-			</f:if>
-			<p class="text-info" type="button" data-toggle="collapse"
-				 data-target="#collapseOptimize" aria-expanded="false" aria-controls="collapseOptimize">
-				<i class="fa fa-info text-info mr-1"></i> <u>Konstanten-Editor: T3SB Optimize Bootstrap</u>
-			</p>
-			<div class="collapse" id="collapseOptimize">
-				<div class="card card-body p-0">	
-					<p>Make sure you optimize Bootstrap by only @importing the components you need.</p>
-					<table class="table">
-						<f:for each="{settings.optimize}" as="optimize" iteration="iterator" key="label">
-							<tr{f:if(condition: '{optimize}',then: '  class="table-warning"', else: ' class="table-success"')}>
-								<td class="table-success">{label}</td>
-								<td>{optimize}</td>
+				<div class="p-0 mb-0">
+					<p>Currently available utility colors:</p>
+					<table class="table table-striped util-table">
+						<f:for each="{utilColors}" as="color" key="colorkey">
+							<tr>
+							  <th style="background-color: {color} !important;"></th>
+							  <td>{colorkey}</td>
+							  <td>{color}</td>
 							</tr>
 						</f:for>
 					</table>
+					<p class="mb-4 text-secondary mt-3 pt-4 border-top">Set the following constant to disable the "Utility Colors":<br />
+						<code>bootstrap.config.enableUtilityColors = 0</code></p>
 				</div>
 			</div>
-
-			<p class="text-secondary my-2">Set the following constant to disable this hints:<br />
-				<code>bootstrap.config.enableInfo = 0</code></p>
 		</div>
 	</div>
-
 </f:section>
+
+
+<f:section name="Hints">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="hints-heading-panel">
+				<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#hints-panel" aria-expanded="false" aria-controls="hints-panel">
+					<span class="caret"></span>
+					Hints to increase the Website speed
+				</a>
+			</h3>
+		</div>
+		<div id="hints-panel" class="collapse" aria-labelledby="hints-heading-panel" data-bs-parent="#accordionList">
+			<div class="panel-body p-4">
+				<f:if condition="{settings.webp} || {webpIsLoaded}">
+					<f:then>
+						<f:if condition="{settings.webp}">
+							<f:then>
+								<p class="text-success"><f:render section="Check" /> WebP Support is enabled</p>						
+							</f:then>
+							<f:else>
+								<p class="text-success"><f:render section="Check" /> WebP Support is enabled for use the default EXT:webp .htaccess configuration
+								</p>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<p class="text-danger"><f:render section="Xmark" /> WebP Support is disabled</p>
+					</f:else>
+				</f:if>
+				<f:if condition="{settings.lazyLoad}">
+					<f:then>
+						<p class="text-success"><f:render section="Check" /> EM config: T3SB lazyLoad is enabled</p>
+					</f:then>
+					<f:else>
+						<p class="text-danger"><f:render section="Xmark" /> EM config: T3SB lazyLoad is disabled</p>
+					</f:else>
+				</f:if>
+				<f:if condition="{settings.t3sbconcatenate}">
+					<f:then>
+						<p class="text-success"><f:render section="Check" /> EM config: T3SB concatenate is enabled</p>
+					</f:then>
+					<f:else>
+						<p class="text-danger"><f:render section="Xmark" /> EM config: T3SB concatenate is disabled</p>
+					</f:else>
+				</f:if>
+				<f:if condition="{settings.t3sbminify}">
+					<f:then>
+						<p class="text-success"><f:render section="Check" /> EM config: T3SB minify is enabled</p>
+					</f:then>
+					<f:else>
+						<p class="text-danger"><f:render section="Xmark" /> EM config: T3SB minify is disabled</p>
+					</f:else>
+				</f:if>
+				<f:if condition="{compress}">
+					<f:then>
+						<p class="text-success"><f:render section="Check" /> BE Modul: T3SB compress is enabled</p>
+					</f:then>
+					<f:else>
+						<p class="text-danger"><f:render section="Xmark" /> BE Modul: T3SB compress is disabled</p>
+					</f:else>
+				</f:if>
+				<f:if condition="{settings.cdn.enable}">
+					<f:then>
+						<p class="text-info mt-2"><f:render section="Info" /> Konstanten-Editor: CDN is enabled</p>
+					</f:then>
+					<f:else>
+						<p class="text-info mt-2"><f:render section="Info" /> Konstanten-Editor: CDN is disabled</p>
+					</f:else>
+				</f:if>
+				<p class="text-info collapsed" type="button" data-bs-toggle="collapse"
+					 data-bs-target="#collapseOptimize" aria-expanded="false" aria-controls="collapseOptimize">
+					 <f:render section="Info" /> <u>Konstanten-Editor: T3SB Optimize Bootstrap</u>
+				</p>
+				<div class="collapse" id="collapseOptimize">
+					<div class="card card-body p-0">	
+						<p>Make sure you optimize Bootstrap by only @importing the components you need.</p>
+						<table class="table">
+							<f:for each="{settings.optimize}" as="optimize" iteration="iterator" key="label">
+								<tr{f:if(condition: '{optimize}',then: '  class="table-warning"', else: ' class="table-success"')}>
+									<td class="table-success">{label}</td>
+									<td>{optimize}</td>
+								</tr>
+							</f:for>
+						</table>
+					</div>
+				</div>	
+				<p class="text-secondary mt-3 pt-4 border-top">Set the following constant to disable this hints:<br />
+					<code>bootstrap.config.enableInfo = 0</code></p>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+
+<f:section name="Xmark">
+<svg style="fill:#cb4949; margin-top: -3px;" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+</f:section>
+
+<f:section name="Check">
+<svg style="fill:#107c10;" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+</f:section>
+
+<f:section name="Info">
+<svg style="fill:#6daae0; margin-top: -3px;" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/></svg>
+</f:section>
+
+<f:section name="Gear">
+<svg width="21px" height="auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M308.5 135.3c7.1-6.3 9.9-16.2 6.2-25c-2.3-5.3-4.8-10.5-7.6-15.5L304 89.4c-3-5-6.3-9.9-9.8-14.6c-5.7-7.6-15.7-10.1-24.7-7.1l-28.2 9.3c-10.7-8.8-23-16-36.2-20.9L199 27.1c-1.9-9.3-9.1-16.7-18.5-17.8C173.9 8.4 167.2 8 160.4 8h-.7c-6.8 0-13.5 .4-20.1 1.2c-9.4 1.1-16.6 8.6-18.5 17.8L115 56.1c-13.3 5-25.5 12.1-36.2 20.9L50.5 67.8c-9-3-19-.5-24.7 7.1c-3.5 4.7-6.8 9.6-9.9 14.6l-3 5.3c-2.8 5-5.3 10.2-7.6 15.6c-3.7 8.7-.9 18.6 6.2 25l22.2 19.8C32.6 161.9 32 168.9 32 176s.6 14.1 1.7 20.9L11.5 216.7c-7.1 6.3-9.9 16.2-6.2 25c2.3 5.3 4.8 10.5 7.6 15.6l3 5.2c3 5.1 6.3 9.9 9.9 14.6c5.7 7.6 15.7 10.1 24.7 7.1l28.2-9.3c10.7 8.8 23 16 36.2 20.9l6.1 29.1c1.9 9.3 9.1 16.7 18.5 17.8c6.7 .8 13.5 1.2 20.4 1.2s13.7-.4 20.4-1.2c9.4-1.1 16.6-8.6 18.5-17.8l6.1-29.1c13.3-5 25.5-12.1 36.2-20.9l28.2 9.3c9 3 19 .5 24.7-7.1c3.5-4.7 6.8-9.5 9.8-14.6l3.1-5.4c2.8-5 5.3-10.2 7.6-15.5c3.7-8.7 .9-18.6-6.2-25l-22.2-19.8c1.1-6.8 1.7-13.8 1.7-20.9s-.6-14.1-1.7-20.9l22.2-19.8zM112 176a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM504.7 500.5c6.3 7.1 16.2 9.9 25 6.2c5.3-2.3 10.5-4.8 15.5-7.6l5.4-3.1c5-3 9.9-6.3 14.6-9.8c7.6-5.7 10.1-15.7 7.1-24.7l-9.3-28.2c8.8-10.7 16-23 20.9-36.2l29.1-6.1c9.3-1.9 16.7-9.1 17.8-18.5c.8-6.7 1.2-13.5 1.2-20.4s-.4-13.7-1.2-20.4c-1.1-9.4-8.6-16.6-17.8-18.5L583.9 307c-5-13.3-12.1-25.5-20.9-36.2l9.3-28.2c3-9 .5-19-7.1-24.7c-4.7-3.5-9.6-6.8-14.6-9.9l-5.3-3c-5-2.8-10.2-5.3-15.6-7.6c-8.7-3.7-18.6-.9-25 6.2l-19.8 22.2c-6.8-1.1-13.8-1.7-20.9-1.7s-14.1 .6-20.9 1.7l-19.8-22.2c-6.3-7.1-16.2-9.9-25-6.2c-5.3 2.3-10.5 4.8-15.6 7.6l-5.2 3c-5.1 3-9.9 6.3-14.6 9.9c-7.6 5.7-10.1 15.7-7.1 24.7l9.3 28.2c-8.8 10.7-16 23-20.9 36.2L315.1 313c-9.3 1.9-16.7 9.1-17.8 18.5c-.8 6.7-1.2 13.5-1.2 20.4s.4 13.7 1.2 20.4c1.1 9.4 8.6 16.6 17.8 18.5l29.1 6.1c5 13.3 12.1 25.5 20.9 36.2l-9.3 28.2c-3 9-.5 19 7.1 24.7c4.7 3.5 9.5 6.8 14.6 9.8l5.4 3.1c5 2.8 10.2 5.3 15.5 7.6c8.7 3.7 18.6 .9 25-6.2l19.8-22.2c6.8 1.1 13.8 1.7 20.9 1.7s14.1-.6 20.9-1.7l19.8 22.2zM464 304a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+</f:section>
+

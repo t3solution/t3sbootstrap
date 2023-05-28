@@ -24,14 +24,14 @@ class Modal implements SingletonInterface
 		$processedData['modal']['size'] = $flexconf['size'];
 		$processedData['modal']['button'] = $flexconf['button'];
 		$processedData['modal']['style'] = $flexconf['style'];
-		if ( $flexconf['buttonText'] ) {
+		if ( !empty($flexconf['buttonText']) ) {
 			$processedData['modal']['buttonText'] = $flexconf['buttonText'];
 		} elseif ( $processedData['data']['header'] ) {
 			$processedData['modal']['buttonText'] = $processedData['data']['header'];
 		} else {
 			$processedData['modal']['buttonText'] = $processedData['modal']['button'] ? 'Modal-Button' :'Modal-Link';
 		}
-		if ( $flexconf['fixedPosition'] ) {
+		if ( !empty($flexconf['fixedPosition']) ) {
 			$processedData['modal']['fixedClass'] = 'fixedModalButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
 			$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 			$processedData['modal']['fixedButton'] = TRUE;
@@ -42,7 +42,7 @@ class Modal implements SingletonInterface
 			if ( $headerPosition == 'right' ) $headerPosition = 'end';
 			$processedData['class'] .= ' text-'.$headerPosition;
 		}
-		if ($flexconf['whiteclosebutton']) {
+		if (!empty($flexconf['whiteclosebutton'])) {
 			$processedData['modal']['whiteclosebutton'] = TRUE;
 		}
 

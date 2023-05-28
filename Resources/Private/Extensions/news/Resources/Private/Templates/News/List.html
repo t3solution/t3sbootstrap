@@ -1,20 +1,271 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
 	  data-namespace-typo3-fluid="true">
-<f:layout name="General" />
-<!--
-	=====================
-		Templates/News/List.html
--->
-<f:section name="content">
-	<!--TYPO3SEARCH_end-->	
-    <f:if condition="{settings.version} > '8'">
-        <f:then>
-			<f:render partial="List/List_9.html" arguments="{_all}" />
-        </f:then>
-        <f:else>
-			<f:render partial="List/List_8.html" arguments="{_all}" />
-        </f:else>
-    </f:if>
-	<!--TYPO3SEARCH_begin-->
-</f:section>
+	<f:if condition="{news}">
+		<f:then>
+			<!--TYPO3SEARCH_end-->
+			<f:switch expression="{settings.templateLayout}">
+				<!-- t3sbootstrap Templates	-->
+				<f:case value="71">
+					<f:render section="ListGroup" arguments="{_all}" />
+				</f:case>
+				<f:case value="72">
+					<f:render section="Cards" arguments="{_all}" />
+				</f:case>
+				<f:case value="73">
+					<f:render section="Cards" arguments="{_all}" />
+				</f:case>
+				<f:case value="74">
+					<f:render section="Cards" arguments="{_all}" />
+				</f:case>
+				<f:case value="75">
+					<f:render section="Columns" arguments="{_all}" />
+				</f:case>
+				<!-- Custom Templates -->
+				<f:case value="90">
+					<f:render partial="List/Custom1" arguments="{_all}" />
+				</f:case>
+				<f:case value="91">
+					<f:render partial="List/Custom2" arguments="{_all}" />
+				</f:case>
+				<f:case value="92">
+					<f:render partial="List/Custom3" arguments="{_all}" />
+				</f:case>
+
+				<!-- Default Templates -->
+				<f:defaultCase>
+					<f:render section="Default" arguments="{_all}" />
+				</f:defaultCase>
+			</f:switch>
+			<!--TYPO3SEARCH_begin-->
+		</f:then>
+		<f:else>
+			<div class="no-news-found">
+				<div class="alert alert-danger" role="alert">
+					<f:translate key="LLL:EXT:news/Resources/Private/Language/locallang.xml:list_nonewsfound" />
+				</div>
+			</div>
+		</f:else>
+	</f:if>
 </html>
+
+
+
+<f:section name="ListGroup">
+<div class="list-group news-list-view{contentObjectData.class}" id="news-container-{contentObjectData.uid}"{contentObjectData.styleAttr -> f:format.raw()}>
+	<f:if condition="{settings.hidePagination}">
+		<f:then>
+			<f:for each="{news}" as="newsItem" iteration="iterator">
+				<f:render partial="List/ListGroup" arguments="{newsItem: newsItem,iterator:iterator}" />
+			</f:for>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.list.paginate.insertAbove}">
+				<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+			</f:if>								   
+			<f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
+				<f:render partial="List/ListGroup" arguments="{newsItem: newsItem,iterator:iterator}" />
+			</f:for>
+			<f:if condition="{settings.list.paginate.insertBelow}">
+				<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+			</f:if>
+		</f:else>
+	</f:if>
+</div>
+</f:section>
+
+
+<f:section name="Cards">
+	<f:if condition="{settings.templateLayout} == 72">
+		<f:then>
+			<f:comment> Card Decks -> Grid Cards </f:comment>
+			<f:if condition="{settings.hidePagination}">
+				<f:then>				
+					<div id="news-container-{contentObjectData.uid}" class="row {settings.list.cardDeck.rowColClass}{contentObjectData.class}"
+						 style="margin-right:-15px;margin-left:-15px; {contentObjectData.style}">
+						<f:for each="{news}" as="newsItem" iteration="iterator">
+							<div class="col">
+								<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator, templ: 'gridCard'}" />
+							</div>
+						</f:for>
+					</div>
+				</f:then>
+				<f:else>
+					<f:if condition="{settings.list.paginate.insertAbove}">
+						<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+					</f:if>
+					<div id="news-container-{contentObjectData.uid}" class="row {settings.list.cardDeck.rowColClass}{contentObjectData.class}"
+						style="margin-right:-15px;margin-left:-15px; {contentObjectData.style}">
+						<f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
+							<div class="col">
+								<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator, templ: 'gridCard'}" />
+							</div>
+						</f:for>
+					</div>
+					<f:if condition="{settings.list.paginate.insertBelow}">
+						<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+					</f:if>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.templateLayout} == 73">
+				<f:then>
+						<f:comment> Card Groups </f:comment>
+						<f:if condition="{settings.hidePagination}">
+							<f:then>
+								<div id="news-container-{contentObjectData.uid}"
+									 class="card-group{contentObjectData.class}"{contentObjectData.styleAttr -> f:format.raw()}>
+									<f:for each="{news}" as="newsItem" iteration="iterator">
+										<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+									</f:for>
+								</div>
+							</f:then>
+
+							<f:else>
+								<f:if condition="{settings.list.paginate.insertAbove}">
+									<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+								</f:if>
+								<div id="news-container-{contentObjectData.uid}" class="card-group{contentObjectData.class}">
+									<f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
+										<f:render partial="List/Card" arguments="{newsItem: newsItem, iterator: iterator}" />
+									</f:for>
+								</div>
+
+								<f:if condition="{settings.list.paginate.insertBelow}">
+									<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+								</f:if>
+							</f:else>
+						</f:if>
+				</f:then>
+				<f:else>
+					<f:comment> Masonry </f:comment>
+					<f:if condition="{settings.hidePagination}">
+						<f:then>
+							<f:if condition="{settings.cdn}">
+								<f:then>
+									<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js" integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
+								</f:then>
+								<f:else>
+									<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+								</f:else>
+							</f:if>
+							<div id="masonry-{contentObjectData.uid}" class="row masonry{contentObjectData.class}"{contentObjectData.styleAttr -> f:format.raw()}
+								  data-masonry='{"percentPosition": true }'>
+							<f:for each="{news}" as="newsItem" iteration="iterator">
+								<n:excludeDisplayedNews newsItem="{newsItem}"/>
+								<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}" class="{settings.list.masonry.class}" >
+									<div class="card">
+										<f:if condition="{newsItem.mediaPreviews}">
+											<!-- media preview element -->
+											<f:then>
+												<f:alias map="{mediaElement: '{newsItem.mediaPreviews.0}'}">
+													<f:if condition="{mediaElement.originalResource.type} == 2">
+														<f:render partial="List/Media/Image" arguments="{file: mediaElement}" />
+													</f:if>
+													<f:if condition="{mediaElement.originalResource.type} == 3 || {mediaElement.originalResource.type} == 4">
+														<f:render partial="List/Media/Video" arguments="{mediaElement: mediaElement}" />
+													</f:if>
+													<f:if condition="{mediaElement.originalResource.type} == 5">
+														<f:render partial="List/Media/File" arguments="{mediaElement: mediaElement}" />
+													</f:if>
+												</f:alias>
+											</f:then>
+											<f:else>
+												<f:if condition="{settings.displayDummyIfNoMedia}">
+													<f:if condition="{settings.dummyImageUid}">
+														<f:then>
+															<f:variable name="dummyImage" value="<t3sb:dummyImage uid='{settings.dummyImageUid}' />" />
+															<f:render partial="List/Media/Image" arguments="{file: dummyImage}" />						
+														</f:then>
+														<f:else>
+															<f:render partial="List/Media/Dummy" />						
+														</f:else>
+													</f:if>
+												</f:if>
+											</f:else>
+										</f:if>
+										<div class="overlay{f:if(condition: settings.list.mobile.imageOverlay,then: ' img-overlay')}">
+											<div class="card-body">
+												<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'false'}" />
+											</div>
+										</div>
+									</div>
+								</n:link>
+							</f:for>
+							</div>
+						</f:then>
+						<f:else>
+							<div class="alert alert-danger" role="alert">
+								Pagination did not work with Masonry
+							</div>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:section>
+
+
+<f:section name="Columns">
+	<f:if condition="{settings.hidePagination}">
+		<f:then>
+			<f:for each="{news}" as="newsItem" iteration="iterator">
+				<f:if condition="{iterator.isFirst}">
+					<div class="row">
+				</f:if>
+				<f:if condition="{iterator.cycle} % 2">
+					<f:then>
+						<div class="col-md-6">
+							<f:render partial="List/Columns" arguments="{newsItem: newsItem,iterator:iterator, contentObjectData:contentObjectData}"/>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="col-md-6">
+							<f:render partial="List/Columns" arguments="{newsItem: newsItem,iterator:iterator, contentObjectData:contentObjectData}"/>
+						</div>
+						<f:if condition="{iterator.isLast}">
+							<f:then></f:then>
+							<f:else>
+								</div><div class="row">
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<f:if condition="{iterator.isLast}">
+					</div>
+				</f:if>
+			</f:for>
+		</f:then>
+		<f:else>
+			<div class="alert alert-danger" role="alert">
+				Pagination did not work with the Template Layout "BS5: 2 Columns"
+			</div>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Default">
+	<ul class="list-unstyled" id="news-container-{contentObjectData.uid}">
+		<f:if condition="{settings.hidePagination}">
+			<f:then>
+				<f:for each="{news}" as="newsItem" iteration="iterator">
+					<f:render partial="List/Default" arguments="{newsItem: newsItem, iterator: iterator}" />
+				</f:for>
+			</f:then>
+			<f:else>
+				<f:if condition="{settings.list.paginate.insertAbove}">
+					<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+				</f:if>
+				<f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
+					<f:render partial="List/Default" arguments="{newsItem: newsItem, iterator: iterator}" />
+				</f:for>
+				<f:if condition="{settings.list.paginate.insertBelow}">
+					<f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+				</f:if>
+			</f:else>
+		</f:if>
+	</ul>
+</f:section>

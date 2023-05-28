@@ -2,7 +2,6 @@
 	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
 	  xmlns:rx="http://typo3.org/ns/Reelworx/RxShariff/ViewHelper"
 	  data-namespace-typo3-fluid="true">
-
 	<n:format.nothing>
 		<n:excludeDisplayedNews newsItem="{newsItem}" />
 		<f:if condition="{newsItem.alternativeTitle}">
@@ -241,10 +240,12 @@
 			<f:format.html>{newsItem.teaser}</f:format.html>
 		</div>
 	</f:if>
-	<!-- main text -->
-	<div class="news-text-wrap" itemprop="articleBody">
-		<f:format.html>{newsItem.bodytext}</f:format.html>
-	</div>
+	<f:if condition="{newsItem.teaser}">
+		<!-- main text -->
+		<div class="news-text-wrap" itemprop="articleBody">
+			<f:format.html>{newsItem.bodytext}</f:format.html>
+		</div>
+	</f:if>
 </f:section>
 
 <f:section name="ContentElements">

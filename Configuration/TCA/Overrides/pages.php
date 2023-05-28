@@ -14,11 +14,12 @@ $tempPagesColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['1',1],
-				['2',2],
-				['3',3],
-				['4',4],
-				['6',6]
+				['label' => '1', 'value' => 1,],
+				['label' => '2', 'value' => 2,],
+				['label' => '3', 'value' => 3,],
+				['label' => '4', 'value' => 4,],
+				['label' => '5', 'value' => 5,],
+				['label' => '6', 'value' => 6,],
 			],
 			'default' => 3
 		]
@@ -30,14 +31,14 @@ $tempPagesColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['no container','0'],
-				['container','container'],
-				['container-sm (< 576px)','container-sm'],
-				['container-md (≥ 576px)','container-md'],
-				['container-lg (≥ 768px)','container-lg'],
-				['container-xl (≥ 992px)','container-xl'],
-				['container-xxl (≥ 1200px)','container-xxl'],
-				['container-fluid (≥ 1400px)','container-fluid']
+				['label' => 'no container', 'value' => '0',],
+				['label' => 'container','value' => 'container',],
+				['label' => 'container-sm (< 576px)', 'value' => 'container-sm',],
+				['label' => 'container-md (≥ 576px)', 'value' => 'container-md',],
+				['label' => 'container-lg (≥ 768px)', 'value' => 'container-lg',],
+				['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
+				['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
+				['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
 			],
 			'default' => 'container'
 		]
@@ -72,13 +73,13 @@ $tempPagesColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['Default','default'],
-				['Top (both)','top'],
-				['Bottom (both)','bottom'],
-				['Left Aside Top','leftTop'],
-				['Left Aside Bottom','leftBottom'],
-				['Right Aside Top','rightTop'],
-				['Right Aside Bottom','rightBottom']
+				['label' => 'Default', 'value' => 'default',],
+				['label' => 'Top (both)', 'value' => 'top',],
+				['label' => 'Bottom (both)', 'value' => 'bottom',],
+				['label' => 'Left Aside Top', 'value' => 'leftTop',],
+				['label' => 'Left Aside Bottom', 'value' => 'leftBottom',],
+				['label' => 'Right Aside Top', 'value' => 'rightTop',],
+				['label' => 'Right Aside Bottom', 'value' => 'rightBottom',],
 			],
 			'default' => 'default'
 		]
@@ -90,12 +91,12 @@ $tempPagesColumns = [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
-				['Default','md'],
-				['sm','sm'],
-				['md','md'],
-				['lg','lg'],
-				['xl','xl'],
-				['xxl','xxl']
+				['label' => 'Default', 'value' => 'md',],
+				['label' => 'sm', 'value' => 'sm',],
+				['label' => 'md', 'value' => 'md',],
+				['label' => 'lg', 'value' => 'lg',],
+				['label' => 'xl', 'value' => 'xl',],
+				['label' => 'xxl', 'value' => 'xxl',],
 			],
 			'default' => 'md'
 		]
@@ -128,7 +129,7 @@ $tempPagesColumns = [
 		'label' => 'Icon only',
 		'description' => 'for nav-item not for page title',
 		'config' => [
-				'type' => 'check',
+			'type' => 'check',
 		]
 	],
 	'tx_t3sbootstrap_titlecolor' => [
@@ -358,13 +359,8 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 	);
 }
 
-
+   
 $menuheader = 198;
-
-// Add new page type:
-$GLOBALS['PAGES_TYPES'][$menuheader] = [
-	'allowedTables' => '*',
-];
 
 // Add new page type as possible select item:
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
@@ -388,9 +384,17 @@ $GLOBALS['PAGES_TYPES'][$menuheader] = [
 				$menuheader => 'content-header',
 			],
 		],
+
+       // add all page standard fields and tabs to your new page type
+       'types' => [
+           $menuheader => [
+               'showitem' => $GLOBALS['TCA']['pages']['types'][\TYPO3\CMS\Core\Domain\Repository\PageRepository::DOKTYPE_DEFAULT]['showitem']
+           ]
+       ]
 	]
 );
-			
+
+
 
 /***************
  * Register PageTSConfig Files

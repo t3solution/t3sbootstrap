@@ -12,7 +12,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper as CmsMediaViewHelper;
+use TYPO3\CMS\Core\Resource\Rendering\RendererRegistry;
+use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 #ConfigurationManagerInterface
 
@@ -24,8 +26,14 @@ use TYPO3\CMS\Fluid\ViewHelpers\MediaViewHelper as CmsMediaViewHelper;
  *
  * 	taken from https://extensions.typo3.org/extension/sms_responsive_images/ and modified
  */
-class MediaViewHelper extends CmsMediaViewHelper
+class MediaViewHelper extends AbstractTagBasedViewHelper
 {
+
+    /**
+     * @var string
+     */
+    protected $tagName = 'img';
+    
 	/**
 	 * @var ResponsiveImagesUtility
 	 */
@@ -59,7 +67,25 @@ class MediaViewHelper extends CmsMediaViewHelper
 	 */
 	public function initializeArguments()
 	{
-		parent::initializeArguments();
+/*#		parent::initializeArguments();
+
+Undeclared arguments passed to ViewHelper T3SBS\T3sbootstrap\ViewHelpers\MediaViewHelper: class, style. 
+Valid arguments are: file, additionalConfig, width, height, cropVariant, fileExtension, loading, decoding, srcset, sizes, breakpoints, imgtag, picturefill, lazyload, ratio, mobileNoRatio, shift, columns, placeholderSize, placeholderInline, ignoreFileExtensions
+*/
+# new
+        $this->registerUniversalTagAttributes();
+        $this->registerTagAttribute('alt', 'string', 'Specifies an alternate text for an image', false);
+        $this->registerArgument('file', 'object', 'File', true);
+        $this->registerArgument('additionalConfig', 'array', 'This array can hold additional configuration that is passed though to the Renderer object', false, []);
+        $this->registerArgument('width', 'string', 'This can be a numeric value representing the fixed width of in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
+        $this->registerArgument('height', 'string', 'This can be a numeric value representing the fixed height in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
+        $this->registerArgument('cropVariant', 'string', 'select a cropping variant, in case multiple croppings have been specified or stored in FileReference', false, 'default');
+        $this->registerArgument('fileExtension', 'string', 'Custom file extension to use for images');
+        $this->registerArgument('loading', 'string', 'Native lazy-loading for images property. Can be "lazy", "eager" or "auto". Used on image files only.');
+        $this->registerArgument('decoding', 'string', 'Provides an image decoding hint to the browser. Can be "sync", "async" or "auto"', false);
+
+# end new
+
 		$this->registerArgument('srcset', 'mixed', 'Image sizes that should be rendered.', false);
 		$this->registerArgument(
 			'sizes',
@@ -74,11 +100,12 @@ class MediaViewHelper extends CmsMediaViewHelper
 		$this->registerArgument('lazyload', 'int', 'Generate markup that supports lazyloading', false, 0);
 		$this->registerArgument('ratio', 'string', 'Image ratio', false, '');
 		$this->registerArgument('mobileNoRatio', 'bool', 'no aspect ratio for mobile', false, '');
-		$this->registerArgument('shift', 'string', 'Image vertical shift', false, '');
+		$this->registerArgument('shift', 'string', 'Image shift', false, '');
 		$this->registerArgument('hshift', 'string', 'Image horizontal shift', false, '');
 		$this->registerArgument('columns', 'int', 'Columns for Image Gallery', false, 0);
 		$this->registerArgument('placeholderSize', 'int', 'Size of the placeholder image for lazyloading (0 = disabled)', false, 0);
 		$this->registerArgument('placeholderInline', 'bool', 'Embed placeholder image for lazyloading inline as data uri', false, false);
+		$this->registerArgument('additionalAttributes', 'string', 'additional Attributes', false, false);
 		$this->registerArgument(
 			'ignoreFileExtensions',
 			'mixed',
@@ -88,6 +115,49 @@ class MediaViewHelper extends CmsMediaViewHelper
 		);
 	}
 
+
+    /**
+     * Render a given media file.
+     *
+     * @throws \UnexpectedValueException
+     * @throws Exception
+     */
+    public function render(): string
+    {
+        $file = $this->arguments['file'];
+        $additionalConfig = (array)$this->arguments['additionalConfig'];
+        $width = $this->arguments['width'];
+        $height = $this->arguments['height'];
+
+        // get Resource Object (non ExtBase version)
+        if (is_callable([$file, 'getOriginalResource'])) {
+            // We have a domain model, so we need to fetch the FAL resource object from there
+            $file = $file->getOriginalResource();
+        }
+
+        if (!$file instanceof FileInterface) {
+            throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface.', 1454252193);
+        }
+
+        if ((string)$this->arguments['fileExtension'] && !GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], (string)$this->arguments['fileExtension'])) {
+            throw new Exception(
+                'The extension ' . $this->arguments['fileExtension'] . ' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
+                . ' as a valid image file extension and can not be processed.',
+                1619030957
+            );
+        }
+
+        $fileRenderer = GeneralUtility::makeInstance(RendererRegistry::class)->getRenderer($file);
+
+        // Fallback to image when no renderer is found
+        if ($fileRenderer === null) {
+            return $this->renderImage($file, $width, $height, $this->arguments['fileExtension'] ?? null);
+        }
+        $additionalConfig = array_merge_recursive($this->arguments, $additionalConfig);
+        return $fileRenderer->render($file, $width, $height, $additionalConfig);
+    }
+    
+    
 	/**
 	 * Render img tag
 	 *
@@ -131,7 +201,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 			$cropString = '{"default":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"tablet":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"mobile":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null}}';
 		}
 
-		if ( $this->arguments['ratio'] ) {
+		if ( $this->arguments['ratio'] && $image->getExtension() !== 'pdf') {
 			$cropString = self::getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
@@ -180,7 +250,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
 			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
 			$breakpointArr[$bpKey]['srcset'] = '';
-			foreach( explode(',', (string) $breakpoint['srcset']) as $key=>$srcset ) {
+			foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
 				if ($width > (int)$srcset) {
 					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
 				} else {
@@ -228,7 +298,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 			'width' => $width,
 			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 		];
-		$imageService = $this->getImageService();
+		$imageService = self::getImageService();
 		$fallbackImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
 		return $fallbackImage;
@@ -277,7 +347,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 		if (!empty($fileExtension)) {
 			$processingInstructions['fileExtension'] = $fileExtension;
 		}
-		$imageService = $this->getImageService();
+		$imageService = self::getImageService();
 		$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
 		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
@@ -335,6 +405,7 @@ class MediaViewHelper extends CmsMediaViewHelper
 				if ( $rArr[0] > $rArr[1] ) {
 					// landscape
 					$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];
+					$pxHeight = !empty($pxHeight) ? $pxHeight : 1;
 					if ( $image->getProperties()['height'] > $pxHeight ) {
 						$cHeight = $pxHeight / $image->getProperties()['height'];
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
@@ -370,7 +441,6 @@ class MediaViewHelper extends CmsMediaViewHelper
 				}
 
 				if ( $this->arguments['shift'] || $this->arguments['hshift'] ) {
-
 					if ( $cropedWidth > $cropedHeight ) {
 						// landscape
 						$shift = $cropObject->$cropVariant->cropArea->x + $this->arguments['hshift']/100;
@@ -394,10 +464,14 @@ class MediaViewHelper extends CmsMediaViewHelper
 						$cropObject->$cropVariant->cropArea->x = $shift;
 					}
 				}
-
 			}
 		}
 
 		return json_encode($cropObject);
 	}
+
+    protected function getImageService(): ImageService
+    {
+        return GeneralUtility::makeInstance(ImageService::class);
+    }
 }

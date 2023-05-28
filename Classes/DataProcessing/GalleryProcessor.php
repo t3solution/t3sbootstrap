@@ -525,10 +525,9 @@ class GalleryProcessor implements DataProcessorInterface
 							$fileObject = $fO;
 						}
 					}
-					if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
-						$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
-						* ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
-					}
+					$mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
+					 * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
+
 					$mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
 					$this->mediaDimensions[$key] = [
 						'width' => floor($mediaWidth),
@@ -573,6 +572,7 @@ class GalleryProcessor implements DataProcessorInterface
 					$gutterWidth = 0;
 				}
 			}
+
 
 			if ( $this->processedData['data']['CType'] === 't3sbs_gallery' ) {
 
@@ -621,9 +621,7 @@ class GalleryProcessor implements DataProcessorInterface
 							}
 						}
 					}
-
 				} else {
-
 					if ($this->galleryData['count']['columns'] === -1 && $this->parentflexconf['card_wrapper'] !== 'slider') {
 						$mediaWidth = $galleryWidth;
 					} elseif ($this->mediaOrientation === 17 || $this->mediaOrientation === 18) {

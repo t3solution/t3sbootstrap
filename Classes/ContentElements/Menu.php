@@ -21,9 +21,11 @@ class Menu implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf, string $cType): array
 	{
 			$processedData['menudirection'] = ' '.$flexconf['menudirection'];
-			$processedData['menupills'] = $flexconf['menupills'] ? ' nav-pills' :'';
-			$processedData['menuHorizontalAlignment'] = !empty($flexconf['menudirection']) && $flexconf['menudirection'] == 'flex-row'
-			 ? ' '.$flexconf['menuHorizontalAlignment'] :'';
+			$processedData['menupills'] = !empty($flexconf['menupills']) ? ' nav-pills' :'';
+			if (!empty($flexconf['menudirection']) && $flexconf['menudirection'] == 'flex-row') {
+				$processedData['menuHorizontalAlignment'] = !empty($flexconf['menuHorizontalAlignment'])
+				 ? ' '.$flexconf['menuHorizontalAlignment'] : ' justify-content-end';
+			}
 			if ( $cType == 'menu_section' ) {
 				$processedData['pageLink'] = FALSE;
 				# if more than 1 page for section-menu
@@ -39,7 +41,7 @@ class Menu implements SingletonInterface
 					}
 				}
 			}
-			if ($flexconf['menuHorizontalAlignment'] == 'nav-fill variant') {
+			if (!empty($flexconf['menuHorizontalAlignment']) && $flexconf['menuHorizontalAlignment'] == 'nav-fill variant') {
 				$processedData['menupills'] = '';
 			}
 

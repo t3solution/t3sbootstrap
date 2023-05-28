@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Controller;
 
+use Psr\Http\Message\ResponseInterface;
+use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
+use T3SBS\T3sbootstrap\Domain\Model\Config;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -14,9 +17,6 @@ use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use Psr\Http\Message\ResponseInterface;
-use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
-use T3SBS\T3sbootstrap\Domain\Model\Config;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -36,6 +36,7 @@ abstract class AbstractController extends ActionController
 	protected $rootTemplates;
 	protected $persistenceManager;
 
+
 	/**
 	 * init all actions
 	 */
@@ -43,11 +44,13 @@ abstract class AbstractController extends ActionController
 	{
 		$site = self::getCurrentSite();
 		$this->rootPageId = $site->getRootPageId();
-		$this->currentUid = (int) GeneralUtility::_GET('id');
+		$this->currentUid = (int) $this->request->getQueryParams()['id'];
 		$this->isSiteroot = $this->rootPageId === $this->currentUid ? TRUE : FALSE;
 		$this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
 		$this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
+		$this->configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
 		$this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
+		$this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
 		$this->rootTemplates = $queryBuilder
@@ -59,11 +62,6 @@ abstract class AbstractController extends ActionController
 			 ->executeQuery()->fetchAll();
 
 		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-		$pageRenderer->addCssFile('EXT:t3sbootstrap/Resources/Public/Backend/bestyles.css');
-		$pageRenderer->loadRequireJsModule(
-			 'TYPO3/CMS/T3sbootstrap/Bootstrap',
-			 'function() { console.log("Loaded bootstrap.js by t3sbootstrap!"); }'
-		);
 	}
 
 
@@ -149,9 +147,9 @@ abstract class AbstractController extends ActionController
 				$var = GeneralUtility::underscoredToLowerCamelCase($field).'Options';
 				foreach ( $columns['config']['items'] as $key=>$entry ) {
 					$option = new \stdClass();
-					$option->key = $entry[1];
-					$option->value = $entry[0];
-					$fieldsOptions[$var][$entry[1]] = $option;
+					$option->key = $entry['value'];
+					$option->value = $entry['label'];
+					$fieldsOptions[$var][$entry['value']] = $option;
 				}
 			}
 		}
@@ -557,7 +555,7 @@ abstract class AbstractController extends ActionController
 	protected function getCurrentSite(): SiteInterface
 	{
 		$matcher = GeneralUtility::makeInstance(SiteMatcher::class);
-		return $matcher->matchByPageId((int) GeneralUtility::_GET('id'));
+		return $matcher->matchByPageId((int) $this->request->getQueryParams()['id']);
 	}
 
 
@@ -590,7 +588,7 @@ abstract class AbstractController extends ActionController
 					$theList .= ',' . $row['uid'];
 				}
 				if ($depth > 1) {
-					$theSubList = $this->getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
+					$theSubList = self::getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
 					if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {
 						$theList .= ',';
 					}

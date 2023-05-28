@@ -1,153 +1,138 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<general>
 			<ROOT>
+				<sheetTitle>General</sheetTitle>
 				<type>array</type>
-				<TCEforms>
-					<sheetTitle>General</sheetTitle>
-				</TCEforms>
 				<el>
 					<multipleToast>
-						<TCEforms>
-							<label>Several "Toasts" instead of other Content Elements.</label>
-							<onChange>reload</onChange>
-							<description>Stack toasts by wrapping them in a toast container. INFO: https://getbootstrap.com/docs/5.1/components/toasts/#stacking</description>
-							<config>
-								<type>check</type>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Several "Toasts" instead of other Content Elements.</label>
+						<onChange>reload</onChange>
+						<description>Stack toasts by wrapping them in a toast container. INFO: https://getbootstrap.com/docs/5.1/components/toasts/#stacking</description>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
 					</multipleToast>
 					<animation>
-						<TCEforms>
-							<label>Animation (apply a CSS fade transition to the toast)</label>
-							<displayCond>FIELD:general.multipleToast:=:0</displayCond>
-							<config>
-								<type>check</type>
-								<default>1</default>
-							</config>
-						</TCEforms>
+						<label>Animation (apply a CSS fade transition to the toast)</label>
+						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
+						<config>
+							<type>check</type>
+							<default>1</default>
+						</config>
 					</animation>
 					<autohide>
-						<TCEforms>
-							<label>Autohide (auto hide the toast)</label>
-							<onChange>reload</onChange>
-							<displayCond>FIELD:general.multipleToast:=:0</displayCond>
-							<config>
-								<type>check</type>
-								<default>1</default>
-							</config>
-						</TCEforms>
+						<label>Autohide (auto hide the toast)</label>
+						<onChange>reload</onChange>
+						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
+						<config>
+							<type>check</type>
+							<default>1</default>
+						</config>
 					</autohide>
 					<delay>
-						<TCEforms>
-							<label>Delay in ms (delay hiding the toast)</label>
-							<displayCond>
+						<label>Delay in ms (delay hiding the toast)</label>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.multipleToast:=:0</value1>
 								<and>
-									<value1>FIELD:general.multipleToast:=:0</value1>
-									<and>
-										<value1>FIELD:general.autohide:=:1</value1>
-									</and>
+									<value1>FIELD:general.autohide:=:1</value1>
 								</and>
-							</displayCond>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<default>5000</default>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
+							</and>
+						</displayCond>
+						<config>
+							<type>input</type>
+							<size>5</size>
+							<default>5000</default>
+							<eval>int</eval>
+						</config>
 					</delay>
 					<placement>
-						<TCEforms>
-							<label>Placement</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">default</numIndex>
-										<numIndex index="1">top-0 start-50 translate-middle-x</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Top left</numIndex>
-										<numIndex index="1">top-0 start-0</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Top center</numIndex>
-										<numIndex index="1">top-0 start-50 translate-middle-x</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Top right</numIndex>
-										<numIndex index="1">top-0 end-0</numIndex>
-									</numIndex>
+						<label>Placement</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">default</numIndex>
+									<numIndex index="value">top-0 start-50 translate-middle-x</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Top left</numIndex>
+									<numIndex index="value">top-0 start-0</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Top center</numIndex>
+									<numIndex index="value">top-0 start-50 translate-middle-x</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Top right</numIndex>
+									<numIndex index="value">top-0 end-0</numIndex>
+								</numIndex>
 
-									<numIndex index="4" type="array">
-										<numIndex index="0">Middle left</numIndex>
-										<numIndex index="1">top-50 start-0 translate-middle-y</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Middle center</numIndex>
-										<numIndex index="1">top-50 start-50 translate-middle</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Middle right</numIndex>
-										<numIndex index="1">top-50 end-0 translate-middle-y</numIndex>
-									</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Middle left</numIndex>
+									<numIndex index="value">top-50 start-0 translate-middle-y</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Middle center</numIndex>
+									<numIndex index="value">top-50 start-50 translate-middle</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Middle right</numIndex>
+									<numIndex index="value">top-50 end-0 translate-middle-y</numIndex>
+								</numIndex>
 
-									<numIndex index="7" type="array">
-										<numIndex index="0">Bottom left</numIndex>
-										<numIndex index="1">bottom-0 start-0</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Bottom center</numIndex>
-										<numIndex index="1">bottom-0 start-50 translate-middle-x</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Bottom right</numIndex>
-										<numIndex index="1">bottom-0 end-0</numIndex>
-									</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Bottom left</numIndex>
+									<numIndex index="value">bottom-0 start-0</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Bottom center</numIndex>
+									<numIndex index="value">bottom-0 start-50 translate-middle-x</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Bottom right</numIndex>
+									<numIndex index="value">bottom-0 end-0</numIndex>
+								</numIndex>
 
-								</items>
-								<default>top-0 start-50 translate-middle-x</default>
-							</config>
-						</TCEforms>
+							</items>
+							<default>top-0 start-50 translate-middle-x</default>
+						</config>
 					</placement>
 					<toastwidth>
-						<TCEforms>
-							<label>Width of the toast in (px)</label>
-							<displayCond>FIELD:general.multipleToast:=:0</displayCond>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<default>350</default>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
+						<label>Width of the toast in (px)</label>
+						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
+						<config>
+							<type>input</type>
+							<size>5</size>
+							<default>350</default>
+							<eval>int</eval>
+						</config>
 					</toastwidth>
 					<cookie>
-						<TCEforms>
-							<label>Set cookie</label>
-							<displayCond>FIELD:general.multipleToast:=:0</displayCond>
-							<description>Option to do not display the toast again until the expiration date or the "toast-body" content is changed.</description>
-							<onChange>reload</onChange>
-							<config>
-								<type>check</type>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Set cookie</label>
+						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
+						<description>Option to do not display the toast again until the expiration date or the "toast-body" content is changed.</description>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
 					</cookie>
 					<expires>
-						<TCEforms>
-							<label>Cookie expiration in days</label>
-							<displayCond>FIELD:general.cookie:=:1</displayCond>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<default>30</default>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
+						<label>Cookie expiration in days</label>
+						<displayCond>FIELD:general.cookie:=:1</displayCond>
+						<config>
+							<type>input</type>
+							<size>5</size>
+							<default>30</default>
+							<eval>int</eval>
+						</config>
 					</expires>
 				</el>
 			</ROOT>

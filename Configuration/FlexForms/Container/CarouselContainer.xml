@@ -1,254 +1,227 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<general>
 			<ROOT>
+				<sheetTitle>General</sheetTitle>
 				<type>array</type>
-				<TCEforms>
-					<sheetTitle>General</sheetTitle>
-				</TCEforms>
 				<el>
 					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Hiding / Display Elements</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Hidden only on xs</numIndex>
+									<numIndex index="value">d-none d-sm-block</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Hidden on sm and down</numIndex>
+									<numIndex index="value">d-none d-md-block</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Hidden on md and down</numIndex>
+									<numIndex index="value">d-none d-lg-block</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Hidden on lg and down</numIndex>
+									<numIndex index="value">d-none d-xl-block</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Hidden only on xl</numIndex>
+									<numIndex index="value">d-xl-none</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Visible only on xs</numIndex>
+									<numIndex index="value">d-block d-sm-none</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Visible sm and down</numIndex>
+									<numIndex index="value">d-block d-md-none</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Visible md and down</numIndex>
+									<numIndex index="value">d-block d-lg-none</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Visible lg and down</numIndex>
+									<numIndex index="value">d-block d-xl-none</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</hidden>
 					<width>
-						<TCEforms>
-							<label>max. Image width (required)</label>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>4</max>
-								<default>1440</default>
-								<eval>int+,required</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>max. Image width (required)</label>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>4</max>
+							<default>1440</default>
+							<eval>int+,required</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</width>
 					<ratio>
-						<TCEforms>
-							<label>Image aspect ratio - e.g.: 37:9</label>
-							<description>Aspect ratio for "Mobile" is 16:9 by default or use next option (image manipulation for mobile view).</description>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>5</max>
-								<default></default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Image aspect ratio - e.g.: 37:9</label>
+						<description>Aspect ratio for "Mobile" is 16:9 by default or use next option (image manipulation for mobile view).</description>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>5</max>
+							<default></default>
+							<checkbox>0</checkbox>
+						</config>
 					</ratio>
 					<mobileNoRatio>
-						<TCEforms>
-							<label>Use image manipulation for mobile view (overrides aspect ratio for mobile only)</label>
-							<description>In order to prevent slides that are too narrow (did not work with videos).</description>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Use image manipulation for mobile view (overrides aspect ratio for mobile only)</label>
+						<description>In order to prevent slides that are too narrow (did not work with videos).</description>
+						<config>
+							<type>check</type>
+						</config>
 					</mobileNoRatio>
 					<origImage>
-						<TCEforms>
-							<label>Use Original Image</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Use Original Image</label>
+						<config>
+							<type>check</type>
+						</config>
 					</origImage>
 					<thumbnails>
-						<TCEforms>
-							<label>Use Thumbnails as carousel-indicators</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Use Thumbnails as carousel-indicators</label>
+						<config>
+							<type>check</type>
+						</config>
 					</thumbnails>
 					<carouselFade>
-						<TCEforms>
-							<label>Switch carousel from horizontal sliding to crossfade</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Switch carousel from horizontal sliding to crossfade</label>
+						<config>
+							<type>check</type>
+						</config>
 					</carouselFade>
 					<darkVariant>
-						<TCEforms>
-							<label>Dark variant</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Dark variant</label>
+						<config>
+							<type>check</type>
+						</config>
 					</darkVariant>
 					<interval>
-						<TCEforms>
-							<label>Interval</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<max>5</max>
-								<default>5000</default>
-								<eval>int</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Interval</label>
+						<config>
+							<type>input</type>
+							<size>5</size>
+							<max>5</max>
+							<default>5000</default>
+							<eval>int</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</interval>
 					<link>
-						<TCEforms>
-							<label>Header link</label>
-							<onChange>reload</onChange>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">Header with link</numIndex>
-										<numIndex index="1">header</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Button with link</numIndex>
-										<numIndex index="1">button</numIndex>
-									</numIndex>
-								</items>
-								<default>header</default>
-							</config>
-						</TCEforms>
+						<label>Header link</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">Header with link</numIndex>
+									<numIndex index="value">header</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Button with link</numIndex>
+									<numIndex index="value">button</numIndex>
+								</numIndex>
+							</items>
+							<default>header</default>
+						</config>
 					</link>
 					<buttontext>
-						<TCEforms>
-							<label>Button Text (use pipe for languages and any HTML tags)</label>
-							<displayCond>FIELD:general.link:=:button</displayCond>
-							<config>
-								<type>input</type>
-								<size>69</size>
-								<max>99</max>
-								<default></default>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>Button Text (use pipe for languages and any HTML tags)</label>
+						<displayCond>FIELD:general.link:=:button</displayCond>
+						<config>
+							<type>input</type>
+							<size>69</size>
+							<max>99</max>
+							<default></default>
+							<checkbox>0</checkbox>
+						</config>
 					</buttontext>
 					<animate>
-						<TCEforms>
-							<label>Animated Caption</label>
-							<description>You can overwrite this setting in the carousel items.</description>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->animateCss</displayCond>
-							<config>
-								<type>input</type>
-								<checkbox></checkbox>
-								<eval>trim</eval>
-								<size>20</size>
-								<max>99</max>
-								<default></default>
-								<valuePicker type="array">
-									<items type="array">
-										<numIndex index="0" type="array">
-											<numIndex index="0">fadeIn</numIndex>
-											<numIndex index="1">fadeIn</numIndex>
-										</numIndex>
-										<numIndex index="1" type="array">
-											<numIndex index="0">fadeInUpBig</numIndex>
-											<numIndex index="1">fadeInUpBig</numIndex>
-										</numIndex>
-										<numIndex index="2" type="array">
-											<numIndex index="0">fadeInDownBig</numIndex>
-											<numIndex index="1">fadeInDownBig</numIndex>
-										</numIndex>
-										<numIndex index="3" type="array">
-											<numIndex index="0">rotateIn</numIndex>
-											<numIndex index="1">rotateIn</numIndex>
-										</numIndex>
-										<numIndex index="4" type="array">
-											<numIndex index="0">slideInUp</numIndex>
-											<numIndex index="1">slideInUp</numIndex>
-										</numIndex>
-										<numIndex index="5" type="array">
-											<numIndex index="0">zoomIn</numIndex>
-											<numIndex index="1">zoomIn</numIndex>
-										</numIndex>
-										<numIndex index="6" type="array">
-											<numIndex index="0">zoomInUp</numIndex>
-											<numIndex index="1">zoomInUp</numIndex>
-										</numIndex>
-										<numIndex index="7" type="array">
-											<numIndex index="0">zoomInDown</numIndex>
-											<numIndex index="1">zoomInDown</numIndex>
-										</numIndex>
+						<label>Animated Caption</label>
+						<description>You can overwrite this setting in the carousel items.</description>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->animateCss</displayCond>
+						<config>
+							<type>input</type>
+							<checkbox></checkbox>
+							<eval>trim</eval>
+							<size>20</size>
+							<max>99</max>
+							<default></default>
+							<valuePicker type="array">
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">fadeIn</numIndex>
+										<numIndex index="1">fadeIn</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">fadeInUpBig</numIndex>
+										<numIndex index="1">fadeInUpBig</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">fadeInDownBig</numIndex>
+										<numIndex index="1">fadeInDownBig</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">rotateIn</numIndex>
+										<numIndex index="1">rotateIn</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">slideInUp</numIndex>
+										<numIndex index="1">slideInUp</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">zoomIn</numIndex>
+										<numIndex index="1">zoomIn</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">zoomInUp</numIndex>
+										<numIndex index="1">zoomInUp</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">zoomInDown</numIndex>
+										<numIndex index="1">zoomInDown</numIndex>
+									</numIndex>
 
-										<numIndex index="8" type="array">
-											<numIndex index="0">rubberBand</numIndex>
-											<numIndex index="1">rubberBand</numIndex>
-										</numIndex>
-										<numIndex index="9" type="array">
-											<numIndex index="0">rollIn</numIndex>
-											<numIndex index="1">rollIn</numIndex>
-										</numIndex>
-									</items>
-								</valuePicker>
-							</config>
-						</TCEforms>
+									<numIndex index="8" type="array">
+										<numIndex index="0">rubberBand</numIndex>
+										<numIndex index="1">rubberBand</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">rollIn</numIndex>
+										<numIndex index="1">rollIn</numIndex>
+									</numIndex>
+								</items>
+							</valuePicker>
+						</config>
 					</animate>
 					<zoom>
-						<TCEforms>
-							<label>Enable open in lightbox</label>
-							<description>Not working with a link inside the carousel content.</description>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Enable open in lightbox</label>
+						<description>Not working with a link inside the carousel content.</description>
+						<config>
+							<type>check</type>
+						</config>
 					</zoom>
 					<mobileIndicators>
-						<TCEforms>
-							<label>Indicators also on mobile view</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Indicators also on mobile view</label>
+						<config>
+							<type>check</type>
+						</config>
 					</mobileIndicators>
 				</el>
 			</ROOT>

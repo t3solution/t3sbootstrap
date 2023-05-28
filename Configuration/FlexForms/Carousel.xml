@@ -1,115 +1,101 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<general>
 			<ROOT>
-				<type>array</type>
-				<TCEforms>
-					<sheetTitle>General</sheetTitle>
-				</TCEforms>
+				<sheetTitle>General</sheetTitle>
 				<el>
 					<shift>
-						<TCEforms>
-							<label>Vertical shift in % ( 0 = center, range: -60 to 60 )</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<default>0</default>
-								<eval>int</eval>
-								<range>
-									<lower>-60</lower>
-									<upper>60</upper>
-								</range>
-								<slider>
-									<step>1</step>
-									<width>200</width>
-								</slider>
-							</config>
-						</TCEforms>
+						<label>Vertical shift in % ( 0 = center, range: -60 to 60 )</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+						<config>
+							<type>input</type>
+							<size>5</size>
+							<default>0</default>
+							<eval>int</eval>
+							<range>
+								<lower>-60</lower>
+								<upper>60</upper>
+							</range>
+							<slider>
+								<step>1</step>
+								<width>200</width>
+							</slider>
+						</config>
 					</shift>
 					<loop>
-						<TCEforms>
-							<label>Loop (local video)</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Loop (local video)</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</loop>
 					<muted>
-						<TCEforms>
-							<label>Muted (local video)</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Muted (local video)</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</muted>
 					<controls>
-						<TCEforms>
-							<label>Controls (local video)</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Controls (local video)</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</controls>
 					<playsinline>
-						<TCEforms>
-							<label>Playsinline (local video)</label>
-							<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+						<label>Playsinline (local video)</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
+						<config>
+							<type>check</type>
+						</config>
 					</playsinline>
 					<bgOverlay>
-						<TCEforms>
-							<label>Background color for caption</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Caption only</numIndex>
-										<numIndex index="1">caption</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Entire image (overlay)</numIndex>
-										<numIndex index="1">image</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Background color for caption</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Caption only</numIndex>
+									<numIndex index="value">caption</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Entire image (overlay)</numIndex>
+									<numIndex index="value">image</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</bgOverlay>
 					<captionVAlign>
-						<TCEforms>
-							<label>Caption vertical align</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">Top</numIndex>
-										<numIndex index="1">top</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Center</numIndex>
-										<numIndex index="1">center</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Bottom</numIndex>
-										<numIndex index="1">end</numIndex>
-									</numIndex>
-								</items>
-								<default>end</default>
-							</config>
-						</TCEforms>
+						<label>Caption vertical align</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">Top</numIndex>
+									<numIndex index="value">top</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Center</numIndex>
+									<numIndex index="value">center</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Bottom</numIndex>
+									<numIndex index="value">end</numIndex>
+								</numIndex>
+							</items>
+							<default>end</default>
+						</config>
 					</captionVAlign>
 				</el>
 			</ROOT>

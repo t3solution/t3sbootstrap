@@ -1,0 +1,5 @@
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/Page.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/Content.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'

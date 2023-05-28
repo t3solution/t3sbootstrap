@@ -5669,7 +5669,7 @@ EOL;
 
             $tree = $this->importCache[$realPath];
         } else {
-            $code   = file_get_contents($path);
+            $code   = @file_get_contents($path);
             $parser = $this->parserFactory($path);
             $tree   = $parser->parse($code);
 

@@ -23,12 +23,12 @@ class Toast implements SingletonInterface
 		$processedData['autohide'] = $flexconf['autohide'] ? 'true' : 'false';
 		$processedData['delay'] = $flexconf['delay'];
 		$processedData['style'] .= !empty($flexconf['toastwidth']) ? ' width:'.$flexconf['toastwidth'].'px;' : '';
-		if ($flexconf['placement'] && str_starts_with($flexconf['placement'], 'top-0')) {
+		if (!empty($flexconf['placement']) && str_starts_with($flexconf['placement'], 'top-0')) {
 			$processedData['placement'] = ' '.str_replace('top-0', 'top-70', $flexconf['placement']);
 		} else {
-			$processedData['placement'] = ' '.$flexconf['placement'];
+			$processedData['placement'] = ' top-0 start-50 translate-middle-x';
 		}
-		$processedData['cookie'] = $flexconf['cookie'];
+		$processedData['cookie'] = !empty($flexconf['cookie']) ? TRUE : FALSE;
 		$processedData['expires'] = !empty($flexconf['expires']) ? $flexconf['expires'] : '';
 
 		$processedData['style'] .= ' z-index:1;';

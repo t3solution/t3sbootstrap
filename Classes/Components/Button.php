@@ -62,13 +62,13 @@ class Button implements SingletonInterface
 
 		$processedData['headerPosition'] = $headerPosition;
 
-		if ( $flexconf['fixedPosition'] ) {
+		if ( !empty($flexconf['fixedPosition']) ) {
 			$typolinkButtonClass .= ' d-none fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
 			$typolinkButtonClass .= !empty($flexconf['rotate']) ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
 			$processedData['fixedButton'] = $flexconf['fixedPosition'];
 		}
 
-		$processedData['linkTitle'] = $flexconf['linkTitle'];
+		$processedData['linkTitle'] = !empty($flexconf['linkTitle']) ? $flexconf['linkTitle'] : '';
 		$processedData['slideInButton'] = FALSE;
 		$processedData['slideInButtonFaIcon'] = FALSE;
 

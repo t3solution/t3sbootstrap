@@ -3,35 +3,34 @@
 	<f:flashMessages/>    
 	<f:if condition="{isSiteroot}">
 		<div class="t3sb-ext-navigation">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<f:link.action action="list" class="navbar-brand" title="Configuration">T3SBootstrap</f:link.action>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#t3sbNavbarToggler"
-				 aria-controls="t3sbNavbarToggler" aria-expanded="false" aria-label="Toggle navigation" style="float: right;">
-				 	<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="t3sbNavbarToggler">
-				<ul class="navbar-nav list-unstyled mr-auto mt-3 mt-lg-0" style="margin-top: 1rem;">
-					<li class="nav-item {f:if(condition: '{action}==list || action}==edit', then: 'active')}">
-						<f:link.action action="list" class="nav-link" title="Configuration">
-							<em class="fa fas fa-cogs" aria-hidden="true"></em> Configuration
-						</f:link.action>
-					</li>
-					<li class="nav-item {f:if(condition: '{action}==constants', then: 'active')}">
-						<f:link.action action="constants" class="nav-link" title="Settings">
-							<em class="fa fa-bars" aria-hidden="true"></em> Outsourced Constants
-						</f:link.action>
-					</li>
-					<li class="nav-item {f:if(condition: '{action}==dashboard', then: 'active')}">
-						<f:link.action action="dashboard" class="nav-link" title="Dashboard">
-							<em class="fa fa-cog" aria-hidden="true"></em> EM Config
-						</f:link.action>
-					</li>
-				  </ul>
+			<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading" style="background-color: #f8f8f8;">
+						<h2 class="panel-title" id="main-heading-panel" style="font-size: 24px; color: #6a10f3; font-weight: 300;">
+							<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#main-panel" aria-expanded="false" aria-controls="main-panel">
+								<strong>
+								<svg style="fill:#6a10f3; margin-top: -5px;" width="32px" height="32px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+								T3SBootstrap</strong>
+							</a>
+						</h2>
+					</div>
+					<div id="main-panel" class="collapse" aria-labelledby="main-heading-panel">
+						<div class="panel-body">
+							<f:link.action action="list" title="Configuration" style="margin-bottom:2rem;">
+								<f:be.infobox title="Configuration" state="-2">Adjust the configuration or custom scss</f:be.infobox>
+							</f:link.action>
+							<f:link.action action="constants" title="Settings">
+								<f:be.infobox title="Outsourced Constants" state="-2">Overview of the provided, outsourced constants</f:be.infobox>
+							</f:link.action>
+							<f:link.action action="dashboard" title="Dashboard">
+								<f:be.infobox title="EM Config" state="-2">Overview of the settings in the EM Config</f:be.infobox>
+							</f:link.action>
+						</div>
+					</div>
 				</div>
-			</nav>
+			</div>
 		</div>
 	</f:if>
 	<f:render section="content"/>
 </div>
 </html>
-

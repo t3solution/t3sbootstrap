@@ -240,7 +240,7 @@ class SourceMapGenerator
         $content = [];
 
         foreach ($this->sources as $sourceFile) {
-            $content[] = file_get_contents($sourceFile);
+            $content[] = @file_get_contents($sourceFile);
         }
 
         return $content;

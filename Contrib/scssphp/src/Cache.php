@@ -132,7 +132,7 @@ class Cache
                 (\is_null($lastModified) || $cacheTime > $lastModified) &&
                 $cacheTime + self::$gcLifetime > time()
             ) {
-                $c = file_get_contents($fileCache);
+                $c = @file_get_contents($fileCache);
                 $c = unserialize($c);
 
                 if (\is_array($c) && isset($c['value'])) {

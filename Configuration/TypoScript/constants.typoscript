@@ -1,3 +1,4 @@
+
 #-------------------------------------------------------------------------------
 #	Plugin Constants
 #-------------------------------------------------------------------------------
@@ -23,11 +24,24 @@ bootstrap.cdn.fontawesome6latest = 6.4.0
 #	Constant Editor
 #-------------------------------------------------------------------------------
 
-# customcategory=bootstrap-cdn=* T3SB::CDN- Google Fonts and Version-Settings
-# customsubcategory=a-enable=CDN (Content Delivery Network) - can offer a performance benefit!
+# customcategory=bootstrap-cdn=T3SB CDN - Google Fonts and Version-Settings
+# customsubcategory=a-enable=CDN - can offer a performance benefit
 # customsubcategory=a-google=GoogleFonts - Integrate Google Fonts
-# customsubcategory=b-version=CDN Versions used in the scheduler task "T3SB CDN to local" - must be valid
+# customsubcategory=b-version=CDN Versions used in the scheduler task T3SB CDN to local - must be valid
 # customsubcategory=c-integrity=CDN Integrity - if set crossorigin is set to anonymous
+
+# customcategory=bootstrap-image=T3SB Image settings
+# customsubcategory=a-image=Default Image Size
+# customsubcategory=b-image=Additional image sizes (srcset) that should be generated for each content image.
+# customsubcategory=c-image=Lazyloading Threshold
+# customsubcategory=d-image=Picturefill
+
+# customcategory=bootstrap-optimize=T3SB OPTIMIZE-Bootstrap 
+# customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports When using "Custom SCSS", make sure you optimize Bootstrap by only @importing the components you need. For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below. progress, tooltip, popover and placeholders are not used by t3sbootstrap! After that execute the scheduler task "t3sbootstrap:customScss".
+
+# customcategory=bootstrap-pages=T3SB Global pages override
+# customsubcategory=a-pages=Global pages override
+
 bootstrap.cdn {
 	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Public/
 	enable = 1
@@ -44,7 +58,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.4.0
 	fontawesome = 6.4.0
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
-	jquery = 3.6.1
+	jquery = 3.7.0
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
@@ -66,7 +80,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax: set to 2 only to get v2.x (latest)
 	jarallax = 2
 	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 8 only to get v8.x (latest)
-	swiper = 8
+	swiper = 9
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
 	bootstrapCssIntegrity = sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65
@@ -98,11 +112,6 @@ bootstrap.cdn {
 	glightboxIntegrity = 
 }
 
-# customcategory=bootstrap-image=* T3SB::Image settings
-# customsubcategory=a-image=Default Image Size
-# customsubcategory=b-image=Additional image sizes (srcset) that should be generated for each content image.
-# customsubcategory=c-image=Lazyloading Threshold
-# customsubcategory=d-image=Picturefill
 bootstrap.image {
 	# cat=bootstrap-image/a-image/10; type=boolean; label=Set Cookie with viewport width: usefull if using container "fluid-container" and auto image width.
 	viewportWidthCookie = 0
@@ -132,9 +141,6 @@ bootstrap.image {
 	picturefill = 0
 }
 
-
-# customcategory=bootstrap-optimize=* T3SB::OPTIMIZE-Bootstrap 
-# customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports When using "Custom SCSS", make sure you optimize Bootstrap by only @importing the components you need. For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below. progress, tooltip, popover and placeholders are not used by t3sbootstrap! After that execute the scheduler task "t3sbootstrap:customScss".
 bootstrap.optimize {
 	# cat=bootstrap-optimize/c-enable/10; type=boolean; label=tables
 	tables = 1
@@ -188,9 +194,6 @@ bootstrap.optimize {
 	placeholders = 1
 }
 
-
-# customcategory=bootstrap-pages=* T3SB::Global pages override
-# customsubcategory=a-pages=Global pages override
 bootstrap.pages.override {
 	# cat=bootstrap-pages/a-pages/10; type=options[none=0, container=container, container-sm=container-sm, container-md=container-md, container-lg=container-lg, container-xl=container-xl, container-xxl=container-xxl, container-fluid=container-fluid]; label=Container (for the whole page):
 	container = 0
@@ -261,7 +264,7 @@ bootstrap.config.jqueryHeader = 0
 bootstrap.disable.accordion.scrollToTop = 0
 
 bootstrap.navbar {
-	image.defaultPath = /typo3conf/ext/t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
+	image.defaultPath = EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
 	image.width = 30
 	image.height = 24
 	image.altText = Company Logo

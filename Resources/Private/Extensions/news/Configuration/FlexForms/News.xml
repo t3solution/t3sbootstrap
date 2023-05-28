@@ -1,235 +1,206 @@
+
 <extra>
 	<ROOT>
-		<TCEforms>
-			<sheetTitle>T3SB</sheetTitle>
-			<sheetShortDescr>Added by EXT:t3sbootstrap</sheetShortDescr>
-			<sheetDescription>Be sure to save, after changing the template layout!</sheetDescription>
-		</TCEforms>
+		<sheetTitle>T3SB</sheetTitle>
+		<sheetShortDescr>Added by EXT:t3sbootstrap</sheetShortDescr>
+		<sheetDescription>Be sure to save, after changing the template layout!</sheetDescription>
 		<type>array</type>
 		<el>
 			<settings.list.cardDeck.rowColClass>
-				<TCEforms>
-					<label>Use the Bootstrap grid system and its .row-cols classes for "Grid Cards"</label>
-					<description>INFO: https://getbootstrap.com/docs/5.1/components/card/#grid-cards &#xA; Default: row-cols-1 row-cols-md-3 row-cols-lg-4 g-4</description>
- 					<displayCond>FIELD:template.settings.templateLayout:=:72</displayCond>
-					<config>
-						<type>input</type>
-						<size>25</size>
-						<eval>required</eval>
-						<default>row-cols-1 row-cols-md-3 row-cols-lg-4 g-4</default>
-					</config>
-				</TCEforms>
+				<label>Use the Bootstrap grid system and its .row-cols classes for "Grid Cards"</label>
+				<description>INFO: https://getbootstrap.com/docs/5.3/components/card/#grid-cards &#xA; Default: row-cols-1 row-cols-md-3 row-cols-lg-4 g-4</description>
+					<displayCond>FIELD:template.settings.templateLayout:=:72</displayCond>
+				<config>
+					<type>input</type>
+					<size>25</size>
+					<eval>required</eval>
+					<default>row-cols-1 row-cols-md-3 row-cols-lg-4 g-4</default>
+				</config>
 			</settings.list.cardDeck.rowColClass>
 			<settings.list.masonry.class>
-				<TCEforms>
-					<label>Use the Bootstrap responsive grid for "Masonry"</label>
-					<description>INFO: https://getbootstrap.com/docs/5.1/examples/masonry/ &#xA; Default: col-xs-12 col-sm-6 col-lg-3 mb-3</description>
- 					<displayCond>FIELD:template.settings.templateLayout:=:74</displayCond>
-					<config>
-						<type>input</type>
-						<size>25</size>
-						<eval>required</eval>
-						<default>col-xs-12 col-sm-6 col-lg-3 mb-3</default>
-					</config>
-				</TCEforms>
+				<label>Use the Bootstrap responsive grid for "Masonry"</label>
+				<description>INFO: https://getbootstrap.com/docs/5.1/examples/masonry/ &#xA; Default: col-xs-12 col-sm-6 col-lg-3 mb-3</description>
+					<displayCond>FIELD:template.settings.templateLayout:=:74</displayCond>
+				<config>
+					<type>input</type>
+					<size>25</size>
+					<eval>required</eval>
+					<default>col-xs-12 col-sm-6 col-lg-3 mb-3</default>
+				</config>
 			</settings.list.masonry.class>
 			<settings.list.imageRatio>
-				<TCEforms>
-					<label>Image ratio for List view - e.g. 16:9, 4:3 or any other - disabled if empty</label>
-					<displayCond>
-						<or>
-							<numIndex index="0">FIELD:template.settings.templateLayout:=:71</numIndex>
-							<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
-							<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
-							<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
-							<numIndex index="4">FIELD:template.settings.templateLayout:=:75</numIndex>
-						</or>
-					</displayCond>
-					<config>
-						<type>input</type>
-						<size>5</size>
-						<eval>trim</eval>
-						<default>16:9</default>
-					</config>
-				</TCEforms>
+				<label>Image ratio for List view - e.g. 16:9, 4:3 or any other - disabled if empty</label>
+				<displayCond>
+					<or>
+						<numIndex index="0">FIELD:template.settings.templateLayout:=:71</numIndex>
+						<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
+						<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
+						<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
+						<numIndex index="4">FIELD:template.settings.templateLayout:=:75</numIndex>
+					</or>
+				</displayCond>
+				<config>
+					<type>input</type>
+					<size>5</size>
+					<eval>trim</eval>
+					<default>16:9</default>
+				</config>
 			</settings.list.imageRatio>
 			<settings.list.info>
-				<TCEforms>
-					<label>Date, Categories, Author etc. in List view</label>
-					<displayCond>
-						<or>
-							<numIndex index="0">FIELD:template.settings.templateLayout:=:71</numIndex>
-							<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
-							<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
-							<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
-							<numIndex index="4">FIELD:template.settings.templateLayout:=:75</numIndex>
-						</or>
-					</displayCond>
-					<config>
-						<type>check</type>
-					</config>
-				</TCEforms>
+				<label>Date, Categories, Author etc. in List view</label>
+				<displayCond>
+					<or>
+						<numIndex index="0">FIELD:template.settings.templateLayout:=:71</numIndex>
+						<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
+						<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
+						<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
+						<numIndex index="4">FIELD:template.settings.templateLayout:=:75</numIndex>
+					</or>
+				</displayCond>
+				<config>
+					<type>check</type>
+				</config>
 			</settings.list.info>
 			<settings.list.mobile.imageOverlay>
-				<TCEforms>
-					<label>Image mobile overlay (list view): if &lt; 576px for Card-Templates only</label>
-					<displayCond>
-						<or>
-							<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
-							<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
-							<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
-						</or>
-					</displayCond>
-					<config>
-						<type>check</type>
-					</config>
-				</TCEforms>
+				<label>Image mobile overlay (list view): if &lt; 576px for Card-Templates only</label>
+				<displayCond>
+					<or>
+						<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
+						<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
+						<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
+					</or>
+				</displayCond>
+				<config>
+					<type>check</type>
+				</config>
 			</settings.list.mobile.imageOverlay>
 			<settings.dummyImageUid>
-				<TCEforms>
-					<label>UID of content element with custom dummy image (assets or image).</label>
-					<displayCond>
-						<or>
-							<numIndex index="0">FIELD:template.settings.templateLayout:=:71</numIndex>
-							<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
-							<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
-							<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
-							<numIndex index="4">FIELD:template.settings.templateLayout:=:75</numIndex>
-						</or>
-					</displayCond>
-					<config>
-						<type>input</type>
-						<size>5</size>
-						<eval>int</eval>
-						<default></default>
-					</config>
-				</TCEforms>
+				<label>UID of content element with custom dummy image (assets or image).</label>
+				<displayCond>
+					<or>
+						<numIndex index="0">FIELD:template.settings.templateLayout:=:71</numIndex>
+						<numIndex index="1">FIELD:template.settings.templateLayout:=:72</numIndex>
+						<numIndex index="2">FIELD:template.settings.templateLayout:=:73</numIndex>
+						<numIndex index="3">FIELD:template.settings.templateLayout:=:74</numIndex>
+						<numIndex index="4">FIELD:template.settings.templateLayout:=:75</numIndex>
+					</or>
+				</displayCond>
+				<config>
+					<type>input</type>
+					<size>5</size>
+					<eval>int</eval>
+					<default></default>
+				</config>
 			</settings.dummyImageUid>
 
 			<!-- Detail PlugIn -->
 
 			<settings.detail.imageRatio>
-				<TCEforms>
-					<label>Image ratio - Detail view - e.g. 16:9, 4:3 or any other - disabled if empty</label>
- 					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					<config>
-						<type>input</type>
-						<size>5</size>
-						<eval>trim</eval>
-						<default>16:9</default>
-					</config>
-				</TCEforms>
+				<label>Image ratio - Detail view - e.g. 16:9, 4:3 or any other - disabled if empty</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				<config>
+					<type>input</type>
+					<size>5</size>
+					<eval>trim</eval>
+					<default>16:9</default>
+				</config>
 			</settings.detail.imageRatio>
 			<settings.detail.info>
-				<TCEforms>
-					<label>Date, Categories, Author etc. - Detail view</label>
- 					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					<config>
-						<type>check</type>
-					</config>
-				</TCEforms>
+				<label>Date, Categories, Author etc. - Detail view</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				<config>
+					<type>check</type>
+				</config>
 			</settings.detail.info>
 			<settings.detail.mediaOnTop>
-				<TCEforms>
-					<label>Media on top - Detail view</label>
- 					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					<config>
-						<type>check</type>
-					</config>
-				</TCEforms>
+				<label>Media on top - Detail view</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				<config>
+					<type>check</type>
+				</config>
 			</settings.detail.mediaOnTop>
 			  <settings.detail.leftGrid>
-				  <TCEforms>
-					  <label>Grid for the left column (only if media) - Detail view</label>
-						<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					  <config>
-						  <type>input</type>
-						  <size>5</size>
-						  <eval>int</eval>
-						  <default>7</default>
-					  </config>
-				  </TCEforms>
+				  <label>Grid for the left column (only if media) - Detail view</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				  <config>
+					  <type>input</type>
+					  <size>5</size>
+					  <eval>int</eval>
+					  <default>7</default>
+				  </config>
 			  </settings.detail.leftGrid>
 			  <settings.detail.teaser.class>
-				  <TCEforms>
-					  <label>Class for the teaser (e.g.: lead) - Detail view</label>
-						<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					  <config>
-						  <type>input</type>
-						  <size>5</size>
-						  <eval>trim</eval>
-						  <default>lead</default>
-					  </config>
-				  </TCEforms>
+				  <label>Class for the teaser (e.g.: lead) - Detail view</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				  <config>
+					  <type>input</type>
+					  <size>5</size>
+					  <eval>trim</eval>
+					  <default>lead</default>
+				  </config>
 			  </settings.detail.teaser.class>
 			<settings.detail.lightbox.enabled>
-				<TCEforms>
-					<label>Enable lightbox - Detail view</label>
-						<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					<config>
-						<type>check</type>
-						<default>1</default>
-					</config>
-				</TCEforms>
+				<label>Enable lightbox - Detail view</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				<config>
+					<type>check</type>
+					<default>1</default>
+				</config>
 			</settings.detail.lightbox.enabled>
 			<settings.detail.carousel>
-				<TCEforms>
-					<label>Carousel if more than one image - Detail view</label>
- 					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					<config>
-						<type>check</type>
-						<default>1</default>
-					</config>
-				</TCEforms>
+				<label>Carousel if more than one image - Detail view</label>
+					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				<config>
+					<type>check</type>
+					<default>1</default>
+				</config>
 			</settings.detail.carousel>
 			<settings.button.class>
-				<TCEforms>
-					<label>Utility class for buttons</label>
-					<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
-					<config>
-						<type>select</type>
-						<renderType>selectSingle</renderType>
-						<items type="array">
-							<numIndex index="0" type="array">
-								<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
-								<numIndex index="1">secondary</numIndex>
-							</numIndex>
-							<numIndex index="1" type="array">
-								<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-								<numIndex index="1">primary</numIndex>
-							</numIndex>
-							<numIndex index="2" type="array">
-								<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-								<numIndex index="1">success</numIndex>
-							</numIndex>
-							<numIndex index="3" type="array">
-								<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-								<numIndex index="1">info</numIndex>
-							</numIndex>
-							<numIndex index="4" type="array">
-								<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-								<numIndex index="1">warning</numIndex>
-							</numIndex>
-							<numIndex index="5" type="array">
-								<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-								<numIndex index="1">danger</numIndex>
-							</numIndex>
-							<numIndex index="6" type="array">
-								<numIndex index="0">Light</numIndex>
-								<numIndex index="1">light</numIndex>
-							</numIndex>
-							<numIndex index="7" type="array">
-								<numIndex index="0">Dark</numIndex>
-								<numIndex index="1">dark</numIndex>
-							</numIndex>
-							<numIndex index="8" type="array">
-								<numIndex index="0">White</numIndex>
-								<numIndex index="1">white</numIndex>
-							</numIndex>
-						</items>
-						<default>primary</default>
-					</config>
-				</TCEforms>
+				<label>Utility class for buttons</label>
+				<displayCond>FIELD:template.settings.templateLayout:=:81</displayCond>
+				<config>
+					<type>select</type>
+					<renderType>selectSingle</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
+							<numIndex index="value">secondary</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
+							<numIndex index="value">primary</numIndex>
+						</numIndex>
+						<numIndex index="2" type="array">
+							<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
+							<numIndex index="value">success</numIndex>
+						</numIndex>
+						<numIndex index="3" type="array">
+							<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
+							<numIndex index="value">info</numIndex>
+						</numIndex>
+						<numIndex index="4" type="array">
+							<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
+							<numIndex index="value">warning</numIndex>
+						</numIndex>
+						<numIndex index="5" type="array">
+							<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
+							<numIndex index="value">danger</numIndex>
+						</numIndex>
+						<numIndex index="6" type="array">
+							<numIndex index="label">Light</numIndex>
+							<numIndex index="value">light</numIndex>
+						</numIndex>
+						<numIndex index="7" type="array">
+							<numIndex index="label">Dark</numIndex>
+							<numIndex index="value">dark</numIndex>
+						</numIndex>
+						<numIndex index="8" type="array">
+							<numIndex index="label">White</numIndex>
+							<numIndex index="value">white</numIndex>
+						</numIndex>
+					</items>
+					<default>primary</default>
+				</config>
 			</settings.button.class>
 		</el>
 	</ROOT>

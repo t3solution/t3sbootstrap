@@ -53,9 +53,7 @@ function t3sbAddHeight(TYPO3, objKey) {
 		var totalHeight = 0;
 		var addHeight = 0;
 		Object.keys(TYPO3.settings.ADDHEIGHT).forEach(function (item) {
-			if (objKey == 'bg-img-'+item) {
-				addHeight = parseInt(TYPO3.settings.ADDHEIGHT[item]);
-			}
+			addHeight = parseInt(item);
 		});
 		if ( overlay.querySelector('.container') ) {
 			Array.from(overlay.getElementsByClassName('container')[0].children).forEach( bgwContent => {
@@ -181,31 +179,41 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 											<figure style="margin: 0 auto;">
 												<f:if condition="{settings.lazyLoadBgWrapperImage}">
 													<f:then>
-														<t3sb:media file="{file}" width="{ingWidth}" height="auto"
+														<t3sb:media 
+															file="{file}" 
+															width="{ingWidth}" 
+															height="auto"
 															class="img-fluid orig-img{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load}
 															 && {settings.lazyLoad} == 2 || {settings.lazyLoad} == 1', then: ' lazy')}"
 															breakpoints="{
-															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
-															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-														}" picturefill="{settings.picturefill}" lazyload="{settings.lazyLoad}" ratio="0"
-														 style="{style}"
-														 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
-														 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
-														 />
+																0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+																1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+																2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+															}" 
+															picturefill="{settings.picturefill}"
+															lazyload="{settings.lazyLoad}" 
+															ratio="0" 
+															style="{style}" 
+															shift="{file.properties.tx_t3sbootstrap_shift_vertical}" 
+															hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}" />
 													</f:then>
 													<f:else>
-														<t3sb:media file="{file}" width="{ingWidth}" height="auto"
+														<t3sb:media 
+															file="{file}" 
+															width="{ingWidth}" 
+															height="auto"
 															class="img-fluid orig-img"
 															breakpoints="{
-															0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
-															1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
-															2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
-														}" picturefill="{settings.picturefill}" lazyload="0" ratio="0"
-														 style="{style}"
-														 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
-														 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
-														 />
+																0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+																1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+																2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+															}" 
+															picturefill="{settings.picturefill}" 
+															lazyload="0" 
+															ratio="0" 
+															style="{style}" 
+															shift="{file.properties.tx_t3sbootstrap_shift_vertical}" 
+															hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}" />
 													</f:else>
 												</f:if>
 											</figure>

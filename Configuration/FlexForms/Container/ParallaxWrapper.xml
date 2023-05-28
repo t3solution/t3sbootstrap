@@ -1,111 +1,102 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.general</sheetTitle>
 				<type>array</type>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.general</sheetTitle>
-				</TCEforms>
 				<el>
 					<hidden>
-						<TCEforms>
-							<label>Hiding / Display Elements</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">none</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Hidden only on xs</numIndex>
-										<numIndex index="1">d-none d-sm-block</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Hidden on sm and down</numIndex>
-										<numIndex index="1">d-none d-md-block</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Hidden on md and down</numIndex>
-										<numIndex index="1">d-none d-lg-block</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Hidden on lg and down</numIndex>
-										<numIndex index="1">d-none d-xl-block</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Hidden only on xl</numIndex>
-										<numIndex index="1">d-xl-none</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Visible only on xs</numIndex>
-										<numIndex index="1">d-block d-sm-none</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Visible sm and down</numIndex>
-										<numIndex index="1">d-block d-md-none</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Visible md and down</numIndex>
-										<numIndex index="1">d-block d-lg-none</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Visible lg and down</numIndex>
-										<numIndex index="1">d-block d-xl-none</numIndex>
-									</numIndex>
-								</items>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<label>Hiding / Display Elements</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">none</numIndex>
+									<numIndex index="value">0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">Hidden only on xs</numIndex>
+									<numIndex index="value">d-none d-sm-block</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">Hidden on sm and down</numIndex>
+									<numIndex index="value">d-none d-md-block</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">Hidden on md and down</numIndex>
+									<numIndex index="value">d-none d-lg-block</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">Hidden on lg and down</numIndex>
+									<numIndex index="value">d-none d-xl-block</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">Hidden only on xl</numIndex>
+									<numIndex index="value">d-xl-none</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">Visible only on xs</numIndex>
+									<numIndex index="value">d-block d-sm-none</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">Visible sm and down</numIndex>
+									<numIndex index="value">d-block d-md-none</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">Visible md and down</numIndex>
+									<numIndex index="value">d-block d-lg-none</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">Visible lg and down</numIndex>
+									<numIndex index="value">d-block d-xl-none</numIndex>
+								</numIndex>
+							</items>
+							<default>0</default>
+						</config>
 					</hidden>
 
 					<width>
-						<TCEforms>
-							<label>max. Image width</label>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>4</max>
-								<default>576</default>
-								<eval>int</eval>
-								<checkbox>0</checkbox>
-							</config>
-						</TCEforms>
+						<label>max. Image width</label>
+						<config>
+							<type>input</type>
+							<size>4</size>
+							<max>4</max>
+							<default>576</default>
+							<eval>int</eval>
+							<checkbox>0</checkbox>
+						</config>
 					</width>
-				
+
 					<speedFactor>
-						<TCEforms>
-							<label>Parallax effect speed. Provide numbers from -1.0 to 2.0</label>
-							<config>
-								<type>input</type>
-								<checkbox></checkbox>
-								<size>6</size>
-								<default>1</default>								
-							</config>
-						</TCEforms>
+						<label>Parallax effect speed. Provide numbers from -1.0 to 2.0</label>
+						<config>
+							<type>input</type>
+							<checkbox></checkbox>
+							<size>6</size>
+							<default>1</default>
+						</config>
 					</speedFactor>
 					<addHeight>
-						<TCEforms>
-							<label>Surcharge height to parallax view (in px)</label>
-							<config>
-								<type>input</type>
-								<checkbox></checkbox>
-								<eval>int</eval>
-								<size>6</size>
-								<default>100</default>
-							</config>
-						</TCEforms>
+						<label>Surcharge height to parallax view (in px)</label>
+						<config>
+							<type>input</type>
+							<checkbox></checkbox>
+							<eval>int</eval>
+							<size>6</size>
+							<default>100</default>
+						</config>
 					</addHeight>
 
 					<mobile>
-						<TCEforms>
-							<label>Disable on mobile devices</label>
-							<config>
-								<type>check</type>
-								<default>0.5</default>
-							</config>
-						</TCEforms>
+						<label>Disable on mobile devices</label>
+						<config>
+							<type>check</type>
+							<default>0.5</default>
+						</config>
 					</mobile>
 
 				</el>

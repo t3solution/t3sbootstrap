@@ -426,6 +426,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$fileObjects = [];
 			$processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
+
 			if ( $processedRecordVariables['jumbotronBgimage'] == 'root' ) {
 				// slide in rootline
 				foreach ($frontendController->rootLine as $page) {
@@ -458,6 +459,7 @@ class ConfigProcessor implements DataProcessorInterface
 					}
 				}
 			} elseif ( $processedRecordVariables['jumbotronBgimage'] == 'page' ) {
+
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				$hasBgImages = count($fileObjects);
 				if ( count($fileObjects) > 1 ) {
@@ -622,7 +624,7 @@ class ConfigProcessor implements DataProcessorInterface
 			 ->select('uid','tx_t3sbootstrap_navigationcolor', 'tx_t3sbootstrap_navigationactivecolor', 'tx_t3sbootstrap_navigationhover','tx_t3sbootstrap_navigationbgcolor')
 			 ->from('pages')
 			 ->where(
-				$queryBuilder->expr()->orX(
+				$queryBuilder->expr()->or(
 					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationcolor', $queryBuilder->createNamedParameter('')),
 					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationactivecolor', $queryBuilder->createNamedParameter('')),
 					$queryBuilder->expr()->neq('tx_t3sbootstrap_navigationhover', $queryBuilder->createNamedParameter('')),
@@ -711,7 +713,7 @@ class ConfigProcessor implements DataProcessorInterface
 					$theList .= ',' . $row['uid'];
 				}
 				if ($depth > 1) {
-					$theSubList = $this->getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
+					$theSubList = self::getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
 					if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {
 						$theList .= ',';
 					}
