@@ -10,11 +10,12 @@
 </f:if>
 </html>
 
+
 <f:section name="Indexedsearch">
 <form id="searchbox" role="search" class="d-flex ms-{navbarBreakpoint}-3 mb-0{sbmauto}" method="post" action="{f:uri.page(pageUid:'{settings.indexedsearch.targetPid}',additionalParams:'{tx_indexedsearch_pi2: {action:\'search\',controller:\'Search\'}}')}">
-	<input type="text" name="tx_indexedsearch_pi2[search][sword]" value="" class="form-control me-2">
+	<input type="text" name="tx_indexedsearch_pi2[search][sword]" value="" class="form-control me-2" placeholder="{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.search')}">
 	<f:if condition="{config.navbar.searchbox} == 'button'">
-		<button name="tx_indexedsearch_pi2[search][submitButton]" class="btn btn-outline-dark" type="submit">Suchen</button>
+		<button name="tx_indexedsearch_pi2[search][submitButton]" class="btn btn-outline-dark" type="submit">{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.submit')}</button>
 	</f:if>
 </form>
 </f:section>

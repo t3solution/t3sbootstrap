@@ -21,7 +21,7 @@ class TwoColumns implements SingletonInterface
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $flexconf, bool $webp=FALSE, string $bgMediaQueries='2560,1920,1200,992,768,576'): array
+	public function getProcessedData(array $processedData, array $flexconf, string $bgMediaQueries='2560,1920,1200,992,768,576'): array
 	{
 		$processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
 		$processedData = GeneralUtility::makeInstance(Grid::class)->getGrid($processedData, $flexconf);
@@ -34,7 +34,7 @@ class TwoColumns implements SingletonInterface
 		if ( !empty($flexconf['bgimages']) ) {
 			$bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 				->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
-				 $flexconf, FALSE, $processedData['data']['uid'], $webp,$bgMediaQueries);
+				 $flexconf, FALSE, $processedData['data']['uid'], $bgMediaQueries);
 			if ($bgimages) {
 				$processedData['bgimages'] = $bgimages;
 				$processedData['bgimagePosition'] = $flexconf['bgimagePosition'];

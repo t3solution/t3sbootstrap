@@ -26,6 +26,8 @@ defined('TYPO3') || die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 0');
+	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.webp = 0');
+	#ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 0');
@@ -44,7 +46,6 @@ defined('TYPO3') || die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.expandedContent = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.bootswatch = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
-	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbconcatenate = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbminify = 0');
 
@@ -52,7 +53,6 @@ defined('TYPO3') || die();
 	 * Extension configuration
 	 */
 	$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-
 
 	/***************
 	 * Other Extensions
@@ -107,6 +107,8 @@ defined('TYPO3') || die();
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_be.xlf'][] = Environment::getPublicPath() . $ctPath . 'locallang_be.xlf';
 	}
 	// Optional CKEditor plugin "Code Snippet"
+$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
+/* rte_ckeditor_fontawesome & codesnippet are currently not available 
 	if (array_key_exists('codesnippet', $extconf) && $extconf['codesnippet'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 1');
 		// if rte_ckeditor_fontawesome is loaded
@@ -132,6 +134,7 @@ defined('TYPO3') || die();
 			$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
 		}
 	}
+*/
 	// Optional fontawesomeCss
 	$fontawesomeCss = (int)$extconf['fontawesomeCss'];
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = '.$fontawesomeCss.'');

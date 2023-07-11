@@ -22,6 +22,9 @@
 			<trans-unit id="form.submit">
 				<source>Suchen</source>
 			</trans-unit>
+			<trans-unit id="form.search">
+				<source>suchen</source>
+			</trans-unit>
 
 			<trans-unit id="form.modal.label">
 				<source>Kontaktformular</source>

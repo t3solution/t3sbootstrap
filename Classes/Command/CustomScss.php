@@ -85,13 +85,13 @@ class CustomScss extends CommandBase
 
 			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 			$result = $queryBuilder
-				  ->select('*')
-				  ->from('pages')
-				  ->where(
-				  	 $queryBuilder->expr()->eq('sys_language_uid', 0),
+				->select('*')
+				->from('pages')
+				->where(
+					 $queryBuilder->expr()->eq('sys_language_uid', 0),
 					 $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
-				  )
-				  ->executeQuery();
+				)
+				->executeQuery();
 			$siteroots = $result->fetchAll();
 
 			foreach ($siteroots as $key=>$siteroot) {
@@ -210,7 +210,8 @@ class CustomScss extends CommandBase
 				mkdir($customPath, 0777, true);
 			}
 			$customContent = $name == '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' :	 '// Your own SCSS';
-			if ( $settings['bootswatch'] ) {
+
+			if ( !empty($settings['bootswatch']) ) {
 				$customContent = @file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
 				if ($name == '_variables') {
 					$customContent = str_replace(' !default', '', $customContent);

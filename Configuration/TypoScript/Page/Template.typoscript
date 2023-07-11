@@ -40,7 +40,7 @@ page {
 			codesnippet = {$bootstrap.extconf.codesnippet}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
-			webp = {$bootstrap.extconf.webp}
+			webp = {$bootstrap.ext.webp}
 			indexedsearch.loaded = {$bootstrap.ext.indexedsearch}
 			kesearch.loaded = {$bootstrap.ext.kesearch}
 			cookieconsent = {$bootstrap.extconf.cookieconsent}
@@ -357,7 +357,3 @@ plugin.tx_felogin_login {
 
 // import outsourced setup
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript'
-
-['{$bootstrap.cdn.bootstrap}' < '5.3']
-page.10.settings.config.navbarDarkMode = 0
-[global]

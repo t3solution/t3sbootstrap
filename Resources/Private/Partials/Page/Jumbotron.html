@@ -1,5 +1,12 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.jumbotron.enable}">
+
+	<f:if condition="{ratioCalcCss}">
+		<f:asset.css identifier="jumbotronRatioCss-{data.uid}">
+{ratioCalcCss -> f:format.raw()}
+		</f:asset.css>
+	</f:if>
+			
 	<f:if condition="{bgSlides -> f:count()} > 1">
 		<f:then>
 			<f:comment> SLIDER </f:comment>

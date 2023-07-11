@@ -4,7 +4,8 @@ page {
 	bodyTagCObject {
 		wrap = <body |>
 		10 = TEXT
-		10.data = TSFE:id
+		#10.data = TSFE:id
+		10.data = request:routing|pageId
 		10.noTrimWrap = | id="page-|"|
 		20 = COA
 		20 {
@@ -42,13 +43,13 @@ page {
 			60 {
 				value = webp
 				noTrimWrap = | ||
-				if.isTrue = {$bootstrap.extconf.webp}
+				if.isTrue = {$bootstrap.ext.webp}
 			}
 			70 = TEXT
 			70 {
 				value = no-webp
 				noTrimWrap = | ||
-				if.isFalse = {$bootstrap.extconf.webp}
+				if.isFalse = {$bootstrap.ext.webp}
 			}
 		}
 		30 = COA

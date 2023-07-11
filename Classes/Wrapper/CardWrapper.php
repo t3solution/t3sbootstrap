@@ -114,7 +114,7 @@ class CardWrapper implements SingletonInterface
 
 			// swiperjs
 			if ($flexconf['card_wrapper'] == 'slider') {
-				$processedData['visibleCards'] = (int)$flexconf['visibleCards'] ?: 3;
+				$processedData['visibleCards'] = $flexconf['visibleCards'] ? (int)$flexconf['visibleCards'] : 3;
 				$processedData['cols'] = floor(12 / $processedData['visibleCards']);
 				$processedData['width'] = $flexconf['width'];
 				$processedData['ratio'] = $flexconf['ratio'];

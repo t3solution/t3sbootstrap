@@ -27,7 +27,6 @@ class ClassHelper implements SingletonInterface
 		} else {
 			$class = '';
 		}
-
 		// Spacing: padding
 		if ( $data['tx_t3sbootstrap_padding_sides'] ) {
 			// on all 4 sides of the element
@@ -61,6 +60,7 @@ class ClassHelper implements SingletonInterface
 				$class .= ' m'.$marginSide.'-'.$data['tx_t3sbootstrap_margin_size'];
 			}
 		}
+
 		// Layout
 		if ($data['layout']) {
 			$pagesTSconfig = self::getFrontendController()->getPagesTSconfig();
@@ -173,19 +173,13 @@ class ClassHelper implements SingletonInterface
 		 * Auto-layout row/column
 		 */
 		if ( $data['CType'] == 'autoLayout_row' ) {
-
 			if ( !empty($flexconf['horizontalGutters']) && $flexconf['horizontalGutters'] != 'gx-4') {
 				$class .= $flexconf['horizontalGutters'] ? ' '.$flexconf['horizontalGutters'] : '';
 			}
-
 			if (!empty($flexconf['verticalGutters'])) {
-
 				if ($flexconf['verticalGutters'] == 'gy-0') $flexconf['verticalGutters'] = 0;
-
-
 				$class .= !empty($flexconf['verticalGutters']) ? ' '.$flexconf['verticalGutters'] : '';
 			}
-
 			if (!empty($flexconf['responsiveVariations'])) {
 				$class .= !empty($flexconf['justify']) ? ' justify-content-'.$flexconf['responsiveVariations'].'-'.$flexconf['justify'] : '';
 				$class .= !empty($flexconf['alignItem']) ? ' align-items-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignItem'] : '';

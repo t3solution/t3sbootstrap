@@ -47,11 +47,11 @@ temp.jsCookieConsent >
 
 // preload GOOGLE FONTS
 [{$bootstrap.preloadGooleFonts} == 1]
-@import 'fileadmin/T3SB/Configuration/TypoScript/preloadGooleFonts.typoscript'
+@import '/fileadmin/T3SB/Configuration/TypoScript/preloadGooleFonts.typoscript'
 [global]
 
 # Bugfix for Safari browser if using webp with lazyload
-[browser('Safari') && {$bootstrap.extconf.webp} == 1 && {$bootstrap.extconf.lazyLoad} > 0]
+[browser('Safari') && {$bootstrap.ext.webp} == 1 && {$bootstrap.extconf.lazyLoad} > 0]
 page.cssInline {
 	124 = TEXT
 	124.value = picture img.lazy {opacity:1 !important;}
@@ -84,11 +84,6 @@ page.includeJSLibs {
 	jquery.forceOnTop = 1
 	jquery.if.isFalse = {$bootstrap.disable.jquery}
 }
-[global]
-
-# Bootstrap color mode toggler in navbar
-[{$bootstrap.config.navbarDarkMode} == 1]
-page.includeCSS.bsicons = EXT:t3sbootstrap/Resources/Public/Contrib/BootstrapIsons/bootstrap-icons.css
 [global]
 
 ##########################################################################################################

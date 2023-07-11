@@ -18,7 +18,8 @@ class NewsFlexformEvent
 		 && ($identifier['dataStructureKey'] === '*,news_pi1' || $identifier['dataStructureKey'] === '*,news_newsliststicky')) {
 
 			$file = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml');
-			$content = @file_get_contents($file);
+			$content = file_get_contents($file);
+
 			if ($content) {
 				$extraDataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
 				ArrayUtility::mergeRecursiveWithOverrule($dataStructure, $extraDataStructure);

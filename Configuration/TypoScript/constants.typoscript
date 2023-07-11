@@ -15,16 +15,15 @@ plugin.tx_t3sbootstrap {
 }
 
 
-bootstrap.cdn.bootstraplatest = 5.2.3
+bootstrap.cdn.bootstraplatest = 5.3.0
 bootstrap.cdn.noZip = 0
-bootstrap.cdn.fontawesome5latest = 5.15.4
 bootstrap.cdn.fontawesome6latest = 6.4.0
 
 #-------------------------------------------------------------------------------
 #	Constant Editor
 #-------------------------------------------------------------------------------
 
-# customcategory=bootstrap-cdn=T3SB CDN - Google Fonts and Version-Settings
+# customcategory=bootstrap-cdn=T3SB CDN - Version-Settings and Google Fonts
 # customsubcategory=a-enable=CDN - can offer a performance benefit
 # customsubcategory=a-google=GoogleFonts - Integrate Google Fonts
 # customsubcategory=b-version=CDN Versions used in the scheduler task T3SB CDN to local - must be valid
@@ -50,12 +49,12 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-google/10; type=small; label=Comma separated list with google fonts:integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)
 	googlefonts =
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.2.3
+	bootstrap = 5.3.0
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
-	popperjs = 2.11.6
+	popperjs = 2.11.8
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
-	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g. 5.15.4 or 6.4.0
+	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g.6.4.0
 	fontawesome = 6.4.0
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.7.0
@@ -66,7 +65,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
 	highlight = 11.6.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 17.8
+	lazyload = 17.8.3
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
@@ -79,17 +78,17 @@ bootstrap.cdn {
 	glightbox = 3.2.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax: set to 2 only to get v2.x (latest)
 	jarallax = 2
-	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 8 only to get v8.x (latest)
-	swiper = 9
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 9 only to get v9.x (latest)
+	swiper = 10
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65
+	bootstrapCssIntegrity = sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V
+	bootstrapJsIntegrity = sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
-	bootstrapBundleJsIntegrity = sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4
+	bootstrapBundleJsIntegrity = sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
-	popperjsIntegrity = sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3
+	popperjsIntegrity = sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:

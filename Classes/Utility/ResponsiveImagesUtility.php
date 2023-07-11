@@ -102,7 +102,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$fallbackTag = $fallbackTag ?: GeneralUtility::makeInstance(TagBuilder::class, 'img');
 
 		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		$webpIsLoaded = (bool)$settings['page.']['10.']['settings.']['webp'];
 
 		// Deal with file formats that can't be cropped separately
 		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
@@ -186,9 +185,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Add metadata to fallback image
 		$this->addMetadataToImageTag($fallbackTag, $originalImage, $fallbackImage, $focusArea);
 
-		if ( $webpIsLoaded ) {
-			$types[0] = 'image/webp';
-		}
 		$types[1] = $originalImage->getProperties()['mime_type'];
 
 		// Generate source tags for image breakpoints
@@ -207,7 +203,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 					$cropArea,
 					$absoluteUri,
 					$lazyload,
-					$webpIsLoaded,
 					$type
 				);
 
@@ -234,7 +229,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param	Area			 $cropArea
 	 * @param	bool			 $absoluteUri
 	 * @param	int			$lazyload
-	 * @param	bool			 $webpIsLoaded
 	 * @param	string		 $type
 	 *
 	 * @return TagBuilder
@@ -248,13 +242,12 @@ class ResponsiveImagesUtility implements SingletonInterface
 		Area $cropArea = null,
 		bool $absoluteUri = false,
 		int $lazyload = 0,
-		bool $webpIsLoaded = false,
 		string $type = ''
 	): TagBuilder {
 		$cropArea = $cropArea ?: Area::createEmpty();
 
 		// Generate different image sizes for srcset attribute
-		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $webpIsLoaded, $type);
+		$srcsetImages = $this->generateSrcsetImages($originalImage, $defaultWidth, $srcset, $cropArea, $absoluteUri, $type);
 		$srcsetMode = substr(key($srcsetImages), -1); // x or w
 
 		// Create source tag for this breakpoint
@@ -270,9 +263,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		if ($srcsetMode == 'w' && $sizesQuery) {
 			$sourceTag->addAttribute('sizes', sprintf($sizesQuery, $defaultWidth));
 		}
-
-		if ($webpIsLoaded && $type == 'image/webp')
-		 $sourceTag->addAttribute('type', $type);
 
 		return $sourceTag;
 	}
@@ -384,7 +374,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param	array|string	  $srcset
 	 * @param	Area				 $cropArea
 	 * @param	bool				 $absoluteUri
-	 * @param	bool			$webpIsLoaded
 	 * @param	string			 	$type
 	 *
 	 * @return array
@@ -395,7 +384,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$srcset,
 		Area $cropArea = null,
 		bool $absoluteUri = false,
-		bool $webpIsLoaded = false,
 		string $type = ''
 	): array {
 		$cropArea = $cropArea ?: Area::createEmpty();
@@ -431,11 +419,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 				'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 			];
 			$processedImage =  $this->imageService->applyProcessingInstructions($image, $processingInstructions);
-
-			if ( $webpIsLoaded && $type == 'image/webp' ) {
-				$webpIdentifier = $processedImage->getIdentifier().'.webp';
-				$processedImage->setIdentifier($webpIdentifier);
-			}
 
 			// If processed file isn't as wide as it should be ([GFX][processor_allowUpscaling] set to false)
 			// then use final width of the image as widthDescriptor if not input case 3 is used

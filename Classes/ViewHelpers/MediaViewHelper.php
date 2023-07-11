@@ -84,8 +84,6 @@ Valid arguments are: file, additionalConfig, width, height, cropVariant, fileExt
         $this->registerArgument('loading', 'string', 'Native lazy-loading for images property. Can be "lazy", "eager" or "auto". Used on image files only.');
         $this->registerArgument('decoding', 'string', 'Provides an image decoding hint to the browser. Can be "sync", "async" or "auto"', false);
 
-# end new
-
 		$this->registerArgument('srcset', 'mixed', 'Image sizes that should be rendered.', false);
 		$this->registerArgument(
 			'sizes',
@@ -351,12 +349,7 @@ Valid arguments are: file, additionalConfig, width, height, cropVariant, fileExt
 		$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
 		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		$webpIsLoaded = (bool)$settings['page.']['10.']['settings.']['webp'];
 
-		if ( $webpIsLoaded ) {
-			$webpIdentifier = $processedImage->getIdentifier().'.webp';
-			$processedImage->setIdentifier($webpIdentifier);
-		}
 		$imageUri = $imageService->getImageUri($processedImage);
 
 		if (!$this->tag->hasAttribute('data-focus-area')) {
