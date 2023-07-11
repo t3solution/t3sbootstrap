@@ -15,7 +15,8 @@ lib.dynamicContent {
 		pageUid.cObject = TEXT
 		pageUid.cObject {
 			field = pageUid
-			ifEmpty.data = TSFE:id
+			#ifEmpty.data = TSFE:id
+			ifEmpty.data = request:routing|pageId
 		}
 	}
 	10 = CONTENT

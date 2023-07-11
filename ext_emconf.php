@@ -14,7 +14,7 @@ $EM_CONF['t3sbootstrap'] = [
   'title' => 'Bootstrap Components',
   'description' => 'Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: www.t3sbootstrap.de',
   'category' => 'templates',
-  'version' => '5.2.20',
+  'version' => '5.3.0',
   'state' => 'stable',
   'clearCacheOnLoad' => true,
   'author' => 'Helmut Hackbarth',
@@ -25,9 +25,9 @@ $EM_CONF['t3sbootstrap'] = [
     'depends' => 
     [
       'php' => '8.1.0-8.2.99',
-      'typo3' => '12.4.0-12.4.99',
-      'container' => '2.1.2-2.99.99',
-      'content_defender' => '3.3.0-3.99.99'
+      'typo3' => '12.4.2-12.4.99',
+      'container' => '2.2.3-2.99.99',
+      'content_defender' => '3.4.0-3.99.99'
     ],
     'conflicts' => 
     [

@@ -27,7 +27,7 @@ class BackgroundWrapper implements SingletonInterface
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $flexconf, bool $webp=FALSE, string $bgMediaQueries='2560,1920,1200,992,768,576'): array
+	public function getProcessedData(array $processedData, array $flexconf, string $bgMediaQueries='2560,1920,1200,992,768,576'): array
 	{
 		// autoheight
 		$processedData['enableAutoheight'] = !empty($flexconf['enableAutoheight']) ? TRUE : FALSE;
@@ -115,7 +115,7 @@ class BackgroundWrapper implements SingletonInterface
 					$processedData['ingWidth'] = $flexconf['width'] ? $flexconf['width'] : 1296;
 				} else {
 					$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $webp, $bgMediaQueries);
+						->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, TRUE, $flexconf, FALSE, 0, $bgMediaQueries);
 					$processedData['bgImage'] = $bgImage;
 					if (!empty($flexconf['paddingTopBottom'])) {
 						$processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 0;';

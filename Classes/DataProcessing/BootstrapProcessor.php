@@ -174,7 +174,7 @@ class BootstrapProcessor implements DataProcessorInterface
 		if ( str_contains(self::TX_CONTAINER_GRID, $cType) ) {
 			if ( $cType == 'two_columns' ) {
 				$processedData = GeneralUtility::makeInstance(TwoColumns::class)
-				->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+				->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 			}
 			if ( $cType == 'three_columns' ) {
 				$processedData = GeneralUtility::makeInstance(ThreeColumns::class)
@@ -208,11 +208,11 @@ class BootstrapProcessor implements DataProcessorInterface
 			}
 			if ( $cType == 'background_wrapper' ) {
 				$processedData = GeneralUtility::makeInstance(BackgroundWrapper::class)
-				->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+				->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['bgMediaQueries']);
 			}
 			if ( $cType == 'parallax_wrapper' ) {
 				$processedData = GeneralUtility::makeInstance(ParallaxWrapper::class)
-				->getProcessedData($processedData, $flexconf, (bool)$contentObjectConfiguration['settings.']['webp']);
+				->getProcessedData($processedData, $flexconf);
 			}
 			if ( $cType == 'collapsible_container' ) {
 				$processedData = GeneralUtility::makeInstance(CollapsibleContainer::class)

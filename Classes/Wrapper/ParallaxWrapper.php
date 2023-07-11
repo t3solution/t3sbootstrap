@@ -21,7 +21,7 @@ class ParallaxWrapper implements SingletonInterface
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $flexconf, bool $webp=FALSE): array
+	public function getProcessedData(array $processedData, array $flexconf): array
 	{
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
@@ -53,7 +53,7 @@ class ParallaxWrapper implements SingletonInterface
 				}
 			} else {
 				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0, $webp);
+				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0);
 				$processedData['parallaxImage'] = $bgImage;
 			}
 

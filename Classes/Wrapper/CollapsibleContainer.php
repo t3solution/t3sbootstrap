@@ -23,7 +23,6 @@ class CollapsibleContainer implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-
 		$processedData['appearance'] = $flexconf['appearance'];
 		if ($flexconf['appearance'] == 'accordion') {
 			$processedData['flush'] = !empty($flexconf['flush']) ? ' accordion-flush' : '';

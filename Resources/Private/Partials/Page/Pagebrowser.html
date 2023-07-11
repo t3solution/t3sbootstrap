@@ -3,7 +3,9 @@
 	<ul class="pagination justify-content-center">
 		<f:if condition="{browsePrev}">
 			<f:for each="{browsePrev}" as="page" iteration="iterator" reverse="true">
-				<li class="page-item"><a class="page-link" href="{page.link}"><span aria-hidden="true"><i class="fas fa-chevron-left"></i></span> {page.title}</a></li>
+				<li class="page-item">
+					<a class="page-link" href="{page.link}"><span aria-hidden="true"><i class="fas fa-chevron-left"></i></span> {page.title}</a>
+				</li>
 			</f:for>
 		</f:if>
 		<f:if condition="{browseNext}">

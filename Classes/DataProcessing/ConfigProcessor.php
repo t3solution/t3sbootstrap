@@ -45,7 +45,6 @@ class ConfigProcessor implements DataProcessorInterface
 		if (!$frontendController) {
 			$frontendController = self::getFrontendController();
 		}
-		$webp = (bool)$settings['webp'];
 
 		if ( !empty($contentObjectConfiguration['settings.']['config.']['uid'])
 			 && is_numeric($contentObjectConfiguration['settings.']['config.']['uid']) ) {
@@ -439,20 +438,20 @@ class ConfigProcessor implements DataProcessorInterface
 					if (!empty($settings['multiplePagesMedia'])) {
 						// background images
 						$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
-						$processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+						$processedData['data']['uid'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
 						$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 						$processedData['config']['jumbotron']['multiplePagesMedia'] = TRUE;
 					} else {
 						// slider
 						$processedData['config']['jumbotron']['alignItem'] = '';
 						$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE, 0,
-						$webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+						$contentObjectConfiguration['settings.']['bgMediaQueries']);
 						$processedData['bgSlides'] = $bgSlides;
 					}
 				} else {
 					// background image
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($uid, 'pages', TRUE, FALSE, [], FALSE,
-					$processedData['data']['uid'], $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+					$processedData['data']['uid'], $contentObjectConfiguration['settings.']['bgMediaQueries']);
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 					if (!empty($settings['multiplePagesMedia'])) {
 						$processedData['config']['jumbotron']['multiplePagesMedia'] = FALSE;
@@ -466,12 +465,12 @@ class ConfigProcessor implements DataProcessorInterface
 					// slider
 					$processedData['config']['jumbotron']['alignItem'] = '';
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0,
-					  $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+					  $contentObjectConfiguration['settings.']['bgMediaQueries']);
 					$processedData['bgSlides'] = $bgSlides;
 				} else {
 					// background image
 					$bgSlides = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', TRUE, FALSE, [], FALSE, 0,
-					 $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+					 $contentObjectConfiguration['settings.']['bgMediaQueries']);
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 				}
 			}
@@ -491,11 +490,11 @@ class ConfigProcessor implements DataProcessorInterface
 		if ( $contentObjectConfiguration['settings.']['config.']['backgroundImageEnable'] ) {
 
 			$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($frontendController->id, 'pages', FALSE, FALSE, [], TRUE, 0,
-			 $webp, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			 $contentObjectConfiguration['settings.']['bgMediaQueries']);
 			 $bgImage = is_array($BodyBgImage) ? $BodyBgImage[1] : '';
 			if ( empty($BodyBgImage) && $contentObjectConfiguration['settings.']['config.']['backgroundImageSlide'] ) {
 				foreach ($frontendController->rootLine as $page) {
-					$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id, $webp);
+					$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', FALSE, FALSE, [], TRUE, $frontendController->id);
 					if ($BodyBgImage) break;
 				}
 			}

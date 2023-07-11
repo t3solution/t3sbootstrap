@@ -252,17 +252,9 @@ color: #fff;">
 		</div>
 		<div id="hints-panel" class="collapse" aria-labelledby="hints-heading-panel" data-bs-parent="#accordionList">
 			<div class="panel-body p-4">
-				<f:if condition="{settings.webp} || {webpIsLoaded}">
+				<f:if condition="{webpIsLoaded}">
 					<f:then>
-						<f:if condition="{settings.webp}">
-							<f:then>
-								<p class="text-success"><f:render section="Check" /> WebP Support is enabled</p>						
-							</f:then>
-							<f:else>
-								<p class="text-success"><f:render section="Check" /> WebP Support is enabled for use the default EXT:webp .htaccess configuration
-								</p>
-							</f:else>
-						</f:if>
+						<p class="text-success"><f:render section="Check" /> WebP Support is enabled for use the default EXT:webp .htaccess configuration</p>
 					</f:then>
 					<f:else>
 						<p class="text-danger"><f:render section="Xmark" /> WebP Support is disabled</p>
