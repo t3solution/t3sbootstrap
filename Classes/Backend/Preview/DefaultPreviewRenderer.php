@@ -113,6 +113,8 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 			}
 		}
 
+		$flexconfOut = '';
+		
 		if ($record['CType'] === 't3sbs_carousel') {
 			if ( !empty($flexconf['shift']) ) {
 				$flexconfOut .= 'shift='.$flexconf['shift'].', ';
