@@ -258,7 +258,7 @@ $tempContentColumns = [
 				['label' => 'no margin', 'value' => '',],
 				['label' => 'margin on all 4 sides', 'value' => 'blank',],
 				['label' => 'margin-top', 'value' => 't',],
-				['label' => 'margin-bottom', 'value' => 'blank',],
+				['label' => 'margin-bottom', 'value' => 'b',],
 				['label' => 'margin-left', 'value' => 's',],
 				['label' => 'margin-right', 'value' => 'e',],
 				['label' => 'margin-left and -right', 'value' => 'x',],
