@@ -24,7 +24,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 	{
 		$configurationManager =GeneralUtility::makeInstance(BackendConfigurationManager::class);
 		$setup = $configurationManager->getTypoScriptSetup();
-		$flexforms = $setup['plugin.']['tx_t3sbootstrap.']['flexform.'];
+		$flexforms = !empty($setup['plugin.']['tx_t3sbootstrap.']['flexform.']) ? $setup['plugin.']['tx_t3sbootstrap.']['flexform.'] : [];
 
 		# if FlexFormManipulation
 		if ( !empty($flexforms) && !empty($result['databaseRow']['CType']) ) {
