@@ -195,7 +195,7 @@ $tempContentColumns = [
 			'renderType' => 'selectSingle',
 			'items' => [
 				['label' => 'Above the image (default)', 'value' => 'above',],
-				['label' => 'Beside or under the image', 'value' => 'above',],
+				['label' => 'Beside or under the image', 'value' => 'beside',],
 			],
 			'default' => 'above'
 		]
