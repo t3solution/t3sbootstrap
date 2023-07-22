@@ -18,7 +18,7 @@
 <f:section name="Default">
 	<div class="list-group{class}">
 		<f:for each="{col_282}" as="child">
-			<f:if condition="{child.header_link} && {child.tx_t3sbootstrap_header_celink}">
+			<f:if condition="{child.header_link} || {child.tx_t3sbootstrap_header_celink}">
 				<f:then>
 					{child.renderedContent -> f:format.raw()}
 				</f:then>
