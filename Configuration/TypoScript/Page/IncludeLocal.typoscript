@@ -26,8 +26,13 @@ page {
 		jquery.if.isFalse = {$bootstrap.disable.jquery}
 
 		popper = /fileadmin/T3SB/Resources/Public/JS/popper.js
+		popper.if.isFalse = {$bootstrap.bundle.enable}
 
 		bootstrap = /fileadmin/T3SB/Resources/Public/JS/bootstrap.min.js
+		bootstrap.if.isFalse = {$bootstrap.bundle.enable}
+
+		bootstrapBundle = /fileadmin/T3SB/Resources/Public/JS/bootstrap.bundle.min.js
+		bootstrapBundle.if.isTrue = {$bootstrap.bundle.enable}
 
 	}
 

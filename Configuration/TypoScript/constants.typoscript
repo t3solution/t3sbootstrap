@@ -78,7 +78,7 @@ bootstrap.cdn {
 	glightbox = 3.2.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax: set to 2 only to get v2.x (latest)
 	jarallax = 2
-	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 9 only to get v9.x (latest)
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 10 only to get v10.x (latest)
 	swiper = 10
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
@@ -216,6 +216,9 @@ bootstrap.pages.override {
 #-------------------------------------------------------------------------------
 #	NOT in Constant Editor
 #-------------------------------------------------------------------------------
+# include Bootstraps bundle.min.js (include popper.js)
+bootstrap.bundle.enable = 1
+
 # Pagebrowser - MORE INFO: https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html#special-browse
 bootstrap.pagebrowser.enable = 0
 bootstrap.pagebrowser.prevnextToSection = 1
@@ -311,6 +314,13 @@ bootstrap.cookieconsent {
 	location = true
 }
 
+# Color mode toggler - only if "bootstrap.config.navbarDarkMode" is disabled
+bootstrap.colorMode {
+	enable = 0
+	# e.g.: position-fixed bottom-0 start-0 mb-3 ms-3 | info: https://getbootstrap.com/docs/5.3/utilities/position/#center-elements
+	position = position-fixed bottom-0 end-0 mb-3 me-3
+}
+
 styles.content.allowTags:= addToList( s, mark)
 
 # in px (preset)
@@ -345,6 +355,10 @@ bootstrap.config.backgroundImageEnable = 0
 bootstrap.config.footerSticky = 0
 bootstrap.config.compress = 
 bootstrap.config.navbarBreakpoint = 
+
+[loaded('felogin')]
+plugin.tx_felogin_login.view.templateRootPath = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
+[global]
 
 // import outsourced constants from DB
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript'

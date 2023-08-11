@@ -61,7 +61,7 @@
 
 					<!-- card wrapper: columns,group or deck  -->
 					<card_wrapper>
-						<label>Groups, Decks, or Columns</label>
+						<label>Groups, Decks, Columns or Slider</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -201,23 +201,33 @@
 							<checkbox>0</checkbox>
 						</config>
 					</ratio>
-
 					<slidesPerView>
 						<label>Slides per view</label>
+						<description>slides visible at the same time on slider's container (can be empty if you use breakpoints)</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
-							<default>4</default>
+							<default>0</default>
 							<checkbox>0</checkbox>
 						</config>
 					</slidesPerView>
-
+					<breakpoints10>
+						<label>Slides per view - breakpoint > 10px</label>
+						<description>breakpoints allows to set different parameter for different responsive breakpoints (screen sizes)</description>
+						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
+						<config>
+							<type>number</type>
+							<size>4</size>
+							<default>1</default>
+							<checkbox>0</checkbox>
+						</config>
+					</breakpoints10>
 					<breakpoints576>
 						<label>Slides per view - breakpoint > 576px</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>2</default>
 							<checkbox>0</checkbox>
@@ -227,7 +237,7 @@
 						<label>Slides per view - breakpoint > 768px</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>3</default>
 							<checkbox>0</checkbox>
@@ -237,44 +247,44 @@
 						<label>Slides per view - breakpoint > 992px</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>4</default>
 							<checkbox>0</checkbox>
 						</config>
 					</breakpoints992>
-
 					<slidesPerGroup>
 						<label>Slides per group</label>
+						<description>Set numbers of slides to define and enable group sliding</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
+							<range>
+								<lower>1</lower>
+							</range>
 							<size>4</size>
 							<default>1</default>
 							<checkbox>0</checkbox>
 						</config>
 					</slidesPerGroup>
-
 					<spaceBetween>
 						<label>Space between</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>20</default>
 							<checkbox>0</checkbox>
 						</config>
 					</spaceBetween>
-
 					<loop>
 						<label>Loop</label>
-						<description>Amount of slides in loop mode should be at least 2x of "slidesPerView" value.</description>
+						<description>amount of slides in loop mode should be at least 2x of "slidesPerView" value.</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</loop>
-
 					<navigation>
 						<label>Navigation</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
@@ -282,7 +292,6 @@
 							<type>check</type>
 						</config>
 					</navigation>
-
 					<pagination>
 						<label>Pagination</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
@@ -290,7 +299,6 @@
 							<type>check</type>
 						</config>
 					</pagination>
-
 					<autoplay>
 						<label>Autoplay</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
@@ -299,7 +307,6 @@
 							<type>check</type>
 						</config>
 					</autoplay>
-
 					<delay>
 						<label>Delay between transitions (in ms)</label>
 						<displayCond>
@@ -309,22 +316,19 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>5000</default>
 							<checkbox>0</checkbox>
 						</config>
 					</delay>
-
 					<cropMaxCharacters>
 						<label>Length of card-bodytext (in chars)</label>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
-							<eval>num</eval>
 						</config>
 					</cropMaxCharacters>
-
 					<equalHeight>
 						<label>Equal Height</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>

@@ -125,7 +125,7 @@
 			</f:if>
 		</f:else>
 	</f:if>
-	<div class="navbar-nav flex-row flex-wrap ms-md-auto">
+	<div class="navbar-nav flex-row flex-wrap{f:if(condition: '{config.navbar.alignment} == left' , then:' ms-md-auto')}">
 		<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
 			<f:render partial="Page/Navbar/Language" arguments="{_all}" />
 			<f:if condition="{navbarMenuRight -> f:count()}">

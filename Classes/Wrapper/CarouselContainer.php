@@ -24,7 +24,7 @@ class CarouselContainer implements SingletonInterface
 	{
 		$processedData['maxWidth'] = $flexconf['width'] ? $flexconf['width'].'px' : '1440px';
 		$processedData['interval'] = $flexconf['interval'];
-		$processedData['darkVariant'] = $flexconf['darkVariant'];
+		$processedData['darkVariant'] = !empty($flexconf['darkVariant']) ? $flexconf['darkVariant'] : 'light';
 		$processedData['carouselFade'] = !empty($flexconf['carouselFade']) ? ' carousel-fade': '';
 		$processedData['carouselFade'] .= !empty($flexconf['darkVariant']) ? ' carousel-dark': '';
 		$processedData['thumbnails'] = !empty($flexconf['thumbnails']) ? true : false;

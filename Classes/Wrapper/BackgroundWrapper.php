@@ -44,9 +44,9 @@ class BackgroundWrapper implements SingletonInterface
 					$processedData['youtube'] = TRUE;
 					$processedData['vimeo'] = FALSE;
 					$processedData['isVideo'] = TRUE;
-					$processedData['contentPosition'] = $flexconf['contentPosition'];
-					$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
-					$processedData['ytVideo']['ytshift'] = $flexconf['ytshift'];
+					$processedData['contentPosition'] = !empty($flexconf['contentPosition']) ? $flexconf['contentPosition'] : 'align-self-center';
+					$processedData['ytVideo']['bgHeight'] = !empty($flexconf['bgHeight']) ? $flexconf['bgHeight'] : '';
+					$processedData['ytVideo']['ytshift'] = !empty($flexconf['ytshift']) ? $flexconf['ytshift'] : '';
 					$processedData['videoAutoPlay'] = $file->getProperties()['autoplay'];
 					$youTubeRenderer = GeneralUtility::makeInstance(YouTubeRenderer::class);
 					$processedData['videoId'] = $youTubeRenderer->render($file);
@@ -56,9 +56,9 @@ class BackgroundWrapper implements SingletonInterface
 						$processedData['vimeo'] = TRUE;
 						$processedData['youtube'] = FALSE;
 						$processedData['isVideo'] = TRUE;
-						$processedData['contentPosition'] = $flexconf['contentPosition'];
-						$processedData['ytVideo']['bgHeight'] = $flexconf['bgHeight'];
-						$processedData['ytVideo']['ytshift'] = $flexconf['ytshift'];
+						$processedData['contentPosition'] = !empty($flexconf['contentPosition']) ? $flexconf['contentPosition'] : 'align-self-center';
+						$processedData['ytVideo']['bgHeight'] = !empty($flexconf['bgHeight']) ? $flexconf['bgHeight'] : '';
+						$processedData['ytVideo']['ytshift'] = !empty($flexconf['ytshift']) ? $flexconf['ytshift'] : '';
 						$processedData['videoAutoPlay'] = $file->getProperties()['autoplay'];
 						$youTubeRenderer = GeneralUtility::makeInstance(YouTubeRenderer::class);
 						$processedData['videoId'] = $youTubeRenderer->render($file);
@@ -107,8 +107,6 @@ class BackgroundWrapper implements SingletonInterface
 
 			} elseif ( $file->getType() === 2 ) {
 			// IMAGE
-
-
 				// orig. image option in flexform
 				if (!empty($flexconf['origImage'])) {
 					$processedData['file'] = $file;

@@ -87,11 +87,10 @@
 						<label>max. Image width</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<max>4</max>
 							<default>1296</default>
-							<eval>int</eval>
 							<checkbox>0</checkbox>
 						</config>
 					</width>
@@ -136,9 +135,8 @@
 							</AND>
 						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<checkbox></checkbox>
-							<eval>int</eval>
 							<size>6</size>
 							<default>60</default>
 						</config>
@@ -201,9 +199,8 @@
 							</AND>
 						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<checkbox></checkbox>
-							<eval>int</eval>
 							<size>6</size>
 							<default>1</default>
 						</config>
@@ -212,14 +209,13 @@
 						<label>Grayscale</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
-							<default>0</default>
-							<eval>num</eval>
 							<range>
 								<lower>0</lower>
 								<upper>100</upper>
 							</range>
+							<default>0</default>
 							<slider>
 								<step>1</step>
 								<width>200</width>
@@ -230,10 +226,9 @@
 						<label>Sepia</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>0</default>
-							<eval>num</eval>
 							<range>
 								<lower>0</lower>
 								<upper>100</upper>
@@ -248,10 +243,9 @@
 						<label>Opacity</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>100</default>
-							<eval>num</eval>
 							<range>
 								<lower>0</lower>
 								<upper>100</upper>
@@ -283,9 +277,8 @@
 						<label>Padding (top and bottom in rem)</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isNoMedia</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<checkbox></checkbox>
-							<eval>int</eval>
 							<size>6</size>
 							<default>10</default>
 						</config>
@@ -399,10 +392,9 @@
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<description>e.g.: 100 or -100</description>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>0</default>
-							<eval>int</eval>
 							<range>
 								<lower>-100</lower>
 								<upper>100</upper>
@@ -419,10 +411,9 @@
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<description>e.g.: 100 or -100</description>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>0</default>
-							<eval>int</eval>
 							<range>
 								<lower>-200</lower>
 								<upper>200</upper>
@@ -439,10 +430,9 @@
 						 <description>card-img-overlay min-height in px</description>
 						 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						 <config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>200</default>
-							<eval>int</eval>
 							<range>
 								<lower>100</lower>
 								<upper>1000</upper>
@@ -459,10 +449,9 @@
 						 <description>figure.video width in %</description>
 						 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						 <config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>100</default>
-							<eval>int</eval>
 							<range>
 								<lower>100</lower>
 								<upper>500</upper>
@@ -532,10 +521,9 @@
 							</or>
 						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>300</default>
-							<eval>int+</eval>
 						</config>
 					</bgHeight>
 					<ytshift>
@@ -548,10 +536,9 @@
 						</displayCond>
 						<description>e.g.: -100 or 100 (default = 50)</description>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>50</default>
-							<eval>int</eval>
 							<range>
 								<lower>-50</lower>
 								<upper>150</upper>

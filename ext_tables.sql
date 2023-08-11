@@ -46,7 +46,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_height int(2) DEFAULT '0' NOT NULL,
 	navbar_searchbox varchar(6) DEFAULT '' NOT NULL,
 	navbar_langmenu tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	navbar_shrinkcolorschemes varchar(10) DEFAULT '' NOT NULL,
+	navbar_shrinkcolorschemes varchar(30) DEFAULT '' NOT NULL,
 	navbar_shrinkcolor varchar(5) DEFAULT '' NOT NULL,
 	navbar_right_menu_uid_list varchar(255) DEFAULT '' NOT NULL,
 	navbar_extra_row tinyint(1) unsigned DEFAULT '0' NOT NULL,
@@ -211,6 +211,7 @@ CREATE TABLE sys_file_reference (
 	tx_t3sbootstrap_media_width varchar(255) default '' not null,
 	tx_t3sbootstrap_shift_vertical int(2) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_shift_horizontal int(2) DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_video_ratio varchar(40) DEFAULT '' NOT NULL,
 );
 
 #

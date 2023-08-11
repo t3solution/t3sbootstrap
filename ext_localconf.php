@@ -22,12 +22,10 @@ defined('TYPO3') || die();
 	 * Default Constants
 	 */
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.form.ajax = 0');
-	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.webp = 0');
-	#ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 0');
@@ -55,12 +53,9 @@ defined('TYPO3') || die();
 	$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 	/***************
-	 * Other Extensions
+	 * Custom Extensions
 	 */
-	# if typoscript_rendering is loaded
-	if ( ExtensionManagementUtility::isLoaded('typoscript_rendering') ) {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.typoscriptRendering = 1');
-	}
+
 	# EXPERIMENTAL -  if ke_search is loaded
 	/*
 	if ( ExtensionManagementUtility::isLoaded('ke_search') ) {
@@ -106,38 +101,12 @@ defined('TYPO3') || die();
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_db.xlf'][] = Environment::getPublicPath() . $ctPath . 'locallang_db.xlf';
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_be.xlf'][] = Environment::getPublicPath() . $ctPath . 'locallang_be.xlf';
 	}
-	// Optional CKEditor plugin "Code Snippet"
-$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
-/* rte_ckeditor_fontawesome & codesnippet are currently not available 
-	if (array_key_exists('codesnippet', $extconf) && $extconf['codesnippet'] === '1') {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.codesnippet = 1');
-		// if rte_ckeditor_fontawesome is loaded
-		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') && array_key_exists('fontawesomeCss', $extconf) ) {
-			if ($extconf['fontawesomeCss'] === '4') {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa6Pro.yaml';				
-			} else {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/CodesnippetFa6.yaml';				
-			}
-
-		} else {
-			$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Codesnippet.yaml';
-		}
-	} else {
-		// if rte_ckeditor_fontawesome is loaded
-		if ( ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome') && array_key_exists('fontawesomeCss', $extconf) ) {
-			if ($extconf['fontawesomeCss'] === '4') {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6Pro.yaml';				
-			} else {
-				$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/DefaultFa6.yaml';				
-			}
-		} else {
-			$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
-		}
-	}
-*/
+	// RTE presets
+	$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
 	// Optional fontawesomeCss
-	$fontawesomeCss = (int)$extconf['fontawesomeCss'];
-	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = '.$fontawesomeCss.'');
+	if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] > '0') {
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = '.(int)$extconf['fontawesomeCss'].'');
+	}
 	// Optional Hover Link Effect (FAL)
 	if (array_key_exists('linkHoverEffect', $extconf) && $extconf['linkHoverEffect'] === '1') {
 		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 1');
@@ -219,7 +188,7 @@ $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstra
 	}
 	# if webp is loaded
 	if ( ExtensionManagementUtility::isLoaded('webp') ) {
-		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.webp = 1');
+		ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.webp = 1');
 	}
 	/***************
 	 * Override preview of tt_content elements in page module

@@ -103,7 +103,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 			}
 		}
 
-		if ($record['CType'] == 't3sbs_gallery') {
+		if ($record['CType'] === 't3sbs_gallery') {
 			$flexconfSettings .= 'columns='.$record['imagecols'].', ';
 			if ( !empty($record['tx_t3sbootstrap_image_ratio'])) {
 				$flexconfSettings .= 'ratio='.$record['tx_t3sbootstrap_image_ratio'].', ';
@@ -114,7 +114,7 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		$flexconfOut = '';
-		
+
 		if ($record['CType'] === 't3sbs_carousel') {
 			if ( !empty($flexconf['shift']) ) {
 				$flexconfOut .= 'shift='.$flexconf['shift'].', ';

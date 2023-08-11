@@ -94,6 +94,8 @@ page {
 			config {
 				jqueryHeader = {$bootstrap.config.jqueryHeader}
 				navbarPlusicon = {$bootstrap.config.navbarPlusicon}
+				colorMode.enable = {$bootstrap.colorMode.enable}
+				colorMode.position = {$bootstrap.colorMode.position}
 			}
 		}
 		dataProcessing {
@@ -346,14 +348,6 @@ lib.t3sbs.dispose.value = Nicht mehr anzeigen
 [loaded('indexed_search')]
 page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
 [global]
-
-plugin.tx_felogin_login {
-	view {
-		templateRootPaths {
-			10 = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
-		}
-	}
-}
 
 // import outsourced setup
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript'

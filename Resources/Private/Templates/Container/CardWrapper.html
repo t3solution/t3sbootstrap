@@ -140,11 +140,13 @@ function insertAfter(referenceNode, newNode) {
 		spb = {spaceBetween},
 		spg = {slidesPerGroup},
 		del = {delay},
+		b10 = {breakpoints10},
 		b576 = {breakpoints576},
 		b768 = {breakpoints768},
 		b992 = {breakpoints992},
 		lop = {loop},
 		uid = {data.uid};
+		if(spv === null || spv === '') spv = 1;
 	var swiper = new Swiper("#swiper-{data.uid}", {
 		slidesPerView: spv,
 		spaceBetween: spb,
@@ -163,7 +165,7 @@ function insertAfter(referenceNode, newNode) {
 		},
 		breakpoints: {
 			10: {
-				slidesPerView: 1,
+				slidesPerView: b10,
 			},
 			576: {
 				slidesPerView: b576,

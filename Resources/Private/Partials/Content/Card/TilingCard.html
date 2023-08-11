@@ -1,0 +1,94 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	 xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>Tiling Card</f:comment>
+
+<f:asset.css identifier="tiling-card">
+.card.tiling {box-shadow: none;}
+.card.tiling .background-image {min-height: 300px;}
+@media (max-width: 991.98px) {
+	.odd .tiling-first-right {order: 2;}
+	.odd .tiling-second-right {order: 1;}
+	.even .tiling-first-left {order: 2;}
+	.even .tiling-second-left {order: 1;}
+}
+@media (max-width: 767.98px) {
+	.odd .tiling-first-right {order: 1;}
+	.odd .tiling-second-right {order: 2;}
+	.odd .tiling-first-left {order: 2;}
+	.odd .tiling-second-left {order: 1;}
+	.tiling {margin-bottom: 3rem;}
+}
+</f:asset.css>
+
+	<div class="row g-0 h-100">
+		<f:if condition="{card.tiling.position} == 'right'">
+			<f:then>
+				<div class="col-md-6 tiling-first-right d-flex align-items-center py-3">
+					<f:render section="Text" arguments="{_all}" />					
+				</div>
+				<div id="s{data.uid}" class="col-md-6 tiling-second-right background-image">
+
+				</div>
+			</f:then>
+			<f:else>
+				<div id="s{data.uid}" class="col-md-6 tiling-first-left background-image">
+
+				</div>
+				<div class="col-md-6 tiling-second-left d-flex align-items-center py-3">
+					<f:render section="Text" arguments="{_all}" />
+				</div>
+			</f:else>
+		</f:if>
+	</div>
+
+</html>
+
+
+<f:section name="Text">
+<div class="card-body">
+	<f:if condition="{data.header} || {data.subheader}">
+		<f:render partial="Header/All" arguments="{_all}"/>
+	</f:if>
+	<f:if condition="{card.cropMaxCharacters}">
+		<f:then>
+			{data.bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+		</f:then>
+		<f:else>
+			{data.bodytext -> f:format.html()}
+		</f:else>
+	</f:if>
+</div>
+
+<f:if condition="({data.tx_t3sbootstrap_cardfooter} || {card.multiImage.socialmedia.footer} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
+	<div class="card-footer{f:if(condition: card.multiImage.socialmedia.enable,then: ' bg-white')}">
+		{data.tx_t3sbootstrap_cardfooter -> f:format.raw()}
+		<f:if condition="{card.button.footer}">
+			<f:render section="Button" arguments="{_all}" />
+		</f:if>
+		<f:if condition="{card.multiImage.socialmedia.footer}">
+			<div class="icon-block text-center my-2">
+				<f:for each="{card.multiImage.socialmediaLinks}" key="company" as="socialmediaLink">
+					<a target="_blank" title="{company}" href="{socialmediaLink}"><i class="fa-brands fa-{company}"></i></a>
+				</f:for>
+			</div>
+		</f:if>
+	</div>
+</f:if>
+
+</f:section>
+
+
+<f:section name="Button">
+	<f:if condition="{card.button.enable} && {card.button.link}">
+		<f:link.typolink parameter="{card.button.link}" class="btn btn{card.button.linkClass} mt-2" additionalAttributes="{role: 'button'}">
+			<f:if condition="{card.button.text}">
+				<f:then>
+					{card.button.text -> f:format.raw()}
+				</f:then>
+				<f:else>
+					{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:more')}
+				</f:else>
+			</f:if>
+		</f:link.typolink>
+	</f:if>
+</f:section>

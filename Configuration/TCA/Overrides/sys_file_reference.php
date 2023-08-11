@@ -283,13 +283,31 @@ $tempSysFileReferenceColumns = [
 			]
 		],
 	],
-
+	'tx_t3sbootstrap_video_ratio' => [
+		'exclude' => 1,
+		'label' => 'Custom aspect ratio (default: 16:9)',
+		'description' => 'you can use any aspect ratio - e.g.: 4:3 (textmedia only)',
+		'displayCond' => 'FIELD:tablenames:=:tt_content',
+		'config' => [
+			'type' => 'input',
+			'size' => 10,
+			'eval' => 'trim',
+			'valuePicker' => [
+				'items' => [
+					['16:9 (widescreen)', '16:9'],
+					['9:16 (vertical)', '9:16'],
+					['1:1 (square)', '1:1'],
+					['4:3 (fullscreen)', '4:3'],
+					['21:9 (cinematic widescreen)', '21:9']
+				],
+			],
+			'default' => '16:9'
+		],
+	],	
 ];
-
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('sys_file_reference',$tempSysFileReferenceColumns);
 unset($tempSysFileReferenceColumns);
-
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_description_align','after:title');
 
@@ -320,6 +338,7 @@ if (array_key_exists('imgtag', $extconf) && $extconf['imgtag']) {
 }
 
 if (array_key_exists('ratio', $extconf) && $extconf['ratio']) {
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'videoOverlayPalette','--linebreak--,tx_t3sbootstrap_video_ratio','after:autoplay');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_shift_vertical','after:tx_t3sbootstrap_description_align');
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette','--linebreak--,tx_t3sbootstrap_shift_horizontal','after:tx_t3sbootstrap_shift_vertical');
 }

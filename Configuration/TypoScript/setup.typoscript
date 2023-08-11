@@ -136,7 +136,8 @@ temp.pagelayout {
 # Google Tag Manager
 #
 ##########################################################################################################
-[{$bootstrap.gtm} && request.getCookieParams()['cookieconsent_status'] == 'allow']
+
+[{$bootstrap.gtm} && {$bootstrap.extconf.cookieconsent} == 1 && request.getCookieParams()['cookieconsent_status'] == 'allow']
 page.includeJS.gtm = https://www.googletagmanager.com/gtag/js?id={$bootstrap.gtm}
 page.includeJS.gtm.external = 1
 page.includeJS.gtm.async = 1

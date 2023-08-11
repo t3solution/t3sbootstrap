@@ -20,9 +20,8 @@ page {
 
 		googleFontCSS = /fileadmin/T3SB/Resources/Public/CSS/googlefonts.css
 		googleFontCSS.forceOnTop = 1
-		googleFontCSS.if {
-			isTrue = {$bootstrap.cdn.googlefonts}
-		}
+		googleFontCSS.if.isTrue = {$bootstrap.cdn.googlefonts}
+
 	}
 
 	##########################################################################################################
@@ -94,12 +93,6 @@ page.includeJSLibs {
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 0]
 page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
 [global]
-#[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 1]
-#page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
-#[global]
-#[{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 2]
-#page.includeCSS.t3sfontawesomeProLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeProLink.css
-#[global]
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 3]
 page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesome6Link.css
 [global]

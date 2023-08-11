@@ -34,10 +34,8 @@ services:
     tags:
       - name: event.listener
         identifier: 't3sbootstrap/newsFlexParsing'
-        event: TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent
 
   T3SBS\T3sbootstrap\Backend\EventListener\FlexForm\FlexformEvent:
     tags:
       - name: event.listener
         identifier: 't3sbootstrap/flexParsing'
-        event: TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent

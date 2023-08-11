@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use T3SBS\T3sbootstrap\Helper\FlexformHelper;
+use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -164,6 +165,18 @@ class Card implements SingletonInterface
 				}
 			}
 		}
+
+#		if ( !empty($cardData['square']['enable']) ) {
+#			$cardClass .= ' rounded-0 border-0';
+#		}
+
+		if ( !empty($cardData['tiling']['enable']) ) {
+			$cardClass = 'card tiling rounded-0 border-0 h-100'.$processedData['class'];
+			if (empty($processedData['data']['tx_t3sbootstrap_contextcolor'])) {
+				$cardClass .= ' bg-transparent';	
+			}	
+		}
+		
 		// header position
 		if ( $processedData['data']['header_position'] ) {
 			$headerPosition = $processedData['data']['header_position'];
@@ -184,6 +197,17 @@ class Card implements SingletonInterface
 			$cardClass .= ' h-100';
 		}
 
+		if ( !empty($cardData['tiling']['enable']) ) {
+			$processedData['addmedia']['imgclass'] = ' rounded-0 '.$cardData['image']['class'];
+			$bgMediaQueries = '768,576';
+			$bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
+				->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
+				 $flexconf, FALSE, $processedData['data']['uid'],$bgMediaQueries);
+			if ($bgimages) {
+				$cardData['bgimages'] = $bgimages;
+			}
+		}
+		
 		$processedData['class'] = trim($cardClass);
 
 		// addmedia
@@ -191,6 +215,10 @@ class Card implements SingletonInterface
 		$processedData['addmedia']['imgclass'] .= !empty($flexconf['horizontal']) ? ' rounded-start' : '';
 		$processedData['addmedia']['figureclass'] = ' text-center';
 		$processedData['addmedia']['figureclass'] .= !empty($flexconf['horizontal']) ? ' d-block' : '';
+
+		if ( !empty($cardData['square']['enable']) ) {
+			$processedData['addmedia']['imgclass'] = 'img-fluid';
+		}
 
 		$processedData['card'] = $cardData;
 

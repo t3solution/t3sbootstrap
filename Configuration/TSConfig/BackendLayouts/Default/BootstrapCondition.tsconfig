@@ -2,16 +2,16 @@
 [colPosList('Content')]
 # Content only (no Jumbotron = 3 & no Footer = 4)
 mod.SHARED.colPos_list = 0,1,2
-[END]
+[global]
 [colPosList('Jumbotron')]
 # Content & Jumbotron
 mod.SHARED.colPos_list = 3,0,1,2
-[END]
+[global]
 [colPosList('Footer')]
 # Content & Footer
 mod.SHARED.colPos_list = 0,1,2,4
-[END]
+[global]
 [colPosList('All')]
 # Content & Footer & Jumbotron
 mod.SHARED.colPos_list = 3,0,1,2,4
-[END]
+[global]
