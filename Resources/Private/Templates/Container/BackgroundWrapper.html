@@ -33,7 +33,7 @@ function t3sbBackgroundVideo(div, params) {
 	top: {ytVideo.ytshift}% !important;
 }
 		</f:asset.css>
-			<div class="position-relative overflow-hidden youtube-wrapper card"
+			<div class="position-relative overflow-hidden youtube-wrapper card rounded-0 border-0"
 				 style="height:{f:if(condition:'{ytVideo.bgHeight}',then:'{ytVideo.bgHeight}',else:'300')}px;{controlStyle}">
 				<div id="v{data.uid}" class="video-container"></div>
 				<f:render section="SectionInner" arguments="{_all}" />
@@ -247,7 +247,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 
 <f:section name="SectionInner">
 	<f:if condition="{col_273 -> f:count()}">
-		<div class="d-flex">
+		<div class="d-flex card-img-overlay" style="z-index: 1;">
 			<div class="col{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 				{containerPre -> f:format.raw()}
 					<f:for each="{col_273}" as="row">

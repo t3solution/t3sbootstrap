@@ -27,7 +27,6 @@ plugin.tx_news {
 		srcsetTablet = {$bootstrap.image.srcsetTablet}
 		srcsetMobile = {$bootstrap.image.srcsetMobile}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
-		typoscriptRendering = {$bootstrap.ext.typoscriptRendering}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		picturefill = {$bootstrap.image.picturefill}
 		magnifying = {$bootstrap.config.magnifying}

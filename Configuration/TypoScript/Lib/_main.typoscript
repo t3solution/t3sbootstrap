@@ -124,5 +124,5 @@ lib.printButton {
 
 [siteLanguage("languageId") == "0"]
 lib.printButton.stdWrap.typolink.title = Druckversion dieser Seite in einem neuen Fenster öffnen
-[END]
+[global]
 

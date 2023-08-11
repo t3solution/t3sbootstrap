@@ -24,7 +24,6 @@ class CardWrapper implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-		$processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 4;
 		$processedData['gutter'] = !empty($flexconf['gutter']) ? (int)$flexconf['gutter'] : 0;
 
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
@@ -114,15 +113,16 @@ class CardWrapper implements SingletonInterface
 
 			// swiperjs
 			if ($flexconf['card_wrapper'] == 'slider') {
-				$processedData['visibleCards'] = $flexconf['visibleCards'] ? (int)$flexconf['visibleCards'] : 3;
+				$processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;
 				$processedData['cols'] = floor(12 / $processedData['visibleCards']);
 				$processedData['width'] = $flexconf['width'];
 				$processedData['ratio'] = $flexconf['ratio'];
-				$processedData['slidesPerView'] = (int)$flexconf['slidesPerView'] ?: 4;
+				$processedData['slidesPerView'] = (int)$flexconf['slidesPerView'] ?: 0;
+				$processedData['breakpoints10'] = !empty($flexconf['breakpoints10']) ? (int)$flexconf['breakpoints10'] : 1;
 				$processedData['breakpoints576'] = (int)$flexconf['breakpoints576'] ?: 2;
 				$processedData['breakpoints768'] = (int)$flexconf['breakpoints768'] ?: 3;
 				$processedData['breakpoints992'] = (int)$flexconf['breakpoints992'] ?: 4;
-				$processedData['slidesPerGroup'] = (int)$flexconf['slidesPerGroup'];
+				$processedData['slidesPerGroup'] = (int)$flexconf['slidesPerGroup'] ?: 1;
 				$processedData['spaceBetween'] = (int)$flexconf['spaceBetween'];
 				$processedData['loop'] = (int)$flexconf['loop'];
 				$processedData['navigation'] = (int)$flexconf['navigation'];

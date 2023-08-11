@@ -281,15 +281,15 @@ function t3sbNavbarSearchbox(vw, bp) {
 </f:if>
 
 
-<f:if condition="{settings.config.navbarDarkMode}">
-<f:asset.script identifier="darkMode_function">
-// Dark mode - Main.html
+<f:if condition="{settings.config.navbarDarkMode} || {settings.config.colorMode.enable}">
+<f:asset.script identifier="colorMode_function">
+// Color mode - Main.html
 /*!
  * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under the Creative Commons Attribution 3.0 Unported License.
  */
-function t3sbDarkMode() {
+function t3sbColorMode() {
 
 	const getStoredTheme = () => localStorage.getItem('theme')
 	const setStoredTheme = theme => localStorage.setItem('theme', theme)

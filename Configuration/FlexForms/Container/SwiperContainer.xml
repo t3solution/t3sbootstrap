@@ -110,19 +110,46 @@
 					</ratio>
 					<slidesPerView>
 						<label>Slides per view</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<description>slides visible at the same time on slider's container (can be empty if you use breakpoints)</description>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>4</default>
 							<checkbox>0</checkbox>
 						</config>
 					</slidesPerView>
+					<breakpoints10>
+						<label>Slides per view - breakpoint > 10px</label>
+						<description>breakpoints allows to set different parameter for different responsive breakpoints (screen sizes)</description>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
+						<config>
+							<type>number</type>
+							<size>4</size>
+							<default>1</default>
+							<checkbox>0</checkbox>
+						</config>
+					</breakpoints10>
 					<breakpoints576>
 						<label>Slides per view - breakpoint > 576px</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>2</default>
 							<checkbox>0</checkbox>
@@ -130,9 +157,14 @@
 					</breakpoints576>
 					<breakpoints768>
 						<label>Slides per view - breakpoint > 768px</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>3</default>
 							<checkbox>0</checkbox>
@@ -140,9 +172,14 @@
 					</breakpoints768>
 					<breakpoints992>
 						<label>Slides per view - breakpoint > 992px</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>4</default>
 							<checkbox>0</checkbox>
@@ -150,9 +187,18 @@
 					</breakpoints992>
 					<slidesPerGroup>
 						<label>Slides per group</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<description>set numbers of slides to define and enable group sliding</description>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
+							<range>
+								<lower>1</lower>
+							</range>
 							<size>4</size>
 							<default>1</default>
 							<checkbox>0</checkbox>
@@ -160,9 +206,14 @@
 					</slidesPerGroup>
 					<spaceBetween>
 						<label>Space between</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>20</default>
 							<checkbox>0</checkbox>
@@ -170,29 +221,49 @@
 					</spaceBetween>
 					<loop>
 						<label>Loop</label>
-						<description>Amount of slides in loop mode should be at least 2x of slidesPerView value.</description>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<description>amount of slides in loop mode should be at least 2x of slidesPerView value.</description>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</loop>
 					<navigation>
 						<label>Navigation</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</navigation>
 					<pagination>
 						<label>Pagination</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</pagination>
 					<autoplay>
 						<label>Autoplay</label>
-						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:0</value2>
+							</and>
+						</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -204,10 +275,11 @@
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
 								<value2>FIELD:general.autoplay:=:1</value2>
+								<value3>FIELD:general.useCustomSwiperJs:=:0</value3>
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<default>5000</default>
 							<checkbox>0</checkbox>
@@ -235,11 +307,36 @@
 					</swiperJs>
 					<zoom>
 						<label>Enable open in lightbox</label>
-						<description>Not working with a link inside the carousel content.</description>
+						<description>not working with a link inside the carousel content.</description>
 						<config>
 							<type>check</type>
 						</config>
 					</zoom>
+					<useCustomSwiperJs>
+						<label>Custom Swiper JS</label>
+						<description>use your own Swiper JS</description>
+						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+						</config>
+					</useCustomSwiperJs>
+					<customSwiperJs>
+						<label>your JS</label>
+						<description>overwrites all the above settings</description>
+						<displayCond>
+							<and>
+								<value1>FIELD:general.sliderStyle:=:Default</value1>
+								<value2>FIELD:general.useCustomSwiperJs:=:1</value2>
+							</and>
+						</displayCond>
+						<config>
+							<type>text</type>
+							<size>500</size>
+							<max>9999</max>
+							<default></default>
+						</config>
+					</customSwiperJs>
 				</el>
 			</ROOT>
 		</general>

@@ -109,8 +109,6 @@ final class ConfigController extends AbstractController
 
 	/**
 	 * action new
-	 *
-	 * @return void
 	 */
 	public function newAction(): ResponseInterface
 	{

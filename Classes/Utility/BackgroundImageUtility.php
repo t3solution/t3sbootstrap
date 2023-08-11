@@ -13,7 +13,6 @@ use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -65,18 +64,16 @@ class BackgroundImageUtility implements SingletonInterface
 		if ( ExtensionManagementUtility::isLoaded('webp') ) {
 			$webp = true;
 		}
-
+		
 		if ( count($filesFromRepository) > 1 && $body == FALSE ) {
-
 			if ( !empty($flexconf['bgimagePosition']) && ( $flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2 ) ) {
 				// bg-images in two-columns
 				// in the case if two images available but only one is selected in the flexform
 				$file = $filesFromRepository[0];
 				$image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 				$bgImages = $this->generateSrcsetImages($file, $image);
-				$imageUri_mobile = $bgImages[576];
 				$imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
-				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $flexconf, FALSE, $bgMediaQueries);
+				$css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 
 			} else {
 				// slider in jumbotron or two bg-images in two-columns
@@ -88,7 +85,7 @@ class BackgroundImageUtility implements SingletonInterface
 					$image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
 					$bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
 					$imageUri_mobile[$fileKey] = $webp ? $bgImages[$fileKey][576].'.webp' : $bgImages[$fileKey][576];
-					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $flexconf, FALSE, $bgMediaQueries);
+					$css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf, FALSE, $bgMediaQueries);
 				}
 			}
 		} else {
@@ -101,9 +98,9 @@ class BackgroundImageUtility implements SingletonInterface
 					$uid = $uid . '-' . $flexconf['bgimagePosition'];
 				}
 				if ($jumbotron) {
-					$css = $this->generateCss('s'.$uid, $file, $image, $flexconf, FALSE, $bgMediaQueries);
+					$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 				} elseif ($body) {
-					$css = $this->generateCss('page-'.$uid, $file, $image, $flexconf, TRUE, $bgMediaQueries);
+					$css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf, TRUE, $bgMediaQueries);
 				} else {
 					if ( !empty($flexconf['enableAutoheight']) ) {
 						if ( $flexconf['addHeight'] ) {
@@ -112,9 +109,9 @@ class BackgroundImageUtility implements SingletonInterface
 							GeneralUtility::makeInstance(AssetCollector::class)
 								  ->addInlineJavaScript('addheight-'.$uid, $inline);
 						}
-						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, FALSE, $bgMediaQueries);
+						$css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					} else {
-						$css = $this->generateCss('s'.$uid, $file, $image, $flexconf, FALSE, $bgMediaQueries);
+						$css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, FALSE, $bgMediaQueries);
 					}
 				}
 				$bgImages = $this->generateSrcsetImages($file, $image);
@@ -149,6 +146,7 @@ class BackgroundImageUtility implements SingletonInterface
 		string $uid,
 		FileReference $file,
 		File $image,
+		bool $webp,
 		array $flexconf=[],
 		bool $body=FALSE,
 		string $bgMediaQueries='2560,1920,1200,992,768,576'
@@ -157,11 +155,6 @@ class BackgroundImageUtility implements SingletonInterface
 		$imageRaster = !empty($flexconf['imageRaster']) ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
 		$processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
 		$cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
-
-		$webp = false;
-		if ( ExtensionManagementUtility::isLoaded('webp') ) {
-			$webp = true;
-		}
 
 		$css = '';
 		$mediaQueries = explode(',', $bgMediaQueries);

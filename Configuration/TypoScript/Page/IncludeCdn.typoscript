@@ -28,7 +28,6 @@ page {
 		jqueryCDN.forceOnTop = 1
 		jqueryCDN.if.isFalse = {$bootstrap.disable.jquery}
 
-
 		popperCDN = https://cdnjs.cloudflare.com/ajax/libs/popper.js/{$bootstrap.cdn.popperjs}/umd/popper.min.js
 		popperCDN.integrity = {$bootstrap.cdn.popperjsIntegrity}
 		popperCDN.external = 1

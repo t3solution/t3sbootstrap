@@ -123,9 +123,15 @@ editor:
 #        - { name: 'Button Info', element: 'a', 'classes': ['btn btn-info'] } 
 #        - { name: 'Button Light', element: 'a', 'classes': ['btn btn-light'] } 
 #        - { name: 'Button Dark', element: 'a', 'classes': ['btn btn-dark'] } 
+
+
+
+
+
+
         
         # Textstile - Badges
-        - { name: 'Badge Primary', element: 'span', 'classes': ['badge text-bg-primary'] } 
+        - { name: 'Badge Primary', element: 'span', 'classes': ['badge', 'text-bg-primary'] } 
         - { name: 'Badge Secondary', element: 'span', 'classes': ['badge text-bg-secondary'] } 
         - { name: 'Badge Success', element: 'span', 'classes': ['badge text-bg-success'] } 
         - { name: 'Badge Danger', element: 'span', 'classes': ['badge text-bg-danger'] } 

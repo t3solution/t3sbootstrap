@@ -73,10 +73,10 @@ class CustomScss extends CommandBase
 			if ($settings['cdn']['noZip']) {
 				self::getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath);
 			} else {
-				self::getBootstrapFiles($bootstrapVersion);
+				self::getBootstrapFiles($bootstrapVersion);	
 			}
 			if (!file_exists(GeneralUtility::getFileAbsFileName(self::localZipPath.'scss/bootstrap.scss'))) {
-				self::getBootstrapFiles($settings, $bootstrapVersion, $bootstrapScssPath);
+				self::getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath);
 			}
 
 			# Custom
@@ -268,6 +268,7 @@ class CustomScss extends CommandBase
 
 			parent::rmDir(GeneralUtility::getFileAbsFileName(self::localZipPath.'bootstrap-'.$bootstrapVersion));
 			$zipFile = GeneralUtility::getFileAbsFileName(self::localZipPath.self::localZipFile);
+
 			if (file_exists($zipFile)) unlink($zipFile);
 		} else {
 			throw new \InvalidArgumentException('No content from GitHub archive!', 1657464783);

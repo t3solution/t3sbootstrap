@@ -29,73 +29,30 @@ class FlexFormManipulation implements FormDataProviderInterface
 		# if FlexFormManipulation
 		if ( !empty($flexforms) && !empty($result['databaseRow']['CType']) ) {
 
-			switch ($result['databaseRow']['CType']) {
-				   case 't3sbs_card':
-					$flexformFile = 'cardSetting.';
-						break;
-				   case 't3sbs_carousel':
-					$flexformFile = 'carousel.';
-						break;
-				   case 't3sbs_button':
-					$flexformFile = 'button.';
-						break;
-				   case 't3sbs_mediaobject':
-					$flexformFile = 'mediaobject.';
-						break;
-				   case 'table':
-					$flexformFile = 'table.';
-						break;
-				   case 'card_wrapper':
-					$flexformFile = 'cardWrapper.';
-						break;
-				   case 'autoLayout_row':
-					$flexformFile = 'autoLayoutRow.';
-						break;
-				   case 'button_group':
-					$flexformFile = 'buttongroup.';
-						break;
-				   case 'container':
-					$flexformFile = 'container.';
-						break;
-				   case 'two_columns':
-					$flexformFile = 'twoColumns.';
-						break;
-				   case 'three_columns':
-					$flexformFile = 'threeColumns.';
-						break;
-				   case 'four_columns':
-					$flexformFile = 'fourColumns.';
-						break;
-				   case 'six_columns':
-					$flexformFile = 'sixColumns.';
-						break;
-				   case 'background_wrapper':
-					$flexformFile = 'backgroundWrapper.';
-						break;
-				   case 'parallax_wrapper':
-					$flexformFile = 'parallaxWrapper.';
-						break;
-				   case 'carousel_container':
-					$flexformFile = 'carouselContainer.';
-						break;
-				   case 'collapsible_accordion':
-					$flexformFile = 'collapse.';
-						break;
-				   case 'collapsible_container':
-					$flexformFile = 'collapseContainer.';
-						break;
-				   case 'modal':
-					$flexformFile = 'modal.';
-						break;
-				   case 'tabs_container':
-					$flexformFile = 'tabs.';
-						break;
-				   case 'tabs_tab':
-					$flexformFile = 'tabsTab.';
-						break;
-				   default:
-					  $flexformFile = 'bootstrap.';
-			}
+			$flexformFile = match ($result['databaseRow']['CType']) {
+				't3sbs_card' => 'cardSetting.',
+				't3sbs_carousel' => 'carousel.',
+				't3sbs_button' => 'button.',
+				't3sbs_mediaobject' => 'mediaobject.',
+				'table' => 'table.',
+				'card_wrapper' => 'cardWrapper.',
+				'autoLayout_row' => 'autoLayoutRow.',
+				'button_group' => 'buttongroup.',
+				'container' => 'container.',
+				'two_columns' => 'twoColumns.',
+				'three_columns' => 'threeColumns.',
+				'four_columns' => 'fourColumns.',
+				'six_columns' => 'sixColumns.',
+				'background_wrapper' => 'backgroundWrapper.',
+				'parallax_wrapper' => 'parallaxWrapper.',
+				'carousel_container' => 'carouselContainer.',
+				'collapsible_accordion' => 'collapse.',
+				'collapsible_container' => 'collapseContainer.',
+				'modal' => 'modal.',
+				'tabs_container' => 'tabs.',
+				'tabs_tab' => 'tabsTab.',
+				default => 'bootstrap.',
+			};
 
 			$dataStructure = [];
 
@@ -106,7 +63,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 				$addArr = [];
 	
 				foreach ($flexforms as $file=>$fields) {
-					if ( $file == $flexformFile ) {
+					if ( $file === $flexformFile ) {
 						foreach ($fields as $field=>$mod) {
 							if ( !empty($mod['add']) ) {
 								foreach (explode(',',$mod['add']) as $add) {
@@ -116,11 +73,11 @@ class FlexFormManipulation implements FormDataProviderInterface
 												foreach ($fieldArr as $fieldName) {
 													if (!empty($fieldName) && $fieldName !== 'array' && is_array($fieldName)) {
 														foreach ($fieldName as $key=>$name) {
-															if (!empty($name['config']['type']) && $name['config']['type'] == 'select') {
-																if (substr($field, 0, -1) == $key) {
+															if (!empty($name['config']['type'])
+																 && $name['config']['type'] === 'select'
+																 && substr($field, 0, -1) === $key) {
 																	$addArr = ['label' => trim($add), 'value' => lcfirst(GeneralUtility::underscoredToUpperCamelCase(trim($add)))];
 																	array_push($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'], $addArr);
-																}
 															}
 														}
 													}
@@ -138,10 +95,10 @@ class FlexFormManipulation implements FormDataProviderInterface
 												foreach ($fieldArr as $fieldName) {
 													if (!empty($fieldName) && $fieldName !== 'array' && is_array($fieldName)) {
 														foreach ($fieldName as $key=>$name) {
-															if (!empty($name['config']['type']) && $name['config']['type'] == 'select') {
+															if (!empty($name['config']['type']) && $name['config']['type'] === 'select') {
 																if (substr($field, 0, -1) == $key) {
 																	foreach ($name['config']['items'] as $k=>$item ) {
-																		if (!empty($item['value']) && trim($item['value']) == trim($reduce)) {
+																		if (!empty($item['value']) && trim($item['value']) === trim($reduce)) {
 																			unset($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'][$k]);
 																		}
 																	}

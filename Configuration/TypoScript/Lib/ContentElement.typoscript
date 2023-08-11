@@ -144,7 +144,7 @@ lib.contentElement {
 
 [{$bootstrap.image.minimumWidth} == 1]
 lib.contentElement.settings.srcsetMobile = 575
-[END]
+[global]
 
 # 2 == halkabox - https://github.com/ahmednooor/halkaBox.js
 [{$bootstrap.config.lightboxSelection} == 2]
@@ -153,7 +153,7 @@ lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.dataWrap = class="gallery-{file:current:uid_foreign}"  data-title="{file:current:description}"
 	directImageLink = 1
 }
-[END]
+[global]
 
 # 3 == LightBox Plugin - glightbox.js - https://github.com/biati-digital/glightbox
 [{$bootstrap.config.lightboxSelection} == 3]
@@ -162,9 +162,9 @@ lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="glightbox" data-glightbox="title:{file:current:description}" data-gallery="gallery-{file:current:uid_foreign}" data-effect="fade"
 	directImageLink = 1
 }
-[END]
+[global]
 
 [{$bootstrap.ext.news} == 1]
 # settings for news lightbox
 plugin.tx_news.settings.media.popup < lib.contentElement.settings.media.popup
-[END]
+[global]

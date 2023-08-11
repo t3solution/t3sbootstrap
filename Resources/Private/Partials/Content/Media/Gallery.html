@@ -57,7 +57,14 @@
 		<div class="row {data.tx_t3sbootstrap_gutters} {data.tx_t3sbootstrap_verticalgutters}">
 			<f:for each="{row.columns}" as="column" iteration="iterator">
 				<f:if condition="{column.media}">
-					<f:variable name="poster">/{posters.{rowiterator.index}.poster}</f:variable>
+					<f:if condition="{posters.{rowiterator.index}.poster}">
+						<f:then>
+							<f:variable name="poster">/{posters.{rowiterator.index}.poster}</f:variable>
+						</f:then>
+						<f:else>
+							<f:variable name="poster"></f:variable>	
+						</f:else>
+					</f:if>
 					<div class="col-sm text-center{f:if(condition: iterator.isFirst, then: ' first-figure')}{f:if(condition: iterator.isLast, then: ' last-figure')}">
 						<f:render partial="Media/Type" arguments="{
 							file: column.media,

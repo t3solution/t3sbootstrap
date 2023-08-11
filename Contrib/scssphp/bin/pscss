@@ -38,8 +38,8 @@ $embedSourceMap = false;
 /**
  * Parse argument
  *
- * @param integer $i
- * @param array $options
+ * @param int      $i
+ * @param string[] $options
  *
  * @return string|null
  */
@@ -166,7 +166,7 @@ EOT;
 
 if (isset($arguments[0]) && file_exists($arguments[0])) {
     $inputFile = $arguments[0];
-    $data = @file_get_contents($inputFile);
+    $data = file_get_contents($inputFile);
 } else {
     $data = '';
 

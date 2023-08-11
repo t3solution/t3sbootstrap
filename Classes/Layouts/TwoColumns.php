@@ -9,6 +9,7 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\Layouts\Grid;
 use T3SBS\T3sbootstrap\Layouts\Gutters;
 
+use TYPO3\CMS\Core\Service\FlexFormService;
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
@@ -25,6 +26,20 @@ class TwoColumns implements SingletonInterface
 	{
 		$processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
 		$processedData = GeneralUtility::makeInstance(Grid::class)->getGrid($processedData, $flexconf);
+
+		$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+		foreach ($processedData as $key=>$data) {
+			if ($key == 'col_221' || $key == 'col_222') {
+				if (is_array($data) && !empty($data[0]['tx_t3sbootstrap_flexform'])) {
+					$flexconf = $flexFormService->convertFlexFormContentToArray($data[0]['tx_t3sbootstrap_flexform']);
+					if (!empty($flexconf['tiling']['enable'])) {
+						// cards with tiling enabled inside
+						$processedData['gutters'] = ' gx-0 gy-0';
+						break;
+					}
+				}	
+			}
+		}
 
 		$processedData['style'] .= !empty($flexconf['colHeight']) ? ' min-height: '.$flexconf['colHeight'].'px;' : '';
 		$processedData['verticalAlign'] = !empty($flexconf['colHeight'])
