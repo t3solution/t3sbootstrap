@@ -166,7 +166,7 @@
 			</f:link.typolink>
 		</f:case>
 		<f:case value="heading">
-			<h1 class="navbar-brand mb-0">{config.general.company}</h1>
+			<span class="navbar-brand mb-0 h1">{config.general.company}</span>
 		</f:case>
 		<f:defaultCase>
 			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}">
@@ -178,16 +178,8 @@
 </f:section>
 
 <f:section name="BrandImage">
-	<f:if condition="{config.general.pageTitle} == 'replace'">
-		<f:then>
-			<h1 class="text-hide m-0 p-0 float-start" style="background-image: url('{config.navbar.image}'); width: {settings.navbar.image.width}px; height: {settings.navbar.image.height}px;">
-				<f:cObject typoscriptObjectPath="lib.pageTitle"/>
-			</h1>
-		</f:then>
-		<f:else>
-			<f:image src="{config.navbar.image}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}" class="img-fluid{config.navbar.brandClass}" alt="{settings.navbar.image.altText}" />
-		</f:else>
-	</f:if>
+	<f:image src="{config.navbar.image}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}"
+	 class="img-fluid{config.navbar.brandClass}" alt="{settings.navbar.image.altText}" />
 </f:section>
 
 <f:section name="Toggler">
