@@ -349,5 +349,13 @@ lib.t3sbs.dispose.value = Nicht mehr anzeigen
 page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
 [global]
 
+plugin.tx_felogin_login {
+	view {
+		templateRootPaths {
+			10 = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
+		}
+	}
+}
+
 // import outsourced setup
 @import 'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript'

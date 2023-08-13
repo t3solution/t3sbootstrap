@@ -1,18 +1,16 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{config.expandedcontentTop.enable}">
-	<f:if condition="{config.expandedcontentTop.container} ">
-		<f:then>
-			<f:render section="{config.expandedcontentTop.containerposition}" arguments="{_all}" />
-		</f:then>
-		<f:else>
-			<f:render section="Default" arguments="{_all}" />
-		</f:else>
-	</f:if>
+<f:if condition="{config.expandedcontentBottom.container} && {config.expandedcontentTop.container} != 'none'">
+	<f:then>
+		<f:render section="{config.expandedcontentTop.containerposition}" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:render section="Default" arguments="{_all}" />
+	</f:else>
 </f:if>
 </html>
 
 <f:section name="Inside">
-<div id="expanded-content-top" class="{config.expandedcontentTop.class}">
+<div id="expanded-content-top"{f:if(condition: '{config.expandedcontentTop.class}', then: ' class="{config.expandedcontentTop.class}"')}>
 	<div class="{config.expandedcontentTop.container}">
 		<f:render section="Content" arguments="{_all}" />
 	</div>
@@ -21,14 +19,14 @@
 
 <f:section name="Outside">
 <div class="{config.expandedcontentTop.container}">
-	<div id="expanded-content-top" class="{config.expandedcontentTop.class}">
+	<div id="expanded-content-top" {f:if(condition: '{config.expandedcontentTop.class}', then: ' class="{config.expandedcontentTop.class}"')}>
 		<f:render section="Content" arguments="{_all}" />
 	</div>
 </div>
 </f:section>
 
 <f:section name="Default">
-<div id="expanded-content-top" class="{config.expandedcontentTop.class}">
+<div id="expanded-content-top"{f:if(condition: '{config.expandedcontentTop.class}', then: ' class="{config.expandedcontentTop.class}"')}>
 	<f:render section="Content" arguments="{_all}" />
 </div>
 </f:section>

@@ -255,7 +255,7 @@ bootstrap.preloadGooleFonts = 0
 bootstrap.gooleFontsWeights = 300, regular, 700
 
 # GTM Account ID - include the Google Tag Manager if entered
-bootstrap.gtm =
+bootstrap.gtm = 0
 
 # disable jQuery by default
 bootstrap.disable.jquery = 1

@@ -44,7 +44,7 @@ lib.parseFunc_RTE.externalBlocks.pre.stdWrap{
 
 lib.pageTitle = TEXT
 lib.pageTitle.data = leveltitle:-1
-lib.pageTitle.stdWrap.wrap = <span class="text-hide">|</span>
+#lib.pageTitle.stdWrap.wrap = <span class="text-hide">|</span>
 lib.pageTitle.stdWrap.required = 1
 
 lib.newsTitle = TEXT
