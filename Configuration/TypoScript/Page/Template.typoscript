@@ -325,7 +325,7 @@ page {
 				value = {$bootstrap.config.lastModifiedContentElement}
 				equals = 1
 			}
-			70.isTrue = {$bootstrap.config.recentlyUpdatedContentElements}
+			70.if.isTrue = {$bootstrap.config.recentlyUpdatedContentElements}
 
 			#
 			# Main Config
