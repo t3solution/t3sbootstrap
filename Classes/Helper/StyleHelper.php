@@ -21,18 +21,16 @@ class StyleHelper implements SingletonInterface
 
 		if ( $data['tx_t3sbootstrap_bgcolor']
 		 && !$data['tx_t3sbootstrap_contextcolor'] ) {
-			if ( $data['tx_t3sbootstrap_bgopacity'] && $data['tx_t3sbootstrap_bgopacity'] != 100 ) {
+			if ( $data['tx_t3sbootstrap_bgopacity'] && $data['tx_t3sbootstrap_bgopacity'] != 1 ) {
 				// if opacity
-				$opacity = (int)$data['tx_t3sbootstrap_bgopacity'] / 100;
-				$rgba = self::hex2RGB($data['tx_t3sbootstrap_bgcolor']).','.$opacity;
+				$rgba = self::hex2RGB($data['tx_t3sbootstrap_bgcolor']).','.$data['tx_t3sbootstrap_bgopacity'];
 				$color = 'background-color: rgba('.$rgba.');';
 			} elseif ( $hexdec ) {
 				$color = 'background-color: '.$data['tx_t3sbootstrap_bgcolor'].';';
 			}
 		} elseif (!empty($data['tx_t3sbootstrap_contextcolor'])) {
-			$bgopacity = (int)$data['tx_t3sbootstrap_bgopacity'] / 10;
-			if ($bgopacity !== 10) {
-				$color = '--bs-bg-opacity: 0.'.$bgopacity.';';
+			if ($data['tx_t3sbootstrap_bgopacity'] < 1) {
+				$color = '--bs-bg-opacity: '.$data['tx_t3sbootstrap_bgopacity'].';';
 			}		
 		}
 
