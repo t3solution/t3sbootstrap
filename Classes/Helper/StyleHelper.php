@@ -29,6 +29,11 @@ class StyleHelper implements SingletonInterface
 			} elseif ( $hexdec ) {
 				$color = 'background-color: '.$data['tx_t3sbootstrap_bgcolor'].';';
 			}
+		} elseif (!empty($data['tx_t3sbootstrap_contextcolor'])) {
+			$bgopacity = (int)$data['tx_t3sbootstrap_bgopacity'] / 10;
+			if ($bgopacity !== 10) {
+				$color = '--bs-bg-opacity: 0.'.$bgopacity.';';
+			}		
 		}
 
 		return $color;
