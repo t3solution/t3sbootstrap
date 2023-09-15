@@ -134,6 +134,7 @@ class CardWrapper implements SingletonInterface
 			if ($flexconf['card_wrapper'] == 'deck' && $flexconf['equalHeight']) {
 				$processedData['equalHeight'] = ' d-flex align-items-stretch';
 			}
+            		$processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;
 		}
 
 		$processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
