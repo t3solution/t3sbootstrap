@@ -103,14 +103,14 @@ $tempPagesColumns = [
 	],
 	'tx_t3sbootstrap_fontawesome_icon' => [
 		'exclude' => 1,
-		'label'	=> 'e.g.: fab fa-typo3 fa-lg',
+		'label'	=> 'e.g.: fa-brands fa-typo3 fa-lg',
 		'config' => [
 			'type' => 'input',
 			'size' => 20,
 			'eval' => 'trim',
 			'valuePicker' => [
 				'items' => [
-					['typo3', 'fab fa-typo3'],
+					['typo3', 'fa-brands fa-typo3'],
 					['envelope', 'far fa-envelope'],
 					['circle-info', 'fa-solid fa-circle-info'],
 					['exclamation-circle', 'fa-solid fa-exclamation-circle'],
@@ -118,8 +118,8 @@ $tempPagesColumns = [
 					['circle-check', 'fa-solid fa-circle-check'],
 					['circle-chevron-left', 'fa-solid fa-circle-chevron-left'],
 					['circle-chevron-right', 'fa-solid fa-circle-chevron-right'],
-					['youtube', 'fab fa-youtube'],
-					['vimeo', 'fab fa-vimeo-square'],
+					['youtube', 'fa-brands fa-youtube'],
+					['vimeo', 'fa-brands fa-vimeo-square'],
 				],
 			],
 		]
