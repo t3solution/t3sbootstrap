@@ -111,7 +111,7 @@ $tempPagesColumns = [
 			'valuePicker' => [
 				'items' => [
 					['typo3', 'fa-brands fa-typo3'],
-					['envelope', 'fa-regular fa-envelope'],
+					['envelope', 'fa-solid fa-envelope'],
 					['circle-info', 'fa-solid fa-circle-info'],
 					['exclamation-circle', 'fa-solid fa-exclamation-circle'],
 					['circle-question', 'fa-solid fa-circle-question'],
