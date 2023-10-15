@@ -963,7 +963,7 @@ return [
                     ['label' => 'Small (<= 576px) [sm]', 'value' => 'sm',],
                     ['label' => 'Medium (<= 768px [md]', 'value' => 'md',],
                     ['label' => 'Large (<= 992px) [lg]', 'value' => 'lg',],
-                    ['label' => 'Extra extra large (<= 1400px) [xxl]', 'value' => 'xl',],
+                    ['label' => 'Extra large (<= 1200px) [xl]', 'value' => 'xl',],
                     ['label' => 'Extra extra large (<= 1400px) [xxl]', 'value' => 'xxl',],
                     ['label' => 'Never expand [no]', 'value' => 'no',],
                 ]
