@@ -240,12 +240,10 @@
 			<f:format.html>{newsItem.teaser}</f:format.html>
 		</div>
 	</f:if>
-	<f:if condition="{newsItem.teaser}">
-		<!-- main text -->
-		<div class="news-text-wrap" itemprop="articleBody">
-			<f:format.html>{newsItem.bodytext}</f:format.html>
-		</div>
-	</f:if>
+	<!-- main text -->
+	<div class="news-text-wrap" itemprop="articleBody">
+		<f:format.html>{newsItem.bodytext}</f:format.html>
+	</div>
 </f:section>
 
 <f:section name="ContentElements">
