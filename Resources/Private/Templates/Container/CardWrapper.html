@@ -34,7 +34,7 @@ function t3sbCardFlipper() {
 			var cardBody = backside.querySelector('.card-body');
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
-			el.innerHTML = '<p class="square-backlink"><i class="fas fa-minus-square fa-2x mx-auto"></i></p>';
+			el.innerHTML = '<p class="square-backlink"><i class="fa-solid fa-minus-square fa-2x mx-auto"></i></p>';
 			insertAfter(cardBody, el);
 			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
 				backside.style.transform = 'rotateY(180deg)';
@@ -242,7 +242,7 @@ function insertAfter(referenceNode, newNode) {
 										{card.tx_t3sbootstrap_cardfooter -> f:format.raw()}
 									</f:then>
 									<f:else>
-										<p class="square-link"><i class="fas fa-plus-square fa-2x mx-auto"></i></p>
+										<p class="square-link"><i class="fa-solid fa-plus-square fa-2x mx-auto"></i></p>
 									</f:else>
 								</f:if>
 							</div>

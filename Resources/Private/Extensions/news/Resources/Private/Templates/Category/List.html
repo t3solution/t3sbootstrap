@@ -24,11 +24,11 @@
 				<div class="btn-group me-2 mb-2" role="group">
 					<f:link.page class="btn btn-primary" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{tx_news_pi1:{overwriteDemand:{categories: category.item.uid}}}">
-						<i class="fas fa-folder-open me-1"></i> {category.item.title}
+						<i class="fa-solid fa-folder-open me-1"></i> {category.item.title}
 					</f:link.page>
 					<f:link.page class="btn btn-primary active" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{n:multiCategoryLink.arguments(mode:'remove',item:category.item.uid,list:overwriteDemand.categories)}">
-						<i class="fas fa-minus"></i>
+						<i class="fa-solid fa-minus"></i>
 					</f:link.page>
 				</div>
 			</f:then>
@@ -36,11 +36,11 @@
 				<div class="btn-group me-2 mb-2" role="group">
 					<f:link.page class="btn btn-primary" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{tx_news_pi1:{overwriteDemand:{categories: category.item.uid}}}">
-						<i class="fas fa-folder-open me-1"></i> {category.item.title}
+						<i class="fa-solid fa-folder-open me-1"></i> {category.item.title}
 					</f:link.page>
 					<f:link.page class="btn btn-primary" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{n:multiCategoryLink.arguments(mode:'add',item:category.item.uid,list:overwriteDemand.categories)}">
-						<i class="fas fa-plus"></i>
+						<i class="fa-solid fa-plus"></i>
 					</f:link.page>
 				</div>
 			</f:else>
