@@ -108,7 +108,7 @@
 </f:if>
 <f:if condition="{settings.navbar.feUserName}">
 	<f:security.ifAuthenticated>
-		<span class="nav-link fe-user ms-1"><i class="fas fa-user me-1"></i> <t3sb:getUsername /></span>
+		<span class="nav-link fe-user ms-1"><i class="fa-solid fa-user me-1"></i> <t3sb:getUsername /></span>
 	</f:security.ifAuthenticated>
 </f:if>
 </f:section>
@@ -121,7 +121,7 @@
 		</f:then>
 		<f:else>
 			<f:if condition="{settings.navbar.searchboxLink} && !{navbarMenuRight -> f:count()}">
-				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fas fa-search me-3"></i></f:link.page>
+				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fa-solid fa-search me-3"></i></f:link.page>
 			</f:if>
 		</f:else>
 	</f:if>

@@ -83,7 +83,7 @@ class Button implements SingletonInterface
 			if ( $processedData['data']['tx_t3sbootstrap_header_fontawesome'] ) {
 				$processedData['slideInButtonFaIcon'] = TRUE;
 			} else {
-				$processedData['data']['tx_t3sbootstrap_header_fontawesome'] = 'fas fa-ban text-danger';
+				$processedData['data']['tx_t3sbootstrap_header_fontawesome'] = 'fa-solid fa-ban text-danger';
 				$processedData['slideInButtonFaIcon'] = TRUE;
 			}
 		}
