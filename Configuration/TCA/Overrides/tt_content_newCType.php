@@ -221,7 +221,7 @@ $tempContentColumns = [
                 ['label' => 'no padding', 'value' => '',],
                 ['label' => 'padding on all 4 sides', 'value' => 'blank',],
                 ['label' => 'padding-top', 'value' => 't',],
-                ['label' => 'padding-bottom', 'value' => 'blank',],
+                ['label' => 'padding-bottom', 'value' => 'b',],
                 ['label' => 'padding-left', 'value' => 's',],
                 ['label' => 'padding-right', 'value' => 'e',],
                 ['label' => 'padding-left and -right', 'value' => 'x',],
