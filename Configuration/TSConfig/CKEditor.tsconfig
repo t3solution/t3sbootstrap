@@ -2,6 +2,7 @@
 #### Allen Editoren im BE wird der Stil t3sbootstrap zugewiesen ####
 ####################################################################
 
+		
 RTE {
 	default {
 		preset = t3sbootstrap
@@ -32,10 +33,14 @@ RTE {
 				type = telephone
 			}
 
+			email {
+				class = email-link
+				type = email
+			}
+
 		}
 		buttons.link {
-			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link
+			properties.class.allowedClasses = phone-link, external-link, internal-link, email-link, download-link, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark
 		}
 	}
 }
-

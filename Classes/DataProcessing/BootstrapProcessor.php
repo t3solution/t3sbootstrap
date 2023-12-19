@@ -69,7 +69,6 @@ class BootstrapProcessor implements DataProcessorInterface
         }
 
         $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-
         $cType = $processedData['data']['CType'];
         $parentCType = '';
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
@@ -102,9 +101,9 @@ class BootstrapProcessor implements DataProcessorInterface
         $processedData['dataAnimate'] = '';
         $processedData['isAnimateCss'] = false;
         $processedData['animateCssRepeat'] = false;
-        $processedData['codesnippet'] = false;
         $processedData['containsVideo'] = false;
         $processedData['containerError'] = false;
+        $processedData['lightBox'] = false;
         $processedData['data']['configuid'] = (int)$processorConfiguration['configuid'];
         $processedData['header_fontawesome'] = '';
 
@@ -271,7 +270,9 @@ class BootstrapProcessor implements DataProcessorInterface
         #
         # plug-ins
         #
-        #if ( $cType == 'list' ) {}
+        if ($cType == 'news_newsdetail') {
+            $processedData['lightBox'] = true;
+        }
 
         // media
         if ($processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media']) {
@@ -281,6 +282,7 @@ class BootstrapProcessor implements DataProcessorInterface
             $fileObjects = $fileRepository->findByRelation('tt_content ', 'assets', $processedData['data']['uid']);
             $fileParts = [];
             $processedData['addmedia']['ratioClass'] = 'ratio-16x9';
+            $processedData['addmedia']['origImageZoom'] = $processedData['data']['tx_t3sbootstrap_zoom_orig'];
             foreach ($fileObjects as $key=>$fileObject) {
                 if ($fileObject->getType() === 4) {
                     $fileConfig = $fileObject->getStorage()->getConfiguration();
@@ -315,13 +317,6 @@ class BootstrapProcessor implements DataProcessorInterface
             // lightbox
             if ($cType == 't3sbs_gallery' || !empty($processedData['data']['image_zoom'])) {
                 $processedData['lightBox'] = true;
-            }
-        }
-
-        // codesnippet
-        if (array_key_exists('codesnippet', $extConf) && $extConf['codesnippet'] === '1' && $processedData['data']['bodytext']) {
-            if (str_contains($processedData['data']['bodytext'], '<pre>')) {
-                $processedData['codesnippet'] = true;
             }
         }
 

@@ -52,8 +52,9 @@ function t3sbAddHeight(TYPO3, objKey) {
 	if (overlay) {
 		var totalHeight = 0;
 		var addHeight = 0;
-		Object.keys(TYPO3.settings.ADDHEIGHT).forEach(function (item) {
-			addHeight = parseInt(item);
+		var claimsArray = Object.entries(TYPO3.settings.ADDHEIGHT);
+		claimsArray.forEach(function (item, index) {
+			addHeight = parseInt(item[1]);
 		});
 		if ( overlay.querySelector('.container') ) {
 			Array.from(overlay.getElementsByClassName('container')[0].children).forEach( bgwContent => {
@@ -247,7 +248,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 
 <f:section name="SectionInner">
 	<f:if condition="{col_273 -> f:count()}">
-		<div class="d-flex card-img-overlay" style="z-index: 1;">
+		<div class="d-flex" style="z-index: 1;">
 			<div class="col{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 				{containerPre -> f:format.raw()}
 					<f:for each="{col_273}" as="row">

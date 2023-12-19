@@ -1,14 +1,4 @@
 
-/*
-body {
-	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
-	font-size: 12px;
-	color: #333;
-	background-color: #fff;
-	margin: 20px;
-}
-*/
-
 .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
   font-family: inherit;
@@ -65,28 +55,26 @@ code {
 code, pre {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
-
-div.alert,
-p.alert {
+div {
+	display: block;
+}
+div.alert {
     padding: .75rem 1.25rem;
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-radius: .25rem;
 }
-div.alert-primary,
-p.alert-primary {
+div.alert-primary {
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
 }
-div.alert-secondary,
-p.alert-secondary {
+div.alert-secondary {
     color: #464a4e;
     background-color: #e7e8ea;
     border-color: #dddfe2;
 }
-div.alert-success,
-p.alert-success {
+div.alert-success {
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
@@ -96,26 +84,22 @@ div.alert-info {
     background-color: #d1ecf1;
     border-color: #bee5eb;
 }
-div.alert-warning,
-p.alert-warning {
+div.alert-warning {
     color: #856404;
     background-color: #fff3cd;
     border-color: #ffeeba;
 }
-div.alert-danger,
-p.alert-danger {
+div.alert-danger {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
-div.alert-light,
-p.alert-light {
+div.alert-light {
     color: #818182;
     background-color: #fefefe;
     border-color: #fdfdfe;
 }
-div.alert-dark,
-p.alert-dark {
+div.alert-dark {
     color: #1b1e21;
     background-color: #d6d8d9;
     border-color: #c6c8ca;

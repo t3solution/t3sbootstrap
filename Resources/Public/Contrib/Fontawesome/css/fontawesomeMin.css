@@ -1,46 +1,43 @@
 @font-face {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: 'Font Awesome 6 Brands';
   font-style: normal;
   font-weight: normal;
-  src: url("../webfonts/fa-brands-400.eot");
-  src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.woff") format("woff"), url("../webfonts/fa-brands-400.ttf") format("truetype"), url("../webfonts/fa-brands-400.svg#fontawesome") format("svg");
+  src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype");
   font-display: swap; }
 
-.fab {
-  font-family: 'Font Awesome 5 Brands';
+.fa-brands {
+  font-family: 'Font Awesome 6 Brands';
   font-weight: 400; }
 
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: 'Font Awesome 6 Free';
   font-style: normal;
   font-weight: 400;
-  src: url("../webfonts/fa-regular-400.eot");
-  src: url("../webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.woff") format("woff"), url("../webfonts/fa-regular-400.ttf") format("truetype"), url("../webfonts/fa-regular-400.svg#fontawesome") format("svg");
+  src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype");
   font-display: swap; }
 
-.far {
-  font-family: 'Font Awesome 5 Free';
+.fa-regular {
+  font-family: 'Font Awesome 6 Free';
   font-weight: 400; }
 
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: 'Font Awesome 6 Free';
   font-style: normal;
   font-weight: 900;
-  src: url("../webfonts/fa-solid-900.eot");
-  src: url("../webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.woff") format("woff"), url("../webfonts/fa-solid-900.ttf") format("truetype"), url("../webfonts/fa-solid-900.svg#fontawesome") format("svg");
+  src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
   font-display: swap; }
 
 
-.fa, .fas {
-  font-family: 'Font Awesome 5 Free';
+.fa-solid {
+  font-family: 'Font Awesome 6 Free';
   font-weight: 900; }
 
 
 
 /*!
  * From Font Awesome Free @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * License - https://fontawesome.com/license/free
  */
-.fa, .fas, .fab, .far{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1;font-style: normal}.fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul > li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pen-square:before{content:"\f14b"}.fa-shield-alt:before{content:"\f3ed"}.fa-chevron-circle-up:before{content:"\f139"}.fa-euro-sign:before{content:"\f153"}.fa-globe:before{content:"\f0ac"}.fa-chevron-circle-down:before{content:"\f13a"}.fa-chevron-circle-left:before{content:"\f137"}.fa-chevron-circle-right:before{content:"\f138"}.fa-chevron-circle-up:before{content:"\f139"}.fa-chevron-down:before{content:"\f078"}.fa-chevron-left:before{content:"\f053"}.fa-chevron-right:before{content:"\f054"}.fa-chevron-up:before{content:"\f077"}.fa-plus-square:before{content:"\f0fe"}.fa-print:before{content:"\f02f"}.fa-bars:before{content:"\f0c9"}.fa-times:before{content:"\f00d"}.fa-times-circle:before{content:"\f057"}.fa-typo3:before{content:"\f42b"}.fa-font-awesome-flag:before{content:"\f425"}.fa-php:before{content:"\f457"}.fa-html5:before{content:"\f13b"}.fa-tags:before{content:"\f02c"}.fa-folder-open:before{content:"\f07c"}.fa-calendar-alt:before{content:"\f073"}.fa-facebook:before{content:"\f09a"}.fa-facebook-f:before{content:"\f39e"}.fa-facebook-messenger:before{content:"\f39f"}.fa-facebook-square:before{content:"\f082"}.fa-twitch:before{content:"\f1e8"}.fa-twitter:before{content:"\f099"}.fa-twitter-square:before{content:"\f081"}.fa-xing:before{content:"\f168"}.fa-xing-square:before{content:"\f169"}.fa-user:before{content:"\f007"}.fa-user-alt:before{content:"\f406"}.fa-home:before{content:"\f015"}.fa-search:before{content: "\f002"}.fa-search-dollar:before {content: "\f688"}.fa-search-location:before {content: "\f689"}.fa-search-minus:before {content: "\f010"}.fa-search-plus:before {content: "\f00e"}.fa-youtube:before{content:"\f167"}.fa-youtube-square:before{content:"\f431"}.fa-minus-square:before{content:"\f146"}.fa-copyright:before{content:"\f1f9"}.fa-info-circle:before{content:"\f05a"}.fa-instagram:before{content:"\f16d"}.fa-minus:before{content:"\f068"}.fa-plus:before{content:"\f067"}.fa-ban:before{content:"\f05e"}.fa-square-plus:before{content:"\f0fe"}
+.fa-solid, .fa-brands, .fa-regular{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1;font-style: normal}.fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul > li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pen-square:before{content:"\f14b"}.fa-shield-alt:before{content:"\f3ed"}.fa-circle-chevron-up:before{content:"\f139"}.fa-euro-sign:before{content:"\f153"}.fa-globe:before{content:"\f0ac"}.fa-chevron-circle-down:before{content:"\f13a"}.fa-chevron-circle-left:before{content:"\f137"}.fa-chevron-circle-right:before{content:"\f138"}.fa-circle-chevron-up:before{content:"\f139"}.fa-chevron-down:before{content:"\f078"}.fa-chevron-left:before{content:"\f053"}.fa-chevron-right:before{content:"\f054"}.fa-chevron-up:before{content:"\f077"}.fa-plus-square:before{content:"\f0fe"}.fa-print:before{content:"\f02f"}.fa-bars:before{content:"\f0c9"}.fa-times:before{content:"\f00d"}.fa-times-circle:before{content:"\f057"}.fa-typo3:before{content:"\f42b"}.fa-font-awesome-flag:before{content:"\f425"}.fa-php:before{content:"\f457"}.fa-html5:before{content:"\f13b"}.fa-tags:before{content:"\f02c"}.fa-folder-open:before{content:"\f07c"}.fa-calendar-alt:before{content:"\f073"}.fa-facebook:before{content:"\f09a"}.fa-facebook-f:before{content:"\f39e"}.fa-facebook-messenger:before{content:"\f39f"}.fa-facebook-square:before{content:"\f082"}.fa-twitch:before{content:"\f1e8"}.fa-twitter:before{content:"\f099"}.fa-twitter-square:before{content:"\f081"}.fa-xing:before{content:"\f168"}.fa-xing-square:before{content:"\f169"}.fa-user:before{content:"\f007"}.fa-user-alt:before{content:"\f406"}.fa-home:before{content:"\f015"}.fa-search:before{content: "\f002"}.fa-search-dollar:before {content: "\f688"}.fa-search-location:before {content: "\f689"}.fa-search-minus:before {content: "\f010"}.fa-search-plus:before {content: "\f00e"}.fa-youtube:before{content:"\f167"}.fa-youtube-square:before{content:"\f431"}.fa-minus-square:before{content:"\f146"}.fa-copyright:before{content:"\f1f9"}.fa-info-circle:before{content:"\f05a"}.fa-instagram:before{content:"\f16d"}.fa-minus:before{content:"\f068"}.fa-plus:before{content:"\f067"}.fa-ban:before{content:"\f05e"}.fa-square-plus:before{content:"\f0fe"}
 
  

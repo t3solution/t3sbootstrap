@@ -6,6 +6,7 @@ module.tx_t3sbootstrap {
 		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
 	}
 	settings {
+		sitepackage = {$bootstrap.extconf.sitepackage}
 		customScss = {$bootstrap.extconf.customScss}
 		customScssPath = {$bootstrap.customScssPath}
 		editScss = {$bootstrap.extconf.editScss}
@@ -21,7 +22,6 @@ module.tx_t3sbootstrap {
 		compress = {$bootstrap.config.compress}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		webp = {$bootstrap.ext.webp}
-		gtm = {$bootstrap.gtm}
 		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
 		breakpoint.sm = {$bootstrap.navbar.breakpoint.sm}
 		breakpoint.md = {$bootstrap.navbar.breakpoint.md}
@@ -29,7 +29,6 @@ module.tx_t3sbootstrap {
 		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		disableJquery = {$bootstrap.disable.jquery}
-		preloadGooleFonts = {$bootstrap.preloadGooleFonts}
 		gooleFontsWeights = {$bootstrap.gooleFontsWeights}
 		cdn {
 			// Versions
@@ -40,7 +39,6 @@ module.tx_t3sbootstrap {
 			bootswatch = {$bootstrap.cdn.bootswatch}
 			jquery = {$bootstrap.cdn.jquery}
 			jqueryEasing = {$bootstrap.cdn.jqueryEasing}
-			highlight = {$bootstrap.cdn.highlight}
 			fontawesome = {$bootstrap.cdn.fontawesome}
 			lazyload = {$bootstrap.cdn.lazyload}
 			picturefill = {$bootstrap.cdn.picturefill}
@@ -48,7 +46,6 @@ module.tx_t3sbootstrap {
 			baguetteBox = {$bootstrap.cdn.baguetteBox}
 			halkabox = {$bootstrap.cdn.halkabox}
 			glightbox = {$bootstrap.cdn.glightbox}
-			cookieconsent = {$bootstrap.cdn.cookieconsent}
 			masonry = {$bootstrap.cdn.masonry}
 			jarallax = {$bootstrap.cdn.jarallax}
 			swiper = {$bootstrap.cdn.swiper}
@@ -130,27 +127,6 @@ temp.pagelayout {
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/ContentElement/_main.typoscript'
-
-##########################################################################################################
-#
-# Google Tag Manager
-#
-##########################################################################################################
-
-[{$bootstrap.gtm} && {$bootstrap.extconf.cookieconsent} == 1 && request.getCookieParams()['cookieconsent_status'] == 'allow']
-page.includeJS.gtm = https://www.googletagmanager.com/gtag/js?id={$bootstrap.gtm}
-page.includeJS.gtm.external = 1
-page.includeJS.gtm.async = 1
-page.jsInline.1 = TEXT
-page.jsInline.1.value (
-		// Google Tag Manager
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', '{$bootstrap.gtm}');
-
-)
-[global]
 
 
 [applicationContext == "Development"]

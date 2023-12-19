@@ -19,6 +19,7 @@ plugin.tx_news {
 	settings {
 		cssFile =
 		detail.lightbox.selection = {$bootstrap.config.lightboxSelection}
+#		detail.carousel = {$settings.detail.carousel}
 		media.minWidth = {$bootstrap.image.minimumWidth}
 		loadingSpinner = {$bootstrap.config.loadingSpinner}
 		loadingSpinnerColor = {$bootstrap.config.loadingSpinnerColor}
@@ -36,6 +37,7 @@ plugin.tx_news {
 		glightboxVersion = {$bootstrap.cdn.glightbox}
 		halkaboxVersion = {$bootstrap.cdn.halkabox}
 		jqueryDisable = {$bootstrap.disable.jquery}
+		sitepackage = {$bootstrap.extconf.sitepackage}
 	}
 
 	_LOCAL_LANG.de.more-link = mehr

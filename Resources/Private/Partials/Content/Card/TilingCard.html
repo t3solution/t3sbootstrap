@@ -2,7 +2,7 @@
 	 xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment>Tiling Card</f:comment>
 
-<f:asset.css identifier="tiling-card">
+<f:asset.css identifier="tiling-cards">
 .card.tiling {box-shadow: none;}
 .card.tiling .background-image {min-height: 300px;}
 @media (max-width: 991.98px) {
@@ -16,23 +16,29 @@
 	.odd .tiling-second-right {order: 2;}
 	.odd .tiling-first-left {order: 2;}
 	.odd .tiling-second-left {order: 1;}
-	.tiling {margin-bottom: 3rem;}
 }
 </f:asset.css>
 
-	<div class="row g-0 h-100">
+<f:if condition="{data.tx_t3sbootstrap_textcolor}">
+<f:asset.css identifier="tiling-card-{data.uid}">
+#c{data.uid} .card-body {
+  color: var(--bs-{data.tx_t3sbootstrap_textcolor}) !important;
+}
+</f:asset.css>
+</f:if>
+	<div class="row g-0">
 		<f:if condition="{card.tiling.position} == 'right'">
 			<f:then>
 				<div class="col-md-6 tiling-first-right d-flex align-items-center py-3">
 					<f:render section="Text" arguments="{_all}" />					
 				</div>
 				<div id="s{data.uid}" class="col-md-6 tiling-second-right background-image">
-
+					&nbsp
 				</div>
 			</f:then>
 			<f:else>
 				<div id="s{data.uid}" class="col-md-6 tiling-first-left background-image">
-
+					&nbsp
 				</div>
 				<div class="col-md-6 tiling-second-left d-flex align-items-center py-3">
 					<f:render section="Text" arguments="{_all}" />
@@ -40,7 +46,6 @@
 			</f:else>
 		</f:if>
 	</div>
-
 </html>
 
 

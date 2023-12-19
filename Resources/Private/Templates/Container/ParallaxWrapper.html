@@ -22,10 +22,20 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<f:asset.script identifier="jarallaxJs" src="fileadmin/T3SB/Resources/Public/JS/jarallax.min.js" />
-		<f:if condition="{video}">
-			<f:asset.script identifier="jarallaxVideoJs" src="fileadmin/T3SB/Resources/Public/JS/jarallax-video.min.js" />
-		</f:if>
+		<f:if condition="{settings.sitepackage}">
+			 <f:then>
+				<f:asset.script identifier="jarallaxJs" src="EXT:t3sb_package/T3SB/Resources/Public/JS/jarallax.min.js" />
+				<f:if condition="{video}">
+				  	<f:asset.script identifier="jarallaxVideoJs" src="EXT:t3sb_package/T3SB/Resources/Public/JS/jarallax-video.min.js" />
+				</f:if>
+			 </f:then>
+			 <f:else>
+				<f:asset.script identifier="jarallaxJs" src="fileadmin/T3SB/Resources/Public/JS/jarallax.min.js" />
+			 	<f:if condition="{video}">
+				 	<f:asset.script identifier="jarallaxVideoJs" src="fileadmin/T3SB/Resources/Public/JS/jarallax-video.min.js" />
+			 	</f:if>
+			 </f:else>
+		 </f:if>
 	</f:else>
 </f:if>
 <f:asset.css identifier="jarallaxCss">

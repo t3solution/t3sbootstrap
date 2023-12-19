@@ -211,8 +211,8 @@ return [
                 'items' => [
                     ['label' => 'none', 'value' => '',],
                     ['label' => 'Baguettbox', 'value' => 1,],
-                    ['label' => 'Halkabox [1]', 'value' => 2,],
-                    ['label' => 'GLightbox [1]', 'value' => 3,],
+                    ['label' => 'Halkabox', 'value' => 2,],
+                    ['label' => 'GLightbox', 'value' => 3,],
                 ],
             ]
         ],
@@ -963,8 +963,8 @@ return [
                     ['label' => 'Small (<= 576px) [sm]', 'value' => 'sm',],
                     ['label' => 'Medium (<= 768px [md]', 'value' => 'md',],
                     ['label' => 'Large (<= 992px) [lg]', 'value' => 'lg',],
-                    ['label' => 'Extra large (<= 1200px) [xl]', 'value' => 'xl',],
-                    ['label' => 'Extra extra large (<= 1400px) [xxl]', 'value' => 'xxl',],
+                    ['label' => 'Extra large (<= 1400px) [xl]', 'value' => 'xl',],
+                    ['label' => 'Extra extra large (> 1400px) [xxl]', 'value' => 'xxl',],
                     ['label' => 'Never expand [no]', 'value' => 'no',],
                 ]
             ]

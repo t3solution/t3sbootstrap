@@ -4,22 +4,15 @@ imports:
     - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml' }
     - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml' }
 
+
 # Add configuration for the editor
 # For complete documentation see https://ckeditor.com/docs/ckeditor5/latest/features/index.html
 editor:
 
-  editing:
-    view:
-      change:
-        - ( writer => {const viewEditableRoot = editor.editing.view.document.getRoot();
-          writer.setAttribute( 'div', 'value', viewEditableRoot )
-
   config:
-
-#    importModules:
-#      - '@t3sbs/t3sbootstrap/timestamp-plugin.js'
-
-    contentsCss: 'EXT:t3sbootstrap/Resources/Public/Backend/RTE/t3sbootstrap.css'
+   
+    contentsCss: 
+      - 'EXT:t3sbootstrap/Resources/Public/Backend/RTE/t3sbootstrap.css'
 
     toolbar:
       items:
@@ -54,19 +47,18 @@ editor:
         - findAndReplace
         - insertTable
         - specialCharacters
-#        - '|'
-#        - timestamp
+
 
     heading:
       options:
         - { model: 'paragraph', title: 'Paragraph' }
         - { model: 'heading2', view: 'h2', title: 'Heading 2' }
-        - { model: 'heading2 - primary', view: 'h2', title: 'Heading 2' }
         - { model: 'heading3', view: 'h3', title: 'Heading 3' }
         - { model: 'heading4', view: 'h4', title: 'Heading 4' }
         - { model: 'heading5', view: 'h5', title: 'Heading 5' }
         - { model: 'heading6', view: 'h6', title: 'Heading 6' }
         - { model: 'formatted', view: 'pre', title: 'Pre-Formatted Text' }
+
 
     style:
       definitions:
@@ -79,27 +71,27 @@ editor:
         - { name: 'Color info ', element: 'p', classes: ['text-info'], isBlock: 'true' }
         - { name: 'Color danger ', element: 'p', classes: ['text-danger'], isBlock: 'true' }
         - { name: 'Color warning ', element: 'p', classes: ['text-warning'], isBlock: 'true' }
-
-        # Blockstile - Alert
-#        - { name: 'Alert Primary', element: 'div', 'classes': ['alert alert-primary'], isBlock: 'true' }
-#        - { name: 'Alert Secondary', element: 'div', classes': ['alert alert-secondary'], isBlock: 'true' }
-#        - { name: 'Alert Success', element: 'div', 'classes': ['alert alert-success'], isBlock: 'true' }
-#        - { name: 'Alert Danger', element: 'div', 'classes': ['alert alert-danger'], isBlock: 'true' }
-#        - { name: 'Alert Warning', element: 'div', 'classes': ['alert alert-warning'], isBlock: 'true' }
-#        - { name: 'Alert Info', element: 'div', 'classes': ['alert alert-info'], isBlock: 'true' }
-#        - { name: 'Alert Light', element: 'div', 'classes': ['alert alert-light'], isBlock: 'true' }
-#        - { name: 'Alert Dark', element: 'div', 'classes': ['alert alert-dark'], isBlock: 'true' }
-
         - { name: 'Lowercase', element: 'p', 'classes': ['text-lowercase'], isBlock: 'true' }
         - { name: 'Uppercase', element: 'p', 'classes': ['text-uppercase'], isBlock: 'true' }
         - { name: 'Capitalize', element: 'p', 'classes': ['text-capitalize'], isBlock: 'true' }
+
+
+        # Blockstile - Alert (div)
+ #       - { name: 'Alert Primary', element: 'div', 'classes': ['alert', 'alert-primary'], isBlock: 'true' }
+ #       - { name: 'Alert Secondary', element: 'div', classes': ['alert', 'alert-secondary'], isBlock: 'true' }
+ #       - { name: 'Alert Success', element: 'div', 'classes': ['alert', 'alert-success'], isBlock: 'true' }
+ #       - { name: 'Alert Danger', element: 'div', 'classes': ['alert', 'alert-danger'], isBlock: 'true' }
+ #       - { name: 'Alert Warning', element: 'div', 'classes': ['alert', 'alert-warning'], isBlock: 'true' }
+ #       - { name: 'Alert Info', element: 'div', 'classes': ['alert', 'alert-info'], isBlock: 'true' }
+ #       - { name: 'Alert Light', element: 'div', 'classes': ['alert', 'alert-light'], isBlock: 'true' }
+ #       - { name: 'Alert Dark', element: 'div', 'classes': ['alert', 'alert-dark'], isBlock: 'true' }
 
         # Textstile
         - { name: 'Mark', element: 'span', classes: ['mark'] }
 
         - { name: 'Del', element: 'del', classes: ['del'] }
         - { name: 'Ins', element: 'ins', classes: ['ins'] }
-        - { name: 'Code', element: 'code', classes: ['code'] }
+        - { name: 'Code', element: 'code', classes: [''] }
 
         - { name: 'Lead', element: 'span', classes: ['lead'] }
         - { name: 'Small', element: 'span', classes: ['small'] }
@@ -115,21 +107,16 @@ editor:
 
 
         # Textstile - Buttons
-#        - { name: 'Button Primary', element: 'a', 'classes': ['btn btn-primary'] } 
-#        - { name: 'Button Secondary', element: 'a', 'classes': ['btn btn-secondary'] } 
-#        - { name: 'Button Success', element: 'a', 'classes': ['btn btn-success'] } 
-#        - { name: 'Button Danger', element: 'a', 'classes': ['btn btn-danger'] } 
-#        - { name: 'Button Warning', element: 'a', 'classes': ['btn btn-warning'] } 
-#        - { name: 'Button Info', element: 'a', 'classes': ['btn btn-info'] } 
-#        - { name: 'Button Light', element: 'a', 'classes': ['btn btn-light'] } 
-#        - { name: 'Button Dark', element: 'a', 'classes': ['btn btn-dark'] } 
+        - { name: 'Button Primary', element: 'a', 'classes': ['btn btn-primary'] } 
+        - { name: 'Button Secondary', element: 'a', 'classes': ['btn btn-secondary'] } 
+        - { name: 'Button Success', element: 'a', 'classes': ['btn btn-success'] } 
+        - { name: 'Button Danger', element: 'a', 'classes': ['btn btn-danger'] } 
+        - { name: 'Button Warning', element: 'a', 'classes': ['btn btn-warning'] } 
+        - { name: 'Button Info', element: 'a', 'classes': ['btn btn-info'] } 
+        - { name: 'Button Light', element: 'a', 'classes': ['btn btn-light'] } 
+        - { name: 'Button Dark', element: 'a', 'classes': ['btn btn-dark'] } 
 
 
-
-
-
-
-        
         # Textstile - Badges
         - { name: 'Badge Primary', element: 'span', 'classes': ['badge', 'text-bg-primary'] } 
         - { name: 'Badge Secondary', element: 'span', 'classes': ['badge text-bg-secondary'] } 

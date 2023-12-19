@@ -55,7 +55,6 @@ lib.contentElement {
 				}
 			}
 		}
-		codesnippet = {$bootstrap.extconf.codesnippet}
 		linkHoverEffect = {$bootstrap.extconf.linkHoverEffect}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
@@ -69,8 +68,6 @@ lib.contentElement {
 		halkaboxVersion = {$bootstrap.cdn.halkabox}
 		swiperVersion = {$bootstrap.cdn.swiper}
 		cdn = {$bootstrap.cdn.enable}
-		highlightIntegrity = {$bootstrap.cdn.highlightIntegrity}
-		highlightVersion = {$bootstrap.cdn.highlight}
 		dateformat = {$bootstrap.config.dateFormat}
 		subheaderColor = {$bootstrap.config.subheaderColor}
 		sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
@@ -96,7 +93,7 @@ lib.contentElement {
 		btnSlideOutCorrection = 21
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		sectionMenuClass = {$bootstrap.config.sectionMenuClass}
-		// used also with config
+		sitepackage = {$bootstrap.extconf.sitepackage}
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 			sectionmenuScrollspyRootMargin = {$bootstrap.config.sectionmenuScrollspyRootMargin}
@@ -144,27 +141,27 @@ lib.contentElement {
 
 [{$bootstrap.image.minimumWidth} == 1]
 lib.contentElement.settings.srcsetMobile = 575
-[global]
+[END]
 
 # 2 == halkabox - https://github.com/ahmednooor/halkaBox.js
-[{$bootstrap.config.lightboxSelection} == 2]
+[{$bootstrap.config.lightboxSelection} == '2']
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
 	linkParams.ATagParams.dataWrap = class="gallery-{file:current:uid_foreign}"  data-title="{file:current:description}"
 	directImageLink = 1
 }
-[global]
+[END]
 
 # 3 == LightBox Plugin - glightbox.js - https://github.com/biati-digital/glightbox
-[{$bootstrap.config.lightboxSelection} == 3]
+[{$bootstrap.config.lightboxSelection} == '3']
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
 	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="glightbox" data-glightbox="title:{file:current:description}" data-gallery="gallery-{file:current:uid_foreign}" data-effect="fade"
 	directImageLink = 1
 }
-[global]
+[END]
 
 [{$bootstrap.ext.news} == 1]
 # settings for news lightbox
 plugin.tx_news.settings.media.popup < lib.contentElement.settings.media.popup
-[global]
+[END]

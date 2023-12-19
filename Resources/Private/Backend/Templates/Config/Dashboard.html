@@ -386,6 +386,18 @@
 			</f:if>
 			<strong>Minify CSS- and JS files</strong>
 		</li>
+
+		<li class="list-group-item">
+			<f:if condition="{extconf.sitepackage}">
+				<f:then>
+					<f:render section="Check" />
+				</f:then>
+				<f:else>
+					<f:render section="Xmark" />
+				</f:else>
+			</f:if>
+			<strong>Sitepackage</strong>
+		</li>
 	</ul>
 </div>
 </f:section>
@@ -428,17 +440,6 @@
 		Different
 	</h5>
 	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<f:if condition="{extconf.codesnippet}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Codesnippet</strong>
-		</li>
 		<li class="list-group-item">
 			<f:if condition="{extconf.imgCopyright}">
 				<f:then>
@@ -514,17 +515,6 @@
 				</f:else>
 			</f:if>
 			<strong>Lazy Load</strong>
-		</li>
-		<li class="list-group-item">
-			<f:if condition="{extconf.cookieconsent}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Cookieconsent</strong>
 		</li>
 		<li class="list-group-item">
 			<f:if condition="{extconf.extNews}">

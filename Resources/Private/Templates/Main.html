@@ -8,10 +8,6 @@
 		<f:spaceless>
 			<f:render partial="FunctionAssets" arguments="{_all}" />
 			<f:render section="AssetScripts" arguments="{_all}" />
-			<f:comment> GOOGLE TAG MANAGER </f:comment>
-			<f:if condition="{settings.gtm}">
-				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={settings.gtm}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-			</f:if>
 			<f:comment> LOADING SPINNER </f:comment>
 			<f:if condition="{settings.config.loadingSpinner}">
 				<div id="site-preloader">
@@ -127,7 +123,7 @@
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
+		t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight);
 	}
 		</f:asset.script>
 	</f:then>
@@ -144,7 +140,7 @@
 
 	// Scroll anchor - Main.html
 	if (window.location.hash) {
-		t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight);
+		t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight);
 	}
 		</f:asset.script>
 	</f:else>
@@ -174,7 +170,7 @@
 </f:asset.script>
 </f:if>
 <f:comment> Lazyload </f:comment>
-<f:variable name="customthreshold">{t3sb:intval(number: '{settings.lazyLoadThreshold}')}</f:variable>
+<f:variable name="customthreshold">{settings.lazyLoadThreshold as integer}</f:variable>
 <f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
 	<f:then>
 		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
@@ -240,15 +236,4 @@ html {
 </f:asset.script>
 </f:if>
 
-<f:if condition="!{settings.fontawesome.cdn}">
-	<f:if condition="{settings.fontawesome.extconf} == '1' || {settings.fontawesome.extconf} == '3' ">
-		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/Resources/Public/JS/fontawesome.min.js" />
-	</f:if>
-	<f:if condition="{settings.fontawesome.extconf} == '2' ">
-		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA5Pro/js/all.min.js" />
-	</f:if>
-	<f:if condition="{settings.fontawesome.extconf} == '4' ">
-		<f:asset.script identifier="fontawesome" src="fileadmin/T3SB/FA6Pro/js/all.min.js" />
-	</f:if>
-</f:if>
 </f:section>

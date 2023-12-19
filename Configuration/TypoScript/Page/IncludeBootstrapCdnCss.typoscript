@@ -1,0 +1,38 @@
+page {
+	
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# BOOTSTRAP CSS
+		#
+		##########################################################################################################
+
+		# CDN
+		bootstrapCDN = https://cdn.jsdelivr.net/npm/bootstrap@{$bootstrap.cdn.bootstrap}/dist/css/bootstrap.min.css
+		bootstrapCDN.external = 1
+		bootstrapCDN.forceOnTop = 1
+		bootstrapCDN.if {
+			isFalse = {$bootstrap.cdn.bootswatch}
+		}
+
+		##########################################################################################################
+		#
+		# BOOTSWATCH
+		#
+		##########################################################################################################
+
+		# CDN
+		bootswatchCDN = https://cdn.jsdelivr.net/npm/bootswatch@{$bootstrap.cdn.bootstrap}/dist/{$bootstrap.cdn.bootswatch}/bootstrap.min.css
+		bootswatchCDN.external = 1
+		bootswatchCDN.forceOnTop = 1
+		bootswatchCDN.if {
+			isTrue = {$bootstrap.cdn.bootswatch}
+		}
+	}
+}
+
+
+
+
+

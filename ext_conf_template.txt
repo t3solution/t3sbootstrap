@@ -40,7 +40,7 @@ editScss = 0
 # cat=custom scss/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables in custom-variables.scss and custom-variables.scss if run the Scheduler (clear cache)
 keepVariables = 0
 
-# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache)
+# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: EXT:t3sb_package/.. or /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache)
 flexformExtend = 0
 # cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache)
 flexformModify = 0
@@ -53,18 +53,15 @@ cTypeClass = 0
 t3sbconcatenate = 0
 # cat=t3SB/enable/80; type=boolean; label=Minify CSS- and JS files from t3sbootstrap - EXPERIMENTAL: Minify CSS and JS with "toptal.com" if no error message is generated (clear cache)
 t3sbminify = 0
-
-
-# cat=different/enable/10; type=boolean; label=Codesnippet: Enable CKEditor plugin "Code Snippet" - currently not available with TYPO3 v12.
-codesnippet = 0
-
+# cat=t3SB/enable/90; type=boolean; label=Use Extension "t3sb_package" instead of "/fileadmin": for outsourced files from "CDN to local" and "Custom SCSS" (clear cache)
+sitepackage = 0
 
 # cat=different/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache)
 imgCopyright = 0
 # cat=different/enable/20; type=boolean; label=Custom translations:(clear cache)
 customTranslations = 0
 
-# cat=advanced/enable/10; type=options[none=0, FA 6 free=3, FA 6 pro (You need the Pro license - Info: https://www.t3sbootstrap.de/dokumentation/snippets/extend-t3sbootstrap/font-awesome-pro)=4]; label=Font Awesome: include Font Awesome SCSS - if deactivated, only some required icons are loaded (check the version in the constant editor and clear cache).
+# cat=advanced/enable/10; type=options[none=0,FA 6 KIT=1,FA 6 KIT Pro=2, FA 6 free=3]; label=Font Awesome: FA-KIT Info: https://fontawesome.com/docs/web/setup/use-kit
 fontawesomeCss = 0
 # cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache)
 animateCss = 0
@@ -72,8 +69,6 @@ animateCss = 0
 linkHoverEffect = 0
 # cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache)
 lazyLoad = 0
-# cat=advanced/enable/60; type=boolean; label=Cookieconsent: include Cookieconsent von https://cookieconsent.insites.com (clear cache)
-cookieconsent = 0
 # cat=advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache)
 extNews = 1
 

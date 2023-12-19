@@ -40,11 +40,11 @@
 
 <f:section name="Carousel">
 <div id="carousel-news" class="carousel slide my-3 my-md-0" data-bs-ride="carousel">
-	<ol class="carousel-indicators">
+	<div class="carousel-indicators">
 		<f:for each="{media}" as="file" iteration="iterator">
-			<li data-bs-target="#carousel-news" data-bs-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}"></li>
+<button type="button" data-bs-target="#carousel-news" data-bs-slide-to="{iterator.index}" class="{f:if(condition:'{iterator.isFirst} == 1',then:'active')}" aria-current="{f:if(condition:'{iterator.isFirst} == 1',then:'true', else:'false')}" aria-label="Slide 1"></button>
 		</f:for>
-	</ol>
+	</div>
 	<div class="carousel-inner text-center">
 		<f:for each="{media}" as="file" iteration="iterator">
 			<div class="carousel-item{f:if(condition:'{iterator.isFirst} == 1',then:' active')}">

@@ -15,7 +15,7 @@ plugin.tx_t3sbootstrap {
 }
 
 
-bootstrap.cdn.bootstraplatest = 5.3.1
+bootstrap.cdn.bootstraplatest = 5.3.2
 bootstrap.cdn.noZip = 0
 bootstrap.cdn.fontawesome6latest = 6.4.2
 
@@ -28,7 +28,6 @@ bootstrap.cdn.fontawesome6latest = 6.4.2
 # customsubcategory=a-google=GoogleFonts - Integrate Google Fonts
 # customsubcategory=b-version=CDN Versions used in the scheduler task T3SB CDN to local - must be valid
 # customsubcategory=c-integrity=CDN Integrity - if set crossorigin is set to anonymous
-
 # customcategory=bootstrap-image=T3SB Image settings
 # customsubcategory=a-image=Default Image Size
 # customsubcategory=b-image=Additional image sizes (srcset) that should be generated for each content image.
@@ -41,15 +40,19 @@ bootstrap.cdn.fontawesome6latest = 6.4.2
 # customcategory=bootstrap-pages=T3SB Global pages override
 # customsubcategory=a-pages=Global pages override
 
+# customcategory=bootstrap-fontawesome=T3SB Font Awesome
+# customsubcategory=a-fontawesome=Framework
+# customsubcategory=b-fontawesome=Styles - if "FA6-KIT" is activated in EM config
+
 bootstrap.cdn {
-	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/Resources/Public/
+	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/ or EXT:t3sb_package/T3SB/
 	enable = 1
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/.
 	bootswatch = 0
 	# cat=bootstrap-cdn/a-google/10; type=small; label=Comma separated list with google fonts:integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)
 	googlefonts =
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.3.1
+	bootstrap = 5.3.2
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
 	popperjs = 2.11.8
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
@@ -60,10 +63,6 @@ bootstrap.cdn {
 	jquery = 3.7.0
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
-	# cat=bootstrap-cdn/b-version/25; type=int+; label=Cookieconsent: set to 3 only to get v3.x (latest)
-	cookieconsent = 3
-	# cat=bootstrap-cdn/b-version/27; type=small; label=Highlight: used with codesnippet
-	highlight = 11.6.0
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
 	lazyload = 17.8.3
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
@@ -78,15 +77,15 @@ bootstrap.cdn {
 	glightbox = 3.2.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax: set to 2 only to get v2.x (latest)
 	jarallax = 2
-	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 10 only to get v10.x (latest)
-	swiper = 10
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 11 only to get v11.x (latest)
+	swiper = 11
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM
+	bootstrapCssIntegrity = sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS
+	bootstrapJsIntegrity = sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
-	bootstrapBundleJsIntegrity = sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz
+	bootstrapBundleJsIntegrity = sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
 	popperjsIntegrity = sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
@@ -95,10 +94,6 @@ bootstrap.cdn {
 	jqueryIntegrity = sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=
 	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
 	jqueryEasingIntegrity = 
-	# cat=bootstrap-cdn/c-integrity/25; type=small; label=Cookieconsent:
-	cookieconsentIntegrity = 
-	# cat=bootstrap-cdn/c-integrity/27; type=small; label=Highlight:
-	highlightIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/30; type=small; label=Lazyload:
 	lazyloadIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/32; type=small; label=Picturefill:
@@ -109,6 +104,8 @@ bootstrap.cdn {
 	halkaboxIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/42; type=small; label=G Lightbox:
 	glightboxIntegrity = 
+	# cat=bootstrap-cdn/c-integrity/50; type=small; label=Font Awesome:
+	fontawesomeIntegrity = sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==
 }
 
 bootstrap.image {
@@ -212,10 +209,30 @@ bootstrap.pages.override {
 	subtitlecolor =
 }
 
+bootstrap.fontawesome {
+	# cat=bootstrap-fontawesome/a-fontawesome/10; type=boolean; label=FONT AWESOME - using SVG & JS (if enabled) or Web Fonts & CSS (if disabled):Font Awesome comes with two different web frameworks for easily using icons on the web: our original Web Fonts & CSS method and our newer SVG & JS framework. Each has benefits and caveats - pick the one that works best for your project and situation.
+	svgJs = 0
+	# cat=bootstrap-fontawesome/a-fontawesome/20; type=small; label=Your FA6 KIT code:is only required if "FA6-KIT" & "CDN" is activated 
+	kitcode = 
+	# cat=bootstrap-fontawesome/b-fontawesome/20; type=boolean; label=Brands:
+	brands = 1
+	# cat=bootstrap-fontawesome/b-fontawesome/30; type=boolean; label=Solid:
+	solid = 1
+	# cat=bootstrap-fontawesome/b-fontawesome/40; type=boolean; label=Regular:
+	regular = 1
+	# cat=bootstrap-fontawesome/b-fontawesome/50; type=boolean; label=Light (FA6 Pro only):
+	light = 0
+	# cat=bootstrap-fontawesome/b-fontawesome/60; type=boolean; label=Thin (FA6 Pro only):
+	thin = 0
+	# cat=bootstrap-fontawesome/b-fontawesome/70; type=boolean; label=Duotone (FA6 Pro only):
+	duotone = 0
+}
+
 
 #-------------------------------------------------------------------------------
 #	NOT in Constant Editor
 #-------------------------------------------------------------------------------
+
 # include Bootstraps bundle.min.js (include popper.js)
 bootstrap.bundle.enable = 1
 
@@ -233,29 +250,23 @@ bootstrap.config.enableUtilityColors = 1
 # hints to increase the website speed in the BE Modul
 bootstrap.config.enableInfo = 1
 
-bootstrap.config.sectionMenuClass = 0
+bootstrap.config.sectionMenuClass = 
 
 # include print template
 bootstrap.print.enable = 0
-
-# Custom path to your custom.scss files: e.g.: fileadmin/T3SB/Resources/Public/SCSS/ (clear cache and run the Scheduler).
-bootstrap.customScssPath = fileadmin/T3SB/Resources/Public/SCSS/
 
 # disable default CSS - t3sbootstrap.css
 bootstrap.config.disableDefaultCss = 0
 
 # back to top button
 bootstrap.backToTopTitle = to top
-bootstrap.backToTopClass = fa fa-chevron-circle-up fa-4x
+bootstrap.backToTopClass = fa-solid fa-circle-chevron-up fa-4x
+
 bootstrap.backToTopForAllPages = 0
 
-# Preload the google fonts includedby bootstrap.cdn.googlefonts if activated (execute scheduler task t3sbootstrap:cdnToLocal)
-bootstrap.preloadGooleFonts = 0
 # font-weights for Google fonts (regular == 400)
 bootstrap.gooleFontsWeights = 300, regular, 700
 
-# GTM Account ID - include the Google Tag Manager if entered
-bootstrap.gtm = 0
 
 # disable jQuery by default
 bootstrap.disable.jquery = 1
@@ -266,6 +277,7 @@ bootstrap.config.jqueryHeader = 0
 bootstrap.disable.accordion.scrollToTop = 0
 
 bootstrap.navbar {
+	noLinkTitle = 
 	image.defaultPath = EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
 	image.width = 30
 	image.height = 24
@@ -291,29 +303,6 @@ bootstrap.navbar {
 # style one for the submenu (0 = default)
 bootstrap.submenu.styleOne = 0
 
-# enable in EM config (info: https://github.com/insites/cookieconsent)
-bootstrap.cookieconsent {
-	# info, opt-in or opt-out
-	type = info
-	popup.background = #000
-	popup.text = #fff
-	button.background = #f1d600
-	button.text = #000
-	# block (default), edgeless, classic
-	theme = edgeless
-	# top, bottom, top-left, top-right, bottom-left, bottom-right
-	position = top
-	message = Diese Website setzt Cookies und verwendet Google Analytics. Durch die Nutzung unserer Website erklären Sie sich damit einverstanden.
-	dismiss = Info ausblenden
-	allow = zulassen
-	link = Mehr erfahren
-	deny = Cookies ablehnen
-	href = /datenschutzerklaerung/
-	revokeBtn = <div class='cc-revoke {{classes}}'>Cookie Optionen</div>
-	regionalLaw = false
-	location = true
-}
-
 # Color mode toggler - only if "bootstrap.config.navbarDarkMode" is disabled
 bootstrap.colorMode {
 	enable = 0
@@ -321,7 +310,7 @@ bootstrap.colorMode {
 	position = position-fixed bottom-0 end-0 mb-3 me-3
 }
 
-styles.content.allowTags:= addToList( s, mark)
+styles.content.allowTags:= addToList( div, s, mark)
 
 # in px (preset)
 styles.content.textmedia.maxW = 1320
@@ -347,18 +336,7 @@ pages.override {
 	dropdownRight = 
 }
 
-# Prevents a LOG ERROR "TYPO3.CMS.Frontend.Configuration.TypoScript.ConditionMatching.ConditionMatcher": Expression could not be parsed
-bootstrap.config.uid = 1
-bootstrap.config.lightboxSelection = 0
-bootstrap.config.faLinkIcons = 0
-bootstrap.config.backgroundImageEnable = 0
-bootstrap.config.footerSticky = 0
-bootstrap.config.compress = 
-bootstrap.config.navbarBreakpoint = 
 
 [loaded('felogin')]
 plugin.tx_felogin_login.view.templateRootPath = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
-[global]
-
-// import outsourced constants from DB
-@import 'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript'
+[END]

@@ -18,47 +18,47 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class PreProcessHook
 {
-	/**
-	 * @var \T3SBS\T3sbootstrap\Service\CompileService
-	 */
-	protected $compileService;
+    /**
+     * @var \T3SBS\T3sbootstrap\Service\CompileService
+     */
+    protected $compileService;
 
-	/**
-	 * @param array $params
-	 * @param PageRenderer $pagerenderer
-	 */
-	public function execute(&$params, &$pagerenderer): void
-	{
-		if (!($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface ||
-			!ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
-			return;
-		}
+    /**
+     * @param array $params
+     * @param PageRenderer $pagerenderer
+     */
+    public function execute(&$params, &$pagerenderer): void
+    {
+        if (!($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface ||
+            !ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
+            return;
+        }
 
-		foreach (['cssLibs', 'cssFiles'] as $key) {
-			$files = [];
-			if (is_array($params[$key])) {
-				foreach ($params[$key] as $file => $settings) {
-					$compiledFile = $this->getCompileService()->getCompiledFile($file);
-					if ($compiledFile !== null) {
-						$settings['file'] = $compiledFile;
-						$files[$compiledFile] = $settings;
-					} else {
-						$files[$file] = $settings;
-					}
-				}
-				$params[$key] = $files;
-			}
-		}
-	}
+        foreach (['cssLibs', 'cssFiles'] as $key) {
+            $files = [];
+            if (is_array($params[$key])) {
+                foreach ($params[$key] as $file => $settings) {
+                    $compiledFile = $this->getCompileService()->getCompiledFile($file);
+                    if ($compiledFile !== null) {
+                        $settings['file'] = $compiledFile;
+                        $files[$compiledFile] = $settings;
+                    } else {
+                        $files[$file] = $settings;
+                    }
+                }
+                $params[$key] = $files;
+            }
+        }
+    }
 
-	/**
-	 * Get the compile service
-	 */
-	protected function getCompileService(): CompileService
-	{
-		if ($this->compileService === null) {
-			$this->compileService = GeneralUtility::makeInstance(CompileService::class);
-		}
-		return $this->compileService;
-	}
+    /**
+     * Get the compile service
+     */
+    protected function getCompileService(): CompileService
+    {
+        if ($this->compileService === null) {
+            $this->compileService = GeneralUtility::makeInstance(CompileService::class);
+        }
+        return $this->compileService;
+    }
 }

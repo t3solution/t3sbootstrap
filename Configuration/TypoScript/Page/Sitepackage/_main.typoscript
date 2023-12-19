@@ -1,0 +1,15 @@
+
+[{$bootstrap.extconf.customScss} == 1 && {$bootstrap.cdn.enable} == 0]
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/IncludeLocal.typoscript'
+[END]
+
+[{$bootstrap.extconf.customScss} == 0 && {$bootstrap.cdn.enable} == 0]
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/IncludeBootstrapCss.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/IncludeLocal.typoscript'
+[END]
+
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/IncludeDefault.typoscript'
+
+[{$bootstrap.cdn.enable} == 0]
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/Fontawesome.typoscript'
+[END]

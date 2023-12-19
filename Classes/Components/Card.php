@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Components;
@@ -19,214 +20,229 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
  */
 class Card implements SingletonInterface
 {
+    /**
+     * Returns the $processedData
+     */
+    public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf): array
+    {
+        $flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+        $flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
+        $parentflexconf = [];
+        $parentUid = $processedData['data']['tx_container_parent'];
+        if ($parentUid) {
+            $parentFlexformData = BackendUtility::getRecord('tt_content', $parentUid, 'CType, tx_t3sbootstrap_flexform');
+            if ($parentFlexformData['tx_t3sbootstrap_flexform']) {
+                $parentflexconf = $flexformService->convertFlexFormContentToArray($parentFlexformData['tx_t3sbootstrap_flexform']);
+                $parentflexconf =$flexformHelper->addMissingElements($parentflexconf, $parentFlexformData['CType'], true);
+            }
+        }
+        $cardData = $flexconf;
 
-	/**
-	 * Returns the $processedData
-	 */
-	public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf): array
-	{
-		$flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-		$flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
-		$parentflexconf = [];
-		$parentUid = $processedData['data']['tx_container_parent'];
-		if ($parentUid) {
-			$parentFlexformData = BackendUtility::getRecord('tt_content', $parentUid, 'CType, tx_t3sbootstrap_flexform');
-			if ($parentFlexformData['tx_t3sbootstrap_flexform']) {
-				$parentflexconf = $flexformService->convertFlexFormContentToArray($parentFlexformData['tx_t3sbootstrap_flexform']);
-				$parentflexconf =$flexformHelper->addMissingElements($parentflexconf, $parentFlexformData['CType'], TRUE);
-			}
-		}
-		$cardData = $flexconf;
-		// crop max characters
-		$cardData['cropMaxCharacters'] = !empty($parentflexconf['cropMaxCharacters']) ? $parentflexconf['cropMaxCharacters'] : '';
-		// image position
-		if ( (int)$processedData['data']['imageorient'] == 8 ) {
-			$processedData['data']['imageorient'] = 'bottom';
-		} else {
-			$processedData['data']['imageorient'] = 'top';
-		}
-		// title position
-		if ( !empty($cardData['title']['onTop']) && $processedData['data']['imageorient'] == 'top' && !$cardData['image']['overlay'] ) {
-			$cardData['title']['position'] = 'top';
-		} else {
-			$cardData['title']['position'] = 'default';
-		}
-		// button
-		if ( !empty($processedData['data']['bodytext']) && !empty($processedData['data']['tx_t3sbootstrap_bodytext']) ) {
-			$cardData['button']['position'] = 'bottom';
-		} elseif ( !empty($processedData['data']['tx_t3sbootstrap_bodytext']) ) {
-			$cardData['button']['position'] = 'top';
-		} else {
-			$cardData['button']['position'] = 'bottom';
-		}
-		if (!empty($flexconf['button']['enable'])) {
-			$cardData['button']['link'] = $processedData['data']['header_link'];
-			$processedData['data']['header_link'] = '';
-		}
-		$cardData['button']['linkClass'] = !empty($flexconf['button']['outline']) ? '-outline': '';
-		$cardData['button']['linkClass'] .= !empty($flexconf['button']['style']) ? '-'.$flexconf['button']['style'] : '';
-		$cardData['button']['linkClass'] .= !empty($flexconf['button']['block']) ? ' btn-block' : '';
-		$cardData['button']['linkClass'] .= !empty($flexconf['button']['stretchedLink']) ? ' stretched-link' : '';
-		// dimensions
-		$cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
-		$cardData['dimensions']['height'] = $processedData['data']['imageheight'];
-		// class
-		$cardClass = 'card'.$processedData['class'];
-		$cardClass .= !empty($flexconf['button']['stretchedLink']) ? ' ce-link-content' : '';
-		// image
-		if ( !empty($cardData['image']['overlay']) ) {
-			$cardClass .= ' overflow-hidden';
-			$cardData['image']['class'] = 'img-fluid';
-			$cardData['image']['overlay'] = 'card-img-overlay d-flex';
-			$cardData['mobile']['overlay'] = FALSE;
-		} else {
-			if ( !empty($cardData['mobile']['overlay']) ) {
-				# card-img-overlay for mobile < 576 by JS and class overlay
-				$cardData['mobile']['overlay'] = 'img-overlay';
-			}
-			if ( $processedData['data']['imageorient'] == 'top' ) {
-				if ( !empty($cardData['title']['onTop']) || !empty($processedData['data']['tx_t3sbootstrap_cardheader']) ) {
-					$cardData['image']['class'] = 'img-fluid';
-				} else {
-					$cardData['image']['class'] = 'card-img-top img-fluid';
-				}
-			} else {
-				if ( $processedData['data']['tx_t3sbootstrap_cardfooter'] ) {
-					$cardData['image']['class'] = 'img-fluid';
-				} else {
-					$cardData['image']['class'] = 'card-img-bottom img-fluid';
-				}
-			}
-		}
-		// block
-		if ( empty($processedData['data']['bodytext']) && empty($processedData['data']['tx_t3sbootstrap_bodytext'])
-			 && empty($processedData['data']['header']) && empty($processedData['data']['subheader']) ) {
-			$cardData['block']['enable'] = FALSE;
-		} else {
-			$cardData['block']['enable'] = TRUE;
-		}
-		// flip card
-		if ( !empty($flexconf['flipcard']) ) {
-			$backstyle = '';
-			$backclass = '';
-			$cardClass .= ' flip-card border-0 bg-transparent';
-			$cardData['flipcard'] = TRUE;
-			$cardData['rotateY'] = $flexconf['rotateY'];
-			if ( $processedData['data']['tx_t3sbootstrap_textcolor'] ) {
-				$backclass .= 'text-'.$processedData['data']['tx_t3sbootstrap_textcolor'];
-			}
-			if ( $processedData['data']['tx_t3sbootstrap_bgcolor'] ) {
-				$backstyle .= $processedData['data']['tx_t3sbootstrap_bgcolor'];
-			} else {
-				if ( $processedData['data']['tx_t3sbootstrap_contextcolor'] ) {
-					$backclass .= ' bg-'.$processedData['data']['tx_t3sbootstrap_contextcolor'];
-				}
-			}
-			$processedData['backclass'] = trim((string)$backclass);
-			$processedData['backstyle'] = $backstyle;
-		} else {
-			$cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position']:'';
-		}
-		// list group
-		$cardData['list'] = [];
-		if (!empty($processedData['data']['tx_t3sbootstrap_list_item'])) {
-			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-			$queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
-			$listGroup = $queryBuilder
-					->select('listitem')
-					->from('tx_t3sbootstrap_list_item_inline')
-					->where(
-						$queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
-					)
-					->executeQuery()
-					->fetchAll();
+        // crop max characters
+        $cardData['cropMaxCharacters'] = !empty($parentflexconf['cropMaxCharacters']) ? $parentflexconf['cropMaxCharacters'] : '';
+        // image position
+        if ((int)$processedData['data']['imageorient'] == 8) {
+            $processedData['data']['imageorient'] = 'bottom';
+        } else {
+            $processedData['data']['imageorient'] = 'top';
+        }
+        // title position
+        if (!empty($cardData['title']['onTop']) && $processedData['data']['imageorient'] == 'top' && !$cardData['image']['overlay']) {
+            $cardData['title']['position'] = 'top';
+        } else {
+            $cardData['title']['position'] = 'default';
+        }
+        // button
+        if (!empty($processedData['data']['bodytext']) && !empty($processedData['data']['tx_t3sbootstrap_bodytext'])) {
+            $cardData['button']['position'] = 'bottom';
+        } elseif (!empty($processedData['data']['tx_t3sbootstrap_bodytext'])) {
+            $cardData['button']['position'] = 'top';
+        } else {
+            $cardData['button']['position'] = 'bottom';
+        }
+        if (!empty($flexconf['button']['enable'])) {
+            $cardData['button']['link'] = $processedData['data']['header_link'];
+            $processedData['data']['header_link'] = '';
+        }
+        $cardData['button']['linkClass'] = !empty($flexconf['button']['outline']) ? '-outline' : '';
+        $cardData['button']['linkClass'] .= !empty($flexconf['button']['style']) ? '-'.$flexconf['button']['style'] : '';
+        $cardData['button']['linkClass'] .= !empty($flexconf['button']['block']) ? ' btn-block' : '';
+        $cardData['button']['linkClass'] .= !empty($flexconf['button']['stretchedLink']) ? ' stretched-link' : '';
+        // dimensions
+        $cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
+        $cardData['dimensions']['height'] = $processedData['data']['imageheight'];
+        // class
+        $cardClass = !empty($processedData['class']) ? $processedData['class'] : '';
+        $cardClass = 'card'.$cardClass;
+        $cardClass .= !empty($flexconf['button']['stretchedLink']) ? ' ce-link-content' : '';
+        // image
+        if (!empty($cardData['image']['overlay'])) {
+            $cardClass .= ' overflow-hidden';
+            $cardData['image']['class'] = 'img-fluid';
+            $cardData['image']['overlay'] = 'card-img-overlay d-flex';
+            $cardData['mobile']['overlay'] = false;
+        } else {
+            if (!empty($cardData['mobile']['overlay'])) {
+                # card-img-overlay for mobile < 576 by JS and class overlay
+                $cardData['mobile']['overlay'] = 'img-overlay';
+            }
+            if ($processedData['data']['imageorient'] == 'top') {
+                if (!empty($cardData['title']['onTop']) || !empty($processedData['data']['tx_t3sbootstrap_cardheader'])) {
+                    $cardData['image']['class'] = 'img-fluid';
+                } else {
+                    $cardData['image']['class'] = 'card-img-top img-fluid';
+                }
+            } else {
+                if ($processedData['data']['tx_t3sbootstrap_cardfooter']) {
+                    $cardData['image']['class'] = 'img-fluid';
+                } else {
+                    $cardData['image']['class'] = 'card-img-bottom img-fluid';
+                }
+            }
+        }
+        // block
+        if (empty($processedData['data']['bodytext']) && empty($processedData['data']['tx_t3sbootstrap_bodytext'])
+             && empty($processedData['data']['header']) && empty($processedData['data']['subheader'])) {
+            $cardData['block']['enable'] = false;
+        } else {
+            $cardData['block']['enable'] = true;
+        }
+        // flip card
+        if (!empty($flexconf['flipcard'])) {
+            $backstyle = '';
+            $backclass = '';
+            $cardClass .= ' flip-card border-0 bg-transparent';
+            $cardData['flipcard'] = true;
+            $cardData['rotateY'] = $flexconf['rotateY'];
+            if ($processedData['data']['tx_t3sbootstrap_textcolor']) {
+                $backclass .= 'text-'.$processedData['data']['tx_t3sbootstrap_textcolor'];
+            }
+            if ($processedData['data']['tx_t3sbootstrap_bgcolor']) {
+                $backstyle .= $processedData['data']['tx_t3sbootstrap_bgcolor'];
+            } else {
+                if ($processedData['data']['tx_t3sbootstrap_contextcolor']) {
+                    $backclass .= ' bg-'.$processedData['data']['tx_t3sbootstrap_contextcolor'];
+                }
+            }
+            $processedData['backclass'] = trim((string)$backclass);
+            $processedData['backstyle'] = $backstyle;
+        } else {
+            $cardClass .= $processedData['data']['tx_t3sbootstrap_header_position'] ? ' '.$processedData['data']['tx_t3sbootstrap_header_position'] : '';
+        }
+        // list group
+        $cardData['list'] = [];
+        if (!empty($processedData['data']['tx_t3sbootstrap_list_item'])) {
+            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+            $queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
+            $listGroup = $queryBuilder
+                    ->select('listitem')
+                    ->from('tx_t3sbootstrap_list_item_inline')
+                    ->where(
+                        $queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+                    )
+                    ->executeQuery()
+                    ->fetchAllAssociative();
 
-			$cardData['list'] = $listGroup;
-		}
+            $cardData['list'] = $listGroup;
+        }
 
-		// profile card
-		$cardData['multiImage']['enable'] = FALSE;
-		if ( !empty($flexconf['multiImage']['enable']) ) {
-			$cardData['multiImage']['enable'] = TRUE;
-			$cardData['multiImage']['percent'] = '0.'.$flexconf['multiImage']['percent'];
-			$cardData['multiImage']['style'] = 'top: -' . $flexconf['multiImage']['percent']/2 .'px';
-			$borderColor = $flexconf['multiImage']['borderColor'] ? ' border-'.$flexconf['multiImage']['borderColor'] : '';
-			$shadow = $flexconf['multiImage']['shadow'] ? ' circularshadow' : '';
-			$cardData['multiImage']['shadow'] = $flexconf['multiImage']['shadow'] ? TRUE : FALSE;
-			$cardData['multiImage']['border'] = $flexconf['multiImage']['borderWidth'].$borderColor.$shadow;
-			$cardData['multiImage']['slope'] =	$flexconf['multiImage']['diagonal'] ? $flexconf['multiImage']['slope'] : 0;
-			$cardData['multiImage']['socialmedia']['enable'] = $flexconf['multiImage']['socialmedia']['enable'];
-			$cardData['multiImage']['socialmedia']['footer'] = $flexconf['multiImage']['socialmedia']['footer'];
-			if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
-				foreach ($flexconf['multiImage']['socialmedia'] as $key=>$socialmedia) {
-					if ($key != 'enable' && $key != 'footer' &&  !empty($socialmedia)) {
-						$cardData['multiImage']['socialmediaLinks'][$key] = $socialmedia;
-					}
-				}
-			}
-		}
+        // profile card
+        $cardData['multiImage']['enable'] = false;
+        if (!empty($flexconf['multiImage']['enable'])) {
+            $cardData['multiImage']['enable'] = true;
+            $cardData['multiImage']['percent'] = '0.'.$flexconf['multiImage']['percent'];
+            $cardData['multiImage']['style'] = 'top: -' . $flexconf['multiImage']['percent']/2 .'px';
+            $borderColor = $flexconf['multiImage']['borderColor'] ? ' border-'.$flexconf['multiImage']['borderColor'] : '';
+            $shadow = $flexconf['multiImage']['shadow'] ? ' circularshadow' : '';
+            $cardData['multiImage']['shadow'] = $flexconf['multiImage']['shadow'] ? true : false;
+            $cardData['multiImage']['border'] = $flexconf['multiImage']['borderWidth'].$borderColor.$shadow;
+            $cardData['multiImage']['slope'] =	$flexconf['multiImage']['diagonal'] ? $flexconf['multiImage']['slope'] : 0;
+            $cardData['multiImage']['socialmedia']['enable'] = $flexconf['multiImage']['socialmedia']['enable'];
+            $cardData['multiImage']['socialmedia']['footer'] = $flexconf['multiImage']['socialmedia']['footer'];
+            if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
+                foreach ($flexconf['multiImage']['socialmedia'] as $key=>$socialmedia) {
+                    if ($key != 'enable' && $key != 'footer' &&  !empty($socialmedia)) {
+                        $cardData['multiImage']['socialmediaLinks'][$key] = $socialmedia;
+                    }
+                }
+            }
+        }
 
-#		if ( !empty($cardData['square']['enable']) ) {
-#			$cardClass .= ' rounded-0 border-0';
-#		}
+        #		if ( !empty($cardData['square']['enable']) ) {
+        #			$cardClass .= ' rounded-0 border-0';
+        #		}
 
-		if ( !empty($cardData['tiling']['enable']) ) {
-			$cardClass = 'card tiling rounded-0 border-0 h-100'.$processedData['class'];
-			if (empty($processedData['data']['tx_t3sbootstrap_contextcolor'])) {
-				$cardClass .= ' bg-transparent';	
-			}	
-		}
-		
-		// header position
-		if ( $processedData['data']['header_position'] ) {
-			$headerPosition = $processedData['data']['header_position'];
-			if ( $headerPosition == 'left' ) $headerPosition = 'start';
-			if ( $headerPosition == 'right' ) $headerPosition = 'end';
-			$cardClass .= ' text-'.$headerPosition;
-		}
-		// effect
-		if ( !empty($cardData['effect']) ) {
-			$cardClass .= ' card-effect-'.$cardData['effect'];
-		}
-		// custom border class
-		if ( !empty($cardData['cardborder']) ) {
-			$cardClass .= ' border-'.$cardData['cardborderstyle'];
-		}
-		// parent equal Height
-		if ( !empty($parentflexconf['equalHeight']) && isset($parentflexconf['card_wrapper']) && $parentflexconf['card_wrapper'] !== 'group' ) {
-			$cardClass .= ' h-100';
-		}
+        if (!empty($cardData['tiling']['enable'])) {
+            $cardClass = 'card tiling rounded-0 border-0'.$processedData['class'];
+            if (empty($processedData['data']['tx_t3sbootstrap_contextcolor'])) {
+                $cardClass .= ' bg-transparent';
+            }
+        }
 
-		if ( !empty($cardData['tiling']['enable']) ) {
-			$processedData['addmedia']['imgclass'] = ' rounded-0 '.$cardData['image']['class'];
-			$bgMediaQueries = '768,576';
-			$bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-				->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE,
-				 $flexconf, FALSE, $processedData['data']['uid'],$bgMediaQueries);
-			if ($bgimages) {
-				$cardData['bgimages'] = $bgimages;
-			}
-		}
-		
-		$processedData['class'] = trim($cardClass);
+        // header position
+        if ($processedData['data']['header_position']) {
+            $headerPosition = $processedData['data']['header_position'];
+            if ($headerPosition == 'left') {
+                $headerPosition = 'start';
+            }
+            if ($headerPosition == 'right') {
+                $headerPosition = 'end';
+            }
+            $cardClass .= ' text-'.$headerPosition;
+        }
+        // effect
+        if (!empty($cardData['effect'])) {
+            $cardClass .= ' card-effect-'.$cardData['effect'];
+            if (!empty($cardData['effectColor'])) {
+                $cardClass .= ' '.$cardData['effectColor'];
+            }
+        }
+        // custom border class
+        if (!empty($cardData['cardborder'])) {
+            $cardClass .= ' border-'.$cardData['cardborderstyle'];
+        }
+        // parent equal Height
+        if (!empty($parentflexconf['equalHeight']) && isset($parentflexconf['card_wrapper']) && $parentflexconf['card_wrapper'] !== 'group') {
+            $cardClass .= ' h-100';
+        }
 
-		// addmedia
-		$processedData['addmedia']['imgclass'] = $cardData['image']['class'];
-		$processedData['addmedia']['imgclass'] .= !empty($flexconf['horizontal']) ? ' rounded-start' : '';
-		$processedData['addmedia']['figureclass'] = ' text-center';
-		$processedData['addmedia']['figureclass'] .= !empty($flexconf['horizontal']) ? ' d-block' : '';
+        if (!empty($cardData['tiling']['enable'])) {
+            $processedData['addmedia']['imgclass'] = ' rounded-0 '.$cardData['image']['class'];
+            $bgMediaQueries = '768,576';
+            $bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
+                ->getBgImage(
+                    $processedData['data']['uid'],
+                    'tt_content',
+                    false,
+                    false,
+                    $flexconf,
+                    false,
+                    $processedData['data']['uid'],
+                    $bgMediaQueries
+                );
+            if ($bgimages) {
+                $cardData['bgimages'] = $bgimages;
+            }
+        }
 
-		if ( !empty($cardData['square']['enable']) ) {
-			$processedData['addmedia']['imgclass'] = 'img-fluid';
-		}
+        $processedData['class'] = trim($cardClass);
 
-		$processedData['card'] = $cardData;
+        // addmedia
+        $processedData['addmedia']['imgclass'] = $cardData['image']['class'];
+        $processedData['addmedia']['imgclass'] .= !empty($flexconf['horizontal']) ? ' rounded-start' : '';
+        $processedData['addmedia']['figureclass'] = ' text-center';
+        $processedData['addmedia']['figureclass'] .= !empty($flexconf['horizontal']) ? ' d-block' : '';
 
-		if ( !empty($processedData['data']['imagewidth']) && !empty($flexconf['maxwidth'])) {
-			$processedData['style'] .= ' max-width: '.$processedData['data']['imagewidth'].'px;';
-		}
+        if (!empty($cardData['square']['enable'])) {
+            $processedData['addmedia']['imgclass'] = 'img-fluid';
+        }
 
-		return $processedData;
-	}
+        $processedData['card'] = $cardData;
 
+        if (!empty($processedData['data']['imagewidth']) && !empty($flexconf['maxwidth'])) {
+            $processedData['style'] .= ' max-width: '.$processedData['data']['imagewidth'].'px;';
+        }
+
+        return $processedData;
+    }
 }

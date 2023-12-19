@@ -68,7 +68,7 @@ function insertAfter(referenceNode, newNode) {
 </f:if>
 <f:comment> GRID CARD (DECK) </f:comment>
 <f:if condition="{card_wrapper_layout} == 'deck'">
-	<div class="card-deck gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
+	<div class="gallery g-{gutter} row row-cols-1 row-cols-md-{visibleCards}{class}"
 		{styleAttr -> f:format.raw()}{dataAnimate}>
 		<f:for each="{col_270}" as="card" iteration="cardIterator">
 			<div class="col{equalHeight}">
@@ -85,8 +85,18 @@ function insertAfter(referenceNode, newNode) {
 			 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 		</f:then>
 		<f:else>
-			<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
-			 crossorigin="anonymous" async="async" />
+
+			<f:if condition="{settings.sitepackage}">
+				<f:then>
+					<f:asset.script identifier="masonry" src="EXT:t3sb_package/T3SB/Resources/Public/JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+				</f:then>
+				<f:else>
+					<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+				</f:else>
+			</f:if>	
+
+
+			
 		</f:else>
 	</f:if>
 	<div class="row{class}"
@@ -106,8 +116,16 @@ function insertAfter(referenceNode, newNode) {
 			<f:asset.script identifier="swiperjs" src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 		</f:then>
 		<f:else>
-			<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
-			<f:asset.script identifier="swiperjs" src="fileadmin/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+			<f:if condition="{settings.sitepackage}">
+				<f:then>
+					<f:asset.css identifier="swipercss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
+					<f:asset.script identifier="swiperjs" src="EXT:t3sb_package/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+				</f:then>
+				<f:else>
+					<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
+					<f:asset.script identifier="swiperjs" src="fileadmin/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+				</f:else>
+			</f:if>	
 		</f:else>
 	</f:if>
 	<f:asset.css identifier="swipercss-{data.uid}">

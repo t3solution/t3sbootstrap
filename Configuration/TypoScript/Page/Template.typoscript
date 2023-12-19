@@ -31,19 +31,17 @@ page {
 			fontawesome.extconf = {$bootstrap.extconf.fontawesomeCss}
 			fontawesome.cdn = {$bootstrap.cdn.enable}
 			fontawesome.version = {$bootstrap.cdn.fontawesome}
-			fontawesome.5latest = {$bootstrap.cdn.fontawesome5latest}
 			fontawesome.6latest = {$bootstrap.cdn.fontawesome6latest}
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			fontawesome.fontawesomeCss = {$bootstrap.extconf.fontawesomeCss}
 			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}
+
 			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
-			codesnippet = {$bootstrap.extconf.codesnippet}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
 			webp = {$bootstrap.ext.webp}
 			indexedsearch.loaded = {$bootstrap.ext.indexedsearch}
 			kesearch.loaded = {$bootstrap.ext.kesearch}
-			cookieconsent = {$bootstrap.extconf.cookieconsent}
 			cdn = {$bootstrap.cdn.enable}
 			googlefonts = {$bootstrap.cdn.googlefonts}
 			t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
@@ -51,12 +49,13 @@ page {
 			backToTopTitle = {$bootstrap.backToTopTitle}
 			backToTopClass = {$bootstrap.backToTopClass}
 			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
-			gtm = {$bootstrap.gtm}
 			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 			submenu.styleOne = {$bootstrap.submenu.styleOne}
 			viewportWidthCookie = {$bootstrap.image.viewportWidthCookie}
+			sitepackage = {$bootstrap.extconf.sitepackage}
 			navbar {
+				noLinkTitle = {$bootstrap.navbar.noLinkTitle}
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}
 				image.height = {$bootstrap.navbar.image.height}
@@ -357,5 +356,4 @@ plugin.tx_felogin_login {
 	}
 }
 
-// import outsourced setup
-@import 'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript'
+

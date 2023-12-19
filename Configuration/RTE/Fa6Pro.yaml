@@ -1,0 +1,9 @@
+imports:
+    - { resource: "EXT:t3sbootstrap/Configuration/RTE/Default.yaml" }
+    - { resource: "EXT:rte_ckeditor_fontawesome/Configuration/RTE/PluginFA6Pro.yaml" }
+
+editor:
+  config:
+    ui:
+      DPFontAwesome:
+        css: '../../../../../../fileadmin/T3SB/Resources/Public/FA6Pro/css/all.min.css'

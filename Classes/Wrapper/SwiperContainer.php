@@ -25,13 +25,13 @@ class SwiperContainer implements SingletonInterface
         $filesFromRepository = [];
 
         $processedData['swiperCss'] = !empty($flexconf['swiperCss']) ? $flexconf['swiperCss'] : '';
-        $processedData['swiperJs'] = $flexconf['swiperJs'] ?? '';
-        $processedData['customSwiperJs'] = $flexconf['customSwiperJs'] ?? '';
-        $processedData['useCustomSwiperJs'] = $flexconf['useCustomSwiperJs'] ?? false;
+        $processedData['swiperJs'] = !empty($flexconf['swiperJs']) ? $flexconf['swiperJs'] : '';
+        $processedData['customSwiperJs'] = !empty($flexconf['customSwiperJs']) ? $flexconf['customSwiperJs'] : '';
+        $processedData['useCustomSwiperJs'] = !empty($flexconf['useCustomSwiperJs']) ? $flexconf['useCustomSwiperJs'] : false;
         $processedData['sliderStyle'] = $flexconf['sliderStyle'];
         $processedData['width'] = $flexconf['width'];
         $processedData['ratio'] = $flexconf['ratio'];
-        $processedData['slidesPerView'] = (int)$flexconf['slidesPerView'] ?: 0;
+        $processedData['slidesPerView'] = !empty($flexconf['slidesPerView']) ? (int)$flexconf['slidesPerView'] : 0;
         $processedData['breakpoints10'] = !empty($flexconf['breakpoints10']) ? (int)$flexconf['breakpoints10'] : 1;
         $processedData['breakpoints576'] = (int)$flexconf['breakpoints576'] ?: 2;
         $processedData['breakpoints768'] = (int)$flexconf['breakpoints768'] ?: 3;
@@ -43,8 +43,11 @@ class SwiperContainer implements SingletonInterface
         $processedData['navigation'] = (int)$flexconf['navigation'];
         $processedData['pagination'] = (int)$flexconf['pagination'];
         $processedData['autoplay'] = (int)$flexconf['autoplay'];
-        $processedData['delay'] = !empty($flexconf['autoplay']) ? (int)$flexconf['delay'] : 99999999;
         $processedData['origImage'] = !empty($flexconf['origImage']) ? $flexconf['origImage'] : '';
+        $processedData['delay'] = 0;
+        if (!empty($flexconf['delay'])) {
+            $processedData['delay'] = !empty($flexconf['autoplay']) ? (int)$flexconf['delay'] : 99999999;
+        }
 
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
@@ -55,7 +58,7 @@ class SwiperContainer implements SingletonInterface
                 $queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
             )
             ->executeQuery()
-            ->fetchAll();
+            ->fetchAllAssociative();
 
         $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
         foreach ($statement as $element) {

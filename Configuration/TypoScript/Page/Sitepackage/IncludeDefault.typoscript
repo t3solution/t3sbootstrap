@@ -1,0 +1,26 @@
+page {
+	includeCSS {
+
+		##########################################################################################################
+		#
+		# GOOGLE FONTS
+		#
+		##########################################################################################################
+
+		googleFontCSS = EXT:t3sb_package/T3SB/Resources/Public/CSS/googlefonts.css
+		googleFontCSS.if.isTrue = {$bootstrap.cdn.googlefonts}
+
+	}
+}
+
+
+
+# load jquery into the header
+[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
+page.includeJSFooterlibs.jquery >
+page.includeJSLibs {
+	jquery = EXT:t3sb_package/T3SB/Resources/Public/JS/jquery.min.js
+	jquery.forceOnTop = 1
+	jquery.if.isFalse = {$bootstrap.disable.jquery}
+}
+[END]

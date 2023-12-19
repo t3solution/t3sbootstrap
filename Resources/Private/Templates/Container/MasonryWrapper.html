@@ -22,8 +22,14 @@
 		 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 	</f:then>
 	<f:else>
-		<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js"
-		 crossorigin="anonymous" async="async" />
+		<f:if condition="{settings.sitepackage}">
+			 <f:then>
+				 <f:asset.script identifier="masonry" src="EXT:t3sb_package/T3SB/Resources/Public/JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+			 </f:then>
+			 <f:else>
+			 	<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+			 </f:else>
+		 </f:if>
 	</f:else>
 </f:if>
 <div id="masonry-{data.uid}" class="row masonry{class}"

@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">	
 <f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && {file.link} && ({file.description} || {file.title})">
 	<f:then>
 		<f:render partial="Media/Effects" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio}" />
@@ -16,13 +16,21 @@
 					<f:if condition="{addmedia.imagezoom}">
 						<f:then>
 						<f:comment> Lightbox (zoom) </f:comment>
-							<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
+							<f:if condition="{addmedia.origImageZoom}">
+								<f:then>
+									<f:variable name="zoomfile" value="{file.originalFile}" />
+								</f:then>
+								<f:else>
+									<f:variable name="zoomfile" value="{file}" />	
+								</f:else>
+							</f:if>
+							<ce:link.clickEnlarge image="{zoomfile}" configuration="{settings.media.popup}">
 								<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia}" />
 								<f:comment> magnifying glass-icon </f:comment>
 								<f:if condition="{settings.magnifying}">
 									<div class="zoom-overlay{addmedia.zoomOverlay}{f:if(condition: file.description, then: ' description')}">
 										<span class="magnifying-glass-icon">
-											<i class="fa-solid fa-magnifying-glass-plus"></i>
+											<i class="fa-solid fa-search-plus"></i>
 										</span>
 									</div>
 								</f:if>
@@ -86,7 +94,7 @@ function t3sbCopyright() {
 		t3sbCopyright();
 	</f:asset.script>
 	<span class="img-copyright {file.properties.tx_t3sbootstrap_copyright_color}">
-		 <i class="fa-solid fa-copyright fa-lg"></i>
+		 <i class="fa-regular fa-copyright fa-lg"></i>
 	</span>
 	<div id="toast-{file.properties.uid}" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
 		<div class="toast-header">
