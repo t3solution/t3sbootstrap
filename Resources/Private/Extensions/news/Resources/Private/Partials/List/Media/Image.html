@@ -92,6 +92,16 @@
 		ratio="{ratio}"
 		shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
 		hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
-	/>
+	/>	
+	<f:render section="Copyright" arguments="{_all}" />
 </figure>
 </html>
+
+
+<f:section name="Copyright">
+<f:if condition="{settings.imgCopyright} && {file.originalResource.properties.tx_t3sbootstrap_copyright}">
+	<span class="img-copyright-default {file.originalResource.properties.tx_t3sbootstrap_copyright_color}">
+		<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.tx_t3sbootstrap_copyright}</span>
+	</span>
+</f:if>
+</f:section>

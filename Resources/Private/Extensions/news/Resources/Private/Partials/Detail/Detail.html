@@ -21,7 +21,7 @@
 		</f:if>
 	</n:format.nothing>
 	<f:if condition="{settings.detail.showPrevNext}">
-		<n:simplePrevNext pidList="{newsItem.pid}" news="{newsItem}" as="paginated" sortField="datetime">
+		<n:simplePrevNext pidList="{settings.startingpoint}" news="{newsItem}" as="paginated" sortField="datetime">
 			<f:if condition="{paginated}">
 				<nav class="page-pagination" aria-label="page pagination">
 					<ul class="pagination justify-content-center">
@@ -240,10 +240,12 @@
 			<f:format.html>{newsItem.teaser}</f:format.html>
 		</div>
 	</f:if>
-	<!-- main text -->
-	<div class="news-text-wrap" itemprop="articleBody">
-		<f:format.html>{newsItem.bodytext}</f:format.html>
-	</div>
+	<f:if condition="{newsItem.teaser}">
+		<!-- main text -->
+		<div class="news-text-wrap" itemprop="articleBody">
+			<f:format.html>{newsItem.bodytext}</f:format.html>
+		</div>
+	</f:if>
 </f:section>
 
 <f:section name="ContentElements">

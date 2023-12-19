@@ -1,0 +1,187 @@
+
+
+<f:comment> AnimateCss </f:comment>
+<f:if condition="{isAnimateCss} && {settings.animateCss}">
+	<f:if condition="{settings.cdn}">
+		<f:then>
+			<f:asset.css identifier="animateCss"
+				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.compat.css" />
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.sitepackage}">
+				<f:then>
+					<f:asset.css identifier="animateCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/animate.compat.css" />
+				</f:then>
+				<f:else>
+					<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/CSS/animate.compat.css" />
+				</f:else>
+			</f:if>
+		
+		
+		</f:else>
+	</f:if>
+	<f:if condition="{animateCssRepeat}">
+
+		<f:asset.script identifier="t3sbCssAnimate_function">
+// AnimateCss - Layouts/Assets.html
+function isScrolledIntoView(el) {
+	// check for 5% visible
+	var percentVisible = 0.05;
+	var elemTop = el.getBoundingClientRect().top;
+	var elemBottom = el.getBoundingClientRect().bottom;
+	var elemHeight = el.getBoundingClientRect().height;
+	var overhang = elemHeight * (1 - percentVisible);
+	var isVisible = (elemTop >= -overhang) && (elemBottom <= window.innerHeight + overhang);
+	return isVisible;
+}
+
+function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
+	// used w/ button or buttonGroup ???
+	if (ael.nodeName == 'HEADER') {
+//		ael = ael.nextSibling;
+	}
+	if (isScrolledIntoView(ael)) {
+		ael.classList.add('bt_visible', dataAnimate);
+		ael.classList.remove('bt_hidden');
+	} else {
+		if (animateRepeat) {
+			ael.classList.remove('bt_visible', dataAnimate);
+			ael.classList.add('bt_hidden');
+		}
+	}
+	window.addEventListener('scroll', function() {
+		if (isScrolledIntoView(ael)) {
+			ael.classList.add('bt_visible', dataAnimate);
+			ael.classList.remove('bt_hidden');
+		} else {
+			if (animateRepeat) {
+				ael.classList.remove('bt_visible', dataAnimate);
+				ael.classList.add('bt_hidden');
+			}
+		}
+	});
+}
+		</f:asset.script>
+		<f:if condition="{isTxContainer}">
+			<f:then>
+				<f:asset.script identifier="vanilla_animatecssJsInline-{data.uid}">
+	// AnimateCss-{data.uid} - Partials/Layouts/Assets.html
+	var animatedElement = document.getElementById('c{data.uid}'),
+		animateRepeat = '{animateCssRepeat}',
+		dataAnimate = '{dataAnimate}',
+		child = animatedElement.firstChild;
+	if ( animatedElement.nodeType == 1 && animatedElement.classList.contains('animated') ) {
+		t3sbCssAnimate(animatedElement, dataAnimate, animateRepeat);
+	} else {
+		if ( child.nodeType == 1 && child.classList.contains('animated') ) {
+			t3sbCssAnimate(child, dataAnimate, animateRepeat);
+		} else {
+			if (child.nodeName == 'HEADER') {
+				t3sbCssAnimate(child.nextSibling, dataAnimate, animateRepeat);
+			}
+		}
+	}
+				</f:asset.script>
+			</f:then>
+			<f:else>
+				<f:asset.script identifier="vanilla_animatecssJsInline-{data.uid}">
+	// AnimateCss-{data.uid} - Partials/Layouts/Assets.html
+	var animatedElement = document.getElementById('c{data.uid}'),
+		animateRepeat = '{animateCssRepeat}',
+		dataAnimate = '{dataAnimate}';
+	if (animatedElement) {
+		t3sbCssAnimate(animatedElement, dataAnimate, animateRepeat);
+	}
+				</f:asset.script>
+			</f:else>
+		</f:if>
+	</f:if>
+</f:if>
+<f:comment> Lightbox - same in News/Detail.html </f:comment>
+<f:if condition="{settings.lightboxSelection} && {lightBox}">
+	<f:comment> Baguette Box </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 1">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
+			</f:then>
+			<f:else>
+				<f:if condition="{settings.sitepackage}">
+					<f:then>
+						<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+					</f:then>
+					<f:else>
+						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+					</f:else>
+				</f:if>	
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="vanilla_lightbox">
+	// Baguette Box (lightbox) - Partials/Layouts/Assets.html
+	baguetteBox.run('.gallery, .image-gallery', {
+		animation: 'fadeIn',
+		noScrollbars: true
+	});
+		</f:asset.script>
+	</f:if>
+	<f:comment> Halkabox </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 2">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.js" />			
+			</f:then>
+			<f:else>
+				<f:if condition="{settings.sitepackage}">
+					<f:then>
+						<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/halkaBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/T3SB/Resources/Public/JS/halkaBox.min.js" />
+					</f:then>
+					<f:else>
+						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/halkaBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/halkaBox.min.js" />				
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="vanilla_lightbox-{data.uid}">
+	// halkabox-{data.uid} (lightbox) - Partials/Layouts/Assets.html
+	halkaBox.options({animation: 'fade',theme: 'dark'});
+	halkaBox.run('gallery-{data.uid}');
+		</f:asset.script>
+	</f:if>
+	<f:comment> G Lightbox </f:comment>
+	<f:if condition="{settings.lightboxSelection} == 3">
+		<f:if condition="{settings.cdn}">
+			<f:then>
+				<f:asset.css identifier="t3sblightboxCss"
+					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS"
+					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
+			</f:then>
+			<f:else>
+				<f:if condition="{settings.sitepackage}">
+					<f:then>
+						<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/glightbox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/T3SB/Resources/Public/JS/glightbox.min.js" />
+					</f:then>
+					<f:else>
+						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/glightbox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/glightbox.min.js" />
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+		<f:asset.script identifier="vanilla_lightbox">
+	// GLightbox (lightbox) - Partials/Layouts/Assets.html
+	const lightbox = GLightbox({loop: true});
+		</f:asset.script>
+	</f:if>
+</f:if>

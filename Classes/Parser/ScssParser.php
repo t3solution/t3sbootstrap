@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Parser;
@@ -112,29 +113,29 @@ class ScssParser extends AbstractParser
         // Add extensions path to import paths, so that we can use paths relative to this directory to resolve imports
         $scss->addImportPath(Environment::getExtensionsPath());
 
-		// Make paths in url() statements relative to site root
-		$absoluteFilePath = dirname($absoluteFilename);
-		$relativeFilePath = PathUtility::getAbsoluteWebPath($absoluteFilePath);
+        // Make paths in url() statements relative to site root
+        $absoluteFilePath = dirname($absoluteFilename);
+        $relativeFilePath = PathUtility::getAbsoluteWebPath($absoluteFilePath);
 
-		$scss->registerFunction(
-			'url',
-			function ($args) use (
-				$scss,
-				$absoluteFilePath,
-				$relativeFilePath
-			) : string {
-				$marker = $args[0][1];
-				$args[0][1] = '';
-				$result = $scss->compileValue($args[0]);
-				if (substr_compare($result, 'data:', 0, 5, true) !== 0) {
-					if (is_file(PathUtility::getCanonicalPath($absoluteFilePath . '/' . $result))) {
-						$result = PathUtility::getCanonicalPath($relativeFilePath . '/' . $result);
-					}
-					$result = str_starts_with($result, '/') ? substr($result, 1) : $result;
-				}
-				return 'url(' . $marker . $result . $marker . ')';
-			}
-		);
+        $scss->registerFunction(
+            'url',
+            function ($args) use (
+                $scss,
+                $absoluteFilePath,
+                $relativeFilePath
+            ): string {
+                $marker = $args[0][1];
+                $args[0][1] = '';
+                $result = $scss->compileValue($args[0]);
+                if (substr_compare($result, 'data:', 0, 5, true) !== 0) {
+                    if (is_file(PathUtility::getCanonicalPath($absoluteFilePath . '/' . $result))) {
+                        $result = PathUtility::getCanonicalPath($relativeFilePath . '/' . $result);
+                    }
+                    $result = str_starts_with($result, '/') ? substr($result, 1) : $result;
+                }
+                return 'url(' . $marker . $result . $marker . ')';
+            }
+        );
 
         // Compile file
         $compilationResult = $scss->compileString('@import "' . $absoluteFilename . '"');

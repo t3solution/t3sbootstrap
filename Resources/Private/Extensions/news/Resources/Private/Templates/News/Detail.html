@@ -23,8 +23,16 @@
 					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+				<f:if condition="{settings.sitepackage}">
+					<f:then>
+						<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+					</f:then>
+					<f:else>
+						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/baguetteBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/baguetteBox.min.js" />
+					</f:else>
+				</f:if>	
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">
@@ -45,8 +53,16 @@
 					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/halkaBox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/halkaBox.min.js" />
+				<f:if condition="{settings.sitepackage}">
+					<f:then>
+						<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/halkaBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/T3SB/Resources/Public/JS/halkaBox.min.js" />
+					</f:then>
+					<f:else>
+						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/halkaBox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/halkaBox.min.js" />				
+					</f:else>
+				</f:if>	
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox-{contentObjectData.uid}">
@@ -60,14 +76,21 @@
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />			
-			
+					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />	
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/glightbox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/glightbox.min.js" />
+				<f:if condition="{settings.sitepackage}">
+					<f:then>
+						<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/glightbox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/T3SB/Resources/Public/JS/glightbox.min.js" />
+					</f:then>
+					<f:else>
+						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/CSS/glightbox.min.css" />
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/JS/glightbox.min.js" />
+					</f:else>
+				</f:if>	
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">
@@ -118,7 +141,7 @@
 	</f:if>
 </n:format.nothing>
 <f:if condition="{settings.detail.showPrevNext}">
-	<n:simplePrevNext pidList="{newsItem.pid}" news="{newsItem}" as="paginated" sortField="datetime">
+	<n:simplePrevNext pidList="{settings.startingpoint}" news="{newsItem}" as="paginated" sortField="datetime">
 		<f:if condition="{paginated}">
 			<ul class="pager">
 				<f:if condition="{paginated.prev}">

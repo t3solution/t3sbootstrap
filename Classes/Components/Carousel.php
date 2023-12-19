@@ -31,11 +31,11 @@ class Carousel implements SingletonInterface
 			$processedData['data']['header_link'] = '';
 		}
 
-		$flexconf['captionVAlign'] = $flexconf['captionVAlign'] ? $flexconf['captionVAlign'] : 'end';
-		if ($flexconf['bgOverlay'] == 'caption') {
+		$flexconf['captionVAlign'] = !empty($flexconf['captionVAlign']) ? $flexconf['captionVAlign'] : 'end';
+		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'caption') {
 			$innerCaptionStyle = $processedData['style'].' padding:15px 0; z-index:1';
 			$processedData['style'] = '';
-		} elseif ($flexconf['bgOverlay'] == 'image') {
+		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'image') {
 			$innerCaptionStyle = 'z-index:1';
 		} else {
 			$processedData['style'] = '';

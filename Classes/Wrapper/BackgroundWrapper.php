@@ -136,7 +136,6 @@ class BackgroundWrapper implements SingletonInterface
 				$filter = !empty($flexconf['imgGrayscale']) ? ' grayscale('.$flexconf['imgGrayscale'].'%) ' : '';
 				$filter .= !empty($flexconf['imgSepia']) ? ' sepia('.$flexconf['imgSepia'].'%) ' : '';
 				$filter .= !empty($flexconf['imgOpacity']) && $flexconf['imgOpacity'] != 100 ? ' opacity('.$flexconf['imgOpacity'].'%) ' : '';
-
 				if ($filter)
 				$processedData['style'] .= 'filter: '.trim($filter).';';
 

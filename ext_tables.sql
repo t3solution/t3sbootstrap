@@ -185,6 +185,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_list_item varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
 	tx_t3sbootstrap_verticalgutters varchar(5) DEFAULT 'mb-4' NOT NULL,
+	tx_t3sbootstrap_zoom_orig varchar(4) DEFAULT '' NOT NULL,
 );
 
 

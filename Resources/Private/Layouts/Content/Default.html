@@ -15,7 +15,7 @@
 		<f:link.typolink parameter="{celink}" class="ce-link{f:if(condition: '{parentCType} == listGroup_wrapper', then: ' list-group-item list-group-item-action')}">
 			<f:if condition="{isTxContainer}">
 				<f:then>
-					<div id="c{data.uid}"{dataAttr -> f:format.raw()}>	
+					<div id="c{data.uid}"{dataAttr -> f:format.raw()}>
 						<f:render section="Header" optional="true">
 							<f:render partial="Header/All" arguments="{_all}" />
 						</f:render>

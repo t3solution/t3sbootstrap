@@ -1,8 +1,0 @@
-imports:
-    - { resource: "EXT:t3sbootstrap/Configuration/RTE/Default.yaml" }
-
-editor:
-    
-      config:
-        extraPlugins:
-          - codesnippet

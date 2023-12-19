@@ -78,7 +78,7 @@ class ConfigProcessor implements DataProcessorInterface
         $smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
         $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $rootlinePage = $pageRepository->getPage($processedRecordVariables['homepageUid']);
-        $smallColumnsRootline = (int)$rootlinePage['tx_t3sbootstrap_smallColumns'];
+        $smallColumnsRootline = !empty($rootlinePage['tx_t3sbootstrap_smallColumns']) ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
         $smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 
         // global override page data
@@ -173,14 +173,18 @@ class ConfigProcessor implements DataProcessorInterface
         if ($processedRecordVariables['navbarEnable']) {
             // navbar menu
             $mainMenu = [];
-
             if (!empty($processedData['navbarMenu'])) {
                 foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
                     $mainMenu[$key] = $navbarMenu;
                     if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
                         $mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
                     }
+					$mainMenu[$key]['linkTitle'] = $navbarMenu['data']['title'];
+					if (!empty($settings['navbar.']['noLinkTitle'])) {
+						$mainMenu[$key]['linkTitle'] = '';
+					}
                     if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
+                        $mainMenu[$key]['linkTitle'] = $navbarMenu['data']['title'];
                         $mainMenu[$key]['title'] = '';
                     }
                     $mainMenu[$key]['target'] = $navbarMenu['data']['target'] ? $navbarMenu['data']['target'] : '_self';
@@ -685,7 +689,7 @@ class ConfigProcessor implements DataProcessorInterface
             )
              ->executeQuery();
 
-        $navbarColors = $result->fetchAll();
+        $navbarColors = $result->fetchAllAssociative();
         $navbarColorCSS = '';
 
         if (is_array($navbarColors)) {

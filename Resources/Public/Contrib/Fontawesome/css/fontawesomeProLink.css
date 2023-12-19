@@ -1,26 +1,35 @@
 @font-face {
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
+	font-style: normal;
+	font-weight: 100;
+	src: url('../webfonts/fa-thin-100.woff2') format('woff2'),
+		 url('../webfonts/fa-thin-100.ttf') format('truetype');
+	font-display: swap; }
+
+@font-face {
+	font-family: 'Font Awesome 6 Pro';
 	font-style: normal;
 	font-weight: 300;
-	src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-light-300.eot");
-	src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-light-300.eot?#iefix") format("embedded-opentype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-light-300.woff2") format("woff2"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-light-300.woff") format("woff"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-light-300.ttf") format("truetype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-light-300.svg#fontawesome") format("svg");
+	src: url("../webfonts/fa-light-300.woff2") format('woff2'),
+		 url('../webfonts/fa-light-300.ttf') format('truetype');
 	font-display: swap; }
 
 @font-face {
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
 	font-style: normal;
 	font-weight: 400;
-	src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-regular-400.eot");
-	src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-regular-400.woff2") format("woff2"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-regular-400.woff") format("woff"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-regular-400.ttf") format("truetype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-regular-400.svg#fontawesome") format("svg");
+	src: url("../webfonts/fa-regular-400.woff2") format('woff2'),
+		 url('../webfonts/fa-regular-400.ttf') format('truetype');
 	font-display: swap; }
 
 @font-face {
-  font-family: 'Font Awesome 5 Pro';
+  font-family: 'Font Awesome 6 Pro';
   font-style: normal;
   font-weight: 900;
-  src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.eot");
-  src: url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.woff2") format("woff2"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.woff") format("woff"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.ttf") format("truetype"), url("../../../../../../../../../fileadmin/T3SB/FA5Pro/webfonts/fa-solid-900.svg#fontawesome") format("svg");
+  src: url("../webfonts/fa-solid-900.woff2") format('woff2'),
+  	   url('../webfonts/fa-solid-900.ttf') format('truetype');
   font-display: swap; }
+
 
 
 .internal-link::before,
@@ -39,20 +48,23 @@
 }
 
 .internal-link::before {
-	font-family: "Font Awesome 5 Pro"; font-weight: 900; content: "\f0c1";
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f0c1";
 }
 .external-link::before {
-	font-family: "Font Awesome 5 Pro"; font-weight: 900; content: "\f35d";
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f35d";
 }
 .download-link::before {
-	font-family: "Font Awesome 5 Pro"; font-weight: 900; content: "\f019";
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f019";
 }
 .email-link::before {
-	font-family: "Font Awesome 5 Pro"; font-weight: 900; content: "\f0e0";
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f0e0";
 }
 .phone-link::before {
-	font-family: "Font Awesome 5 Pro"; font-weight: 900; content: "\f095";
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f095";
 }
 .fax-link::before {
-	font-family: "Font Awesome 5 Pro"; font-weight: 900; content: "\f1ac";
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f1ac";
+}
+.fa-square-plus:before{
+	font-family: "Font Awesome 6 Pro"; font-weight: 900; content: "\f0fe";
 }

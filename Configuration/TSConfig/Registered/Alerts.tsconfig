@@ -1,0 +1,37 @@
+TCEFORM.tt_content {
+	layout {
+		addItems {
+			94 = ------ T3SB ------
+			105 = Alert primary
+			106 = Alert info
+			107 = Alert success
+			108 = Alert warning
+			109 = Alert danger
+			110 = Alert secondary
+			111 = Alert light
+			112 = Alert dark
+		}
+		altLabels {
+			94 = ------ T3SB ------
+			105 = Alert primary
+			106 = Alert info
+			107 = Alert success
+			108 = Alert warning
+			109 = Alert danger
+			110 = Alert secondary
+			111 = Alert light
+			112 = Alert dark
+		}
+		classes {
+			94 = 
+			105 = alert alert-primary
+			106 = alert alert-info
+			107 = alert alert-success
+			108 = alert alert-warning
+			109 = alert alert-danger
+			110 = alert alert-secondary
+			111 = alert alert-light
+			112 = alert alert-dark
+		}
+	}
+}

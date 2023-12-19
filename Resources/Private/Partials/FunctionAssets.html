@@ -109,7 +109,7 @@ function t3sbScrollIt(e) {
 // Sticky footer - Page/Footer.html
 function t3sbStickyFooter(footerExtraHeight) {
 	const footer = document.getElementById('page-footer');
-	var footerHeight = footer.clientHeight;
+	var footerHeight = footer.offsetHeight -2;
 	if ( footerExtraHeight > 0 ) {
 		footerHeight += footerExtraHeight;
 	}
@@ -128,7 +128,7 @@ function t3sbSectionMenu(fixedNavbar,sectionmenuAnchorOffset,navbarHeight,offcan
 	const sectionmenu = document.getElementById('main-navbar');
 	sectionmenu.querySelectorAll('a.js-scroll-trigger').forEach( link => {
 		link.addEventListener('click', function(l) {
-			t3sbScrollToAnchor({t3sb:intval(number: sectionmenuAnchorOffset)}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
+			t3sbScrollToAnchor(sectionmenuAnchorOffset, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
 			l.preventDefault();
 		});
 	});

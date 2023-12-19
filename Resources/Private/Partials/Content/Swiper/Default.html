@@ -99,6 +99,8 @@
 
 <f:section name="Image">
 <f:variable name="imgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}')}" />
+
+<f:link.typolink parameter="{file.properties.link}" class="ce-link">
 <figure class="image{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
 <f:if condition="{origImage}">
 	<f:then>
@@ -125,6 +127,7 @@
 	</f:else>
 </f:if>
 </figure>
+</f:link.typolink>
 </f:section>
 
 <f:section name="CardTitle">
@@ -139,22 +142,23 @@
 </f:section>
 
 <f:section name="Title">
+	<f:variable name="headerLayout" value="{f:if(condition: card.header_layout, then: '{card.header_layout}', else: '2')}" />
 	<f:if condition="{card.header} && {card.subheader}">
 		<f:then>
 			<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
-				<f:if condition="{card.header_layout} != 100">
-					<h{card.header_layout} class="card-title">
+				<f:if condition="{headerLayout} != 100">
+					<h{headerLayout} class="card-title">
 						{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
-					</h{card.header_layout}>
+					</h{headerLayout}>
 				</f:if>
 				<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 			</header>
 		</f:then>
 		<f:else if="{card.header}">
-			<f:if condition="{card.header_layout} != 100">
-				<h{card.header_layout} class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
+			<f:if condition="{headerLayout} != 100">
+				<h{headerLayout} class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
 					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
-				</h{card.header_layout}>
+				</h{headerLayout}>
 			</f:if>
 		</f:else>
 		<f:else if="{card.subheader}">

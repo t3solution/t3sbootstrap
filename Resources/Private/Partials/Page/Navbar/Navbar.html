@@ -155,13 +155,13 @@
 <f:if condition="{config.navbar.brand}">
 	<f:switch expression="{config.navbar.brand}">
 		<f:case value="imgText">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}">
+			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
 				<f:render section="BrandImage" arguments="{_all}" />
 				{config.general.company}
 			</f:link.typolink>
 		</f:case>
 		<f:case value="image">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}">
+			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
 				<f:render section="BrandImage" arguments="{_all}" />
 			</f:link.typolink>
 		</f:case>
@@ -169,7 +169,7 @@
 			<span class="navbar-brand mb-0 h1">{config.general.company}</span>
 		</f:case>
 		<f:defaultCase>
-			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}">
+			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="{data.linkTitle}">
 				{config.general.company}
 			</f:link.typolink>
 		</f:defaultCase>
@@ -224,8 +224,8 @@
 								</f:if>
 								<a class="nav-link{navbarItem.activeClass}"
 									href="{navbarItem.link}"
-										target="{navbarItem.target}"
-											title="{navbarItem.title}">
+									 target="{navbarItem.target}"
+									 title="{navbarItem.linkTitle}">
 									<f:render section="Title" arguments="{item: navbarItem}" />
 								</a>
 							</f:else>
@@ -279,6 +279,7 @@
 			<f:variable name="dropdownRight" value="{navbarItem.data.tx_t3sbootstrap_dropdownRight}" />
 		</f:else>
 	</f:if>
+
 	<f:if condition="{config.navbar.navbarPlusicon}">
 		<f:then>
 			<f:render partial="Page/Navbar/Plusicon" arguments="{_all}" />
@@ -297,7 +298,7 @@
 			data-bs-toggle="{config.navbar.bstoggle}"
 			role="button"
 			aria-expanded="false"
-			title="{navbarItem.title}"
+			title="{navbarItem.linkTitle}"
 			{f:if(condition: navbarItem.current, then:' aria-current="page"')}>
 			<f:render section="Title" arguments="{item: navbarItem}" />
 		</a>
@@ -436,7 +437,7 @@
 		<f:else>
 			<a class="dropdown-item dropdown-item-{child.data.uid}{child.activeClass}"
 				href="{child.link}" title="{child.title -> f:format.raw()}"
-				target="{grandchild.target}"
+				target="{child.target}"
 				{f:if(condition: child.current, then:' aria-current="page"')} >
 				<f:render section="Title" arguments="{item: child}" />
 			</a>

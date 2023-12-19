@@ -1,8 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
-<f:section name="Header">
-<f:comment>no header here</f:comment>
-</f:section>
 <f:section name="Main">
 <f:if condition="{col_300 -> f:count()}">
 	<f:then>
@@ -27,8 +24,16 @@
 				src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 		</f:then>
 		<f:else>
-			<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
-			<f:asset.script identifier="swiperjs" src="fileadmin/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+			<f:if condition="{settings.sitepackage}">
+				 <f:then>
+					<f:asset.css identifier="swipercss" href="EXT:t3sb_package/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
+					<f:asset.script identifier="swiperjs" src="EXT:t3sb_package/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+				 </f:then>
+				 <f:else>
+				 	<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/CSS/swiper-bundle.min.css" />
+					<f:asset.script identifier="swiperjs" src="fileadmin/T3SB/Resources/Public/JS/swiper-bundle.min.js" />
+				 </f:else>
+			 </f:if>
 		</f:else>
 	</f:if>
 	<f:render partial="Swiper/{sliderStyle}" arguments="{_all}" />

@@ -13,10 +13,11 @@
 	}
 </f:asset.script>
 </f:if>
+
 <f:if condition="{fixedbutton}">
 	<f:asset.script identifier="fixedbutton_function">
 // Fixed button on left or right browser edge - Page/Assets.html
-function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {
+function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {  
 	fixedButtons.forEach( fixedButton => {
 		if (fixedButton !== null && fixedButton !== '') {
 			fixedButton.style.opacity = '0';
@@ -60,7 +61,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBt
 									slideInButton.classList.add('mb-1', 'text-start', 'btnGroupSlider');
 									slideInButton.addEventListener('mouseenter', function(e) {
 										if(e.target.classList.contains('btn')) {
-											slideOut = slideInButton.clientWidth-visiblePart-3;
+											slideOut = slideInButton.clientWidth-visiblePart;
 											e.target.style.position = 'relative';
 											e.target.style.right = Math.abs(slideOut)+'px';
 											e.target.classList.add('btn-slide-out');
@@ -147,7 +148,7 @@ function t3sbFadeInEffect(fadeTarget) {
 		document.body.setAttribute('tabindex', '0');
 		sectionmenu.querySelectorAll('a').forEach( link => {
 			link.addEventListener('click', function(l) {
-				t3sbScrollToAnchor({t3sb:intval(number: '{settings.config.sectionmenuAnchorOffset}')}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
+				t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
 			});
 		});
 	}
