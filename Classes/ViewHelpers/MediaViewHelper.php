@@ -244,12 +244,14 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
 			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
 			$breakpointArr[$bpKey]['srcset'] = '';
-			foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
-				if ($width > (int)$srcset) {
-					$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
-				} else {
-					$breakpointArr[$bpKey]['srcset'] .= $srcset;
-					break;
+			if (!empty($breakpoint['srcset'])) {
+				foreach( explode(',', $breakpoint['srcset']) as $key=>$srcset ) {
+					if ($width > (int)$srcset) {
+						$breakpointArr[$bpKey]['srcset'] .= $srcset.',';
+					} else {
+						$breakpointArr[$bpKey]['srcset'] .= $srcset;
+						break;
+					}
 				}
 			}
 		}
