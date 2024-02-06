@@ -515,7 +515,7 @@ $tempContentColumns = [
                                 ['label' => 'gx-4 (default)', 'value' => 'gx-4',],
                                 ['label' => 'gx-5', 'value' => 'gx-5',],
                         ],
-                        'default' => 'gx-4'
+                        'default' => 'gx-0'
                 ]
         ],
         'tx_t3sbootstrap_verticalgutters' => [
@@ -547,6 +547,8 @@ $tempContentColumns = [
         'tx_t3sbootstrap_bordercolor' => [
                 'label' => 'Border color',
                 'exclude' => 1,
+                'onChange' => 'reload',
+                'displayCond' => 'FIELD:imageborder:REQ:true',
                 'config' => [
                         'type' => 'select',
                         'renderType' => 'selectSingle',
@@ -570,16 +572,13 @@ $tempContentColumns = [
                 'label' => 'Image Ratio',
                 'exclude' => 1,
                 'displayCond' => [
-                        'AND' => [
-                                'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['ratio'],
-                                'OR' => [
-                                        'FIELD:CType:=:textpic',
-                                        'FIELD:CType:=:textmedia',
-                                        'FIELD:CType:=:t3sbs_mediaobject',
-                                        'FIELD:CType:=:t3sbs_card',
-                                        'FIELD:CType:=:t3sbs_toast',
-                                        'FIELD:CType:=:t3sbs_gallery',
-                                ]
+                        'OR' => [
+                                'FIELD:CType:=:textpic',
+                                'FIELD:CType:=:textmedia',
+                                'FIELD:CType:=:t3sbs_mediaobject',
+                                'FIELD:CType:=:t3sbs_card',
+                                'FIELD:CType:=:t3sbs_toast',
+                                'FIELD:CType:=:t3sbs_gallery',
                         ]
                 ],
                 'config' => [
@@ -601,16 +600,13 @@ $tempContentColumns = [
                 'exclude' => 1,
                 'label' => 'Use Original Image',
                 'displayCond' => [
-                        'AND' => [
-                                'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['ratio'],
-                                'OR' => [
-                                        'FIELD:CType:=:textpic',
-                                        'FIELD:CType:=:textmedia',
-                                        'FIELD:CType:=:t3sbs_mediaobject',
-                                        'FIELD:CType:=:t3sbs_card',
-                                        'FIELD:CType:=:t3sbs_toast',
-                                        'FIELD:CType:=:t3sbs_gallery',
-                                ]
+                        'OR' => [
+                            'FIELD:CType:=:textpic',
+                            'FIELD:CType:=:textmedia',
+                            'FIELD:CType:=:t3sbs_mediaobject',
+                            'FIELD:CType:=:t3sbs_card',
+                            'FIELD:CType:=:t3sbs_toast',
+                            'FIELD:CType:=:t3sbs_gallery',
                         ]
                 ],
                 'config' => [
@@ -624,16 +620,13 @@ $tempContentColumns = [
                 'label' => 'Use Original Image for Lightbox',
                 'description' => 'Only useful with image manipulation (cropping)',
                 'displayCond' => [
-                        'AND' => [
-                                'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->ratio_'.$extconf['ratio'],
-                                'OR' => [
-                                        'FIELD:CType:=:textpic',
-                                        'FIELD:CType:=:textmedia',
-                                        'FIELD:CType:=:t3sbs_mediaobject',
-                                        'FIELD:CType:=:t3sbs_card',
-                                        'FIELD:CType:=:t3sbs_toast',
-                                        'FIELD:CType:=:t3sbs_gallery',
-                                ]
+                        'OR' => [
+                            'FIELD:CType:=:textpic',
+                            'FIELD:CType:=:textmedia',
+                            'FIELD:CType:=:t3sbs_mediaobject',
+                            'FIELD:CType:=:t3sbs_card',
+                            'FIELD:CType:=:t3sbs_toast',
+                            'FIELD:CType:=:t3sbs_gallery',
                         ]
                 ],
                 'config' => [
@@ -1065,47 +1058,20 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
     'tx_t3sbootstrap_header_celink',
     'after:header_link'
 );
+
+// Media Adjustments
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
     'tt_content',
     'mediaAdjustments',
     '--linebreak--, tx_t3sbootstrap_bordercolor',
     'after:imageborder'
 );
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-    'tt_content',
-    'imageSettings',
-    'tx_t3sbootstrap_image_ratio',
-    'after:tx_t3sbootstrap_bordercolor'
-);
 
-
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-    'tt_content',
-    'imagelinks',
-    'tx_t3sbootstrap_zoom_orig',
-    'after: image_zoom'
-);
-
-
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-    'tt_content',
-    'imageSettings',
-    'tx_t3sbootstrap_image_orig',
-    'before:tx_t3sbootstrap_image_ratio'
-);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
-    'tt_content',
-    'imageSettings',
-    'tx_t3sbootstrap_inTextImgRowWidth',
-    'after:tx_t3sbootstrap_bordercolor'
-);
+// T3SB Image Gutters
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
     'tt_content',
     'imageGutters',
     'tx_t3sbootstrap_gutters',
-    'after:tx_t3sbootstrap_image_ratio'
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
     'tt_content',
@@ -1114,14 +1080,46 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
     'after:tx_t3sbootstrap_gutters'
 );
 
+// T3SB Image Settings
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+    'tt_content',
+    'imageSettings',
+    'tx_t3sbootstrap_inTextImgRowWidth'
+);
+if ($extconf['ratio']) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+        'tt_content',
+        'imageSettings',
+        'tx_t3sbootstrap_image_ratio',
+        'before:tx_t3sbootstrap_inTextImgRowWidth'
+    );
+}
+if ($extconf['origimage']) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+        'tt_content',
+        'imageSettings',
+        'tx_t3sbootstrap_image_orig',
+        'after:tx_t3sbootstrap_inTextImgRowWidth'
+    );
+}
 
-# add palette bootstrap etc
+// Behavior
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+    'tt_content',
+    'imagelinks',
+    'tx_t3sbootstrap_zoom_orig',
+    'after: image_zoom'
+);
+
+
+# add palettes
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
     '--palette--; ;bsHeaderExtra',
     '',
     'after:header'
 );
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
     '--palette--;Bootstrap Color;bootstrapColor',
