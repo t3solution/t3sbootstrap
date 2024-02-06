@@ -12,6 +12,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Symfony\Component\Console\Command\Command;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
