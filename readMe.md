@@ -14,7 +14,9 @@
 
 #### Installation using Composer
 
-The recommended way to install the extension is by using Composer. In your Composer based TYPO3 project root, just do `composer require t3sbs/t3sbootstrap`. 
+The recommended way to install the extension is by using Composer. In your Composer based TYPO3 project root, just do 
+
+	composer require t3sbs/t3sbootstrap
 
 #### Installation as extension from TYPO3 Extension Repository (TER)
 
