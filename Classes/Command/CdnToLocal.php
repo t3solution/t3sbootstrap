@@ -37,7 +37,7 @@ class CdnToLocal extends CommandBase
      *
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         $settings = $configurationManager->getConfiguration(
@@ -245,11 +245,11 @@ class CdnToLocal extends CommandBase
             }
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 
-    private function writeCustomFile($customPath, $customFileName, $cdnPath, $extend=false)
+    private function writeCustomFile($customPath, $customFileName, $cdnPath, $extend=false): void
     {
         $customFile = $customPath.$customFileName;
         $customContent = GeneralUtility::getURL($cdnPath);
@@ -272,7 +272,7 @@ class CdnToLocal extends CommandBase
     }
 
 
-    private function getGoogleFonts($googleFonts, $gooleFontsWeights, $baseDir)
+    private function getGoogleFonts($googleFonts, $gooleFontsWeights, $baseDir): void
     {
         $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
         if (is_dir($localZipPath)) {
@@ -329,7 +329,7 @@ class CdnToLocal extends CommandBase
         }
     }
 
-    private function getGoogleFontsSitepackage($googleFonts, $gooleFontsWeights, $baseDir)
+    private function getGoogleFontsSitepackage($googleFonts, $gooleFontsWeights, $baseDir): void
     {
         $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
         if (is_dir($localZipPath)) {
@@ -388,7 +388,7 @@ class CdnToLocal extends CommandBase
     }
 
 
-    private function getGoogleFiles($zipContent, $baseDir='/')
+    private function getGoogleFiles($zipContent, $baseDir='/'): array
     {
         $googleFileArr = [];
         if ($zipContent) {
@@ -422,7 +422,7 @@ class CdnToLocal extends CommandBase
     }
 
 
-    private function generateRandomString($length = 4)
+    private function generateRandomString($length = 4): string
     {
         $characters = '0123456789';
         $charactersLength = strlen($characters);
