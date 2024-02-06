@@ -8,6 +8,7 @@ use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 final class BgOpacityUpgradeWizard implements UpgradeWizardInterface
 {
@@ -91,7 +92,10 @@ final class BgOpacityUpgradeWizard implements UpgradeWizardInterface
      */
     public function getPrerequisites(): array
     {
-        return '';
+        return [
+            DatabaseUpdatedPrerequisite::class,
+        ];
+
     }
 
     /**
