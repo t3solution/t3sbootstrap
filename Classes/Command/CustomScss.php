@@ -6,6 +6,7 @@ namespace T3SBS\T3sbootstrap\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -50,7 +51,7 @@ class CustomScss extends CommandBase
      *
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         $settings = $this->configurationManager->getConfiguration(
@@ -185,21 +186,21 @@ class CustomScss extends CommandBase
             }
 
             if (is_dir($baseDir.'Resources/Public/Contrib/Bootstrap/scss/')) {
-                return 0;
+                return Command::SUCCESS;
             } else {
                 throw new \InvalidArgumentException('Check the bootstrap version in the constant editor for validity!', 1657204821);
 
-                return 1;
+                return Command::FAILURE;
             }
         } else {
             throw new \InvalidArgumentException('You have to activate SCSS in the EM config!', 1657204821);
 
-            return 1;
+            return Command::FAILURE;
         }
     }
 
 
-    private function writeCustomFile($customPath, $customFileName, $settings, $name)
+    private function writeCustomFile($customPath, $customFileName, $settings, $name): bool
     {
         $customFile = $customPath.$customFileName;
 
@@ -234,7 +235,7 @@ class CustomScss extends CommandBase
     }
 
 
-    private function deleteFilesFromDirectory($directory)
+    private function deleteFilesFromDirectory($directory): void
     {
         if (is_dir($directory)) {
             if ($dh = opendir($directory)) {
