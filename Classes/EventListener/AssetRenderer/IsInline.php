@@ -36,9 +36,13 @@ class IsInline
 			't3sbootstrap',
 			'm1'
 		);
+		
+		if (!empty($settings['disableInlineJs'])) {
+            		return;
+        	}
 
 		$t3sbconcatenate = $settings['t3sbconcatenate'];
-
+		
 		if ( $event->isInline() == FALSE ) {
 
 			if ( $event->isPriority() == FALSE ) {
