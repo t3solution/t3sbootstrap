@@ -17,7 +17,7 @@ plugin.tx_t3sbootstrap {
 
 bootstrap.cdn.bootstraplatest = 5.3.2
 bootstrap.cdn.noZip = 0
-bootstrap.cdn.fontawesome6latest = 6.4.2
+bootstrap.cdn.fontawesome6latest = 6.5.1
 
 #-------------------------------------------------------------------------------
 #	Constant Editor
@@ -58,13 +58,13 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
 	masonry = 4.2.2
 	# cat=bootstrap-cdn/b-version/12; type=small; label=Fontawesome: e.g.6.4.0
-	fontawesome = 6.4.2
+	fontawesome = 6.5.1
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
-	jquery = 3.7.0
+	jquery = 3.7.1
 	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
 	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
-	lazyload = 17.8.3
+	lazyload = 17.8.5
 	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
 	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:

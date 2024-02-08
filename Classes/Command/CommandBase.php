@@ -17,7 +17,7 @@ class CommandBase extends Command
 	/**
 	* remove dirs
 	*/
-	public function rmDir(string $path) : int
+	public function rmDir(string $path): int
 	{
 		if (!is_dir ($path)) {
 			return -1;
