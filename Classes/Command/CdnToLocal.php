@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
 
-use TYPO3\CMS\Core\Http\RequestFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Symfony\Component\Console\Command\Command;
+use TYPO3\CMS\Core\Http\RequestFactory;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
