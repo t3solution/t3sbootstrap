@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:render partial="Layouts/Assets" arguments="{_all}" />
 <f:spaceless>
-<f:if condition="{data.CType} == 'collapsible_accordion' || {data.CType} == 't3sbs_toast' || {data.colPos} == 20">
+<f:if condition="{data.CType} == 'collapsible_accordion' || {data.CType} == 't3sbs_toast'">
 	<f:then>
 		<f:render section="Main" arguments="{_all}" />		
 	</f:then>
