@@ -56,6 +56,9 @@ class BackgroundImageUtility implements SingletonInterface
         if (empty($filesFromRepository)) {
             $filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
         }
+        if (empty($filesFromRepository)) {
+            $filesFromRepository = $fileRepository->findByRelation($table, 'bgimages', $uid);
+        }
 
         $css = '';
         $webp = false;
