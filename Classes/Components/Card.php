@@ -47,7 +47,7 @@ class Card implements SingletonInterface
             $processedData['data']['imageorient'] = 'top';
         }
         // title position
-        if (!empty($cardData['title']['onTop']) && $processedData['data']['imageorient'] == 'top' && !$cardData['image']['overlay']) {
+        if (!empty($cardData['title']['onTop']) && !empty($cardData['image']['overlay'])) {
             $cardData['title']['position'] = 'top';
         } else {
             $cardData['title']['position'] = 'default';
