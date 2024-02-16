@@ -103,8 +103,9 @@ class GalleryHelper implements SingletonInterface
 			if ( $imageorient == 0 || $imageorient == 8 ) {
 				// center
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $rowwidth.' text-center mx-auto';
+				$galleryRowClass .= $rowwidth.' text-center';
 				$processedData['addmedia']['zoomOverlay'] = ' d-flex mx-auto';
+				$processedData['addmedia']['figureclass'] .= ' mx-auto';
 			}
 			if ( $imageorient == 1 || $imageorient == 9 ) {
 				// right
