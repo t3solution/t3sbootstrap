@@ -5,7 +5,7 @@
 		<f:render partial="Media/Effects" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio}" />
 	</f:then>
 	<f:else>
-		<figure class="m-0 image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+		<figure class="m-0 image{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}" style="max-width:{dimensions.width}px">
 			<f:if condition="{file.link}">
 				<f:then>
 					<f:link.typolink parameter="{file.link}" title="{file.title}">
