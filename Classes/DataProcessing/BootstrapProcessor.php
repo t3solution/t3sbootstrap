@@ -275,7 +275,7 @@ class BootstrapProcessor implements DataProcessorInterface
         }
 
         // media
-        if ($processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media']) {
+        if ($processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] || $cType === 't3sbs_gallery') {
             $mediaElementHelper = GeneralUtility::makeInstance(MediaElementHelper::class);
             $processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint'], $parentflexconf);
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
