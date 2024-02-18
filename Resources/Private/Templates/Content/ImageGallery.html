@@ -29,14 +29,14 @@
 						<f:if condition="{file.type} == 2">
 							<f:if condition="{file.link}">
 								<f:then>
-									<figure class="image m-0">
+									<figure class="image m-0" style="max-width:{gallery.width}px;">
 										<f:link.typolink parameter="{file.link}">
 											<f:render section="Image" arguments="{_all}" />
 										</f:link.typolink>
 									</figure>
 								</f:then>
 								<f:else>
-									<figure class="image m-0{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}">
+									<figure class="image m-0{addmedia.figureclass}{f:if(condition: file.properties.tx_t3sbootstrap_extra_class, then: ' {file.properties.tx_t3sbootstrap_extra_class}')}" style="max-width:{gallery.width}px;">
 										<ce:link.clickEnlarge image="{file}" configuration="{settings.media.popup}">
 											<f:render section="Image" arguments="{_all}" />
 											<div class="zoom-overlay ml-2">
