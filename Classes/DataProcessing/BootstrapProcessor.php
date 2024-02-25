@@ -315,13 +315,13 @@ class BootstrapProcessor implements DataProcessorInterface
                 $processedData['lightBox'] = true;
             }
             // lightbox
-            if ($cType == 't3sbs_gallery' || !empty($processedData['data']['image_zoom'])) {
+            if ($cType === 't3sbs_gallery' || !empty($processedData['data']['image_zoom'])) {
                 $processedData['lightBox'] = true;
             }
         }
 
         // child of autoLayout_row
-        if ($parentCType == 'autoLayout_row') {
+        if ($parentCType === 'autoLayout_row') {
             $processedData['newLine'] = $flexconf['newLine'] ? true : false;
             $processedData['class'] .= $classHelper->getAutoLayoutClass($flexconf);
         }
@@ -374,7 +374,6 @@ class BootstrapProcessor implements DataProcessorInterface
 
         return $processedData;
     }
-
 
 
     /**

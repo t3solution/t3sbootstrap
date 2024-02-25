@@ -28,14 +28,14 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 final class ConfigController extends AbstractController
 {
     public function __construct(
-        private ModuleTemplateFactory $moduleTemplateFactory
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory
     ) {
     }
 
     /**
        * Init all actions.
        */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         parent::initializeAction();
     }

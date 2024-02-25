@@ -164,7 +164,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_container varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_extra_class varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_bgcolor varchar(30) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_bgopacity varchar(3) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_bgopacity varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_contextcolor varchar(20) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_textcolor varchar(9) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_flexform mediumtext,

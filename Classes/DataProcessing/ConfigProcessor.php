@@ -45,7 +45,6 @@ class ConfigProcessor implements DataProcessorInterface
         if (!$frontendController) {
             $frontendController = self::getFrontendController();
         }
-
         if (!empty($contentObjectConfiguration['settings.']['config.']['uid'])
              && is_numeric($contentObjectConfiguration['settings.']['config.']['uid'])) {
             $processedRecordVariables = $contentObjectConfiguration['settings.']['config.'];
@@ -179,10 +178,10 @@ class ConfigProcessor implements DataProcessorInterface
                     if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
                         $mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
                     }
-					$mainMenu[$key]['linkTitle'] = $navbarMenu['data']['title'];
-					if (!empty($settings['navbar.']['noLinkTitle'])) {
-						$mainMenu[$key]['linkTitle'] = '';
-					}
+                    $mainMenu[$key]['linkTitle'] = $navbarMenu['data']['title'];
+                    if (!empty($settings['navbar.']['noLinkTitle'])) {
+                        $mainMenu[$key]['linkTitle'] = '';
+                    }
                     if ($navbarMenu['data']['tx_t3sbootstrap_icon_only']) {
                         $mainMenu[$key]['linkTitle'] = $navbarMenu['data']['title'];
                         $mainMenu[$key]['title'] = '';
@@ -385,7 +384,7 @@ class ConfigProcessor implements DataProcessorInterface
                     $processedData['config']['navbar']['sbmauto'] = ' ms-auto';
                 }
                 if ($processedData['config']['navbar']['mauto'] == ' ms-auto') {
-                    $processedData['config']['navbar']['sbmauto'] = ' float-right ms-3';
+                    $processedData['config']['navbar']['sbmauto'] = ' float-end ms-3';
                 }
                 if ($processedData['config']['navbar']['mauto'] == 'center') {
                     $processedData['config']['navbar']['sbmauto'] = '';

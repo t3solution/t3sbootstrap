@@ -1,21 +1,10 @@
-<!--
-	=====================
-	Partials/ResultRow.html
 
-	modified by EXT:t3sbootstrap
--->
-
-<f:asset.css identifier="searchResult">
-.card {
-	border-radius: 0;
-  border-top-left-radius: 30px;
-  behavior:url(border-radius.htc);
+<f:asset.css identifier="ke_searchResult">
+#kesearch_pagebrowser_top a, #kesearch_pagebrowser_bottom a {
+  padding: 6px 12px !important;
 }
-
-.hit {
-background: rgba(0, 0, 0, 0.05);
-font-weight: 700;
-color: var(--bs-primary)
+#kesearch_pagebrowser_top a.current, #kesearch_pagebrowser_bottom a.current {
+  color: #fff !important;
 }
 </f:asset.css>
 
@@ -23,15 +12,15 @@ color: var(--bs-primary)
 <div class="card above h-100 w-100">
 <div class="card-body">
   <div class="row">
-	<div class="col-md-6">
-		<p><span class="teaser_icon">
+	<div class="col-6">
+		<span class="teaser_icon">
 		<f:render
 			section="typeIconOrPreviewImage"
 			arguments="{icon: resultrow.typeIconPath, filePreviewId: resultrow.filePreviewId, treatIdAsReference:resultrow.treatIdAsReference, iconConf: conf.showTypeIcon}"
 		/>
-		</span>{resultrow.type}</p>
+		</span>{resultrow.type}
 	</div>
-	<div class="col-md-6 text-end">
+	<div class="col-6 text-end">
 		<f:if condition="{resultrow.type} == 'cal'">
 			<f:then>
 				<f:comment><!-- Special cal date rendering --></f:comment>
@@ -47,7 +36,7 @@ color: var(--bs-primary)
 	</div>
   </div>
 <header>
-	<h5 class="result-title">
+	<h5 class="result-title my-3">
 		<f:format.raw>{resultrow.title}</f:format.raw>
 	</h5>
 </header>
@@ -55,15 +44,23 @@ color: var(--bs-primary)
 	<span class="result-teaser">{resultrow.teaser -> f:format.raw()}</span>
 </div>
 </div>
-  <div class="card-footer">
+  <div class="card-footer small">
 	  <i class="fa-solid fa-tags me-1"></i>{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}
   </div>
 </div>
 </div>
 
 
+
 <f:section name="typeIconOrPreviewImage">
-	<f:if condition="{iconConf}">
-		<f:image class="me-1" src="{icon}" maxWidth="16" maxHeight="16" />
+	<f:if condition="{iconConf} && !{filePreviewId}">
+		<f:then>
+			<f:image src="{icon}" maxWidth="16" maxHeight="16" />
+		</f:then>
+		<f:else>
+			<f:if condition="{filePreviewId}">
+				<f:image src="{filePreviewId}" treatIdAsReference="{treatIdAsReference}" maxWidth="200" />
+			</f:if>
+		</f:else>
 	</f:if>
 </f:section>
