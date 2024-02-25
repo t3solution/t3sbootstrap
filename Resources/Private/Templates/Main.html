@@ -5,9 +5,16 @@
 		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
 	</f:then>
 	<f:else>
+		<f:if condition="{settings.gtm}">
+			<!-- Google Tag Manager (noscript) -->
+			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={settings.gtm}"
+			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+			<!-- End Google Tag Manager (noscript) -->
+		</f:if>
 		<f:spaceless>
 			<f:render partial="FunctionAssets" arguments="{_all}" />
 			<f:render section="AssetScripts" arguments="{_all}" />
+			<f:comment> GOOGLE TAG MANAGER (noscript)</f:comment>
 			<f:comment> LOADING SPINNER </f:comment>
 			<f:if condition="{settings.config.loadingSpinner}">
 				<div id="site-preloader">

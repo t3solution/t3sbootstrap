@@ -54,27 +54,28 @@ defined('TYPO3') || die();
      * Custom Extensions
      */
 
-    # EXPERIMENTAL -  if ke_search is loaded
-    /*
-    if ( ExtensionManagementUtility::isLoaded('ke_search') ) {
-         # Setup
-        ExtensionManagementUtility::addTypoScript('t3sbootstrap',
-            'setup','@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TypoScript/setup.typoscript"'
-        );
-        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 1');
-         # TsConfig
-         ExtensionManagementUtility::addPageTSConfig('@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig"');
-    }
-    */
-    # if indexed_search is loaded
-    if (ExtensionManagementUtility::isLoaded('indexed_search')) {
+    # if ke_search is loaded
+    if (ExtensionManagementUtility::isLoaded('ke_search')) {
         # Setup
         ExtensionManagementUtility::addTypoScript(
             't3sbootstrap',
             'setup',
-            '@import "EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript"'
+            '@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TypoScript/setup.typoscript"'
         );
-        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 1');
+        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 1');
+        # TsConfig
+        ExtensionManagementUtility::addPageTSConfig('@import "EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig"');
+    } else {
+        # if indexed_search is loaded
+        if (ExtensionManagementUtility::isLoaded('indexed_search')) {
+            # Setup
+            ExtensionManagementUtility::addTypoScript(
+                't3sbootstrap',
+                'setup',
+                '@import "EXT:t3sbootstrap/Resources/Private/Extensions/indexed_search/Configuration/TypoScript/setup.typoscript"'
+            );
+            ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 1');
+        }
     }
     # if news is loaded
     if (ExtensionManagementUtility::isLoaded('news') && array_key_exists('extNews', $extconf) && $extconf['extNews'] === '1') {

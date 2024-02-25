@@ -1,12 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-
-
 	<f:if condition="{settings.navbar.searchboxLink}">
 		<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fa-solid fa-search mx-3"></i></f:link.page>
 	</f:if>
-
-
 	<div class="nav-item dropdown {config.navbar.hover}">
 		<a class="nav-link dropdown-toggle ps-{settings.config.navbarBreakpoint}-3" id="right-menu"
 			 href="#" data-bs-toggle="{config.navbar.bstoggle}" role="button" aria-expanded="false">
@@ -39,7 +35,7 @@
 					</f:else>
 				</f:if>
 			</f:for>
-			</div>
+		</div>
 	</div>
 
 </html>

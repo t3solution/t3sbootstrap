@@ -7,19 +7,36 @@ plugin.tx_kesearch_pi1 {
 		partialRootPaths {
 			55 = EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Resources/Private/Partials/
 		}
-	}	
+
+		layoutRootPaths {
+			55 = EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Resources/Private/Layouts/
+		}
+	}
 }
 
+plugin.tx_kesearch_pi2.highlightedWord_stdWrap.wrap = <mark>|</mark>
+
+
 plugin.tx_kesearch_pi1.cssFile =
-plugin.tx_kesearch_pi2.cssFile =
+#plugin.tx_kesearch_pi2.cssFile =
 plugin.tx_kesearch_pi2.includeFilters = 1
+
 
 lib.searchbox_html = TEXT
 lib.searchbox_html.value (
-<form method="get" id="form_kesearch_searchfield" name="form_kesearch_searchfield" action="/suchen/">
-  <input class="form-control" type="text" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Suchbegriff" />
+<form method="get" id="form_kesearch_searchfield" class="d-flex m-0" name="form_kesearch_searchfield" action="/suchen/" role="search">
+  <input class="form-control me-2" type="search" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Suchbegriff" aria-label="Search" />
 </form>
 )
 
-// The action “/suchen/” ist the slug of the page you created with your result list plugin.
+lib.searchboxWithButton_html = TEXT
+lib.searchboxWithButton_html.value (
+<form method="get" id="form_kesearch_searchfield" class="d-flex m-0" name="form_kesearch_searchfield" action="/suchen/" role="search">
+  <input class="form-control me-2" type="search" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Suchbegriff" aria-label="Search" />
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+)
 
+##########################################################################################
+// The action “/suchen/” is the slug of the page you created with your result list plugin.
+##########################################################################################

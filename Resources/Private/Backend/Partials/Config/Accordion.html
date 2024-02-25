@@ -38,10 +38,10 @@
 				<div class="panel-body">
 					<div class="panel-group accordion accordion-sub" id="accordion-{colkey}" style="box-shadow: none;">
 						<f:for each="{columns}" as="field" key="ckey">
-							<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
+							<f:if condition="{ckey} == 'general_override' && {config.homepageUid} == {config.pid}">
 								<f:then>
 									<f:comment>
-										Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
+										Hide Option 'general_override' on siteroot
 									</f:comment>
 								</f:then>
 								<f:else>

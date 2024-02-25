@@ -2,7 +2,12 @@
 	xmlns:kesearch="http://typo3.org/ns/Tpwd/KeSearch/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{settings.kesearch.loaded}">
 	<f:then>
-		<f:cObject typoscriptObjectPath="lib.searchbox_html" />
+		<f:if condition="{config.navbar.searchbox} == 'form'">
+			<f:cObject typoscriptObjectPath="lib.searchbox_html" />
+		</f:if>
+		<f:if condition="{config.navbar.searchbox} == 'button'">
+			<f:cObject typoscriptObjectPath="lib.searchboxWithButton_html" />
+		</f:if>
 	</f:then>
 	<f:else>
 		<f:render section="Indexedsearch" arguments="{_all}" />

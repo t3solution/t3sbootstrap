@@ -3,7 +3,6 @@
 <f:alias map="{sword: searchParams.sword}">
 	<f:render partial="Form" arguments="{_all}" />
 </f:alias>
-
 <f:for each="{resultsets}" as="result">
 	<f:if condition="{result.categoryTitle}">
 		<h1 class="tx-indexedsearch-category">{result.categoryTitle}</h1>
@@ -51,11 +50,11 @@
 						</table>
 					</div>
 				</f:if>
-				<t3sb:pageBrowsing maximumNumberOfResultPages="{settings.page_links}" numberOfResults="{result.count}" currentPage="{searchParams.pointer}" resultsPerPage="{searchParams.numberOfResults}" />
+				<t3sb:pageBrowsing maximumNumberOfResultPages="{settings.page_links}" numberOfResults="{result.count}" currentPage="{searchParams.pointer}" resultsPerPage="{searchParams.numberOfResults}" freeIndexUid="{freeIndexUid}" />
 			</div>
 			<f:for each="{result.rows}" as="row">
 				<f:if condition="{row.isSectionHeader}">
-					<f:then>
+					<f:then>	
 					<div id="anchor_{row.sectionId}" class="tx-indexedsearch-sectionhead">
 						<h2 class="tx-indexedsearch-title"><f:format.html>{row.sectionTitle}</f:format.html> <span class="tx-indexedsearch-result-count">{row.numResultRows} <f:translate key="{f:if(condition: '{row.numResultRows} > 1', then: 'result.pages', else: 'result.page')}" /></span></h2>
 					</div>
@@ -66,7 +65,7 @@
 				</f:if>
 			</f:for>
 			<div class="tx-indexedsearch-browsebox">
-				<t3sb:pageBrowsing numberOfResults="{result.count}" maximumNumberOfResultPages="{settings.page_links}" currentPage="{searchParams.pointer}" resultsPerPage="{searchParams.numberOfResults}" />
+				<t3sb:pageBrowsing numberOfResults="{result.count}" maximumNumberOfResultPages="{settings.page_links}" currentPage="{searchParams.pointer}" resultsPerPage="{searchParams.numberOfResults}" freeIndexUid="{freeIndexUid}" />
 			</div>
 		</f:then>
 		<f:else>

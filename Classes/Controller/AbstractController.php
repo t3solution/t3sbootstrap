@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
-#use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -42,7 +41,7 @@ abstract class AbstractController extends ActionController
     /**
      * init all actions
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $site = $this->request->getAttribute('site');
         $this->rootPageId = $site->getRootPageId();
@@ -62,8 +61,6 @@ abstract class AbstractController extends ActionController
                 $queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
             )
             ->executeQuery()->fetchOne();
-
-#        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
     }
 
 
