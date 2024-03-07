@@ -91,7 +91,11 @@ class ConfigProcessor implements DataProcessorInterface
                     } elseif (($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
                         $processedData['data'][$field] = 'var('.$override.')';
                     } else {
-                        $processedData['data'][$field] = $override;
+                        if ($processedData['data']['tx_t3sbootstrap_container'] === '0') {
+                            // no override if container = none
+                        } else {
+                            $processedData['data'][$field] = $override;
+                        }
                     }
                 }
             }
