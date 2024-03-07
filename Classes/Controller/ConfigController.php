@@ -45,6 +45,19 @@ final class ConfigController extends AbstractController
      */
     public function listAction(bool $deleted = false, bool $created = false, bool $updateSss = false): ResponseInterface
     {
+        if (empty($this->settings['sitepackage'])) {
+            $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
+        } else {
+            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
+                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/T3SB/');
+            }
+        }
+        $cdnHint = false;
+        $file = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss';
+        if (file_exists($file) && $this->settings['cdn']['enable']) {
+            $cdnHint = true;
+        }
+
         if ($this->isSiteroot && $this->rootPageId) {
             $pidList = parent::getTreeList($this->rootPageId, 999999, 0, '1');
             $allConfig = [];
@@ -74,6 +87,7 @@ final class ConfigController extends AbstractController
         $assignedOptions['updateScss'] = $updateSss;
         $assignedOptions['deleted'] = $deleted;
         $assignedOptions['created'] = $created;
+        $assignedOptions['cdnHint'] = $cdnHint;
 
         if (!empty($this->settings['customScss']) && (int)$this->settings['customScss'] === 1) {
             $customScss = parent::getCustomScss('custom-variables');
@@ -252,8 +266,6 @@ final class ConfigController extends AbstractController
         } else {
             if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
                 $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/T3SB/");
-            } else {
-                throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
             }
         }
 

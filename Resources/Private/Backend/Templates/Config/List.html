@@ -134,6 +134,11 @@ color: #fff;">
 </div>
 
 <f:if condition="{admin}">
+	<f:if condition="{cdnHint}">
+		<div class="alert alert-danger text-center mt-4" role="alert">
+			You run the scheduler task "T3SB CDN to local" but did not deactivate "Enable CDN" in the Constant Editor!
+		</div>
+	</f:if>
 	<f:if condition="{settings.customScss}">
 		<f:then>
 			<f:if condition="{customScss}">

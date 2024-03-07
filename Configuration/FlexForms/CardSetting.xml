@@ -25,7 +25,6 @@
 							<default>0</default>
 						</config>
 					</effect>
-
 					<effectColor>
 						<label>Card Hover Effect Color</label>
 						<displayCond>
@@ -82,7 +81,6 @@
 							<default>primary</default>
 						</config>
 					</effectColor>
-
 					<maxwidth>
 						<label>Card max-width == image width</label>
 						<displayCond>
@@ -316,7 +314,8 @@
 						<label>Horizontal</label>
 						<displayCond>
 							<and>
-								<numIndex index="0">FIELD:sDEF.multiImage.enable:=:0</numIndex>
+								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
 								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
 							</and>
 						</displayCond>
@@ -324,10 +323,9 @@
 							<type>check</type>
 						</config>
 					</horizontal>
-
 					<tiling.enable>
 						<label>Tiling card with text and image</label>
-						<description>Best in 2 columns with the following setting "col-lg-6 col-md-12 col-12"</description>
+						<description>Only in 2 columns and best with the following setting "col-lg-6 col-md-12 col-12"</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->twoColumnsParent</displayCond>
 						<onChange>reload</onChange>
 						<config>
@@ -335,7 +333,6 @@
 							<default>0</default>	
 						</config>
 					</tiling.enable>
-
 					<tiling.position>
 						<label>Tiling position of the Image</label>
 						<displayCond>FIELD:sDEF.tiling.enable:=:1</displayCond>
@@ -352,18 +349,13 @@
 									<numIndex index="1">right</numIndex>
 								</numIndex>
 							</items>
-							<default>left</default>							
+							<default>left</default>	
 						</config>
 					</tiling.position>
 					<multiImage.enable>
 						<label>Enable Profile Card</label>
 						<description>You need at least two images for the profile card. The second is the circular, smaller image</description>
-						<displayCond>
-							<and>
-								<numIndex index="0">FIELD:sDEF.horizontal:=:0</numIndex>
-								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
-							</and>
-						</displayCond>
+						<displayCond>FIELD:sDEF.tiling.enable:=:0</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
