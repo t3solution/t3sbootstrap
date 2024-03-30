@@ -11,7 +11,9 @@
 							<div class="col">
 								<f:render section="HeaderBeside" arguments="{_all}" />
 								<f:if condition="{data.bodytext}">
-									{data.bodytext -> f:format.html()}
+									<div class="bodytext">
+										{data.bodytext -> f:format.html()}
+									</div>
 								</f:if>
 							</div>
 						</div>
@@ -35,7 +37,9 @@
 							<div class="col">
 								<f:render section="HeaderBeside" arguments="{_all}" />
 								<f:if condition="{data.bodytext}">
-									{data.bodytext -> f:format.html()}
+									<div class="bodytext">
+										{data.bodytext -> f:format.html()}
+									</div>
 								</f:if>
 							</div>
 						</div>
@@ -58,7 +62,9 @@
 		<f:render partial="Media/Gallery" arguments="{_all}" />
 		<f:render section="HeaderBeside" arguments="{_all}" />
 		<f:if condition="{data.bodytext}">
-			{data.bodytext -> f:format.html()}
+			<div class="bodytext">
+				{data.bodytext -> f:format.html()}
+			</div>
 		</f:if>
 	</f:then>
 	<f:else>
@@ -76,7 +82,9 @@
 							<f:if condition="{data.bodytext || data.header || data.subheader}">
 								<div class="col order-1 order-md-2{restrowwidth}">
 									<f:render section="HeaderBeside" arguments="{_all}" />
-									{data.bodytext -> f:format.html()}
+									<div class="bodytext">
+										{data.bodytext -> f:format.html()}
+									</div>
 								</div>
 							</f:if>
 						</div>
@@ -86,7 +94,9 @@
 							<f:if condition="{data.bodytext || data.header || data.subheader}">
 								<div class="col{restrowwidth}">
 									<f:render section="HeaderBeside" arguments="{_all}" />
-									{data.bodytext -> f:format.html()}
+									<div class="bodytext">
+										{data.bodytext -> f:format.html()}
+									</div>
 								</div>
 							</f:if>
 							<f:if condition="{gallery.rows} || {files}">

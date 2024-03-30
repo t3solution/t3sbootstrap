@@ -104,8 +104,9 @@ defined('TYPO3') || die();
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_db.xlf'][] = Environment::getPublicPath() . $ctPath . 'locallang_db.xlf';
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$extPath . 'locallang_be.xlf'][] = Environment::getPublicPath() . $ctPath . 'locallang_be.xlf';
     }
-    // CKEditor & if rte_ckeditor_fontawesome is loaded
+    // CKEditor
     if (ExtensionManagementUtility::isLoaded('rte_ckeditor_fontawesome')) {
+        // ... if rte_ckeditor_fontawesome is loaded
         if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '1') {
             // FA6 KIT
             $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Fa6.yaml';
@@ -125,7 +126,7 @@ defined('TYPO3') || die();
         $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
     }
     // Optional sitepackage
-    if (array_key_exists('sitepackage', $extconf) && !empty($extconf['sitepackage'])) {
+    if (ExtensionManagementUtility::isLoaded('t3sb_package') && array_key_exists('sitepackage', $extconf) && !empty($extconf['sitepackage'])) {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sitepackage = 1');
         ExtensionManagementUtility::addTypoScriptConstants('@import \'EXT:t3sb_package/T3SB/Configuration/TypoScript/t3sbconstants.typoscript\'');
         ExtensionManagementUtility::addTypoScriptSetup('@import \'EXT:t3sb_package/T3SB/Configuration/TypoScript/t3sbsetup.typoscript\'');

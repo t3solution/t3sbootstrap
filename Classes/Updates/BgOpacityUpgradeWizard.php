@@ -7,6 +7,7 @@ namespace T3SBS\T3sbootstrap\Updates;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
@@ -53,7 +54,7 @@ final class BgOpacityUpgradeWizard implements UpgradeWizardInterface
                 $queryBuilder
                         ->update('tt_content')
                         ->where(
-                            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, \PDO::PARAM_INT))
+                            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordId, Connection::PARAM_INT))
                         )
                      ->set('tx_t3sbootstrap_bgopacity', $erg)
                      ->executeStatement();
@@ -95,7 +96,6 @@ final class BgOpacityUpgradeWizard implements UpgradeWizardInterface
         return [
             DatabaseUpdatedPrerequisite::class,
         ];
-
     }
 
     /**

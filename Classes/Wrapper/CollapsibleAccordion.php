@@ -35,7 +35,6 @@ class CollapsibleAccordion implements SingletonInterface
         $processedData['buttonstyle'] = !empty($flexconf['style']) ? $flexconf['style'] : 'primary';
         $processedData['collapsibleByPid'] = !empty($flexconf['collapsibleByPid']) ? $flexconf['collapsibleByPid'] : '';
         $processedData['media'] = $file ? $file : '';
-
         $processedData['appearance'] = $parentflexconf['appearance'];
 
         return $processedData;

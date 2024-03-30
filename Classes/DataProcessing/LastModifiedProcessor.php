@@ -8,6 +8,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -74,8 +75,8 @@ class LastModifiedProcessor implements DataProcessorInterface
              ->select('uid')
              ->from('tt_content')
              ->where(
-                 $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)),
-                 $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), \PDO::PARAM_INT)),
+                 $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)),
+                 $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), Connection::PARAM_INT)),
                  $queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('menu_recently_updated'))
              )
              ->executeQuery()
@@ -101,8 +102,8 @@ class LastModifiedProcessor implements DataProcessorInterface
              ->from('tt_content')
              ->orderBy('tstamp', 'DESC')
              ->where(
-                 $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)),
-                 $queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), \PDO::PARAM_INT))
+                 $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)),
+                 $queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), Connection::PARAM_INT))
              )
              ->setMaxResults($setMaxResults)
              ->executeQuery()
@@ -139,8 +140,8 @@ class LastModifiedProcessor implements DataProcessorInterface
                  ->select('uid', 'title', 'nav_title')
                  ->from('pages')
                  ->where(
-                     $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)),
-                     $queryBuilder->expr()->eq('doktype', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
+                     $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)),
+                     $queryBuilder->expr()->eq('doktype', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
                  )
                  ->executeQuery()
                  ->fetch();

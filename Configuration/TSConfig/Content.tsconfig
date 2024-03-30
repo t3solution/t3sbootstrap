@@ -48,7 +48,7 @@ TCEFORM.tt_content {
 	}
 	frame_class {
 		types {
-			collapsible_accordion.disabled = 1
+#			collapsible_accordion.disabled = 1
 			t3sbs_toast.disabled = 1
 		}
 	}

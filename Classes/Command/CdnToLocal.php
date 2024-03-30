@@ -283,7 +283,7 @@ class CdnToLocal extends CommandBase
         $googleFontsArr = explode(',', $googleFonts);
         foreach ($googleFontsArr as $font) {
             $fontFamily = trim($font);
-            $font = str_replace(' ', '-', trim($font));
+            $font = str_replace(' ', '-', $fontFamily);
             foreach (explode(',', $gooleFontsWeights) as $style) {
                 $style = trim($style);
                 $zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
@@ -310,13 +310,8 @@ class CdnToLocal extends CommandBase
     font-style: normal;
     font-weight: ".$style.";
     font-display: swap;
-    src: url('".$basePath."Resources/Public/CSS/googlefonts/".$file.".eot');
-    src: local(''),
-            url('googlefonts/".$file.".eot?#iefix') format('embedded-opentype'),
-        url('googlefonts/".$file.".woff2') format('woff2'),
-        url('googlefonts/".$file.".woff') format('woff');
-        url('googlefonts/".$file.".ttf') format('truetype'),
-        url('googlefonts/".$file.".svg#".trim(str_replace(' ', '', $fontFamily))."') format('svg');
+    src: url('googlefonts/".$file.".woff2') format('woff2'),
+         url('googlefonts/".$file.".ttf') format('truetype');
 }".LF.LF;
                 }
             }
@@ -349,14 +344,12 @@ class CdnToLocal extends CommandBase
                 $fontArr[$fontFamily] = self::getGoogleFiles($zipContent, $baseDir);
             }
         }
-
         if (is_array($fontArr)) {
             foreach ($fontArr as $fontFamily=>$googlePath) {
                 $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
             }
             $css = '';
             $headerData = '';
-
             foreach ($sliceArr as $fontFamily=>$googlePath) {
                 foreach (explode(',', $gooleFontsWeights) as $i=>$style) {
                     $style = trim($style);
@@ -368,13 +361,8 @@ class CdnToLocal extends CommandBase
         font-style: normal;
         font-weight: ".$style.";
         font-display: swap;
-        src: url('".$googlefontsPath.$file.".eot');
-        src: local(''),
-            url('".$googlefontsPath.$file.".eot?#iefix') format('embedded-opentype'),
-            url('".$googlefontsPath.$file.".woff2') format('woff2'),
-            url('".$googlefontsPath.$file.".woff') format('woff');
-            url('".$googlefontsPath.$file.".ttf') format('truetype'),
-            url('".$googlefontsPath.$file.".svg#".trim(str_replace(' ', '', $fontFamily))."') format('svg');
+        src: url('googlefonts/".$file.".woff2') format('woff2'),
+             url('googlefonts/".$file.".ttf') format('truetype');
     }".LF.LF;
                 }
             }
@@ -395,7 +383,6 @@ class CdnToLocal extends CommandBase
         if ($zipContent) {
             $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
             $localZipFile = $localZipPath.'googlefont.zip';
-
             GeneralUtility::writeFile($localZipFile, $zipContent);
             $zip = new \ZipArchive();
             if ($zip->open($localZipFile) === true) {
@@ -409,9 +396,8 @@ class CdnToLocal extends CommandBase
             }
             $googleFiles = scandir($localZipPath);
             $css = '';
-
             foreach ($googleFiles as $googleFile) {
-                if (str_ends_with($googleFile, 'woff')) {
+                if (str_ends_with($googleFile, 'ttf')) {
                     $googleFileArr[] = $googleFile;
                 }
             }

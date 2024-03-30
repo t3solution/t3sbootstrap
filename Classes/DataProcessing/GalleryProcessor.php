@@ -11,6 +11,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\ContentObject\Exception\ContentRenderingException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -791,7 +792,7 @@ class GalleryProcessor implements DataProcessorInterface
              ->count('uid')
              ->from($table)
              ->where(
-                 $queryBuilder->expr()->eq($equal, $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                 $queryBuilder->expr()->eq($equal, $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
              )
              ->executeQuery()->fetchOne();
 

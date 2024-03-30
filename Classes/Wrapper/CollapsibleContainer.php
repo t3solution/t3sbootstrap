@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Service\FlexFormService;
 
 /*
@@ -33,7 +34,7 @@ class CollapsibleContainer implements SingletonInterface
             ->select('tx_t3sbootstrap_flexform', 'tx_t3sbootstrap_header_fontawesome', 'tx_t3sbootstrap_header_class')
             ->from('tt_content')
             ->where(
-                $queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], Connection::PARAM_INT))
             )
             ->executeQuery()
             ->fetchAllAssociative();

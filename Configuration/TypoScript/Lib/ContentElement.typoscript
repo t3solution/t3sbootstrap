@@ -94,6 +94,7 @@ lib.contentElement {
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		sectionMenuClass = {$bootstrap.config.sectionMenuClass}
 		sitepackage = {$bootstrap.extconf.sitepackage}
+		shortcutsremove = {$bootstrap.shortcutsremove}
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 			sectionmenuScrollspyRootMargin = {$bootstrap.config.sectionmenuScrollspyRootMargin}
@@ -126,6 +127,7 @@ lib.contentElement {
 			contentMarginTop = {$bootstrap.config.contentMarginTop}
 			configuid = {$bootstrap.config.uid}
 			disableAutoRow = {$bootstrap.image.disableAutoRow}
+			footerPid = {$bootstrap.config.footerPid}
 			breakpoint {
 				sm = {$bootstrap.navbar.breakpoint.sm}
 				md = {$bootstrap.navbar.breakpoint.md}

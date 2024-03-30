@@ -9,6 +9,7 @@ use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
@@ -58,7 +59,7 @@ abstract class AbstractController extends ActionController
             ->count('uid')
             ->from('sys_template')
             ->where(
-                $queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
             )
             ->executeQuery()->fetchOne();
     }
@@ -84,7 +85,7 @@ abstract class AbstractController extends ActionController
              ->from('pages')
              ->where(
                  $queryBuilder->expr()->eq('sys_language_uid', 0),
-                 $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
+                 $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
              )
              ->executeQuery();
 
@@ -585,7 +586,7 @@ abstract class AbstractController extends ActionController
             $statement = $queryBuilder->select('uid')
                 ->from('pages')
                 ->where(
-                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, Connection::PARAM_INT)),
                     $queryBuilder->expr()->eq('sys_language_uid', 0),
                     QueryHelper::stripLogicalOperatorPrefix($permsClause)
                 )

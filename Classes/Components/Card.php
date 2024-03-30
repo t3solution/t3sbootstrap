@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Components;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Service\FlexFormService;
@@ -138,7 +139,7 @@ class Card implements SingletonInterface
                     ->select('listitem')
                     ->from('tx_t3sbootstrap_list_item_inline')
                     ->where(
-                        $queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+                        $queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($processedData['data']['uid'], Connection::PARAM_INT))
                     )
                     ->executeQuery()
                     ->fetchAllAssociative();

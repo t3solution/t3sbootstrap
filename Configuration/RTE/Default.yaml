@@ -4,13 +4,23 @@ imports:
     - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml' }
     - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml' }
 
-
 # Add configuration for the editor
 # For complete documentation see https://ckeditor.com/docs/ckeditor5/latest/features/index.html
 editor:
 
   config:
-   
+
+    importModules:
+      - { 'module': '@ckeditor/ckeditor5-font', 'exports': [ 'Font' ] }
+      - { 'module': '@ckeditor/ckeditor5-indent', 'exports': [ 'IndentBlock' ] }
+      - { 'module': '@ckeditor/ckeditor5-show-blocks', 'exports': ['ShowBlocks'] }
+      - { 'module': '@ckeditor/ckeditor5-word-count', 'exports': ['WordCount'] }
+
+    extraPlugins:
+      - Font
+      - Indent
+      - IndentBlock
+
     contentsCss: 
       - 'EXT:t3sbootstrap/Resources/Public/Backend/RTE/t3sbootstrap.css'
 
@@ -37,17 +47,50 @@ editor:
         - undo
         - redo
         - '|'
+        - showBlocks
         - horizontalLine
         - sourceEditing
         - '-'
         - style
+        - '|'
         - heading
+        - '|'
+        - { label: 'Font', icon: false, items: [ 'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor' ] }
         - '|'
         - alignment
         - findAndReplace
-        - insertTable
         - specialCharacters
+        - '|'
+        - outdent
+        - indent
 
+    indentBlock:
+      classes:
+        - 'custom-block-indent-a'
+        - 'custom-block-indent-b'
+        - 'custom-block-indent-c'
+
+    fontColor:
+      colors:
+        - { label: 'Primary', color: 'var(--bs-primary)' }
+        - { label: 'Secondary', color: 'var(--bs-secondary)' }
+        - { label: 'Success', color: 'var(--bs-success)' }
+        - { label: 'Danger', color: 'var(--bs-danger)' }
+        - { label: 'Warning', color: 'var(--bs-warning)' }
+        - { label: 'Info', color: 'var(--bs-info)' }
+        - { label: 'Light', color: 'var(--bs-light)' }
+        - { label: 'Dark', color: 'var(--bs-dark)' }
+    
+      fontBackgroundColor:
+        colors:
+        - { label: 'Primary', color: 'var(--bs-primary)' }
+        - { label: 'Secondary', color: 'var(--bs-secondary)' }
+        - { label: 'Success', color: 'var(--bs-success)' }
+        - { label: 'Danger', color: 'var(--bs-danger)' }
+        - { label: 'Warning', color: 'var(--bs-warning)' }
+        - { label: 'Info', color: 'var(--bs-info)' }
+        - { label: 'Light', color: 'var(--bs-light)' }
+        - { label: 'Dark', color: 'var(--bs-dark)' }
 
     heading:
       options:
@@ -58,7 +101,6 @@ editor:
         - { model: 'heading5', view: 'h5', title: 'Heading 5' }
         - { model: 'heading6', view: 'h6', title: 'Heading 6' }
         - { model: 'formatted', view: 'pre', title: 'Pre-Formatted Text' }
-
 
     style:
       definitions:
@@ -75,24 +117,20 @@ editor:
         - { name: 'Uppercase', element: 'p', 'classes': ['text-uppercase'], isBlock: 'true' }
         - { name: 'Capitalize', element: 'p', 'classes': ['text-capitalize'], isBlock: 'true' }
 
-
-        # Blockstile - Alert (div)
- #       - { name: 'Alert Primary', element: 'div', 'classes': ['alert', 'alert-primary'], isBlock: 'true' }
- #       - { name: 'Alert Secondary', element: 'div', classes': ['alert', 'alert-secondary'], isBlock: 'true' }
- #       - { name: 'Alert Success', element: 'div', 'classes': ['alert', 'alert-success'], isBlock: 'true' }
- #       - { name: 'Alert Danger', element: 'div', 'classes': ['alert', 'alert-danger'], isBlock: 'true' }
- #       - { name: 'Alert Warning', element: 'div', 'classes': ['alert', 'alert-warning'], isBlock: 'true' }
- #       - { name: 'Alert Info', element: 'div', 'classes': ['alert', 'alert-info'], isBlock: 'true' }
- #       - { name: 'Alert Light', element: 'div', 'classes': ['alert', 'alert-light'], isBlock: 'true' }
- #       - { name: 'Alert Dark', element: 'div', 'classes': ['alert', 'alert-dark'], isBlock: 'true' }
+        - { name: 'Alert Primary', element: 'p', 'classes': ['alert', 'alert-primary'], isBlock: 'true' }
+        - { name: 'Alert Secondary', element: 'p', classes': ['alert', 'alert-secondary'], isBlock: 'true' }
+        - { name: 'Alert Success', element: 'p', 'classes': ['alert', 'alert-success'], isBlock: 'true' }
+        - { name: 'Alert Danger', element: 'p', 'classes': ['alert', 'alert-danger'], isBlock: 'true' }
+        - { name: 'Alert Warning', element: 'p', 'classes': ['alert', 'alert-warning'], isBlock: 'true' }
+        - { name: 'Alert Info', element: 'p', 'classes': ['alert', 'alert-info'], isBlock: 'true' }
+        - { name: 'Alert Light', element: 'p', 'classes': ['alert', 'alert-light'], isBlock: 'true' }
+        - { name: 'Alert Dark', element: 'p', 'classes': ['alert', 'alert-dark'], isBlock: 'true' }
 
         # Textstile
         - { name: 'Mark', element: 'span', classes: ['mark'] }
-
         - { name: 'Del', element: 'del', classes: ['del'] }
         - { name: 'Ins', element: 'ins', classes: ['ins'] }
         - { name: 'Code', element: 'code', classes: [''] }
-
         - { name: 'Lead', element: 'span', classes: ['lead'] }
         - { name: 'Small', element: 'span', classes: ['small'] }
         - { name: 'Color primary', element: 'span', classes: ['text-primary']  }
@@ -105,51 +143,50 @@ editor:
         - { name: 'Uppercase ', element: 'span', 'classes': ['text-uppercase'] }
         - { name: 'Capitalize ', element: 'span', 'classes': ['text-capitalize'] }
 
-
         # Textstile - Buttons
-        - { name: 'Button Primary', element: 'a', 'classes': ['btn btn-primary'] } 
-        - { name: 'Button Secondary', element: 'a', 'classes': ['btn btn-secondary'] } 
-        - { name: 'Button Success', element: 'a', 'classes': ['btn btn-success'] } 
-        - { name: 'Button Danger', element: 'a', 'classes': ['btn btn-danger'] } 
-        - { name: 'Button Warning', element: 'a', 'classes': ['btn btn-warning'] } 
-        - { name: 'Button Info', element: 'a', 'classes': ['btn btn-info'] } 
-        - { name: 'Button Light', element: 'a', 'classes': ['btn btn-light'] } 
-        - { name: 'Button Dark', element: 'a', 'classes': ['btn btn-dark'] } 
-
+        - { name: 'Button Primary', element: 'a', 'classes': ['btn btn-primary'] }
+        - { name: 'Button Secondary', element: 'a', 'classes': ['btn btn-secondary'] }
+        - { name: 'Button Success', element: 'a', 'classes': ['btn btn-success'] }
+        - { name: 'Button Danger', element: 'a', 'classes': ['btn btn-danger'] }
+        - { name: 'Button Warning', element: 'a', 'classes': ['btn btn-warning'] }
+        - { name: 'Button Info', element: 'a', 'classes': ['btn btn-info'] }
+        - { name: 'Button Light', element: 'a', 'classes': ['btn btn-light'] }
+        - { name: 'Button Dark', element: 'a', 'classes': ['btn btn-dark'] }
 
         # Textstile - Badges
-        - { name: 'Badge Primary', element: 'span', 'classes': ['badge', 'text-bg-primary'] } 
-        - { name: 'Badge Secondary', element: 'span', 'classes': ['badge text-bg-secondary'] } 
-        - { name: 'Badge Success', element: 'span', 'classes': ['badge text-bg-success'] } 
-        - { name: 'Badge Danger', element: 'span', 'classes': ['badge text-bg-danger'] } 
-        - { name: 'Badge Warning', element: 'span', 'classes': ['badge text-bg-warning'] } 
-        - { name: 'Badge Info', element: 'span', 'classes': ['badge text-bg-info'] } 
-        - { name: 'Badge Light', element: 'span', 'classes': ['badge text-bg-light'] } 
-        - { name: 'Badge Dark', element: 'span', 'classes': ['badge text-bg-dark'] } 
-        
+        - { name: 'Badge Primary', element: 'span', 'classes': ['badge', 'text-bg-primary'] }
+        - { name: 'Badge Secondary', element: 'span', 'classes': ['badge text-bg-secondary'] }
+        - { name: 'Badge Success', element: 'span', 'classes': ['badge text-bg-success'] }
+        - { name: 'Badge Danger', element: 'span', 'classes': ['badge text-bg-danger'] }
+        - { name: 'Badge Warning', element: 'span', 'classes': ['badge text-bg-warning'] }
+        - { name: 'Badge Info', element: 'span', 'classes': ['badge text-bg-info'] }
+        - { name: 'Badge Light', element: 'span', 'classes': ['badge text-bg-light'] }
+        - { name: 'Badge Dark', element: 'span', 'classes': ['badge text-bg-dark'] }
+
         # Textstile - Pill badges
-        - { name: 'Pill Badge Primary', element: 'span', 'classes': ['badge rounded-pill text-bg-primary'] } 
-        - { name: 'Pill Badge Secondary', element: 'span', 'classes': ['badge rounded-pill text-bg-secondary'] } 
-        - { name: 'Pill Badge Success', element: 'span', 'classes': ['badge rounded-pill text-bg-success'] } 
-        - { name: 'Pill Badge Danger', element: 'span', 'classes': ['badge rounded-pill text-bg-danger'] } 
-        - { name: 'Pill Badge Warning', element: 'span', 'classes': ['badge rounded-pill text-bg-warning'] } 
-        - { name: 'Pill Badge Info', element: 'span', 'classes': ['badge rounded-pill text-bg-info'] } 
-        - { name: 'Pill Badge Light', element: 'span', 'classes': ['badge rounded-pill text-bg-light'] } 
+        - { name: 'Pill Badge Primary', element: 'span', 'classes': ['badge rounded-pill text-bg-primary'] }
+        - { name: 'Pill Badge Secondary', element: 'span', 'classes': ['badge rounded-pill text-bg-secondary'] }
+        - { name: 'Pill Badge Success', element: 'span', 'classes': ['badge rounded-pill text-bg-success'] }
+        - { name: 'Pill Badge Danger', element: 'span', 'classes': ['badge rounded-pill text-bg-danger'] }
+        - { name: 'Pill Badge Warning', element: 'span', 'classes': ['badge rounded-pill text-bg-warning'] }
+        - { name: 'Pill Badge Info', element: 'span', 'classes': ['badge rounded-pill text-bg-info'] }
+        - { name: 'Pill Badge Light', element: 'span', 'classes': ['badge rounded-pill text-bg-light'] }
         - { name: 'Pill Badge Dark', element: 'span', 'classes': ['badge rounded-pill text-bg-dark'] }
 
     alignment:
       options:
-        - { name: 'left', className: 'text-left' }
+        - { name: 'left', className: 'text-start' }
         - { name: 'center', className: 'text-center' }
-        - { name: 'right', className: 'text-right' }
+        - { name: 'right', className: 'text-end' }
         - { name: 'justify', className: 'text-justify' }
 
-    table:
-      defaultHeadings: { rows: 1 }
-      contentToolbar:
-        - tableColumn
-        - tableRow
-        - mergeTableCells
-        - tableProperties
-        - tableCellProperties
+    htmlSupport:
+        allowEmpty:
+          - 'div'
+        
+        allow:
+          - name: 'div'
+            attributes: true
+            classes: true
+            styles: true
 

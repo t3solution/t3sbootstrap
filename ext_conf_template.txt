@@ -8,7 +8,7 @@ previewCropMaxCharacters = 80
 previewClosedCollapsible = 0
 
 # cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache)
-spacing = 1
+spacing = 0
 # cat=content/enable/20; type=boolean; label=Container: Shows a select-field for a .container or .container-fluid class in any content element if enabled (clear cache)
 container = 1
 # cat=content/enable/30; type=boolean; label=Color: Shows palette "Bootstrap Color" in almost any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache)
