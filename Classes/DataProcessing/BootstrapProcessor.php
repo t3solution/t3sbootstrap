@@ -112,6 +112,28 @@ class BootstrapProcessor implements DataProcessorInterface
             $sectionMenuClass = $contentObjectConfiguration['settings.']['sectionMenuClass'];
         }
 
+        if (!empty($contentObjectConfiguration['settings.']['shortcutsremove'])) {
+            $currentUid = (int) $GLOBALS['TSFE']->id;
+            $footerPid = !empty($processorConfiguration['footerPid']) ? (int) $processorConfiguration['footerPid'] : 0;
+            $removeArr = GeneralUtility::trimExplode(',', $contentObjectConfiguration['settings.']['shortcutsremove']);
+            if ($processedData['data']['pid'] !== $currentUid && $processedData['data']['pid'] !== $footerPid) {
+                // if contentByPid for collapsible_accordion or tabs_tab
+                foreach($removeArr as $remove) {
+                    if (str_contains($processedData['data']['frame_class'], substr($remove,6))) {
+                        $processedData['data']['frame_class'] = 'default';
+                    }
+                }
+            }
+            if ($cType == 'shortcut' && !empty($parentCType)) {
+                // remove a class or any string from shortcuts if in parent ce/wrapper
+                foreach($removeArr as $remove) {
+                    if (str_contains($processedData['shortcuts'], $remove)) {
+                        $processedData['shortcuts'] = self::removeChar($processedData['shortcuts'], $remove);
+                    }
+                }
+            }
+        }
+
         // class
         $classHelper = GeneralUtility::makeInstance(ClassHelper::class);
         $class = $classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass'], $sectionMenuClass);
@@ -380,7 +402,7 @@ class BootstrapProcessor implements DataProcessorInterface
      * @param array $animationSettingsArray
      * @return string
      */
-    private function generateAnimationAttributeSettingsFromAnimationsArray(array $animationSettingsArray)
+    private function generateAnimationAttributeSettingsFromAnimationsArray(array $animationSettingsArray): string
     {
         $animationSettings = '';
 
@@ -397,4 +419,21 @@ class BootstrapProcessor implements DataProcessorInterface
         }
         return ' '.$animationSettings;
     }
+
+
+    /**
+     * @param string $s
+     * @param string $c
+     * @return string
+     */
+    function removeChar(string $s, string $c): string
+    {
+        $s = str_replace($c, '', $s);
+        if (str_contains($s, $c)) {
+            self::removeChar($s, $c);
+        }
+        return $s;
+    }
+
+
 }

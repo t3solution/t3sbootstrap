@@ -15,7 +15,7 @@ plugin.tx_t3sbootstrap {
 }
 
 
-bootstrap.cdn.bootstraplatest = 5.3.2
+bootstrap.cdn.bootstraplatest = 5.3.3
 bootstrap.cdn.noZip = 0
 bootstrap.cdn.fontawesome6latest = 6.5.1
 
@@ -52,7 +52,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/a-google/10; type=small; label=Comma separated list with google fonts:integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)
 	googlefonts =
 	# cat=bootstrap-cdn/b-version/10; type=small; label=Bootstrap:
-	bootstrap = 5.3.2
+	bootstrap = 5.3.3
 	# cat=bootstrap-cdn/b-version/11; type=small; label=Popper js:
 	popperjs = 2.11.8
 	# cat=bootstrap-cdn/b-version/13; type=small; label=Masonry js:
@@ -81,11 +81,11 @@ bootstrap.cdn {
 	swiper = 11
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN
+	bootstrapCssIntegrity = sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
-	bootstrapJsIntegrity = sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+
+	bootstrapJsIntegrity = sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
-	bootstrapBundleJsIntegrity = sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL
+	bootstrapBundleJsIntegrity = sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
 	popperjsIntegrity = sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
@@ -300,6 +300,12 @@ bootstrap.navbar {
 	floatDropdownIconRight = 0
 }
 
+# creating "Skip Links" to navigation, content or footer for barrier-free accessibility if activated (in Main.html)
+bootstrap.skiplinks = 0
+
+# remove any string (e.g. a class name) from shortcuts if in parent CE/wrapper
+bootstrap.shortcutsremove =
+
 # style one for the submenu (0 = default)
 bootstrap.submenu.styleOne = 0
 
@@ -327,14 +333,14 @@ styles.content.textmedia.borderWidth =
 styles.content.textmedia.borderPadding =
 
 # pages override - deprecated
-pages.override {
-	# 1,2,3,4 or 6 (only)
-	smallColumns =
-	# sm,md,lg or xl (only)
-	breakpoint =
-	# boolean	
-	dropdownRight = 
-}
+#pages.override {
+#	# 1,2,3,4 or 6 (only)
+#	smallColumns =
+#	# sm,md,lg or xl (only)
+#	breakpoint =
+#	# boolean	
+#	dropdownRight = 
+#}
 
 
 [loaded('felogin')]

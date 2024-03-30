@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -55,7 +56,7 @@ class SwiperContainer implements SingletonInterface
             ->select('uid')
             ->from('tt_content')
             ->where(
-                $queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], Connection::PARAM_INT))
             )
             ->executeQuery()
             ->fetchAllAssociative();

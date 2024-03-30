@@ -36,6 +36,7 @@ page {
 			fontawesome.fontawesomeCss = {$bootstrap.extconf.fontawesomeCss}
 			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}
 
+			skiplinks = {$bootstrap.skiplinks}
 			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}

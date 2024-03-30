@@ -6,6 +6,7 @@ namespace T3SBS\T3sbootstrap\UserFunction;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -32,7 +33,7 @@ class TcaMatcher
                   ->select('*')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetch();
@@ -58,7 +59,7 @@ class TcaMatcher
                   ->select('*')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetch();
@@ -97,7 +98,7 @@ class TcaMatcher
                   ->select('*')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetch();
@@ -124,7 +125,7 @@ class TcaMatcher
                   ->select('*')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetch();
@@ -228,7 +229,7 @@ class TcaMatcher
                   ->select('*')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetch();
@@ -260,7 +261,7 @@ class TcaMatcher
                   ->select('tx_t3sbootstrap_flexform')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetchAllAssociative();
@@ -450,7 +451,7 @@ class TcaMatcher
                   ->select('*')
                   ->from('tt_content')
                   ->where(
-                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
             $parent_rec = $result->fetch();

@@ -6,6 +6,7 @@
 	</f:then>
 	<f:else>
 		<f:if condition="{settings.gtm}">
+			<f:comment> GOOGLE TAG MANAGER (noscript)</f:comment>
 			<!-- Google Tag Manager (noscript) -->
 			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={settings.gtm}"
 			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -14,7 +15,23 @@
 		<f:spaceless>
 			<f:render partial="FunctionAssets" arguments="{_all}" />
 			<f:render section="AssetScripts" arguments="{_all}" />
-			<f:comment> GOOGLE TAG MANAGER (noscript)</f:comment>
+			<f:comment> Skip links </f:comment>
+			<f:if condition="{settings.skiplinks}">
+				<a class="skip-link" href="#main-navbar">Skip to main navigation</a>
+				<a class="skip-link" href="#page-content">Skip to main content</a>
+				<a class="skip-link" href="#page-footer">Skip to page footer</a>
+<f:asset.css identifier="t3sbs_skiplink">
+.skip-link:not(:focus) {
+	position: absolute;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(100%);
+	white-space: nowrap;
+}
+</f:asset.css>
+			</f:if>
 			<f:comment> LOADING SPINNER </f:comment>
 			<f:if condition="{settings.config.loadingSpinner}">
 				<div id="site-preloader">

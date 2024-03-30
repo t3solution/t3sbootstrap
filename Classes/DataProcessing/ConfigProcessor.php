@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -627,7 +628,7 @@ class ConfigProcessor implements DataProcessorInterface
                 ->count('uid')
                 ->from('tt_content')
                 ->where(
-                    $queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, \PDO::PARAM_INT))
+                    $queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, Connection::PARAM_INT))
                 )
             ->executeQuery()
             ->fetchOne();
@@ -645,7 +646,7 @@ class ConfigProcessor implements DataProcessorInterface
                 ->count('uid')
                 ->from('tt_content')
                 ->where(
-                    $queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, \PDO::PARAM_INT))
+                    $queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, Connection::PARAM_INT))
                 )
             ->executeQuery()
             ->fetchOne();
@@ -688,7 +689,7 @@ class ConfigProcessor implements DataProcessorInterface
                  )
              )
             ->andWhere(
-                $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, Connection::PARAM_INT))
             )
              ->executeQuery();
 
@@ -752,7 +753,7 @@ class ConfigProcessor implements DataProcessorInterface
             $statement = $queryBuilder->select('uid')
                 ->from('pages')
                 ->where(
-                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, Connection::PARAM_INT)),
                     $queryBuilder->expr()->eq('sys_language_uid', 0),
                     QueryHelper::stripLogicalOperatorPrefix($permsClause)
                 )

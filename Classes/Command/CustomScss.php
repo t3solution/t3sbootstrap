@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -101,7 +102,7 @@ class CustomScss extends CommandBase
                 ->from('pages')
                 ->where(
                     $queryBuilder->expr()->eq('sys_language_uid', 0),
-                    $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT))
+                    $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
                 )
                 ->executeQuery();
             $siteroots = $result->fetchAllAssociative();
@@ -301,7 +302,7 @@ class CustomScss extends CommandBase
 
         # get the Boostrap SCSS-Files
         if ($bootstrapVersion > '5.1.3') {
-            $scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _maps.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
+            $scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _maps.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables-dark.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
         } else {
             $scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
         }
