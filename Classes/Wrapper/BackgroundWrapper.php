@@ -110,7 +110,7 @@ class BackgroundWrapper implements SingletonInterface
                 // orig. image option in flexform
                 if (!empty($flexconf['origImage'])) {
                     $processedData['file'] = $file;
-                    $processedData['ingWidth'] = $flexconf['width'] ? $flexconf['width'] : 1296;
+                    $processedData['ingWidth'] = !empty($flexconf['width']) ? $flexconf['width'] : 1296;
                 } else {
                     $bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
                         ->getBgImage($processedData['data']['uid'], 'tt_content', false, true, $flexconf, false, 0, $bgMediaQueries);
