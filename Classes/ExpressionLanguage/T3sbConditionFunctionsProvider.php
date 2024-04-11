@@ -82,7 +82,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
                 $configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
                 $config = $configRepository->findOneByPid($pid);
 
-                if (empty($config)) {
+                if (empty($config) && is_array($arguments['tree']->rootLineIds)) {
                     $rootLineIdsArray = array_reverse($arguments['tree']->rootLineIds);
                     unset($rootLineIdsArray[count($rootLineIdsArray)-1]);
                     unset($rootLineIdsArray[0]);
