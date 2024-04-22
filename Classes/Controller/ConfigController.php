@@ -171,6 +171,7 @@ final class ConfigController extends AbstractController
         $newConfig->setHomepageUid($this->rootPageId);
         $newConfig->setPid($this->currentUid);
         $this->configRepository->add($newConfig);
+        parent::setDefaultBackendLayout();
         parent::writeConstants();
         return $this->redirect('list', null, null, array('created' => true));
     }

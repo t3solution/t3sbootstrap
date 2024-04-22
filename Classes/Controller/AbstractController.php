@@ -607,4 +607,20 @@ abstract class AbstractController extends ActionController
 
         return (string)$theList;
     }
+
+
+    protected function setDefaultBackendLayout() {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $queryBuilder
+            ->update('pages')
+            ->where(
+                $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('backend_layout', $queryBuilder->createNamedParameter('', Connection::PARAM_STR)),
+                $queryBuilder->expr()->eq('backend_layout_next_level', $queryBuilder->createNamedParameter('', Connection::PARAM_STR))
+            )
+            ->set('backend_layout', 'pagets__OneCol')
+            ->set('backend_layout_next_level', 'pagets__OneCol')
+            ->executeStatement();
+    }
+
 }

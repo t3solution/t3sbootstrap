@@ -124,7 +124,7 @@ tt_content {
 	menu_section {
 		dataProcessing >
 		dataProcessing {
-			10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			10 = menu
 			10 {
 				special = list
 				special {
@@ -139,11 +139,11 @@ tt_content {
 					}
 				}
 				dataProcessing {
-					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+					10 = files
 					10 {
 						references.fieldName = media
 					}
-					20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+					20 = database-query
 					20 {
 						table = tt_content
 						pidInList.field = uid
@@ -151,7 +151,7 @@ tt_content {
 						where = sectionIndex = 1 AND ( colPos = 0 OR colPos > 199 )
 						orderBy = {$bootstrap.extconf.sectionOrder}
 						dataProcessing {
-							10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+							10 = files
 							10 {
 								references.fieldName = media
 							}

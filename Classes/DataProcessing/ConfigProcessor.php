@@ -40,12 +40,10 @@ class ConfigProcessor implements DataProcessorInterface
      */
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
     {
-        $request = $GLOBALS['TYPO3_REQUEST'];
+        /** @var \Psr\Http\Message\ServerRequestInterface $request */
+        $request = $cObj->getRequest();
         $settings = $contentObjectConfiguration['settings.'];
         $frontendController = $request->getAttribute('frontend.controller');
-        if (!$frontendController) {
-            $frontendController = self::getFrontendController();
-        }
         if (!empty($contentObjectConfiguration['settings.']['config.']['uid'])
              && is_numeric($contentObjectConfiguration['settings.']['config.']['uid'])) {
             $processedRecordVariables = $contentObjectConfiguration['settings.']['config.'];
@@ -831,14 +829,4 @@ class ConfigProcessor implements DataProcessorInterface
         return $mainMenu;
     }
 
-
-    /**
-     * Returns $typoScriptFrontendController TypoScriptFrontendController
-     *
-     * @return TypoScriptFrontendController
-     */
-    protected function getFrontendController(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
-    }
 }

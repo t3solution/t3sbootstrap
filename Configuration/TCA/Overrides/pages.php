@@ -374,17 +374,17 @@ if (array_key_exists('fontawesome', $extconf) && $extconf['fontawesome'] === '1'
 
 $menuheader = 198;
 
-// Add new page type as possible select item:
+// Add new page type:
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
-    'pages',
-    'doktype',
-    [
-        'Dropdownmenu header',
-        $menuheader,
-        'content-header'
-    ],
-    '2',
-    'after'
+   'pages',
+   'doktype',
+   [
+       'label' => 'Dropdownmenu header',
+       'value' => $menuheader,
+       'icon'  => 'content-header',
+   ],
+   '2',
+   'after'
 );
 
 // Add icon for new page type:

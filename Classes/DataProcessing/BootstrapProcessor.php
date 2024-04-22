@@ -68,6 +68,8 @@ class BootstrapProcessor implements DataProcessorInterface
             return $processedData;
         }
 
+        /** @var \Psr\Http\Message\ServerRequestInterface $request */
+        $request = $cObj->getRequest();
         $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
         $cType = $processedData['data']['CType'];
         $parentCType = '';
@@ -113,7 +115,8 @@ class BootstrapProcessor implements DataProcessorInterface
         }
 
         if (!empty($contentObjectConfiguration['settings.']['shortcutsremove'])) {
-            $currentUid = (int) $GLOBALS['TSFE']->id;
+            $pageArguments = $request->getAttribute('routing');
+            $currentUid = $pageArguments->getPageId();            
             $footerPid = !empty($processorConfiguration['footerPid']) ? (int) $processorConfiguration['footerPid'] : 0;
             $removeArr = GeneralUtility::trimExplode(',', $contentObjectConfiguration['settings.']['shortcutsremove']);
             if ($processedData['data']['pid'] !== $currentUid && $processedData['data']['pid'] !== $footerPid) {

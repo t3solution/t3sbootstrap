@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use Psr\Http\Message\ServerRequestInterface;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -20,6 +21,9 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  */
 class LastModifiedProcessor implements DataProcessorInterface
 {
+    
+    protected $request;
+
     /**
      * Fetches records from the database as an array
      *
@@ -32,6 +36,9 @@ class LastModifiedProcessor implements DataProcessorInterface
      */
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
     {
+        /** @var ServerRequestInterface $request */
+        $this->request = $cObj->getRequest();
+
         if (!empty($processorConfiguration['lastModifiedContentElement'])) {
             $processorConfiguration = [];
             $processorConfiguration['pidInList'] = self::getCurrentUid();
@@ -64,7 +71,7 @@ class LastModifiedProcessor implements DataProcessorInterface
     /**
      * Returns true if is page w/ content.cType == menu_recently_updated
      *
-     * @return bool $mdtm
+     * @return bool
      */
     protected function isMenuRecentlyUpdatedOnPage(): bool
     {
@@ -160,6 +167,7 @@ class LastModifiedProcessor implements DataProcessorInterface
      */
     protected function getCurrentUid(): int
     {
-        return (int) $GLOBALS['TSFE']->id;
+        $pageArguments = $this->request->getAttribute('routing');
+        return $pageArguments->getPageId();
     }
 }
