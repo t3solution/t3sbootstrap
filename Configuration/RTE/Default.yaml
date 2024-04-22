@@ -117,15 +117,6 @@ editor:
         - { name: 'Uppercase', element: 'p', 'classes': ['text-uppercase'], isBlock: 'true' }
         - { name: 'Capitalize', element: 'p', 'classes': ['text-capitalize'], isBlock: 'true' }
 
-        - { name: 'Alert Primary', element: 'p', 'classes': ['alert', 'alert-primary'], isBlock: 'true' }
-        - { name: 'Alert Secondary', element: 'p', classes': ['alert', 'alert-secondary'], isBlock: 'true' }
-        - { name: 'Alert Success', element: 'p', 'classes': ['alert', 'alert-success'], isBlock: 'true' }
-        - { name: 'Alert Danger', element: 'p', 'classes': ['alert', 'alert-danger'], isBlock: 'true' }
-        - { name: 'Alert Warning', element: 'p', 'classes': ['alert', 'alert-warning'], isBlock: 'true' }
-        - { name: 'Alert Info', element: 'p', 'classes': ['alert', 'alert-info'], isBlock: 'true' }
-        - { name: 'Alert Light', element: 'p', 'classes': ['alert', 'alert-light'], isBlock: 'true' }
-        - { name: 'Alert Dark', element: 'p', 'classes': ['alert', 'alert-dark'], isBlock: 'true' }
-
         # Textstile
         - { name: 'Mark', element: 'span', classes: ['mark'] }
         - { name: 'Del', element: 'del', classes: ['del'] }
