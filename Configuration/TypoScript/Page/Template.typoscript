@@ -103,7 +103,7 @@ page {
 			#
 			# NavBar / Main Navigation
 			#
-			10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			10 = menu
 			10 {
 				entryLevel.cObject = TEXT
 				entryLevel.cObject.value = {$bootstrap.config.navbarEntrylevel}
@@ -132,7 +132,7 @@ page {
 			#
 			# NavBar-RIGHT / Main Navigation
 			#
-			11 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			11 = menu
 			11 {
 				special = list
 				special.value = {$bootstrap.config.navbarRightMenuUidList}
@@ -143,7 +143,7 @@ page {
 			#
 			# Pagebrowser
 			#
-			12 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			12 = menu
 			12 {
 				special = browse
 				special.items = {$bootstrap.pagebrowser.nextItem}
@@ -153,7 +153,7 @@ page {
 			}
 			12.if.isTrue = {$bootstrap.pagebrowser.enable}
 
-			13 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			13 = menu
 			13 {
 				special = browse
 				special.items = {$bootstrap.pagebrowser.prevItem}
@@ -166,7 +166,7 @@ page {
 			#
 			# Sub Navigation in Sidebar
 			#
-			20 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			20 = menu
 			20 {
 				entryLevel.cObject = TEXT
 				entryLevel.cObject {
@@ -212,7 +212,7 @@ page {
 			#
 			# Breadcrumb
 			#
-			30 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			30 = menu
 			30 {
 				special = rootline
 				special.range = 0|-1
@@ -233,7 +233,7 @@ page {
  			#
 			# Language Navigation
 			#
-			40 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
+			40 = language-menu
 			40 {
 				languages = auto
 				as = languageNavigation
@@ -244,7 +244,7 @@ page {
 			#
 			# Meta Navigation
 			#
-			50 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			50 = menu
 			50 {
 				special = list
 				special.value.cObject = TEXT
@@ -261,7 +261,7 @@ page {
 			#
 			# Section Menu
 			#
-			60 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+			60 = menu
 			60 {
 				special = list
 				special {
@@ -277,11 +277,11 @@ page {
 				}
 				as = sectionMenu
 				dataProcessing {
-					10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+					10 = files
 					10 {
 						references.fieldName = media
 					}
-					20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+					20 = database-query
 					20 {
 						table = tt_content
 						pidInList.field = uid
@@ -331,6 +331,11 @@ page {
 			# Main Config
 			#
 			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
+
+			#
+			# Site Config
+			#
+			#91 = site
 		}
 	}
 }

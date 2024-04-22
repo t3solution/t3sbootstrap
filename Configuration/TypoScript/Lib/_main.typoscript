@@ -28,9 +28,8 @@ lib.currentDate {
 
 lib.currentDomain = TEXT
 lib.currentDomain {
-	dataWrap = {getIndpEnv:TYPO3_REQUEST_HOST}|
-	typolink.parameter.current = 1
-	typolink.returnLast = url
+	stdWrap.data = getIndpEnv : TYPO3_REQUEST_HOST
+	stdWrap.htmlSpecialChars = 1
 }
 
 lib.printButton = COA
