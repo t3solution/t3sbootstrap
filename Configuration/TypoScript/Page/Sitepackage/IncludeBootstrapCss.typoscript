@@ -8,7 +8,7 @@ page {
 		#
 		##########################################################################################################
 
-		bootstrapCSS = EXT:t3sb_package/T3SB/Resources/Public/CSS/bootstrap.min.css
+		bootstrapCSS = EXT:t3sb_package/Resources/Public/T3SB-CSS/bootstrap.min.css
 
 	}
 }

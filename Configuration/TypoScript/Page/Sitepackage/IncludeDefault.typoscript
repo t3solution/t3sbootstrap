@@ -7,7 +7,7 @@ page {
 		#
 		##########################################################################################################
 
-		googleFontCSS = EXT:t3sb_package/T3SB/Resources/Public/CSS/googlefonts.css
+		googleFontCSS = EXT:t3sb_package/Resources/Public/T3SB-CSS/googlefonts.css
 		googleFontCSS.if.isTrue = {$bootstrap.cdn.googlefonts}
 
 	}
@@ -19,7 +19,7 @@ page {
 [{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
-	jquery = EXT:t3sb_package/T3SB/Resources/Public/JS/jquery.min.js
+	jquery = EXT:t3sb_package/Resources/Public/T3SB-JS/jquery.min.js
 	jquery.forceOnTop = 1
 	jquery.if.isFalse = {$bootstrap.disable.jquery}
 }

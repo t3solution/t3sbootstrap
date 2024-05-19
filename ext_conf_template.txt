@@ -44,6 +44,8 @@ keepVariables = 0
 flexformExtend = 0
 # cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache)
 flexformModify = 0
+# cat=flexform/enable/40; type=boolean; label=No default settings in columns "Col-md-*" and "Col-*":in two_columns, three_columns, four_columns or six_columns
+flexformNoDefault = 0
 
 # cat=t3SB/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache)
 expandedContent = 0

@@ -49,7 +49,7 @@ final class ConfigController extends AbstractController
             $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
         } else {
             if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/T3SB/');
+                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/');
             }
         }
         $cdnHint = false;
@@ -111,6 +111,16 @@ final class ConfigController extends AbstractController
         $assignedOptions['webpIsLoaded'] = false;
         if (ExtensionManagementUtility::isLoaded('webp')) {
             $assignedOptions['webpIsLoaded'] = true;
+        }
+
+        $new_raster = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/raster.png');
+        if ( !file_exists($new_raster) ) {
+            $folder = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/');
+            if (!is_dir($folder)) {
+                mkdir($folder, 0777, true);
+            }
+            $orig_raster = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Public/Images/raster.png');
+            copy($orig_raster, $new_raster);
         }
 
         $this->view->assignMultiple($assignedOptions);
@@ -266,7 +276,7 @@ final class ConfigController extends AbstractController
             $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
         } else {
             if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/T3SB/");
+                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
             }
         }
 

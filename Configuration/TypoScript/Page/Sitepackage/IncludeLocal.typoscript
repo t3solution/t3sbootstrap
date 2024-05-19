@@ -8,17 +8,17 @@ page {
 		#
 		##########################################################################################################
 
-		jquery = EXT:t3sb_package/T3SB/Resources/Public/JS/jquery.min.js
+		jquery = EXT:t3sb_package/Resources/Public/T3SB-JS/jquery.min.js
 		jquery.forceOnTop = 1
 		jquery.if.isFalse = {$bootstrap.disable.jquery}
 
-		popper = EXT:t3sb_package/T3SB/Resources/Public/JS/popper.js
+		popper = EXT:t3sb_package/Resources/Public/T3SB-JS/popper.js
 		popper.if.isFalse = {$bootstrap.bundle.enable}
 
-		bootstrap = EXT:t3sb_package/T3SB/Resources/Public/JS/bootstrap.min.js
+		bootstrap = EXT:t3sb_package/Resources/Public/T3SB-JS/bootstrap.min.js
 		bootstrap.if.isFalse = {$bootstrap.bundle.enable}
 
-		bootstrapBundle = EXT:t3sb_package/T3SB/Resources/Public/JS/bootstrap.bundle.min.js
+		bootstrapBundle = EXT:t3sb_package/Resources/Public/T3SB-JS/bootstrap.bundle.min.js
 		bootstrapBundle.if.isTrue = {$bootstrap.bundle.enable}
 
 	}
@@ -31,7 +31,7 @@ page {
 		#
 		##########################################################################################################
 
-		t3sbjqueryeasing = EXT:t3sb_package/T3SB/Resources/Public/JS/jquery.easing.min.js
+		t3sbjqueryeasing = EXT:t3sb_package/Resources/Public/T3SB-JS/jquery.easing.min.js
 		t3sbjqueryeasing.forceOnTop = 1
 		t3sbjqueryeasing.if.isFalse = {$bootstrap.disable.jquery}
 
@@ -41,7 +41,7 @@ page {
 		#
 		##########################################################################################################
 
-		lazyload = EXT:t3sb_package/T3SB/Resources/Public/JS/lazyload.min.js
+		lazyload = EXT:t3sb_package/Resources/Public/T3SB-JS/lazyload.min.js
 		lazyload.if.isTrue = {$bootstrap.extconf.lazyLoad}
 		lazyload.if {
 			value = 1,2
@@ -54,7 +54,7 @@ page {
 		##########################################################################################################
 
 		# Local
-		picturefill = EXT:t3sb_package/T3SB/Resources/Public/JS/picturefill.min.js
+		picturefill = EXT:t3sb_package/Resources/Public/T3SB-JS/picturefill.min.js
 		picturefill.if.isTrue = {$bootstrap.image.picturefill}
 
 	}

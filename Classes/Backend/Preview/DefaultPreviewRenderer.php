@@ -143,7 +143,16 @@ class DefaultPreviewRenderer extends StandardContentPreviewRenderer
 		}
 
 		if (!empty($flexconfSettings)) {
-			$flexconfSettings = '<div style="padding:1rem;color:#7e00b4;border: 1px solid #7e00b4;display:block;margin-bottom:.75rem;"><strong>Settings:</strong> ' . rtrim($flexconfSettings, ', ') . '</div>';
+			$icon = '<span style="width:14px;height:14px;display:block;float:right;margin-left:5px;">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+			<path d="M7.593 11.43L3.565 5.79A.5.5 0 0 1 3.972 5h8.057a.5.5 0 0 1 .407.791l-4.028 5.64a.5.5 0 0 1-.815-.001z"></path>
+			</svg>
+			</span>';
+			$flexconfSettings = '<a title="Settings" class="" data-bs-toggle="collapse" href="#collapse-'.$record['uid'].'" role="button" 
+			aria-expanded="false" aria-controls="collapse-'.$record['uid'].'">'.$icon.'</a><div class="collapse" 
+			id="collapse-'.$record['uid'].'"><div class="card card-body p-0">
+			<div style="padding:1rem;color:#7e00b4;border: 1px solid #7e00b4;display:block;margin-bottom:0;">
+			<strong>Settings:</strong> ' . rtrim($flexconfSettings, ', ') . '</div></div></div>';
 		}
 
 		return $flexconfSettings.$outHeader;

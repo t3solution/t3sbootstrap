@@ -153,7 +153,7 @@ class BackgroundImageUtility implements SingletonInterface
         bool $body=false,
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ): string {
-        $imageRaster = !empty($flexconf['imageRaster']) ? 'url(/typo3conf/ext/t3sbootstrap/Resources/Public/Images/raster.png), ' : '';
+        $imageRaster = !empty($flexconf['imageRaster']) ? 'url("/fileadmin/T3SB/Resources/Public/Images/raster.png"), ' : '';
         $processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
         $cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
 

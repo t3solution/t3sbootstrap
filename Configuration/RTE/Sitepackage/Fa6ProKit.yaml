@@ -6,4 +6,4 @@ editor:
   config:
     ui:
       DPFontAwesome:
-        css: 'EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/all.min.css'
+        css: 'EXT:t3sb_package/Resources/Public/FA6-Kit/css/all.min.css'

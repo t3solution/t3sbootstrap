@@ -128,8 +128,8 @@ defined('TYPO3') || die();
     // Optional sitepackage
     if (ExtensionManagementUtility::isLoaded('t3sb_package') && array_key_exists('sitepackage', $extconf) && !empty($extconf['sitepackage'])) {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sitepackage = 1');
-        ExtensionManagementUtility::addTypoScriptConstants('@import \'EXT:t3sb_package/T3SB/Configuration/TypoScript/t3sbconstants.typoscript\'');
-        ExtensionManagementUtility::addTypoScriptSetup('@import \'EXT:t3sb_package/T3SB/Configuration/TypoScript/t3sbsetup.typoscript\'');
+        ExtensionManagementUtility::addTypoScriptConstants('@import \'EXT:t3sb_package/Configuration/TypoScript/t3sbconstants.typoscript\'');
+        ExtensionManagementUtility::addTypoScriptSetup('@import \'EXT:t3sb_package/Configuration/TypoScript/t3sbsetup.typoscript\'');
     } else {
         ExtensionManagementUtility::addTypoScriptConstants('@import \'fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript\'');
         ExtensionManagementUtility::addTypoScriptSetup('@import \'fileadmin/T3SB/Configuration/TypoScript/t3sbsetup.typoscript\'');

@@ -51,7 +51,7 @@ class CdnToLocal extends CommandBase
             $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
         } else {
             if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/T3SB/');
+                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/');
             } else {
                 throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
             }
@@ -77,11 +77,11 @@ class CdnToLocal extends CommandBase
                 self::getGoogleFontsSitepackage($settings['cdn']['googlefonts'], $settings['gooleFontsWeights'], $baseDir);
             }
         } else {
-            $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
+            $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
             if (is_dir($localZipPath)) {
                 parent::rmDir($localZipPath);
             }
-            $cssFile = $baseDir.'Resources/Public/CSS/googlefonts.css';
+            $cssFile = $baseDir.'Resources/Public/T3SB-CSS/googlefonts.css';
             if (file_exists($cssFile)) {
                 unlink($cssFile);
             }
@@ -89,14 +89,14 @@ class CdnToLocal extends CommandBase
 
         foreach ($settings['cdn'] as $key=>$version) {
             if ($key == 'jquery') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'jquery.min.js';
                 $cdnPath = 'https://code.jquery.com/jquery-'.$version.'.min.js';
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'bootstrap') {
-                $customPath = $baseDir.'Resources/Public/CSS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                 $customFileName = 'bootstrap.min.css';
                 if ($settings['cdn']['bootswatch']) {
                     $bootswatchTheme = $settings['cdn']['bootswatch'];
@@ -107,7 +107,7 @@ class CdnToLocal extends CommandBase
                     self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
                 }
 
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'bootstrap.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -117,7 +117,7 @@ class CdnToLocal extends CommandBase
             }
 
             if ($key == 'popperjs') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'popper.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -130,7 +130,7 @@ class CdnToLocal extends CommandBase
                         mkdir($customPath, 0777, true);
                     }
                 } else {
-                    $customPath = $baseDir.'Resources/Public/CSS/';
+                    $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                     $customFileName = 'fontawesome.min.css';
                     $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/'.$version.'/css/all.min.css';
                     self::writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -147,7 +147,7 @@ class CdnToLocal extends CommandBase
                         }
                     }
 
-                    $customPath = $baseDir.'Resources/Public/JS/';
+                    $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                     $customFileName = 'fontawesome.min.js';
                     $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/'.$version.'/js/all.min.js';
                     self::writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -155,77 +155,77 @@ class CdnToLocal extends CommandBase
             }
 
             if ($key == 'jqueryEasing') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'jquery.easing.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'lazyload') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'lazyload.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'picturefill') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'picturefill.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/picturefill/'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'animate') {
-                $customPath = $baseDir.'Resources/Public/CSS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                 $customFileName = 'animate.compat.css';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'baguetteBox') {
-                $customPath = $baseDir.'Resources/Public/CSS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                 $customFileName = 'baguetteBox.min.css';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'baguetteBox.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
             if ($key == 'halkabox') {
-                $customPath = $baseDir.'Resources/Public/CSS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                 $customFileName = 'halkaBox.min.css';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath, true);
 
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'halkaBox.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'glightbox') {
-                $customPath = $baseDir.'Resources/Public/CSS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                 $customFileName = 'glightbox.min.css';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/css/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
 
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'glightbox.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/js/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'masonry') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'masonry.pkgd.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/masonry/'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key == 'jarallax') {
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'jarallax.min.js';
                 $cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -235,11 +235,11 @@ class CdnToLocal extends CommandBase
             }
 
             if ($key == 'swiper') {
-                $customPath = $baseDir.'Resources/Public/CSS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
                 $customFileName = 'swiper-bundle.min.css';
                 $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
-                $customPath = $baseDir.'Resources/Public/JS/';
+                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'swiper-bundle.min.js';
                 $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -275,7 +275,7 @@ class CdnToLocal extends CommandBase
 
     private function getGoogleFonts($googleFonts, $gooleFontsWeights, $baseDir): void
     {
-        $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
+        $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
         if (is_dir($localZipPath)) {
             parent::rmDir($localZipPath);
         }
@@ -301,9 +301,14 @@ class CdnToLocal extends CommandBase
             $css = '';
             $headerData = '';
             foreach ($sliceArr as $fontFamily=>$googlePath) {
+
+                $gp = explode('.', $googlePath[0]);
+                $gp = explode('-', $gp[0]);
+                $replace = end($gp);
+
                 foreach (explode(',', $gooleFontsWeights) as $i=>$style) {
                     $style = trim($style);
-                    $file = str_replace('300', '', explode('.', $googlePath[0])[0]).$style;
+                    $file = str_replace($replace, '', explode('.', $googlePath[0])[0]).$style;
                     $style = $style == 'regular' ? '400' : $style;
                     $css .= "@font-face {
     font-family: '".$fontFamily."';
@@ -316,7 +321,7 @@ class CdnToLocal extends CommandBase
                 }
             }
             if (!empty($css)) {
-                $cssFile = $baseDir.'Resources/Public/CSS/googlefonts.css';
+                $cssFile = $baseDir.'Resources/Public/T3SB-CSS/googlefonts.css';
                 if (file_exists($cssFile)) {
                     unlink($cssFile);
                 }
@@ -327,15 +332,17 @@ class CdnToLocal extends CommandBase
 
     private function getGoogleFontsSitepackage($googleFonts, $gooleFontsWeights, $baseDir): void
     {
-        $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
+        $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
         if (is_dir($localZipPath)) {
             parent::rmDir($localZipPath);
         }
         mkdir($localZipPath, 0777, true);
         $googleFontsArr = explode(',', $googleFonts);
+
         foreach ($googleFontsArr as $font) {
             $fontFamily = trim($font);
             $font = str_replace(' ', '-', trim($font));
+
             foreach (explode(',', $gooleFontsWeights) as $style) {
                 $style = trim($style);
                 $zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
@@ -344,16 +351,23 @@ class CdnToLocal extends CommandBase
                 $fontArr[$fontFamily] = self::getGoogleFiles($zipContent, $baseDir);
             }
         }
+
         if (is_array($fontArr)) {
             foreach ($fontArr as $fontFamily=>$googlePath) {
                 $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
             }
             $css = '';
             $headerData = '';
+
             foreach ($sliceArr as $fontFamily=>$googlePath) {
+
+                $gp = explode('.', $googlePath[0]);
+                $gp = explode('-', $gp[0]);
+                $replace = end($gp);
+
                 foreach (explode(',', $gooleFontsWeights) as $i=>$style) {
                     $style = trim($style);
-                    $file = str_replace('300', '', explode('.', $googlePath[0])[0]).$style;
+                    $file = str_replace($replace, '', explode('.', $googlePath[0])[0]).$style;
                     $style = $style == 'regular' ? '400' : $style;
                     $googlefontsPath = 'googlefonts/';
                     $css .= "@font-face {
@@ -367,7 +381,7 @@ class CdnToLocal extends CommandBase
                 }
             }
             if (!empty($css)) {
-                $cssFile = $baseDir.'Resources/Public/CSS/googlefonts.css';
+                $cssFile = $baseDir.'Resources/Public/T3SB-CSS/googlefonts.css';
                 if (file_exists($cssFile)) {
                     unlink($cssFile);
                 }
@@ -381,7 +395,7 @@ class CdnToLocal extends CommandBase
     {
         $googleFileArr = [];
         if ($zipContent) {
-            $localZipPath = $baseDir.'Resources/Public/CSS/googlefonts/';
+            $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
             $localZipFile = $localZipPath.'googlefont.zip';
             GeneralUtility::writeFile($localZipFile, $zipContent);
             $zip = new \ZipArchive();

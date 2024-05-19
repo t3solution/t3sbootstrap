@@ -1,0 +1,1129 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<sheetTitle>Settings</sheetTitle>
+				<type>array</type>
+				<el>
+					<equalWidth>
+						<label>Equal width</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
+					</equalWidth>
+					<equalHeight>
+						<label>Equal height</label>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
+					</equalHeight>
+					<horizontalGutters>
+						<label>Horizontal gutters</label>
+						<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#horizontal-gutters</description>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">gx-0 (no gutters)</numIndex>
+									<numIndex index="value">gx-0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">gx-1</numIndex>
+									<numIndex index="value">gx-1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">gx-2</numIndex>
+									<numIndex index="value">gx-2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">gx-3</numIndex>
+									<numIndex index="value">gx-3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">gx-4 (default)</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">gx-5</numIndex>
+									<numIndex index="value">gx-5</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</horizontalGutters>
+					<verticalGutters>
+						<label>Vertical gutters</label>
+						<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#vertical-gutters</description>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">gy-0 (no gutters)</numIndex>
+									<numIndex index="value">gy-0</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">gy-1</numIndex>
+									<numIndex index="value">gy-1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">gy-2</numIndex>
+									<numIndex index="value">gy-2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">gy-3</numIndex>
+									<numIndex index="value">gy-3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">gy-4 (default)</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">gy-5</numIndex>
+									<numIndex index="value">gy-5</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</verticalGutters>
+					<colHeight>
+						<label>Min.-Height of the Element</label>
+						<onChange>reload</onChange>
+						<displayCond>FIELD:Bgimage.bgimages:>:0</displayCond>
+						<config>
+							<type>input</type>
+							<checkbox></checkbox>
+							<eval>int</eval>
+							<size>3</size>
+							<default>0</default>
+						</config>
+					</colHeight>
+					<verticalAlign>
+						<label>Vertical Align for Content</label>
+						<displayCond>FIELD:Bgimage.bgimages:>:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">top</numIndex>
+									<numIndex index="value">start</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">center</numIndex>
+									<numIndex index="value">center</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">bottom</numIndex>
+									<numIndex index="value">end</numIndex>
+								</numIndex>
+							</items>
+							<default>start</default>
+						</config>
+					</verticalAlign>
+				</el>
+			</ROOT>
+		</sDEF>
+		<Bgimage>
+			<ROOT>
+				<sheetTitle>Background Images</sheetTitle>
+				<type>array</type>
+				<el>
+					<bgimages>
+						<label>Background-Images</label>
+						<onChange>reload</onChange>
+							<config>
+								 <type>inline</type>
+								 <foreign_table>sys_file_reference</foreign_table>
+								 <foreign_field>uid_foreign</foreign_field>
+								 <foreign_sortby>sorting_foreign</foreign_sortby>
+								 <foreign_table_field>tablenames</foreign_table_field>
+								 <foreign_match_fields>
+								  <fieldname>assets</fieldname>
+								 </foreign_match_fields>
+								 <foreign_label>uid_local</foreign_label>
+								 <foreign_selector>uid_local</foreign_selector>
+								 <overrideChildTca>
+								   <types type="array">
+										<numIndex index="0" type="array">
+											 <showitem>
+												  --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												  --palette--;;filePalette
+											 </showitem>
+										</numIndex>
+										<numIndex index="1" type="array">
+											 <showitem>
+												  --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												  --palette--;;filePalette
+											 </showitem>
+										</numIndex>
+										<numIndex index="2" type="array">
+											 <showitem>
+												  --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												  --palette--;;filePalette
+											 </showitem>
+										</numIndex>
+										<numIndex index="3" type="array">
+											 <showitem>
+												  --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.audioOverlayPalette;audioOverlayPalette,
+												  --palette--;;filePalette
+											 </showitem>
+										</numIndex>
+										<numIndex index="4" type="array">
+											 <showitem>
+												  --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.videoOverlayPalette;videoOverlayPalette,
+												  --palette--;;filePalette
+											 </showitem>
+										</numIndex>
+										<numIndex index="5" type="array">
+											 <showitem>
+												  --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+												  --palette--;;filePalette
+											 </showitem>
+										</numIndex>
+								  </types>
+								 <columns>
+									 <uid_local>
+										 <config>
+											 <appearance>
+												 <elementBrowserType>file</elementBrowserType>
+												 <elementBrowserAllowed>jpg,jpeg,png</elementBrowserAllowed>
+											 </appearance>
+										 </config>
+									 </uid_local>
+								 </columns>
+							 </overrideChildTca>
+							 <filter>
+								 <userFunc>TYPO3\CMS\Core\Resource\Filter\FileExtensionFilter->filterInlineChildren</userFunc>
+								 <parameters>
+									 <allowedFileExtensions></allowedFileExtensions>
+									 <disallowedFileExtensions></disallowedFileExtensions>
+								 </parameters>
+							 </filter>
+							 <appearance>
+								 <useSortable>1</useSortable>
+								 <headerThumbnail>
+									 <field>uid_local</field>
+									 <width>45</width>
+									 <height>45c</height>
+								 </headerThumbnail>
+								 <enabledControls>
+									 <info>1</info>
+									 <new>0</new>
+									 <dragdrop>1</dragdrop>
+									 <sort>0</sort>
+									 <hide>1</hide>
+									 <delete>1</delete>
+								 </enabledControls>
+							 </appearance>
+								<maxitems>2</maxitems>
+							</config>
+					</bgimages>
+					<bgimagePosition>
+						<label>Background Image Position (left or right column)</label>
+						<displayCond>FIELD:Bgimage.bgimages:>:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">left</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">right</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">both</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+							</items>
+							<default>1</default>
+						</config>
+					</bgimagePosition>
+				</el>
+			</ROOT>
+		</Bgimage>
+		<extraClass>
+			<ROOT>
+				<sheetTitle>Extra Class</sheetTitle>
+				<type>array</type>
+				<el>
+					<extraClass_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<config>
+							<type>input</type>
+						</config>
+					</extraClass_one>
+					<extraClass_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<config>
+							<type>input</type>
+						</config>
+					</extraClass_two>
+				</el>
+			</ROOT>
+		</extraClass>
+		<xxl>
+			<ROOT>
+				<sheetTitle>Col-xxl-*</sheetTitle>
+				<type>array</type>
+				<el>
+					<xxl_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</xxl_one>
+					<xxl_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</xxl_two>
+				</el>
+			</ROOT>
+		</xxl>
+		<xl>
+			<ROOT>
+				<sheetTitle>Col-xl-*</sheetTitle>
+				<type>array</type>
+				<el>
+					<xl_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</xl_one>
+					<xl_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</xl_two>
+				</el>
+			</ROOT>
+		</xl>
+		<lg>
+			<ROOT>
+				<sheetTitle>Col-lg-*</sheetTitle>
+				<type>array</type>
+				<el>
+					<lg_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</lg_one>
+					<lg_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</lg_two>
+				</el>
+			</ROOT>
+		</lg>
+		<md>
+			<ROOT>
+				<sheetTitle>Col-md-*</sheetTitle>
+				<type>array</type>
+				<el>
+					<md_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</md_one>
+					<md_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</md_two>
+				</el>
+			</ROOT>
+		</md>
+		<sm>
+			<ROOT>
+				<sheetTitle>Col-sm-*</sheetTitle>
+				<type>array</type>
+				<el>
+					<sm_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</sm_one>
+					<sm_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</sm_two>
+				</el>
+			</ROOT>
+		</sm>
+		<xs>
+			<ROOT>
+				<sheetTitle>Col-*</sheetTitle>
+				<type>array</type>
+				<el>
+					<xs_one>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</xs_one>
+					<xs_two>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1</label>
+						<displayCond>FIELD:sDEF.equalWidth:=:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="label">0</numIndex>
+									<numIndex index="value"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="label">1</numIndex>
+									<numIndex index="value">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="label">2</numIndex>
+									<numIndex index="value">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="label">3</numIndex>
+									<numIndex index="value">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="label">4</numIndex>
+									<numIndex index="value">4</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="label">5</numIndex>
+									<numIndex index="value">5</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="label">6</numIndex>
+									<numIndex index="value">6</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="label">7</numIndex>
+									<numIndex index="value">7</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="label">8</numIndex>
+									<numIndex index="value">8</numIndex>
+								</numIndex>
+								<numIndex index="9" type="array">
+									<numIndex index="label">9</numIndex>
+									<numIndex index="value">9</numIndex>
+								</numIndex>
+								<numIndex index="10" type="array">
+									<numIndex index="label">10</numIndex>
+									<numIndex index="value">10</numIndex>
+								</numIndex>
+								<numIndex index="11" type="array">
+									<numIndex index="label">11</numIndex>
+									<numIndex index="value">11</numIndex>
+								</numIndex>
+								<numIndex index="12" type="array">
+									<numIndex index="label">12</numIndex>
+									<numIndex index="value">12</numIndex>
+								</numIndex>
+								<numIndex index="13" type="array">
+									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
+									<numIndex index="value">auto</numIndex>
+								</numIndex>
+							</items>
+							<default></default>
+						</config>
+					</xs_two>
+				</el>
+			</ROOT>
+		</xs>
+	</sheets>
+</T3DataStructure>

@@ -51,12 +51,12 @@
 </f:section>
 
 <f:section name="Default">
-	<div id="navbarToggler" class="collapse p-3 py-{navbarBreakpoint}-0 navbar-collapse{config.navbar.navbarCenter}{config.navbar.navbarExtraRow}">
+	<div id="navbarToggler" class="collapse navbar-collapse{config.navbar.navbarCenter}{config.navbar.navbarExtraRow}">
 		<f:if condition="{navbarMenu} || {sectionMenu} || {languageNavigation}">
 			<f:if condition="{settings.config.navbarExtraRow}">
 				<f:render partial="Page/Navbar/NavbarExtraRow" arguments="{_all}" />
 			</f:if>
-			<div class="navbar-nav main-navbarnav mb-2 mb-lg-0{config.navbar.sectionMenu}{config.navbar.mauto}">
+			<div class="navbar-nav main-navbarnav p-3 py-{navbarBreakpoint}-0 mb-2 mb-lg-0{config.navbar.sectionMenu}{config.navbar.mauto}">
 				<f:render section="NavbarNav" arguments="{_all}" />
 				<f:if condition="{settings.config.navbarExtraRow}">
 					<f:then>

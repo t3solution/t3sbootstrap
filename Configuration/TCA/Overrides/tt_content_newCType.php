@@ -5,6 +5,17 @@ defined('TYPO3') || die();
 # Extension configuration
 $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
+if (!empty($extconf['flexformNoDefault'])) {
+    $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsNoDefaults.xml';
+    $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumnsNoDefaults.xml';
+    $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsNoDefaults.xml';
+    $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsNoDefaults.xml';
+} else {
+    $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml';
+    $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml';
+    $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml';
+    $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml';
+}
 
 /***************
  * Add new CTypes
@@ -313,7 +324,7 @@ $tempContentColumns = [
                 'label' => ' ',
                 'config' => [
                         'type' => 'flex',
-                        'ds_pointerField' => 'CType',
+                        'ds_pointerField' => 'CType',    
                         'ds' => [
                                 'default' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Bootstrap.xml',
                                 't3sbs_card' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
@@ -322,10 +333,10 @@ $tempContentColumns = [
                                 't3sbs_button' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
                                 't3sbs_mediaobject' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
                                 'table' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Table.xml',
-                                'two_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml',
-                                'three_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml',
-                                'four_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml',
-                                'six_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml',
+                                'two_columns' => $flexformTwoColumns,
+                                'three_columns' => $flexformThreeColumns,
+                                'four_columns' => $flexformFourColumns,
+                                'six_columns' => $flexformSixColumns,
                                 'card_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CardWrapper.xml',
                                 'button_group' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Buttongroup.xml',
                                 'autoLayout_row' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/AutoLayoutRow.xml',
