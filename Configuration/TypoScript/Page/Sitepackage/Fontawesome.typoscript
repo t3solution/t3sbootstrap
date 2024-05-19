@@ -6,30 +6,30 @@
 ##########################################################################################################
 
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0]
-page.includeCSS.t3sfontawesomeKit = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/fontawesome.min.css
+page.includeCSS.t3sfontawesomeKit = EXT:t3sb_package/Resources/Public/FA6-Kit/css/fontawesome.min.css
 [END]
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0 && '{$bootstrap.fontawesome.solid}']
-page.includeCSS.t3sfontawesomeSolid = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/solid.min.css
+page.includeCSS.t3sfontawesomeSolid = EXT:t3sb_package/Resources/Public/FA6-Kit/css/solid.min.css
 [END]
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0 && '{$bootstrap.fontawesome.regular}']
-page.includeCSS.t3sfontawesomeRegular = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/regular.min.css
+page.includeCSS.t3sfontawesomeRegular = EXT:t3sb_package/Resources/Public/FA6-Kit/css/regular.min.css
 [END]
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0 && '{$bootstrap.fontawesome.light}']
-page.includeCSS.t3sfontawesomeLight = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/light.min.css
+page.includeCSS.t3sfontawesomeLight = EXT:t3sb_package/Resources/Public/FA6-Kit/css/light.min.css
 [END]
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0 && '{$bootstrap.fontawesome.thin}']
-page.includeCSS.t3sfontawesomeThin = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/thin.min.css
+page.includeCSS.t3sfontawesomeThin = EXT:t3sb_package/Resources/Public/FA6-Kit/css/thin.min.css
 [END]
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0 && '{$bootstrap.fontawesome.duotone}']
-page.includeCSS.t3sfontawesomeDuotone = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/duotone.min.css
+page.includeCSS.t3sfontawesomeDuotone = EXT:t3sb_package/Resources/Public/FA6-Kit/css/duotone.min.css
 [END]
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0 && '{$bootstrap.fontawesome.brands}']
-page.includeCSS.t3sfontawesomeBrands = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/css/brands.min.css
+page.includeCSS.t3sfontawesomeBrands = EXT:t3sb_package/Resources/Public/FA6-Kit/css/brands.min.css
 [END]
 
 # svgJs
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 1]
-page.includeJSFooter.fontawesomeSvgJs = EXT:t3sb_package/T3SB/Resources/Public/FA6-Kit/js/all.min.js
+page.includeJSFooter.fontawesomeSvgJs = EXT:t3sb_package/Resources/Public/FA6-Kit/js/all.min.js
 [END]
 
 
@@ -40,6 +40,6 @@ page.includeJSFooter.fontawesomeSvgJs = EXT:t3sb_package/T3SB/Resources/Public/F
 ##########################################################################################################
 
 [{$bootstrap.extconf.fontawesomeCss} == 3 && {$bootstrap.fontawesome.svgJs} == 0]
-page.includeCSS.t3sfontawesomeDefault = EXT:t3sb_package/T3SB/Resources/Public/CSS/fontawesome.min.css
+page.includeCSS.t3sfontawesomeDefault = EXT:t3sb_package/Resources/Public/T3SB-CSS/fontawesome.min.css
 [END]
 

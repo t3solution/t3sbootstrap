@@ -34,11 +34,7 @@ class FlexformEvent
             $dataStructure = $event->getDataStructure();
             $identifier = $event->getIdentifier();
 
-            if (!empty($settings['sitepackage'])) {
-                $ffPath = 'EXT:t3sb_package/T3SB/FlexForms/';
-            } else {
-                $ffPath = '/fileadmin/T3SB/FlexForms/';
-            }
+            $ffPath = Environment::getPublicPath() . '/fileadmin/T3SB/FlexForms/';
 
             foreach ($GLOBALS['TCA']['tt_content']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] as $key=>$flexForm) {
                 $flexForms[$key] = substr($flexForm, 46, -4);
@@ -47,7 +43,7 @@ class FlexformEvent
             if (array_key_exists($identifier['dataStructureKey'], $flexForms)) {
                 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
                 && $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey']) {
-                    $file = Environment::getPublicPath() . $ffPath.$flexForms[$identifier['dataStructureKey']].'.xml';
+                    $file = $ffPath.$flexForms[$identifier['dataStructureKey']].'.xml';
                     if (file_exists($file)) {
                         $content = @file_get_contents($file);
                         if ($content) {

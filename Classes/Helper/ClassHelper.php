@@ -22,13 +22,13 @@ class ClassHelper implements SingletonInterface
     public function getDefaultClass(array $data, array $flexconf, string $cTypeClass, string $sectionMenuClass): string
     {
         // class
-        if ($cTypeClass) {
+        if (!empty($cTypeClass)) {
             $class = 'fsc-default ce-'. $data['CType'];
         } else {
             $class = '';
         }
         // Spacing: padding
-        if ($data['tx_t3sbootstrap_padding_sides']) {
+        if (!empty($data['tx_t3sbootstrap_padding_sides'])) {
             // on all 4 sides of the element
             if ($data['tx_t3sbootstrap_padding_sides'] == 'blank') {
                 $class .= ' p-'.$data['tx_t3sbootstrap_padding_size'];
@@ -44,7 +44,7 @@ class ClassHelper implements SingletonInterface
             }
         }
         // Spacing: margin
-        if ($data['tx_t3sbootstrap_margin_sides']) {
+        if (!empty($data['tx_t3sbootstrap_margin_sides'])) {
             // on all 4 sides of the element
             if ($data['tx_t3sbootstrap_margin_sides'] == 'blank') {
                 $class .= ' m-'.$data['tx_t3sbootstrap_margin_size'];
@@ -61,7 +61,7 @@ class ClassHelper implements SingletonInterface
         }
 
         // Layout
-        if ($data['layout']) {
+        if (!empty($data['layout'])) {
             $pagesTSconfig = self::getFrontendController()->getPagesTSconfig();
             $layout = $data['layout'];
             $layoutAddItems = '';
@@ -78,7 +78,7 @@ class ClassHelper implements SingletonInterface
                 $layoutAltLabels = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'];
             }
 
-            if (isset($layoutAddItems) && isset($layoutAddItems) === $layout) {
+            if (!empty($layoutAddItems) && $layoutAddItems === $layout) {
                 $class .= ' layout-'.$layout;
             } elseif (isset($layoutAltLabels) && !empty($layoutAltLabels[$layout])) {
                 if (isset($layoutClasses) && $layoutClasses[$layout]) {

@@ -73,9 +73,9 @@ abstract class AbstractController extends ActionController
         $assignedOptions = [];
 
         if (!empty($this->settings['sitepackage'])) {
-            $customScssDir = 'EXT:t3sb_package/T3SB/Resources/Public/SCSS/';
+            $customScssDir = 'EXT:t3sb_package/Resources/Public/T3SB-SCSS/';
         } else {
-            $customScssDir = 'fileadmin/T3SB/Resources/Public/SCSS/';
+            $customScssDir = 'fileadmin/T3SB/Resources/Public/T3SB-SCSS/';
         }
         $customScssFilePath = GeneralUtility::getFileAbsFileName($customScssDir);
 
@@ -268,7 +268,7 @@ abstract class AbstractController extends ActionController
             $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
         } else {
             if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/T3SB/");
+                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
             } else {
                 throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
             }
@@ -283,8 +283,8 @@ abstract class AbstractController extends ActionController
             $filecontent = '';
             foreach ($this->configRepository->findAll() as $config) {
                 $page = GeneralUtility::makeInstance(PageRepository::class)->getPage($config->getPid());
-                if ($page['hidden'] === 0 && $page['deleted'] === 0) {
-                    if (!empty($page['is_siteroot'])) {
+	            if (!empty($page['uid']) && $page['hidden'] === 0 && $page['deleted'] === 0) {
+                   if (!empty($page['is_siteroot'])) {
                         $siteroots[$config->getUid()] = $page['is_siteroot'];
                     }
                     $pages[$config->getPid()] = $page;
@@ -466,7 +466,7 @@ abstract class AbstractController extends ActionController
         if (empty($this->settings['sitepackage'])) {
             $variablesSCSS = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
         } else {
-            $variablesSCSS = 'EXT:t3sb_package/T3SB/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
+            $variablesSCSS = 'EXT:t3sb_package/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
         }
 
         $variablesSCSS = GeneralUtility::getFileAbsFileName($variablesSCSS);

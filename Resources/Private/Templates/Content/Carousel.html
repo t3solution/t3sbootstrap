@@ -42,7 +42,6 @@
 		</div>
 	</f:then>
 	<f:else>
-
 		<f:comment> Image </f:comment>
 		<f:if condition="{parentCType} != 'swiper_container'">
 			<div class="carousel-item carousel-item-{data.uid} carousel-image">
@@ -103,7 +102,7 @@
 		<f:image class="img-fluid{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_imgclass, then: ' {files.0.properties.tx_t3sbootstrap_extra_imgclass}')}"
 		 src="fileadmin/{files.0.identifier}" width="{maxWidth}" height="auto" />
 	</f:then>
-	<f:else>
+	<f:else>	
 		<t3sb:media file="{files.0}" title="{files.0.title}"
 		alt="{f:if(condition: files.0.alternative, then: '{files.0.alternative}', else: '{t3sb:alternative(title:files.0.title, name:files.0.name)}')}"
 		 class="img-fluid{imgLazyLoad}{imgClass}"

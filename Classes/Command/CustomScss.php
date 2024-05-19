@@ -65,7 +65,7 @@ class CustomScss extends CommandBase
             $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
         } else {
             if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/T3SB/");
+                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
             } else {
                 throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
             }
@@ -90,7 +90,7 @@ class CustomScss extends CommandBase
             }
 
             # Custom
-            $customPath = $baseDir.'Resources/Public/SCSS/';
+            $customPath = $baseDir.'Resources/Public/T3SB-SCSS/';
 
             if (!is_dir($customPath)) {
                 mkdir($customPath, 0777, true);
@@ -139,7 +139,7 @@ class CustomScss extends CommandBase
                         mkdir($includePath, 0777, true);
                     }
 
-                    $customDir = $baseDir.'Resources/Public/SCSS/';
+                    $customDir = $baseDir.'Resources/Public/T3SB-SCSS/';
                     if ($key === 0) {
                         $includeContent = '
 @import "'.$customDir.'custom-variables";

@@ -45,7 +45,7 @@ bootstrap.cdn.fontawesome6latest = 6.5.1
 # customsubcategory=b-fontawesome=Styles - if "FA6-KIT" is activated in EM config
 
 bootstrap.cdn {
-	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/ or EXT:t3sb_package/T3SB/
+	# cat=bootstrap-cdn/a-enable/10; type=boolean; label=Enable CDN - please consider the "GDPR" ("DSGVO"):before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/ or EXT:t3sb_package/
 	enable = 1
 	# cat=bootstrap-cdn/a-enable/20; type=options[none=0, Cerulean=cerulean, Cosmo=cosmo, Cyborg=cyborg, Darkly=darkly, Flatly=flatly, Journal=journal, Litera=litera, Lumen=lumen, Lux=lux, Materia=materia, Minty=minty, Morph=morph Pulse=pulse, Quartz=quartz, Sandstone=sandstone, Simplex=simplex, Sketchy=sketchy, Slate=slate, Solar=solar, Spacelab=spacelab, Superhero=superhero, United=united, Vapor=vapor, Yeti=yeti, Zephyr=zephyr]; label=Bootswatch Themes CDN: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/.
 	bootswatch = 0
@@ -91,7 +91,7 @@ bootstrap.cdn {
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
-	jqueryIntegrity = sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=
+	jqueryIntegrity = sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=
 	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
 	jqueryEasingIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/30; type=small; label=Lazyload:
@@ -191,7 +191,7 @@ bootstrap.optimize {
 }
 
 bootstrap.pages.override {
-	# cat=bootstrap-pages/a-pages/10; type=options[none=0, container=container, container-sm=container-sm, container-md=container-md, container-lg=container-lg, container-xl=container-xl, container-xxl=container-xxl, container-fluid=container-fluid]; label=Container (for the whole page):
+	# cat=bootstrap-pages/a-pages/10; type=options[none=0, container=container, container-sm=container-sm, container-md=container-md, container-lg=container-lg, container-xl=container-xl, container-xxl=container-xxl, container-fluid=container-fluid, none-container=none-container]; label=Container (for the whole page):
 	container = 0
 	# cat=bootstrap-pages/a-pages/20; type=boolean; label=Link to top:
 	linkToTop = 0

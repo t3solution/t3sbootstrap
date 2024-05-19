@@ -40,5 +40,5 @@ page.includeJSFooter.fontawesomeSvgJs = /fileadmin/T3SB/Resources/Public/FA6-Kit
 ##########################################################################################################
 
 [{$bootstrap.extconf.fontawesomeCss} == 3 && {$bootstrap.fontawesome.svgJs} == 0]
-page.includeCSS.t3sfontawesomeDefault = /fileadmin/T3SB/Resources/Public/CSS/fontawesome.min.css
+page.includeCSS.t3sfontawesomeDefault = /fileadmin/T3SB/Resources/Public/T3SB-CSS/fontawesome.min.css
 [END]
