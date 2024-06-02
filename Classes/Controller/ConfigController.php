@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Service\CacheService;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -232,6 +233,11 @@ final class ConfigController extends AbstractController
         $config->setHomepageUid($this->rootPageId);
         $this->configRepository->update($config);
         parent::writeConstants();
+		if (!empty($this->settings['clearPageCache'])) {
+	        $cacheService = GeneralUtility::makeInstance(CacheService::class);
+	        $cacheService->clearPageCache();			
+		}
+
         return $this->redirect('edit', null, null, array('config' => $config, 'updated' => true));
     }
 

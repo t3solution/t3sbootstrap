@@ -67,8 +67,8 @@
 										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true', origImage: '{origImage}'}" />
 									</ce:link.clickEnlarge>
 								</f:then>
-								<f:else>
-									<f:link.typolink parameter="{card.file.properties.link}" class="card-imglink">
+								<f:else>								
+									<f:link.typolink parameter="{swiperSlides.{card.uid}.0.properties.link}" class="card-imglink">
 										<f:render section="Image"
 										 arguments="{ratio: '{ratio}', file: '{swiperSlides.{card.uid}.0}', width: '{width}', swiper: 'true', origImage: '{origImage}'}" />
 									</f:link.typolink>

@@ -267,6 +267,9 @@ bootstrap.backToTopForAllPages = 0
 # font-weights for Google fonts (regular == 400)
 bootstrap.gooleFontsWeights = 300, regular, 700
 
+# clears the cache when the config is saved
+bootstrap.extconf.clearPageCache = 1
+
 
 # disable jQuery by default
 bootstrap.disable.jquery = 1
