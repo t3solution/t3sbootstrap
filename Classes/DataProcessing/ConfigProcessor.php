@@ -237,12 +237,9 @@ class ConfigProcessor implements DataProcessorInterface
             ? $processedRecordVariables['navbarImage'] : $contentObjectConfiguration['settings.']['navbar.']['image.']['defaultPath'];
 
             // container
-            if (!$processedRecordVariables['navbarContainer']) {
-                $processedData['config']['navbar']['container'] = '';
-            } else {
-                $processedData['config']['navbar']['containerposition'] = $processedRecordVariables['navbarContainer'];
-                $processedData['config']['navbar']['container'] = 'container';
-            }
+            $processedData['config']['navbar']['container'] = !empty($processedRecordVariables['navbarContainer'])
+             ? $processedRecordVariables['navbarContainer'] : '';
+            // inner container is required
             $processedData['config']['navbar']['innercontainer'] = $processedRecordVariables['navbarInnercontainer'] ?: 'container';
 
             // brand
@@ -311,19 +308,16 @@ class ConfigProcessor implements DataProcessorInterface
                 $navBarAttr .= ' data-colorschemes="'.$navbarColor.'"';
                 $navBarAttr .= ' data-color="navbar-'.$processedRecordVariables['navbarEnable'].'"';
             }
-
-            // sticky-top
-            if ($processedRecordVariables['navbarPlacement'] === 'sticky-top') {
-                $navBarAttr .= ' data-bs-toggle="sticky-onscroll"';
-            }
             $processedData['config']['navbar']['dataAttr'] = $navBarAttr;
 
             // placement
             if ($processedRecordVariables['navbarPlacement']) {
                 $processedData['config']['navbar']['placement'] = $processedRecordVariables['navbarPlacement'];
-                if (!empty($processedData['config']['navbar']['containerposition']) && $processedData['config']['navbar']['containerposition'] == 'outside') {
-                    $processedData['config']['navbar']['container'] =
-                    trim($processedData['config']['navbar']['container'].' '.$processedRecordVariables['navbarPlacement']);
+
+                // sticky-top & navbar container
+                if ($processedRecordVariables['navbarPlacement'] === 'sticky-top'
+                     && !empty($processedData['config']['navbar']['container'])) {
+                    $processedData['config']['navbar']['container'] = $processedData['config']['navbar']['container'].' sticky-top';
                 } else {
                     $navbarClass .= ' '.$processedRecordVariables['navbarPlacement'];
                 }

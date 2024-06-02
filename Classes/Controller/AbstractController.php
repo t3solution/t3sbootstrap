@@ -37,6 +37,7 @@ abstract class AbstractController extends ActionController
     protected $rootConfig;
     protected $rootTemplates;
     protected $persistenceManager;
+    protected $countRootTemplates;
 
 
     /**
