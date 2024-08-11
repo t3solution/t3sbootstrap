@@ -12,19 +12,20 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">None</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>None</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">zoom and border</numIndex>
-									<numIndex index="1">one</numIndex>
+								<numIndex index="1">
+									<label>zoom and border</label>
+									<value>one</value>
 								</numIndex>
 							</items>
 							<default>0</default>
 						</config>
 					</effect>
+
 					<effectColor>
 						<label>Card Hover Effect Color</label>
 						<displayCond>
@@ -36,51 +37,52 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
-									<numIndex index="1">secondary</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</label>
+									<value>secondary</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-									<numIndex index="1">primary</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-									<numIndex index="1">success</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-									<numIndex index="1">info</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-									<numIndex index="1">warning</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-									<numIndex index="1">danger</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">light</numIndex>
-									<numIndex index="1">light</numIndex>
+								<numIndex index="6">
+									<label>light</label>
+									<value>light</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">dark</numIndex>
-									<numIndex index="1">dark</numIndex>
+								<numIndex index="7">
+									<label>dark</label>
+									<value>dark</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">white</numIndex>
-									<numIndex index="1">white</numIndex>
+								<numIndex index="8">
+									<label>white</label>
+									<value>white</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+								<numIndex index="9">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
 							</items>
 							<default>primary</default>
 						</config>
 					</effectColor>
+
 					<maxwidth>
 						<label>Card max-width == image width</label>
 						<displayCond>
@@ -140,18 +142,18 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">180deg</numIndex>
-									<numIndex index="1">180deg</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>180deg</label>
+									<value>180deg</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">540deg</numIndex>
-									<numIndex index="1">540deg</numIndex>
+								<numIndex index="1">
+									<label>540deg</label>
+									<value>540deg</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">900deg</numIndex>
-									<numIndex index="1">900deg</numIndex>
+								<numIndex index="2">
+									<label>900deg</label>
+									<value>900deg</value>
 								</numIndex>
 							</items>
 							<default>180deg</default>
@@ -185,34 +187,34 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">Secondary</numIndex>
-									<numIndex index="1">secondary</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>Secondary</label>
+									<value>secondary</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-									<numIndex index="1">primary</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-									<numIndex index="1">success</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-									<numIndex index="1">info</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-									<numIndex index="1">warning</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-									<numIndex index="1">danger</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">Link</numIndex>
-									<numIndex index="1">card-link</numIndex>
+								<numIndex index="6">
+									<label>Link</label>
+									<value>card-link</value>
 								</numIndex>
 							</items>
 							<default>secondary</default>
@@ -265,46 +267,46 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
-									<numIndex index="1">secondary</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</label>
+									<value>secondary</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-									<numIndex index="1">primary</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-									<numIndex index="1">success</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-									<numIndex index="1">info</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-									<numIndex index="1">warning</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-									<numIndex index="1">danger</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">light</numIndex>
-									<numIndex index="1">light</numIndex>
+								<numIndex index="6">
+									<label>light</label>
+									<value>light</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">dark</numIndex>
-									<numIndex index="1">dark</numIndex>
+								<numIndex index="7">
+									<label>dark</label>
+									<value>dark</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">white</numIndex>
-									<numIndex index="1">white</numIndex>
+								<numIndex index="8">
+									<label>white</label>
+									<value>white</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+								<numIndex index="9">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
 							</items>
 							<default>secondary</default>
@@ -314,8 +316,7 @@
 						<label>Horizontal</label>
 						<displayCond>
 							<and>
-								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
-								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
+								<numIndex index="0">FIELD:sDEF.multiImage.enable:=:0</numIndex>
 								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
 							</and>
 						</displayCond>
@@ -323,39 +324,46 @@
 							<type>check</type>
 						</config>
 					</horizontal>
+
 					<tiling.enable>
 						<label>Tiling card with text and image</label>
-						<description>Only in 2 columns and best with the following setting "col-lg-6 col-md-12 col-12"</description>
+						<description>Best in 2 columns with the following setting "col-lg-6 col-md-12 col-12"</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->twoColumnsParent</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
-							<default>0</default>	
+							<default>0</default>
 						</config>
 					</tiling.enable>
+
 					<tiling.position>
 						<label>Tiling position of the Image</label>
 						<displayCond>FIELD:sDEF.tiling.enable:=:1</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">left</numIndex>
-									<numIndex index="1">left</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>left</label>
+									<value>left</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">right</numIndex>
-									<numIndex index="1">right</numIndex>
+								<numIndex index="1">
+									<label>right</label>
+									<value>right</value>
 								</numIndex>
 							</items>
-							<default>left</default>	
+							<default>left</default>
 						</config>
 					</tiling.position>
 					<multiImage.enable>
 						<label>Enable Profile Card</label>
 						<description>You need at least two images for the profile card. The second is the circular, smaller image</description>
-						<displayCond>FIELD:sDEF.tiling.enable:=:0</displayCond>
+						<displayCond>
+							<and>
+								<numIndex index="0">FIELD:sDEF.horizontal:=:0</numIndex>
+								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
+							</and>
+						</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -385,30 +393,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">none</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>none</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">border border-1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>border border-1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">border border-2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>border border-2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">border border-3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>border border-3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">border border-4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>border border-4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">border border-5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>border border-5</value>
 								</numIndex>
 							</items>
 							<default>border border-1</default>
@@ -421,46 +429,46 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
-									<numIndex index="1">secondary</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</label>
+									<value>secondary</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-									<numIndex index="1">primary</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-									<numIndex index="1">success</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-									<numIndex index="1">info</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-									<numIndex index="1">warning</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-									<numIndex index="1">danger</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">light</numIndex>
-									<numIndex index="1">light</numIndex>
+								<numIndex index="6">
+									<label>light</label>
+									<value>light</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">dark</numIndex>
-									<numIndex index="1">dark</numIndex>
+								<numIndex index="7">
+									<label>dark</label>
+									<value>dark</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">white</numIndex>
-									<numIndex index="1">white</numIndex>
+								<numIndex index="8">
+									<label>white</label>
+									<value>white</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+								<numIndex index="9">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
 							</items>
 							<default>white</default>
@@ -644,22 +652,22 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">no .col</numIndex>
-									<numIndex index="1">none</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>no .col</label>
+									<value>none</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">Equal-width</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="1">
+									<label>Equal-width</label>
+									<value>equal</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">Column width</numIndex>
-									<numIndex index="1">column</numIndex>
+								<numIndex index="2">
+									<label>Column width</label>
+									<value>column</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">Variable width content</numIndex>
-									<numIndex index="1">variable</numIndex>
+								<numIndex index="3">
+									<label>Variable width content</label>
+									<value>variable</value>
 								</numIndex>
 							</items>
 							<default>equal</default>
@@ -684,22 +692,22 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">start</numIndex>
-									<numIndex index="1">start</numIndex>
+								<numIndex index="1">
+									<label>start</label>
+									<value>start</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">end</numIndex>
-									<numIndex index="1">end</numIndex>
+								<numIndex index="2">
+									<label>end</label>
+									<value>end</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">center</numIndex>
-									<numIndex index="1">center</numIndex>
+								<numIndex index="3">
+									<label>center</label>
+									<value>center</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -716,30 +724,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">xs</numIndex>
-									<numIndex index="1">xs</numIndex>
+								<numIndex index="1">
+									<label>xs</label>
+									<value>xs</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">sm</numIndex>
-									<numIndex index="1">sm</numIndex>
+								<numIndex index="2">
+									<label>sm</label>
+									<value>sm</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">md</numIndex>
-									<numIndex index="1">md</numIndex>
+								<numIndex index="3">
+									<label>md</label>
+									<value>md</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">lg</numIndex>
-									<numIndex index="1">lg</numIndex>
+								<numIndex index="4">
+									<label>lg</label>
+									<value>lg</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">xl</numIndex>
-									<numIndex index="1">xl</numIndex>
+								<numIndex index="5">
+									<label>xl</label>
+									<value>xl</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -752,26 +760,26 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">right</numIndex>
-									<numIndex index="1">mr</numIndex>
+								<numIndex index="1">
+									<label>right</label>
+									<value>mr</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">left</numIndex>
-									<numIndex index="1">ml</numIndex>
+								<numIndex index="2">
+									<label>left</label>
+									<value>ml</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">top</numIndex>
-									<numIndex index="1">mt</numIndex>
+								<numIndex index="3">
+									<label>top</label>
+									<value>mt</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">bottom</numIndex>
-									<numIndex index="1">mb</numIndex>
+								<numIndex index="4">
+									<label>bottom</label>
+									<value>mb</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -783,58 +791,58 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -864,66 +872,66 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="0">auto</numIndex>
-									<numIndex index="1">auto</numIndex>
+								<numIndex index="13">
+									<label>auto</label>
+									<value>auto</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="0">equal</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="14">
+									<label>equal</label>
+									<value>equal</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -949,66 +957,66 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="0">auto</numIndex>
-									<numIndex index="1">auto</numIndex>
+								<numIndex index="13">
+									<label>auto</label>
+									<value>auto</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="0">equal</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="14">
+									<label>equal</label>
+									<value>equal</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -1034,66 +1042,66 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="0">auto</numIndex>
-									<numIndex index="1">auto</numIndex>
+								<numIndex index="13">
+									<label>auto</label>
+									<value>auto</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="0">equal</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="14">
+									<label>equal</label>
+									<value>equal</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -1120,66 +1128,66 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="0">auto</numIndex>
-									<numIndex index="1">auto</numIndex>
+								<numIndex index="13">
+									<label>auto</label>
+									<value>auto</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="0">equal</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="14">
+									<label>equal</label>
+									<value>equal</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -1206,66 +1214,66 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="0">auto</numIndex>
-									<numIndex index="1">auto</numIndex>
+								<numIndex index="13">
+									<label>auto</label>
+									<value>auto</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="0">equal</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="14">
+									<label>equal</label>
+									<value>equal</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -1291,66 +1299,66 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="0">none</numIndex>
-									<numIndex index="1">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="0">1</numIndex>
-									<numIndex index="1">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="0">2</numIndex>
-									<numIndex index="1">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="0">3</numIndex>
-									<numIndex index="1">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="0">4</numIndex>
-									<numIndex index="1">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="0">5</numIndex>
-									<numIndex index="1">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="0">6</numIndex>
-									<numIndex index="1">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="0">7</numIndex>
-									<numIndex index="1">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="0">8</numIndex>
-									<numIndex index="1">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="0">9</numIndex>
-									<numIndex index="1">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="0">10</numIndex>
-									<numIndex index="1">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="0">11</numIndex>
-									<numIndex index="1">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="0">12</numIndex>
-									<numIndex index="1">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="0">auto</numIndex>
-									<numIndex index="1">auto</numIndex>
+								<numIndex index="13">
+									<label>auto</label>
+									<value>auto</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="0">equal</numIndex>
-									<numIndex index="1">equal</numIndex>
+								<numIndex index="14">
+									<label>equal</label>
+									<value>equal</value>
 								</numIndex>
 							</items>
 							<default>0</default>

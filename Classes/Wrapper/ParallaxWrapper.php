@@ -57,9 +57,9 @@ class ParallaxWrapper implements SingletonInterface
 				$processedData['parallaxImage'] = $bgImage;
 			}
 
-			$processedData['width'] = $flexconf['width'];
+			$processedData['width'] = !empty($flexconf['width']) ? $flexconf['width'] : 'auto';
 			$processedData['speedFactor'] = $flexconf['speedFactor'] ?: 1;
-			$processedData['addHeight'] = (int)$flexconf['addHeight'] ?: 0;
+			$processedData['addHeight'] = !empty($flexconf['addHeight']) ? (int)$flexconf['addHeight'] : 0;
 			$processedData['no-mobile'] = $flexconf['mobile'] ? '/iPad|iPhone|iPod|Android/' : '-';
 		}
 

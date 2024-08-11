@@ -62,33 +62,7 @@ class ClassHelper implements SingletonInterface
 
         // Layout
         if (!empty($data['layout'])) {
-            $pagesTSconfig = self::getFrontendController()->getPagesTSconfig();
-            $layout = $data['layout'];
-            $layoutAddItems = '';
-            $layoutClasses = '';
-            $layoutAltLabels = '';
-
-            if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'])) {
-                $layoutAddItems = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['addItems.'];
-            }
-            if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'])) {
-                $layoutClasses = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['classes.'];
-            }
-            if (!empty($pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'])) {
-                $layoutAltLabels = $pagesTSconfig['TCEFORM.']['tt_content.']['layout.']['altLabels.'];
-            }
-
-            if (!empty($layoutAddItems) && $layoutAddItems === $layout) {
-                $class .= ' layout-'.$layout;
-            } elseif (isset($layoutAltLabels) && !empty($layoutAltLabels[$layout])) {
-                if (isset($layoutClasses) && $layoutClasses[$layout]) {
-                    $class .= ' '.strtolower($layoutClasses[$layout]);
-                } else {
-                    $class .= ' layout-'.str_replace(' ', '-', strtolower($layoutAltLabels[$layout]));
-                }
-            } else {
-                $class .= ' layout-'.$layout;
-            }
+			$class .= ' layout-'.$data['layout'];
         }
         // Frame class
         if ($data['frame_class'] != 'default') {
@@ -337,11 +311,4 @@ class ClassHelper implements SingletonInterface
     }
 
 
-    /**
-     * Returns the frontend controller
-     */
-    protected function getFrontendController(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
-    }
 }

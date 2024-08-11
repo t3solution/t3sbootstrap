@@ -79,16 +79,16 @@ final class ConfigController extends AbstractController
         if ($this->countRootTemplates === 0) {
             $assignedOptions['rootTemplate'] = false;
         }
-        $assignedOptions['rootConfig'] = $this->rootConfig ? true : false;
-        $assignedOptions['config'] = $this->configRepository->findOneByPid($this->currentUid);
+        $assignedOptions['rootConfig'] = $this->rootConfig ? true : false;        
+        $assignedOptions['config'] = $this->configRepository->findOneBy(['pid' => $this->currentUid]);    
         $assignedOptions['admin'] = $this->isAdmin;
         $assignedOptions['customScss'] = false;
-        $assignedOptions['scss'] = '';
         $assignedOptions['action'] = 'list';
         $assignedOptions['updateScss'] = $updateSss;
         $assignedOptions['deleted'] = $deleted;
         $assignedOptions['created'] = $created;
         $assignedOptions['cdnHint'] = $cdnHint;
+		$assignedOptions['settings'] = $this->settings;
 
         if (!empty($this->settings['customScss']) && (int)$this->settings['customScss'] === 1) {
             $customScss = parent::getCustomScss('custom-variables');
@@ -124,11 +124,9 @@ final class ConfigController extends AbstractController
             copy($orig_raster, $new_raster);
         }
 
-        $this->view->assignMultiple($assignedOptions);
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->assignMultiple($assignedOptions);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        return $moduleTemplate->renderResponse('Config/List');
     }
 
 
@@ -149,8 +147,8 @@ final class ConfigController extends AbstractController
                 if (count($rootLineArray) > 1) {
                     unset($rootLineArray[count($rootLineArray)-1]);
                 }
-                foreach ($rootLineArray as $rootline) {
-                    $rootlineConfig = $this->configRepository->findOneByPid((int)$rootline['uid']);
+                foreach ($rootLineArray as $rootline) {                    
+                    $rootlineConfig = $this->configRepository->findOneBy(['pid' => (int)$rootline['uid']]);              
                     if (!empty($rootlineConfig)) {
                         break;
                     }
@@ -166,11 +164,11 @@ final class ConfigController extends AbstractController
             $newConfig = parent::setDefaults($newConfig);
             $assignedOptions['newConfig'] = $newConfig;
         }
+		$assignedOptions['settings'] = $this->settings;
 
-        $this->view->assignMultiple($assignedOptions);
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assignMultiple($assignedOptions);
+        return $moduleTemplate->renderResponse('Config/Edit');
     }
 
 
@@ -201,6 +199,7 @@ final class ConfigController extends AbstractController
         $assignedOptions['updated'] = $updated;
         $assignedOptions['override'] = parent::overrideConfig();
         $assignedOptions['tcaColumns'] = parent::getTcaColumns();
+		$assignedOptions['settings'] = $this->settings;
         $assignedOptions['action'] = 'edit';
         if (!$this->isSiteroot) {
             $assignedOptions['compare'] = parent::compareConfig($config);
@@ -218,10 +217,9 @@ final class ConfigController extends AbstractController
             $notificationQueue->enqueue($flashMessage);
         }
 
-        $this->view->assignMultiple($assignedOptions);
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assignMultiple($assignedOptions);
+        return $moduleTemplate->renderResponse('Config/Edit');
     }
 
 
@@ -265,11 +263,11 @@ final class ConfigController extends AbstractController
         $assignedOptions['action'] = 'dashboard';
         $assignedOptions['isSiteroot'] = $this->isSiteroot;
         $assignedOptions['admin'] = $this->isAdmin;
+		$assignedOptions['settings'] = $this->settings;
 
-        $this->view->assignMultiple($assignedOptions);
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assignMultiple($assignedOptions);
+        return $moduleTemplate->renderResponse('Config/Dashboard');
     }
 
 
@@ -307,10 +305,11 @@ final class ConfigController extends AbstractController
         $assignedOptions['action'] = 'constants';
         $assignedOptions['isSiteroot'] = $this->isSiteroot;
         $assignedOptions['admin'] = $this->isAdmin;
+		$assignedOptions['settings'] = $this->settings;
 
-        $this->view->assignMultiple($assignedOptions);
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assignMultiple($assignedOptions);
+        return $moduleTemplate->renderResponse('Config/Constants');
+
     }
 }

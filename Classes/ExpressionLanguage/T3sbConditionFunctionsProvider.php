@@ -79,16 +79,17 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 
             if ($_GET['id'] ?? 0 && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
                 $pid = (int)$_GET['id'];
-                $configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
-                $config = $configRepository->findOneByPid($pid);
+                $configRepository = GeneralUtility::makeInstance(ConfigRepository::class);                
+                $config = $configRepository->findOneBy(['pid' => $pid]);
 
                 if (empty($config) && is_array($arguments['tree']->rootLineIds)) {
                     $rootLineIdsArray = array_reverse($arguments['tree']->rootLineIds);
                     unset($rootLineIdsArray[count($rootLineIdsArray)-1]);
                     unset($rootLineIdsArray[0]);
 
-                    foreach ($rootLineIdsArray as $id) {
-                        $config = $configRepository->findOneByPid($id);
+                    foreach ($rootLineIdsArray as $id) {                        
+                        $config = $configRepository->findOneBy(['pid' => $id]);
+                        
                         if (!empty($config)) {
                             break;
                         }

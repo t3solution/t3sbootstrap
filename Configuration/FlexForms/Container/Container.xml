@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
@@ -13,46 +10,46 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Hidden only on xs</numIndex>
-									<numIndex index="value">d-none d-sm-block</numIndex>
+								<numIndex index="1">
+									<label>Hidden only on xs</label>
+									<value>d-none d-sm-block</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Hidden on sm and down</numIndex>
-									<numIndex index="value">d-none d-md-block</numIndex>
+								<numIndex index="2">
+									<label>Hidden on sm and down</label>
+									<value>d-none d-md-block</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">Hidden on md and down</numIndex>
-									<numIndex index="value">d-none d-lg-block</numIndex>
+								<numIndex index="3">
+									<label>Hidden on md and down</label>
+									<value>d-none d-lg-block</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">Hidden on lg and down</numIndex>
-									<numIndex index="value">d-none d-xl-block</numIndex>
+								<numIndex index="4">
+									<label>Hidden on lg and down</label>
+									<value>d-none d-xl-block</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">Hidden only on xl</numIndex>
-									<numIndex index="value">d-xl-none</numIndex>
+								<numIndex index="5">
+									<label>Hidden only on xl</label>
+									<value>d-xl-none</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">Visible only on xs</numIndex>
-									<numIndex index="value">d-block d-sm-none</numIndex>
+								<numIndex index="6">
+									<label>Visible only on xs</label>
+									<value>d-block d-sm-none</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">Visible sm and down</numIndex>
-									<numIndex index="value">d-block d-md-none</numIndex>
+								<numIndex index="7">
+									<label>Visible sm and down</label>
+									<value>d-block d-md-none</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">Visible md and down</numIndex>
-									<numIndex index="value">d-block d-lg-none</numIndex>
+								<numIndex index="8">
+									<label>Visible md and down</label>
+									<value>d-block d-lg-none</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">Visible lg and down</numIndex>
-									<numIndex index="value">d-block d-xl-none</numIndex>
+								<numIndex index="9">
+									<label>Visible lg and down</label>
+									<value>d-block d-xl-none</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -65,18 +62,18 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">flex</numIndex>
-									<numIndex index="value">flex</numIndex>
+								<numIndex index="1">
+									<label>flex</label>
+									<value>flex</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">inline-flex</numIndex>
-									<numIndex index="value">inline-flex</numIndex>
+								<numIndex index="2">
+									<label>inline-flex</label>
+									<value>inline-flex</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -95,30 +92,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">xs</numIndex>
-									<numIndex index="value">xs</numIndex>
+								<numIndex index="1">
+									<label>xs</label>
+									<value>xs</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">sm</numIndex>
-									<numIndex index="value">sm</numIndex>
+								<numIndex index="2">
+									<label>sm</label>
+									<value>sm</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">md</numIndex>
-									<numIndex index="value">md</numIndex>
+								<numIndex index="3">
+									<label>md</label>
+									<value>md</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">lg</numIndex>
-									<numIndex index="value">lg</numIndex>
+								<numIndex index="4">
+									<label>lg</label>
+									<value>lg</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">xl</numIndex>
-									<numIndex index="value">xl</numIndex>
+								<numIndex index="5">
+									<label>xl</label>
+									<value>xl</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -137,26 +134,26 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">horizontal direction (.flex-row)</numIndex>
-									<numIndex index="value">row</numIndex>
+								<numIndex index="1">
+									<label>horizontal direction (.flex-row)</label>
+									<value>row</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">horizontal direction from the opposite side (.flex-row-reverse)</numIndex>
-									<numIndex index="value">row-reverse</numIndex>
+								<numIndex index="2">
+									<label>horizontal direction from the opposite side (.flex-row-reverse)</label>
+									<value>row-reverse</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">vertical direction (.flex-column)</numIndex>
-									<numIndex index="value">column</numIndex>
+								<numIndex index="3">
+									<label>vertical direction (.flex-column)</label>
+									<value>column</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">vertical direction from the opposite side (.flex-column-reverse)</numIndex>
-									<numIndex index="value">column-reverse</numIndex>
+								<numIndex index="4">
+									<label>vertical direction from the opposite side (.flex-column-reverse)</label>
+									<value>column-reverse</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -175,30 +172,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">start (default)</numIndex>
-									<numIndex index="value">start</numIndex>
+								<numIndex index="1">
+									<label>start (default)</label>
+									<value>start</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">center</numIndex>
-									<numIndex index="value">center</numIndex>
+								<numIndex index="2">
+									<label>center</label>
+									<value>center</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">end</numIndex>
-									<numIndex index="value">end</numIndex>
+								<numIndex index="3">
+									<label>end</label>
+									<value>end</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">between</numIndex>
-									<numIndex index="value">between</numIndex>
+								<numIndex index="4">
+									<label>between</label>
+									<value>between</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">around</numIndex>
-									<numIndex index="value">around</numIndex>
+								<numIndex index="5">
+									<label>around</label>
+									<value>around</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -216,30 +213,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">start</numIndex>
-									<numIndex index="value">start</numIndex>
+								<numIndex index="1">
+									<label>start</label>
+									<value>start</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">end</numIndex>
-									<numIndex index="value">end</numIndex>
+								<numIndex index="2">
+									<label>end</label>
+									<value>end</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">center</numIndex>
-									<numIndex index="value">center</numIndex>
+								<numIndex index="3">
+									<label>center</label>
+									<value>center</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">baseline</numIndex>
-									<numIndex index="value">baseline</numIndex>
+								<numIndex index="4">
+									<label>baseline</label>
+									<value>baseline</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">stretch</numIndex>
-									<numIndex index="value">stretch</numIndex>
+								<numIndex index="5">
+									<label>stretch</label>
+									<value>stretch</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -257,22 +254,22 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">nowrap (default)</numIndex>
-									<numIndex index="value">nowrap</numIndex>
+								<numIndex index="1">
+									<label>nowrap (default)</label>
+									<value>nowrap</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">wrap</numIndex>
-									<numIndex index="value">wrap</numIndex>
+								<numIndex index="2">
+									<label>wrap</label>
+									<value>wrap</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">wrap-reverse</numIndex>
-									<numIndex index="value">wrap-reverse</numIndex>
+								<numIndex index="3">
+									<label>wrap-reverse</label>
+									<value>wrap-reverse</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -291,30 +288,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">start</numIndex>
-									<numIndex index="value">start</numIndex>
+								<numIndex index="1">
+									<label>start</label>
+									<value>start</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">end</numIndex>
-									<numIndex index="value">end</numIndex>
+								<numIndex index="2">
+									<label>end</label>
+									<value>end</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">center</numIndex>
-									<numIndex index="value">center</numIndex>
+								<numIndex index="3">
+									<label>center</label>
+									<value>center</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">around</numIndex>
-									<numIndex index="value">around</numIndex>
+								<numIndex index="4">
+									<label>around</label>
+									<value>around</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">stretch</numIndex>
-									<numIndex index="value">stretch</numIndex>
+								<numIndex index="5">
+									<label>stretch</label>
+									<value>stretch</value>
 								</numIndex>
 							</items>
 							<default></default>

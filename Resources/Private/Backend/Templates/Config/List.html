@@ -23,8 +23,7 @@
 		});
 	</f:asset.script>
 </f:if>
-
-<div class="card">
+<div class="card" style="margin-top: 60px;">
 	<div class="card-header card-header-light">
 		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
 			<h2><f:render section="Gear" /> Configuration</h2>
@@ -44,7 +43,7 @@ color: #fff;">
 								<div class="panel-group" id="accordionList">
 									<f:if condition="{admin} && {settings.enableInfo}">
 										<f:render section="Hints" arguments="{_all}" />
-									</f:if>								
+									</f:if>
 									<f:if condition="{utilColors} && {settings.enableUtilityColors}">
 										<f:render section="UtilityColors" arguments="{_all}" />
 									</f:if>
@@ -134,11 +133,6 @@ color: #fff;">
 </div>
 
 <f:if condition="{admin}">
-	<f:if condition="{cdnHint}">
-		<div class="alert alert-danger text-center mt-4" role="alert">
-			You run the scheduler task "T3SB CDN to local" but did not deactivate "Enable CDN" in the Constant Editor!
-		</div>
-	</f:if>
 	<f:if condition="{settings.customScss}">
 		<f:then>
 			<f:if condition="{customScss}">
@@ -148,10 +142,10 @@ color: #fff;">
 					</div>
 					<f:if condition="{settings.editScss} && {isSiteroot}">
 						<f:then>
-							<f:form class="form-horizontal" action="list" name="custom-variables" arguments="{updateSss: 'TRUE'}" >
+							<f:form class="form-horizontal mx-3" action="list" name="custom-variables" arguments="{updateSss: 'TRUE'}" >
 								<p class="text-center text-secondary">You can override default <strong>Bootstrap</strong> variables here:</p>
-								<f:form.textarea name="t3sbootstrap[custom-variables]" id="pageTitleclass" class="form-control"
-								rows="16" style="padding:1rem; margin-bottom:1rem;" value="{custom-variables -> f:format.raw()}" />
+								<f:form.textarea name="t3sbootstrap[custom-variables]" class="form-control"
+								rows="16" style="padding:1rem; margin-bottom:1rem;background-color:#f5f5f5" value="{custom-variables -> f:format.raw()}" />
 								<f:if condition="{settings.bootswatch}">
 									<f:then>
 										<p class="text-center text-secondary">
@@ -162,8 +156,8 @@ color: #fff;">
 										<p class="text-center text-secondary">You can set your <strong>own</strong> SCSS here:</p>
 									</f:else>
 								</f:if>
-								<f:form.textarea name="t3sbootstrap[custom]" id="pageTitleclass" class="form-control"
-								rows="16" style="padding:1rem;" value="{custom -> f:format.raw()}" />
+								<f:form.textarea name="t3sbootstrap[custom]" class="form-control"
+								rows="16" style="padding:1rem;background-color:#f5f5f5" value="{custom -> f:format.raw()}" />
 								<f:form.submit value="Save custom-variables.scss & clean up temporary files in typo3temp/assets/t3sbootstrap/css/"
 								class="btn btn-success btn-block" style="margin: 3rem 0;" />
 							</f:form>
@@ -300,7 +294,7 @@ color: #fff;">
 					 <f:render section="Info" /> <u>Konstanten-Editor: T3SB Optimize Bootstrap</u>
 				</p>
 				<div class="collapse" id="collapseOptimize">
-					<div class="card card-body p-0">	
+					<div class="card card-body p-0">
 						<p>Make sure you optimize Bootstrap by only @importing the components you need.</p>
 						<table class="table">
 							<f:for each="{settings.optimize}" as="optimize" iteration="iterator" key="label">
@@ -311,7 +305,7 @@ color: #fff;">
 							</f:for>
 						</table>
 					</div>
-				</div>	
+				</div>
 				<p class="text-secondary mt-3 pt-4 border-top">Set the following constant to disable this hints:<br />
 					<code>bootstrap.config.enableInfo = 0</code></p>
 			</div>

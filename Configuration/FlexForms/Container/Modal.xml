@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<general>
 			<ROOT>
@@ -13,46 +10,46 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Hidden only on xs</numIndex>
-									<numIndex index="value">d-none d-sm-block</numIndex>
+								<numIndex index="1">
+									<label>Hidden only on xs</label>
+									<value>d-none d-sm-block</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Hidden on sm and down</numIndex>
-									<numIndex index="value">d-none d-md-block</numIndex>
+								<numIndex index="2">
+									<label>Hidden on sm and down</label>
+									<value>d-none d-md-block</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">Hidden on md and down</numIndex>
-									<numIndex index="value">d-none d-lg-block</numIndex>
+								<numIndex index="3">
+									<label>Hidden on md and down</label>
+									<value>d-none d-lg-block</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">Hidden on lg and down</numIndex>
-									<numIndex index="value">d-none d-xl-block</numIndex>
+								<numIndex index="4">
+									<label>Hidden on lg and down</label>
+									<value>d-none d-xl-block</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">Hidden only on xl</numIndex>
-									<numIndex index="value">d-xl-none</numIndex>
+								<numIndex index="5">
+									<label>Hidden only on xl</label>
+									<value>d-xl-none</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">Visible only on xs</numIndex>
-									<numIndex index="value">d-block d-sm-none</numIndex>
+								<numIndex index="6">
+									<label>Visible only on xs</label>
+									<value>d-block d-sm-none</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">Visible sm and down</numIndex>
-									<numIndex index="value">d-block d-md-none</numIndex>
+								<numIndex index="7">
+									<label>Visible sm and down</label>
+									<value>d-block d-md-none</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">Visible md and down</numIndex>
-									<numIndex index="value">d-block d-lg-none</numIndex>
+								<numIndex index="8">
+									<label>Visible md and down</label>
+									<value>d-block d-lg-none</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">Visible lg and down</numIndex>
-									<numIndex index="value">d-block d-xl-none</numIndex>
+								<numIndex index="9">
+									<label>Visible lg and down</label>
+									<value>d-block d-xl-none</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -60,32 +57,37 @@
 					</hidden>
 					<animation>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.animation</label>
-						<config type="array">
+						<config>
 							<type>check</type>
 							<default>1</default>
 						</config>
 					</animation>
 					<size>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.modalsize</label>
-						<config type="array">
+						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-									<numIndex index="value">default</numIndex></numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</numIndex>
-									<numIndex index="value">modal-sm</numIndex></numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:large</numIndex>
-									<numIndex index="value">modal-lg</numIndex></numIndex>
-								<numIndex index="3" type="array">
-										<numIndex index="label">Extra large</numIndex>
-										<numIndex index="value">modal-xl</numIndex></numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">Fullscreen</numIndex>
-									<numIndex index="value">modal-fullscreen</numIndex></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</label>
+									<value>default</value>
+								</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</label>
+									<value>modal-sm</value>
+								</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:large</label>
+									<value>modal-lg</value>
+								</numIndex>
+								<numIndex index="3">
+									<label>Extra large</label>
+									<value>modal-xl</value>
+								</numIndex>
+								<numIndex index="4">
+									<label>Fullscreen</label>
+									<value>modal-fullscreen</value>
+								</numIndex>
 							</items>
 							<default>default</default>
 						</config>
@@ -100,7 +102,7 @@
 					</buttonText>
 					<whiteclosebutton>
 						<label>White close button</label>
-						<config type="array">
+						<config>
 							<type>check</type>
 							<default>0</default>
 						</config>
@@ -108,7 +110,7 @@
 					<button>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.usebutton</label>
 							<onChange>reload</onChange>
-						<config type="array">
+						<config>
 							<type>check</type>
 							<default>1</default>
 						</config>
@@ -116,22 +118,34 @@
 					<style>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.buttonstyle</label>
 						<displayCond>FIELD:general.button:=:1</displayCond>
-						<config type="array">
+						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array"><numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-								<numIndex index="value">default</numIndex></numIndex>
-								<numIndex index="1" type="array"><numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-								<numIndex index="value">primary</numIndex></numIndex>
-								<numIndex index="2" type="array"><numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-								<numIndex index="value">success</numIndex></numIndex>
-								<numIndex index="3" type="array"><numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-								<numIndex index="value">info</numIndex></numIndex>
-								<numIndex index="4" type="array"><numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-								<numIndex index="value">warning</numIndex></numIndex>
-								<numIndex index="5" type="array"><numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-								<numIndex index="value">danger</numIndex></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</label>
+									<value>default</value>
+								</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
+								</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
+								</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
+								</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
+								</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
+								</numIndex>
 							</items>
 							<default>default</default>
 						</config>
@@ -143,18 +157,18 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Left browser edge</numIndex>
-									<numIndex index="value">left</numIndex>
+								<numIndex index="1">
+									<label>Left browser edge</label>
+									<value>left</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Right browser edge</numIndex>
-									<numIndex index="value">right</numIndex>
+								<numIndex index="2">
+									<label>Right browser edge</label>
+									<value>right</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -171,18 +185,18 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0 degree</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0 degree</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">+ 90 degree</numIndex>
-									<numIndex index="value">plus</numIndex>
+								<numIndex index="1">
+									<label>+ 90 degree</label>
+									<value>plus</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">- 90 degree</numIndex>
-									<numIndex index="value">minus</numIndex>
+								<numIndex index="2">
+									<label>- 90 degree</label>
+									<value>minus</value>
 								</numIndex>
 							</items>
 							<default>0</default>

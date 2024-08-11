@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<general>
 			<ROOT>
@@ -15,44 +12,44 @@
 							<renderType>selectSingle</renderType>
 							<items type="array">
 								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value">0</numIndex>
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
 								<numIndex index="1" type="array">
-									<numIndex index="label">Hidden only on xs</numIndex>
-									<numIndex index="value">d-none d-sm-block</numIndex>
+									<label>Hidden only on xs</label>
+									<value>d-none d-sm-block</value>
 								</numIndex>
 								<numIndex index="2" type="array">
-									<numIndex index="label">Hidden on sm and down</numIndex>
-									<numIndex index="value">d-none d-md-block</numIndex>
+									<label>Hidden on sm and down</label>
+									<value>d-none d-md-block</value>
 								</numIndex>
 								<numIndex index="3" type="array">
-									<numIndex index="label">Hidden on md and down</numIndex>
-									<numIndex index="value">d-none d-lg-block</numIndex>
+									<label>Hidden on md and down</label>
+									<value>d-none d-lg-block</value>
 								</numIndex>
 								<numIndex index="4" type="array">
-									<numIndex index="label">Hidden on lg and down</numIndex>
-									<numIndex index="value">d-none d-xl-block</numIndex>
+									<label>Hidden on lg and down</label>
+									<value>d-none d-xl-block</value>
 								</numIndex>
 								<numIndex index="5" type="array">
-									<numIndex index="label">Hidden only on xl</numIndex>
-									<numIndex index="value">d-xl-none</numIndex>
+									<label>Hidden only on xl</label>
+									<value>d-xl-none</value>
 								</numIndex>
 								<numIndex index="6" type="array">
-									<numIndex index="label">Visible only on xs</numIndex>
-									<numIndex index="value">d-block d-sm-none</numIndex>
+									<label>Visible only on xs</label>
+									<value>d-block d-sm-none</value>
 								</numIndex>
 								<numIndex index="7" type="array">
-									<numIndex index="label">Visible sm and down</numIndex>
-									<numIndex index="value">d-block d-md-none</numIndex>
+									<label>Visible sm and down</label>
+									<value>d-block d-md-none</value>
 								</numIndex>
 								<numIndex index="8" type="array">
-									<numIndex index="label">Visible md and down</numIndex>
-									<numIndex index="value">d-block d-lg-none</numIndex>
+									<label>Visible md and down</label>
+									<value>d-block d-lg-none</value>
 								</numIndex>
 								<numIndex index="9" type="array">
-									<numIndex index="label">Visible lg and down</numIndex>
-									<numIndex index="value">d-block d-xl-none</numIndex>
+									<label>Visible lg and down</label>
+									<value>d-block d-xl-none</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -130,12 +127,12 @@
 							<renderType>selectSingle</renderType>
 							<items type="array">
 								<numIndex index="0" type="array">
-									<numIndex index="label">Header with link</numIndex>
-									<numIndex index="value">header</numIndex>
+									<label>Header with link</label>
+									<value>header</value>
 								</numIndex>
 								<numIndex index="1" type="array">
-									<numIndex index="label">Button with link</numIndex>
-									<numIndex index="value">button</numIndex>
+									<label>Button with link</label>
+									<value>button</value>
 								</numIndex>
 							</items>
 							<default>header</default>

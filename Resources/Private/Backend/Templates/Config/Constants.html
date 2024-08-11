@@ -4,10 +4,10 @@
 <f:flashMessages />
 <f:if condition="{filecontent}">
 	<f:then>
-		<div class="card">
+		<div class="card" style="margin-top: 60px;">
 			<div class="card-header card-header-light">
 				<div class="d-flex flex-column flex-md-row t3sb-header">
-					<h2><f:render section="Bar" /> Overview of the provided, outsourced constants from {f:if(condition: '{settings.sitepackage}', then: 'EXT:t3sb_package', else: '/fileadmin/')}</h2>
+					<h2><f:render section="Bar" /> Overview of the provided, outsourced constants from {f:if(condition: '{sitepackage}', then: 'EXT:t3sb_package', else: '/fileadmin/')}</h2>
 				</div>
 			</div>
 			<div class="card-body">

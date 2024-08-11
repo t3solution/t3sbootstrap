@@ -1,9 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
-<div class="t3sb-config">
-	<f:flashMessages/>    
+<div class="t3sb-config" style="overflow-y:auto;max-height:100vh">
+	<f:flashMessages/>
 	<f:if condition="{isSiteroot}">
 		<div class="t3sb-ext-navigation">
-			<div class="panel-group">
+			<div class="panel-group" style="position:fixed;z-index:1;width:100%;margin-top:1px">
 				<div class="panel panel-default">
 					<div class="panel-heading" style="background-color: #f8f8f8;">
 						<h2 class="panel-title" id="main-heading-panel" style="font-size: 24px; color: #6a10f3; font-weight: 300;">

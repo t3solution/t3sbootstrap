@@ -247,8 +247,5 @@ defined('TYPO3') || die();
          PreProcessHook::class . '->execute';
     }
 
-    /***************
-     * UpgradeWizard
-     */
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['bgOpacity'] = \T3SBS\T3sbootstrap\Updates\BgOpacityUpgradeWizard::class;
+
 })();

@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<general>
 			<ROOT>
@@ -56,48 +53,48 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">default</numIndex>
-									<numIndex index="value">top-0 start-50 translate-middle-x</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>default</label>
+									<value>top-0 start-50 translate-middle-x</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Top left</numIndex>
-									<numIndex index="value">top-0 start-0</numIndex>
+								<numIndex index="1">
+									<label>Top left</label>
+									<value>top-0 start-0</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Top center</numIndex>
-									<numIndex index="value">top-0 start-50 translate-middle-x</numIndex>
+								<numIndex index="2">
+									<label>Top center</label>
+									<value>top-0 start-50 translate-middle-x</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">Top right</numIndex>
-									<numIndex index="value">top-0 end-0</numIndex>
-								</numIndex>
-
-								<numIndex index="4" type="array">
-									<numIndex index="label">Middle left</numIndex>
-									<numIndex index="value">top-50 start-0 translate-middle-y</numIndex>
-								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">Middle center</numIndex>
-									<numIndex index="value">top-50 start-50 translate-middle</numIndex>
-								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">Middle right</numIndex>
-									<numIndex index="value">top-50 end-0 translate-middle-y</numIndex>
+								<numIndex index="3">
+									<label>Top right</label>
+									<value>top-0 end-0</value>
 								</numIndex>
 
-								<numIndex index="7" type="array">
-									<numIndex index="label">Bottom left</numIndex>
-									<numIndex index="value">bottom-0 start-0</numIndex>
+								<numIndex index="4">
+									<label>Middle left</label>
+									<value>top-50 start-0 translate-middle-y</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">Bottom center</numIndex>
-									<numIndex index="value">bottom-0 start-50 translate-middle-x</numIndex>
+								<numIndex index="5">
+									<label>Middle center</label>
+									<value>top-50 start-50 translate-middle</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">Bottom right</numIndex>
-									<numIndex index="value">bottom-0 end-0</numIndex>
+								<numIndex index="6">
+									<label>Middle right</label>
+									<value>top-50 end-0 translate-middle-y</value>
+								</numIndex>
+
+								<numIndex index="7">
+									<label>Bottom left</label>
+									<value>bottom-0 start-0</value>
+								</numIndex>
+								<numIndex index="8">
+									<label>Bottom center</label>
+									<value>bottom-0 start-50 translate-middle-x</value>
+								</numIndex>
+								<numIndex index="9">
+									<label>Bottom right</label>
+									<value>bottom-0 end-0</value>
 								</numIndex>
 
 							</items>

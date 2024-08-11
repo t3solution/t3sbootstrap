@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
@@ -14,50 +11,48 @@
 							<type>check</type>
 						</config>
 					</active>
-
 					<style>
 						<label>Button Style</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isButton</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</numIndex>
-									<numIndex index="value">primary</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</numIndex>
-									<numIndex index="value">secondary</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</label>
+									<value>secondary</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</numIndex>
-									<numIndex index="value">success</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</numIndex>
-									<numIndex index="value">info</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</numIndex>
-									<numIndex index="value">warning</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</numIndex>
-									<numIndex index="value">danger</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
 								</numIndex>
-
-								<numIndex index="6" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:light</numIndex>
-									<numIndex index="value">light</numIndex>
+								<numIndex index="6">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:light</label>
+									<value>light</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:dark</numIndex>
-									<numIndex index="value">dark</numIndex>
+								<numIndex index="7">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:dark</label>
+									<value>dark</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:link</numIndex>
-									<numIndex index="value">link</numIndex>
+								<numIndex index="8">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:link</label>
+									<value>link</value>
 								</numIndex>
 							</items>
 							<default>primary</default>
