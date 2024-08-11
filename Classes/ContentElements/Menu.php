@@ -20,9 +20,9 @@ class Menu implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf, string $cType): array
 	{
-			$processedData['menudirection'] = ' '.$flexconf['menudirection'];
+			$processedData['menudirection'] = !empty($flexconf['menudirection']) ? ' '.$flexconf['menudirection'] : null;
 			$processedData['menupills'] = !empty($flexconf['menupills']) ? ' nav-pills' :'';
-			if (!empty($flexconf['menudirection']) && $flexconf['menudirection'] == 'flex-row') {
+			if ($processedData['menudirection'] == ' flex-row') {
 				$processedData['menuHorizontalAlignment'] = !empty($flexconf['menuHorizontalAlignment'])
 				 ? ' '.$flexconf['menuHorizontalAlignment'] : ' justify-content-end';
 			}
@@ -33,7 +33,11 @@ class Menu implements SingletonInterface
 					$processedData['pageLink'] = TRUE;
 				} else {
 					// if current page is selected
-					$frontendController = self::getFrontendController();
+			        $request = $GLOBALS['TYPO3_REQUEST'];
+			        $frontendController = $request->getAttribute('frontend.controller');
+			        if (!$frontendController) {
+			            $frontendController = self::getFrontendController();
+			        }
 					if ( $frontendController->id == $processedData['data']['pid'] ) {
 						$processedData['onlyCurrentPageSelected'] = TRUE;
 					} else {

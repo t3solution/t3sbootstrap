@@ -10,8 +10,6 @@
 {styleInline -> f:format.raw()}
 </f:asset.css>
 </f:if>
-
-
 <f:if condition="{parentCType} == 'button_group'">
 	 <f:then>
 		<f:if condition="{slideInButton}">
@@ -129,7 +127,9 @@
 		<f:for each="{dropdownItems}" as="dropdownItem">
 			<li>				
 				<f:link.typolink parameter="{dropdownItem.link}" class="dropdown-item {dropdownItem.class}" target="{dropdownItem.target}">
-					{dropdownItem.title}
+
+					<f:cObject typoscriptObjectPath="lib.linkTitle" data='{dropdownItem.target}'/>
+
 				</f:link.typolink>
 			</li>
 		</f:for>

@@ -1,5 +1,14 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/ContentElement.typoscript'
 
+lib.linkTitle = HMENU
+lib.linkTitle {
+	special = list
+	special.value.current = 1
+    1 = TMENU
+    1 {
+    	NO.doNotLinkIt = 1
+	}
+}
 
 lib.pageTitle = TEXT
 lib.pageTitle.data = leveltitle:-1

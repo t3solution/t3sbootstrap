@@ -151,7 +151,7 @@ class LastModifiedProcessor implements DataProcessorInterface
                      $queryBuilder->expr()->eq('doktype', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
                  )
                  ->executeQuery()
-                 ->fetch();
+                 ->fetchAssociative();
 
             $pageTitle = !empty($result['nav_title']) ? $result['nav_title'] : '';
         }

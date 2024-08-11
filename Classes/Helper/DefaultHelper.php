@@ -23,10 +23,9 @@ class DefaultHelper implements SingletonInterface
 	 */
 	public function getContainerClass(array $processedData, string $extConfContainer): array
 	{
-
-
 		$container = '';
-		if ($extConfContainer && $processedData['data']['tx_t3sbootstrap_container']) {
+
+		if (!empty($extConfContainer) && $processedData['data']['tx_t3sbootstrap_container']) {
 			if ( $processedData['data']['tx_container_parent'] === 0 ) {
 				$t3sbconfig = self::getConfig();
 				if ( (int)$t3sbconfig['footer_pid'] === $processedData['data']['pid'] ) {
@@ -53,14 +52,13 @@ class DefaultHelper implements SingletonInterface
 				}
 			}
 		}
-
 		if ($container) {
 			$processedData['containerPre'] = '<div class="'.trim($container).'">';
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = trim($container);
 		} else {
 			if ($processedData['be_layout'] === 'OneCol') {
-				$processedData['containerError'] = self::getContainerError($processedData['data'], $container);
+				$processedData['containerError'] = self::getContainerError($processedData['data']);
 			}
 		}
 
@@ -71,36 +69,36 @@ class DefaultHelper implements SingletonInterface
 	/**
 	 * Returns the Container Error
 	 */
-	public function getContainerError(array $data, string $container): bool
+	public function getContainerError(array $data): bool
 	{
 		$error = FALSE;
-		if ($container) {
-			if ( $data['tx_container_parent'] === 0 ) {
-				$t3sbconfig = self::getConfig();
-				if ( $t3sbconfig['footer_pid'] === $data['pid'] ) {
-					if ( $t3sbconfig['footer_container'] === 'none' && $data['colPos'] === 0 ) {
-						$error = TRUE;
-					}
-				} else {
-					$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
-					if ( $pageContainer === FALSE && $data['colPos'] === 0 ) {
-						$error = TRUE;
-					}
-					if ( $t3sbconfig['jumbotron_container'] === 'none' && $data['colPos'] === 3 ) {
-						$error = TRUE;
-					}
-					if ( $t3sbconfig['expandedcontent_containertop'] === 'none' && $data['colPos'] === 20 ) {
-						$error = TRUE;
-					}
-					if ( $t3sbconfig['expandedcontent_containerbottom'] === 'none' && $data['colPos'] === 21 ) {
-						$error = TRUE;
-					}
-					if ( $t3sbconfig['footer_container'] === 'none' && $data['colPos'] === 4 ) {
-						$error = TRUE;
-					}
+	
+		if ( $data['tx_container_parent'] === 0 ) {
+			$t3sbconfig = self::getConfig();
+			if ( $t3sbconfig['footer_pid'] === $data['pid'] ) {
+				if ( $t3sbconfig['footer_container'] === 'none' && $data['colPos'] === 0 ) {
+					$error = TRUE;
+				}
+			} else {
+				$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
+				if ( $pageContainer === FALSE && $data['colPos'] === 0 ) {
+					$error = TRUE;
+				}
+				if ( $t3sbconfig['jumbotron_container'] === 'none' && $data['colPos'] === 3 ) {
+					$error = TRUE;
+				}
+				if ( $t3sbconfig['expandedcontent_containertop'] === 'none' && $data['colPos'] === 20 ) {
+					$error = TRUE;
+				}
+				if ( $t3sbconfig['expandedcontent_containerbottom'] === 'none' && $data['colPos'] === 21 ) {
+					$error = TRUE;
+				}
+				if ( $t3sbconfig['footer_container'] === 'none' && $data['colPos'] === 4 ) {
+					$error = TRUE;
 				}
 			}
 		}
+
 
 		return $error;
 	}

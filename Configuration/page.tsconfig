@@ -3,3 +3,6 @@
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'
+
+
+templates.t3sbs/t3sbootstrap.11 = t3sbs/t3sbootstrap:Resources/Private/Backend

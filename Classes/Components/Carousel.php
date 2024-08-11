@@ -168,12 +168,12 @@ class Carousel implements SingletonInterface
 	public function getCarouselCaptionStyle( $flexconf, $animate ): string
 	{
 		$style = '';
-		if ($flexconf['bgOverlay'] == 'caption') {
+		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'caption') {
 			$captionStyle = ' top:0; left:15%; right:15%; bottom:0;';
 			$captionStyle .= $flexconf['captionVAlign'] == 'top' ? ' bottom:inherit;' : '';
 			$captionStyle .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
 
-		} elseif ($flexconf['bgOverlay'] == 'image') {
+		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'image') {
 			$captionStyle = ' top:0; left:0; right:0; bottom:0;';
 			$captionStyle .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
 		} else {

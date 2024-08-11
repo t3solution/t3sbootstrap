@@ -1,8 +1,12 @@
 <?php
 defined('TYPO3') || die();
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use B13\Container\Tca\Registry;
+use B13\Container\Tca\ContainerConfiguration;
+
 # Extension configuration
-$extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+$extconf = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
 
 /***************
  * Add new EXT:container CTypes
@@ -11,9 +15,9 @@ $extconf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\
 # GRID COLUMNS
 if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'two_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
@@ -32,9 +36,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setGridPartialPaths(['EXT:backend/Resources/Private/Partials/', 'EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/'])
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'three_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
 				'description',
@@ -54,9 +58,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setGridPartialPaths(['EXT:backend/Resources/Private/Partials/', 'EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/'])
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'four_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
@@ -77,9 +81,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setGridPartialPaths(['EXT:backend/Resources/Private/Partials/', 'EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/'])
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'six_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
@@ -103,9 +107,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# ROW CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'row_columns',
 				'Row Columns',
 				'Use these row columns classes to quickly create basic grid layouts.',
@@ -125,9 +129,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 	);
 
 	# CARD WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'card_wrapper',
 				'Card Wrapper',
 				'In addition to styling the content within cards, Bootstrap includes a few options for laying out series of cards.',
@@ -146,9 +150,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# BUTTON GROUP
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'button_group',
 				'Button Group',
 				'Group a series of buttons together on a single line with the button group.',
@@ -167,9 +171,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# AUTO LAYOUT
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'autoLayout_row',
 				'Auto-layout',
 				'Options: "Equal-width", "Setting one column width" or "Variable width content".',
@@ -188,9 +192,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# BACKGROUND WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'background_wrapper',
 				'Background Wrapper',
 				'Options: "Full width container with background color -image or -Youtube vido.',
@@ -209,9 +213,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# PARALLAX WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'parallax_wrapper',
 				'Parallax Wrapper',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.parallaxWrapper.description',
@@ -230,9 +234,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'container',
 				'Container',
 				'Bootstrap .container',
@@ -251,9 +255,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# CAROUSEL CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'carousel_container',
 				'Carousel Container',
 				'A container for several Carousel slides (CE:t3sbs_carousel)',
@@ -272,9 +276,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# COLLAPSIBLE CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'collapsible_container',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.description',
@@ -293,9 +297,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# COLLAPSIBLE ELEMENT
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'collapsible_accordion',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.description',
@@ -314,9 +318,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# MODAL CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'modal',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.description',
@@ -335,9 +339,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# TAB CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'tabs_container',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.description',
@@ -356,9 +360,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# TAB
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'tabs_tab',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.description',
@@ -377,9 +381,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# LIST GROUP WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'listGroup_wrapper',
 				'List Group Wrapper',
 				'Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"',
@@ -398,9 +402,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# MASONRY
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'masonry_wrapper',
 				'Masonry Wrapper',
 				'Masonry with the Bootstrap grid system',
@@ -419,9 +423,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# SWIPE CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'swiper_container',
 				'Swiper Container',
 				'A container for several Swipe slides (CE:t3sbs_carousel)',
@@ -440,9 +444,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->addGridPartialPath('EXT:t3sbootstrap/Resources/Private/Backend/Preview/Partials/')
 	);
 	# TOAST CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'toast_container',
 				'Toast Container',
 				'A container for several Toast content',
@@ -463,9 +467,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 
 } else {
 
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'two_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
@@ -480,9 +484,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'three_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
 				'description',
@@ -498,9 +502,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'four_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
@@ -517,9 +521,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'six_columns',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
@@ -539,9 +543,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# ROW CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'row_columns',
 				'Row Columns',
 				'Use these row columns classes to quickly create basic grid layouts.',
@@ -556,9 +560,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# CARD WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'card_wrapper',
 				'Card Wrapper',
 				'In addition to styling the content within cards, Bootstrap includes a few options for laying out series of cards.',
@@ -573,9 +577,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# BUTTON GROUP
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'button_group',
 				'Button Group',
 				'Group a series of buttons together on a single line with the button group.',
@@ -590,9 +594,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# AUTO LAYOUT
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'autoLayout_row',
 				'Auto-layout',
 				'Options: "Equal-width", "Setting one column width" or "Variable width content".',
@@ -607,9 +611,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# BACKGROUND WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'background_wrapper',
 				'Background Wrapper',
 				'Options: "Full width container with background color -image or -Youtube vido.',
@@ -624,9 +628,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# PARALLAX WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'parallax_wrapper',
 				'Parallax Wrapper',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.parallaxWrapper.description',
@@ -641,9 +645,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'container',
 				'Container',
 				'Bootstrap .container',
@@ -658,9 +662,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# CAROUSEL CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'carousel_container',
 				'Carousel Container',
 				'A container for several Carousel slides (CE:t3sbs_carousel)',
@@ -675,9 +679,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# COLLAPSIBLE CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'collapsible_container',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.description',
@@ -692,9 +696,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# COLLAPSIBLE ELEMENT
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'collapsible_accordion',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleElement.description',
@@ -709,9 +713,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# MODAL CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'modal',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.modal.description',
@@ -726,9 +730,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# TAB CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'tabs_container',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.description',
@@ -743,9 +747,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# TAB
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'tabs_tab',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.title',
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabElement.description',
@@ -760,9 +764,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# LIST GROUP WRAPPER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'listGroup_wrapper',
 				'List Group Wrapper',
 				'Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"',
@@ -777,9 +781,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# MASONRY
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'masonry_wrapper',
 				'Masonry Wrapper',
 				'Masonry with the Bootstrap grid system',
@@ -794,9 +798,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# SWIPE CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'swiper_container',
 				'Swiper Container',
 				'A container for several Swipe slides (CE:t3sbs_carousel)',
@@ -811,9 +815,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 		->setSaveAndCloseInNewContentElementWizard(false)
 	);
 	# TOAST CONTAINER
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\B13\Container\Tca\Registry::class)->configureContainer(
+	GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		(
-			new \B13\Container\Tca\ContainerConfiguration(
+			new ContainerConfiguration(
 				'toast_container',
 				'Toast Container',
 				'A container for several Toast content',

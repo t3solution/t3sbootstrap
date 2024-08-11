@@ -37,7 +37,7 @@ customScss = 0
 bootswatch = none
 # cat=custom scss/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache)
 editScss = 0
-# cat=custom scss/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables in custom-variables.scss and custom-variables.scss if run the Scheduler (clear cache)
+# cat=custom scss/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables if run the Scheduler (clear cache)
 keepVariables = 0
 
 # cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: EXT:t3sb_package/.. or /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache)

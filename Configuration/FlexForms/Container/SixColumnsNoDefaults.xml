@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
@@ -30,30 +27,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">gx-0 (no gutters)</numIndex>
-									<numIndex index="value">gx-0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>gx-0 (no gutters)</label>
+									<value>gx-0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">gx-1</numIndex>
-									<numIndex index="value">gx-1</numIndex>
+								<numIndex index="1">
+									<label>gx-1</label>
+									<value>gx-1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">gx-2</numIndex>
-									<numIndex index="value">gx-2</numIndex>
+								<numIndex index="2">
+									<label>gx-2</label>
+									<value>gx-2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">gx-3</numIndex>
-									<numIndex index="value">gx-3</numIndex>
+								<numIndex index="3">
+									<label>gx-3</label>
+									<value>gx-3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">gx-4 (default)</numIndex>
-									<numIndex index="value"></numIndex>
+								<numIndex index="4">
+									<label>gx-4 (default)</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">gx-5</numIndex>
-									<numIndex index="value">gx-5</numIndex>
+								<numIndex index="5">
+									<label>gx-5</label>
+									<value>gx-5</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -65,30 +62,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">gy-0 (no gutters)</numIndex>
-									<numIndex index="value">gy-0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>gy-0 (no gutters)</label>
+									<value>gy-0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">gy-1</numIndex>
-									<numIndex index="value">gy-1</numIndex>
+								<numIndex index="1">
+									<label>gy-1</label>
+									<value>gy-1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">gy-2</numIndex>
-									<numIndex index="value">gy-2</numIndex>
+								<numIndex index="2">
+									<label>gy-2</label>
+									<value>gy-2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">gy-3</numIndex>
-									<numIndex index="value">gy-3</numIndex>
+								<numIndex index="3">
+									<label>gy-3</label>
+									<value>gy-3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">gy-4 (default)</numIndex>
-									<numIndex index="value"></numIndex>
+								<numIndex index="4">
+									<label>gy-4 (default)</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">gy-5</numIndex>
-									<numIndex index="value">gy-5</numIndex>
+								<numIndex index="5">
+									<label>gy-5</label>
+									<value>gy-5</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -152,62 +149,62 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -219,62 +216,62 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -286,62 +283,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -353,62 +350,62 @@
 						<config>
 						<type>select</type>
 						<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -420,62 +417,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -487,62 +484,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -562,62 +559,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -629,62 +626,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -696,62 +693,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -763,62 +760,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -830,62 +827,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -897,62 +894,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -972,62 +969,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1039,62 +1036,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1106,62 +1103,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1173,62 +1170,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1240,62 +1237,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1307,62 +1304,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1382,63 +1379,62 @@
 						<config>
 						<type>select</type>
 						<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1450,62 +1446,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1517,62 +1513,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1584,62 +1580,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1651,62 +1647,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="label">0</numIndex>
-										<numIndex index="value"></numIndex>
+								<items>
+									<numIndex index="0">
+										<label>0</label>
+										<value></value>
 									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="label">1</numIndex>
-										<numIndex index="value">1</numIndex>
+									<numIndex index="1">
+										<label>1</label>
+										<value>1</value>
 									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="label">2</numIndex>
-										<numIndex index="value">2</numIndex>
+									<numIndex index="2">
+										<label>2</label>
+										<value>2</value>
 									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="label">3</numIndex>
-										<numIndex index="value">3</numIndex>
+									<numIndex index="3">
+										<label>3</label>
+										<value>3</value>
 									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="label">4</numIndex>
-										<numIndex index="value">4</numIndex>
+									<numIndex index="4">
+										<label>4</label>
+										<value>4</value>
 									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="label">5</numIndex>
-										<numIndex index="value">5</numIndex>
+									<numIndex index="5">
+										<label>5</label>
+										<value>5</value>
 									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="label">6</numIndex>
-										<numIndex index="value">6</numIndex>
+									<numIndex index="6">
+										<label>6</label>
+										<value>6</value>
 									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="label">7</numIndex>
-										<numIndex index="value">7</numIndex>
+									<numIndex index="7">
+										<label>7</label>
+										<value>7</value>
 									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="label">8</numIndex>
-										<numIndex index="value">8</numIndex>
+									<numIndex index="8">
+										<label>8</label>
+										<value>8</value>
 									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="label">9</numIndex>
-										<numIndex index="value">9</numIndex>
+									<numIndex index="9">
+										<label>9</label>
+										<value>9</value>
 									</numIndex>
-									<numIndex index="10" type="array">
-										<numIndex index="label">10</numIndex>
-										<numIndex index="value">10</numIndex>
+									<numIndex index="10">
+										<label>10</label>
+										<value>10</value>
 									</numIndex>
-									<numIndex index="11" type="array">
-										<numIndex index="label">11</numIndex>
-										<numIndex index="value">11</numIndex>
+									<numIndex index="11">
+										<label>11</label>
+										<value>11</value>
 									</numIndex>
-									<numIndex index="12" type="array">
-										<numIndex index="label">12</numIndex>
-										<numIndex index="value">12</numIndex>
+									<numIndex index="12">
+										<label>12</label>
+										<value>12</value>
 									</numIndex>
-									<numIndex index="13" type="array">
-										<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-										<numIndex index="value">auto</numIndex>
+									<numIndex index="13">
+										<label>auto (size columns based on the natural width of their content)</label>
+										<value>auto</value>
 									</numIndex>
 								</items>
 								<default></default>
@@ -1718,62 +1714,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1793,62 +1789,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1860,62 +1856,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1927,62 +1923,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -1994,62 +1990,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2061,62 +2057,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2128,62 +2124,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2203,62 +2199,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2270,62 +2266,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2337,62 +2333,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2404,62 +2400,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2471,62 +2467,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>
@@ -2538,62 +2534,62 @@
 						<config>
 						<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="6">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">7</numIndex>
-									<numIndex index="value">7</numIndex>
+								<numIndex index="7">
+									<label>7</label>
+									<value>7</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">8</numIndex>
-									<numIndex index="value">8</numIndex>
+								<numIndex index="8">
+									<label>8</label>
+									<value>8</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">9</numIndex>
-									<numIndex index="value">9</numIndex>
+								<numIndex index="9">
+									<label>9</label>
+									<value>9</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">10</numIndex>
-									<numIndex index="value">10</numIndex>
+								<numIndex index="10">
+									<label>10</label>
+									<value>10</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">11</numIndex>
-									<numIndex index="value">11</numIndex>
+								<numIndex index="11">
+									<label>11</label>
+									<value>11</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">12</numIndex>
-									<numIndex index="value">12</numIndex>
+								<numIndex index="12">
+									<label>12</label>
+									<value>12</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">auto (size columns based on the natural width of their content)</numIndex>
-									<numIndex index="value">auto</numIndex>
+								<numIndex index="13">
+									<label>auto (size columns based on the natural width of their content)</label>
+									<value>auto</value>
 								</numIndex>
 							</items>
 							<default></default>

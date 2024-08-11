@@ -36,7 +36,7 @@ class TcaMatcher
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
-            $parent_rec = $result->fetch();
+            $parent_rec = $result->fetchAssociative();
 
             if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'autoLayout_row') {
                 $parent = true;
@@ -62,7 +62,7 @@ class TcaMatcher
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
-            $parent_rec = $result->fetch();
+            $parent_rec = $result->fetchAssociative();
 
             if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'button_group') {
                 $parent = false;
@@ -101,7 +101,7 @@ class TcaMatcher
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
-            $parent_rec = $result->fetch();
+            $parent_rec = $result->fetchAssociative();
 
             if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'card_wrapper') {
                 $parent = false;
@@ -128,7 +128,7 @@ class TcaMatcher
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
-            $parent_rec = $result->fetch();
+            $parent_rec = $result->fetchAssociative();
 
             if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'two_columns') {
                 $parent = true;
@@ -232,7 +232,7 @@ class TcaMatcher
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
-            $parent_rec = $result->fetch();
+            $parent_rec = $result->fetchAssociative();
 
             if (!empty($parent_rec)) {
                 $parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
@@ -454,7 +454,7 @@ class TcaMatcher
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
                   )
                   ->executeQuery();
-            $parent_rec = $result->fetch();
+            $parent_rec = $result->fetchAssociative();
             if ($parent_rec['CType'] == 'toast_container') {
                 $parent = false;
             }

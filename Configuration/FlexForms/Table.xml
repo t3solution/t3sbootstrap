@@ -13,46 +13,46 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Hidden only on xs</numIndex>
-									<numIndex index="value">d-none d-sm-block</numIndex>
+								<numIndex index="1">
+									<label>Hidden only on xs</label>
+									<value>d-none d-sm-block</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Hidden on sm and down</numIndex>
-									<numIndex index="value">d-none d-md-block</numIndex>
+								<numIndex index="2">
+									<label>Hidden on sm and down</label>
+									<value>d-none d-md-block</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">Hidden on md and down</numIndex>
-									<numIndex index="value">d-none d-lg-block</numIndex>
+								<numIndex index="3">
+									<label>Hidden on md and down</label>
+									<value>d-none d-lg-block</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">Hidden on lg and down</numIndex>
-									<numIndex index="value">d-none d-xl-block</numIndex>
+								<numIndex index="4">
+									<label>Hidden on lg and down</label>
+									<value>d-none d-xl-block</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">Hidden only on xl</numIndex>
-									<numIndex index="value">d-xl-none</numIndex>
+								<numIndex index="5">
+									<label>Hidden only on xl</label>
+									<value>d-xl-none</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">Visible only on xs</numIndex>
-									<numIndex index="value">d-block d-sm-none</numIndex>
+								<numIndex index="6">
+									<label>Visible only on xs</label>
+									<value>d-block d-sm-none</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">Visible sm and down</numIndex>
-									<numIndex index="value">d-block d-md-none</numIndex>
+								<numIndex index="7">
+									<label>Visible sm and down</label>
+									<value>d-block d-md-none</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">Visible md and down</numIndex>
-									<numIndex index="value">d-block d-lg-none</numIndex>
+								<numIndex index="8">
+									<label>Visible md and down</label>
+									<value>d-block d-lg-none</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">Visible lg and down</numIndex>
-									<numIndex index="value">d-block d-xl-none</numIndex>
+								<numIndex index="9">
+									<label>Visible lg and down</label>
+									<value>d-block d-xl-none</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -64,78 +64,78 @@
 						<config>
 							<type>select</type>
 							<renderType>selectMultipleSideBySide</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</numIndex>
-									<numIndex index="value">table</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</label>
+									<value>table</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.striped</numIndex>
-									<numIndex index="value">table table-striped</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.striped</label>
+									<value>table table-striped</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.bordered</numIndex>
-									<numIndex index="value">table table-bordered</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.bordered</label>
+									<value>table table-bordered</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.hover</numIndex>
-									<numIndex index="value">table table-hover</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.hover</label>
+									<value>table table-hover</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.small</numIndex>
-									<numIndex index="value">table table-sm</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.small</label>
+									<value>table table-sm</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">Table dark</numIndex>
-									<numIndex index="value">table table-dark</numIndex>
+								<numIndex index="5">
+									<label>Table dark</label>
+									<value>table table-dark</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">Table borderless</numIndex>
-									<numIndex index="value">table table-borderless</numIndex>
+								<numIndex index="6">
+									<label>Table borderless</label>
+									<value>table table-borderless</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">Border primary</numIndex>
-									<numIndex index="value">table border-primary</numIndex>
+								<numIndex index="7">
+									<label>Border primary</label>
+									<value>table border-primary</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">Border secondary</numIndex>
-									<numIndex index="value">table border-secondary</numIndex>
+								<numIndex index="8">
+									<label>Border secondary</label>
+									<value>table border-secondary</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">Border success</numIndex>
-									<numIndex index="value">table border-success</numIndex>
+								<numIndex index="9">
+									<label>Border success</label>
+									<value>table border-success</value>
 								</numIndex>
-								<numIndex index="10" type="array">
-									<numIndex index="label">Border info</numIndex>
-									<numIndex index="value">table border-info</numIndex>
+								<numIndex index="10">
+									<label>Border info</label>
+									<value>table border-info</value>
 								</numIndex>
-								<numIndex index="11" type="array">
-									<numIndex index="label">Border warning</numIndex>
-									<numIndex index="value">table border-warning</numIndex>
+								<numIndex index="11">
+									<label>Border warning</label>
+									<value>table border-warning</value>
 								</numIndex>
-								<numIndex index="12" type="array">
-									<numIndex index="label">Border danger</numIndex>
-									<numIndex index="value">table border-danger</numIndex>
+								<numIndex index="12">
+									<label>Border danger</label>
+									<value>table border-danger</value>
 								</numIndex>
-								<numIndex index="13" type="array">
-									<numIndex index="label">Border light</numIndex>
-									<numIndex index="value">table border-light</numIndex>
+								<numIndex index="13">
+									<label>Border light</label>
+									<value>table border-light</value>
 								</numIndex>
-								<numIndex index="14" type="array">
-									<numIndex index="label">Border dark</numIndex>
-									<numIndex index="value">table border-dark</numIndex>
+								<numIndex index="14">
+									<label>Border dark</label>
+									<value>table border-dark</value>
 								</numIndex>
-								<numIndex index="15" type="array">
-									<numIndex index="label">Vertical align top</numIndex>
-									<numIndex index="value">table align-top</numIndex>
+								<numIndex index="15">
+									<label>Vertical align top</label>
+									<value>table align-top</value>
 								</numIndex>
-								<numIndex index="16" type="array">
-									<numIndex index="label">Vertical align middle</numIndex>
-									<numIndex index="value">table align-middle</numIndex>
+								<numIndex index="16">
+									<label>Vertical align middle</label>
+									<value>table align-middle</value>
 								</numIndex>
-								<numIndex index="17" type="array">
-									<numIndex index="label">Vertical align bottom</numIndex>
-									<numIndex index="value">table align-bottom</numIndex>
+								<numIndex index="17">
+									<label>Vertical align bottom</label>
+									<value>table align-bottom</value>
 								</numIndex>
 							</items>
 							<enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
@@ -148,18 +148,18 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">None</numIndex>
-									<numIndex index="value"></numIndex>
+							<items>
+								<numIndex index="0">
+									<label>None</label>
+									<value></value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Light</numIndex>
-									<numIndex index="value">table-light</numIndex>
+								<numIndex index="1">
+									<label>Light</label>
+									<value>table-light</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Dark</numIndex>
-									<numIndex index="value">table-dark</numIndex>
+								<numIndex index="2">
+									<label>Dark</label>
+									<value>table-dark</value>
 								</numIndex>
 							</items>
 							<default>table-dark</default>

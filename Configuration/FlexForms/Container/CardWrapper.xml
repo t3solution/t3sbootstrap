@@ -1,7 +1,4 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
@@ -13,46 +10,46 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">none</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>none</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Hidden only on xs</numIndex>
-									<numIndex index="value">d-none d-sm-block</numIndex>
+								<numIndex index="1">
+									<label>Hidden only on xs</label>
+									<value>d-none d-sm-block</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Hidden on sm and down</numIndex>
-									<numIndex index="value">d-none d-md-block</numIndex>
+								<numIndex index="2">
+									<label>Hidden on sm and down</label>
+									<value>d-none d-md-block</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">Hidden on md and down</numIndex>
-									<numIndex index="value">d-none d-lg-block</numIndex>
+								<numIndex index="3">
+									<label>Hidden on md and down</label>
+									<value>d-none d-lg-block</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">Hidden on lg and down</numIndex>
-									<numIndex index="value">d-none d-xl-block</numIndex>
+								<numIndex index="4">
+									<label>Hidden on lg and down</label>
+									<value>d-none d-xl-block</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">Hidden only on xl</numIndex>
-									<numIndex index="value">d-xl-none</numIndex>
+								<numIndex index="5">
+									<label>Hidden only on xl</label>
+									<value>d-xl-none</value>
 								</numIndex>
-								<numIndex index="6" type="array">
-									<numIndex index="label">Visible only on xs</numIndex>
-									<numIndex index="value">d-block d-sm-none</numIndex>
+								<numIndex index="6">
+									<label>Visible only on xs</label>
+									<value>d-block d-sm-none</value>
 								</numIndex>
-								<numIndex index="7" type="array">
-									<numIndex index="label">Visible sm and down</numIndex>
-									<numIndex index="value">d-block d-md-none</numIndex>
+								<numIndex index="7">
+									<label>Visible sm and down</label>
+									<value>d-block d-md-none</value>
 								</numIndex>
-								<numIndex index="8" type="array">
-									<numIndex index="label">Visible md and down</numIndex>
-									<numIndex index="value">d-block d-lg-none</numIndex>
+								<numIndex index="8">
+									<label>Visible md and down</label>
+									<value>d-block d-lg-none</value>
 								</numIndex>
-								<numIndex index="9" type="array">
-									<numIndex index="label">Visible lg and down</numIndex>
-									<numIndex index="value">d-block d-xl-none</numIndex>
+								<numIndex index="9">
+									<label>Visible lg and down</label>
+									<value>d-block d-xl-none</value>
 								</numIndex>
 							</items>
 							<default>0</default>
@@ -66,26 +63,26 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">Group</numIndex>
-									<numIndex index="value">group</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>Group</label>
+									<value>group</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">Grid Cards (Deck)</numIndex>
-									<numIndex index="value">deck</numIndex>
+								<numIndex index="1">
+									<label>Grid Cards (Deck)</label>
+									<value>deck</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">Masonry (Columns)</numIndex>
-									<numIndex index="value">columns</numIndex>
+								<numIndex index="2">
+									<label>Masonry (Columns)</label>
+									<value>columns</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">Slider (swiper)</numIndex>
-									<numIndex index="value">slider</numIndex>
+								<numIndex index="3">
+									<label>Slider (swiper)</label>
+									<value>slider</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">Flipper</numIndex>
-									<numIndex index="value">flipper</numIndex>
+								<numIndex index="4">
+									<label>Flipper</label>
+									<value>flipper</value>
 								</numIndex>
 							</items>
 							<default>group</default>
@@ -110,30 +107,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="1">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="2">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="3">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="4">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">6</numIndex>
-									<numIndex index="value">6</numIndex>
+								<numIndex index="5">
+									<label>6</label>
+									<value>6</value>
 								</numIndex>
 							</items>
 							<default>3</default>
@@ -146,30 +143,30 @@
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
-							<items type="array">
-								<numIndex index="0" type="array">
-									<numIndex index="label">0</numIndex>
-									<numIndex index="value">0</numIndex>
+							<items>
+								<numIndex index="0">
+									<label>0</label>
+									<value>0</value>
 								</numIndex>
-								<numIndex index="1" type="array">
-									<numIndex index="label">1</numIndex>
-									<numIndex index="value">1</numIndex>
+								<numIndex index="1">
+									<label>1</label>
+									<value>1</value>
 								</numIndex>
-								<numIndex index="2" type="array">
-									<numIndex index="label">2</numIndex>
-									<numIndex index="value">2</numIndex>
+								<numIndex index="2">
+									<label>2</label>
+									<value>2</value>
 								</numIndex>
-								<numIndex index="3" type="array">
-									<numIndex index="label">3</numIndex>
-									<numIndex index="value">3</numIndex>
+								<numIndex index="3">
+									<label>3</label>
+									<value>3</value>
 								</numIndex>
-								<numIndex index="4" type="array">
-									<numIndex index="label">4</numIndex>
-									<numIndex index="value">4</numIndex>
+								<numIndex index="4">
+									<label>4</label>
+									<value>4</value>
 								</numIndex>
-								<numIndex index="5" type="array">
-									<numIndex index="label">5</numIndex>
-									<numIndex index="value">5</numIndex>
+								<numIndex index="5">
+									<label>5</label>
+									<value>5</value>
 								</numIndex>
 							</items>
 							<default>4</default>
@@ -181,12 +178,10 @@
 						<description>if "0" the cards width is used - or auto-width if the cards width is also empty (best practies)</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
-							<type>input</type>
-							<size>4</size>
+							<type>number</type>
+							<size>10</size>
 							<max>4</max>
 							<default>576</default>
-							<eval>int</eval>
-							<checkbox>0</checkbox>
 						</config>
 					</width>
 
@@ -195,10 +190,9 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>input</type>
-							<size>4</size>
+							<size>10</size>
 							<max>5</max>
 							<default>16:9</default>
-							<checkbox>0</checkbox>
 						</config>
 					</ratio>
 					<slidesPerView>
@@ -207,9 +201,8 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>0</default>
-							<checkbox>0</checkbox>
 						</config>
 					</slidesPerView>
 					<breakpoints10>
@@ -218,9 +211,8 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>1</default>
-							<checkbox>0</checkbox>
 						</config>
 					</breakpoints10>
 					<breakpoints576>
@@ -228,9 +220,8 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>2</default>
-							<checkbox>0</checkbox>
 						</config>
 					</breakpoints576>
 					<breakpoints768>
@@ -238,9 +229,8 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>3</default>
-							<checkbox>0</checkbox>
 						</config>
 					</breakpoints768>
 					<breakpoints992>
@@ -248,9 +238,8 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>4</default>
-							<checkbox>0</checkbox>
 						</config>
 					</breakpoints992>
 					<slidesPerGroup>
@@ -262,9 +251,8 @@
 							<range>
 								<lower>1</lower>
 							</range>
-							<size>4</size>
+							<size>10</size>
 							<default>1</default>
-							<checkbox>0</checkbox>
 						</config>
 					</slidesPerGroup>
 					<spaceBetween>
@@ -272,9 +260,8 @@
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>20</default>
-							<checkbox>0</checkbox>
 						</config>
 					</spaceBetween>
 					<loop>
@@ -317,16 +304,15 @@
 						</displayCond>
 						<config>
 							<type>number</type>
-							<size>4</size>
+							<size>10</size>
 							<default>5000</default>
-							<checkbox>0</checkbox>
 						</config>
 					</delay>
 					<cropMaxCharacters>
 						<label>Length of card-bodytext (in chars)</label>
 						<config>
 							<type>number</type>
-							<size>5</size>
+							<size>10</size>
 						</config>
 					</cropMaxCharacters>
 					<equalHeight>

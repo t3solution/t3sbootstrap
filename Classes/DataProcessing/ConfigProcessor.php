@@ -750,7 +750,7 @@ class ConfigProcessor implements DataProcessorInterface
                     QueryHelper::stripLogicalOperatorPrefix($permsClause)
                 )
                 ->executeQuery();
-            while ($row = $statement->fetch()) {
+            while ($row = $statement->fetchAssociative()) {
                 if ($begin <= 0) {
                     $theList .= ',' . $row['uid'];
                 }

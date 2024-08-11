@@ -1,19 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="content">
-<f:form.validationResults for="{object}">
-	<f:if condition="{validationResults.flattenedErrors}">
-		<f:then>
-			<f:render partial="FormErrors" />
-		</f:then>
-		<f:else>
-
-		</f:else>
-	</f:if>
-</f:form.validationResults>
-<div class="card">
+<div class="card" style="margin-top: 60px;">
 	<div class="card-header card-header-light edit-conf-btn">
-		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
+		<div class="d-flex flex-column flex-{navbarBreakpoint}-row t3sb-header">
 			<h2><f:render section="Gears" /> Edit Configuration</h2>
 		</div>
 	</div>
@@ -21,8 +11,8 @@
 		<a class="text-left mb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
 			<f:render section="Info" />
 		</a>
-		<div class="collapse" id="collapseInfo" style="margin-bottom: 1rem;">
-			<p class="m-0">The data entered here are provided as outsourced constants.<br />
+		<div class="collapse" id="collapseInfo">
+			<p class="m-0" style="padding-bottom:1rem">The data entered here are provided as outsourced constants.<br />
 			<span class="text-secondary">(t3sb_package/.. or fileadmin/T3SB/Configuration/TypoScript/t3sbconstants.typoscript)</span>
 			<br /><br />
 			The snippets in <code>red font color</code> are the constants you can use to override the settings in your constants - if you prefer this!</p>

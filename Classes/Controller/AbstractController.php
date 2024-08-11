@@ -51,8 +51,8 @@ abstract class AbstractController extends ActionController
         $this->isSiteroot = $this->rootPageId === $this->currentUid ? true : false;
         $this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
         $this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
-        $this->configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
-        $this->rootConfig = $this->configRepository->findOneByPid($this->rootPageId);
+        $this->configRepository = GeneralUtility::makeInstance(ConfigRepository::class);        
+        $this->rootConfig = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_template');
@@ -277,7 +277,7 @@ abstract class AbstractController extends ActionController
 
         $this->persistenceManager->persistAll();
         if ($this->countRootTemplates) {
-            $configRepository = $this->configRepository->findOneByPid($this->rootPageId);
+            $configRepository = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);            
             $navbarBreakpoint = $configRepository->getNavbarBreakpoint();
             $breakpointWidth = $navbarBreakpoint == 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
             $siteroots = [];
@@ -592,10 +592,11 @@ abstract class AbstractController extends ActionController
                     QueryHelper::stripLogicalOperatorPrefix($permsClause)
                 )
                 ->executeQuery();
-            while ($row = $statement->fetch()) {
+            while ($row = $statement->fetchAssociative()) {
                 if ($begin <= 0) {
                     $theList .= ',' . $row['uid'];
                 }
+
                 if ($depth > 1) {
                     $theSubList = self::getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
                     if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {

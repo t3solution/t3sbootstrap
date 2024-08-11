@@ -22,25 +22,13 @@ class Button implements SingletonInterface
         $btnDropdownItem = [];
         if (!empty($flexconf['dropdownItems']) && is_array($flexconf['dropdownItems'])) {
             $processedData['dropdowndirection'] = !empty($flexconf['direction']) ? ' '.$flexconf['direction'] : '';
+
             foreach ($flexconf['dropdownItems'] as $key=>$dropdownItem) {
-                $dIarray = explode(' ', $dropdownItem['list']['group']);
-                if (str_contains($dropdownItem['list']['group'], '"')) {
-                    // if title have more than one word
-                    $btnDropdownItem[$key]['link'] = $dIarray[0];
-                    $btnDropdownItem[$key]['target'] = $dIarray[1] != '-' ? $dIarray[1] : '';
-                    $btnDropdownItem[$key]['class'] = !empty($dIarray[2]) && $dIarray[2] != '-' ? $dIarray[2] : '';
-                    $btnDropdownItem[$key]['title'] = !empty($dIarray[3]) && $dIarray[3] != '-' ? str_replace('"', '', $dIarray[3].' '.$dIarray[4]) : 'no tilte';
-                    $btnDropdownItem[$key]['param'] = !empty($dIarray[5]) ? $dIarray[5] : '';
-                } else {
-                    $btnDropdownItem[$key]['link'] = $dIarray[0];
-                    $btnDropdownItem[$key]['target'] = !empty($dIarray[1]) && $dIarray[1] != '-' ? $dIarray[1] : '';
-                    $btnDropdownItem[$key]['class'] = !empty($dIarray[2]) && $dIarray[2] != '-' ? $dIarray[2] : '';
-                    $btnDropdownItem[$key]['title'] = !empty($dIarray[3]) && $dIarray[3] != '-' ? $dIarray[3] : 'no title';
-                    $btnDropdownItem[$key]['param'] = !empty($dIarray[4]) ? $dIarray[4] : '';
-                }
+                $btnDropdownItem[$key]['link'] = $dropdownItem['list']['group'];
+                $btnDropdownItem[$key]['target'] = explode('=', $dropdownItem['list']['group'])[1];
             }
         }
-        $processedData['dropdownItems'] = !empty($btnDropdownItem) ? $btnDropdownItem : '';
+        $processedData['dropdownItems'] = !empty($btnDropdownItem) ? $btnDropdownItem : [];
         $outline = !empty($flexconf['outline']) ? 'outline-' : '';
         $style = !empty($flexconf['style']) ? $flexconf['style'] : '';
         $typolinkButtonClass = ' btn btn-'.$outline.$style;
@@ -97,4 +85,5 @@ class Button implements SingletonInterface
 
         return $processedData;
     }
+
 }
