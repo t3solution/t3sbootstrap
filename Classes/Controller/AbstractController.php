@@ -175,6 +175,7 @@ abstract class AbstractController extends ActionController
             $get = 'get'.$var;
             $newConfig->$set($rootConfig->$get());
         }
+		$this->configRepository->add($newConfig);
 
         return $newConfig;
     }
