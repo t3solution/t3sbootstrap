@@ -138,6 +138,7 @@ final class ConfigController extends AbstractController
         $assignedOptions = parent::getFieldsOptions();
         $assignedOptions['pid'] = $this->currentUid;
         $assignedOptions['tcaColumns'] = parent::getTcaColumns();
+        $assignedOptions['admin'] = $this->isAdmin;
 
         if ($this->rootConfig) {
             // config from rootline
@@ -162,13 +163,10 @@ final class ConfigController extends AbstractController
             $newConfig = new Config();
             // some defaults
             $newConfig = parent::setDefaults($newConfig);
-            $assignedOptions['newConfig'] = $newConfig;
+            $this->configRepository->add($newConfig);
         }
-		$assignedOptions['settings'] = $this->settings;
 
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->assignMultiple($assignedOptions);
-        return $moduleTemplate->renderResponse('Config/Edit');
+		return $this->redirect('list', null, null, ['created' => true]);
     }
 
 
@@ -182,7 +180,7 @@ final class ConfigController extends AbstractController
         $this->configRepository->add($newConfig);
         parent::setDefaultBackendLayout();
         parent::writeConstants();
-        return $this->redirect('list', null, null, array('created' => true));
+        return $this->redirect('list', null, null, ['created' => true]);
     }
 
 
@@ -230,13 +228,14 @@ final class ConfigController extends AbstractController
     {
         $config->setHomepageUid($this->rootPageId);
         $this->configRepository->update($config);
+		$this->persistenceManager->persistAll();
         parent::writeConstants();
 		if (!empty($this->settings['clearPageCache'])) {
 	        $cacheService = GeneralUtility::makeInstance(CacheService::class);
 	        $cacheService->clearPageCache();			
 		}
 
-        return $this->redirect('edit', null, null, array('config' => $config, 'updated' => true));
+        return $this->redirect('edit', null, null, ['config' => $config, 'updated' => true]);
     }
 
 
