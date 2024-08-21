@@ -160,10 +160,7 @@ final class ConfigController extends AbstractController
                 $assignedOptions['newConfig'] = parent::getNewConfig($this->rootConfig);
             }
         } else {
-            $newConfig = new Config();
-            // some defaults
-            $newConfig = parent::setDefaults($newConfig);
-            $this->configRepository->add($newConfig);
+			return $this->redirect('create');
         }
 
 		return $this->redirect('list', null, null, ['created' => true]);
@@ -173,10 +170,14 @@ final class ConfigController extends AbstractController
     /**
      * action create
      */
-    public function createAction(Config $newConfig): ResponseInterface
+    public function createAction(Config $newConfig = null): ResponseInterface
     {
+		if (empty($newConfig)) {
+            $newConfig = new Config();
+		}
         $newConfig->setHomepageUid($this->rootPageId);
         $newConfig->setPid($this->currentUid);
+        $newConfig = parent::setDefaults($newConfig);
         $this->configRepository->add($newConfig);
         parent::setDefaultBackendLayout();
         parent::writeConstants();

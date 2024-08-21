@@ -28,88 +28,88 @@ ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Plain CSS or JavaScript inline',
-        't3sbs_assets',
-        'cssJsIcon',
+        'label' => 'Plain CSS or JavaScript inline',
+        'value' => 't3sbs_assets',
+        'icon' => 'cssJsIcon',
         'group' => 'special',
-        'description' => 'With this element you can insert raw JS or CSS code on the page.'
+        'description' => 'With this element you can insert raw JS or CSS code on the page.',   
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Bootstrap Media object',
-        't3sbs_mediaobject',
-        'content-beside-text-img-left',
+        'label' => 'Bootstrap Media object',
+        'value' => 't3sbs_mediaobject',
+        'icon' => 'content-beside-text-img-left',
         'group' => 'T3S Bootstrap',
-        'description' => 'The media object helps build complex and repetitive components where some media is positioned alongside content that doesn’t wrap around said media.'
+        'description' => 'The media object helps build complex and repetitive components where some media is positioned alongside content that doesn’t wrap around said media.',   
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Bootstrap Card',
-        't3sbs_card',
-        'content-card',
+        'label' => 'Bootstrap Card',
+        'value' => 't3sbs_card',
+        'icon' => 'content-card',
         'group' => 'T3S Bootstrap',
-        'description' => 'A card is a flexible and extensible content container.'
+        'description' => 'A card is a flexible and extensible content container.',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Bootstrap Toasts',
-        't3sbs_toast',
-        'content-widget-calltoaction',
+        'label' => 'Bootstrap Toasts',
+        'value' => 't3sbs_toast',
+        'icon' => 'content-widget-calltoaction',
         'group' => 'T3S Bootstrap',
-        'description' => 'Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.'
+        'description' => 'Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Bootstrap Carousel Item (in carousel- or swiper-container)',
-        't3sbs_carousel',
-        'content-carousel-item-textandimage',
+        'label' => 'Bootstrap Carousel Item (in carousel- or swiper-container)',
+        'value' => 't3sbs_carousel',
+        'icon' => 'content-carousel-item-textandimage',
         'group' => 'T3S Bootstrap',
-        'description' => 'A slideshow component for cycling through elements—images or slides of text—like a carousel.'
+        'description' => 'A slideshow component for cycling through elements—images or slides of text—like a carousel.',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Bootstrap Button',
-        't3sbs_button',
-        'form-radio-button',
+        'label' => 'Bootstrap Button',
+        'value' => 't3sbs_button',
+        'icon' => 'form-radio-button',
         'group' => 'T3S Bootstrap',
-        'description' => 'Bootstrap includes several predefined button styles, each serving its own semantic purpose.'
+        'description' => 'Bootstrap includes several predefined button styles, each serving its own semantic purpose.',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Fluidtemplate',
-        't3sbs_fluidtemplate',
-        'actions-template-new',
+        'label' => 'Fluidtemplate',
+        'value' => 't3sbs_fluidtemplate',
+        'icon' => 'actions-template-new',
         'group' => 'T3S Bootstrap',
-        'description' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbs_fluidtemplate'
+        'description' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbs_fluidtemplate',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Bootstrap Image Gallery',
-        't3sbs_gallery',
-        'apps-filetree-folder-media',
+        'label' => 'Bootstrap Image Gallery',
+        'value' => 't3sbs_gallery',
+        'icon' => 'apps-filetree-folder-media',
         'group' => 'T3S Bootstrap',
-        'description' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbsgallery.description'
+        'description' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbsgallery.description',
     ]
 );
 
@@ -833,7 +833,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
             'config' => [
                 'type' => 'text',
                 'format' => 'javascript',
-                'renderType' => 'codeEditor',
+                'renderType' => 't3editor',
                 'wrap' => 'virtual',
                 'rows' => 15,
             ],
@@ -841,7 +841,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
         'tx_t3sbootstrap_bodytext' => [
             'config' => [
                 'type' => 'text',
-                'renderType' => 'codeEditor',
+                'renderType' => 't3editor',
                 'format' => 'css',
                 'rows' => 15,
                 'wrap' => 'virtual',
