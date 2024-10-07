@@ -532,7 +532,9 @@ class ConfigProcessor implements DataProcessorInterface
                 $y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';
                 $processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
             } else {
-                $processedData['config']['jumbotron']['class'] = ' ratio';
+                if ( !empty($processedData['data']['tx_t3sbootstrap_fullheightsection']) ) {
+					$processedData['config']['jumbotron']['class'] = ' ratio';
+				}
             }
 
         }
