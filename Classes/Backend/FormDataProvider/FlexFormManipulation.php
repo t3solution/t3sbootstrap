@@ -22,7 +22,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 	 */
 	public function addData(array $result): array
 	{
-		$configurationManager =GeneralUtility::makeInstance(BackendConfigurationManager::class);
+		$configurationManager = GeneralUtility::makeInstance(BackendConfigurationManager::class);
 		$setup = $configurationManager->getTypoScriptSetup();
 		$flexforms = !empty($setup['plugin.']['tx_t3sbootstrap.']['flexform.']) ? $setup['plugin.']['tx_t3sbootstrap.']['flexform.'] : [];
 

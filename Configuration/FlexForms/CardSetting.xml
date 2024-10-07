@@ -314,12 +314,6 @@
 					</cardborderstyle>
 					<horizontal>
 						<label>Horizontal</label>
-						<displayCond>
-							<and>
-								<numIndex index="0">FIELD:sDEF.multiImage.enable:=:0</numIndex>
-								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
-							</and>
-						</displayCond>
 						<config>
 							<type>check</type>
 						</config>
@@ -358,12 +352,6 @@
 					<multiImage.enable>
 						<label>Enable Profile Card</label>
 						<description>You need at least two images for the profile card. The second is the circular, smaller image</description>
-						<displayCond>
-							<and>
-								<numIndex index="0">FIELD:sDEF.horizontal:=:0</numIndex>
-								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
-							</and>
-						</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -373,10 +361,10 @@
 						<label>Width of the circular image (in %)</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>50</default>
-							<eval>trim,int</eval>
+							<eval>trim</eval>
 							<range>
 								<lower>10</lower>
 								<upper>90</upper>
@@ -499,10 +487,10 @@
 							</and>
 						 </displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>50</default>
-							<eval>trim,int</eval>
+							<eval>trim</eval>
 							<range>
 								<lower>10</lower>
 								<upper>90</upper>

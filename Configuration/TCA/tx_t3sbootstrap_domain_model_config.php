@@ -1048,7 +1048,7 @@ return [
             'exclude' => false,
             'label' => 'Background image ratio',
             'accordion_id' => 4,
-            'info' => 'Only to be used with a background image - not with videos.',
+            'info' => 'Only to be used with a background image - not with videos or "Full height section".',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',

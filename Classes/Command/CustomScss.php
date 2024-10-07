@@ -24,17 +24,11 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class CustomScss extends CommandBase
 {
+
     public function initializeAction()
     {
         parent::initializeAction();
     }
-
-
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
 
     /**
      * Defines the allowed options for this command
@@ -54,8 +48,8 @@ class CustomScss extends CommandBase
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $settings = $this->configurationManager->getConfiguration(
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $settings = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             't3sbootstrap',
             'm1'

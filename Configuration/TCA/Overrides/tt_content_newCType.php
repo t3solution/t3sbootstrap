@@ -881,12 +881,14 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button'] = [
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
     'header_link' => [
         'config' => [
-            'eval' => 'trim,required'
+            'required' => true,
+            'eval' => 'trim'
         ]
     ],
     'header' => [
         'config' => [
-            'eval' => 'trim,required'
+            'required' => true,
+            'eval' => 'trim'
         ]
     ],
 ];

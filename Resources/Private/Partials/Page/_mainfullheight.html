@@ -1,0 +1,76 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:asset.css identifier="full-height-css">
+
+#full-height-section {
+	position: relative;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+#full-height-section .jumbotron {
+  flex-grow: 1;
+}
+
+#full-height-section #full-height-icon {
+	position: absolute;
+	left: calc(50% - 32px);
+	font-size: 4em;
+	color: #fff;
+	opacity: .7;
+	z-index: 1009;
+	margin: 0 auto;
+	cursor: pointer;
+	padding: 0;
+	height: 75px;
+	border: none;
+	background: none;
+	bottom: 30px;
+}
+
+</f:asset.css>
+
+<f:asset.script identifier="full-height-js_function">
+function scrollDown() {
+
+	var scrollTo = document.getElementById('full-height-section').clientHeight;
+	var navbar = document.getElementById('main-navbar');
+	var navbarHeight = navbar.clientHeight;
+	var fixedNavbar = false;
+
+	if ( navbar.classList.contains('fixed-top') ) {
+		fixedNavbar = true;
+	}
+
+	if ( fixedNavbar ) {
+		scrollTo -= navbarHeight;
+	}
+
+	window.scroll({ top: scrollTo, behavior: 'smooth' });
+}
+</f:asset.script>
+
+<f:asset.script identifier="vanilla_full-height-js">
+	if ( navbar.offsetTop < 1  && fixedNavbar ) {
+		var fhs = document.getElementById('full-height-section');
+		fhs.style.paddingTop = navbarHeight+'px';
+	}
+</f:asset.script>
+
+<div id="full-height-section">
+	<f:if condition="{config.jumbotron.position} == 'above' && {config.navbar.placement} != 'fixed-top'">
+		<f:then>
+			<f:render partial="Page/Jumbotron" arguments="{_all}" />
+			<f:render partial="Page/Navbar/Navbar" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render partial="Page/Navbar/Navbar" arguments="{_all}" />
+			<f:render partial="Page/Jumbotron" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</div>
+<f:if condition="{config.breadcrumb.enable}">
+	<f:render partial="Page/Breadcrumb" arguments="{_all}" />
+</f:if>
+</html>

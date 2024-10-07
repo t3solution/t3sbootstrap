@@ -8,7 +8,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -46,8 +45,8 @@ class FlexformEvent
 
             if (array_key_exists($identifier['dataStructureKey'], $flexForms)) {
                 if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-                && $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey']) {
-                    $file = Environment::getPublicPath() . $ffPath.$flexForms[$identifier['dataStructureKey']].'.xml';
+                && $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey']) { 
+ 					$file = GeneralUtility::getFileAbsFileName($ffPath.$flexForms[$identifier['dataStructureKey']].'.xml');
                     if (file_exists($file)) {
                         $content = @file_get_contents($file);
                         if ($content) {

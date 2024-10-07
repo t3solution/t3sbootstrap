@@ -42,10 +42,9 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>5000</default>
-							<eval>int</eval>
 						</config>
 					</delay>
 					<placement>
@@ -105,10 +104,9 @@
 						<label>Width of the toast in (px)</label>
 						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>350</default>
-							<eval>int</eval>
 						</config>
 					</toastwidth>
 					<cookie>
@@ -125,10 +123,9 @@
 						<label>Cookie expiration in days</label>
 						<displayCond>FIELD:general.cookie:=:1</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>30</default>
-							<eval>int</eval>
 						</config>
 					</expires>
 				</el>

@@ -95,7 +95,9 @@ page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/F
 [END]
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 3]
 page.includeCSS.t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+page.includeCSS.t3sfontawesomeLink.forceOnTop = 1
 [END]
 [{$bootstrap.config.faLinkIcons} == 0 && {$bootstrap.extconf.fontawesomeCss} == 0]
 page.includeCSS.t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
+page.includeCSS.t3sfontawesomeMin.forceOnTop = 1
 [END]

@@ -81,11 +81,10 @@
 					<width>
 						<label>max. Image width</label>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<max>4</max>
 							<default>576</default>
-							<eval>int</eval>
 							<checkbox>0</checkbox>
 						</config>
 					</width>

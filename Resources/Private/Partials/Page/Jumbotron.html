@@ -1,12 +1,21 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.jumbotron.enable}">
 
+	<f:if condition="{config.jumbotron.container} == 'none'">
+		<f:then>
+			<f:variable name="jumbotronContainer">FALSE</f:variable>
+		</f:then>
+		<f:else>
+			<f:variable name="jumbotronContainer">TRUE</f:variable>
+		</f:else>
+	</f:if>
+
 	<f:if condition="{ratioCalcCss}">
 		<f:asset.css identifier="jumbotronRatioCss-{data.uid}">
 {ratioCalcCss -> f:format.raw()}
 		</f:asset.css>
 	</f:if>
-			
+
 	<f:if condition="{bgSlides -> f:count()} > 1">
 		<f:then>
 			<f:comment> SLIDER </f:comment>
@@ -16,7 +25,7 @@
 					<f:if condition="{config.jumbotron.alignItem}">
 						<f:then>
 							<div class="{config.jumbotron.alignItem}">
-								<f:if condition="{config.jumbotron.container}">
+								<f:if condition="{jumbotronContainer}">
 									<f:then>
 										<div class="{config.jumbotron.alignItem}">
 											<div class="{config.jumbotron.container}">
@@ -33,10 +42,12 @@
 							</div>
 						</f:then>
 						<f:else>
-							<f:if condition="{config.jumbotron.container}">
+							<f:if condition="{jumbotronContainer}">
 								<f:then>
 									<div class="{config.jumbotron.alignItem}">
-										<f:render section="JumboBgSlider" arguments="{_all}" />
+										<div class="{config.jumbotron.container}">
+											<f:render section="JumboBgSlider" arguments="{_all}" />
+										</div>
 									</div>
 								</f:then>
 								<f:else>
@@ -52,7 +63,7 @@
 			</f:if>
 		</f:then>
 		<f:else>
-			<f:if condition="{config.jumbotron.container} && {config.jumbotron.container} !== 'none'">
+			<f:if condition="{jumbotronContainer}">
 				<f:then>
 					<f:render section="{config.jumbotron.containerposition}" arguments="{_all}" />
 				</f:then>
@@ -77,7 +88,7 @@
 		<f:if condition="{config.jumbotron.alignItem}">
 			<f:then>
 				<div class="{config.jumbotron.alignItem}">
-					<f:if condition="{config.jumbotron.container}">
+					<f:if condition="{jumbotronContainer}">
 						<f:then>
 							<div class="{config.jumbotron.container}">
 								<f:render section="Content" arguments="{_all}" />
@@ -90,7 +101,7 @@
 				</div>
 			</f:then>
 			<f:else>
-				<f:if condition="{config.jumbotron.container}">
+				<f:if condition="{jumbotronContainer}">
 					<f:then>
 						<div class="{config.jumbotron.container}">
 							<f:render section="Content" arguments="{_all}" />
@@ -114,8 +125,8 @@
 </f:section>
 
 <f:section name="Content">
-	<f:if condition="({config.jumbotron.alignItem} && !{config.jumbotron.container})
-	 || ({config.jumbotron.alignItem} && {config.jumbotron.container} && {config.jumbotron.containerposition} == 'Outside')">
+	<f:if condition="({config.jumbotron.alignItem} && !{jumbotronContainer})
+	 || ({config.jumbotron.alignItem} && {jumbotronContainer} && {config.jumbotron.containerposition} == 'Outside')">
 		<f:then>
 			<div class="{config.jumbotron.alignItem}">
 				<div class="jumbotron-content w-100">
@@ -148,6 +159,9 @@
 				</f:if>
 			</div>
 		</f:else>
+	</f:if>
+	<f:if condition="{settings.fullHeightSection.icon} && {data.tx_t3sbootstrap_fullheightsection}">
+		<button id="full-height-icon" onclick="scrollDown()" title="down"><f:format.raw>{settings.fullHeightSection.icon}</f:format.raw></button>
 	</f:if>
 </f:section>
 

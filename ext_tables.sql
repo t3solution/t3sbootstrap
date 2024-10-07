@@ -234,4 +234,5 @@ CREATE TABLE pages (
 	tx_t3sbootstrap_navigationactivecolor varchar(30) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_navigationhover varchar(30) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_navigationbgcolor varchar(30) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_fullheightsection tinyint(4) DEFAULT '0' NOT NULL,
 );
