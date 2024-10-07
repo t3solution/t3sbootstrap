@@ -58,11 +58,11 @@
 					<width>
 						<label>max. Image width (required)</label>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<max>4</max>
 							<default>1440</default>
-							<eval>int+,required</eval>
+							<required>true</required>
 							<checkbox>0</checkbox>
 						</config>
 					</width>
@@ -111,11 +111,10 @@
 					<interval>
 						<label>Interval</label>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<max>5</max>
 							<default>5000</default>
-							<eval>int</eval>
 							<checkbox>0</checkbox>
 						</config>
 					</interval>

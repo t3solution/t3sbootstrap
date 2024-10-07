@@ -309,21 +309,32 @@ $tempPagesColumns = [
                 ],
             ],
         ],
+    ],
+    'tx_t3sbootstrap_fullheightsection' => [
+        'exclude' => 1,
+        'label' => 'Full height section',
+        'description' => 'Make a fullscreen section that`s full height of browser window',
+        'config' => [
+            'type' => 'check'
+        ]
     ]
 ];
 
 ExtensionManagementUtility::addTCAcolumns('pages', $tempPagesColumns);
 unset($tempPagesColumns);
 
-ExtensionManagementUtility::addFieldsToPalette('pages', 'title', '--linebreak--,tx_t3sbootstrap_titlecolor', 'after:title');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'title', '--linebreak--,tx_t3sbootstrap_subtitlecolor', 'after:subtitle');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_smallColumns', 'after:backend_layout_next_level');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_mobileOrder', 'after:tx_t3sbootstrap_smallColumns');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_breakpoint', 'after:tx_t3sbootstrap_mobileOrder');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_dropdownRight', 'after:tx_t3sbootstrap_breakpoint');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_container', 'after:tx_t3sbootstrap_dropdownRight');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_linkToTop', 'after:tx_t3sbootstrap_container');
-ExtensionManagementUtility::addFieldsToPalette('pages', 'layout', '--linebreak--,tx_t3sbootstrap_megamenu', 'after:tx_t3sbootstrap_linkToTop');
+
+$GLOBALS['TCA']['pages']['palettes']['bootstrap'] = [
+ 'showitem' => 'tx_t3sbootstrap_smallColumns, tx_t3sbootstrap_mobileOrder, --linebreak--, tx_t3sbootstrap_container, tx_t3sbootstrap_breakpoint, --linebreak--, tx_t3sbootstrap_linkToTop, tx_t3sbootstrap_fullheightsection',
+     'canNotCollapse' => 1
+];
+
+ExtensionManagementUtility::addToAllTCAtypes(
+    'pages',
+    '--palette--;T3S Bootstrap;bootstrap',
+    '',
+    'after:backend_layout'
+);
 
 if (array_key_exists('navigationColor', $extconf) && $extconf['navigationColor'] === '1') {
     # add palette Navigation Colors

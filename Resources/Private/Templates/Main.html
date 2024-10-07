@@ -49,7 +49,14 @@
 							<f:render partial="Page/Meta" arguments="{metaNavigation: metaNavigation, config: config}" />
 						</f:if>
 						<f:comment> NAVBAR | JUMBOTRON | BREADCRUMB </f:comment>
-						<f:render partial="Page/_main" arguments="{_all}" />
+						<f:if condition="{data.tx_t3sbootstrap_fullheightsection}">
+							<f:then>
+								<f:render partial="Page/_mainfullheight" arguments="{_all}" />
+							</f:then>
+							<f:else>
+								<f:render partial="Page/_main" arguments="{_all}" />
+							</f:else>
+						</f:if>
 					</f:else>
 				</f:if>
 				<f:comment> EXPANDED CONTENT TOP </f:comment>

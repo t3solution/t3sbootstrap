@@ -97,6 +97,9 @@ page {
 				colorMode.enable = {$bootstrap.colorMode.enable}
 				colorMode.position = {$bootstrap.colorMode.position}
 			}
+			fullHeightSection {
+				icon = <i class="fa-solid fa-chevron-down"></i>
+			}
 		}
 		dataProcessing {
 

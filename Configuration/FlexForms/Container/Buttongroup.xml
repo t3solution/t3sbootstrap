@@ -169,12 +169,12 @@
 						<description>offset to the left specified in px</description>
 						<displayCond>FIELD:sDEF.slideIn:=:1</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>4</size>
 							<max>4</max>
 							<default>33</default>
 							<checkbox>0</checkbox>
-							<eval>required,int</eval>
+							<required>true</required>
 						</config>
 					</visiblePart>
 				</el>

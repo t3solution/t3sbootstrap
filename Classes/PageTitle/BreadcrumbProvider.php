@@ -17,18 +17,19 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class BreadcrumbProvider extends AbstractPageTitleProvider
 {
 
-	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-	{
-		$this->configurationManager = $configurationManager;
-	}
+    /**
+     * @var ConfigurationManagerInterface
+     */
+    protected ConfigurationManagerInterface $configurationManager;
+
 
 	/**
 	 * @param string $title
 	 */
 	public function setTitle(string $title)
 	{
-		$this->configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-		$settings = $this->configurationManager->getConfiguration(
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+		$settings = $configurationManager->getConfiguration(
 			ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
 			't3sbootstrap',
 			'm1'

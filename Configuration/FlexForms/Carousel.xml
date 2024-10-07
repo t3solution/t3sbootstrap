@@ -11,10 +11,9 @@
 						<label>Vertical shift in % ( 0 = center, range: -60 to 60 )</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
-							<type>input</type>
+							<type>number</type>
 							<size>5</size>
 							<default>0</default>
-							<eval>int</eval>
 							<range>
 								<lower>-60</lower>
 								<upper>60</upper>

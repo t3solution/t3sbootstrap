@@ -16,7 +16,6 @@ use TYPO3\CMS\Core\Resource\Rendering\RendererRegistry;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
-#ConfigurationManagerInterface
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -33,34 +32,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
      * @var string
      */
     protected $tagName = 'img';
-    
-	/**
-	 * @var ResponsiveImagesUtility
-	 */
-	protected $responsiveImagesUtility;
 
-	/**
-	 * @var ConfigurationManager
-	 */
-	protected $configurationManager;
-
-
-	/**
-	 * @param ResponsiveImagesUtility $responsiveImagesUtility
-	 */
-	public function injectResponsiveImagesUtility(ResponsiveImagesUtility $responsiveImagesUtility)
-	{
-		$this->responsiveImagesUtility = $responsiveImagesUtility;
-	}
-
-
-	/**
-	 * @param ConfigurationManager $configurationManager
-	 */
-	public function injectConfigurationManager(ConfigurationManager $configurationManager)
-	{
-		$this->configurationManager = $configurationManager;
-	}
 
 	/**
 	 * Initialize arguments.
@@ -150,8 +122,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
         $additionalConfig = array_merge_recursive($this->arguments, $additionalConfig);
         return $fileRenderer->render($file, $width, $height, $additionalConfig);
     }
-    
-    
+
+
 	/**
 	 * Render img tag
 	 *
@@ -258,8 +230,9 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 
 		$this->arguments['breakpoints'] = $breakpointArr;
 
+		$responsiveImagesUtility = GeneralUtility::makeInstance(ResponsiveImagesUtility::class);
 		// Generate picture tag
-		$this->tag = $this->responsiveImagesUtility->createPictureTag(
+		$this->tag = $responsiveImagesUtility->createPictureTag(
 			$image,
 			$fallbackImage,
 			$this->arguments['breakpoints'],
@@ -346,7 +319,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		$imageService = self::getImageService();
 		$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
-		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+		$settings = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
 		$imageUri = $imageService->getImageUri($processedImage);
 

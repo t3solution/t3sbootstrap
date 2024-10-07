@@ -2,7 +2,7 @@
 	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:variable name="imgTitle" value="{f:if(condition: '{file.title}', then: '{file.title}', else: '{file.description}')}" />
 <f:variable name="extraImgClass" value="{f:if(condition: file.properties.tx_t3sbootstrap_extra_imgclass, then: ' {file.properties.tx_t3sbootstrap_extra_imgclass}', else: '')}" />
-<f:variable name="altText" value="{f:if(condition: altText, then: '{altText}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}" />
+<f:variable name="altText" value="{f:if(condition: file.properties.alternative, then: '{file.properties.alternative}', else: '{t3sb:alternative(title:file.title, name:file.name)}')}" />
 <f:variable name="lazyClass" value="{f:if(condition: '{file.properties.tx_t3sbootstrap_lazy_load} && {settings.lazyLoad} == 2', then: ' lazy')}" />
 <f:variable name="ratio" value="{f:if(condition: '{dimensions.ratio}', then: '{dimensions.ratio}', else: '{addmedia.ratio}')}" />
 	<f:if condition="{addmedia.origImg}">

@@ -78,7 +78,6 @@ class ConfigProcessor implements DataProcessorInterface
         $rootlinePage = $pageRepository->getPage($processedRecordVariables['homepageUid']);
         $smallColumnsRootline = !empty($rootlinePage['tx_t3sbootstrap_smallColumns']) ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
         $smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
-
         // global override page data
         if (!empty($contentObjectConfiguration['settings.']['pages.']['override.'])) {
             foreach ($contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override) {
@@ -425,7 +424,14 @@ class ConfigProcessor implements DataProcessorInterface
             $hasBgImages = 0;
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
             $fileObjects = [];
-            $processedData['config']['jumbotron']['alignItem'] = 'd-flex align-items-'.$processedRecordVariables['jumbotronAlignitem'];
+
+            if ( !empty($processedRecordVariables['jumbotronAlignitem']) ) {
+                $processedData['config']['jumbotron']['alignItem'] = 'd-flex mx-auto align-items-'.$processedRecordVariables['jumbotronAlignitem'];
+                $processedData['config']['jumbotron']['class'] .= ' d-flex';
+            } else {
+                $processedData['config']['jumbotron']['alignItem'] = ' d-flex';
+            }
+
             $processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
 
             if ($processedRecordVariables['jumbotronBgimage'] == 'root') {
@@ -517,14 +523,18 @@ class ConfigProcessor implements DataProcessorInterface
                     $processedData['config']['jumbotron']['bgImage'] = $bgSlides;
                 }
             }
-            if ($hasBgImages && !empty($processedRecordVariables['jumbotronBgimageratio'])) {
+
+            if ($hasBgImages && empty($currentPage['tx_t3sbootstrap_fullheightsection']) && !empty($processedRecordVariables['jumbotronBgimageratio'])) {
                 $processedData['config']['jumbotron']['noBgRatio'] = false;
                 $processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
                 $ratioArr = explode('x', $processedRecordVariables['jumbotronBgimageratio']);
                 $x = $processedRecordVariables['jumbotronBgimageratio'];
                 $y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';
                 $processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
+            } else {
+                $processedData['config']['jumbotron']['class'] = ' ratio';
             }
+
         }
 
         /**
