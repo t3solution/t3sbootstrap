@@ -325,7 +325,7 @@ unset($tempPagesColumns);
 
 
 $GLOBALS['TCA']['pages']['palettes']['bootstrap'] = [
- 'showitem' => 'tx_t3sbootstrap_smallColumns, tx_t3sbootstrap_mobileOrder, --linebreak--, tx_t3sbootstrap_container, tx_t3sbootstrap_breakpoint, --linebreak--, tx_t3sbootstrap_linkToTop, tx_t3sbootstrap_fullheightsection',
+ 'showitem' => 'tx_t3sbootstrap_smallColumns, tx_t3sbootstrap_mobileOrder, --linebreak--, tx_t3sbootstrap_container, tx_t3sbootstrap_breakpoint, --linebreak--, tx_t3sbootstrap_linkToTop, tx_t3sbootstrap_fullheightsection, --linebreak--, tx_t3sbootstrap_megamenu',
      'canNotCollapse' => 1
 ];
 
