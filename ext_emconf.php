@@ -25,7 +25,7 @@ $EM_CONF['t3sbootstrap'] = [
         [
             'php' => '8.1.0-8.3.99',
             'typo3' => '12.4.12-12.4.99',
-            'container' => '3.0.0-3.99.99',
+            'container' => '2.3.6-2.99.99',
             'content_defender' => '3.4.2-3.99.99'
         ],
         'conflicts' =>
