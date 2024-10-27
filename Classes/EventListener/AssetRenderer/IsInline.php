@@ -42,7 +42,7 @@ class IsInline
             return;
         }
 
-	$t3sbconcatenate = !empty($settings['t3sbconcatenate']) ? TRUE : FALSE;
+        $t3sbconcatenate = !empty($settings['t3sbconcatenate']) ? TRUE : FALSE;
 
         if ($event->isInline() == false) {
             if ($event->isPriority() == false) {
