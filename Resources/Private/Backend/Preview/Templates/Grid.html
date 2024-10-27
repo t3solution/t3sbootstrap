@@ -1,6 +1,5 @@
 <html
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:container="http://typo3.org/ns/B13/Container/ViewHelpers"
 	xmlns:t3sbs="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
@@ -18,20 +17,6 @@
 	</div>
  </div>
 </div>
-</f:if>
-
-<f:if condition="{grid}">
-	<table style="width: 100%; table-layout: fixed;">
-		<f:for each="{grid}" as="row">
-			<tr>
-				<f:for each="{row}" as="column">
-					<td class="t3-grid-cell" valign="top"{f:if(condition:"{column.colspan}", then: ' colspan="{column.colspan}"')}{f:if(condition:"{column.rowspan}", then: ' rowspan="{column.rowspan}"')}>
-						<container:drawChildren uid="{uid}" colPos="{column.colPos}" />
-					</td>
-				</f:for>
-			</tr>
-		</f:for>
-	</table>
 </f:if>
 
 <f:if condition="{containerGrid}">

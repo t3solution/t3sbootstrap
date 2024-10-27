@@ -23,8 +23,8 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 221],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 222]
+						['name' => 'Column 1', 'colPos' => 221],
+						['name' => 'Column 2', 'colPos' => 222]
 					]
 				]
 			)
@@ -44,9 +44,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 231],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 232],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 233]
+						['name' => 'Column 1', 'colPos' => 231],
+						['name' => 'Column 2', 'colPos' => 232],
+						['name' => 'Column 3', 'colPos' => 233]
 					  ]
 				]
 			)
@@ -66,10 +66,10 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 241],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 242],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 243],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 244]
+						['name' => 'Column 1', 'colPos' => 241],
+						['name' => 'Column 2', 'colPos' => 242],
+						['name' => 'Column 3', 'colPos' => 243],
+						['name' => 'Column 4', 'colPos' => 244]
 					  ]
 				]
 			)
@@ -89,12 +89,12 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 261],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 262],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 263],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 264],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.4', 'colPos' => 265],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.5', 'colPos' => 266]
+						['name' => 'Column 1', 'colPos' => 261],
+						['name' => 'Column 2', 'colPos' => 262],
+						['name' => 'Column 3', 'colPos' => 263],
+						['name' => 'Column 4', 'colPos' => 264],
+						['name' => 'Column 5', 'colPos' => 265],
+						['name' => 'Column 6', 'colPos' => 266]
 					  ]
 				]
 			)
@@ -475,8 +475,8 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 221],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 222]
+						['name' => 'Column 1', 'colPos' => 221],
+						['name' => 'Column 2', 'colPos' => 222]
 					]
 				]
 			)
@@ -492,9 +492,9 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 231],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 232],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 233]
+						['name' => 'Column 1', 'colPos' => 231],
+						['name' => 'Column 2', 'colPos' => 232],
+						['name' => 'Column 3', 'colPos' => 233]
 					  ]
 				]
 			)
@@ -510,10 +510,10 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 241],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 242],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 243],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 244]
+						['name' => 'Column 1', 'colPos' => 241],
+						['name' => 'Column 2', 'colPos' => 242],
+						['name' => 'Column 3', 'colPos' => 243],
+						['name' => 'Column 4', 'colPos' => 244]
 					  ]
 				]
 			)
@@ -529,12 +529,12 @@ if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
 				'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
 				[
 					[
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 261],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 262],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 263],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 264],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.4', 'colPos' => 265],
-						['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.5', 'colPos' => 266]
+						['name' => 'Column 1', 'colPos' => 261],
+						['name' => 'Column 2', 'colPos' => 262],
+						['name' => 'Column 3', 'colPos' => 263],
+						['name' => 'Column 4', 'colPos' => 264],
+						['name' => 'Column 5', 'colPos' => 265],
+						['name' => 'Column 6', 'colPos' => 266]
 					  ]
 				]
 			)

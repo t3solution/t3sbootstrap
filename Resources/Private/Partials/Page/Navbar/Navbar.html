@@ -152,7 +152,9 @@
 </f:section>
 
 <f:section name="Brand">
+
 <f:if condition="{config.navbar.brand}">
+	<f:then>
 	<f:switch expression="{config.navbar.brand}">
 		<f:case value="imgText">
 			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
@@ -174,6 +176,10 @@
 			</f:link.typolink>
 		</f:defaultCase>
 	</f:switch>
+	</f:then>
+	<f:else>
+		<span class="navbar-brand"></span>
+	</f:else>
 </f:if>
 </f:section>
 

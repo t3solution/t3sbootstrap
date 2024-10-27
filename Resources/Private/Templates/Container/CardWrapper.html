@@ -260,7 +260,9 @@ function insertAfter(referenceNode, newNode) {
 										{card.tx_t3sbootstrap_cardfooter -> f:format.raw()}
 									</f:then>
 									<f:else>
-										<p class="square-link"><i class="fa-solid fa-plus-square fa-2x mx-auto"></i></p>
+										<f:if condition="{settings.cardFlipperOnClick}">
+											<p class="square-link"><i class="fa-solid fa-plus-square fa-2x mx-auto"></i></p>
+										</f:if>
 									</f:else>
 								</f:if>
 							</div>

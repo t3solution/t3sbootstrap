@@ -7,6 +7,7 @@ namespace T3SBS\T3sbootstrap\Helper;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -62,8 +63,17 @@ class ClassHelper implements SingletonInterface
 
         // Layout
         if (!empty($data['layout'])) {
-			$class .= ' layout-'.$data['layout'];
+			$request = $GLOBALS['TYPO3_REQUEST'];
+			$site = $request->getAttribute('site');
+			$this->rootPageId = $site->getRootPageId();
+			$pageTs = BackendUtility::getPagesTSconfig($this->rootPageId);
+			if (!empty($pageTs['TCEFORM.']['tt_content.']['layout.']['classes.'][$data['layout']])) {
+	            $class .= $pageTs['TCEFORM.']['tt_content.']['layout.']['classes.'][$data['layout']];
+			} else {
+				$class .= ' layout-'.$data['layout'];
+			}
         }
+
         // Frame class
         if ($data['frame_class'] != 'default') {
             $class .= ' frame-'.$data['frame_class'];
