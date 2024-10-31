@@ -24,7 +24,7 @@ class ClassHelper implements SingletonInterface
     {
         // class
         if (!empty($cTypeClass)) {
-            $class = 'fsc-default ce-'. $data['CType'];
+            $class = 'fsc-default ce-'. $data['CType'] .' ';
         } else {
             $class = '';
         }
