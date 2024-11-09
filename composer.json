@@ -17,8 +17,8 @@
   "type": "typo3-cms-extension",
   "require": {
     "php": "^8.1 || ^8.2 || ^8.3",
-    "typo3/cms-core": ">=12.4.12 <12.4.99",
-    "b13/container": "^2 || ^3.1",
+    "typo3/cms-core": "^12.4.12",
+    "b13/container": "^2.3 || ^3.1",
     "ichhabrecht/content-defender": "^3.1"
   },
   "autoload": {
