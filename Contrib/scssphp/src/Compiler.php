@@ -5699,7 +5699,7 @@ EOL;
         }
 
         if ($argumentDeclaration === null) {
-            @trigger_error('Omitting the argument declaration when registering custom function is deprecated and won\'t be supported in ScssPhp 2.0 anymore.', E_USER_DEPRECATED);
+#            @trigger_error('Omitting the argument declaration when registering custom function is deprecated and won\'t be supported in ScssPhp 2.0 anymore.', E_USER_DEPRECATED);
         }
 
         $this->userFunctions[$this->normalizeName($name)] = [$callback, $argumentDeclaration];
@@ -6341,7 +6341,7 @@ EOL;
             return $returnValue;
         }
 
-        @trigger_error(sprintf('Returning a PHP value from the "%s" custom function is deprecated. A sass value must be returned instead.', $name), E_USER_DEPRECATED);
+#        @trigger_error(sprintf('Returning a PHP value from the "%s" custom function is deprecated. A sass value must be returned instead.', $name), E_USER_DEPRECATED);
 
         return $this->coerceValue($returnValue);
     }

@@ -2,7 +2,6 @@
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -13,26 +12,21 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class AlternativeViewHelper extends AbstractViewHelper
 {
-   use CompileWithRenderStatic;
-
-	/**
+   /**
 	 */
-	public function initializeArguments()
+	public function initializeArguments(): void
 	{
 		$this->registerArgument('title', 'string', 'title', true);
 		$this->registerArgument('name', 'string', 'name', true);
 	}
 
-	public static function renderStatic(
-		array $arguments,
-		\Closure $renderChildrenClosure,
-		RenderingContextInterface $renderingContext
-	) {
-		if ( $arguments['title'] ) {
-			return $arguments['title'];
-		} else {
-			$name = explode(".", $arguments['name']);
-			return $name[0];
-		}
-	}
+	public function render()
+ {
+	 if ( $this->arguments['title'] ) {
+			   return $this->arguments['title'];
+		   } else {
+			   $name = explode(".", $this->arguments['name']);
+			   return $name[0];
+		   }
+ }
 }

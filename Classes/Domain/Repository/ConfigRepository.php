@@ -13,7 +13,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
  */
 class ConfigRepository extends Repository
 {
-	public function initializeObject() {
+	public function initializeObject(): void {
 		/** @var Typo3QuerySettings $querySettings */
 		$querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
 		$querySettings->setRespectStoragePage(false);

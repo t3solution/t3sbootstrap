@@ -26,7 +26,7 @@ class BreadcrumbProvider extends AbstractPageTitleProvider
 	/**
 	 * @param string $title
 	 */
-	public function setTitle(string $title)
+	public function setTitle(string $title): void
 	{
 		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
 		$settings = $configurationManager->getConfiguration(

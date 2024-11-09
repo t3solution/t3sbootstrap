@@ -191,9 +191,6 @@
 							<size>20</size>
 						</config>
 					</linkTitle>
-
-
-	
 					<dropdownItems>
 						<section>1</section>
 						<type>array</type>
@@ -205,8 +202,7 @@
 									<group>
 										<label>Input Link</label>
 										<config>
-											<type>input</type>
-											<renderType>inputLink</renderType>
+											<type>link</type>
 											<size>48</size>
 										</config>
 									</group>
@@ -214,11 +210,6 @@
 							</list>
 						</el>
 					</dropdownItems>
-
-
-
-
-
 					<direction>
 						<label>Dropdown direction</label>
 						<description>Trigger dropdown menus direction (if dropdown items)</description>

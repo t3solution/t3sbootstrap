@@ -530,8 +530,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.facebook>
 					<multiImage.socialmedia.twitter>
@@ -543,8 +542,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.twitter>
 					<multiImage.socialmedia.google>
@@ -556,8 +554,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.google>
 					<multiImage.socialmedia.linkedin>
@@ -569,8 +566,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.linkedin>
 					<multiImage.socialmedia.youtube>
@@ -582,8 +578,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.youtube>
 					<multiImage.socialmedia.instagram>
@@ -595,8 +590,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.instagram>
 					<multiImage.socialmedia.pinterest>
@@ -608,8 +602,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.pinterest>
 					<multiImage.socialmedia.skype>
@@ -621,8 +614,7 @@
 							</and>
 						</displayCond>
 						<config>
-							<type>input</type>
-							<renderType>inputLink</renderType>
+							<type>link</type>
 						</config>
 					</multiImage.socialmedia.skype>
 				</el>
