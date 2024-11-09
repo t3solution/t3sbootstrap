@@ -32,7 +32,8 @@ class CompileService
     public function getCompiledFile(string $file): ?string
     {
         $absoluteFile = GeneralUtility::getFileAbsFileName($file);
-        $configuration = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_t3sbootstrap.']['settings.'] ?? [];
+        #$configuration = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_t3sbootstrap.']['settings.'] ?? [];
+        $configuration = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript')->getSetupArray()['plugin.']['tx_t3sbootstrap.']['settings.'] ?? [];
 
         // Ensure cache directory exists
         if (!file_exists(Environment::getPublicPath() . '/' . $this->tempDirectory)) {

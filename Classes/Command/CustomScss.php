@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class CustomScss extends CommandBase
 {
 
-    public function initializeAction()
+    public function initializeAction(): void
     {
         parent::initializeAction();
     }

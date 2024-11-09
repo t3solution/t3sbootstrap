@@ -3,7 +3,6 @@ namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Resource\FileRepository;
 
@@ -15,25 +14,19 @@ use TYPO3\CMS\Core\Resource\FileRepository;
  */
 class DummyImageViewHelper extends AbstractViewHelper
 {
-	use CompileWithRenderStatic;
-
-	public function initializeArguments()
+	public function initializeArguments(): void
 	{
 		$this->registerArgument('uid', 'string', 'Uid of tt_content with custom dummy image for EXT:news', false);
 	}
 
-	public static function renderStatic(
-		array $arguments,
-		\Closure $renderChildrenClosure,
-		RenderingContextInterface $renderingContext
-	) {
-		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		$fileObjects = $fileRepository->findByRelation('tt_content', 'image', (int)$arguments['uid']);
-		if (empty($fileObjects)) {
-			$fileObjects = $fileRepository->findByRelation('tt_content', 'assets', (int)$arguments['uid']);
-		}
-
-		return !empty($fileObjects) ? $fileObjects[0] : '';
-	}
+	public function render()
+ {
+	 $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+	 $fileObjects = $fileRepository->findByRelation('tt_content', 'image', (int)$this->arguments['uid']);
+	 if (empty($fileObjects)) {
+			   $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', (int)$this->arguments['uid']);
+		   }
+	 return !empty($fileObjects) ? $fileObjects[0] : '';
+ }
 
 }

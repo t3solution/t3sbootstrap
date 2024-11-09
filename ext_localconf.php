@@ -222,7 +222,7 @@ defined('TYPO3') || die();
      */
     if (array_key_exists('preview', $extconf) && $extconf['preview'] === '1') {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.preview = 1');
-        $GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets'][] = 'EXT:t3sbootstrap/Resources/Public/Backend/Style/';
+        $GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Resources/Public/Backend/Style/bestyles.css';
     } else {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.preview = 0');
     }
@@ -246,6 +246,5 @@ defined('TYPO3') || die();
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class] =
          PreProcessHook::class . '->execute';
     }
-
 
 })();
