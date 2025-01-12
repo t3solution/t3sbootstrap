@@ -1,16 +1,6 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{config.navbar.enable} && {config.navbar.enable} != 'none'">
 	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
-	<f:if condition="{config.navbar.navColorCSS}">
-		<div class="container my-5">
-			<div class="alert alert-danger" role="alert">
-				For the "Navigation color" an inline style is created.
-				Before you public your site, you should copy the generated inline style into a file and include it (with TS).
-				<strong>Afterwards you can deactivate the option in the extension configuration to avoid problems!</strong>
-			</div>
-		</div>
-	</f:if>
 	<f:if condition="{config.navbar.container}">
 		<f:then>
 			<div class="{config.navbar.container}">
@@ -28,15 +18,8 @@
 <f:section name="NavbarInner">
 <nav id="main-navbar" class="navbar {config.navbar.class}"{config.navbar.styleAttr -> f:format.raw()}{config.navbar.dataAttr -> f:format.raw()}>
 	<div class="{config.navbar.innercontainer}">
-		<f:if condition="{config.navbar.toggler} == 'left'">
-			<f:then>
-				<f:render section="Toggler" arguments="{_all}" />
-				<f:render section="Brand" arguments="{_all}" />
-			</f:then>
-			<f:else>
-				<f:render section="Brand" arguments="{_all}" />
-				<f:render section="Toggler" arguments="{_all}" />
-			</f:else>
+		<f:if condition="{config.navbar.brandAlignment} == 'left'">
+			<f:render section="NavbarToggler" arguments="{_all}" />
 		</f:if>
 		<f:if condition="{config.navbar.offcanvas}">
 			<f:then>
@@ -46,8 +29,24 @@
 				<f:render section="Default" arguments="{_all}" />
 			</f:else>
 		</f:if>
+		<f:if condition="{config.navbar.brandAlignment} == 'right'">
+			<f:render section="NavbarToggler" arguments="{_all}" />
+		</f:if>
 	</div>
 </nav>
+</f:section>
+
+<f:section name="NavbarToggler">
+<f:if condition="{config.navbar.toggler} == 'left'">
+	<f:then>
+		<f:render section="Toggler" arguments="{_all}" />
+		<f:render section="Brand" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:render section="Brand" arguments="{_all}" />
+		<f:render section="Toggler" arguments="{_all}" />
+	</f:else>
+</f:if>
 </f:section>
 
 <f:section name="Default">
@@ -108,7 +107,7 @@
 </f:if>
 <f:if condition="{settings.navbar.feUserName}">
 	<f:security.ifAuthenticated>
-		<span class="nav-link fe-user ms-1"><i class="fa-solid fa-user me-1"></i> <t3sb:getUsername /></span>
+		<span class="nav-link fe-user ms-1"><t3sb:icon iconfig="fa6:solid,user" additionalAttributes="{class:'me-1'}" /> <t3sb:getUsername /></span>		
 	</f:security.ifAuthenticated>
 </f:if>
 </f:section>
@@ -121,7 +120,9 @@
 		</f:then>
 		<f:else>
 			<f:if condition="{settings.navbar.searchboxLink} && !{navbarMenuRight -> f:count()}">
-				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fa-solid fa-search me-3"></i></f:link.page>
+				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}">
+					<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'me-3'}" />
+				</f:link.page>
 			</f:if>
 		</f:else>
 	</f:if>
@@ -294,7 +295,7 @@
 			</a>
 			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split{f:if(condition: navbarItem.active, then:' --bs-dropdown-link-active-bg')}"
 			 data-bs-toggle="dropdown" aria-expanded="false" href="#">
-				<i class="fa-solid fa-square-plus"></i>
+				<t3sb:icon iconfig="fa6:solid,square-plus" />
 			</button>
 		</f:then>
 		<f:else>
@@ -374,7 +375,7 @@
 							<f:render section="Title" arguments="{item: child}" />
 						</a>
 						<button type="button" class="btn btn-link ps-0 dropdown-toggle dropdown-toggle-split{child.activeClass}" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-							<i class="fa-solid fa-square-plus"></i>
+							<t3sb:icon iconfig="fa6:solid,square-plus" />
 						</button>
 					</f:then>
 					<f:else>
@@ -461,5 +462,8 @@
 </f:section>
 
 <f:section name="Title">
-{item.faIcon -> f:format.raw()} {item.title -> f:format.raw()}
+	<f:if condition="{item.iconPack}">
+		<t3sb:icon iconfig="{item.iconPack}" additionalAttributes="{class:'nav-iconPack'}" />
+	</f:if>
+	{item.title -> f:format.raw()}
 </f:section>

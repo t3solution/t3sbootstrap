@@ -12,7 +12,12 @@
 				Here is a container expected! <small>... you can disable this error message in the BE Modul!</small>
 			</div>
 		</f:if>
+
+
 		<f:link.typolink parameter="{celink}" class="ce-link{f:if(condition: '{parentCType} == listGroup_wrapper', then: ' list-group-item list-group-item-action')}">
+
+
+
 			<f:if condition="{isTxContainer}">
 				<f:then>
 					<div id="c{data.uid}"{dataAttr -> f:format.raw()}>
@@ -23,6 +28,11 @@
 					</div>
 				</f:then>
 				<f:else>
+
+
+
+
+					{data.chapter -> f:format.raw()}
 					<div id="c{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}{dataAttr -> f:format.raw()}>
 						<f:render section="Header" optional="true">
 							<f:render partial="Header/All" arguments="{_all}" />

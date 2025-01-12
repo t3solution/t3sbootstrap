@@ -12,13 +12,13 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -51,7 +51,7 @@ abstract class AbstractController extends ActionController
         $this->isSiteroot = $this->rootPageId === $this->currentUid ? true : false;
         $this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
         $this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
-        $this->configRepository = GeneralUtility::makeInstance(ConfigRepository::class);        
+        $this->configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
         $this->rootConfig = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
@@ -63,6 +63,16 @@ abstract class AbstractController extends ActionController
                 $queryBuilder->expr()->eq('root', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
             )
             ->executeQuery()->fetchOne();
+        if (empty($this->settings['sitepackage'])) {
+            $this->baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
+        } else {
+            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
+                $this->baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
+            } else {
+                throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
+            }
+        }
+
     }
 
 
@@ -266,19 +276,9 @@ abstract class AbstractController extends ActionController
      */
     protected function writeConstants(): void
     {
-        if (empty($this->settings['sitepackage'])) {
-            $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
-        } else {
-            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
-            } else {
-                throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
-            }
-        }
-
         $this->persistenceManager->persistAll();
         if ($this->countRootTemplates) {
-            $configRepository = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);            
+            $configRepository = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
             $navbarBreakpoint = $configRepository->getNavbarBreakpoint();
             $breakpointWidth = $navbarBreakpoint == 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
             $siteroots = [];
@@ -331,7 +331,7 @@ abstract class AbstractController extends ActionController
                     $filecontent .= '[END]'.PHP_EOL.PHP_EOL;
                 }
             }
-            $customPath = $baseDir.'Configuration/TypoScript/';
+            $customPath = $this->baseDir.'Configuration/TypoScript/';
             $customFileName = 't3sbconstants.typoscript';
             $customFile = $customPath.$customFileName;
 
@@ -558,7 +558,6 @@ abstract class AbstractController extends ActionController
         $newConfig->setLangMenuWithFaIcon(1);
         $newConfig->setDateFormat('d.m.Y');
         $newConfig->setSubheaderColor('secondary');
-        $newConfig->setFaLinkIcons(1);
         $newConfig->setSectionmenuAnchorOffset(29);
         $newConfig->setSectionmenuScrollspy(1);
         $newConfig->setNavbarLangFlags(1);

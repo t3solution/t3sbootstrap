@@ -16,8 +16,8 @@
 
 <f:section name="Pagetitle">
 <h1 class="display-1"{f:if(condition:'{data.tx_t3sbootstrap_titlecolor}',then:' style="color: {data.tx_t3sbootstrap_titlecolor};"')}>
-	<f:if condition="{settings.fontawesome.pagetitle} && {data.tx_t3sbootstrap_fontawesome_icon}">
-		<i class="{data.tx_t3sbootstrap_fontawesome_icon}"></i>
+	<f:if condition="{data.page_icon}">
+		<t3sb:icon iconfig="{data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />
 	</f:if>
 	{data.title -> f:format.raw()}
 </h1>

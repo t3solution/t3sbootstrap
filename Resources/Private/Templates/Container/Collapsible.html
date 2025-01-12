@@ -1,16 +1,26 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" 
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Header">
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
-<f:if condition="{appearance} == 'accordion'">
+<f:if condition="{col_278 -> f:count()}">
 	<f:then>
-		<f:render section="Accordion" arguments="{_all}" />
+		<f:if condition="{appearance} == 'accordion'">
+			<f:then>
+				<f:render section="Accordion" arguments="{_all}" />
+			</f:then>
+			<f:else>
+				<f:render section="Button" arguments="{_all}" />
+			</f:else>
+		</f:if>
 	</f:then>
 	<f:else>
-		<f:render section="Button" arguments="{_all}" />
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Collapsible Element (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>
@@ -34,11 +44,13 @@
 					picturefill="0"
 					lazyload="{settings.lazyLoad}"
 					ratio="{ratio}"
-					shift="{media.properties.tx_t3sbootstrap_shift_vertical}" 
+					shift="{media.properties.tx_t3sbootstrap_shift_vertical}"
 					hshift="{media.properties.tx_t3sbootstrap_shift_horizontal}"
 				/>
 			</f:if>
-			{headerFontawesome -> f:format.raw()}
+			<f:if condition="{data.header_icon}">
+				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
+			</f:if>
 			{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}
 			<f:if condition="{data.subheader}">
 				<small class="ms-3">

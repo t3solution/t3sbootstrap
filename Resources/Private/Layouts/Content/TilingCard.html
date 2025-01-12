@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:comment>
+	<f:render partial="Layouts/Assets" arguments="{_all}" />
+</f:comment>
+
+
+<f:spaceless>
+
+
+		{containerPre -> f:format.raw()}
+
+		<f:link.typolink parameter="{celink}" class="ce-link">
+
+
+					{data.chapter -> f:format.raw()}
+					<div id="c{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}{dataAttr -> f:format.raw()}>
+						<f:render section="Header" optional="true">
+							<f:render partial="Header/All" arguments="{_all}" />
+						</f:render>
+						<f:render section="Main" arguments="{_all}" />
+					</div>
+
+
+		</f:link.typolink>
+
+
+		{containerPost -> f:format.raw()}	
+
+
+</f:spaceless>
+</html>

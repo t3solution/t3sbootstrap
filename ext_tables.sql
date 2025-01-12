@@ -130,7 +130,6 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	subheader_color varchar(255) DEFAULT '' NOT NULL,
 	date_format varchar(255) DEFAULT '' NOT NULL,
 	favicon varchar(255) DEFAULT '' NOT NULL,
-	fa_link_icons tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	card_flipper_on_Click tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	last_modified_content_element tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	recently_updated_content_elements tinyint(1) unsigned DEFAULT '0' NOT NULL,
@@ -151,7 +150,6 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 CREATE TABLE tt_content (
 	tx_t3sbootstrap_header_display varchar(9) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_class varchar(100) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_header_fontawesome varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_position varchar(6) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_sectionMenu varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_sectionOrder varchar(5) DEFAULT '' NOT NULL,
@@ -186,6 +184,8 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
 	tx_t3sbootstrap_verticalgutters varchar(5) DEFAULT 'mb-4' NOT NULL,
 	tx_t3sbootstrap_zoom_orig varchar(4) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_chapter varchar(1) DEFAULT '' NOT NULL,
+tx_t3sbootstrap_header_fontawesome varchar(100) DEFAULT '' NOT NULL,
 );
 
 
@@ -225,14 +225,11 @@ CREATE TABLE pages (
 	tx_t3sbootstrap_dropdownRight tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_mobileOrder varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_breakpoint varchar(7) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_fontawesome_icon varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_icon_only tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_megamenu tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_titlecolor varchar(30) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_subtitlecolor varchar(30) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_navigationcolor varchar(30) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_navigationactivecolor varchar(30) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_navigationhover varchar(30) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_navigationbgcolor varchar(30) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_fullheightsection tinyint(4) DEFAULT '0' NOT NULL,
+tx_t3sbootstrap_fontawesome_icon varchar(100) DEFAULT '' NOT NULL,
 );
+

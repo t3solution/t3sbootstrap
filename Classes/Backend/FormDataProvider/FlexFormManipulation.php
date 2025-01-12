@@ -5,7 +5,8 @@ namespace T3SBS\T3sbootstrap\Backend\FormDataProvider;
 
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -22,8 +23,14 @@ class FlexFormManipulation implements FormDataProviderInterface
 	 */
 	public function addData(array $result): array
 	{
-		$configurationManager = GeneralUtility::makeInstance(BackendConfigurationManager::class);
-		$setup = $configurationManager->getTypoScriptSetup();
+
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $setup = $configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
+            't3sbootstrap',
+            'm1'
+        );
+
 		$flexforms = !empty($setup['plugin.']['tx_t3sbootstrap.']['flexform.']) ? $setup['plugin.']['tx_t3sbootstrap.']['flexform.'] : [];
 
 		# if FlexFormManipulation
@@ -51,7 +58,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 				'modal' => 'modal.',
 				'tabs_container' => 'tabs.',
 				'tabs_tab' => 'tabsTab.',
-				default => 'bootstrap.',
+				'default' => 'bootstrap.',
 			};
 
 			$dataStructure = [];

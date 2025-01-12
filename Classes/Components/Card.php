@@ -8,10 +8,6 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Service\FlexFormService;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use T3SBS\T3sbootstrap\Helper\FlexformHelper;
-use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -26,19 +22,8 @@ class Card implements SingletonInterface
      */
     public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf): array
     {
-        $flexformService = GeneralUtility::makeInstance(FlexFormService::class);
-        $flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
-        $parentflexconf = [];
-        $parentUid = $processedData['data']['tx_container_parent'];
-        if ($parentUid) {
-            $parentFlexformData = BackendUtility::getRecord('tt_content', $parentUid, 'CType, tx_t3sbootstrap_flexform');
-            if ($parentFlexformData['tx_t3sbootstrap_flexform']) {
-                $parentflexconf = $flexformService->convertFlexFormContentToArray($parentFlexformData['tx_t3sbootstrap_flexform']);
-                $parentflexconf =$flexformHelper->addMissingElements($parentflexconf, $parentFlexformData['CType'], true);
-            }
-        }
-        $cardData = $flexconf;
 
+        $cardData = $flexconf;
         // crop max characters
         $cardData['cropMaxCharacters'] = !empty($parentflexconf['cropMaxCharacters']) ? $parentflexconf['cropMaxCharacters'] : '';
         // image position
@@ -73,9 +58,9 @@ class Card implements SingletonInterface
         $cardData['dimensions']['width'] = $processedData['data']['imagewidth'];
         $cardData['dimensions']['height'] = $processedData['data']['imageheight'];
         // class
-        $cardClass = !empty($processedData['class']) ? $processedData['class'] : '';
-        $cardClass = 'card'.$cardClass;
-        $cardClass .= !empty($flexconf['button']['stretchedLink']) ? ' ce-link-content' : '';
+		$cardClass = !empty($processedData['class']) ? $processedData['class'] : '';
+		$cardClass = 'card'.$cardClass;
+		$cardClass .= !empty($flexconf['button']['stretchedLink']) ? ' ce-link-content' : '';
         // image
         if (!empty($cardData['image']['overlay'])) {
             $cardClass .= ' overflow-hidden';
@@ -169,17 +154,6 @@ class Card implements SingletonInterface
             }
         }
 
-        #		if ( !empty($cardData['square']['enable']) ) {
-        #			$cardClass .= ' rounded-0 border-0';
-        #		}
-
-        if (!empty($cardData['tiling']['enable'])) {
-            $cardClass = 'card tiling rounded-0 border-0'.$processedData['class'];
-            if (empty($processedData['data']['tx_t3sbootstrap_contextcolor'])) {
-                $cardClass .= ' bg-transparent';
-            }
-        }
-
         // header position
         if ($processedData['data']['header_position']) {
             $headerPosition = $processedData['data']['header_position'];
@@ -207,24 +181,6 @@ class Card implements SingletonInterface
             $cardClass .= ' h-100';
         }
 
-        if (!empty($cardData['tiling']['enable'])) {
-            $processedData['addmedia']['imgclass'] = ' rounded-0 '.$cardData['image']['class'];
-            $bgMediaQueries = '768,576';
-            $bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-                ->getBgImage(
-                    $processedData['data']['uid'],
-                    'tt_content',
-                    false,
-                    false,
-                    $flexconf,
-                    false,
-                    $processedData['data']['uid'],
-                    $bgMediaQueries
-                );
-            if ($bgimages) {
-                $cardData['bgimages'] = $bgimages;
-            }
-        }
 
         $processedData['class'] = trim($cardClass);
 

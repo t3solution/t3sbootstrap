@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
@@ -8,6 +9,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -21,44 +23,44 @@ class DefaultHelper implements SingletonInterface
 	/**
 	 * Returns the $processedData
 	 */
-	public function getContainerClass(array $processedData, string $extConfContainer): array
+	public function getContainerClass(array $processedData, string $extConfContainer, array $containerConfig): array
 	{
 		$container = '';
 
 		if (!empty($extConfContainer) && $processedData['data']['tx_t3sbootstrap_container']) {
 			if ( $processedData['data']['tx_container_parent'] === 0 ) {
-				$t3sbconfig = self::getConfig();
-				if ( (int)$t3sbconfig['footer_pid'] === $processedData['data']['pid'] ) {
-					if ( $t3sbconfig['footer_container'] === 'none' && $processedData['data']['colPos'] === 0 ) {
+				if ( (int)$containerConfig['footerPid'] === (int)$processedData['data']['pid'] ) {
+					if ( $containerConfig['footerContainer'] === 'none' && $processedData['data']['colPos'] === 0 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
 				} else {
-					$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
-					if ( $pageContainer === FALSE && $processedData['data']['colPos'] === 0 ) {
+					if ( $containerConfig['pageContainer'] === FALSE && $processedData['data']['colPos'] === 0 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
-					if ( $t3sbconfig['jumbotron_container'] === 'none' && $processedData['data']['colPos'] === 3 ) {
+					if ( $containerConfig['jumbotronContainer'] === 'none' && $processedData['data']['colPos'] === 3 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
-					if ( $t3sbconfig['expandedcontent_containertop'] === 'none' && $processedData['data']['colPos'] === 20 ) {
+					if ( $containerConfig['expandedcontentContainertop'] === 'none' && $processedData['data']['colPos'] === 20 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
-					if ( $t3sbconfig['expandedcontent_containerbottom'] === 'none' && $processedData['data']['colPos'] === 21 ) {
+					if ( $containerConfig['expandedcontentContainerbottom'] === 'none' && $processedData['data']['colPos'] === 21 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
-					if ( $t3sbconfig['footer_container'] === 'none' && $processedData['data']['colPos'] === 4 ) {
+					if ( $containerConfig['footerContainer'] === 'none' && $processedData['data']['colPos'] === 4 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}
 				}
 			}
 		}
-		if ($container) {
+
+		if (!empty($container)) {
 			$processedData['containerPre'] = '<div class="'.trim($container).'">';
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = trim($container);
 		} else {
-			if ($processedData['be_layout'] === 'OneCol') {
-				$processedData['containerError'] = self::getContainerError($processedData['data']);
+			$processedData['containerError'] = FALSE;
+			if ($processedData['be_layout'] === 'OneCol' && !empty($containerConfig['containerError']) ) {
+				$processedData['containerError'] = self::getContainerError($processedData['data'], $containerConfig);
 			}
 		}
 
@@ -69,39 +71,35 @@ class DefaultHelper implements SingletonInterface
 	/**
 	 * Returns the Container Error
 	 */
-	public function getContainerError(array $data): bool
+	public function getContainerError(array $data, array $containerConfig): bool
 	{
 		$error = FALSE;
-	
 		if ( $data['tx_container_parent'] === 0 ) {
-			$t3sbconfig = self::getConfig();
-			if ( $t3sbconfig['footer_pid'] === $data['pid'] ) {
-				if ( $t3sbconfig['footer_container'] === 'none' && $data['colPos'] === 0 ) {
+			if ( $containerConfig['footerPid'] === $data['pid'] ) {
+				if ( $containerConfig['footerContainer'] === 'none' && $data['colPos'] === 0 ) {
 					$error = TRUE;
 				}
-			} else {
-				$pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'] ? TRUE : FALSE;
-				if ( $pageContainer === FALSE && $data['colPos'] === 0 ) {
+				if ( $containerConfig['pageContainer'] === FALSE && $data['colPos'] === 0 ) {
 					$error = TRUE;
 				}
-				if ( $t3sbconfig['jumbotron_container'] === 'none' && $data['colPos'] === 3 ) {
+				if ( $containerConfig['jumbotronContainer'] === 'none' && $data['colPos'] === 3 ) {
 					$error = TRUE;
 				}
-				if ( $t3sbconfig['expandedcontent_containertop'] === 'none' && $data['colPos'] === 20 ) {
+				if ( $containerConfig['expandedcontentContainertop'] === 'none' && $data['colPos'] === 20 ) {
 					$error = TRUE;
 				}
-				if ( $t3sbconfig['expandedcontent_containerbottom'] === 'none' && $data['colPos'] === 21 ) {
+				if ( $containerConfig['expandedcontentContainerbottom'] === 'none' && $data['colPos'] === 21 ) {
 					$error = TRUE;
 				}
-				if ( $t3sbconfig['footer_container'] === 'none' && $data['colPos'] === 4 ) {
+				if ( $containerConfig['footerContainer'] === 'none' && $data['colPos'] === 4 ) {
 					$error = TRUE;
 				}
 			}
 		}
 
-
 		return $error;
 	}
+
 
 
 	/**
@@ -110,7 +108,6 @@ class DefaultHelper implements SingletonInterface
 	public function getDefaults(
 		array $processedData,
 		array $flexconf,
-		array $extConf,
 		int $defaultHeaderType,
 		string $contentMarginTop,
 		string $animateCss,
@@ -180,6 +177,9 @@ class DefaultHelper implements SingletonInterface
 
 		# default margin-top for each content-element if no margin-top
 		$hasMarginTop = strpos($processedData['class'], 'mt-') || strpos($processedData['class'], 'my-') || strpos($processedData['class'], 'm-');
+
+
+
 		if ($contentMarginTop && $processedData['data']['colPos'] == 0 && $hasMarginTop == FALSE ) {
 			$processedData['class'] .= ' '.$contentMarginTop;
 		}
@@ -187,28 +187,4 @@ class DefaultHelper implements SingletonInterface
 		return $processedData;
 	}
 
-
-	/**
-	 * Returns the t3sb configuration
-	 */
-	protected function getConfig(): array
-	{
-		$settings = [];
-		$configurationManager = GeneralUtility::makeInstance(BackendConfigurationManager::class);
-		$typoScriptSetup = $configurationManager->getTypoScriptSetup();
-		foreach ( $typoScriptSetup['page.']['10.']['settings.']['config.'] as $key=>$config ) {
-			$settings[GeneralUtility::camelCaseToLowerCaseUnderscored($key)] = $config;
-		}
-
-		return $settings;
-	}
-
-
-	/**
-	 * Returns the frontend controller
-	 */
-	protected function getFrontendController(): TypoScriptFrontendController
-	{
-		return $GLOBALS['TSFE'];
-	}
 }

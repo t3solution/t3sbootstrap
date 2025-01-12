@@ -13,7 +13,7 @@
 <f:asset.script identifier="vanilla_navbarSearchbox">
 	// Searchbox - Navbar/Assets.html
 	t3sbNavbarSearchbox(viewportWidth, navbarBreakpointWidth);
-	window.addEventListener('resize', function(event) {	
+	window.addEventListener('resize', function(event) {
 		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
 		t3sbNavbarSearchbox(resizedViewportWidth, navbarBreakpointWidth);
 	}, true);
@@ -23,7 +23,7 @@
 <f:asset.script identifier="vanilla_navbarExtraRow">
 	// Extra row - Navbar/Assets.html
 	t3sbExtraRow(viewportWidth, navbarBreakpointWidth);
-	window.addEventListener('resize', function(event) {	
+	window.addEventListener('resize', function(event) {
 		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
 		t3sbExtraRow(resizedViewportWidth, navbarBreakpointWidth);
 	}, true);
@@ -44,15 +44,15 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 			dda.classList.remove('removed-animate-'+dropdownAnimateValue);
 		});
 	}
-}	
+}
 	</f:asset.script>
 <f:asset.script identifier="vanilla_navbarDropdownAnimate">
 	// Dropdown animate - Navbar/Assets.html
 	t3sbDropdownAnimate(viewportWidth, navbarBreakpointWidth, {config.navbar.dropdownAnimateValue});
-	window.addEventListener('resize', function(event) {	
+	window.addEventListener('resize', function(event) {
 		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
 		t3sbDropdownAnimate(resizedViewportWidth, navbarBreakpointWidth, {config.navbar.dropdownAnimateValue});
-	}, true);	
+	}, true);
 </f:asset.script>
 </f:if>
 <f:if condition="{config.navbar.alignment} == 'fill'">
@@ -60,8 +60,8 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 	// No justify on mobile - Navbar/Assets.html
 	if ( viewportWidth < navbarBreakpointWidth ) {
 		navbar.querySelector('.main-navbarnav').classList.remove('nav-fill', 'w-100');
-	} 
-</f:asset.script>	
+	}
+</f:asset.script>
 </f:if>
 <f:if condition="{settings.config.navbarOffcanvas}">
 <f:asset.script identifier="vanilla_offcanvasJs">
@@ -74,7 +74,7 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 		navbarBPWidth = 99999;
 	}
 	t3sbOffcanvas(viewportWidth, navbarBPWidth, utilColorArr);
-	window.addEventListener('resize', function(event) {	
+	window.addEventListener('resize', function(event) {
 		resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
 		t3sbOffcanvas(resizedViewportWidth, navbarBPWidth, utilColorArr);
 	}, true);
@@ -86,15 +86,15 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 	var megaDropdown = document.querySelectorAll('.mega-dropdown'),
 		navbarBreakpointToggler = '';
 	if ( viewportWidth < navbarBreakpointWidth ) {
-		navbarBreakpointToggler = document.querySelectorAll('.remove-{settings.config.navbarBreakpoint}');	
+		navbarBreakpointToggler = document.querySelectorAll('.remove-{settings.config.navbarBreakpoint}');
 		navbarBreakpointToggler.forEach( nbt => {
 			nbt.remove();
 		});
 	} else {
-		navbarBreakpointToggler = document.querySelectorAll('.show-{settings.config.navbarBreakpoint}');	
+		navbarBreakpointToggler = document.querySelectorAll('.show-{settings.config.navbarBreakpoint}');
 		navbarBreakpointToggler.forEach( nbt => {
 			nbt.remove();
-		});	
+		});
 	}
 </f:asset.script>
 </f:if>
@@ -103,11 +103,6 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 	// Shrinking Navbar on scrolling - Navbar/Assets.html
 	t3sbShrinkingNavbar(navbar, '{settings.config.shrinkingNavPadding}');
 </f:asset.script>
-</f:if>
-<f:if condition="{config.navbar.navColorCSS}">
-<f:asset.css identifier="navColorCSS">
-{config.navbar.navColorCSS}
-</f:asset.css>
 </f:if>
 <f:if condition="{config.navbar.transparent}">
 <f:asset.script identifier="vanilla_navbartransparentJS">

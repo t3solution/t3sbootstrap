@@ -17,9 +17,11 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Four Columns (uid = {data.uid}) has no content!
-		</div>
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Four Columns (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>

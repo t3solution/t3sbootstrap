@@ -1,4 +1,5 @@
 <?php
+	
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\PageTitle;
@@ -36,7 +37,9 @@ class BreadcrumbProvider extends AbstractPageTitleProvider
 		);
 
 		$this->title = '';
-		$rootline = $GLOBALS['TSFE']->rootLine;
+		$request = $GLOBALS['TYPO3_REQUEST'];
+		$frontendController = $request->getAttribute('frontend.controller');
+		$rootline = $frontendController->rootLine;
 		foreach (array_reverse($rootline) as $key=>$titlePart) {
 			if ($key !== 0) {
 				$this->title .= $titlePart['title'];

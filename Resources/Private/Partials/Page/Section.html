@@ -8,27 +8,26 @@
 			<f:render partial="Page/Assets" arguments="{stickytop:'false', scrollspy:'true'}" />		
 		</f:else>
 	</f:if>
-	<div id="sectionmenu" class="list-group{config.sidebar.stickTopClass}" style="top:{config.sidebar.stickTopOffset}">
+
+	<div id="sectionmenu" class="list-group{f:if(condition: config.sidebar.sticky, then:' sticky-top')}" style="top:{config.sidebar.stickTopOffset}">
 		<f:for each="{sectionMenu.0.content}" as="element">
 			<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
 				<a class="list-group-item list-group-item-action" href="#c{element.data.uid}">
+					<f:if condition="{element.data.header_icon}">
+						<t3sb:icon iconfig="{element.data.header_icon}" additionalAttributes="{class:'sectiontitle-iconPack'}" />
+					</f:if>
 					<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 						<f:then>
-							<f:render section="HeaderIcon" arguments="{_all}" />
 							{element.data.tx_t3sbootstrap_header_sectionMenu}
 						</f:then>
 						<f:else>
-							<f:render section="HeaderIcon" arguments="{_all}" />
 							{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
 						</f:else>
 					</f:if>
+
 				</a>
 			</f:if>
 		</f:for>	
 	</div>
 </f:if>
 </html>
-
-<f:section name="HeaderIcon">
-  {f:if(condition: '{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
-</f:section>

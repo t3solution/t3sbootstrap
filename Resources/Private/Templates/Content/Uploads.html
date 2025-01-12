@@ -7,11 +7,13 @@
 			<li class="list-group-item">
 				<f:if condition="{data.uploads_type} == 1">
 					<f:switch expression="{file.extension}">
-						<f:case value="pdf"><i class="fa-solid fa-file-pdf me-2"></i></f:case>
-						<f:case value="jpg"><i class="fa-solid fa-file-image me-2"></i></f:case>
-						<f:case value="png"><i class="fa-solid fa-file-image me-2"></i></f:case>
-						<f:case value="zip"><i class="fa-solid fa-file-zip me-2"></i></f:case>
-						<f:defaultCase><img class="me-2" src="{f:uri.resource(path: 'Icons/FileIcons/{file.extension}.gif', extensionName: 'frontend')}" alt=""></f:defaultCase>
+						<f:case value="pdf"><t3sb:icon iconfig="fa6:solid,file-pdf" additionalAttributes="{class:'me-2'}" /></f:case>
+						<f:case value="jpg"><t3sb:icon iconfig="fa6:solid,file-image" additionalAttributes="{class:'me-2'}" /></f:case>
+						<f:case value="png"><t3sb:icon iconfig="fa6:solid,file-image" additionalAttributes="{class:'me-2'}" /></f:case>
+						<f:case value="zip"><t3sb:icon iconfig="fa6:solid,file-zip" additionalAttributes="{class:'me-2'}" /></f:case>
+						<f:defaultCase>
+							<img class="me-2" src="{f:uri.resource(path: 'Icons/FileIcons/{file.extension}.gif', extensionName: 'frontend')}" alt="">
+						</f:defaultCase>
 					</f:switch>
 				</f:if>
 				<f:if condition="{data.uploads_type} == 2">

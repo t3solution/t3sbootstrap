@@ -79,7 +79,6 @@
 					<alwaysOpen>
 						<label>Always open</label>
 						<description>stay open when another item is opened</description>
-						<displayCond>FIELD:sDEF.appearance:=:accordion</displayCond>
 						<config>
 							<type>check</type>
 						</config>
@@ -94,6 +93,80 @@
 						</config>
 					</flush>
 
+
+					<style>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:predefined.styles</label>
+						<displayCond>FIELD:sDEF.appearance:=:button</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:secondary</label>
+									<value>secondary</value>
+								</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:primary</label>
+									<value>primary</value>
+								</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:success</label>
+									<value>success</value>
+								</numIndex>
+								<numIndex index="3">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:info</label>
+									<value>info</value>
+								</numIndex>
+								<numIndex index="4">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:warning</label>
+									<value>warning</value>
+								</numIndex>
+								<numIndex index="5">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:danger</label>
+									<value>danger</value>
+								</numIndex>
+								<numIndex index="6">
+									<label>Dark</label>
+									<value>dark</value>
+								</numIndex>
+								<numIndex index="7">
+									<label>light</label>
+									<value>light</value>
+								</numIndex>
+								<numIndex index="8">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:link</label>
+									<value>link</value>
+								</numIndex>
+							</items>
+							<default>secondary</default>
+						</config>
+					</style>
+					<btnsize>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
+						<displayCond>FIELD:sDEF.appearance:=:button</displayCond>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items>
+								<numIndex index="0">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:default</label>
+									<value>default</value>
+								</numIndex>
+								<numIndex index="1">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:small</label>
+									<value>btn-sm</value>
+								</numIndex>
+								<numIndex index="2">
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:large</label>
+									<value>btn-lg</value>
+								</numIndex>
+							</items>
+							<default>default</default>
+						</config>
+					</btnsize>
+					
+					
 				</el>
 			</ROOT>
 		</sDEF>

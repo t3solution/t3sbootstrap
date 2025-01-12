@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">	
+	xmlns:ce="http://typo3.org/ns/TYPO3/CMS/FluidStyledContent/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{file.properties.tx_t3sbootstrap_hover_effect} && {file.link} && ({file.description} || {file.title})">
 	<f:then>
 		<f:render partial="Media/Effects" arguments="{file: file, dimensions: dimensions, addmedia: addmedia, ratio: ratio}" />
@@ -21,7 +21,7 @@
 									<f:variable name="zoomfile" value="{file.originalFile}" />
 								</f:then>
 								<f:else>
-									<f:variable name="zoomfile" value="{file}" />	
+									<f:variable name="zoomfile" value="{file}" />
 								</f:else>
 							</f:if>
 							<ce:link.clickEnlarge image="{zoomfile}" configuration="{settings.media.popup}">
@@ -30,7 +30,7 @@
 								<f:if condition="{settings.magnifying}">
 									<div class="zoom-overlay{addmedia.zoomOverlay}{f:if(condition: file.description, then: ' description')}">
 										<span class="magnifying-glass-icon">
-											<i class="fa-solid fa-search-plus"></i>
+<svg fill="#fff" style="width: 1em; height: 1em; vertical-align: -0.125em;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM184 296c0 13.3 10.7 24 24 24s24-10.7 24-24l0-64 64 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-64 0 0-64c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 64-64 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l64 0 0 64z"/></svg>
 										</span>
 									</div>
 								</f:if>
@@ -43,7 +43,7 @@
 				</f:else>
 			</f:if>
 			<f:comment> Copyright notice && !{celink} </f:comment>
-			<f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
+			<f:if condition="{file.properties.tx_t3sbootstrap_copyright} || {file.properties.copyright}">
 				<f:if condition="{settings.imgCopyright} == 2 && !{celink}">
 					<f:then>
 						<f:render section="CopyrightOnClick" arguments="{_all}" />
@@ -66,7 +66,7 @@
 
 
 <f:section name="CopyrightOnClick">
-<f:if condition="{file.properties.tx_t3sbootstrap_copyright}">
+<f:if condition="{file.properties.tx_t3sbootstrap_copyright} || {file.properties.copyright}">
 	<f:asset.script identifier="imgcopyright_function">
 // Image copyright on click - Media/Type/Image.html
 function t3sbCopyright() {
@@ -94,7 +94,7 @@ function t3sbCopyright() {
 		t3sbCopyright();
 	</f:asset.script>
 	<span class="img-copyright {file.properties.tx_t3sbootstrap_copyright_color}">
-		 <i class="fa-regular fa-copyright fa-lg"></i>
+		 &copy;
 	</span>
 	<div id="toast-{file.properties.uid}" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
 		<div class="toast-header">
@@ -102,7 +102,14 @@ function t3sbCopyright() {
 			<button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
 		</div>
 		<div class="toast-body text-start">
-			{file.properties.tx_t3sbootstrap_copyright}
+			<f:if condition="{file.properties.copyright}">
+				<f:then>
+					{file.properties.copyright}
+				</f:then>
+				<f:else>
+					{file.properties.tx_t3sbootstrap_copyright}
+				</f:else>
+			</f:if>
 			<f:if condition="{file.properties.tx_t3sbootstrap_copyright_source}">
 			<f:link.typolink parameter="{file.properties.tx_t3sbootstrap_copyright_source}" target="_blank" class="d-block">
 				Weblink
@@ -114,9 +121,16 @@ function t3sbCopyright() {
 </f:section>
 
 <f:section name="Copyright">
-<f:if condition="{settings.imgCopyright} && {file.properties.tx_t3sbootstrap_copyright}">
+<f:if condition="{settings.imgCopyright} && ( {file.properties.tx_t3sbootstrap_copyright} || {file.properties.copyright} )">
 	<span class="img-copyright-default {file.properties.tx_t3sbootstrap_copyright_color}">
-		<span class="copyright">&copy;</span> <span class="copyright-note">{file.properties.tx_t3sbootstrap_copyright}</span>
+		<f:if condition="{file.properties.copyright}">
+			<f:then>
+				<span class="copyright">&copy;</span> <span class="copyright-note">{file.properties.copyright}</span>
+			</f:then>
+			<f:else>
+				<span class="copyright">&copy;</span> <span class="copyright-note">{file.properties.tx_t3sbootstrap_copyright}</span>
+			</f:else>
+		</f:if>
 	</span>
 </f:if>
 </f:section>

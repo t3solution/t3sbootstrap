@@ -248,8 +248,9 @@ class ClassHelper implements SingletonInterface
             $header['hClass'] = '';
         }
 
-        if ($data['tx_t3sbootstrap_header_fontawesome']) {
-            $header['hFa'] = '<i class="me-1 '.trim($data['tx_t3sbootstrap_header_fontawesome']).'"></i> ';
+        if (!empty($data['header_icon'])) {
+			$header['hFa'] = $data['header_icon'];
+
         }
 
         return $header;
@@ -319,6 +320,5 @@ class ClassHelper implements SingletonInterface
 
         return $class;
     }
-
 
 }

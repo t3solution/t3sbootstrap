@@ -2,21 +2,20 @@
 <f:layout name="Default" />
 <f:section name="Main">
 <f:if condition="{menu}">
-<div class="submenu">
+<div class="submenu">	
 	<ul class="nav menusubpages{menudirection}{menupills}{menuHorizontalAlignment}">
 		<f:for each="{menu}" as="page">
 			<li class="nav-item">
 				<a href="{page.link}"{f:if(condition:'{page.target}',
 					then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{page.current}',then:' active')}">
+					<f:if condition="{page.data.page_icon}">
+						<t3sb:icon iconfig="{page.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />
+					</f:if>
 					<f:if condition="{page.nav_title}">
 						<f:then>
-							{f:if(condition: '{element.data.tx_t3sbootstrap_header_fontawesome}',
-							 then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 							{page.nav_title}
 						</f:then>
 						<f:else>
-							{f:if(condition: '{element.data.tx_t3sbootstrap_header_fontawesome}',
-							 then:'<i class="{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 							{page.title}
 						</f:else>
 					</f:if>

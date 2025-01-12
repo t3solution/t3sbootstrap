@@ -81,9 +81,9 @@
 </f:section>
 
 <f:section name="Text">
-	<f:if condition="{iterator.isFirst} && {breadcrumbItem.data.tx_t3sbootstrap_fontawesome_icon} && {config.breadcrumb.faicon}">
+	<f:if condition="{iterator.isFirst} && {breadcrumbItem.data.page_icon} && {config.breadcrumb.faicon}">
 		<f:then>
-			<i class="{breadcrumbItem.data.tx_t3sbootstrap_fontawesome_icon}"></i>
+			<t3sb:icon iconfig="{breadcrumbItem.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />
 		</f:then>
 		<f:else>
 			{breadcrumbItem.title -> f:format.raw()}

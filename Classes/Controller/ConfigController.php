@@ -44,17 +44,14 @@ final class ConfigController extends AbstractController
     /**
      * action list
      */
-    public function listAction(bool $deleted = false, bool $created = false, bool $updateSss = false): ResponseInterface
+    public function listAction(
+        bool $deleted = false,
+        bool $created = false,
+        bool $updateSss = false
+    ): ResponseInterface
     {
-        if (empty($this->settings['sitepackage'])) {
-            $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
-        } else {
-            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/');
-            }
-        }
         $cdnHint = false;
-        $file = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss';
+        $file = $this->baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss';
         if (file_exists($file) && $this->settings['cdn']['enable']) {
             $cdnHint = true;
         }
@@ -79,8 +76,8 @@ final class ConfigController extends AbstractController
         if ($this->countRootTemplates === 0) {
             $assignedOptions['rootTemplate'] = false;
         }
-        $assignedOptions['rootConfig'] = $this->rootConfig ? true : false;        
-        $assignedOptions['config'] = $this->configRepository->findOneBy(['pid' => $this->currentUid]);    
+        $assignedOptions['rootConfig'] = $this->rootConfig ? true : false;
+        $assignedOptions['config'] = $this->configRepository->findOneBy(['pid' => $this->currentUid]);
         $assignedOptions['admin'] = $this->isAdmin;
         $assignedOptions['customScss'] = false;
         $assignedOptions['action'] = 'list';
@@ -148,8 +145,8 @@ final class ConfigController extends AbstractController
                 if (count($rootLineArray) > 1) {
                     unset($rootLineArray[count($rootLineArray)-1]);
                 }
-                foreach ($rootLineArray as $rootline) {                    
-                    $rootlineConfig = $this->configRepository->findOneBy(['pid' => (int)$rootline['uid']]);              
+                foreach ($rootLineArray as $rootline) {
+                    $rootlineConfig = $this->configRepository->findOneBy(['pid' => (int)$rootline['uid']]);
                     if (!empty($rootlineConfig)) {
                         break;
                     }
@@ -233,7 +230,7 @@ final class ConfigController extends AbstractController
         parent::writeConstants();
 		if (!empty($this->settings['clearPageCache'])) {
 	        $cacheService = GeneralUtility::makeInstance(CacheService::class);
-	        $cacheService->clearPageCache();			
+	        $cacheService->clearPageCache();
 		}
 
         return $this->redirect('edit', null, null, ['config' => $config, 'updated' => true]);
@@ -276,16 +273,8 @@ final class ConfigController extends AbstractController
      */
     public function constantsAction(): ResponseInterface
     {
-        if (empty($this->settings['sitepackage'])) {
-            $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
-        } else {
-            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
-            }
-        }
-
         if ($this->isSiteroot) {
-            $constantPath = $baseDir.'Configuration/TypoScript/t3sbconstants.typoscript';
+            $constantPath = $this->baseDir.'Configuration/TypoScript/t3sbconstants.typoscript';
             if (file_exists($constantPath)) {
                 $fileGetContents = @file_get_contents($constantPath);
                 $outsourcedConstantsArr = explode('[END]', trim($fileGetContents));

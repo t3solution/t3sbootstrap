@@ -6,9 +6,11 @@
 		<f:render section="Default" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Masonry Wrapper (uid = {data.uid}) has no content!
-		</div>
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Masonry Wrapper (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>
@@ -18,7 +20,7 @@
 <f:section name="Default">
 <f:if condition="{settings.cdn}">
 	<f:then>
-		<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js" 
+		<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
 		 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 	</f:then>
 	<f:else>
@@ -35,9 +37,9 @@
 <div id="masonry-{data.uid}" class="row masonry{class}"
 	{styleAttr -> f:format.raw()}{dataAnimate} data-masonry='{"percentPosition": true }'>
 	<f:for each="{col_283}" as="ce" iteration="ceIterator">
-		<div class="{f:if(condition:'{masonryClass}',then:'{masonryClass}', else:'col-sm-6 col-lg-4 mb-4')}">		
+		<div class="{f:if(condition:'{masonryClass}',then:'{masonryClass}', else:'col-sm-6 col-lg-4 mb-4')}">
 			{ce.renderedContent -> f:format.raw()}
-		</div>		
+		</div>
 	</f:for>
 </div>
 </f:section>

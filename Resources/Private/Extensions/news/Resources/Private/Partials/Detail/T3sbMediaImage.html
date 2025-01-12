@@ -1,6 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
-	  xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers" data-namespace-typo3-fluid="true">
 <figure class="image text-center{f:if(condition: mediaElement.originalResource.properties.tx_t3sbootstrap_extra_class, then: ' {mediaElement.originalResource.properties.tx_t3sbootstrap_extra_class}')}">
 	<f:if condition="{mediaElement.link}">
 		<f:then>
@@ -12,7 +11,7 @@
 			<f:if condition="{settings.detail.lightbox.enabled}">
 				<f:then>
 					<f:if condition="{settings.detail.lightbox.selection} == 1">
-							<a href="{f:uri.image(image:mediaElement.originalResource,
+							<a href="{f:uri.image(image:mediaElement,
 			 					width:'{settings.media.popup.width}',
 				  				height:'{settings.media.popup.height}')}"
 				   			data-caption="{mediaElement.description}">
@@ -23,11 +22,11 @@
 						<a href="{f:uri.image(image:mediaElement,
 							width:'{settings.media.popup.width}',
 							height:'{settings.media.popup.height}')}"
-							data-title="{f:if(condition:file.description,then:'{file.description}',
+							data-title="{f:if(condition:file.originalResource.description,then:'{file.originalResource.description}',
 							 else:'img-{mediaElement.originalResource.properties.uid_foreign}')}"
 							class="gallery-{contentObjectData.uid}"
 							<f:render section="Image" arguments="{file: mediaElement}" />
-						</a>			
+						</a>
 					</f:if>
 					<f:if condition="{settings.detail.lightbox.selection} == 3">
 						<a href="{f:uri.image(image:mediaElement,
@@ -109,13 +108,15 @@
 		picturefill="{settings.picturefill}"
 		lazyload="{settings.lazyLoad}"
 		ratio="{settings.detail.imageRatio}"
-		shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
-		hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
+		shift="{file.originalResource.properties.tx_t3sbootstrap_shift_vertical}"
+		hshift="{file.originalResource.properties.tx_t3sbootstrap_shift_horizontal}"
 	/>
 	<f:if condition="{settings.detail.lightbox.enabled} && {settings.magnifying}">
-		<div class="zoom-overlay{f:if(condition: file.description, then: ' description')}" style="max-width: {width}px;">
+		<div class="zoom-overlay{f:if(condition: file.originalResource.description, then: ' description')}" style="max-width: {width}px;">
 			<span class="magnifying-glass-icon">
-				<i class="fa-solid fa-search-plus"></i>
+
+<svg fill="#fff" style="width: 1em; height: 1em; vertical-align: -0.125em;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM184 296c0 13.3 10.7 24 24 24s24-10.7 24-24l0-64 64 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-64 0 0-64c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 64-64 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l64 0 0 64z"/></svg>
+
 			</span>
 		</div>
 	</f:if>
@@ -147,18 +148,28 @@ function t3sbCopyright() {
 	</f:asset.script>
 	<f:asset.script identifier="vanilla_imgcopyright">
 		// Image copyright on click - Private/Extensions/news/Resources/Private/Partials/Detail/T3sbMediaImage.html
-		t3sbCopyright();	
+		t3sbCopyright();
 	</f:asset.script>
 	<span class="img-copyright {file.originalResource.properties.tx_t3sbootstrap_copyright_color}">
-		 <i class="fa-regular fa-copyright fa-lg"></i>
+		 &copy;
 	</span>
-	<div id="toast-{file.properties.uid}" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+	<div id="toast-{file.originalResource.properties.uid}" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
 		<div class="toast-header">
 			<strong class="me-auto">Copyright</strong>
 			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 		</div>
 		<div class="toast-body text-start">
-			{file.originalResource.properties.tx_t3sbootstrap_copyright}
+
+			<f:if condition="{file.originalResource.properties.copyright}">
+				<f:then>
+					{file.originalResource.properties.copyright}
+				</f:then>
+				<f:else>
+					{file.originalResource.properties.tx_t3sbootstrap_copyright}
+				</f:else>
+			</f:if>
+
+
 			<f:if condition="{file.originalResource.properties.tx_t3sbootstrap_copyright_source}">
 				<br />
 				<nobr>
@@ -173,9 +184,16 @@ function t3sbCopyright() {
 </f:section>
 
 <f:section name="Copyright">
-<f:if condition="{settings.imgCopyright} && {file.originalResource.properties.tx_t3sbootstrap_copyright}">
+<f:if condition="{settings.imgCopyright} && ( {file.originalResource.properties.tx_t3sbootstrap_copyright} || {file.originalResource.properties.copyright} )">
 	<span class="img-copyright-default {file.originalResource.properties.tx_t3sbootstrap_copyright_color}">
-		<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.tx_t3sbootstrap_copyright}</span>
+		<f:if condition="{file.originalResource.properties.copyright}">
+			<f:then>
+				<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.copyright}</span>
+			</f:then>
+			<f:else>
+				<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.tx_t3sbootstrap_copyright}</span>
+			</f:else>
+		</f:if>
 	</span>
 </f:if>
 </f:section>

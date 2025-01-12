@@ -1,6 +1,13 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="content">
+<f:if condition="{settings.branch} == 13">
+<f:asset.css identifier="edit13">
+.caret {
+	background-color: #fff !important;
+}
+</f:asset.css>
+</f:if>
 <div class="card" style="margin-top: 60px;">
 	<div class="card-header card-header-light edit-conf-btn">
 		<div class="d-flex flex-column flex-{navbarBreakpoint}-row t3sb-header">

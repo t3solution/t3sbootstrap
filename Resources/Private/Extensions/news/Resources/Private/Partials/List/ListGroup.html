@@ -1,10 +1,10 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
-xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers"
 data-namespace-typo3-fluid="true">
 <n:excludeDisplayedNews newsItem="{newsItem}"/>
-<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}" class="list-group-item list-group-item-action{f:if(condition: iterator.isEven, then: ' even', else: ' odd')}{f:if(condition: newsItem.istopnews, then: ' top-news')}">
-	<div class="media">
+<n:link newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}" class="card mb-3{f:if(condition: iterator.isEven, then: ' even', else: ' odd')}{f:if(condition: newsItem.istopnews, then: ' top-news')}">
+<div class="row g-0">
+	<div class="col-md-4">
 		<f:if condition="{newsItem.mediaPreviews}">
 			<!-- media preview element -->
 			<f:then>
@@ -34,9 +34,13 @@ data-namespace-typo3-fluid="true">
 				</f:if>
 			</f:else>
 		</f:if>
-		<div class="media-body">
+	</div>
+	<div class="col-md-8">
+		<div class="card-body">
 			<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'false'}" />
 		</div>
-	</div>
+	</div>	
+</div>
+
 </n:link>
 </html>

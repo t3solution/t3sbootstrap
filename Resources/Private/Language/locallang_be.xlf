@@ -258,49 +258,49 @@
 				<source>Tab Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.tabContainer.description">
-				<source>A container for several tabs (blue frame)</source>
+				<source>A container for several tabs</source>
 			</trans-unit>
 			<trans-unit id="tx_container.tabElement.title">
 				<source>Tab Element</source>
 			</trans-unit>
 			<trans-unit id="tx_container.tabElement.description">
-				<source>A Tab for a TabContainer (green frame)</source>
+				<source>A Tab for a TabContainer</source>
 			</trans-unit>
 			<trans-unit id="tx_container.collapsibleContainer.title">
 				<source>Collapsible Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.collapsibleContainer.description">
-				<source>A container for several collapsible elements (blue frame)</source>
+				<source>A container for several collapsible elements</source>
 			</trans-unit>
 			<trans-unit id="tx_container.collapsibleElement.title">
 				<source>Collapsible Element</source>
 			</trans-unit>
 			<trans-unit id="tx_container.collapsibleElement.description">
-				<source>A collapsible element for a Collapsible Container (green frame)</source>
+				<source>A collapsible element for a Collapsible Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.thumbnailsContainer.title">
 				<source>Thumbnail Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.thumbnailsContainer.description">
-				<source>A container for several Thumbnails (CE:t3sbootstrap_thumbnail) (red frame)</source>
+				<source>A container for several Thumbnails (CE:t3sbootstrap_thumbnail)</source>
 			</trans-unit>
 			<trans-unit id="tx_container.modal.title">
 				<source>Modal Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.modal.description">
-				<source>A container for several content elements (green frame)</source>
+				<source>A container for several content elements</source>
 			</trans-unit>
 			<trans-unit id="tx_container.carouselContainer.title">
 				<source>Carousel Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.carouselContainer.description">
-				<source>A container for several Carousel slides (CE:t3sbootstrap_carousel) (red frame)</source>
+				<source>A container for several Carousel slides (CE:t3sbootstrap_carousel)</source>
 			</trans-unit>
 			<trans-unit id="tx_container.grayscaleSection.title">
 				<source>Grayscale Section Container</source>
 			</trans-unit>
 			<trans-unit id="tx_container.grayscaleSection.description">
-				<source>A container for several sections, use only with the grayscale theme backend layout (green frame)</source>
+				<source>A container for several sections, use only with the grayscale theme backend layout</source>
 			</trans-unit>
 			<trans-unit id="tx_container.backgroundWrapper.title">
 				<source>Background wrapper</source>

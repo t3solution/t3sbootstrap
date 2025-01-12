@@ -8,13 +8,11 @@ module.tx_t3sbootstrap {
 	settings {
 		sitepackage = {$bootstrap.extconf.sitepackage}
 		customScss = {$bootstrap.extconf.customScss}
-		customScssPath = {$bootstrap.customScssPath}
 		editScss = {$bootstrap.extconf.editScss}
 		bootswatch = {$bootstrap.extconf.bootswatch}
 		bootswatchURL = https://bootswatch.com/5/
 		keepVariables = {$bootstrap.extconf.keepVariables}
 		indexedsearch = {$bootstrap.ext.indexedsearch}
-		expandedContent = {$bootstrap.extconf.expandedContent}
 		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
 		enableInfo = {$bootstrap.config.enableInfo}
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
@@ -40,7 +38,6 @@ module.tx_t3sbootstrap {
 			bootswatch = {$bootstrap.cdn.bootswatch}
 			jquery = {$bootstrap.cdn.jquery}
 			jqueryEasing = {$bootstrap.cdn.jqueryEasing}
-			fontawesome = {$bootstrap.cdn.fontawesome}
 			lazyload = {$bootstrap.cdn.lazyload}
 			picturefill = {$bootstrap.cdn.picturefill}
 			animate = {$bootstrap.cdn.animate}
@@ -50,8 +47,6 @@ module.tx_t3sbootstrap {
 			masonry = {$bootstrap.cdn.masonry}
 			jarallax = {$bootstrap.cdn.jarallax}
 			swiper = {$bootstrap.cdn.swiper}
-			fontawesome5latest = {$bootstrap.cdn.fontawesome5latest}
-			fontawesome6latest = {$bootstrap.cdn.fontawesome6latest}
 			bootstraplatest = {$bootstrap.cdn.bootstraplatest}
 			noZip = {$bootstrap.cdn.noZip}
 		}
@@ -139,4 +134,14 @@ config {
 	concatenateCss = 0
 	contentObjectExceptionHandler = 0
 }
-[global]
+[END]
+
+
+
+[typo3.branch == "12.4"]
+	module.tx_t3sbootstrap.settings.branch = 12
+[ELSE]
+	module.tx_t3sbootstrap.settings.branch = 13
+[END]
+
+

@@ -1,5 +1,5 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
 <f:comment>For assets used on more than one page</f:comment>
 <f:if condition="{carousel}">
 <f:comment>CardWrapper.html, CarouselContainer.html, Jumbotron.html</f:comment>
@@ -53,7 +53,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBt
 							Array.from(slideInButtons.children).forEach( slideInButton => {
 								if ( typeof slideInButton.firstChild !== 'undefined' ) {
 									slideIn = boxWidth - visiblePart;
-									var	icon = slideInButton.querySelector('i');
+									var	icon = slideInButton.querySelector('.fixedPosition svg.iconpack')
 									icon.classList.add('me-2');
 									slideInButton.style.width = 'auto';
 									slideInButton.style.right = '-'+slideIn+'px';
@@ -130,14 +130,19 @@ function t3sbFadeInEffect(fadeTarget) {
 	</f:if>
 </f:if>
 
+
 <f:if condition="{scrollspy}">
 	<f:comment>Page/Section.html, Page/MenuSection.html</f:comment>
 	<f:asset.script identifier="vanilla_scrollspy">
 	// Sectionmenu scrollspy - Page/Assets.html
 	const sectionmenu = document.getElementById('sectionmenu');
 	var sidebarSectionMobile = {settings.config.sidebarSectionMobile};
-	var sidebarSectionMobile2222 = {settings.config.sidebarSectionMobile};
-	if ( !sidebarSectionMobile && window.innerWidth < {settings.config.navbarBreakpointWidth} ) {
+	if ({settings.config.navbarBreakpointWidth}) {
+		var breakpointWidth = {settings.config.navbarBreakpointWidth};
+	} else {
+		var breakpointWidth = 768;
+	}
+	if ( !sidebarSectionMobile && window.innerWidth < breakpointWidth ) {
 		sectionmenu.parentNode.removeChild(sectionmenu);
 	} else {
 		document.body.setAttribute('data-bs-spy', 'scroll');

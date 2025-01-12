@@ -1,0 +1,131 @@
+<f:comment> Default </f:comment>
+<f:if condition="{config.navbar.enable}">
+	<f:then>
+		<f:asset.script identifier="vanilla_default">
+	// Default - Main.html
+	const navbar = document.getElementById('main-navbar'),
+		  navbarHeight = navbar.clientHeight,
+		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
+		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+		  onePageLayout = navbar.classList.contains('sectionMenu');
+
+	var fixedNavbar = false;
+
+	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
+		fixedNavbar = true;
+	}
+
+	// Scroll anchor - Main.html
+	if (window.location.hash) {
+		t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight);
+	}
+		</f:asset.script>
+	</f:then>
+	<f:else>
+		<f:asset.script identifier="vanilla_default">
+	// Default - Main.html
+	const navbar = false,
+		  navbarHeight = false,
+		  navbarBreakpointWidth = 99999,
+		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
+		  onePageLayout = 0;
+
+	var fixedNavbar = false;
+
+	// Scroll anchor - Main.html
+	if (window.location.hash) {
+		t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight);
+	}
+		</f:asset.script>
+	</f:else>
+</f:if>
+<f:comment> Loading spinner </f:comment>
+<f:if condition="{settings.config.loadingSpinner}">
+<f:asset.script identifier="vanilla_loadingspinner">
+	// Loading spinner - Main.html
+	window.onload = function() {
+		let spinner = document.getElementById('site-preloader');
+		t3sbFadeOutEffect(spinner);
+	};
+</f:asset.script>
+</f:if>
+<f:comment> Dark Mode </f:comment>
+<f:if condition="{settings.config.navbarDarkMode} || {settings.config.colorMode.enable}">
+<f:asset.script identifier="vanilla_darkMode">
+	// Dark mode - Main.html
+	t3sbColorMode();
+</f:asset.script>
+</f:if>
+<f:comment> Cookie for viewport width </f:comment>
+<f:if condition="{settings.viewportWidthCookie}">
+<f:asset.script identifier="vanilla_widthCookie">
+	// Cookie for viewport width (usefull with fluid-container and image auto width) - Main.html
+	document.cookie = 'viewportWidth='+viewportWidth+'; path=/; max-age=${60 * 60 * 24 * 14};';
+</f:asset.script>
+</f:if>
+<f:comment> Lazyload </f:comment>
+<f:variable name="customthreshold">{settings.lazyLoadThreshold as integer}</f:variable>
+<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
+	<f:then>
+		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+			<f:then>
+				<f:asset.script identifier="vanilla_lazyload">
+	// LazyLoad & Magnifying glass icon - Main.html
+	var customthreshold = {customthreshold};
+	new LazyLoad({
+		elements_selector: '.lazy',
+		threshold: customthreshold,
+		callback_loaded: function(img) {
+			t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth);
+		}
+	});
+				</f:asset.script>
+			</f:then>
+			<f:else>
+				<f:asset.script identifier="vanilla_lazyload">
+	// LazyLoad - Main.html
+	var customthreshold = {customthreshold};
+	new LazyLoad({
+		elements_selector: '.lazy',
+		threshold: customthreshold
+	});
+				</f:asset.script>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
+			<f:asset.script identifier="vanilla_magnifying">
+	// Magnifying glass icon - Main.html
+	var magnify = document.querySelectorAll('.zoom-overlay');
+	if ( magnify.length ) {
+		document.querySelectorAll('figure.image').forEach (
+			img => { t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) }
+		)
+	}
+			</f:asset.script>
+		</f:if>
+	</f:else>
+</f:if>
+<f:if condition="{settings.config.footerSticky}">
+<f:comment> Sticky footer </f:comment>
+<f:asset.css identifier="t3sbs_footerSticky">
+html {
+	position:relative;
+	min-height:100%
+}
+#page-footer {
+	position:absolute;
+	bottom:0;
+	width:100%
+}
+</f:asset.css>
+</f:if>
+
+<f:comment> Link to top </f:comment>
+<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
+<f:asset.script identifier="vanilla_linktotop">
+	// Link to top - Main.html
+	t3sbScrollToTop();
+</f:asset.script>
+</f:if>

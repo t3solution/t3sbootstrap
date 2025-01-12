@@ -371,9 +371,11 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-			t3sbs_assets.disabled = 1
-		}
-	}
+			t3sbs_assets.disabled = 1			
+			card_wrapper.label.default = Container inside
+			card_wrapper.label.de = Container inside
+		}		
+	}			
 	tx_t3sbootstrap_flexform {
 		types {
 			t3sbs_assets.disabled = 1

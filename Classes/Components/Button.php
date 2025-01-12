@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Components;
 
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -24,6 +25,9 @@ class Button implements SingletonInterface
             $processedData['dropdowndirection'] = !empty($flexconf['direction']) ? ' '.$flexconf['direction'] : '';
 
             foreach ($flexconf['dropdownItems'] as $key=>$dropdownItem) {
+				$pid = (int) substr(explode(' ', $dropdownItem['list']['group'])[0], -1);
+                $btnDropdownItem[$key]['pid'] = $pid;
+                $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', intval($pid), 'page_icon')['page_icon'];
                 $btnDropdownItem[$key]['link'] = $dropdownItem['list']['group'];
                 $btnDropdownItem[$key]['target'] = explode('=', $dropdownItem['list']['group'])[1];
             }
@@ -65,19 +69,17 @@ class Button implements SingletonInterface
         $processedData['slideInButton'] = false;
         $processedData['slideInButtonFaIcon'] = false;
 
-        if (!empty($parentflexconf['fixedPosition']) && $parentflexconf['fixedPosition'] == 'right'
+        if (!empty($parentflexconf['fixedPosition'])
+         && $parentflexconf['fixedPosition'] == 'right'
          && $parentflexconf['slideIn']
          && $parentflexconf['visiblePart']
          && $parentflexconf['vertical']
         ) {
             // slide in button
             $processedData['slideInButton'] = true;
-
-            if ($processedData['data']['tx_t3sbootstrap_header_fontawesome']) {
-                $processedData['slideInButtonFaIcon'] = true;
-            } else {
-                $processedData['data']['tx_t3sbootstrap_header_fontawesome'] = 'fa-solid fa-ban text-danger';
-                $processedData['slideInButtonFaIcon'] = true;
+            $processedData['slideInButtonFaIcon'] = true;
+            if ( empty($processedData['data']['header_icon']) ) {
+                $processedData['data']['header_icon'] = 'fa6:solid,ban';                
             }
         }
 

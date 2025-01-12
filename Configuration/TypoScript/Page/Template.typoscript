@@ -27,20 +27,17 @@ page {
 		}
 		settings {
 			module.cdn < module.tx_t3sbootstrap.settings.cdn
-			expandedContent = {$bootstrap.extconf.expandedContent}
-			fontawesome.extconf = {$bootstrap.extconf.fontawesomeCss}
-			fontawesome.cdn = {$bootstrap.cdn.enable}
-			fontawesome.version = {$bootstrap.cdn.fontawesome}
-			fontawesome.6latest = {$bootstrap.cdn.fontawesome6latest}
-			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
-			fontawesome.fontawesomeCss = {$bootstrap.extconf.fontawesomeCss}
-			fontawesome.faLinkIcons = {$bootstrap.config.faLinkIcons}
+
+fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 
 			skiplinks = {$bootstrap.skiplinks}
 			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
+
 			webp = {$bootstrap.ext.webp}
+
+			iconpack.loaded = {$bootstrap.ext.iconpack}
 			indexedsearch.loaded = {$bootstrap.ext.indexedsearch}
 			kesearch.loaded = {$bootstrap.ext.kesearch}
 			cdn = {$bootstrap.cdn.enable}
@@ -49,6 +46,7 @@ page {
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
 			backToTopTitle = {$bootstrap.backToTopTitle}
 			backToTopClass = {$bootstrap.backToTopClass}
+			backToTopIconpack = {$bootstrap.backToTopIconpack}
 			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
 			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
@@ -98,8 +96,10 @@ page {
 				colorMode.position = {$bootstrap.colorMode.position}
 			}
 			fullHeightSection {
-				icon = <i class="fa-solid fa-chevron-down"></i>
+				icon =
 			}
+
+
 		}
 		dataProcessing {
 

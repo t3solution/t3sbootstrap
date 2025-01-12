@@ -29,14 +29,7 @@
 				<f:render partial="Card/ProfileCard" arguments="{_all}" />
 			</f:then>
 			<f:else>
-				<f:if condition="{card.tiling.enable}">
-					<f:then>
-						<f:render partial="Card/TilingCard" arguments="{_all}" />
-					</f:then>
-					<f:else>
-						<f:render section="DefaultCard" arguments="{_all}" />
-					</f:else>
-				</f:if>
+				<f:render section="DefaultCard" arguments="{_all}" />
 			</f:else>
 		</f:if>
 	</f:else>

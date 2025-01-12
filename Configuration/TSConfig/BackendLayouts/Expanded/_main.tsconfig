@@ -1,5 +1,0 @@
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/OneCol.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/TwoCol_9-3.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/TwoCol_3-9.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/ThreeCol.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Expanded/BootstrapCondition.tsconfig'

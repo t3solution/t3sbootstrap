@@ -71,13 +71,23 @@
 </f:section>
 
 <f:section name="NavLink">
+<f:if condition="{settings.iconpack.loaded}">
+	<f:then>
+		<f:if condition="{settings.sectionmenuIcons} && {element.data.header_icon}">
+			<t3sb:icon iconfig="{element.data.header_icon}" additionalAttributes="{class:'me-1'}" />
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}">
+			<i class="me-1 {element.data.tx_t3sbootstrap_header_fontawesome}"></i>
+		</f:if>
+	</f:else>
+</f:if>		
 <f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 	<f:then>
-		{f:if(condition: '{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="me-1{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 		{element.data.tx_t3sbootstrap_header_sectionMenu}
 	</f:then>
 	<f:else>
-		{f:if(condition: '{settings.sectionmenuIcons} && {element.data.tx_t3sbootstrap_header_fontawesome}', then:'<i class="me-1{element.data.tx_t3sbootstrap_header_fontawesome}"></i>')}
 		{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}
 	</f:else>
 </f:if>

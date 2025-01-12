@@ -17,12 +17,12 @@
 					{field.config.items.0.label -> f:format.raw()}
 				</label>
 			</f:if>
-			<br />
-			<f:if condition="{field.info}">
-				<small class="form-text text-muted d-block">{field.info -> f:format.raw()}</small>
-			</f:if>
-				<small class="small-code d-block mt-1"><code>bootstrap.config.{field.property}</code></small>
 		</div>
+			<f:if condition="{field.info}">
+				<small class="form-text text-muted d-block ms-3">{field.info -> f:format.raw()}</small>
+			</f:if>
+				<small class="small-code d-block mt-1 ms-3"><code>bootstrap.config.{field.property}</code></small>
+
 	</div>
 </div>
 </html>

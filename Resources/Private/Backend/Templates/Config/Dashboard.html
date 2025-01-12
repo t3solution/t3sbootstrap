@@ -35,7 +35,7 @@
 
 <f:section name="Preview">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Backend Preview
 		<f:link.external uri="https://www.t3sbootstrap.de/dokumentation/snippets/css-scss/custom-scss"
 		 target="_blank" title="More information!" class="float-right" style="margin-top: .1rem;">
@@ -44,7 +44,7 @@
 	</h5>
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item">
- 
+
 			<f:if condition="{extconf.preview}">
 				<f:then>
 					<f:render section="Check" />
@@ -56,39 +56,6 @@
 
 			<strong>Enable</strong>
 		</li>
-		<li class="list-group-item">
-			<f:if condition="{extconf.previewCrop}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Crop bodytext</strong>
-		</li>
-		<li class="list-group-item">
-			<f:if condition="{extconf.previewCropMaxCharacters}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Max Characters</strong>
-		</li>
-		<li class="list-group-item">
-			<f:if condition="{extconf.previewClosedCollapsible}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Closed Collapsible</strong>
-		</li>
 	</ul>
 </div>
 </f:section>
@@ -96,7 +63,7 @@
 
 <f:section name="SCSS">
 <div class="card mb-3" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Custom SCSS
 		<f:link.external uri="https://www.t3sbootstrap.de/dokumentation/snippets/css-scss/custom-scss"
 		 target="_blank" title="More information!" class="float-right" style="margin-top: .1rem;">
@@ -159,7 +126,7 @@
 
 <f:section name="Extensions">
 <div class="card" style="margin-top: 60px;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Loaded Extensions
 	</h5>
 	<div class="card-body" style="padding: 1.5rem;">
@@ -168,7 +135,9 @@
 			</thead>
 			<tbody>
 				<f:for each="{isLoaded}" as="loaded" key="ext">
-					<f:variable name="infouri" value='<f:link.external uri="{loaded.1}" target="_blank" title="More information!"> <i class="fa fa-info text-info ml-2 fa-sm"></i></f:link.external>' />
+					<f:variable name="infouri" value='<f:link.external uri="{loaded.1}" target="_blank" title="More information!"> 
+<f:render section="Info" />					
+					</f:link.external>' />
 					<tr>
 						<th scope="row">
 							<f:if condition="{extconf.loaded.0}">
@@ -196,7 +165,7 @@
 
 <f:section name="Content">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Content Elements
 	</h5>
 	<ul class="list-group list-group-flush">
@@ -294,21 +263,10 @@
 
 <f:section name="Pages">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Pages
 	</h5>
 	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<f:if condition="{extconf.fontawesome}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Font Awesome Icons</strong>
-		</li>
 		<li class="list-group-item">
 			<f:if condition="{extconf.fontawesomepagetitle}">
 				<f:then>
@@ -318,41 +276,19 @@
 					<f:render section="Xmark" />
 				</f:else>
 			</f:if>
-			<strong>FA Icon in Page Title</strong>
+			<strong>FA Icon in Page Title (iconPack)</strong>
 		</li>
 
-		<li class="list-group-item">
-			<f:if condition="{extconf.navigationColor}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Navigation color</strong>
-		</li>
 	</ul>
 </div>
 </f:section>
 
 <f:section name="T3SB">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		T3SB
 	</h5>
 	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<f:if condition="{extconf.expandedContent}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Expanded Content</strong>
-		</li>
 		<li class="list-group-item">
 			<f:if condition="{extconf.cTypeClass}">
 				<f:then>
@@ -404,7 +340,7 @@
 
 <f:section name="Flexform">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Flexform
 	</h5>
 	<ul class="list-group list-group-flush">
@@ -436,7 +372,7 @@
 
 <f:section name="Different">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Different
 	</h5>
 	<ul class="list-group list-group-flush">
@@ -451,38 +387,16 @@
 			</f:if>
 			<strong>Copyright (Image/FAL)</strong>
 		</li>
-		<li class="list-group-item">
-			<f:if condition="{extconf.customTranslations}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Custom translations</strong>
-		</li>
 	</ul>
 </div>
 </f:section>
 
 <f:section name="Advanced">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Advanced
 	</h5>
 	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<f:if condition="{extconf.fontawesomeCss}">
-				<f:then>
-					<f:render section="Check" />
-				</f:then>
-				<f:else>
-					<f:render section="Xmark" />
-				</f:else>
-			</f:if>
-			<strong>Font Awesome</strong>
-		</li>
 		<li class="list-group-item">
 			<f:if condition="{extconf.animateCss}">
 				<f:then>
@@ -534,7 +448,7 @@
 
 <f:section name="Presets">
 <div class="card" style="margin-bottom: 2rem !important;">
-	<h5 class="card-header text-white" style="background-color: #6a10f3; padding: .5rem;">
+	<h5 class="card-header" style="background-color: #6a10f3; padding: .5rem; color:#fff">
 		Presets
 	</h5>
 	<ul class="list-group list-group-flush">
@@ -614,7 +528,7 @@
 				</f:else>
 			</f:if>
 			<strong>Extra Class - image-tag</strong>
-		</li>	
+		</li>
 	</ul>
 </div>
 </f:section>

@@ -75,9 +75,9 @@
 		if ( navbar.classList.contains('navplusicon') ) {
 			navbar.classList.remove('navplusicon');
 		}
-	
+
 		var toggleSplits = document.querySelectorAll(".dropdown-toggle-split");
-	
+
 		toggleSplits.forEach(function(toggleSplit) {
 			toggleSplit.previousElementSibling.classList.remove('btn', 'btn-link');
 			toggleSplit.previousElementSibling.classList.add('dropdown-toggle');
@@ -85,7 +85,7 @@
 			toggleSplit.previousElementSibling.setAttribute('aria-expanded', 'false');
 			toggleSplit.previousElementSibling.setAttribute('role', 'button');
 			toggleSplit.previousElementSibling.setAttribute('aria-haspopup', 'true');
-	
+
 			if ( toggleSplit.nextElementSibling != null ) {
 				if (toggleSplit.nextElementSibling.classList.contains('dropdown-menu')) {
 					var dItem = toggleSplit.nextElementSibling.firstChild.firstChild;
@@ -103,7 +103,7 @@
 			}
 			toggleSplit.remove()
 		});
-	
+
 		document.querySelectorAll('.dropdown-toggle').forEach(function(sub) {
 			sub.addEventListener('click', function(e) {
 				if ( e.currentTarget.classList.contains('show') ) {
@@ -116,7 +116,7 @@
 				}
 			});
 		});
-	
+
 	} else {
 		// desctop view
 		var dropdowns = document.querySelectorAll('.navplusicon .dropdown');

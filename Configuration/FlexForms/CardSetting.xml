@@ -7,7 +7,6 @@
 				<el>
 					<effect>
 						<label>Card Hover Effect</label>
-						<displayCond>FIELD:sDEF.tiling.enable:=:0</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -28,12 +27,7 @@
 
 					<effectColor>
 						<label>Card Hover Effect Color</label>
-						<displayCond>
-							<and>
-								<numIndex index="0">FIELD:sDEF.tiling.enable:=:0</numIndex>
-								<numIndex index="1">FIELD:sDEF.effect:=:one</numIndex>
-							</and>
-						</displayCond>
+						<displayCond>FIELD:sDEF.effect:=:one</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -85,12 +79,7 @@
 
 					<maxwidth>
 						<label>Card max-width == image width</label>
-						<displayCond>
-							<and>
-								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
-								<numIndex index="1">FIELD:sDEF.tiling.enable:=:0</numIndex>
-							</and>
-						</displayCond>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
 						<config>
 							<type>check</type>
 						</config>
@@ -101,7 +90,6 @@
 							<and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
 								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
-								<numIndex index="2">FIELD:sDEF.tiling.enable:=:0</numIndex>
 							</and>
 						</displayCond>
 						<config>
@@ -114,7 +102,6 @@
 							<and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
 								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
-								<numIndex index="2">FIELD:sDEF.tiling.enable:=:0</numIndex>
 							</and>
 						</displayCond>
 						<config>
@@ -128,7 +115,6 @@
 							<and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
 								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
-								<numIndex index="2">FIELD:sDEF.tiling.enable:=:0</numIndex>
 							</and>
 						</displayCond>
 						<onChange>reload</onChange>
@@ -161,14 +147,12 @@
 					</rotateY>
 					<title.onTop>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.titleOnTop</label>
-						<displayCond>FIELD:sDEF.tiling.enable:=:0</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</title.onTop>
 					<button.enable>
 						<onChange>reload</onChange>
-						<displayCond>FIELD:sDEF.tiling.enable:=:0</displayCond>
 						<label>Enable button with header_link</label>
 						<config>
 							<type>check</type>
@@ -255,7 +239,6 @@
 					</button.block>
 					<cardborder>
 						<label>Custom Border</label>
-						<displayCond>FIELD:sDEF.tiling.enable:=:0</displayCond>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -318,37 +301,6 @@
 							<type>check</type>
 						</config>
 					</horizontal>
-
-					<tiling.enable>
-						<label>Tiling card with text and image</label>
-						<description>Best in 2 columns with the following setting "col-lg-6 col-md-12 col-12"</description>
-						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->twoColumnsParent</displayCond>
-						<onChange>reload</onChange>
-						<config>
-							<type>check</type>
-							<default>0</default>
-						</config>
-					</tiling.enable>
-
-					<tiling.position>
-						<label>Tiling position of the Image</label>
-						<displayCond>FIELD:sDEF.tiling.enable:=:1</displayCond>
-						<config>
-							<type>select</type>
-							<renderType>selectSingle</renderType>
-							<items>
-								<numIndex index="0">
-									<label>left</label>
-									<value>left</value>
-								</numIndex>
-								<numIndex index="1">
-									<label>right</label>
-									<value>right</value>
-								</numIndex>
-							</items>
-							<default>left</default>
-						</config>
-					</tiling.position>
 					<multiImage.enable>
 						<label>Enable Profile Card</label>
 						<description>You need at least two images for the profile card. The second is the circular, smaller image</description>

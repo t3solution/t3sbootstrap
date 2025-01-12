@@ -84,6 +84,12 @@ page.includeJSLibs {
 # FONTAWESOME - minimal installation with required icons and for link icons set in RTE
 #
 ##########################################################################################################
+
+[{$bootstrap.extconf.fontawesomeCss} == 1]
+page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
+[END]
+
+/*
 [{$bootstrap.config.faLinkIcons} == 1 && {$bootstrap.extconf.fontawesomeCss} == 0]
 page.includeCSS.t3sfontawesomeMinLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMinLink.css
 [END]
@@ -101,3 +107,4 @@ page.includeCSS.t3sfontawesomeLink.forceOnTop = 1
 page.includeCSS.t3sfontawesomeMin = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeMin.css
 page.includeCSS.t3sfontawesomeMin.forceOnTop = 1
 [END]
+*/

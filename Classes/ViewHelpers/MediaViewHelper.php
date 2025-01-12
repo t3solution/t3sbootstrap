@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ViewHelpers;
@@ -33,11 +34,10 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
      */
     protected $tagName = 'img';
 
-
 	/**
 	 * Initialize arguments.
 	 */
-	public function initializeArguments()
+	public function initializeArguments(): void
 	{
 #		parent::initializeArguments();
 

@@ -58,15 +58,15 @@
 		<f:then>		
 			<f:if condition="{hLinkClass}">
 				<f:then>
-					<f:link.typolink parameter="{link}" class="{hLinkClass}">{hFa -> f:format.raw()}{header -> f:format.raw()}</f:link.typolink>
+					<f:link.typolink parameter="{link}" class="{hLinkClass}"><t3sb:icon iconfig="{hFa}" />{header -> f:format.raw()}</f:link.typolink>
 				</f:then>
 				<f:else>
-					<f:link.typolink parameter="{link}">{hFa -> f:format.raw()}{header -> f:format.raw()}</f:link.typolink>
+					<f:link.typolink parameter="{link}"><t3sb:icon iconfig="{hFa}" />{header -> f:format.raw()}</f:link.typolink>
 				</f:else>
 			</f:if>
 		</f:then>
 		<f:else>
-			{hFa -> f:format.raw()}{header -> f:format.raw()}
+			<t3sb:icon iconfig="{hFa}" />{header -> f:format.raw()}
 		</f:else>
 	</f:if>
 </f:section>

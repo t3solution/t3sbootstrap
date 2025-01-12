@@ -2,4 +2,10 @@
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol.tsconfig'
+
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra.tsconfig'
+
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/BootstrapCondition.tsconfig'

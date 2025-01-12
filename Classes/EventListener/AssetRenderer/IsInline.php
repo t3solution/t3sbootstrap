@@ -52,21 +52,11 @@ class IsInline
                 if ($t3sbconcatenate) {
                     foreach ($event->getAssetCollector()->getJavaScripts() as $library => $jsFile) {
                         $jsCode .= '// *** T3SB identifier: '.$library.LF.LF;
-                        if ($library == 'fontawesome') {
-                            if (str_starts_with($jsFile['source'], 'http')) {
-                                $faCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
-                            } else {
-                                if (GeneralUtility::getFileAbsFileName($jsFile['source']) != false) {
-                                    $faCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
-                                }
-                            }
+                        if (str_starts_with($jsFile['source'], 'http')) {
+                            $jsCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
                         } else {
-                            if (str_starts_with($jsFile['source'], 'http')) {
-                                $jsCode .= GeneralUtility::getURL($jsFile['source']).LF.LF;
-                            } else {
-                                if (GeneralUtility::getFileAbsFileName($jsFile['source']) != false) {
-                                    $jsCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
-                                }
+                            if (GeneralUtility::getFileAbsFileName($jsFile['source']) != false) {
+                                $jsCode .= GeneralUtility::getURL(GeneralUtility::getFileAbsFileName($jsFile['source'])).LF.LF;
                             }
                         }
 

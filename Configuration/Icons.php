@@ -1,13 +1,17 @@
 <?php
+
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+
 return [
 
 	'cssJsIcon' => [
-		 'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+		 'provider' => BitmapIconProvider::class,
 		 'source' => 'EXT:t3sbootstrap/Resources/Public/Icons/Register/css-javascript.png',
 	],
 
 	'bootstraplogo' => [
-		'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+		'provider' => SvgIconProvider::class,
 		'source' => 'EXT:t3sbootstrap/Resources/Public/Icons/Extension.svg',
 	],
 

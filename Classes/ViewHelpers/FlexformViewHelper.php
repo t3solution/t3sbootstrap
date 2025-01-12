@@ -6,7 +6,6 @@ namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Service\FlexFormService;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -28,19 +27,15 @@ class FlexformViewHelper extends AbstractViewHelper
 		$this->registerArgument('data', 'string', 'xml data', true);
 	}
 
-	public function render(): string
- {
-	 $info = '';
-	 $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-	 $flexFormDataArr = $flexFormService->convertFlexFormContentToArray($this->arguments['data']);
-	 foreach ($flexFormDataArr as $key=>$flexFormData) {
-			   if (str_starts_with($key, 'xxl')) {break;}
-			   if ($key !== 'hidden') {
-				   $value = !empty($flexFormData) ? $flexFormData : 0;
-				   $info .= $key.'='.$value.', ';
-			   }
-		   }
-	 return rtrim($info, ', ');
- }
+	public function render(): array
+	{
+	 
+		if (!empty($this->arguments['data'])) {
+			$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+			return $flexFormService->convertFlexFormContentToArray($this->arguments['data']);	
+		} else {
+			return [];
+		}
+	}
 
 }

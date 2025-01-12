@@ -3,7 +3,7 @@
 # **********************************************************
 
 tx_news.templateLayouts {
-	71 = BS5: List Group (list view)
+	71 = BS5: Horizontal Cards (list view)
 	72 = BS5: Grid Cards (list view)
 	73 = BS5: Card Groups (list view)
 	74 = BS5: Masonry (list view)

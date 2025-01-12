@@ -4,7 +4,7 @@
 # FONTAWESOME KIT
 #
 ##########################################################################################################
-
+/*
 ['{$bootstrap.extconf.fontawesomeCss}' && {$bootstrap.extconf.fontawesomeCss} < 3 && {$bootstrap.fontawesome.svgJs} == 0]
 page.includeCSS.t3sfontawesomeKit = EXT:t3sb_package/Resources/Public/FA6-Kit/css/fontawesome.min.css
 [END]
@@ -42,4 +42,4 @@ page.includeJSFooter.fontawesomeSvgJs = EXT:t3sb_package/Resources/Public/FA6-Ki
 [{$bootstrap.extconf.fontawesomeCss} == 3 && {$bootstrap.fontawesome.svgJs} == 0]
 page.includeCSS.t3sfontawesomeDefault = EXT:t3sb_package/Resources/Public/T3SB-CSS/fontawesome.min.css
 [END]
-
+*/

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ContentElements;
@@ -35,9 +36,6 @@ class Menu implements SingletonInterface
 					// if current page is selected
 			        $request = $GLOBALS['TYPO3_REQUEST'];
 			        $frontendController = $request->getAttribute('frontend.controller');
-			        if (!$frontendController) {
-			            $frontendController = self::getFrontendController();
-			        }
 					if ( $frontendController->id == $processedData['data']['pid'] ) {
 						$processedData['onlyCurrentPageSelected'] = TRUE;
 					} else {
@@ -50,15 +48,6 @@ class Menu implements SingletonInterface
 			}
 
 		return $processedData;
-	}
-
-
-	/**
-	 * Returns the frontend controller
-	 */
-	protected function getFrontendController(): TypoScriptFrontendController
-	{
-		return $GLOBALS['TSFE'];
 	}
 
 }
