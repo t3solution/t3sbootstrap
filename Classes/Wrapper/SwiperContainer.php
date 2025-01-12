@@ -36,7 +36,7 @@ class SwiperContainer implements SingletonInterface
         $processedData['breakpoints10'] = !empty($flexconf['breakpoints10']) ? (int)$flexconf['breakpoints10'] : 1;
         $processedData['breakpoints576'] = !empty($flexconf['breakpoints576']) ? (int)$flexconf['breakpoints576'] : 2;
         $processedData['breakpoints768'] = !empty($flexconf['breakpoints768']) ? (int)$flexconf['breakpoints768'] : 3;
-        $processedData['breakpoints992'] = !empty($flexconf['breakpoints992']) ? int)$flexconf['breakpoints992'] : 4;
+        $processedData['breakpoints992'] = !empty($flexconf['breakpoints992']) ? (int)$flexconf['breakpoints992'] : 4;
         $processedData['slidesPerGroup'] = !empty($flexconf['slidesPerGroup']) ? (int)$flexconf['slidesPerGroup'] : 1;
         $processedData['spaceBetween'] = !empty($flexconf['spaceBetween']) ? (int)$flexconf['spaceBetween'] : 0;
         $processedData['loop'] = !empty($flexconf['loop']) ? 1 : 0;
