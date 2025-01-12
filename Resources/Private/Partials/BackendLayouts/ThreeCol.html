@@ -1,31 +1,47 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-	<div class="row content-row">
-		<f:switch expression="{data.tx_t3sbootstrap_mobileOrder}">
-			<f:case value="top">
-				<f:render section="Top" arguments="{_all}" />
-			</f:case>
-			<f:case value="bottom">
-				<f:render section="Bottom" arguments="{_all}" />
-			</f:case>
-			<f:case value="leftTop">
-				<f:render section="Default" arguments="{_all}" />
-			</f:case>
-			<f:case value="leftBottom">
-				<f:render section="LeftBottom" arguments="{_all}" />
-			</f:case>
-			<f:case value="rightTop">
-				<f:render section="LeftBottom" arguments="{_all}" />
-			</f:case>
-			<f:case value="rightBottom">
-				<f:render section="Default" arguments="{_all}" />
-			</f:case>
-			<f:defaultCase>
-				<f:render section="Default" arguments="{_all}" />
-			</f:defaultCase>
-		</f:switch>
-	</div>
+<f:if condition="{config.general.pageTitle} == 'content'">
+	<f:render partial="Page/Title" arguments="{_all}" />
+</f:if>
+<f:if condition="{data.tx_t3sbootstrap_container}">
+	<f:then>
+		<div class="{data.tx_t3sbootstrap_container}">
+			<f:render section="Order" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<f:render section="Order" arguments="{_all}" />
+	</f:else>
+</f:if>
 </html>
 
+
+<f:section name="Order">
+	<div class="row content-row">
+	<f:switch expression="{data.tx_t3sbootstrap_mobileOrder}">
+		<f:case value="top">
+			<f:render section="Top" arguments="{_all}" />
+		</f:case>
+		<f:case value="bottom">
+			<f:render section="Bottom" arguments="{_all}" />
+		</f:case>
+		<f:case value="leftTop">
+			<f:render section="Default" arguments="{_all}" />
+		</f:case>
+		<f:case value="leftBottom">
+			<f:render section="LeftBottom" arguments="{_all}" />
+		</f:case>
+		<f:case value="rightTop">
+			<f:render section="LeftBottom" arguments="{_all}" />
+		</f:case>
+		<f:case value="rightBottom">
+			<f:render section="Default" arguments="{_all}" />
+		</f:case>
+		<f:defaultCase>
+			<f:render section="Default" arguments="{_all}" />
+		</f:defaultCase>
+	</f:switch>
+</div>
+</f:section>
 
 <f:section name="Default">
 	<aside class="col-{gridBreakpoint}-{colAside}{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">

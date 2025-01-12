@@ -11,6 +11,9 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
+use Psr\Http\Message\ServerRequestInterface;
 use T3SBS\T3sbootstrap\Helper\ClassHelper;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
 use T3SBS\T3sbootstrap\Helper\DefaultHelper;
@@ -23,6 +26,7 @@ use T3SBS\T3sbootstrap\Layouts\SixColumns;
 use T3SBS\T3sbootstrap\Layouts\RowColumns;
 use T3SBS\T3sbootstrap\Components\Mediaobject;
 use T3SBS\T3sbootstrap\Components\Card;
+use T3SBS\T3sbootstrap\Layouts\Grid;
 use T3SBS\T3sbootstrap\Components\Carousel;
 use T3SBS\T3sbootstrap\Components\Button;
 use T3SBS\T3sbootstrap\Components\Toast;
@@ -34,7 +38,6 @@ use T3SBS\T3sbootstrap\Wrapper\CarouselContainer;
 use T3SBS\T3sbootstrap\Wrapper\CollapsibleAccordion;
 use T3SBS\T3sbootstrap\Wrapper\Modal;
 use T3SBS\T3sbootstrap\Wrapper\TabsContainer;
-use T3SBS\T3sbootstrap\Wrapper\CollapsibleContainer;
 use T3SBS\T3sbootstrap\Wrapper\ToastContainer;
 use T3SBS\T3sbootstrap\ContentElements\Menu;
 use T3SBS\T3sbootstrap\ContentElements\Table;
@@ -62,14 +65,23 @@ class BootstrapProcessor implements DataProcessorInterface
      * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
      * @return array the processed data as key/value store
      */
-    public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
+    public function process(
+        ContentObjectRenderer $cObj,
+        array $contentObjectConfiguration,
+        array $processorConfiguration,
+        array $processedData
+    ): array
     {
-        if (empty($processedData['data']['CType'])) {
+        if ( empty($processedData['data']['CType']) ) {
             return $processedData;
+        }
+        if ( empty($processedData['data']['tx_t3sbootstrap_flexform']) ) {
+            $processedData['data']['tx_t3sbootstrap_flexform'] = $processedData['data']['pi_flexform'];
         }
 
         /** @var \Psr\Http\Message\ServerRequestInterface $request */
         $request = $cObj->getRequest();
+        $frontendController = $request->getAttribute('frontend.controller');
         $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
         $cType = $processedData['data']['CType'];
         $parentCType = '';
@@ -78,16 +90,14 @@ class BootstrapProcessor implements DataProcessorInterface
         $parentflexconf = [];
         $parentContainer = [];
         $parentUid = $processedData['data']['tx_container_parent'];
-
         $t3sbsElement = false;
         if (str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) && $cType !== 'list') {
             $t3sbsElement = true;
         }
 
         $flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
-        if (is_string($cType)) {
-            $flexconf = $flexformHelper->addMissingElements($flexconf, $cType, $t3sbsElement);
-        }
+        $flexconf = $flexformHelper->addMissingElements($flexconf, $cType, $t3sbsElement);
+
         if ($parentUid) {
             $parentData = BackendUtility::getRecord('tt_content', $parentUid, 'uid, CType, tx_t3sbootstrap_flexform, tx_container_parent');
             $parentCType = $parentData['CType'];
@@ -107,17 +117,36 @@ class BootstrapProcessor implements DataProcessorInterface
         $processedData['containerError'] = false;
         $processedData['lightBox'] = false;
         $processedData['data']['configuid'] = (int)$processorConfiguration['configuid'];
-        $processedData['header_fontawesome'] = '';
 
         $sectionMenuClass = '';
         if (!empty($contentObjectConfiguration['settings.']['sectionMenuClass'])) {
             $sectionMenuClass = $contentObjectConfiguration['settings.']['sectionMenuClass'];
         }
 
+        $footerPid = !empty($processorConfiguration['footerPid'])
+         ? (int) $processorConfiguration['footerPid'] : 0;
+        $footerContainer = !empty($processorConfiguration['footerContainer'])
+         ? (string) $processorConfiguration['footerContainer'] : '';
+        $jumbotronContainer = !empty($processorConfiguration['jumbotronContainer'])
+         ? (string) $processorConfiguration['jumbotronContainer'] : '';
+        $expandedcontentContainertop = !empty($processorConfiguration['expandedcontentContainertop'])
+         ? (string) $processorConfiguration['expandedcontentContainertop'] : '';
+        $expandedcontentContainerbottom = !empty($processorConfiguration['expandedcontentContainerbottom'])
+         ? (string) $processorConfiguration['expandedcontentContainerbottom'] : '';
+
+        $containerConfig = [
+            'footerPid' => $footerPid,
+            'footerContainer' => $footerContainer,
+            'jumbotronContainer' => $jumbotronContainer,
+            'expandedcontentContainertop' => $expandedcontentContainertop,
+            'expandedcontentContainerbottom' => $expandedcontentContainerbottom,
+            'pageContainer' => !empty($frontendController->page['tx_t3sbootstrap_container']) ? TRUE : FALSE,
+            'containerError' => $contentObjectConfiguration['settings.']['containerError']
+        ];
+
         if (!empty($contentObjectConfiguration['settings.']['shortcutsremove'])) {
             $pageArguments = $request->getAttribute('routing');
-            $currentUid = $pageArguments->getPageId();            
-            $footerPid = !empty($processorConfiguration['footerPid']) ? (int) $processorConfiguration['footerPid'] : 0;
+            $currentUid = $pageArguments->getPageId();
             $removeArr = GeneralUtility::trimExplode(',', $contentObjectConfiguration['settings.']['shortcutsremove']);
             if ($processedData['data']['pid'] !== $currentUid && $processedData['data']['pid'] !== $footerPid) {
                 // if contentByPid for collapsible_accordion or tabs_tab
@@ -238,8 +267,10 @@ class BootstrapProcessor implements DataProcessorInterface
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType == 'collapsible_container') {
-                $processedData = GeneralUtility::makeInstance(CollapsibleContainer::class)
-                ->getProcessedData($processedData, $flexconf);
+		        $processedData['appearance'] = !empty($flexconf['appearance']) ? $flexconf['appearance'] : '';
+		        if ($flexconf['appearance'] === 'accordion') {
+		            $processedData['flush'] = !empty($flexconf['flush']) ? ' accordion-flush' : '';
+		        }
             }
             if ($cType == 'carousel_container') {
                 $processedData = GeneralUtility::makeInstance(CarouselContainer::class)
@@ -309,6 +340,7 @@ class BootstrapProcessor implements DataProcessorInterface
             $processedData['addmedia']['ratioClass'] = 'ratio-16x9';
             $processedData['addmedia']['origImageZoom'] = $processedData['data']['tx_t3sbootstrap_zoom_orig'];
             foreach ($fileObjects as $key=>$fileObject) {
+
                 if ($fileObject->getType() === 4) {
                     $fileConfig = $fileObject->getStorage()->getConfiguration();
                     $filePath = substr($fileConfig['basePath'], 0, -1).explode('.', $fileObject->getIdentifier())[0];
@@ -347,7 +379,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
         // child of autoLayout_row
         if ($parentCType === 'autoLayout_row') {
-            $processedData['newLine'] = $flexconf['newLine'] ? true : false;
+            $processedData['newLine'] = !empty($flexconf['newLine']) ? true : false;
             $processedData['class'] .= $classHelper->getAutoLayoutClass($flexconf);
         }
 
@@ -368,13 +400,12 @@ class BootstrapProcessor implements DataProcessorInterface
 
         // container class
         $defaultHelper = GeneralUtility::makeInstance(DefaultHelper::class);
-        $processedData = $defaultHelper->getContainerClass($processedData, $extConf['container']);
+        $processedData = $defaultHelper->getContainerClass(  $processedData,  $extConf['container'],   $containerConfig);
 
         // defaults
         $processedData = $defaultHelper->getDefaults(
             $processedData,
             $flexconf,
-            $extConf,
             (int)$processorConfiguration['defaultHeaderType'],
             $processorConfiguration['contentMarginTop'],
             $extConf['animateCss'],
@@ -388,14 +419,25 @@ class BootstrapProcessor implements DataProcessorInterface
         $processedData['style'] = trim($processedData['style']);
         $processedData['styleAttr'] = !empty($processedData['style']) ? ' style="'.$processedData['style'].'"' : '';
         $processedData['styleInline'] = !empty($processedData['style']) ? '#c'.$processedData['data']['uid'].' {'.$processedData['style'].'}' : '';
-
         $processedData['trimClass'] = !empty(trim($processedData['class'])) ? trim($processedData['class']) : '';
         $processedData['class'] = !empty($processedData['trimClass']) ? ' '.$processedData['trimClass'] : '';
-        $processedData['classAttr'] = !empty($processedData['trimClass']) ? ' class="'.trim($processedData['class']).'"' : '';
 
-        if (!empty($processedData['data']['tx_t3sbootstrap_header_fontawesome'])) {
-            $processedData['headerFontawesome'] = '<i class="'.$processedData['data']['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ';
+		$trimClass = !empty($processedData['trimClass']) ? trim($processedData['class']) : '';
+
+        // chapter
+        if ( !empty($extConf['chapter']) && !empty($processedData['data']['tx_t3sbootstrap_chapter']) ) {
+			$processedData = self::getChapterIndex($processedData, $request);
+
+            if ( $processedData['data']['tx_t3sbootstrap_chapter'] === '1' ) {
+                $chapter = ' main-chapter';
+            } else {
+                $chapter = ' sub-chapter';
+            }
+
+			$trimClass .= $chapter.' chapter-indent';
         }
+
+		$processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
 
         return $processedData;
     }
@@ -424,11 +466,6 @@ class BootstrapProcessor implements DataProcessorInterface
     }
 
 
-    /**
-     * @param string $s
-     * @param string $c
-     * @return string
-     */
     function removeChar(string $s, string $c): string
     {
         $s = str_replace($c, '', $s);
@@ -438,5 +475,57 @@ class BootstrapProcessor implements DataProcessorInterface
         return $s;
     }
 
+
+
+    function getChapterIndex(array $processedData, ServerRequestInterface $request): array
+    {
+        $pageArguments = $request->getAttribute('routing');
+        $currentPageUid = $pageArguments->getPageId();
+
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+        $result = $queryBuilder
+            ->select('uid', 'header', 'tx_t3sbootstrap_chapter')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($currentPageUid, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
+            )
+            ->executeQuery();
+
+        $i = 0;
+        $e = 0;
+
+        while ($row = $result->fetchAssociative()) {
+            if (!empty($row['tx_t3sbootstrap_chapter'])) {
+                if ( $row['tx_t3sbootstrap_chapter'] == 1 ) {
+                    $i++;
+                    $e = 0;
+                }
+                $ld = '.'. $e;
+                if ($e === 0) $ld = '';
+                $erg[$row['uid']] = $row;
+                $erg[$row['uid']]['index'] = '0.' . $i . $ld;
+                $e++;
+            }
+        }
+
+        $uid = $processedData['data']['uid'];
+
+        if ( !empty( $erg[$uid]) ) {
+            if ( $processedData['data']['tx_t3sbootstrap_chapter'] === '1') {
+                 $class = 'chapter main-chapter';
+            } else {
+                $class = 'chapter sub-chapter';
+            }
+        }
+
+        $processedData['data']['chapter'] ='<span class="position-relative">
+        <span class="chapter-indexer position-absolute">' .$erg[$uid]['index']. '</span></span>';
+
+        return $processedData;
+    }
 
 }

@@ -23,16 +23,6 @@ class TcaCompilation
 
 		// tt_content
 
-		if (!empty($extconf['customFaIcons'])) {
-			$newItems = [];
-			foreach ( explode(',',$extconf['customFaIcons']) as $custom) {
-				$customArray = explode(' ', $custom);
-				$key = trim(end($customArray));
-				$newItems[] = [0 => $key, 1 => $custom];	
-			}
-			$tca['tt_content']['columns']['tx_t3sbootstrap_header_fontawesome']['config']['valuePicker']['items'] = $newItems;
-		}
-
 		if (!empty($extconf['customHeaderClass'])) {
 			$newItems = [];
 			foreach ( explode(',',$extconf['customHeaderClass']) as $custom) {
@@ -45,17 +35,6 @@ class TcaCompilation
 
 
 		// pages
-
-		if (!empty($extconf['customFaIconsPages'])) {
-			$newItems = [];
-			foreach ( explode(',',$extconf['customFaIconsPages']) as $custom) {
-				$customArray = explode(' ', $custom);
-				$key = trim(end($customArray));
-				$newItems[] = [0 => $key, 1 => $custom];	
-			}
-			$tca['pages']['columns']['tx_t3sbootstrap_fontawesome_icon']['config']['valuePicker']['items'] = $newItems;
-		}
-
 
 		if (!empty($extconf['customTitleColor'])) {
 			$newItems = [];

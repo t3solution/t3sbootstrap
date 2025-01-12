@@ -2,7 +2,8 @@
 
 namespace T3SBS\T3sbootstrap\Domain\Model;
 
- use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -12,12 +13,23 @@ namespace T3SBS\T3sbootstrap\Domain\Model;
  */
 class Config extends AbstractEntity
 {
+
+
+ 	    
     /**
      * pid
      *
      * @var int
+
+    protected ?int $pid = null;
      */
+    /**
+     * pid
+     *
+     * @var int
+
     protected $pid;
+     */
 
     /**
      * company
@@ -912,13 +924,6 @@ class Config extends AbstractEntity
      * @var string
      */
     protected $favicon = '';
-
-    /**
-     * faLinkIcons
-     *
-     * @var bool
-     */
-    protected $faLinkIcons = false;
 
     /**
      * cardFlipperOnClick
@@ -3873,27 +3878,6 @@ class Config extends AbstractEntity
     public function setFavicon($favicon): void
     {
         $this->favicon = $favicon;
-    }
-
-    /**
-     * Returns faLinkIcons
-     *
-     * @return bool $faLinkIcons
-     */
-    public function getFaLinkIcons()
-    {
-        return $this->faLinkIcons;
-    }
-
-    /**
-     * Sets the faLinkIcons
-     *
-     * @param bool $faLinkIcons
-     * @return void
-     */
-    public function setFaLinkIcons($faLinkIcons): void
-    {
-        $this->faLinkIcons = $faLinkIcons;
     }
 
     /**

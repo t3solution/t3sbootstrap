@@ -53,7 +53,7 @@ print {
 
 		settings {
 			// EM config
-			expandedContent = {$bootstrap.extconf.expandedContent}
+#			expandedContent = {$bootstrap.extconf.expandedContent}
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			// various not in DB
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
@@ -157,6 +157,7 @@ print {
 				footerContainerposition = {$bootstrap.config.footerContainerposition}
 				footerClass = {$bootstrap.config.footerClass}
 				footerPid = {$bootstrap.config.footerPid}
+/*
 				expandedcontentEnabletop = {$bootstrap.config.expandedcontentEnabletop}
 				expandedcontentSlidetop = {$bootstrap.config.expandedcontentSlidetop}
 				expandedcontentContainerpositiontop = {$bootstrap.config.expandedcontentContainerpositiontop}
@@ -167,6 +168,7 @@ print {
 				expandedcontentContainerpositionbottom = {$bootstrap.config.expandedcontentContainerpositionbottom}
 				expandedcontentContainerbottom = {$bootstrap.config.expandedcontentContainerbottom}
 				expandedcontentClassbottom = {$bootstrap.config.expandedcontentClassbottom}
+*/
 				generalRootline = {$bootstrap.config.generalRootline}
 				contentOnlyOnRootpage = {$bootstrap.config.contentOnlyOnRootpage}
 				jqueryHeader = {$bootstrap.config.jqueryHeader}
@@ -196,7 +198,7 @@ print {
 				subheaderColor = {$bootstrap.config.subheaderColor}
 				dateFormat = {$bootstrap.config.dateFormat}
 				favicon = {$bootstrap.config.favicon}
-				faLinkIcons = {$bootstrap.config.faLinkIcons}
+#				faLinkIcons = {$bootstrap.config.faLinkIcons}
 				cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
 				lastModifiedContentElement = {$bootstrap.config.lastModifiedContentElement}
 				recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}

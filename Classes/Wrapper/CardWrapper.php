@@ -87,8 +87,9 @@ class CardWrapper implements SingletonInterface
                 $children[$key]['imgwidth'] = !empty($child['imagewidth']) ? $child['imagewidth'] : $flipperWidth;
                 if (!empty($fileObjects)) {
                     if ($flexconf['card_wrapper'] == 'flipper') {
-                        $children[$key]['hFa'] = $child['tx_t3sbootstrap_header_fontawesome']
-                         ? '<i class="'.$child['tx_t3sbootstrap_header_fontawesome'].' me-1"></i> ' : '';
+
+						$children[$key]['hFa'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
+                        
                         $children[$key]['file'] = $fileObjects;
                         $children[$key]['backheader'] = $child['tx_t3sbootstrap_cardheader'];
                         $children[$key]['header'] = $child['header'];
@@ -104,7 +105,7 @@ class CardWrapper implements SingletonInterface
                 $children[$key]['header_position'] = $child['header_position'] ? ' text-'.$child['header_position'] : '';
                 $children[$key]['tx_t3sbootstrap_header_display'] = $child['tx_t3sbootstrap_header_display'];
                 $children[$key]['tx_t3sbootstrap_header_class'] = $child['tx_t3sbootstrap_header_class'];
-                $children[$key]['tx_t3sbootstrap_header_fontawesome'] = $child['tx_t3sbootstrap_header_fontawesome'];
+				$children[$key]['header_icon'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                 $children[$key]['celink'] = $child['tx_t3sbootstrap_header_celink'];
                 $children[$key]['settings'] = $flexFormService->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
             }
@@ -114,8 +115,8 @@ class CardWrapper implements SingletonInterface
             if ($flexconf['card_wrapper'] == 'slider') {
                 $processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;
                 $processedData['cols'] = floor(12 / $processedData['visibleCards']);
-                $processedData['width'] = $flexconf['width'];
-                $processedData['ratio'] = $flexconf['ratio'];
+                $processedData['width'] = !empty($flexconf['width']) ? $flexconf['width'] : '';
+                $processedData['ratio'] = !empty($flexconf['ratio']) ? $flexconf['ratio'] : '';
                 $processedData['slidesPerView'] = (int)$flexconf['slidesPerView'] ?: 0;
                 $processedData['breakpoints10'] = !empty($flexconf['breakpoints10']) ? (int)$flexconf['breakpoints10'] : 1;
                 $processedData['breakpoints576'] = (int)$flexconf['breakpoints576'] ?: 2;

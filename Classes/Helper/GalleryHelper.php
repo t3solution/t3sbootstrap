@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
@@ -103,7 +104,7 @@ class GalleryHelper implements SingletonInterface
 			if ( $imageorient == 0 || $imageorient == 8 ) {
 				// center
 				$galleryClass .= ' clearfix';
-				$galleryRowClass .= $rowwidth.' text-center';
+				$galleryRowClass .= $rowwidth.' mx-auto';
 				$processedData['addmedia']['zoomOverlay'] = ' d-flex mx-auto';
 				$processedData['addmedia']['figureclass'] .= ' mx-auto';
 			}

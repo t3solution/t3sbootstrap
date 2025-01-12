@@ -73,12 +73,12 @@
 	</f:else>
 </f:if>
 
-<figure class="text-center image{extraClass}{f:if(condition: '{settings.templateLayout} == 71', then: ' d-none d-sm-block')}">
+<figure class="text-center image{extraClass}">
 	<t3sb:media
 		file="{file}"
 		title="{titleText}"
 		alt="{altText}"
-		class="img-fluid{lazyClass}{imgExtraClass}{f:if(condition: '{settings.templateLayout} == 71', then:' me-3')}"
+		class="img-fluid{lazyClass}{imgExtraClass}"
 		
 		width="{width}"
 		height="{height}"
@@ -90,18 +90,26 @@
 		picturefill="{settings.picturefill}"
 		lazyload="{settings.lazyLoad}"
 		ratio="{ratio}"
-		shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
-		hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
+		shift="{file.originalResource.properties.tx_t3sbootstrap_shift_vertical}"
+		hshift="{file.originalResource.properties.tx_t3sbootstrap_shift_horizontal}"
 	/>	
 	<f:render section="Copyright" arguments="{_all}" />
 </figure>
 </html>
 
 
+
 <f:section name="Copyright">
-<f:if condition="{settings.imgCopyright} && {file.originalResource.properties.tx_t3sbootstrap_copyright}">
+<f:if condition="{settings.imgCopyright} && ( {file.originalResource.properties.tx_t3sbootstrap_copyright} || {file.originalResource.properties.copyright} )">
 	<span class="img-copyright-default {file.originalResource.properties.tx_t3sbootstrap_copyright_color}">
-		<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.tx_t3sbootstrap_copyright}</span>
+		<f:if condition="{file.originalResource.properties.copyright}">
+			<f:then>
+				<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.copyright}</span>
+			</f:then>
+			<f:else>
+				<span class="copyright">&copy;</span> <span class="copyright-note">{file.originalResource.properties.tx_t3sbootstrap_copyright}</span>
+			</f:else>
+		</f:if>
 	</span>
 </f:if>
 </f:section>

@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{noConfig}">
 	<f:then>
 		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
@@ -14,7 +13,7 @@
 		</f:if>
 		<f:spaceless>
 			<f:render partial="FunctionAssets" arguments="{_all}" />
-			<f:render section="AssetScripts" arguments="{_all}" />
+			<f:render partial="MainAssets" arguments="{_all}" />
 			<f:comment> Skip links </f:comment>
 			<f:if condition="{settings.skiplinks}">
 				<a class="skip-link" href="#main-navbar">Skip to main navigation</a>
@@ -57,37 +56,24 @@
 								<f:render partial="Page/_main" arguments="{_all}" />
 							</f:else>
 						</f:if>
-					</f:else>
-				</f:if>
-				<f:comment> EXPANDED CONTENT TOP </f:comment>
-				<f:if condition="{settings.expandedContent} && {config.expandedcontentTop.enable}">
-					<f:render partial="Page/ExpandedContent/Top" arguments="{_all}" />
-				</f:if>
-				<f:comment> PAGE CONTENT </f:comment>
-				<f:if condition="{data.tx_t3sbootstrap_container}">
-					<f:then>
-						<div class="{data.tx_t3sbootstrap_container}">
-							<f:render section="PageContent" arguments="{_all}" />
-						</div>
-					</f:then>
-					<f:else>
-						<f:if condition="{be_layout} == 'OneCol'">
-							<f:then>
-								<f:render section="PageContent" arguments="{_all}" />
-							</f:then>
-							<f:else>
-								<div class="container">
-									<f:render section="PageContent" arguments="{_all}" />
-								</div>
-							</f:else>
+						<f:comment> EXPERIMENTAL CHAPTER </f:comment>
+						<f:if condition="{settings.chapter}">
+							<f:render partial="Page/Chapter" arguments="{_all}" />
 						</f:if>
 					</f:else>
 				</f:if>
+				<f:comment> PAGE CONTENT </f:comment>
+				<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')} >
+					<f:if condition="{be_layout} && {be_layout} != 'default'">
+						<f:then>
+							<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
+						</f:then>
+						<f:else>
+							<f:render partial="BackendLayouts/OneCol" arguments="{_all}" />
+						</f:else>
+					</f:if>
+				</div>
 			</div>
-			<f:comment> EXPANDED CONTENT BOTTOM </f:comment>
-			<f:if condition="{settings.expandedContent} && {config.expandedcontentBottom.enable}">
-				<f:render partial="Page/ExpandedContent/Bottom" arguments="{_all}" />
-			</f:if>
 			<f:comment> BREADCRUMB BOTTOM </f:comment>
 			<f:if condition="{config.breadcrumb.bottom}">
 				<div class="breadcrumb-bottom">
@@ -109,7 +95,14 @@
 			<f:comment> BACK TO TOP BUTTON </f:comment>
 			<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
 				<p class="back-to-top st-none" title="{settings.backToTopTitle}" style="cursor: pointer;">
-					<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="{settings.backToTopIconpack}" /> <span class="d-none">back-to-top</span>	
+						</f:then>
+						<f:else>
+							<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
+						</f:else>
+					</f:if>
 				</p>
 			</f:if>
 			<f:comment> Color Mode Toggler </f:comment>
@@ -120,151 +113,3 @@
 	</f:else>
 </f:if>
 </html>
-
-
-<f:section name="PageContent">
-	<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')} >
-		<f:if condition="{be_layout} && {be_layout} != 'default'">
-			<f:then>
-				<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
-			</f:then>
-			<f:else>
-				<f:render partial="BackendLayouts/OneCol" arguments="{_all}" />
-			</f:else>
-		</f:if>
-	</div>
-</f:section>
-
-<f:section name="AssetScripts">
-<f:if condition="{config.navbar.enable}">
-	<f:then>
-		<f:asset.script identifier="vanilla_default">
-	// Default - Main.html
-	const navbar = document.getElementById('main-navbar'),
-		  navbarHeight = navbar.clientHeight,
-		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = navbar.classList.contains('sectionMenu');
-
-	var fixedNavbar = false;
-
-	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
-		fixedNavbar = true;
-	}
-
-	// Scroll anchor - Main.html
-	if (window.location.hash) {
-		t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight);
-	}
-		</f:asset.script>
-	</f:then>
-	<f:else>
-		<f:asset.script identifier="vanilla_default">
-	// Default - Main.html
-	const navbar = false,
-		  navbarHeight = false,
-		  navbarBreakpointWidth = 99999,
-		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
-		  onePageLayout = 0;
-
-	var fixedNavbar = false;
-
-	// Scroll anchor - Main.html
-	if (window.location.hash) {
-		t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight);
-	}
-		</f:asset.script>
-	</f:else>
-</f:if>
-<f:comment> Loading spinner </f:comment>
-<f:if condition="{settings.config.loadingSpinner}">
-<f:asset.script identifier="vanilla_loadingspinner">
-	// Loading spinner - Main.html
-	window.onload = function() {
-		let spinner = document.getElementById('site-preloader');
-		t3sbFadeOutEffect(spinner);
-	};
-</f:asset.script>
-</f:if>
-<f:comment> Dark Mode </f:comment>
-<f:if condition="{settings.config.navbarDarkMode} || {settings.config.colorMode.enable}">
-<f:asset.script identifier="vanilla_darkMode">
-	// Dark mode - Main.html
-	t3sbColorMode();
-</f:asset.script>
-</f:if>
-<f:comment> Cookie for viewport width </f:comment>
-<f:if condition="{settings.viewportWidthCookie}">
-<f:asset.script identifier="vanilla_widthCookie">
-	// Cookie for viewport width (usefull with fluid-container and image auto width) - Main.html
-	document.cookie = 'viewportWidth='+viewportWidth+'; path=/; max-age=${60 * 60 * 24 * 14};';
-</f:asset.script>
-</f:if>
-<f:comment> Lazyload </f:comment>
-<f:variable name="customthreshold">{settings.lazyLoadThreshold as integer}</f:variable>
-<f:if condition="{settings.lazyLoad} && {settings.lazyLoad} < 3">
-	<f:then>
-		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
-			<f:then>
-				<f:asset.script identifier="vanilla_lazyload">
-	// LazyLoad & Magnifying glass icon - Main.html
-	var customthreshold = {customthreshold};
-	new LazyLoad({
-		elements_selector: '.lazy',
-		threshold: customthreshold,
-		callback_loaded: function(img) {
-			t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth);
-		}
-	});
-				</f:asset.script>
-			</f:then>
-			<f:else>
-				<f:asset.script identifier="vanilla_lazyload">
-	// LazyLoad - Main.html
-	var customthreshold = {customthreshold};
-	new LazyLoad({
-		elements_selector: '.lazy',
-		threshold: customthreshold
-	});
-				</f:asset.script>
-			</f:else>
-		</f:if>
-	</f:then>
-	<f:else>
-		<f:if condition="{settings.config.magnifying} && {settings.config.lightboxSelection}">
-			<f:asset.script identifier="vanilla_magnifying">
-	// Magnifying glass icon - Main.html
-	var magnify = document.querySelectorAll('.zoom-overlay');
-	if ( magnify.length ) {
-		document.querySelectorAll('figure.image').forEach (
-			img => { t3sbMagnifying(img, viewportWidth, navbarBreakpointWidth) }
-		)
-	}
-			</f:asset.script>
-		</f:if>
-	</f:else>
-</f:if>
-<f:if condition="{settings.config.footerSticky}">
-<f:comment> Sticky footer </f:comment>
-<f:asset.css identifier="t3sbs_footerSticky">
-html {
-	position:relative;
-	min-height:100%
-}
-#page-footer {
-	position:absolute;
-	bottom:0;
-	width:100%
-}
-</f:asset.css>
-</f:if>
-
-<f:comment> Link to top </f:comment>
-<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
-<f:asset.script identifier="vanilla_linktotop">
-	// Link to top - Main.html
-	t3sbScrollToTop();
-</f:asset.script>
-</f:if>
-
-</f:section>

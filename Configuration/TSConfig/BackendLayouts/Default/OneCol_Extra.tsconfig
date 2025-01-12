@@ -1,18 +1,17 @@
 mod {
 	web_layout {
 		BackendLayouts {
-			ThreeCol {
-				title = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.threeCol
+			OneCol_Extra {
+				title = 1 Column with extra rows (top and bottom)
 				config {
 					backend_layout {
-						colCount = 3
-						rowCount = 5
+						colCount = 1
+						rowCount = 3
 						rows {
 							1 {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
-										colspan = 3
 										colPos = 3
 									}
 								}
@@ -20,8 +19,7 @@ mod {
 							2 {
 								columns {
 									1 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.otc
-										colspan = 3
+										name = Expanded Content Top
 										colPos = 20
 									}
 								}
@@ -29,27 +27,15 @@ mod {
 							3 {
 								columns {
 									1 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar-left
-										colspan = 1
-										colPos = 1
-									}
-									2 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
-										colspan = 1
 										colPos = 0
-									}
-									3 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar-right
-										colspan = 1
-										colPos = 2
 									}
 								}
 							}
 							4 {
 								columns {
 									1 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.obc
-										colspan = 3
+										name =  Expanded Content Bottom
 										colPos = 21
 									}
 								}
@@ -58,7 +44,6 @@ mod {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
-										colspan = 3
 										colPos = 4
 									}
 								}
@@ -66,9 +51,8 @@ mod {
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-3_col-3-6-3.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col_extra.svg
 			}
 		}
 	}
 }
-

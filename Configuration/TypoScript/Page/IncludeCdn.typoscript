@@ -73,6 +73,7 @@ page {
 	}
 }
 
+/*
 ##########################################################################################################
 #
 # FONTAWESOME KIT
@@ -112,4 +113,6 @@ page.includeJSFooter.t3sfontawesomeMin.external = 1
 #page.includeJSFooter.t3sfontawesomeMin.crossorigin = anonymous
 page.includeJSFooter.t3sfontawesomeMin.data.data-auto-replace-svg = nest
 [END]
+*/
+
 

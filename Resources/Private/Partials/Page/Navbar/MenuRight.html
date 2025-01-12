@@ -1,16 +1,17 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 	<f:if condition="{settings.navbar.searchboxLink}">
-		<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}"><i class="fa-navlink fa-solid fa-search mx-3"></i></f:link.page>
+		<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}">
+			<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'mx-3'}" />	
+		</f:link.page>
 	</f:if>
 	<div class="nav-item dropdown {config.navbar.hover}">
 		<a class="nav-link dropdown-toggle ps-{settings.config.navbarBreakpoint}-3" id="right-menu"
 			 href="#" data-bs-toggle="{config.navbar.bstoggle}" role="button" aria-expanded="false">
-			<i class="fa-navlink fa-solid fa-info-circle me-1"></i>
+			<t3sb:icon iconfig="fa6:solid,circle-info" additionalAttributes="{class:'me-1'}" />			
 		</a>
 		<f:if condition="{config.navbar.navbarPlusicon}">
 			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-				<i class="fa-solid fa-square-plus"></i>
+				<t3sb:icon iconfig="fa6:solid,square-plus" />
 			</button>
 		</f:if>
 		<div class="dropdown-menu dropdown-menu-end mt-0 slideIn{config.navbar.dropdownAnimate}" aria-labelledby="right-menu">
@@ -37,10 +38,9 @@
 			</f:for>
 		</div>
 	</div>
-
 </html>
 
 
 <f:section name="Title">
-{item.faIcon -> f:format.raw()} {item.title -> f:format.raw()}
+<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'me-1'}" /> {item.title -> f:format.raw()}
 </f:section>

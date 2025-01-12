@@ -1,5 +1,5 @@
 ## Default Image cropping
-TCEFORM.sys_file_reference.crop.config.cropVariants {
+TCEFORM.sys_file_reference.crop.config.cropVariants {	
 	default {
 		title = Desktop
 		selectedRatio = NaN
@@ -187,3 +187,4 @@ TCEFORM.sys_file_reference.crop.config.cropVariants {
 		}
 	}
 }
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Vorlage" xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 100 100">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #fff;
+      }
+
+      .st1 {
+        fill: #666;
+      }
+
+      .st2 {
+        fill: #999;
+      }
+    </style>
+  </defs>
+  <g id="layout-1_col">
+    <rect class="st0" y=".00004" width="32" height="32"/>
+    <path class="st2" d="M3.125,3.12504v93.75h93.75V3.12504H3.125ZM6.25,6.25004h87.5v87.5H6.25V6.25004Z"/>
+    <rect class="st1" x="12.5" y="34.37504" width="75" height="31.25"/>
+    <rect class="st1" x="12.5" y="12.50004" width="75" height="15.625"/>
+    <rect class="st1" x="12.5" y="71.87503" width="75" height="15.625"/>
+  </g>
+</svg>

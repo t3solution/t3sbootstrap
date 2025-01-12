@@ -2,16 +2,7 @@
 <f:comment> - ACCORDION - </f:comment>
 <div class="panel-group accordion" id="accordion">
 	<f:for each="{tcaColumns}" as="columns" key="colkey">
-		<f:if condition="{colkey} == 8 || {colkey} == 9">
-			<f:then>
-				<f:if condition="{settings.expandedContent}">
-					<f:render section="Card" arguments="{_all}" />
-				</f:if>
-			</f:then>
-			<f:else>
-				<f:render section="Card" arguments="{_all}" />
-			</f:else>
-		</f:if>
+		<f:render section="Card" arguments="{_all}" />
 	</f:for>
 </div>
 </html>
@@ -27,51 +18,42 @@
 			</a>
 		</h3>
 	</div>
-	<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
-		<f:then>
-			<f:comment>
-				Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
-			</f:comment>
-		</f:then>
-		<f:else>
-			<div id="collapse-{colkey}" class="accordion-collapse collapse" aria-labelledby="header-{colkey}" data-bs-parent="#accordion">
-				<div class="panel-body">
-					<div class="panel-group accordion accordion-sub" id="accordion-{colkey}" style="box-shadow: none;">
-						<f:for each="{columns}" as="field" key="ckey">
-							<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
+	<div id="collapse-{colkey}" class="accordion-collapse collapse" aria-labelledby="header-{colkey}" data-bs-parent="#accordion">
+		<div class="panel-body">
+			<div class="panel-group accordion accordion-sub" id="accordion-{colkey}" style="box-shadow: none;">
+				<f:for each="{columns}" as="field" key="ckey">
+					<f:if condition="{ckey} == 'navbar_dark_mode' && {settings.cdn.bootstrap} < '5.3'">
+						<f:then>
+							<f:comment>
+								Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
+							</f:comment>
+						</f:then>
+						<f:else>
+							<f:if condition="{field.noSub}">
 								<f:then>
-									<f:comment>
-										Hide Option 'navbar_dark_mode' if Bootstrap is not > v5.2.99
-									</f:comment>
-								</f:then>
-								<f:else>
-									<f:if condition="{field.noSub}">
+									<f:comment> - FORM FIELD - </f:comment>
+									<f:if condition="{isSiteroot}">
 										<f:then>
-											<f:comment> - FORM FIELD - </f:comment>
-											<f:if condition="{isSiteroot}">
-												<f:then>
-													<f:render partial="Config/{field.type}" arguments="{_all}" />
-												</f:then>
-												<f:else>
-													<f:if condition="{field.property} != 'contentOnlyOnRootpage'">
-														<f:render partial="Config/{field.type}" arguments="{_all}" />
-													</f:if>
-												</f:else>
-											</f:if>
+											<f:render partial="Config/{field.type}" arguments="{_all}" />
 										</f:then>
 										<f:else>
-											<f:comment> - NESTED ACCORDION - </f:comment>
-											<f:render section="Nested" arguments="{_all}" />
+											<f:if condition="{field.property} != 'contentOnlyOnRootpage'">
+												<f:render partial="Config/{field.type}" arguments="{_all}" />
+											</f:if>
 										</f:else>
 									</f:if>
+								</f:then>
+								<f:else>
+									<f:comment> - NESTED ACCORDION - </f:comment>
+									<f:render section="Nested" arguments="{_all}" />
 								</f:else>
 							</f:if>
-						</f:for>
-					</div>
-				</div>
+						</f:else>
+					</f:if>
+				</f:for>
 			</div>
-		</f:else>
-	</f:if>
+		</div>
+	</div>
 </div>
 </f:section>
 

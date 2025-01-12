@@ -1,0 +1,153 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.expandedcontentTop.enable}">
+	<f:render partial="Page/ExpandedContent/Top" arguments="{_all}" />
+</f:if>
+<f:if condition="{config.general.pageTitle} == 'content'">
+	<f:render partial="Page/Title" arguments="{_all}" />
+</f:if>
+<f:if condition="{data.tx_t3sbootstrap_container}">
+	<f:then>
+		<div class="{data.tx_t3sbootstrap_container}">
+			<f:render section="Order" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<f:render section="Order" arguments="{_all}" />
+	</f:else>
+</f:if>
+<f:if condition="{config.expandedcontentBottom.enable}">
+	<f:render partial="Page/ExpandedContent/Bottom" arguments="{_all}" />
+</f:if>
+</html>
+
+
+<f:section name="Order">
+<div class="row content-row">
+	<f:switch expression="{data.tx_t3sbootstrap_mobileOrder}">
+		<f:case value="top">
+			<f:render section="Top" arguments="{_all}" />
+		</f:case>
+		<f:case value="bottom">
+			<f:render section="Bottom" arguments="{_all}" />
+		</f:case>
+		<f:case value="leftTop">
+			<f:render section="Default" arguments="{_all}" />
+		</f:case>
+		<f:case value="leftBottom">
+			<f:render section="LeftBottom" arguments="{_all}" />
+		</f:case>
+		<f:case value="rightTop">
+			<f:render section="LeftBottom" arguments="{_all}" />
+		</f:case>
+		<f:case value="rightBottom">
+			<f:render section="Default" arguments="{_all}" />
+		</f:case>
+		<f:defaultCase>
+			<f:render section="Default" arguments="{_all}" />
+		</f:defaultCase>
+	</f:switch>
+</div>
+</f:section>
+
+<f:section name="Default">
+	<f:variable name="globalPaddingTop">
+		{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}', else: '')}
+	</f:variable>
+	<f:variable name="asideExtraClass">
+		{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}', else: '')}
+	</f:variable>
+	<f:variable name="mainExtraClass">
+		{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}', else: '')}
+	</f:variable>
+
+	<aside class="col-{gridBreakpoint}-{colAside}{globalPaddingTop}{asideExtraClass}">
+		<f:render section="LeftAside" arguments="{_all}" />
+	</aside>
+	<main class="col-{gridBreakpoint}-{colMain} main-content{globalPaddingTop}{mainExtraClass}">
+		<f:render section="MainContent" arguments="{_all}" />
+	</main>
+	<aside class="col-{gridBreakpoint}-{colAside}{globalPaddingTop}{asideExtraClass}">
+		<f:render section="RightAside" arguments="{_all}" />
+	</aside>
+</f:section>
+
+<f:section name="Top">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{globalPaddingTop}{asideExtraClass}">
+		<f:render section="LeftAside" arguments="{_all}" />
+	</aside>
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{globalPaddingTop}{asideExtraClass}">
+		<f:render section="RightAside" arguments="{_all}" />
+	</aside>
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{globalPaddingTop}{mainExtraClass}">
+		<f:render section="MainContent" arguments="{_all}" />
+	</main>
+</f:section>
+
+<f:section name="Bottom">
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{globalPaddingTop}{mainExtraClass}">
+		<f:render section="MainContent" arguments="{_all}" />
+	</main>
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{globalPaddingTop}{asideExtraClass}">
+		<f:render section="LeftAside" arguments="{_all}" />
+	</aside>
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{globalPaddingTop}{asideExtraClass}">
+		<f:render section="RightAside" arguments="{_all}" />
+	</aside>
+</f:section>
+
+<f:section name="LeftBottom">
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-3{globalPaddingTop}{asideExtraClass}">
+		<f:render section="RightAside" arguments="{_all}" />
+	</aside>
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{globalPaddingTop}{mainExtraClass}">
+		<f:render section="MainContent" arguments="{_all}" />
+	</main>
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{globalPaddingTop}{asideExtraClass}">
+		<f:render section="LeftAside" arguments="{_all}" />
+	</aside>
+</f:section>
+
+<f:section name="MainContent">
+	<f:if condition="{data.content_from_pid}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.content_from_pid}', colPos: '0'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '0'}"/>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="LeftAside">
+	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'above'">
+		<f:render partial="Page/{config.sidebar.left}" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{settings.config.slideLeftAside}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '1'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '1'}"/>
+		</f:else>
+	</f:if>
+	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'below'">
+		<f:render partial="Page/{config.sidebar.left}" arguments="{_all}" />
+	</f:if>
+</f:section>
+
+<f:section name="RightAside">
+	<f:if condition="{config.sidebar.right} && {settings.config.sidebarMenuPosition} == 'above'">
+		<f:render partial="Page/{config.sidebar.right}" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{settings.config.slideRightAside}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '2'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '2'}"/>
+		</f:else>
+	</f:if>
+	<f:if condition="{config.sidebar.right} && {settings.config.sidebarMenuPosition} == 'below'">
+		<f:render partial="Page/{config.sidebar.right}" arguments="{_all}" />
+	</f:if>
+</f:section>

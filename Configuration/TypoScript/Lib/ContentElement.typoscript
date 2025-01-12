@@ -128,6 +128,10 @@ lib.contentElement {
 			configuid = {$bootstrap.config.uid}
 			disableAutoRow = {$bootstrap.image.disableAutoRow}
 			footerPid = {$bootstrap.config.footerPid}
+			footerContainer = {$bootstrap.config.footerContainer}
+			jumbotronContainer = {$bootstrap.config.jumbotronContainer}
+			expandedcontentContainertop = {$bootstrap.config.expandedcontentContainertop}
+			expandedcontentContainerbottom = {$bootstrap.config.expandedcontentContainerbottom}
 			breakpoint {
 				sm = {$bootstrap.navbar.breakpoint.sm}
 				md = {$bootstrap.navbar.breakpoint.md}

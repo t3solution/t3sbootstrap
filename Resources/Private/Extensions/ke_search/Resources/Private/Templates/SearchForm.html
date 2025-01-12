@@ -82,7 +82,7 @@
 								<div class="input-group mb-3">
 									<input type="search" id="ke_search_sword" class="form-control" name="tx_kesearch_pi1[sword]" value="{searchword -> f:format.raw()}"
  									placeholder="Suchbegriff" {f:if(condition: '{extConf.allowEmptySearch} == 0', then: 'required')} minlength="{extConf.searchWordLength}" aria-label="Suchbegriff" aria-describedby="submit-button">
- 									<button id="submit-button" class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i></button>
+ 									<button id="submit-button" class="btn btn-outline-secondary" type="submit"><t3sb:icon iconfig="fa6:solid,magnifying-glass" /></button>
 								</div>
 							</div>
 							<div class="col-12 col-md-6">

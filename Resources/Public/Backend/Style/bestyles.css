@@ -1,18 +1,121 @@
 
+
+/* Backend-layout icons */
+.formengine-field-item .t3js-forms-select-single-icons.form-wizard-icon-list .form-wizard-icon-list-item img {
+	width: 32px;
+	height: 32px;
+}
+.form-wizard-icon-list-item a.active, .form-wizard-icon-list-item a:active {
+  color: var(--typo3-list-item-active-color);
+  background-color: #6a10f3;
+  outline: 1px solid var(--typo3-list-item-active-border-color);
+}
+
+
+
+.t3sb-config .form-horizontal .accordion a {
+	color: #fff !important;
+}
+
+
 .t3-grid-table .t3js-page-column .t3-page-column-header  {
 	background: #eee0ff;
 	color: #7e00b4;
 	margin: 0;
 	padding: .75rem;
-} 
+}
 
 .t3-grid-table .t3js-page-column:first-child .t3-page-ce .t3-page-column-header  {
 	background: #fff;
 	color: #999;
-} 
- 
+}
+
 .ck-content.ck-button.ck-off,
 .ck-content .ck-button.ck-off {
 	display: none;
 }
+
+[data-colpos="211"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="211"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="212"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="212"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="221"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="221"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="222"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="222"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="231"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="231"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="232"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="232"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="233"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="233"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="241"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="241"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="242"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="242"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="243"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="243"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="244"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="244"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="261"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="261"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="262"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="262"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="263"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="263"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="264"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="264"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="265"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="265"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="266"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="266"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="290"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="290"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="270"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="270"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="271"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="271"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="272"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="272"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="273"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="273"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="274"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="274"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="275"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="275"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="276"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="276"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="277"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="277"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="278"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="278"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="279"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="279"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="280"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="280"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="281"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="281"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="282"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="282"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="283"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="283"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="300"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="300"] > .t3-page-column-header {color: #7e00b4 !important;}
+[data-colpos="310"] {background: #eee0ff; color: #7e00b4;}
+[data-colpos="310"] > .t3-page-column-header {color: #7e00b4 !important;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

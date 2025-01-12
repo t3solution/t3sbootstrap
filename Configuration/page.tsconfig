@@ -1,7 +1,18 @@
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/Page.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/Content.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.tsconfig'
+
+[typo3.branch == "12.4"]
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
+[END]
+
+# if news is activated in emconfig
+[t3sbootstrap('extNews') === '1']
+@import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig'
+[END]
+
+@import 'EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig'
 
 templates.t3sbs/t3sbootstrap.11 = t3sbs/t3sbootstrap:Resources/Private/Backend

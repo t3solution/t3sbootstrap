@@ -8,8 +8,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -19,6 +17,9 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\PageTitle\BreadcrumbProvider;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Routing\PageArguments;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -28,17 +29,13 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
  */
 class ConfigProcessor implements DataProcessorInterface
 {
-	/**
-	 * Fetches records from the database as an array
-	 *
-	 * @param ContentObjectRenderer $cObj The data of the content element or page
-	 * @param array $contentObjectConfiguration The configuration of Content Object
-	 * @param array $processorConfiguration The configuration of this processor
-	 * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
-	 *
-	 * @return array the processed data as key/value store
-	 */
-	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
+
+	public function process(
+		ContentObjectRenderer $cObj,
+		array $contentObjectConfiguration,
+		array $processorConfiguration,
+		array $processedData
+	): array
 	{
 		/** @var \Psr\Http\Message\ServerRequestInterface $request */
 		$request = $cObj->getRequest();
@@ -75,7 +72,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$currentPage = $frontendController->page;
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
 		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-		$rootlinePage = $pageRepository->getPage($processedRecordVariables['homepageUid']);
+		$rootlinePage = $pageRepository->getPage((int) $processedRecordVariables['homepageUid']);
 		$smallColumnsRootline = !empty($rootlinePage['tx_t3sbootstrap_smallColumns']) ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 		// global override page data
@@ -99,23 +96,33 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 		}
 
+		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
+		// chapter section
+		if (!empty($extConf['chapter'])) {		
+			$currentPageUid = $request->getAttribute('routing')->getPageId();
+			$processedData = self::chapterSection($processedData, $currentPageUid);
+		}
+		
 		/**
 		 * Backend layout
 		 */
-		if (!empty($processedData['data']['backend_layout'])) {
-			$oneCol = $processedData['data']['backend_layout'] == 'pagets__OneCol' ? true : false;
-			$threeCol = $processedData['data']['backend_layout'] == 'pagets__ThreeCol' ? true : false;
+		 $backendLayout = $processedData['data']['backend_layout'];
+		if (!empty($backendLayout)) {
+			$oneCol = $backendLayout == 'pagets__OneCol' || $backendLayout == 'pagets__OneCol_Extra' ? true : false;
+			$threeCol = $backendLayout == 'pagets__ThreeCol' || $backendLayout == 'pagets__ThreeCol_Extra' ? true : false;
 		} else {
-			$backendLayoutNextLevel = false;
+			$bLNextLevel = false;
 			foreach ($frontendController->rootLine as $subPage) {
-				$backendLayoutNextLevel = $subPage['backend_layout_next_level'];
+				$bLNextLevel = $subPage['backend_layout_next_level'];
 				if (!empty($subPage['backend_layout_next_level'])) {
 					break;
 				}
 			}
-			$oneCol = $backendLayoutNextLevel == 'pagets__OneCol' ? true : false;
-			$threeCol = $backendLayoutNextLevel == 'pagets__ThreeCol' ? true : false;
+			$oneCol = $bLNextLevel == 'pagets__OneCol' || $bLNextLevel == 'pagets__OneCol_Extra' ? true : false;
+			$threeCol = $bLNextLevel == 'pagets__ThreeCol' || $bLNextLevel == 'pagets__ThreeCol_Extra' ? true : false;
 		}
+
 		if ($oneCol === false) {
 			if ($threeCol === true) {
 				$smallColumns = $smallColumns < 6 ? $smallColumns : 5;
@@ -177,8 +184,8 @@ class ConfigProcessor implements DataProcessorInterface
 			if (!empty($processedData['navbarMenu'])) {
 				foreach ($processedData['navbarMenu'] as $key=>$navbarMenu) {
 					$mainMenu[$key] = $navbarMenu;
-					if (!empty($navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'])) {
-						$mainMenu[$key]['faIcon'] = '<i class="'.$navbarMenu['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
+					if (!empty($navbarMenu['data']['page_icon'])) {
+						$mainMenu[$key]['iconPack'] = $navbarMenu['data']['page_icon'];
 					}
 					$mainMenu[$key]['linkTitle'] = $navbarMenu['data']['title'];
 					if (!empty($settings['navbar.']['noLinkTitle'])) {
@@ -221,11 +228,12 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['navbar']['dropdownAnimate'] =
 				 ' dd-animate-'.(int)$processedRecordVariables['navbarDropdownAnimate'];
 				$processedData['config']['navbar']['dropdownAnimateValue'] =
-				 (int)$contentObjectConfiguration['settings.']['config.']['navbarDropdownAnimate'];
+				 (int)$processedRecordVariables['navbarDropdownAnimate'];
 			}
 
 			// shortcut & clickableparent
-			if (!empty($frontendController->rootLine[1]) && $frontendController->rootLine[1]['doktype'] == 4 && empty($processedRecordVariables['navbarPlusicon'])) {
+			if (!empty($frontendController->rootLine[1]) && $frontendController->rootLine[1]['doktype'] == 4
+				 && empty($processedRecordVariables['navbarPlusicon'])) {
 				$processedData['config']['navbar']['clickableparent'] = 1;
 			} else {
 				$processedData['config']['navbar']['clickableparent'] = (int) $processedRecordVariables['navbarClickableparent'];
@@ -247,6 +255,7 @@ class ConfigProcessor implements DataProcessorInterface
 			if ($processedRecordVariables['navbarBrand'] === 'imgText' && !empty($processedRecordVariables['company'])) {
 				$processedData['config']['navbar']['brandClass'] = ' d-inline-block me-2';
 			}
+
 			// toggler
 			$processedData['config']['navbar']['toggler'] = $processedRecordVariables['navbarToggler'];
 			$processedData['config']['navbar']['animatedToggler'] = $processedRecordVariables['navbarAnimatedtoggler'];
@@ -292,7 +301,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$navBarAttr = '';
 			if ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor']) {
 				$processedData['config']['navbar']['transparent'] = false;
-				$navbarClass .= ' shrink py-'.$contentObjectConfiguration['settings.']['config.']['shrinkingNavPadding'];
+				$navbarClass .= ' shrink py-'.$processedRecordVariables['shrinkingNavPadding'];
 				$navbarShrinkcolorschemes = $processedRecordVariables['navbarShrinkcolorschemes'];
 				$navBarAttr .= ' data-shrinkcolorschemes="bg-'.$navbarShrinkcolorschemes.'"';
 				$shrinkColor = $processedRecordVariables['navbarShrinkcolor'];
@@ -401,11 +410,6 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['navbar']['enable'] = false;
 			}
 
-			// navigation color
-			$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-			if ($extConf['navigationColor']) {
-				$processedData['config']['navbar']['navColorCSS'] = self::getNavigationColor((int)$processedData['data']['sys_language_uid']);
-			}
 		}
 
 		/**
@@ -542,7 +546,7 @@ class ConfigProcessor implements DataProcessorInterface
 		/**
 		 * Background Image (body)
 		 */
-		if ($contentObjectConfiguration['settings.']['config.']['backgroundImageEnable']) {
+		if ($processedRecordVariables['backgroundImageEnable']) {
 			$BodyBgImage = self::getBackgroundImageUtility()->getBgImage(
 				$frontendController->id,
 				'pages',
@@ -554,7 +558,7 @@ class ConfigProcessor implements DataProcessorInterface
 				$contentObjectConfiguration['settings.']['bgMediaQueries']
 			);
 			$bgImage = is_array($BodyBgImage) ? $BodyBgImage[1] : '';
-			if (empty($BodyBgImage) && $contentObjectConfiguration['settings.']['config.']['backgroundImageSlide']) {
+			if (empty($BodyBgImage) && $processedRecordVariables['backgroundImageSlide']) {
 				foreach ($frontendController->rootLine as $page) {
 					$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', false, false, [], true, $frontendController->id);
 					if ($BodyBgImage) {
@@ -625,42 +629,17 @@ class ConfigProcessor implements DataProcessorInterface
 		/**
 		 * Expandedcontent Top & Bottom
 		 */
-		if ($processedRecordVariables['expandedcontentEnabletop']) {
-			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-			$numberOfTop = $queryBuilder
-				->count('uid')
-				->from('tt_content')
-				->where(
-					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(20, Connection::PARAM_INT))
-				)
-			->executeQuery()
-			->fetchOne();
+		$processedData['config']['expandedcontentTop']['enable'] = $processedRecordVariables['expandedcontentEnabletop'];
+		$processedData['config']['expandedcontentTop']['slide'] = $processedRecordVariables['expandedcontentSlidetop'];
+		$processedData['config']['expandedcontentTop']['container'] = $processedRecordVariables['expandedcontentContainertop'];
+		$processedData['config']['expandedcontentTop']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositiontop'];
+		$processedData['config']['expandedcontentTop']['class'] = trim($processedRecordVariables['expandedcontentClasstop']);
+		$processedData['config']['expandedcontentBottom']['enable'] = $processedRecordVariables['expandedcontentEnablebottom'];
+		$processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontentSlidebottom'];
+		$processedData['config']['expandedcontentBottom']['container'] = $processedRecordVariables['expandedcontentContainerbottom'];
+		$processedData['config']['expandedcontentBottom']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositionbottom'];
+		$processedData['config']['expandedcontentBottom']['class'] = trim($processedRecordVariables['expandedcontentClassbottom']);
 
-			$processedData['config']['expandedcontentTop']['enable'] = $numberOfTop ? $processedRecordVariables['expandedcontentEnabletop'] : 0;
-			$processedData['config']['expandedcontentTop']['slide'] = $processedRecordVariables['expandedcontentSlidetop'];
-			$processedData['config']['expandedcontentTop']['container'] = $processedRecordVariables['expandedcontentContainertop'];
-			$processedData['config']['expandedcontentTop']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositiontop'];
-			$processedData['config']['expandedcontentTop']['class'] = trim($processedRecordVariables['expandedcontentClasstop']);
-		}
-		if ($processedRecordVariables['expandedcontentEnablebottom']) {
-			$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-			$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-			$numberOfBottom = $queryBuilder
-				->count('uid')
-				->from('tt_content')
-				->where(
-					$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(21, Connection::PARAM_INT))
-				)
-			->executeQuery()
-			->fetchOne();
-
-			$processedData['config']['expandedcontentBottom']['enable'] = $numberOfBottom ? $processedRecordVariables['expandedcontentEnablebottom'] : 0;
-			$processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontentSlidebottom'];
-			$processedData['config']['expandedcontentBottom']['container'] = $processedRecordVariables['expandedcontentContainerbottom'];
-			$processedData['config']['expandedcontentBottom']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositionbottom'];
-			$processedData['config']['expandedcontentBottom']['class'] = trim($processedRecordVariables['expandedcontentClassbottom']);
-		}
 
 		return $processedData;
 	}
@@ -674,110 +653,6 @@ class ConfigProcessor implements DataProcessorInterface
 		return GeneralUtility::makeInstance(BackgroundImageUtility::class);
 	}
 
-
-	/**
-	 * Generate CSS for navigation color
-	 */
-	protected function getNavigationColor(int $languageUid): string
-	{
-		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
-		$result = $queryBuilder
-			 ->select('uid', 'tx_t3sbootstrap_navigationcolor', 'tx_t3sbootstrap_navigationactivecolor', 'tx_t3sbootstrap_navigationhover', 'tx_t3sbootstrap_navigationbgcolor')
-			 ->from('pages')
-			 ->where(
-				 $queryBuilder->expr()->or(
-					 $queryBuilder->expr()->neq('tx_t3sbootstrap_navigationcolor', $queryBuilder->createNamedParameter('')),
-					 $queryBuilder->expr()->neq('tx_t3sbootstrap_navigationactivecolor', $queryBuilder->createNamedParameter('')),
-					 $queryBuilder->expr()->neq('tx_t3sbootstrap_navigationhover', $queryBuilder->createNamedParameter('')),
-					 $queryBuilder->expr()->neq('tx_t3sbootstrap_navigationbgcolor', $queryBuilder->createNamedParameter(''))
-				 )
-			 )
-			->andWhere(
-				$queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($languageUid, Connection::PARAM_INT))
-			)
-			 ->executeQuery();
-
-		$navbarColors = $result->fetchAllAssociative();
-		$navbarColorCSS = '';
-
-		if (is_array($navbarColors)) {
-			foreach ($navbarColors as $navbarColor) {
-				if (is_integer($navbarColor['uid'])) {
-					$treePages = explode(',', self::getTreeList((int)$navbarColor['uid'], 99));
-
-					foreach ($treePages as $treepageUid) {
-						if ($navbarColor['uid'] == $treepageUid) {
-							$item = '#nav-item-'.(int)$treepageUid;
-
-							if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
-								$navbarColorCSS .= $item.'.active .nav-link{color:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
-							}
-						} else {
-							$item = '.dropdown-item-'.(int)$treepageUid;
-
-							if ($navbarColor['tx_t3sbootstrap_navigationcolor']) {
-								$navbarColorCSS .= $item.'{color:'.$navbarColor['tx_t3sbootstrap_navigationcolor'].' !important}';
-							}
-							if ($navbarColor['tx_t3sbootstrap_navigationactivecolor']) {
-								$navbarColorCSS .= $item.'.active{color:'.$navbarColor['tx_t3sbootstrap_navigationactivecolor'].' !important}';
-							}
-							if ($navbarColor['tx_t3sbootstrap_navigationbgcolor']) {
-								$navbarColorCSS .= $item.'.active{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
-								$navbarColorCSS .= $item.':hover,'.$item.':focus{background:'.$navbarColor['tx_t3sbootstrap_navigationbgcolor'].' !important}';
-							}
-							if ($navbarColor['tx_t3sbootstrap_navigationhover']) {
-								$navbarColorCSS .= $item.':hover,'.$item.':focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
-								$navbarColorCSS .= $item.'.active:hover,'.$item.'.active:focus{color:'.$navbarColor['tx_t3sbootstrap_navigationhover'].' !important}';
-							}
-						}
-					}
-				}
-			}
-		}
-		return $navbarColorCSS;
-	}
-
-
-	/**
-	 * Returns an string
-	 */
-	protected function getTreeList(int $id, int $depth, int $begin = 0, string $permsClause = ''): string
-	{
-		if ($id < 0) {
-			$id = abs($id);
-		}
-		if ($begin == 0) {
-			$theList = $id;
-		} else {
-			$theList = '';
-		}
-		if ($id && $depth > 0) {
-			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
-			$queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-			$statement = $queryBuilder->select('uid')
-				->from('pages')
-				->where(
-					$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, Connection::PARAM_INT)),
-					$queryBuilder->expr()->eq('sys_language_uid', 0),
-					QueryHelper::stripLogicalOperatorPrefix($permsClause)
-				)
-				->executeQuery();
-			while ($row = $statement->fetchAssociative()) {
-				if ($begin <= 0) {
-					$theList .= ',' . $row['uid'];
-				}
-				if ($depth > 1) {
-					$theSubList = self::getTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause);
-					if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {
-						$theList .= ',';
-					}
-					$theList .= $theSubList;
-				}
-			}
-		}
-
-		return (string)$theList;
-	}
 
 
 	/**
@@ -808,8 +683,8 @@ class ConfigProcessor implements DataProcessorInterface
 	{
 		$mainMenu = $children;
 		foreach ($children as $cKey=>$child) {
-			if (!empty($child['data']['tx_t3sbootstrap_fontawesome_icon'])) {
-				$mainMenu[$cKey]['faIcon'] = '<i class="'.$child['data']['tx_t3sbootstrap_fontawesome_icon'].'"></i> ';
+			if (!empty($child['data']['page_icon'])) {
+				$mainMenu[$cKey]['iconPack'] = $child['data']['page_icon'];
 			}
 			if (!empty($child['data']['tx_t3sbootstrap_icon_only'])) {
 				$mainMenu[$cKey]['title'] = '';
@@ -834,5 +709,41 @@ class ConfigProcessor implements DataProcessorInterface
 
 		return $mainMenu;
 	}
+
+
+
+	function chapterSection(array $processedData, int $currentPageUid): array
+	{
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$result = $queryBuilder
+			->select('uid', 'header', 'tx_t3sbootstrap_chapter')
+			->from('tt_content')
+			->where(
+				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($currentPageUid, Connection::PARAM_INT)),
+				$queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+				$queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+				$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
+			)
+			->executeQuery();
+
+		$erg = [];
+		$i = -1;
+		while ($row = $result->fetchAssociative()) {
+			if (!empty($row['tx_t3sbootstrap_chapter'])) {
+
+				if ($row['tx_t3sbootstrap_chapter'] === '1') {
+					$i++;
+					$erg[$i][$row['uid']] = $row;
+				} else {
+					$erg[$i][$row['uid']] = $row;
+				}
+			}
+		}
+		$processedData['chapter'] = $erg;
+
+		return $processedData;
+	}
+
 
 }

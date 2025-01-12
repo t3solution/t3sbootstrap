@@ -9,9 +9,11 @@
 		<f:render section="Default" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Modal (uid = {data.uid}) has no content!
-		</div>
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Modal (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>
@@ -47,7 +49,7 @@
 
 <div class="modal{f:if(condition:'{modal.animation}',then:' fade')}" id="modal-{data.uid}" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog {modal.size}">
-		<div class="modal-content">      
+		<div class="modal-content">
 			<div class="modal-header">
 				<f:render partial="Header/All" arguments="{_all}" />
 				<button type="button" class="btn-close{f:if(condition:'{modal.whiteclosebutton}',then:' btn-close-white')}" data-bs-dismiss="modal" aria-label="Schließen"></button>
@@ -61,7 +63,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
 			</div>
-</f:comment>	
+</f:comment>
 		</div>
 	</div>
 </div>

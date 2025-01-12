@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Wrapper;
@@ -23,9 +24,11 @@ class ParallaxWrapper implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
+
 		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 		$processedData['file'] = $file;
+
 		if ( $file ) {
 			if ( $file->getType() === 4 ) {
 				$processedData['video'] = TRUE;
@@ -52,6 +55,7 @@ class ParallaxWrapper implements SingletonInterface
 					$processedData['file'] = $file;
 				}
 			} else {
+
 				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
 				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0);
 				$processedData['parallaxImage'] = $bgImage;

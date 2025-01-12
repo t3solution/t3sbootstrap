@@ -53,6 +53,7 @@
 		<f:render section="defaultJS" arguments="{_all}" />
 	</f:else>
 </f:if>
+
 <div id="swiper-{data.uid}" class="swiper {class}"{styleAttr -> f:format.raw()}>
 	<div class="swiper-wrapper gallery">
 		<f:for each="{col_300}" as="card" iteration="iterator">
@@ -199,6 +200,7 @@
 	</f:if>
 </f:section>
 
+
 <f:section name="defaultJS">
 <f:asset.script identifier="vanilla_swiperjs-{data.uid}">
 	// Swiper Slider - Partials/Content/Swiper/Default.html
@@ -211,8 +213,10 @@
 		b768 = {breakpoints768},
 		b992 = {breakpoints992},
 		lop = {loop},
+		interaction = true,
 		suid = {data.uid};
 		if(spg === null || spg === '') spg = 1;
+		if(!{autoplay}) del = 999999999;
 	var swiper = new Swiper('#swiper-{data.uid}', {
 		slidesPerView: spv,
 		spaceBetween: spb,
@@ -224,7 +228,7 @@
 			clickable: true,
 		},
 		autoplay: {
-			delay: del,
+			delay: del, 
 		},
 		navigation: {
 			nextEl: '.next-'+suid,
@@ -245,6 +249,7 @@
 			},
 		},				
 	});
+	
 <f:if condition="{pagination} && {navigation}">
 	var swi = document.getElementById('swiper-{data.uid}'),
 		pag = swi.querySelector('.swiper-pagination'),

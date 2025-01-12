@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:variable name="globalPaddingTop">
+	{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}', else: '')}
+</f:variable>
+<f:variable name="mainExtraClass">
+	{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}', else: '')}
+</f:variable>
+<main class="main-content{globalPaddingTop}{mainExtraClass}">
+	<f:if condition="{config.expandedcontentTop.enable}">
+		<f:render partial="Page/ExpandedContent/Top" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{config.general.pageTitle} == 'content'">
+		<f:render partial="Page/Title" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{data.tx_t3sbootstrap_container}">
+		<f:then>
+			<div class="{data.tx_t3sbootstrap_container}">
+				<f:render section="MainContent" arguments="{_all}" />
+			</div>
+		</f:then>
+		<f:else>
+			<f:render section="MainContent" arguments="{_all}" />
+		</f:else>
+	</f:if>
+	<f:if condition="{config.expandedcontentBottom.enable}">
+		<f:render partial="Page/ExpandedContent/Bottom" arguments="{_all}" />
+	</f:if>
+</main>
+</html>
+
+<f:section name="MainContent">
+	<f:if condition="{data.content_from_pid}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.content_from_pid}', colPos: '0'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '0'}"/>
+		</f:else>
+	</f:if>
+</f:section>
+

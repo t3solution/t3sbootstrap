@@ -1,12 +1,12 @@
 mod {
 	web_layout {
 		BackendLayouts {
-			TwoCol_3-9 {
-				title = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.twoCol_3-9
+			TwoCol_3-9_Extra {
+				title = 2 Columns (aside left) with extra rows (top and bottom)
 				config {
 					backend_layout {
 						colCount = 3
-						rowCount = 5
+						rowCount = 3
 						rows {
 							1 {
 								columns {
@@ -20,7 +20,7 @@ mod {
 							2 {
 								columns {
 									1 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.otc
+										name = Expanded Content Top
 										colspan = 3
 										colPos = 20
 									}
@@ -43,7 +43,7 @@ mod {
 							4 {
 								columns {
 									1 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.obc
+										name = Expanded Content Bottom
 										colspan = 3
 										colPos = 21
 									}
@@ -61,7 +61,7 @@ mod {
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-2_col-3-9.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-2_col-3-9_extra.svg
 			}
 		}
 	}

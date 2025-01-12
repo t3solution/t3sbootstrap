@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace T3SBS\T3sbootstrap\Helper;
 
 use TYPO3\CMS\Core\SingletonInterface;
@@ -18,7 +20,6 @@ class StyleHelper implements SingletonInterface
     public function getBgColor(array $data, bool $hexdec=true): string
     {
         $color = '';
-
 
         if ($data['tx_t3sbootstrap_bgcolor']
          && !$data['tx_t3sbootstrap_contextcolor']) {

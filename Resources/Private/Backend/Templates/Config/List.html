@@ -163,16 +163,7 @@ color: #fff;">
 						</f:then>
 						<f:else>
 							<f:if condition="{settings.editScss}">
-								<f:then>
-									<p class="text-center text-secondary">You can override default Bootstrap variables on the root page.</p>
-								</f:then>
-								<f:else>
-									<p class="text-center text-secondary">
-										You can override default Bootstrap variables in <strong>{settings.customScssPath}</strong>
-										 without modifying source files.<br />
-										 <small>Clean up temporary files in typo3temp/assets/t3sbootstrap/css/ after edit this file!</small>
-									</p>
-								</f:else>
+								<p class="text-center text-secondary">You can override default Bootstrap variables on the root page.</p>
 							</f:if>
 						</f:else>
 					</f:if>

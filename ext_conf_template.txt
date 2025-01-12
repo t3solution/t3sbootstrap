@@ -1,11 +1,6 @@
+
 # cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache)
 preview = 1
-# cat=preview/enable/20; type=boolean; label=Crop bodytext: Crop bodytext by "maxCharacters" (clear cache)
-previewCrop = 1
-# cat=preview/enable/30; type=string; label=Max Characters: Max Characters for crop bodytext (clear cache)
-previewCropMaxCharacters = 80
-# cat=preview/enable/40; type=boolean; label=Closed Collapsible: Collapsible container preview always closed (clear cache)
-previewClosedCollapsible = 0
 
 # cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache)
 spacing = 0
@@ -24,12 +19,10 @@ sectionOrder = 0
 # cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache)
 extraStyle = 0
 
-# cat=page/enable/10; type=boolean; label=Font Awesome Icons: include input field for Fontawesome Icons in Table pages - Edit Page -> Appearance (clear cache)
-fontawesome = 1
-# cat=page/enable/20; type=boolean; label=Font Awesome Icon in Page Title: Enable the fa icon in the page title (clear cache)
+
+# cat=page/enable/20; type=boolean; label=Icon in Page Title: Enable the page_icon (from EXT:iconpicker) in the page title (clear cache)
 fontawesomepagetitle = 1
-# cat=page/enable/30; type=boolean; label=Navigation color: Enable various colors for submenu nav-items in dropdown-menus (clear cache)
-navigationColor = 0
+
 
 # cat=custom scss/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
 customScss = 0
@@ -40,15 +33,13 @@ editScss = 0
 # cat=custom scss/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables if run the Scheduler (clear cache)
 keepVariables = 0
 
-# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: EXT:t3sb_package/.. or /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache)
+# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: EXT:t3sb_package/Configuration/FlexForms/.. or /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache)
 flexformExtend = 0
 # cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache)
 flexformModify = 0
 # cat=flexform/enable/40; type=boolean; label=No default settings in columns "Col-md-*" and "Col-*":in two_columns, three_columns, four_columns or six_columns
 flexformNoDefault = 0
 
-# cat=t3SB/enable/30; type=boolean; label=Expanded Content: you'll have two more (on top and bottom) backend-layout fields (colPos 20 and 21) if enabled (clear cache)
-expandedContent = 0
 # cat=t3SB/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache)
 cTypeClass = 0
 # cat=t3SB/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Concatenate CSS and JS files - best with "Compress" in T3SB config (clear cache)
@@ -60,32 +51,27 @@ sitepackage = 0
 
 # cat=different/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache)
 imgCopyright = 0
-# cat=different/enable/20; type=boolean; label=Custom translations:(clear cache)
-customTranslations = 0
+# cat=different/enable/25; type=boolean; label=Use Chapter: Shows select field "Chapter type" in the header palette if enabled. (EXPERIMENTAL)
+chapter = 0
 
-# cat=advanced/enable/10; type=options[none=0,FA 6 KIT=1,FA 6 KIT Pro=2, FA 6 free=3]; label=Font Awesome: FA-KIT Info: https://fontawesome.com/docs/web/setup/use-kit
+# cat=Advanced/enable/10; type=boolean; label=Font Awesome: min. Fontawesome CSS for RTE link-icons etc.
 fontawesomeCss = 0
-# cat=advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache)
+# cat=Advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache)
 animateCss = 0
-# cat=advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache)
+# cat=Advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache)
 linkHoverEffect = 0
-# cat=advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache)
+# cat=Advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache)
 lazyLoad = 0
-# cat=advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache)
+# cat=Advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache)
 extNews = 1
 
-# cat=presets/b-config/10; type=string; label=Custom "FA Icons value picker" for table tt_content field tx_t3sbootstrap_header_fontawesome: comma separated list is expected e.g.: fa-solid fa-bug, fa-solid fa-mosquito
-customFaIcons = 
-# cat=presets/b-config/20; type=string; label=Custom "Extra Classes value picker" for table tt_content field tx_t3sbootstrap_header_class: comma separated list is expected
-# cat=presets/b-config/10; type=string; label=Custom "FA Icons value picker" for table tt_content field tx_t3sbootstrap_header_fontawesome: comma separated list is expected e.g.: fa-solid fa-bug, fa-solid fa-mosquito
+# cat=value picker presets/b-config/20; type=string; label=Custom "Extra Classes value picker" for table tt_content field tx_t3sbootstrap_header_class: comma separated list is expected
 customHeaderClass =
-# cat=presets/b-config/30; type=string; label=Custom "FA Icons value picker" for table pages field tx_t3sbootstrap_fontawesome_icon: comma separated list is expected
-customFaIconsPages =
-# cat=presets/b-config/40; type=string; label=Custom "Page Title Color value picker" for table pages field tx_t3sbootstrap_titlecolor: comma separated list is expected
+# cat=value picker presets/b-config/40; type=string; label=Custom "Page Title Color value picker" for table pages field tx_t3sbootstrap_titlecolor: comma separated list is expected
 customTitleColor =
-# cat=presets/b-config/50; type=string; label=Custom "Page Subtitle Color value picker" for table pages field tx_t3sbootstrap_subtitlecolor: comma separated list is expected
+# cat=value picker presets/b-config/50; type=string; label=Custom "Page Subtitle Color value picker" for table pages field tx_t3sbootstrap_subtitlecolor: comma separated list is expected
 customSubtitleColor =
-# cat=presets/b-config/60; type=string; label=Custom "Extra Class - figure-tag value picker" for table sys_file_reference field tx_t3sbootstrap_extra_class: comma separated list is expected
+# cat=value picker presets/b-config/60; type=string; label=Custom "Extra Class - figure-tag value picker" for table sys_file_reference field tx_t3sbootstrap_extra_class: comma separated list is expected
 figureClass =
-# cat=presets/b-config/70; type=string; label=Custom "Extra Class - image-tag value picker" for table sys_file_reference field tx_t3sbootstrap_extra_imgclass: comma separated list is expected
+# cat=value picker presets/b-config/70; type=string; label=Custom "Extra Class - image-tag value picker" for table sys_file_reference field tx_t3sbootstrap_extra_imgclass: comma separated list is expected
 imageClass =

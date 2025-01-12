@@ -46,7 +46,7 @@
 	</f:then>
 	<f:else>
 		<f:for each="{metaNavigation}" as="metaItem">
-			<f:link.typolink class="nav-link{f:if(condition: metaItem.active, then:' active')}" parameter="{metaItem.link}">
+			<f:link.typolink class="ms-3 nav-link{f:if(condition: metaItem.active, then:' active')}" parameter="{metaItem.link}">
 				{metaItem.title}
 			</f:link.typolink>
 		</f:for>

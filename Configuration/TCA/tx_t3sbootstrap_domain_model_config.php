@@ -372,18 +372,6 @@ return [
                 'type' => 'input'
             ]
         ],
-        'fa_link_icons' => [
-            'exclude' => false,
-            'label' => 'FA icons for RTE-Links',
-            'accordion_id' => 1,
-            'accordion_sub' => '1-7',
-            'config' => [
-                'type' => 'check',
-                'items' => [
-                    ['label' => 'loads the required CSS-style for links set in the RTE or used global if activated',],
-                ]
-            ]
-        ],
         'card_flipper_on_Click' => [
             'exclude' => false,
             'label' => 'Card Flipper',

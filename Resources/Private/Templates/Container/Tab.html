@@ -4,9 +4,11 @@
 		<f:render section="Default" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Tab (uid = {data.uid}) has no content!
-		</div>
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Tab (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </html>

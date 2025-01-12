@@ -112,6 +112,7 @@ class GalleryProcessor implements DataProcessorInterface
             return $processedData;
         }
 
+
         $this->contentObjectRenderer = $cObj;
         $this->processorConfiguration = $processorConfiguration;
         $this->processedData = $processedData;
@@ -166,11 +167,14 @@ class GalleryProcessor implements DataProcessorInterface
         $this->maxWidthToast = $this->getConfigurationValue('maxWidthToast');
         $this->disableAutoRow = $this->getConfigurationValue('disableAutoRow');
 
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $this->frontendController = $request->getAttribute('frontend.controller');
+
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
         $this->parentflexconf = !empty($this->processedParentData['tx_t3sbootstrap_flexform'])
          ? $flexFormService->convertFlexFormContentToArray($this->processedParentData['tx_t3sbootstrap_flexform']) : [];
 
-        $pageContainer = self::getFrontendController()->page['tx_t3sbootstrap_container'];
+        $pageContainer = $this->frontendController->page['tx_t3sbootstrap_container'];
         $contentContainer = $this->processedData['data']['tx_t3sbootstrap_container'];
         if ($pageContainer) {
             $this->pageContainer = $pageContainer;
@@ -357,7 +361,7 @@ class GalleryProcessor implements DataProcessorInterface
                 } else {
                     $defaultSmallColumns = 0;
                 }
-                $smallColumns = $defaultSmallColumns ?: self::getFrontendController()->page['tx_t3sbootstrap_smallColumns'];
+                $smallColumns = $defaultSmallColumns ?: $this->frontendController->page['tx_t3sbootstrap_smallColumns'];
 
                 if ($this->beLayout == 'OneCol') {
                     $bsGridWidth = $bsMaxGridWidth;
@@ -969,12 +973,4 @@ class GalleryProcessor implements DataProcessorInterface
         return (int) $mediaWidth;
     }
 
-
-    /**
-     * Returns the frontend controller
-     */
-    protected function getFrontendController(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
-    }
 }

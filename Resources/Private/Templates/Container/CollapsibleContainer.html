@@ -61,9 +61,11 @@ function t3sbCollapsible(fixedNavbar, navbarHeight) {
 		</f:if>
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Collapsible Container (uid = {data.uid}) has no content!
-		</div>
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Collapsible Container (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>
@@ -84,14 +86,26 @@ function t3sbCollapsible(fixedNavbar, navbarHeight) {
 		</f:then>
 		<f:else>
 			<p>
+
+
+
 				<f:for each="{col_277}" as="row" iteration="iterator">
-					<f:variable name="buttonstyle" value="{flexformArr.{iterator.index}.style}" />
-					<f:variable name="expanded" value="{flexformArr.{iterator.index}.active}" />
-					<f:variable name="headerExtraClass" value=" {headerExtraClassArr.{iterator.index}}" />	
-					<a id="c{col_277.{iterator.index}.uid}" class="btn btn-{buttonstyle}{headerExtraClass} me-1"
+
+
+					<f:variable name="flexForm" value="<t3sb:flexform data='{row.tx_t3sbootstrap_flexform}' />" />
+
+
+					<a id="c{col_277.{iterator.index}.uid}" class="btn me-1 btn-{flexForm.style} {row.tx_t3sbootstrap_header_class}"
 						 data-bs-toggle="collapse" href="#collapse-{col_277.{iterator.index}.uid}"
-						 role="button" aria-expanded="{expanded}" aria-controls="collapse-{col_277.{iterator.index}.uid}">
-						 {headerFontawesomeArr.{iterator.index} -> f:format.raw()} 
+						 role="button" aria-expanded="{flexForm.active}" aria-controls="collapse-{col_277.{iterator.index}.uid}">
+
+
+			<f:if condition="{row.header_icon}">
+				<t3sb:icon iconfig="{row.header_icon}" additionalAttributes="{class:'me-1'}" />
+			</f:if>
+
+
+
 						{f:if(condition: '{col_277.{iterator.index}.header}',
 						 then: '{col_277.{iterator.index}.header -> f:format.raw()}', else: 'Button-{col_277.{iterator.index}.uid}')}
 					</a>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Components;
@@ -79,9 +80,13 @@ class Carousel implements SingletonInterface
 		$animate = ($animateCss && $parentAnimateCss) || $processedData['data']['tx_t3sbootstrap_bgcolor'] ? TRUE : FALSE;
 		$processedData['style'] .= self::getCarouselCaptionStyle( $flexconf, $animate );
 
-		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		if (!empty($fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']))) {
-			$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+		if (!empty($processedData['files'])) {
+			$file = $processedData['files'][0];
+		} else {
+			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+			if (!empty($fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']))) {
+				$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+			}
 		}
 		$processedData['localVideoPath'] = '';
 		if (!empty($file)) {
@@ -101,6 +106,7 @@ class Carousel implements SingletonInterface
 				$processedData['controls'] = !empty($flexconf['controls']) ? $flexconf['controls'] : 0;
 			}
 		}
+
 
 		$processedData['ratioCalc'] = '';
 

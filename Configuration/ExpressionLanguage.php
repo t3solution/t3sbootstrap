@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-use T3SBS\T3sbootstrap\ExpressionLanguage\T3sbConditionProvider;
-
-defined('TYPO3') or die ('Access denied.');
+defined('TYPO3') or die ();
 
 /*
  * This file is part of the EXT:t3sbootstrap
@@ -14,6 +13,6 @@ defined('TYPO3') or die ('Access denied.');
 
 return [
 	'typoscript' => [
-		T3sbConditionProvider::class
+		\T3SBS\T3sbootstrap\ExpressionLanguage\T3sbConditionProvider::class
 	]
 ];

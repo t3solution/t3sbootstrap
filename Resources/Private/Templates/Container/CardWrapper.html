@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="Main">
 <f:if condition="{col_270 -> f:count()}">
@@ -7,9 +6,11 @@
 		<f:render section="Default" arguments="{_all}" />
 	</f:then>
 	<f:else>
-		<div class="alert alert-danger my-3" role="alert">
-			Card Wrapper (uid = {data.uid}) has no content!
-		</div>
+		<f:if condition="{containerError}">
+			<div class="alert alert-danger my-3" role="alert">
+				Card Wrapper (uid = {data.uid}) has no content!
+			</div>
+		</f:if>
 	</f:else>
 </f:if>
 </f:section>
@@ -34,7 +35,8 @@ function t3sbCardFlipper() {
 			var cardBody = backside.querySelector('.card-body');
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
-			el.innerHTML = '<p class="square-backlink"><i class="fa-solid fa-minus-square fa-2x mx-auto"></i></p>';
+			el.innerHTML = '<p class="square-backlink"><t3sb:icon iconfig="fa6:solid,minus-square,size:2x" additionalAttributes="{class:'mx-auto'}" />
+			</p>';
 			insertAfter(cardBody, el);
 			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
 				backside.style.transform = 'rotateY(180deg)';
@@ -93,10 +95,10 @@ function insertAfter(referenceNode, newNode) {
 				<f:else>
 					<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
 				</f:else>
-			</f:if>	
+			</f:if>
 
 
-			
+
 		</f:else>
 	</f:if>
 	<div class="row{class}"
@@ -125,7 +127,7 @@ function insertAfter(referenceNode, newNode) {
 					<f:asset.css identifier="swipercss" href="fileadmin/T3SB/Resources/Public/T3SB-CSS/swiper-bundle.min.css" />
 					<f:asset.script identifier="swiperjs" src="fileadmin/T3SB/Resources/Public/T3SB-JS/swiper-bundle.min.js" />
 				</f:else>
-			</f:if>	
+			</f:if>
 		</f:else>
 	</f:if>
 	<f:asset.css identifier="swipercss-{data.uid}">
@@ -261,7 +263,9 @@ function insertAfter(referenceNode, newNode) {
 									</f:then>
 									<f:else>
 										<f:if condition="{settings.cardFlipperOnClick}">
-											<p class="square-link"><i class="fa-solid fa-plus-square fa-2x mx-auto"></i></p>
+											<p class="square-link">
+												<t3sb:icon iconfig="fa6:solid,plus-square,size:2x" additionalAttributes="{class:'mx-auto'}" />
+											</p>
 										</f:if>
 									</f:else>
 								</f:if>
@@ -314,7 +318,7 @@ function insertAfter(referenceNode, newNode) {
 	 picturefill="{settings.picturefill}"
 	 lazyload="{lazyload}"
 	 ratio="{ratio}"
-	 shift="{file.properties.tx_t3sbootstrap_shift_vertical}" 
+	 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
 	 hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
 	/>
 </figure>
@@ -351,17 +355,25 @@ function insertAfter(referenceNode, newNode) {
 		<f:then>
 			<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
 				<h4 class="card-title">
-					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+					<f:if condition="{card.hFa}">
+						<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
+					</f:if>			
+					{card.header -> f:format.raw()}</h4>
 				<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 			</header>
 		</f:then>
 		<f:else if="{card.header}">
 			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
-				{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</h4>
+				<f:if condition="{card.hFa}">
+					<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
+				</f:if>
+				{card.header -> f:format.raw()}
+			</h4>
 		</f:else>
 		<f:else if="{card.subheader}">
 			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' {card.tx_t3sbootstrap_header_class}')}">
-				{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}</h4>
+				{card.subheader -> f:format.raw()}
+			</h4>
 		</f:else>
 	</f:if>
 </f:section>
@@ -372,7 +384,13 @@ function insertAfter(referenceNode, newNode) {
 		<header{f:if(condition: '{card.tx_t3sbootstrap_header_class}',then: ' class="{card.tx_t3sbootstrap_header_class}"')}>
 			<h4 class="card-title">
 				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}"
-				parameter='{card.header_link}'>{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}</f:link.typolink>
+				parameter='{card.header_link}'>
+				
+			<f:if condition="{card.hFa}">
+				<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
+			</f:if>
+							
+				{card.header -> f:format.raw()}</f:link.typolink>
 			</h4>
 			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 		</header>
@@ -381,14 +399,20 @@ function insertAfter(referenceNode, newNode) {
 			<h4 class="card-title mb-3{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
 				then: ' {card.tx_t3sbootstrap_header_class}')}">
 				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
-					{card.hFa -> f:format.raw()}{card.header -> f:format.raw()}
+			<f:if condition="{card.hFa}">
+				<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
+			</f:if>
+					{card.header -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>
 		<f:else if="{card.subheader}">
 			<h4 class="card-subtitle text-muted mb-4{f:if(condition: '{card.tx_t3sbootstrap_header_class}',
 				then: ' {card.tx_t3sbootstrap_header_class}')}">
 				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
-					{card.hFa -> f:format.raw()}{card.subheader -> f:format.raw()}
+			<f:if condition="{card.hFa}">
+				<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
+			</f:if>					
+					{card.subheader -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>
 	</f:if>

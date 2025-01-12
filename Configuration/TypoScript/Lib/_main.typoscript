@@ -44,7 +44,7 @@ lib.currentDomain {
 lib.printButton = COA
 lib.printButton {
 	10 = TEXT
-	10.value = <i class="fa-solid fa-print"></i>
+	10.value = <t3sb:icon iconfig="fa6:solid,print"></t3sb>
 	stdWrap.typolinkno_cache = 1
 	stdWrap.typolink.title = Open print version of this page in a new window
 	stdWrap.typolink.ATagParams = target = _blank

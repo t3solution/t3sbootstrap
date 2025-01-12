@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use T3SBS\T3sbootstrap\Controller\ConfigController;
 
 /**

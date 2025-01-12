@@ -3,11 +3,15 @@
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 defined('TYPO3') || die();
 
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+# TYPO3 branch
+#$branch = GeneralUtility::makeInstance(Typo3Version::class)->getBranch();
+
 
 if (!empty($extconf['flexformNoDefault'])) {
     $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsNoDefaults.xml';
@@ -32,7 +36,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'value' => 't3sbs_assets',
         'icon' => 'cssJsIcon',
         'group' => 'special',
-        'description' => 'With this element you can insert raw JS or CSS code on the page.',   
+        'description' => 'With this element you can insert raw JS or CSS code on the page.',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
@@ -43,7 +47,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'value' => 't3sbs_mediaobject',
         'icon' => 'content-beside-text-img-left',
         'group' => 'T3S Bootstrap',
-        'description' => 'The media object helps build complex and repetitive components where some media is positioned alongside content that doesn’t wrap around said media.',   
+        'description' => 'The media object helps build complex and repetitive components where some media is positioned alongside content that doesn’t wrap around said media.',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
@@ -163,29 +167,6 @@ $tempContentColumns = [
                     ['text-uppercase', 'text-uppercase'],
                     ['One line left and right', 'h-line-1'],
                     ['Two lines left and right', 'h-line-2']
-                ],
-            ],
-        ],
-    ],
-    'tx_t3sbootstrap_header_fontawesome' => [
-        'label' => 'Font Awesome Icon',
-        'exclude' => 1,
-        'config' => [
-            'type' => 'input',
-            'size' => 40,
-            'eval' => 'trim',
-            'valuePicker' => [
-                'items' => [
-                    ['typo3', 'fa-brands fa-typo3'],
-                    ['envelope', 'fa-solid fa-envelope'],
-                    ['info-circle', 'fa-solid fa-circle-info'],
-                    ['exclamation-circle', 'fa-solid fa-circle-exclamation'],
-                    ['question-circle', 'fa-solid fa-circle-question'],
-                    ['check-circle', 'fa-solid fa-circle-check'],
-                    ['chevron-circle-left', 'fa-solid fa-circle-chevron-left'],
-                    ['chevron-circle-right', 'fa-solid fa-circle-chevron-right'],
-                    ['youtube', 'fa-brands fa-youtube'],
-                    ['vimeo', 'fa-brands fa-square-vimeo'],
                 ],
             ],
         ],
@@ -803,8 +784,30 @@ $tempContentColumns = [
             'foreign_field' => 'parentid',
             'foreign_table_field' => 'parenttable',
         ],
+    ],    
+     'tx_t3sbootstrap_chapter' => [
+        'exclude' => 1,
+        'label' => 'Chapter type',
+        'displayCond' => [
+            'OR' => [
+                'FIELD:CType:=:textpic',
+                'FIELD:CType:=:textmedia',
+                'FIELD:CType:=:text',
+            ]
+        ],
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                ['label' => 'none', 'value' => '',],
+                ['label' => 'Main Chapter', 'value' => '1',],
+                ['label' => 'Chapter', 'value' => '2',],
+            ],
+            'default' => '',
+        ]
     ],
 
+     
 ];
 
 
@@ -833,7 +836,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
             'config' => [
                 'type' => 'text',
                 'format' => 'javascript',
-                'renderType' => 't3editor',
+                'renderType' => 'codeEditor',
                 'wrap' => 'virtual',
                 'rows' => 15,
             ],
@@ -841,7 +844,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
         'tx_t3sbootstrap_bodytext' => [
             'config' => [
                 'type' => 'text',
-                'renderType' => 't3editor',
+                'renderType' => 'codeEditor',
                 'format' => 'css',
                 'rows' => 15,
                 'wrap' => 'virtual',
@@ -1180,10 +1183,22 @@ if (!ExtensionManagementUtility::isLoaded('content_animations')) {
     );
 }
 
-$GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
-    'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
-    tx_t3sbootstrap_header_class, tx_t3sbootstrap_header_fontawesome'
-];
+
+
+
+if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
+    $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
+        'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
+        tx_t3sbootstrap_chapter, --linebreak--, tx_t3sbootstrap_header_class'
+    ];
+} else {
+    $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
+        'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
+        tx_t3sbootstrap_header_class'
+    ];
+}
+
+
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
     'showitem' => 'tx_t3sbootstrap_padding_sides, tx_t3sbootstrap_padding_size, --linebreak--,
@@ -1225,14 +1240,5 @@ if ($extconf['sectionOrder']) {
         'tx_t3sbootstrap_sectionOrder',
         'after:sectionIndex'
     );
-}
-
-
-if ($extconf['preview']) {
-    # Show preview of tt_content elements in page module
-    $t3sbsContent = ['t3sbs_button', 't3sbs_card', 't3sbs_carousel', 't3sbs_fluidtemplate', 't3sbs_gallery', 't3sbs_mediaobject', 't3sbs_toast', 't3sbs_assets'];
-    foreach ($t3sbsContent as $t3sb) {
-        $GLOBALS['TCA']['tt_content']['types'][trim($t3sb)]['previewRenderer'] = \T3SBS\T3sbootstrap\Backend\Preview\DefaultPreviewRenderer::class;
-    }
 }
 

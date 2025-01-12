@@ -57,19 +57,6 @@ class CdnToLocal extends CommandBase
             }
         }
 
-        # check FA version & settings
-        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-
-        if (!empty($extConf['fontawesomeCss'])) {
-            if ((int)$extConf['fontawesomeCss'] > 2) {
-                if ((int)$settings['cdn']['fontawesome'] < 6) {
-                    $settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome6latest'];
-                }
-            }
-        } else {
-            $settings['cdn']['fontawesome'] = $settings['cdn']['fontawesome6latest'];
-        }
-
         if (!empty($settings['cdn']['googlefonts']) && empty($settings['cdn']['noZip'])) {
             if (empty($settings['sitepackage'])) {
                 self::getGoogleFonts($settings['cdn']['googlefonts'], $settings['gooleFontsWeights'], $baseDir);
@@ -121,37 +108,6 @@ class CdnToLocal extends CommandBase
                 $customFileName = 'popper.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
                 self::writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key == 'fontawesome') {
-                if ((int)$extConf['fontawesomeCss'] == 1 || (int)$extConf['fontawesomeCss'] == 2) {
-                    $customPath = $baseDir.'Resources/Public/FA6-Kit/';
-                    if (!is_dir($customPath)) {
-                        mkdir($customPath, 0777, true);
-                    }
-                } else {
-                    $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
-                    $customFileName = 'fontawesome.min.css';
-                    $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/'.$version.'/css/all.min.css';
-                    self::writeCustomFile($customPath, $customFileName, $cdnPath);
-
-                    $src = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/webfonts');
-                    if (is_dir($src)) {
-                        $dest = $baseDir.'Resources/Public/webfonts/';
-                        if (!is_dir($dest)) {
-                            mkdir($dest, 0777, true);
-                        }
-                        $fileLists = GeneralUtility::getAllFilesAndFoldersInPath([], $src);
-                        foreach ($fileLists as $file) {
-                            copy($file, $dest.end(explode('/', $file)));
-                        }
-                    }
-
-                    $customPath = $baseDir.'Resources/Public/T3SB-JS/';
-                    $customFileName = 'fontawesome.min.js';
-                    $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/'.$version.'/js/all.min.js';
-                    self::writeCustomFile($customPath, $customFileName, $cdnPath);
-                }
             }
 
             if ($key == 'jqueryEasing') {
