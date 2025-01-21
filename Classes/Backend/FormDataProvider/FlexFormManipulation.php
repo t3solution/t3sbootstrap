@@ -58,7 +58,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 				'modal' => 'modal.',
 				'tabs_container' => 'tabs.',
 				'tabs_tab' => 'tabsTab.',
-				'default' => 'bootstrap.',
+				default => 'bootstrap.',
 			};
 
 			$dataStructure = [];
