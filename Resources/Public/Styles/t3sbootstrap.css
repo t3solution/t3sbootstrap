@@ -3,13 +3,23 @@ a{outline:0}.subheader{margin:0}.alert{display:grid}.code{padding:.2rem .4rem;fo
 
 .submenu .nav-link:hover, .nav-link:focus {
 	text-decoration: underline;
+	outline: none;
+	box-shadow: none;
 }
 
 .list-group.news-list-view .card:hover, .list-group.news-list-view .card:focus {
-	background-color: var(--bs-list-group-action-hover-bg);	
+	background-color: var(--bs-list-group-action-hover-bg);
+	outline: none;
+	box-shadow: none;
 }
 
 .accordion-button:focus {
   box-shadow: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.news-list-view a.card {
+  text-decoration: none;
 }
 

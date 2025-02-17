@@ -9,11 +9,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 
 /*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
+* This file is part of the TYPO3 extension t3sbootstrap.
+*
+* For the full copyright and license information, please read the
+* LICENSE file that was distributed with this source code.
+*/
 class Carousel implements SingletonInterface
 {
 
@@ -23,7 +23,7 @@ class Carousel implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, string $animateCss): array
 	{
 		$innerCaptionStyle = '';
-		$processedData['dimensions']['width'] = $parentflexconf['width'] ?: '';
+		$processedData['dimensions']['width'] = !empty($parentflexconf['width']) ? $parentflexconf['width'] : '';
 		$processedData['carouselLink'] = $parentflexconf['link'] ?? '';
 		$processedData['mobileNoRatio'] = $parentflexconf['mobileNoRatio'] ?? '';
 
@@ -99,8 +99,9 @@ class Carousel implements SingletonInterface
 			$muted = !empty($flexconf['muted']) ? $flexconf['muted'] : FALSE;
 			$processedData['muted'] = !empty($file->getProperties()['autoplay']) ? TRUE : $muted;
 			$processedData['playsinline'] = !empty($flexconf['playsinline']) ? TRUE : FALSE;
+			$btnlink = !empty($parentflexconf['link']) && $parentflexconf['link'] == 'button' ? TRUE : FALSE;
 			if ($processedData['data']['header'] || $processedData['data']['bodytext']
-			 || ( $processedData['data']['header_link'] && $parentflexconf['link'] == 'button') ) {
+			 || ( $processedData['data']['header_link'] && $btnlink) ) {
 				$processedData['controls'] = 0;
 			} else {
 				$processedData['controls'] = !empty($flexconf['controls']) ? $flexconf['controls'] : 0;
@@ -110,7 +111,7 @@ class Carousel implements SingletonInterface
 
 		$processedData['ratioCalc'] = '';
 
-		if ($parentflexconf['ratio']) {
+		if (!empty($parentflexconf['ratio'])) {
 			$ratioArr = explode(':', $parentflexconf['ratio']);
 			$x = str_replace(':', 'x', $parentflexconf['ratio']);
 			$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
@@ -136,7 +137,7 @@ class Carousel implements SingletonInterface
 		}
 		$processedData['zoom'] = $parentflexconf['zoom'] ?? '';
 		$processedData['ratio'] = '';
-		if ($parentflexconf['ratio']) {
+		if (!empty($parentflexconf['ratio'])) {
 			$carouselRatioArr = explode(':', (string) $parentflexconf['ratio']);
 			if ( !empty($carouselRatioArr[0]) ) {
 				$processedData['ratio'] = $parentflexconf['ratio'];

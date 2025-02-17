@@ -98,7 +98,7 @@ function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
 	}
 </f:asset.script>
 </f:if>
-<f:if condition="{settings.config.navbarShrinkcolor}">
+<f:if condition="{settings.config.navbarShrinkcolor} && {settings.config.navbarPlacement} == 'fixed-top'">
 <f:asset.script identifier="vanilla_navbarshrinkcolor">
 	// Shrinking Navbar on scrolling - Navbar/Assets.html
 	t3sbShrinkingNavbar(navbar, '{settings.config.shrinkingNavPadding}');

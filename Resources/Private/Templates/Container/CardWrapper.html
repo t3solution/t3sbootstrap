@@ -357,7 +357,7 @@ function insertAfter(referenceNode, newNode) {
 				<h4 class="card-title">
 					<f:if condition="{card.hFa}">
 						<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
-					</f:if>			
+					</f:if>
 					{card.header -> f:format.raw()}</h4>
 				<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
 			</header>
@@ -385,11 +385,11 @@ function insertAfter(referenceNode, newNode) {
 			<h4 class="card-title">
 				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}"
 				parameter='{card.header_link}'>
-				
+
 			<f:if condition="{card.hFa}">
 				<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
-							
+
 				{card.header -> f:format.raw()}</f:link.typolink>
 			</h4>
 			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
@@ -411,7 +411,7 @@ function insertAfter(referenceNode, newNode) {
 				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}" parameter='{card.header_link}'>
 			<f:if condition="{card.hFa}">
 				<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
-			</f:if>					
+			</f:if>
 					{card.subheader -> f:format.raw()}
 				</f:link.typolink></h4>
 		</f:else>

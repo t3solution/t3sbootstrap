@@ -25,11 +25,13 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  */
 class GalleryProcessor implements DataProcessorInterface
 {
-    public const bsMaxGridWidth = 1320;
-    public const maxGalleryWidth = 1296;
+    #public const bsMaxGridWidth = 1320;
+    #public const maxGalleryWidth = 1296;
+    public const bsMaxGridWidth = 1340;
+    public const maxGalleryWidth = 1320;
     public const minimumWidth = 575;
     public const gridColumns = 12;
-    public const gridGutterWidth = 24; // default 1.5rem => 24px
+    public const gridGutterWidth = 24; // default 1.5rem => ca 24px
 
     protected $contentObjectRenderer;
     protected $contentObjectConfiguration;

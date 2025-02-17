@@ -4,15 +4,27 @@
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.tsconfig'
 
+# T3SB BE templates
+templates.t3sbs/t3sbootstrap.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Backend
+
 [typo3.branch == "12.4"]
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
 [END]
 
-# if news is activated in emconfig
 [t3sbootstrap('extNews') === '1']
 @import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig'
 [END]
 
+[loaded('ke_search')]
 @import 'EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig'
+[END]
 
-templates.t3sbs/t3sbootstrap.11 = t3sbs/t3sbootstrap:Resources/Private/Backend
+# Custom BE preview
+[t3sbootstrap('preview') === '1']
+templates.typo3/cms-backend.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Backend/ContainerPreview/backend/Resources/Private
+[END]
+
+# Footer label info: container (oneCol), layout and frame_class & more info (custom css or js) for BE-User-Group: T3SAdmin
+[t3sbootstrap('footerInfo') === '1']
+templates.typo3/cms-backend.partialsRootPaths = t3sbs/t3sbootstrap:Resources/Private/Backend/TemplateOverrides/typo3/cms-backend
+[END]

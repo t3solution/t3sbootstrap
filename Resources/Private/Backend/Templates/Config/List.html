@@ -231,14 +231,6 @@ color: #fff;">
 		</div>
 		<div id="hints-panel" class="collapse" aria-labelledby="hints-heading-panel" data-bs-parent="#accordionList">
 			<div class="panel-body p-4">
-				<f:if condition="{webpIsLoaded}">
-					<f:then>
-						<p class="text-success"><f:render section="Check" /> WebP Support is enabled for use the default EXT:webp .htaccess configuration</p>
-					</f:then>
-					<f:else>
-						<p class="text-danger"><f:render section="Xmark" /> WebP Support is disabled</p>
-					</f:else>
-				</f:if>
 				<f:if condition="{settings.lazyLoad}">
 					<f:then>
 						<p class="text-success"><f:render section="Check" /> EM config: T3SB lazyLoad is enabled</p>

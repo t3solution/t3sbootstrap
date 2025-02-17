@@ -138,7 +138,6 @@
 									<value>table align-bottom</value>
 								</numIndex>
 							</items>
-							<enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
 							<default>table</default>
 						</config>
 					</tableClass>

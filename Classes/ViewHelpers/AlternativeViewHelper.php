@@ -24,12 +24,12 @@ class AlternativeViewHelper extends AbstractViewHelper
 	}
 
 	public function render()
- {
-	 if ( $this->arguments['title'] ) {
-			   return $this->arguments['title'];
-		   } else {
-			   $name = explode(".", $this->arguments['name']);
-			   return $name[0];
-		   }
- }
+	{
+		if ( !empty($this->arguments['title']) ) {
+			return $this->arguments['title'];
+		} elseif ( !empty($this->arguments['name']) ) {
+			$name = explode(".", $this->arguments['name']);
+			return $name[0];
+		}
+	}
 }

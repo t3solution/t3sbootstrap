@@ -49,13 +49,6 @@ page {
 }
 
 
-# Bugfix for Safari browser if using webp with lazyload
-[browser('Safari') && {$bootstrap.ext.webp} == 1 && {$bootstrap.extconf.lazyLoad} > 0]
-page.cssInline {
-	124 = TEXT
-	124.value = picture img.lazy {opacity:1 !important;}
-}
-[END]
 
 # Background Image
 [{$bootstrap.config.backgroundImageEnable} == 1]

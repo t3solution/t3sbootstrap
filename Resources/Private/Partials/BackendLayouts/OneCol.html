@@ -5,10 +5,13 @@
 <f:variable name="mainExtraClass">
 	{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}', else: '')}
 </f:variable>
+
 <main class="main-content{globalPaddingTop}{mainExtraClass}">
 	<f:if condition="{config.general.pageTitle} == 'content'">
 		<f:render partial="Page/Title" arguments="{_all}" />
 	</f:if>
+
+
 	<f:if condition="{data.tx_t3sbootstrap_container}">
 		<f:then>
 			<div class="{data.tx_t3sbootstrap_container}">

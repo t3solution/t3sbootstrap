@@ -3,6 +3,13 @@
 <f:section name="Header">
 </f:section>
 <f:section name="Main">
+<f:if condition="{bgimageSize} == 'contain'">
+	<f:asset.css identifier="flipCard-{data.uid}">
+#c{data.uid} .background-image {
+	background-size: contain !important;
+}
+	</f:asset.css>
+</f:if>
 <f:if condition="{col_221} || {col_222}">
 	<f:then>
 		<f:if condition="{extraWrapperClass}">

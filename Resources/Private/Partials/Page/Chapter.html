@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:asset.css identifier="chapter_style">	
+<f:asset.css identifier="chapter_style">
 .c-index {
 	min-width: 55px;
 	display: inline-block;
@@ -11,7 +11,7 @@
 	.chapter-indent {
 	  margin-left: 25%;
 	}
-	
+
 	.chapter-indexer {
 		bottom: -22px;
 	}
@@ -19,7 +19,6 @@
 }
 </f:asset.css>
 <f:render partial="Page/Assets" arguments="{stickytop:'false', scrollspy:'true'}" />
-
 <f:if condition="{chapter}">
 	<div id="page-chapter">
 		<div class="{data.tx_t3sbootstrap_container} chapter-section my-{gridBreakpoint}-5">
@@ -28,15 +27,15 @@
 					<f:for each="{chapter}" as="items" iteration="iterator">
 						<div class="col">
 							<f:for each="{items}" as="item" iteration="subiterator">
-	
+
 								<f:if condition="{subiterator.index}">
 									<f:then>
-										<p><span class="c-index">0.{iterator.cycle}.{subiterator.index}:</span> 
+										<p><span class="c-index">0.{iterator.cycle}.{subiterator.index}:</span>
 											<a class="chapter-link link-light" href="#c{item.uid}">{item.header}</a>
 										</p>
 									</f:then>
 									<f:else>
-										<p style="font-weight: 600;"><span class="c-index">0.{iterator.cycle}:</span> 
+										<p style="font-weight: 600;"><span class="c-index">0.{iterator.cycle}:</span>
 											<a class="chapter-link link-light" href="#c{item.uid}">{item.header}</a>
 										</p>
 									</f:else>

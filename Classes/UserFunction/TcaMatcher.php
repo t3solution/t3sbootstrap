@@ -234,7 +234,8 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
 
-            if (!empty($parent_rec)) {
+            if (!empty($parent_rec['tx_t3sbootstrap_flexform'])) {
+
                 $parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
                 if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'container' && $parent_flexconf['flexContainer']) {

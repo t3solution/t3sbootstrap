@@ -1,0 +1,278 @@
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+<f:asset.css identifier="t3sbce-{item.record.uid}">
+#element-tt_content-{item.record.uid} .card-body .t3-page-column-header,
+#element-tt_content-{item.record.uid} .card-body .element-preview-header {
+	display: none !important;
+}
+</f:asset.css>
+
+
+<f:variable name="emconf" value="<t3sb:emconf />" />
+<f:if condition="{emconf.previewClosedCollapsible} == '1'">
+	<f:then>
+		<f:variable name="classname" value="collapse" />
+		<f:variable name="expanded" value="false" />
+	</f:then>
+	<f:else>
+		<f:variable name="classname" value="show" />
+		<f:variable name="expanded" value="true" />
+	</f:else>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'card_wrapper'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#collapseCardWrapper-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="collapseCardWrapper-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="collapseCardWrapper-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'tabs_container'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#tabContainer-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="tabContainer-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="tabContainer-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'carousel_container'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#carouselContainer-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="carouselContainer-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="carouselContainer-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'parallax_wrapper'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#parallaxWrapper-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="parallaxWrapper-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="parallaxWrapper-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'container'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#container-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="container-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="container-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'listGroup_wrapper'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#listGroup-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="listGroup-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="listGroup-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'row_columns'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#rowColumns-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="rowColumns-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="rowColumns-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'autoLayout_row'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#autoLayout-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="autoLayout-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="autoLayout-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'background_wrapper'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#bgWrapper-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="bgWrapper-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="bgWrapper-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'modal'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#modal-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="modal-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="modal-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'masonry_wrapper'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#masonry-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="masonry-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="masonry-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'swiper_container'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#swiper-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="swiper-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="swiper-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'toast_container'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#toast-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="toast-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="toast-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'button_group'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#buttonGroup-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="buttonGroup-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="buttonGroup-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:comment>
+<!-- still open for column layouts -->
+</f:comment>
+
+<f:if condition="{item.record.CType} == 'two_columns'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#twoColumns-{item.record.uid}" aria-expanded="true"
+			 aria-controls="twoColumns-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="show" id="twoColumns-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'three_columns'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#threeColumns-{item.record.uid}" aria-expanded="true"
+			 aria-controls="threeColumns-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="show" id="threeColumns-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'four_columns'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#fourColumns-{item.record.uid}" aria-expanded="true"
+			 aria-controls="fourColumns-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="show" id="fourColumns-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+<f:if condition="{item.record.CType} == 'six_columns'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#sixColumns-{item.record.uid}" aria-expanded="true"
+			 aria-controls="sixColumns-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="show" id="sixColumns-{item.record.uid}">
+	  <div class="card card-body">
+	    {item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+

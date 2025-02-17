@@ -187,7 +187,7 @@ class Card implements SingletonInterface
         // addmedia
         $processedData['addmedia']['imgclass'] = $cardData['image']['class'];
         $processedData['addmedia']['imgclass'] .= !empty($flexconf['horizontal']) ? ' rounded-start' : '';
-        $processedData['addmedia']['figureclass'] = ' text-center';
+        $processedData['addmedia']['figureclass'] = ' text-center mx-auto';
         $processedData['addmedia']['figureclass'] .= !empty($flexconf['horizontal']) ? ' d-block' : '';
 
         if (!empty($cardData['square']['enable'])) {

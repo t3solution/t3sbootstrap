@@ -117,6 +117,10 @@ editor:
        - { name: 'Lowercase', element: 'p', 'classes': ['text-lowercase'], isBlock: 'true' }
        - { name: 'Uppercase', element: 'p', 'classes': ['text-uppercase'], isBlock: 'true' }
        - { name: 'Capitalize', element: 'p', 'classes': ['text-capitalize'], isBlock: 'true' }
+       - { name: 'Indent', element: 'p', 'classes': ['text-indent'], isBlock: 'true' }
+       - { name: 'h2 block-class', element: 'p', classes: ['h2'], isBlock: 'true' }
+       - { name: 'h3 block-class', element: 'p', classes: ['h3'], isBlock: 'true' }
+       - { name: 'h4 block-class', element: 'p', classes: ['h4'], isBlock: 'true' }
 
        # Textstile
        - { name: 'Mark', element: 'span', classes: ['mark'] }
@@ -134,6 +138,10 @@ editor:
        - { name: 'Lowercase ', element: 'span', 'classes': ['text-lowercase'] }
        - { name: 'Uppercase ', element: 'span', 'classes': ['text-uppercase'] }
        - { name: 'Capitalize ', element: 'span', 'classes': ['text-capitalize'] }
+       - { name: 'Indent ', element: 'span', 'classes': ['text-indent'] }
+       - { name: 'h2 class', element: 'span', classes: ['h2'] }
+       - { name: 'h3 class', element: 'span', classes: ['h3'] }
+       - { name: 'h4 class', element: 'span', classes: ['h4'] }
 
        # Textstile - Buttons
        - { name: 'Button Primary', element: 'a', 'classes': ['btn btn-primary'] }
