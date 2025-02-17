@@ -19,7 +19,6 @@ module.tx_t3sbootstrap {
 		t3sbminify = {$bootstrap.extconf.t3sbminify}
 		compress = {$bootstrap.config.compress}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
-		webp = {$bootstrap.ext.webp}
 		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
 		breakpoint.sm = {$bootstrap.navbar.breakpoint.sm}
 		breakpoint.md = {$bootstrap.navbar.breakpoint.md}

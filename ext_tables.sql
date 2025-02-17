@@ -165,7 +165,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_bgopacity varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_contextcolor varchar(20) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_textcolor varchar(9) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_flexform mediumtext,
+	tx_t3sbootstrap_flexform text,
 	tx_t3sbootstrap_inTextImgRowWidth varchar(5) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_inTextImgColumns tinyint(2) unsigned DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_bordercolor varchar(9) DEFAULT '' NOT NULL,
@@ -178,7 +178,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_extra_style varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_image_orig varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_cardheader varchar(255) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_bodytext mediumtext,
+	tx_t3sbootstrap_bodytext text,
 	tx_t3sbootstrap_cardfooter varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_list_item varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
@@ -186,6 +186,8 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_zoom_orig varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_chapter varchar(1) DEFAULT '' NOT NULL,
 tx_t3sbootstrap_header_fontawesome varchar(100) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_css text,
+	tx_t3sbootstrap_js text,
 );
 
 

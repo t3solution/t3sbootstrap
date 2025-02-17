@@ -106,6 +106,7 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 		}
 		altLabels {
 			 1 = H1
@@ -125,6 +126,9 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
 			t3sbs_assets.disabled = 1
+			html.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
+			shortcut.disabled = 1
 		}
 	}
 	header_position {
@@ -141,6 +145,8 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
+			shortcut.disabled = 1
 
 		}
 	}
@@ -277,6 +283,9 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_assets.disabled = 1
+			html.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
+			shortcut.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_bgcolor {
@@ -371,9 +380,9 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
-			t3sbs_assets.disabled = 1			
-			card_wrapper.label.default = Container inside
-			card_wrapper.label.de = Container inside
+			t3sbs_assets.disabled = 1
+			background_wrapper.label.default = Container inside
+			background_wrapper.label.de = Container inside
 		}		
 	}			
 	tx_t3sbootstrap_flexform {

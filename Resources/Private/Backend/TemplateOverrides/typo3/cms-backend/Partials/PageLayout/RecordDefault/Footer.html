@@ -1,0 +1,17 @@
+<f:variable name="infoFooter" value="<t3sb:info pageContainer='{context.pageRecord.tx_t3sbootstrap_container}' backendLayout='{context.backendLayout.identifier}' record='{item.record}' />" />
+<f:if condition="{item.footerInfo} || {infoFooter}">
+    <div class="t3-page-ce-footer">
+        <div class="t3-page-ce-info">
+            <f:if condition="{infoFooter}">
+				{infoFooter -> f:format.raw()}<br>
+            </f:if>
+            <f:if condition="{item.footerInfo}">
+            	<f:if condition="{infoFooter}">
+	            	<span style="display: block; border-top: 1px solid #d4d4d4; margin: 4px 0;"></span>
+            	</f:if>
+                <strong>Notes:</strong> {item.footerInfo -> f:format.raw()}
+            </f:if>
+        </div>
+    </div>
+</f:if>
+

@@ -1,12 +1,28 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers" data-namespace-typo3-fluid="true">
+
 <f:if condition="{settings.list.info}">
-	<p class="small text-secondary mb-0">
-		<f:if condition="{newsItem.categories}">
+	<p class="small text-secondary mb-2">
+
+
+
+		<!-- date -->
+		<span class="news-date me-2">
+			<span itemscope="itemscope" class="news-list-date">
+				<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
+					<t3sb:icon iconfig="fa6:solid,calendar-days" additionalAttributes="{class:'me-1'}" />
+					<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
+				</time>
+			</span>
+		</span>
 		<!-- categories -->
+		<f:if condition="{newsItem.categories}">
 		<span class="news-list-category">
-			<f:for each="{newsItem.categories}" as="category">
-				<f:if condition="{category.shortcut}">
+			<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
+			<f:for each="{newsItem.categories}" as="category" iteration="fooIterator">
+
+				<f:if condition="{fooIterator.index}"> | </f:if>
+				<f:if condition="{category.shortcut} && {settings.templateLayout} != '71'">
 					<f:then>
 						<f:link.typolink parameter="{category.shortcut}">
 							{category.title}
@@ -16,15 +32,11 @@
 						{category.title}
 					</f:else>
 				</f:if>
+
+
 			</f:for>
 		</span>
 		</f:if>
-		<!-- date -->
-		<span itemscope="itemscope" class="news-list-date">
-			<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
-				<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
-			</time>
-		</span>
 	</p>
 </f:if>
 <!-- header -->
@@ -43,24 +55,32 @@
 <!-- teaser -->
 <div class="card-text">
 	<n:removeMediaTags>
+		<f:if condition="{settings.cropMaxCharacters}">
+			<f:then>
+				<f:variable name="cropMaxCharacters" value="{settings.cropMaxCharacters}" />
+			</f:then>
+			<f:else>
+				<f:variable name="cropMaxCharacters" value="999" />
+			</f:else>
+		</f:if>
 		<f:if condition="{newsItem.teaser}">
 			<f:then>
 				<f:if condition="{settings.templateLayout} > 70 && {settings.templateLayout} < 75">
 					<f:then>
-						{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
+						{newsItem.teaser -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
 					</f:then>
 					<f:else>
-						{newsItem.teaser -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+						{newsItem.teaser -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 					</f:else>
 				</f:if>
 			</f:then>
 			<f:else>
 				<f:if condition="{settings.templateLayout} > 70 && {settings.templateLayout} < 75">
 					<f:then>
-						{newsItem.bodytext -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
+						{newsItem.bodytext -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.stripTags()}
 					</f:then>
 					<f:else>
-						{newsItem.bodytext -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+						{newsItem.bodytext -> f:format.crop(maxCharacters: '{cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
 					</f:else>
 				</f:if>
 			</f:else>

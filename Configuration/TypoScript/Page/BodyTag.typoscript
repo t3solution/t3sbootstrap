@@ -39,18 +39,6 @@ page {
 				value = {$bootstrap.config.navbarBreakpoint}
 				noTrimWrap = | ||
 			}
-			60 = TEXT
-			60 {
-				value = webp
-				noTrimWrap = | ||
-				if.isTrue = {$bootstrap.ext.webp}
-			}
-			70 = TEXT
-			70 {
-				value = no-webp
-				noTrimWrap = | ||
-				if.isFalse = {$bootstrap.ext.webp}
-			}
 		}
 		30 = COA
 		30 {

@@ -72,6 +72,7 @@ class BootstrapProcessor implements DataProcessorInterface
         array $processedData
     ): array
     {
+
         if ( empty($processedData['data']['CType']) ) {
             return $processedData;
         }
@@ -98,13 +99,15 @@ class BootstrapProcessor implements DataProcessorInterface
         $flexformHelper = GeneralUtility::makeInstance(FlexformHelper::class);
         $flexconf = $flexformHelper->addMissingElements($flexconf, $cType, $t3sbsElement);
 
-        if ($parentUid) {
+        if (!empty($parentUid)) {
             $parentData = BackendUtility::getRecord('tt_content', $parentUid, 'uid, CType, tx_t3sbootstrap_flexform, tx_container_parent');
             $parentCType = $parentData['CType'];
-            $parentflexconf = $flexFormService->convertFlexFormContentToArray($parentData['tx_t3sbootstrap_flexform']);
-            if (is_string($parentCType)) {
-                $parentflexconf = $flexformHelper->addMissingElements($parentflexconf, $parentCType, $t3sbsElement);
-            }
+			if (!empty($parentData['tx_t3sbootstrap_flexform'])) {
+	            $parentflexconf = $flexFormService->convertFlexFormContentToArray($parentData['tx_t3sbootstrap_flexform']);
+	            if (is_string($parentCType)) {
+	                $parentflexconf = $flexformHelper->addMissingElements($parentflexconf, $parentCType, $t3sbsElement);
+	            }
+			}
             $parentContainer = $parentData['tx_container_parent'];
         }
 
@@ -427,17 +430,18 @@ class BootstrapProcessor implements DataProcessorInterface
         // chapter
         if ( !empty($extConf['chapter']) && !empty($processedData['data']['tx_t3sbootstrap_chapter']) ) {
 			$processedData = self::getChapterIndex($processedData, $request);
-
             if ( $processedData['data']['tx_t3sbootstrap_chapter'] === '1' ) {
-                $chapter = ' main-chapter';
+                $chapter = $trimClass.' main-chapter';
             } else {
-                $chapter = ' sub-chapter';
+                $chapter = $trimClass.' sub-chapter';
             }
-
-			$trimClass .= $chapter.' chapter-indent';
+			$chapterClass = $chapter.' chapter-indent';
+            $processedData['classAttr'] = !empty($chapterClass) ? ' class="'.$chapterClass.'"' : '';
+            $processedData['trimClass'] = !empty($chapterClass) ? $chapterClass : '';
+        } else {
+            $processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
+            $processedData['trimClass'] = $trimClass;
         }
-
-		$processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
 
         return $processedData;
     }
@@ -514,16 +518,7 @@ class BootstrapProcessor implements DataProcessorInterface
 
         $uid = $processedData['data']['uid'];
 
-        if ( !empty( $erg[$uid]) ) {
-            if ( $processedData['data']['tx_t3sbootstrap_chapter'] === '1') {
-                 $class = 'chapter main-chapter';
-            } else {
-                $class = 'chapter sub-chapter';
-            }
-        }
-
-        $processedData['data']['chapter'] ='<span class="position-relative">
-        <span class="chapter-indexer position-absolute">' .$erg[$uid]['index']. '</span></span>';
+		$processedData['chapter-index'] = $erg[$uid]['index'];
 
         return $processedData;
     }

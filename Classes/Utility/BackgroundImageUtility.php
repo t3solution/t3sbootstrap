@@ -48,9 +48,6 @@ class BackgroundImageUtility implements SingletonInterface
     ) {
         $request = $GLOBALS['TYPO3_REQUEST'];
         $frontendController = $request->getAttribute('frontend.controller');
-        if (!$frontendController) {
-            $frontendController = self::getFrontendController();
-        }
         $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
         $filesFromRepository = $fileRepository->findByRelation($table, 'assets', $uid);
         if (empty($filesFromRepository)) {
@@ -61,10 +58,6 @@ class BackgroundImageUtility implements SingletonInterface
         }
 
         $css = '';
-        $webp = false;
-        if (ExtensionManagementUtility::isLoaded('webp')) {
-            $webp = true;
-        }
 
         if (count($filesFromRepository) > 1 && $body == false) {
             if (!empty($flexconf['bgimagePosition']) && ($flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2)) {
@@ -73,8 +66,8 @@ class BackgroundImageUtility implements SingletonInterface
                 $file = $filesFromRepository[0];
                 $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
                 $bgImages = $this->generateSrcsetImages($file, $image);
-                $imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
-                $css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $webp, $flexconf, false, $bgMediaQueries);
+                $imageUri_mobile = $bgImages[576];
+                $css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $flexconf, false, $bgMediaQueries);
             } else {
                 // slider in jumbotron or two bg-images in two-columns
                 if ($jumbotron === true) {
@@ -84,8 +77,8 @@ class BackgroundImageUtility implements SingletonInterface
                     $fileKey = $fileKey+1;
                     $image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
                     $bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
-                    $imageUri_mobile[$fileKey] = $webp ? $bgImages[$fileKey][576].'.webp' : $bgImages[$fileKey][576];
-                    $css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $webp, $flexconf, false, $bgMediaQueries);
+                    $imageUri_mobile[$fileKey] = $bgImages[$fileKey][576];
+                    $css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $flexconf, false, $bgMediaQueries);
                 }
             }
         } else {
@@ -98,9 +91,9 @@ class BackgroundImageUtility implements SingletonInterface
                     $uid = $uid . '-' . $flexconf['bgimagePosition'];
                 }
                 if ($jumbotron) {
-                    $css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, false, $bgMediaQueries);
+                    $css = $this->generateCss('s'.$uid, $file, $image, $flexconf, false, $bgMediaQueries);
                 } elseif ($body) {
-                    $css = $this->generateCss('page-'.$uid, $file, $image, $webp, $flexconf, true, $bgMediaQueries);
+                    $css = $this->generateCss('page-'.$uid, $file, $image, $flexconf, true, $bgMediaQueries);
                 } else {
                     if (!empty($flexconf['enableAutoheight'])) {
                         if ($flexconf['addHeight']) {
@@ -110,13 +103,13 @@ class BackgroundImageUtility implements SingletonInterface
                                   ->addInlineJavaScript('addheight-'.$uid, $inline);
                             }
                         }
-                        $css = $this->generateCss('bg-img-'.$uid, $file, $image, $webp, $flexconf, false, $bgMediaQueries);
+                        $css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, false, $bgMediaQueries);
                     } else {
-                        $css = $this->generateCss('s'.$uid, $file, $image, $webp, $flexconf, false, $bgMediaQueries);
+                        $css = $this->generateCss('s'.$uid, $file, $image, $flexconf, false, $bgMediaQueries);
                     }
                 }
                 $bgImages = $this->generateSrcsetImages($file, $image);
-                $imageUri_mobile = $webp ? $bgImages[576].'.webp' : $bgImages[576];
+                $imageUri_mobile = $bgImages[576];
             } else {
                 $imageUri_mobile = '';
                 if ($bgColorOnly) {
@@ -148,7 +141,6 @@ class BackgroundImageUtility implements SingletonInterface
         string $uid,
         FileReference $file,
         File $image,
-        bool $webp,
         array $flexconf=[],
         bool $body=false,
         string $bgMediaQueries='2560,1920,1200,992,768,576'
@@ -178,33 +170,13 @@ class BackgroundImageUtility implements SingletonInterface
             ];
             $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
             $css .= '@media (max-width: '.$querie.'px) {';
-            if ($webp) {
-                if ($body) {
-                    $css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
-                    $css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
-                } else {
-                    $css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
-                    $css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
-                }
-            } else {
-                $css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
-            }
+            $css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
             $css .= '}';
 
             if ($minWidth == $querie) {
                 $minQuerie = $querie +1;
                 $css .= '@media (min-width: '.$minQuerie.'px) {';
-                if ($webp) {
-                    if ($body) {
-                        $css .= '#'.$uid.'.no-webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
-                        $css .= '#'.$uid.'.webp {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
-                    } else {
-                        $css .= '.no-webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
-                        $css .= '.webp #'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'.webp") !important;}';
-                    }
-                } else {
-                    $css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
-                }
+                $css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
                 $css .= '}';
             }
         }
@@ -232,14 +204,4 @@ class BackgroundImageUtility implements SingletonInterface
         return $bgImages;
     }
 
-
-    /**
-     * Returns $typoScriptFrontendController TypoScriptFrontendController
-     *
-     * @return TypoScriptFrontendController
-     */
-    protected function getFrontendController(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
-    }
 }

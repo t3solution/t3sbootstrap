@@ -1,6 +1,10 @@
 
-# cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview renderer (clear cache)
+# cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview with collapsible container preview always open (clear cache)
 preview = 1
+# cat=preview/enable/20; type=boolean; label=Closed Collapsible: Collapsible container preview always closed - only in conjunction with active "Backend Preview" (clear cache).
+previewClosedCollapsible = 0
+# cat=preview/enable/30; type=boolean; label=Footer Info: If active, a footer label of the content element is displayed with some information: container ("1 Column" backend layout" only), extra class, layout & frame_class - If EXT:content_animations is loaded you have to activate the EM config "Hide the Animation Footer Label" there. (clear cache)
+footerInfo = 1
 
 # cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache)
 spacing = 0
@@ -19,10 +23,8 @@ sectionOrder = 0
 # cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache)
 extraStyle = 0
 
-
 # cat=page/enable/20; type=boolean; label=Icon in Page Title: Enable the page_icon (from EXT:iconpicker) in the page title (clear cache)
 fontawesomepagetitle = 1
-
 
 # cat=custom scss/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
 customScss = 0
@@ -39,6 +41,8 @@ flexformExtend = 0
 flexformModify = 0
 # cat=flexform/enable/40; type=boolean; label=No default settings in columns "Col-md-*" and "Col-*":in two_columns, three_columns, four_columns or six_columns
 flexformNoDefault = 0
+# cat=flexform/enable/45; type=boolean; label=Minimum breakpoint setting - only "Col-md-*":in two_columns, three_columns, four_columns or six_columns (did not work with "No default settings ...")
+flexformMinCol = 0
 
 # cat=t3SB/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache)
 cTypeClass = 0
@@ -51,8 +55,10 @@ sitepackage = 0
 
 # cat=different/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache)
 imgCopyright = 0
-# cat=different/enable/25; type=boolean; label=Use Chapter: Shows select field "Chapter type" in the header palette if enabled. (EXPERIMENTAL)
+# cat=different/enable/25; type=boolean; label=Chapter: Shows select field "Chapter type" in the header palette if enabled. (EXPERIMENTAL)
 chapter = 0
+# cat=different/enable/30; type=boolean; label=Custom CSS code editor in the language tab - ADMIN ONLY: if editors receive a prepared content element for copy & past and this element requires its own CSS, you should activate and use this option.
+cssCodeEditor = 0
 
 # cat=Advanced/enable/10; type=boolean; label=Font Awesome: min. Fontawesome CSS for RTE link-icons etc.
 fontawesomeCss = 0

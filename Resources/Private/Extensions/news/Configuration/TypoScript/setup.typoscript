@@ -44,4 +44,5 @@ plugin.tx_news {
 	_LOCAL_LANG.de.back-link = zurück
 	_LOCAL_LANG.de.dateFormat = {$bootstrap.config.dateFormat}
 	_LOCAL_LANG.de.search-text = Es liegen %1$s Ergebnisse für "%2$s" vor.
+	_LOCAL_LANG.default.dateFormat = d.m.Y
 }

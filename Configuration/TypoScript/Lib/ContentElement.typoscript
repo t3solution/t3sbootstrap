@@ -89,7 +89,6 @@ lib.contentElement {
 		cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
 		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
-		webp = {$bootstrap.ext.webp}
 		btnSlideOutCorrection = 21
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		sectionMenuClass = {$bootstrap.config.sectionMenuClass}

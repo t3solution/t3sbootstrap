@@ -10,8 +10,13 @@ defined('TYPO3') || die();
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 # TYPO3 branch
-#$branch = GeneralUtility::makeInstance(Typo3Version::class)->getBranch();
+$branch = GeneralUtility::makeInstance(Typo3Version::class)->getBranch();
 
+if ( $branch == '12.4') {
+    $codeEditor = 't3editor';
+} else {
+    $codeEditor = 'codeEditor';
+}
 
 if (!empty($extconf['flexformNoDefault'])) {
     $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsNoDefaults.xml';
@@ -19,10 +24,17 @@ if (!empty($extconf['flexformNoDefault'])) {
     $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsNoDefaults.xml';
     $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsNoDefaults.xml';
 } else {
-    $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml';
-    $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml';
-    $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml';
-    $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml';
+    if (!empty($extconf['flexformMinCol'])) {
+        $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsMin.xml';
+        $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumnsMin.xml';
+        $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsMin.xml';
+        $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsMin.xml';
+    } else {
+        $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml';
+        $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml';
+        $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml';
+        $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml';
+    }
 }
 
 /***************
@@ -784,8 +796,8 @@ $tempContentColumns = [
             'foreign_field' => 'parentid',
             'foreign_table_field' => 'parenttable',
         ],
-    ],    
-     'tx_t3sbootstrap_chapter' => [
+    ],
+    'tx_t3sbootstrap_chapter' => [
         'exclude' => 1,
         'label' => 'Chapter type',
         'displayCond' => [
@@ -806,8 +818,43 @@ $tempContentColumns = [
             'default' => '',
         ]
     ],
+    'tx_t3sbootstrap_css' => [
+        'exclude' => 1,
+        'label' => 'Custom CSS for this content element',
+		'displayCond' => [
+		    'AND' => [
+		        'HIDE_FOR_NON_ADMINS',
+	            'FIELD:CType:!=:t3sbs_assets',
+		    ]
+        ],
+        'config' => [
+            'type' => 'text',
+            'renderType' => $codeEditor,
+            'format' => 'css',
+            'rows' => 15,
+            'wrap' => 'virtual',
+        ]
+    ],
 
-     
+    'tx_t3sbootstrap_js' => [
+        'exclude' => 1,
+        'label' => 'Custom JS for this content element',
+        'displayCond' => [
+            'AND' => [
+                'HIDE_FOR_NON_ADMINS',
+                'FIELD:CType:!=:t3sbs_assets',
+            ]
+        ],
+        'config' => [
+            'type' => 'text',
+            'renderType' => $codeEditor,
+            'format' => 'javascript',
+            'rows' => 15,
+            'wrap' => 'virtual',
+        ]
+    ],
+
+
 ];
 
 
@@ -836,7 +883,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
             'config' => [
                 'type' => 'text',
                 'format' => 'javascript',
-                'renderType' => 'codeEditor',
+                'renderType' => $codeEditor,
                 'wrap' => 'virtual',
                 'rows' => 15,
             ],
@@ -844,7 +891,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
         'tx_t3sbootstrap_bodytext' => [
             'config' => [
                 'type' => 'text',
-                'renderType' => 'codeEditor',
+                'renderType' => $codeEditor,
                 'format' => 'css',
                 'rows' => 15,
                 'wrap' => 'virtual',
@@ -1016,11 +1063,15 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast'] = $GLOBALS['TCA']['tt_cont
  */
 // add extra column
 $GLOBALS['TCA']['tt_content']['columns']['bullets_type']['config']['items'] = [
+    ['label' => 'Unsortierte Liste', 'value' => 0,],
+    ['label' => 'Sortierte Liste', 'value' => 1,],
     ['label' => 'BS Inline list', 'value' => 2,],
     ['label' => 'BS Unstyled list', 'value' => 3,],
     ['label' => 'BS Listengruppen', 'value' => 4,],
     ['label' => 'BS Definition list (use pipe "|")', 'value' => 5,],
 ];
+#$GLOBALS['TCA']['tt_content']['columns']['bullets_type']['config']['default'] = 2;
+
 
 /***************
  * FluidTemplate
@@ -1183,9 +1234,6 @@ if (!ExtensionManagementUtility::isLoaded('content_animations')) {
     );
 }
 
-
-
-
 if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
     $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
         'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
@@ -1198,14 +1246,12 @@ if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
     ];
 }
 
-
-
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
     'showitem' => 'tx_t3sbootstrap_padding_sides, tx_t3sbootstrap_padding_size, --linebreak--,
     tx_t3sbootstrap_margin_sides, tx_t3sbootstrap_margin_size'
 ];
 
-if ($extconf['extraStyle']) {
+if (array_key_exists('extraStyle', $extconf) && $extconf['extraStyle'] === '1') {
     $GLOBALS['TCA']['tt_content']['palettes']['bootstrap'] = [
         'showitem' => 'tx_t3sbootstrap_extra_class,
     --linebreak--, tx_t3sbootstrap_extra_style,
@@ -1224,7 +1270,7 @@ $GLOBALS['TCA']['tt_content']['palettes']['bootstrapColor'] = [
     'showitem' => 'tx_t3sbootstrap_contextcolor, tx_t3sbootstrap_bgcolor, --linebreak--, tx_t3sbootstrap_bgopacity, tx_t3sbootstrap_textcolor'
 ];
 
-if ($extconf['animateCss']) {
+if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] === '1') {
     $GLOBALS['TCA']['tt_content']['palettes']['animate'] = [
         'showitem' => 'tx_t3sbootstrap_animateCss,
             tx_t3sbootstrap_animateCssDuration, --linebreak--,
@@ -1233,7 +1279,7 @@ if ($extconf['animateCss']) {
     ];
 }
 
-if ($extconf['sectionOrder']) {
+if (array_key_exists('sectionOrder', $extconf) && $extconf['sectionOrder'] === '1') {
     ExtensionManagementUtility::addFieldsToPalette(
         'tt_content',
         'appearanceLinks',
@@ -1242,3 +1288,11 @@ if ($extconf['sectionOrder']) {
     );
 }
 
+if (array_key_exists('cssCodeEditor', $extconf) && $extconf['cssCodeEditor'] === '1') {
+    ExtensionManagementUtility::addFieldsToPalette(
+        'tt_content',
+        'language',
+        '--linebreak--,tx_t3sbootstrap_css, --linebreak--,tx_t3sbootstrap_js',
+        'after:l18n_parent'
+    );
+}

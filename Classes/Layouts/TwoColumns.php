@@ -32,6 +32,8 @@ class TwoColumns implements SingletonInterface
              && !empty($flexconf['verticalAlign']) ? ' d-flex align-items-' . $flexconf['verticalAlign'] : '';
         $processedData['bgimages'] = '';
         $processedData['bgimagePosition'] = '';
+        $processedData['bgimageSize'] = '';
+		$processedData['files'] = !empty($processedData['files']) ? $processedData['files'] : '';
         if (!empty($flexconf['bgimages'])) {
             $bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
             ->getBgImage(
@@ -48,6 +50,7 @@ class TwoColumns implements SingletonInterface
             if ($bgimages) {
                 $processedData['bgimages'] = $bgimages;
                 $processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
+                $processedData['bgimageSize'] = !empty($flexconf['bgimageSize']) ? $flexconf['bgimageSize'] : 'cover';
                 $processedData['class'] .= ' col-image';
             }
         }

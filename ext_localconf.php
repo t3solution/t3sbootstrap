@@ -24,7 +24,6 @@ defined('TYPO3') || die();
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.indexedsearch = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.news = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.kesearch = 0');
-    ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.webp = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.iconpack = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.imgCopyright = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.linkHoverEffect = 0');
@@ -189,10 +188,6 @@ defined('TYPO3') || die();
     } else {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sectionOrder = sorting');
     }
-    # if webp is loaded - use for background-images only
-    if (ExtensionManagementUtility::isLoaded('webp')) {
-        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.ext.webp = 1');
-    }
     /***************
      * Override preview of tt_content elements in page module
      */
@@ -230,5 +225,6 @@ defined('TYPO3') || die();
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][PreProcessHook::class] =
          PreProcessHook::class . '->execute';
     }
+
 
 })();

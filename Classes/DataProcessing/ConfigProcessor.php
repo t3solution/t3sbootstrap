@@ -48,6 +48,8 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['noConfig'] = true;
 			return $processedData;
 		}
+		$currentPageUid = $request->getAttribute('routing')->getPageId();
+
 
 		/**
 		 * General
@@ -56,6 +58,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$company = $processedRecordVariables['company'];
 		$companyArr = GeneralUtility::trimExplode('|', $company);
 		$sysLanguageUid = $processedData['data']['sys_language_uid'];
+		$backendLayout = $processedData['data']['currentValue_kidjls9dksoje'];
 
 		if ($sysLanguageUid && $company) {
 			$company = !empty($companyArr[$sysLanguageUid]) ? $companyArr[$sysLanguageUid] : $company;
@@ -73,9 +76,13 @@ class ConfigProcessor implements DataProcessorInterface
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
 		$pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 		$rootlinePage = $pageRepository->getPage((int) $processedRecordVariables['homepageUid']);
-		$smallColumnsRootline = !empty($rootlinePage['tx_t3sbootstrap_smallColumns']) ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
+		$smallColumnsRootline = !empty($rootlinePage['tx_t3sbootstrap_smallColumns'])
+		 ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
+
 		// global override page data
+
+
 		if (!empty($contentObjectConfiguration['settings.']['pages.']['override.'])) {
 			foreach ($contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override) {
 				if (!empty($override)) {
@@ -83,14 +90,16 @@ class ConfigProcessor implements DataProcessorInterface
 						$processedData['colAside'] = $override;
 						$processedData['data'][$field] = $override;
 						$smallColumns = $override;
+					} elseif ($field == 'tx_t3sbootstrap_container') {
+						if (($backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra') && $processedData['data']['tx_t3sbootstrap_container'] === '0') {
+							// no override if container = none
+						} else {
+							$processedData['data']['tx_t3sbootstrap_container'] = $override;
+						}
 					} elseif (($field === 'tx_t3sbootstrap_titlecolor' || $field === 'tx_t3sbootstrap_subtitlecolor') && str_starts_with($override, '--bs-')) {
 						$processedData['data'][$field] = 'var('.$override.')';
 					} else {
-						if ($processedData['data']['tx_t3sbootstrap_container'] === '0') {
-							// no override if container = none
-						} else {
-							$processedData['data'][$field] = $override;
-						}
+						$processedData['data'][$field] = $override;
 					}
 				}
 			}
@@ -99,28 +108,16 @@ class ConfigProcessor implements DataProcessorInterface
 		$extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 		// chapter section
-		if (!empty($extConf['chapter'])) {		
-			$currentPageUid = $request->getAttribute('routing')->getPageId();
+		if (!empty($extConf['chapter'])) {
 			$processedData = self::chapterSection($processedData, $currentPageUid);
 		}
-		
+
 		/**
-		 * Backend layout
+		 * Backend layout & smallColumns
 		 */
-		 $backendLayout = $processedData['data']['backend_layout'];
 		if (!empty($backendLayout)) {
-			$oneCol = $backendLayout == 'pagets__OneCol' || $backendLayout == 'pagets__OneCol_Extra' ? true : false;
-			$threeCol = $backendLayout == 'pagets__ThreeCol' || $backendLayout == 'pagets__ThreeCol_Extra' ? true : false;
-		} else {
-			$bLNextLevel = false;
-			foreach ($frontendController->rootLine as $subPage) {
-				$bLNextLevel = $subPage['backend_layout_next_level'];
-				if (!empty($subPage['backend_layout_next_level'])) {
-					break;
-				}
-			}
-			$oneCol = $bLNextLevel == 'pagets__OneCol' || $bLNextLevel == 'pagets__OneCol_Extra' ? true : false;
-			$threeCol = $bLNextLevel == 'pagets__ThreeCol' || $bLNextLevel == 'pagets__ThreeCol_Extra' ? true : false;
+			$oneCol = $backendLayout == 'OneCol' || $backendLayout == 'OneCol_Extra' ? true : false;
+			$threeCol = $backendLayout == 'ThreeCol' || $backendLayout == 'ThreeCol_Extra' ? true : false;
 		}
 
 		if ($oneCol === false) {
@@ -299,7 +296,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 			// shrinking navbar on scrolling
 			$navBarAttr = '';
-			if ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor']) {
+			if ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
 				$processedData['config']['navbar']['transparent'] = false;
 				$navbarClass .= ' shrink py-'.$processedRecordVariables['shrinkingNavPadding'];
 				$navbarShrinkcolorschemes = $processedRecordVariables['navbarShrinkcolorschemes'];
@@ -634,12 +631,12 @@ class ConfigProcessor implements DataProcessorInterface
 		$processedData['config']['expandedcontentTop']['container'] = $processedRecordVariables['expandedcontentContainertop'];
 		$processedData['config']['expandedcontentTop']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositiontop'];
 		$processedData['config']['expandedcontentTop']['class'] = trim($processedRecordVariables['expandedcontentClasstop']);
+
 		$processedData['config']['expandedcontentBottom']['enable'] = $processedRecordVariables['expandedcontentEnablebottom'];
 		$processedData['config']['expandedcontentBottom']['slide'] = $processedRecordVariables['expandedcontentSlidebottom'];
 		$processedData['config']['expandedcontentBottom']['container'] = $processedRecordVariables['expandedcontentContainerbottom'];
 		$processedData['config']['expandedcontentBottom']['containerposition'] = $processedRecordVariables['expandedcontentContainerpositionbottom'];
 		$processedData['config']['expandedcontentBottom']['class'] = trim($processedRecordVariables['expandedcontentClassbottom']);
-
 
 		return $processedData;
 	}
@@ -741,6 +738,7 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 		}
 		$processedData['chapter'] = $erg;
+
 
 		return $processedData;
 	}

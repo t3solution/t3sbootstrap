@@ -28,14 +28,14 @@
 				<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
 				<div class="d-none {modal.fixedClass}">
 					<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
-						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+						<t3sb:icon iconfig="{data.header_icon}" /> {modal.buttonText -> f:format.raw()}
 					</button>
 				</div>
 			</f:then>
 			<f:else>
 				<div class="d-grid">
 					<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
-						{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}
+						<t3sb:icon iconfig="{data.header_icon}" />{modal.buttonText -> f:format.raw()}
 					</button>
 				</div>
 			</f:else>
@@ -43,7 +43,7 @@
 	</f:then>
 	<f:else>
 		<a class="modal-link{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}" style="cursor:pointer;">
-			{header.hFa -> f:format.raw()}{modal.buttonText -> f:format.raw()}</a>
+			<t3sb:icon iconfig="{data.header_icon}" />{modal.buttonText -> f:format.raw()}</a>
 	</f:else>
 </f:if>
 

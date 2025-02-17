@@ -1,0 +1,46 @@
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
+	<div class="t3-page-ce-footer mt-2">
+	    <div class="t3-page-ce-info">
+
+		<f:if condition="{flexForm.equalHeight}">
+			<f:then>
+Equal height: true
+			</f:then>
+			<f:else>
+Equal height: false			
+			</f:else>
+		</f:if>
+		<f:if condition="{flexForm.equalWidth}">
+ | Equal width: true
+		</f:if>
+
+		<f:if condition="{flexForm.horizontalGutters}">
+ | Horizontal gutters: {flexForm.horizontalGutters}
+		</f:if>
+		<f:if condition="{flexForm.verticalGutters}">
+ | Vertical gutters: {flexForm.verticalGutters}
+		</f:if>
+
+	    </div>
+	</div>
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />

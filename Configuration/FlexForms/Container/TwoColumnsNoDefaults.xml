@@ -163,6 +163,25 @@
 							<default>1</default>
 						</config>
 					</bgimagePosition>
+					<bgimageSize>
+						<label>Background image size</label>
+						<displayCond>FIELD:Bgimage.bgimages:>:0</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items>
+								<numIndex index="0">
+									<label>cover</label>
+									<value>cover</value>
+								</numIndex>
+								<numIndex index="1">
+									<label>contain</label>
+									<value>contain</value>
+								</numIndex>
+							</items>
+							<default>cover</default>
+						</config>
+					</bgimageSize>
 				</el>
 			</ROOT>
 		</Bgimage>

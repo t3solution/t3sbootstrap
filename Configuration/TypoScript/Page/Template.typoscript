@@ -34,9 +34,6 @@ fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
-
-			webp = {$bootstrap.ext.webp}
-
 			iconpack.loaded = {$bootstrap.ext.iconpack}
 			indexedsearch.loaded = {$bootstrap.ext.indexedsearch}
 			kesearch.loaded = {$bootstrap.ext.kesearch}

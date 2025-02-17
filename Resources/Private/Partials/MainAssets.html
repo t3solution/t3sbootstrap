@@ -60,7 +60,7 @@
 <f:if condition="{settings.viewportWidthCookie}">
 <f:asset.script identifier="vanilla_widthCookie">
 	// Cookie for viewport width (usefull with fluid-container and image auto width) - Main.html
-	document.cookie = 'viewportWidth='+viewportWidth+'; path=/; max-age=${60 * 60 * 24 * 14};';
+	document.cookie = 'viewportWidth='+viewportWidth+'; path=/; max-age=86400; samesite=strict';
 </f:asset.script>
 </f:if>
 <f:comment> Lazyload </f:comment>

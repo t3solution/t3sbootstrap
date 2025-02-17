@@ -39,3 +39,21 @@ services:
     tags:
       - name: event.listener
         identifier: 't3sbootstrap/flexParsing'
+
+  T3SBS\T3sbootstrap\Command\TextpicToTextmedia:
+    tags:
+      - name: console.command
+        command: 't3sbootstrap:textpicToTextmedia'
+        schedulable: true
+
+  T3SBS\T3sbootstrap\Command\ImageToTextmedia:
+    tags:
+      - name: console.command
+        command: 't3sbootstrap:imageToTextmedia'
+        schedulable: true
+
+  T3SBS\T3sbootstrap\Command\TextToTextmedia:
+    tags:
+      - name: console.command
+        command: 't3sbootstrap:textToTextmedia'
+        schedulable: true

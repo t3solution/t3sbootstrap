@@ -42,6 +42,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             // Not implemented
         }, function ($arguments, $str) {
             $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+
 			if ($str === 'extNews') {	
 				if ( !empty($extConf[$str]) && ExtensionManagementUtility::isLoaded('news') ) {
 					return '1';
@@ -49,12 +50,10 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 					return '0';
 				}
 			} else {
-
 	            if ( !empty($extConf[$str]) ) {
-	                return 1;
+	                return '1';
 	            }
 			}
-
         });
     }
 

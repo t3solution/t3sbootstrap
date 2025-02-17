@@ -1,4 +1,16 @@
 
+<f:comment><!-- Custom CSS --></f:comment>
+<f:if condition="{data.tx_t3sbootstrap_css}">
+	<f:asset.css identifier="customCss_{data.uid}">
+{data.tx_t3sbootstrap_css -> f:format.raw()}
+	</f:asset.css>
+</f:if>
+<f:comment><!-- Custom JS --></f:comment>
+<f:if condition="{data.tx_t3sbootstrap_js}">
+	<f:asset.script identifier="customJs_{data.uid}">
+{data.tx_t3sbootstrap_js -> f:format.raw()}
+	</f:asset.script>
+</f:if>
 
 <f:comment> AnimateCss </f:comment>
 <f:if condition="{isAnimateCss} && {settings.animateCss}">
@@ -16,8 +28,8 @@
 					<f:asset.css identifier="animateCss" href="fileadmin/T3SB/Resources/Public/T3SB-CSS/animate.compat.css" />
 				</f:else>
 			</f:if>
-		
-		
+
+
 		</f:else>
 	</f:if>
 	<f:if condition="{animateCssRepeat}">
@@ -118,7 +130,7 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/T3SB-CSS/baguetteBox.min.css" />
 						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/T3SB-JS/baguetteBox.min.js" />
 					</f:else>
-				</f:if>	
+				</f:if>
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">
@@ -136,7 +148,7 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 				<f:asset.css identifier="t3sblightboxCss"
 					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.css" />
 				<f:asset.script identifier="t3sblightboxJS"
-					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.js" />			
+					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
 				<f:if condition="{settings.sitepackage}">
@@ -146,7 +158,7 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 					</f:then>
 					<f:else>
 						<f:asset.css identifier="t3sblightboxCss" href="fileadmin/T3SB/Resources/Public/T3SB-CSS/halkaBox.min.css" />
-						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/T3SB-JS/halkaBox.min.js" />				
+						<f:asset.script identifier="t3sblightboxJS" src="fileadmin/T3SB/Resources/Public/T3SB-JS/halkaBox.min.js" />
 					</f:else>
 				</f:if>
 			</f:else>

@@ -49,20 +49,21 @@
 	</div>
 	<f:if condition="{settings.detail.info}">
 		<div class="news-info">
-			<p>
+			<p class="small text-secondary">
 				<!-- date -->
 				<span class="news-list-date me-2">
-					<t3sb:icon iconfig="fa6:solid,calendar-days" />
+					<t3sb:icon iconfig="fa6:solid,calendar-days" additionalAttributes="{class:'me-1'}" />
 					<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
 						<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
 					</time>
 				</span>
 				<f:if condition="{newsItem.categories}">
 				<span class="news-list-category me-2">
-					<t3sb:icon iconfig="fa6:solid,folder-open" />
+					<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
 					<!-- categories -->
 					<span class="news-list-category">
-						<f:for each="{newsItem.categories}" as="category">
+						<f:for each="{newsItem.categories}" as="category" iteration="fooIterator">
+							<f:if condition="{fooIterator.index}"> | </f:if>
 							<f:if condition="{category.shortcut}">
 								<f:then>
 									<f:link.typolink parameter="{category.shortcut}">

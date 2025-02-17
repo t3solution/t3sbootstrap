@@ -52,7 +52,8 @@ function scrollDown() {
 </f:asset.script>
 
 <f:asset.script identifier="vanilla_full-height-js">
-	if ( navbar.offsetTop < 1  && fixedNavbar ) {
+	var isTransparent = navbar.classList.contains('bg-transparent');
+	if ( !isTransparent && navbar.offsetTop < 1  && fixedNavbar ) {
 		var fhs = document.getElementById('full-height-section');
 		fhs.style.paddingTop = navbarHeight+'px';
 	}

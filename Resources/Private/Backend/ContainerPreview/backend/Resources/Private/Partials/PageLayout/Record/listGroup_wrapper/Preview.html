@@ -1,0 +1,21 @@
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />

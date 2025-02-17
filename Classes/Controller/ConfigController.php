@@ -106,11 +106,6 @@ final class ConfigController extends AbstractController
             }
         }
 
-        $assignedOptions['webpIsLoaded'] = false;
-        if (ExtensionManagementUtility::isLoaded('webp')) {
-            $assignedOptions['webpIsLoaded'] = true;
-        }
-
         $new_raster = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/raster.png');
         if ( !file_exists($new_raster) ) {
             $folder = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/');

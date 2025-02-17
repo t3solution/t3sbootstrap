@@ -20,9 +20,9 @@ class Toast implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-		$processedData['animation'] = $flexconf['animation'] ? 'true' : 'false';
-		$processedData['autohide'] = $flexconf['autohide'] ? 'true' : 'false';
-		$processedData['delay'] = $flexconf['delay'];
+		$processedData['animation'] = !empty($flexconf['animation']) ? 'true' : 'false';
+		$processedData['autohide'] = !empty($flexconf['autohide']) ? 'true' : 'false';
+		$processedData['delay'] = !empty($flexconf['delay']) ? $flexconf['delay'] : '';
 		$processedData['style'] .= !empty($flexconf['toastwidth']) ? ' width:'.$flexconf['toastwidth'].'px;' : '';
 		if (!empty($flexconf['placement']) && str_starts_with($flexconf['placement'], 'top-0')) {
 			$processedData['placement'] = ' '.str_replace('top-0', 'top-70', $flexconf['placement']);
