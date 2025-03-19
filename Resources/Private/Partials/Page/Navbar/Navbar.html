@@ -107,7 +107,17 @@
 </f:if>
 <f:if condition="{settings.navbar.feUserName}">
 	<f:security.ifAuthenticated>
-		<span class="nav-link fe-user ms-1"><t3sb:icon iconfig="fa6:solid,user" additionalAttributes="{class:'me-1'}" /> <t3sb:getUsername /></span>		
+		<span class="nav-link fe-user ms-1">
+			<f:if condition="{settings.iconpack.loaded}">
+				<f:then>
+					<t3sb:icon iconfig="fa6:solid,user" additionalAttributes="{class:'me-1'}" />		
+				</f:then>
+				<f:else>
+					<i class="fa-solid fa-user me-1"></i>
+				</f:else>	
+			</f:if>
+			<t3sb:getUsername />
+		</span>
 	</f:security.ifAuthenticated>
 </f:if>
 </f:section>
@@ -121,7 +131,14 @@
 		<f:else>
 			<f:if condition="{settings.navbar.searchboxLink} && !{navbarMenuRight -> f:count()}">
 				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}">
-					<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'me-3'}" />
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'me-3'}" />		
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-user me-3"></i>
+						</f:else>	
+					</f:if>
 				</f:link.page>
 			</f:if>
 		</f:else>
@@ -153,7 +170,6 @@
 </f:section>
 
 <f:section name="Brand">
-
 <f:if condition="{config.navbar.brand}">
 	<f:then>
 	<f:switch expression="{config.navbar.brand}">
@@ -232,7 +248,7 @@
 								<a class="nav-link{navbarItem.activeClass}"
 									href="{navbarItem.link}"
 									 target="{navbarItem.target}"
-									 title="{navbarItem.linkTitle}">
+									 title="{navbarItem.linkTitle}" tabindex="0">
 									<f:render section="Title" arguments="{item: navbarItem}" />
 								</a>
 							</f:else>
@@ -295,7 +311,14 @@
 			</a>
 			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split{f:if(condition: navbarItem.active, then:' --bs-dropdown-link-active-bg')}"
 			 data-bs-toggle="dropdown" aria-expanded="false" href="#">
-				<t3sb:icon iconfig="fa6:solid,square-plus" />
+				<f:if condition="{settings.iconpack.loaded}">
+					<f:then>
+						<t3sb:icon iconfig="fa6:solid,square-plus" />		
+					</f:then>
+					<f:else>
+						<i class="fa-solid fa-square-plus"></i>
+					</f:else>	
+				</f:if>
 			</button>
 		</f:then>
 		<f:else>
@@ -375,7 +398,14 @@
 							<f:render section="Title" arguments="{item: child}" />
 						</a>
 						<button type="button" class="btn btn-link ps-0 dropdown-toggle dropdown-toggle-split{child.activeClass}" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-							<t3sb:icon iconfig="fa6:solid,square-plus" />
+							<f:if condition="{settings.iconpack.loaded}">
+								<f:then>
+									<t3sb:icon iconfig="fa6:solid,square-plus" />		
+								</f:then>
+								<f:else>
+									<i class="fa-solid fa-square-plus"></i>
+								</f:else>	
+							</f:if>
 						</button>
 					</f:then>
 					<f:else>

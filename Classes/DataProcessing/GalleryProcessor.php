@@ -25,13 +25,11 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  */
 class GalleryProcessor implements DataProcessorInterface
 {
-    #public const bsMaxGridWidth = 1320;
-    #public const maxGalleryWidth = 1296;
-    public const bsMaxGridWidth = 1340;
-    public const maxGalleryWidth = 1320;
+    public const bsMaxGridWidth = 1320;
+    public const maxGalleryWidth = 1296;
     public const minimumWidth = 575;
     public const gridColumns = 12;
-    public const gridGutterWidth = 24; // default 1.5rem => ca 24px
+    public const gridGutterWidth = 24; // default 1.5rem => 24px
 
     protected $contentObjectRenderer;
     protected $contentObjectConfiguration;
@@ -169,7 +167,8 @@ class GalleryProcessor implements DataProcessorInterface
         $this->maxWidthToast = $this->getConfigurationValue('maxWidthToast');
         $this->disableAutoRow = $this->getConfigurationValue('disableAutoRow');
 
-        $request = $GLOBALS['TYPO3_REQUEST'];
+		/** @var \Psr\Http\Message\ServerRequestInterface $request */
+		$request = $cObj->getRequest();
         $this->frontendController = $request->getAttribute('frontend.controller');
 
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
@@ -340,7 +339,6 @@ class GalleryProcessor implements DataProcessorInterface
             } else {
                 $bsMaxGridWidth = self::maxGalleryWidth;
             }
-
             // row width
             if (is_int($this->rowWidth)) {
                 $rowWidth = $this->rowWidth;
@@ -365,9 +363,9 @@ class GalleryProcessor implements DataProcessorInterface
                 }
                 $smallColumns = $defaultSmallColumns ?: $this->frontendController->page['tx_t3sbootstrap_smallColumns'];
 
-                if ($this->beLayout == 'OneCol') {
+                if ($this->beLayout == 'OneCol' || $this->beLayout == 'OneCol_Extra') {
                     $bsGridWidth = $bsMaxGridWidth;
-                } elseif ($this->beLayout == 'ThreeCol') {
+                } elseif ($this->beLayout == 'ThreeCol' || $this->beLayout == 'ThreeCol_Extra') {
 
                     // Three columns
                     $bsMaxGridWidth = $bsMaxGridWidth + self::gridGutterWidth;
@@ -441,7 +439,7 @@ class GalleryProcessor implements DataProcessorInterface
                 $bsGridWidth = $bsGridWidth + self::gridGutterWidth;
                 $bsGridWidth = self::getCalculatedGridWidth($bsGridWidth);
             } else {
-                if ($this->beLayout == 'OneCol') {
+                if ($this->beLayout == 'OneCol' || $this->beLayout == 'OneCol_Extra') {
                     $bsGridWidth = $bsGridWidth + self::gridGutterWidth;
                 }
             }
@@ -599,7 +597,7 @@ class GalleryProcessor implements DataProcessorInterface
                             if ($this->galleryData['position']['vertical'] === 'above' || $this->galleryData['position']['vertical'] === 'below') {
                                 # imageorient 0 - 10
                                 $galleryWidth = $galleryWidth - self::gridGutterWidth + $gutterWidth;
-                                $gutterWidth = $gutterWidth * $this->galleryData['count']['columns'];
+                                $gutterWidth = $gutterWidth * ($this->galleryData['count']['columns'] - 1);
                                 $mediaWidth = ceil(($galleryWidth - $gutterWidth) / $this->galleryData['count']['columns']);
                             } else {
                                 # imageorient 17 & 18
@@ -641,6 +639,7 @@ class GalleryProcessor implements DataProcessorInterface
                      * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
                 }
                 $mediaHeight = !empty($mediaHeight) ? floor($mediaHeight) : '';
+
                 $this->mediaDimensions[$key] = [
                     'width' => floor($mediaWidth),
                     'height' => $mediaHeight,

@@ -18,7 +18,16 @@
 <f:if condition="{card.multiImage.socialmedia.enable} && !{card.multiImage.socialmedia.footer}">
 	<div class="icon-block text-center my-2">
 		<f:for each="{card.multiImage.socialmediaLinks}" key="company" as="socialmediaLink">
-			<a target="_blank" title="{company}" href="{socialmediaLink}"><t3sb:icon iconfig="fa6:brands,{company}" /></a>
+			<a target="_blank" title="{company}" href="{socialmediaLink}">
+				<f:if condition="{settings.iconpack.loaded}">
+					<f:then>
+						<t3sb:icon iconfig="fa6:brands,{company}" additionalAttributes="{class:'mx-auto'}" />
+					</f:then>
+					<f:else>						
+						<i class="fa-brands fa-{company} mx-auto"></i>
+					</f:else>	
+				</f:if>
+			</a>
 		</f:for>
 	</div>
 </f:if>
@@ -31,7 +40,16 @@
 		<f:if condition="{card.multiImage.socialmedia.footer}">
 			<div class="icon-block text-center my-2">
 				<f:for each="{card.multiImage.socialmediaLinks}" key="company" as="socialmediaLink">
-					<a target="_blank" title="{company}" href="{socialmediaLink}"><t3sb:icon iconfig="fa6:brands,{company}" /></a>
+					<a target="_blank" title="{company}" href="{socialmediaLink}">
+						<f:if condition="{settings.iconpack.loaded}">
+							<f:then>
+								<t3sb:icon iconfig="fa6:brands,{company}" additionalAttributes="{class:'mx-auto'}" />
+							</f:then>
+							<f:else>						
+								<i class="fa-brands fa-{company} mx-auto"></i>
+							</f:else>	
+						</f:if>
+					</a>
 				</f:for>
 			</div>
 		</f:if>

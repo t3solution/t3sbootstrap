@@ -1,41 +1,47 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers" data-namespace-typo3-fluid="true">
-
 <f:if condition="{settings.list.info}">
 	<p class="small text-secondary mb-2">
-
-
-
 		<!-- date -->
 		<span class="news-date me-2">
+			<f:if condition="{settings.iconpack.loaded}">
+				<f:then>
+					<t3sb:icon iconfig="fa6:solid,calendar-days" additionalAttributes="{class:'me-1'}" />		
+				</f:then>
+				<f:else>
+					<i class="fa-solid fa-calendar-days me-1"></i>
+				</f:else>	
+			</f:if>
 			<span itemscope="itemscope" class="news-list-date">
 				<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
-					<t3sb:icon iconfig="fa6:solid,calendar-days" additionalAttributes="{class:'me-1'}" />
 					<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
 				</time>
 			</span>
 		</span>
 		<!-- categories -->
 		<f:if condition="{newsItem.categories}">
-		<span class="news-list-category">
-			<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
-			<f:for each="{newsItem.categories}" as="category" iteration="fooIterator">
-
-				<f:if condition="{fooIterator.index}"> | </f:if>
-				<f:if condition="{category.shortcut} && {settings.templateLayout} != '71'">
-					<f:then>
-						<f:link.typolink parameter="{category.shortcut}">
+			<f:if condition="{settings.iconpack.loaded}">
+				<f:then>
+					<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
+				</f:then>
+				<f:else>
+					<i class="fa-solid fa-folder-open me-1"></i>
+				</f:else>	
+			</f:if>
+			<span class="news-list-category">
+				<f:for each="{newsItem.categories}" as="category">
+					<f:if condition="{category.shortcut}">
+						<f:then>
+							<f:link.typolink parameter="{category.shortcut}">
+								{category.title}
+							</f:link.typolink>
+						</f:then>
+						<f:else>
 							{category.title}
-						</f:link.typolink>
-					</f:then>
-					<f:else>
-						{category.title}
-					</f:else>
-				</f:if>
-
-
-			</f:for>
-		</span>
+						</f:else>
+					</f:if>
+				</f:for>
+			</span>
 		</f:if>
 	</p>
 </f:if>

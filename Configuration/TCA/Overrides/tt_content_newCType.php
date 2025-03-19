@@ -312,7 +312,7 @@ $tempContentColumns = [
                 ['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
                 ['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
             ],
-            'default' => ''
+            'default' => '0'
         ]
     ],
     'tx_t3sbootstrap_flexform' => [
@@ -912,21 +912,21 @@ ExtensionManagementUtility::addPiFlexFormValue(
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_button'] = [
     'showitem' => '
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                        --palette--;;language,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                        --palette--;;hidden,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
-        '
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;hidden,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
+    '
 ];
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
     'header_link' => [
@@ -949,26 +949,26 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
     'showitem' => '
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
-                        bodytext;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext_formlabel,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
-                        assets,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,T3SFlex;tx_t3sbootstrap_flexform,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                        --palette--;;language,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                        --palette--;;hidden,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
-                        categories,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
-                        rowDescription,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
-        ',
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+                bodytext;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext_formlabel,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
+                assets,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,T3SFlex;tx_t3sbootstrap_flexform,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;hidden,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
+                categories,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+                rowDescription,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
+    ',
     'columnsOverrides' => [
         'bodytext' => [
             'config' => [
@@ -1006,32 +1006,32 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject']['columnsOverrides'] 
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
     'showitem' => '
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
-                --div--;Content,pi_flexform;Card Content,
-                        tx_t3sbootstrap_cardheader;Card Header,
-                        bodytext;Text top,
-                        tx_t3sbootstrap_list_item;List Group,
-                        tx_t3sbootstrap_bodytext;Text bottom,
-                        tx_t3sbootstrap_cardfooter;Card Footer,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,
-                        assets,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.mediaAdjustments;mediaAdjustments,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.gallerySettings;gallerySettings,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.imagelinks;imagelinks,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                        --palette--;;language,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                        --palette--;;hidden,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
-        ',
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+        --div--;Content,pi_flexform;Card Content,
+                tx_t3sbootstrap_cardheader;Card Header,
+                bodytext;Text top,
+                tx_t3sbootstrap_list_item;List Group,
+                tx_t3sbootstrap_bodytext;Text bottom,
+                tx_t3sbootstrap_cardfooter;Card Footer,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,
+                assets,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.mediaAdjustments;mediaAdjustments,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.gallerySettings;gallerySettings,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.imagelinks;imagelinks,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;hidden,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
+        --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
+    ',
     'columnsOverrides' => [
         'bodytext' => [
             'config' => [
@@ -1063,8 +1063,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast'] = $GLOBALS['TCA']['tt_cont
  */
 // add extra column
 $GLOBALS['TCA']['tt_content']['columns']['bullets_type']['config']['items'] = [
-    ['label' => 'Unsortierte Liste', 'value' => 0,],
-    ['label' => 'Sortierte Liste', 'value' => 1,],
+    ['label' => '0', 'value' => 0,],
     ['label' => 'BS Inline list', 'value' => 2,],
     ['label' => 'BS Unstyled list', 'value' => 3,],
     ['label' => 'BS Listengruppen', 'value' => 4,],
@@ -1092,21 +1091,21 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_fluidtemplate']['showitem'] = '
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
     'showitem' => '
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,assets,
-                        LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
-                        --linebreak--, file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
-                        --linebreak--, filelink_sorting,
-                        --palette--;;mediaAdjustments,imagecols,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                         --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
-                        hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
-                        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
-        '
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,assets,
+                LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
+                --linebreak--, file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
+                --linebreak--, filelink_sorting,
+                --palette--;;mediaAdjustments,imagecols,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
+                hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+        --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+    '
 ];
 
 
@@ -1129,6 +1128,40 @@ ExtensionManagementUtility::addFieldsToPalette(
     'tx_t3sbootstrap_header_celink',
     'after:header_link'
 );
+
+
+if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
+	ExtensionManagementUtility::addFieldsToPalette(
+		'tt_content',
+		'headers',
+		'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position,tx_t3sbootstrap_chapter',
+		'after:subheader'
+	);
+} else {
+	ExtensionManagementUtility::addFieldsToPalette(
+		'tt_content',
+		'headers',
+		'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position',
+		'after:subheader'
+	);
+}
+
+if (array_key_exists('extraStyle', $extconf) && $extconf['extraStyle'] === '1') {
+	ExtensionManagementUtility::addFieldsToPalette(
+		'tt_content',
+		'frames',
+		'--linebreak--,tx_t3sbootstrap_extra_class,tx_t3sbootstrap_extra_style,--linebreak--,tx_t3sbootstrap_container,--linebreak--, tx_t3sbootstrap_flexform',
+		'after:frame_class'
+	);
+} else {
+	ExtensionManagementUtility::addFieldsToPalette(
+		'tt_content',
+		'frames',
+		'--linebreak--,tx_t3sbootstrap_extra_class,--linebreak--,tx_t3sbootstrap_container,--linebreak--, tx_t3sbootstrap_flexform',
+		'after:frame_class'
+	);
+}
+
 
 // Media Adjustments
 ExtensionManagementUtility::addFieldsToPalette(
@@ -1186,23 +1219,11 @@ ExtensionManagementUtility::addFieldsToPalette(
 # add palettes
 ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
-    '--palette--; ;bsHeaderExtra',
-    '',
-    'after:header'
-);
-
-ExtensionManagementUtility::addToAllTCAtypes(
-    'tt_content',
     '--palette--;Bootstrap Color;bootstrapColor',
     '',
     'after:layout'
 );
-ExtensionManagementUtility::addToAllTCAtypes(
-    'tt_content',
-    '--palette--;Bootstrap Utilities;bootstrap',
-    '',
-    'after:layout'
-);
+
 ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
     '--palette--;Bootstrap Spacing;bootstrapSpacing',
@@ -1234,37 +1255,10 @@ if (!ExtensionManagementUtility::isLoaded('content_animations')) {
     );
 }
 
-if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
-    $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
-        'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
-        tx_t3sbootstrap_chapter, --linebreak--, tx_t3sbootstrap_header_class'
-    ];
-} else {
-    $GLOBALS['TCA']['tt_content']['palettes']['bsHeaderExtra'] = [
-        'showitem' => 'tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_position, --linebreak--,
-        tx_t3sbootstrap_header_class'
-    ];
-}
-
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
     'showitem' => 'tx_t3sbootstrap_padding_sides, tx_t3sbootstrap_padding_size, --linebreak--,
     tx_t3sbootstrap_margin_sides, tx_t3sbootstrap_margin_size'
 ];
-
-if (array_key_exists('extraStyle', $extconf) && $extconf['extraStyle'] === '1') {
-    $GLOBALS['TCA']['tt_content']['palettes']['bootstrap'] = [
-        'showitem' => 'tx_t3sbootstrap_extra_class,
-    --linebreak--, tx_t3sbootstrap_extra_style,
-    --linebreak--, tx_t3sbootstrap_container,
-    --linebreak--, tx_t3sbootstrap_flexform'
-    ];
-} else {
-    $GLOBALS['TCA']['tt_content']['palettes']['bootstrap'] = [
-        'showitem' => 'tx_t3sbootstrap_extra_class,
-    --linebreak--, tx_t3sbootstrap_container,
-    --linebreak--, tx_t3sbootstrap_flexform'
-    ];
-}
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapColor'] = [
     'showitem' => 'tx_t3sbootstrap_contextcolor, tx_t3sbootstrap_bgcolor, --linebreak--, tx_t3sbootstrap_bgopacity, tx_t3sbootstrap_textcolor'

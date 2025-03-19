@@ -45,7 +45,15 @@
 </div>
 </div>
   <div class="card-footer small">
-	  <t3sb:icon iconfig="fa6:solid,tags" />{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}  
+		<f:if condition="{settings.iconpack.loaded}">
+			<f:then>
+				<<t3sb:icon iconfig="fa6:solid,tags" />		
+			</f:then>
+			<f:else>
+				<i class="fa-solid fa-tags"></i>
+			</f:else>	
+		</f:if>
+		{f:if(condition: resultrow.tags, then: '{resultrow.tags}', else: 'home')}
   </div>
 </div>
 </div>

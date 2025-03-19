@@ -1,17 +1,38 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 	<f:if condition="{settings.navbar.searchboxLink}">
 		<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}">
-			<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'mx-3'}" />	
+			<f:if condition="{settings.iconpack.loaded}">
+				<f:then>
+					<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'mx-3'}" />	
+				</f:then>
+				<f:else>
+					<i class="fa-solid fa-magnifying-glass mx-3"></i>
+				</f:else>	
+			</f:if>
 		</f:link.page>
 	</f:if>
 	<div class="nav-item dropdown {config.navbar.hover}">
 		<a class="nav-link dropdown-toggle ps-{settings.config.navbarBreakpoint}-3" id="right-menu"
 			 href="#" data-bs-toggle="{config.navbar.bstoggle}" role="button" aria-expanded="false">
-			<t3sb:icon iconfig="fa6:solid,circle-info" additionalAttributes="{class:'me-1'}" />			
+			<f:if condition="{settings.iconpack.loaded}">
+				<f:then>
+					<t3sb:icon iconfig="fa6:solid,circle-info" additionalAttributes="{class:'me-1'}" />			
+				</f:then>
+				<f:else>
+					<i class="fa-solid fa-circle-info me-1"></i>
+				</f:else>	
+			</f:if>
 		</a>
 		<f:if condition="{config.navbar.navbarPlusicon}">
-			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-				<t3sb:icon iconfig="fa6:solid,square-plus" />
+			<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" href="#">	
+				<f:if condition="{settings.iconpack.loaded}">
+					<f:then>
+						<t3sb:icon iconfig="fa6:solid,square-plus" />		
+					</f:then>
+					<f:else>
+						<i class="fa-solid fa-square-plus"></i>
+					</f:else>	
+				</f:if>
 			</button>
 		</f:if>
 		<div class="dropdown-menu dropdown-menu-end mt-0 slideIn{config.navbar.dropdownAnimate}" aria-labelledby="right-menu">

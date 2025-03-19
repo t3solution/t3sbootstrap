@@ -28,14 +28,31 @@
 						<f:if condition="{paginated.prev}">
 							<li class="page-item">
 								<n:link newsItem="{paginated.prev}" settings="{settings}" class="page-link">
-									<span aria-hidden="true"><t3sb:icon iconfig="fa6:solid,chevron-left" /></span> {paginated.prev.title}
+									<span aria-hidden="true">								
+							 			<f:if condition="{settings.iconpack.loaded}">
+											<f:then>
+												<t3sb:icon iconfig="fa6:solid,chevron-left" />	
+											</f:then>
+											<f:else>
+												<i class="fa-solid fa-chevron-left"></i>
+											</f:else>	
+										</f:if>
+									</span> {paginated.prev.title}
 								</n:link>
 							</li>
 						</f:if>
 						<f:if condition="{paginated.next}">
 							<li class="page-item">
 								<n:link newsItem="{paginated.next}" settings="{settings}" class="page-link">
-									{paginated.next.title} <t3sb:icon iconfig="fa6:solid,chevron-right" additionalAttributes="{class:'ms-1'}" />
+									{paginated.next.title} 
+						 			<f:if condition="{settings.iconpack.loaded}">
+										<f:then>
+											<t3sb:icon iconfig="fa6:solid,chevron-right" additionalAttributes="{class:'ms-1'}" />
+										</f:then>
+										<f:else>
+											<i class="fa-solid fa-chevron-right ms-1"></i>
+										</f:else>	
+									</f:if>
 								</n:link>		
 							</li>
 						</f:if>
@@ -52,18 +69,31 @@
 			<p class="small text-secondary">
 				<!-- date -->
 				<span class="news-list-date me-2">
-					<t3sb:icon iconfig="fa6:solid,calendar-days" additionalAttributes="{class:'me-1'}" />
+		 			<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa6:solid,calendar-days" additionalAttributes="{class:'me-1'}" />
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-calendar-days me-1"></i>
+						</f:else>	
+					</f:if>
 					<time itemprop="datePublished" datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
 						<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
 					</time>
 				</span>
 				<f:if condition="{newsItem.categories}">
 				<span class="news-list-category me-2">
-					<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
+		 			<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-folder-open me-1"></i>
+						</f:else>	
+					</f:if>
 					<!-- categories -->
 					<span class="news-list-category">
-						<f:for each="{newsItem.categories}" as="category" iteration="fooIterator">
-							<f:if condition="{fooIterator.index}"> | </f:if>
+						<f:for each="{newsItem.categories}" as="category">
 							<f:if condition="{category.shortcut}">
 								<f:then>
 									<f:link.typolink parameter="{category.shortcut}">
@@ -80,7 +110,14 @@
 				</f:if>
 				<f:if condition="{newsItem.tags}">
 					<!-- Tags -->
-					<t3sb:icon iconfig="fa6:solid,tags" />
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<<t3sb:icon iconfig="fa6:solid,tags" />		
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-tags"></i>
+						</f:else>	
+					</f:if>
 					<span class="news-list-tags me-2" itemprop="keywords">
 					<f:for each="{newsItem.tags}" as="tag">
 						{tag.title}
@@ -89,7 +126,14 @@
 				</f:if>
 				<f:if condition="{newsItem.author}">
 					<!-- author -->
-					<t3sb:icon iconfig="fa6:solid,user" />
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa6:solid,user" />		
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-user me-1"></i>
+						</f:else>	
+					</f:if>
 					<span class="news-list-author me-2" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
 						<f:link.typolink parameter="{newsItem.authorEmail}">
 							<f:translate key="author_simple" />

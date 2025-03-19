@@ -24,11 +24,26 @@
 				<div class="btn-group me-2 mb-2" role="group">
 					<f:link.page class="btn btn-primary" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{tx_news_pi1:{overwriteDemand:{categories: category.item.uid}}}">
-						<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" /> {category.item.title}
+						<f:if condition="{settings.iconpack.loaded}">
+							<f:then>
+								<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
+							</f:then>
+							<f:else>
+								<i class="fa-solid fa-folder-open me-1"></i>
+							</f:else>	
+						</f:if>
+						 {category.item.title}
 					</f:link.page>
 					<f:link.page class="btn btn-primary active" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{n:multiCategoryLink.arguments(mode:'remove',item:category.item.uid,list:overwriteDemand.categories)}">
-						<t3sb:icon iconfig="fa6:solid,minus" />
+						<f:if condition="{settings.iconpack.loaded}">
+							<f:then>
+								<t3sb:icon iconfig="fa6:solid,minus" />
+							</f:then>
+							<f:else>
+								<i class="fa-solid fa-minus"></i>
+							</f:else>	
+						</f:if>
 					</f:link.page>
 				</div>
 			</f:then>
@@ -36,11 +51,26 @@
 				<div class="btn-group me-2 mb-2" role="group">
 					<f:link.page class="btn btn-primary" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{tx_news_pi1:{overwriteDemand:{categories: category.item.uid}}}">
-						<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" /> {category.item.title}
+						<f:if condition="{settings.iconpack.loaded}">
+							<f:then>
+								<t3sb:icon iconfig="fa6:solid,folder-open" additionalAttributes="{class:'me-1'}" />
+							</f:then>
+							<f:else>
+								<i class="fa-solid fa-folder-open me-1"></i>
+							</f:else>	
+						</f:if>	
+						 {category.item.title}
 					</f:link.page>
 					<f:link.page class="btn btn-primary" title="{category.item.title}" pageUid="{settings.listPid}"
 						 additionalParams="{n:multiCategoryLink.arguments(mode:'add',item:category.item.uid,list:overwriteDemand.categories)}">
-						<t3sb:icon iconfig="fa6:solid,plus" />
+						<f:if condition="{settings.iconpack.loaded}">
+							<f:then>
+								<t3sb:icon iconfig="fa6:solid,plus" />
+							</f:then>
+							<f:else>
+								<i class="fa-solid fa-plus"></i>
+							</f:else>	
+						</f:if>
 					</f:link.page>
 				</div>
 			</f:else>

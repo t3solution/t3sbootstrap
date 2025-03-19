@@ -52,13 +52,32 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<f:render partial="Header/All" arguments="{_all}" />
-				<button type="button" class="btn-close{f:if(condition:'{modal.whiteclosebutton}',then:' btn-close-white')}" data-bs-dismiss="modal" aria-label="Schließen"></button>
+				<button type="button" class="btn-close{f:if(condition:'{modal.whiteclosebutton}',then:' btn-close-white')}"
+				 data-bs-dismiss="modal" aria-label="Schließen"></button>
 			</div>
 			<div class="modal-body{f:if(condition:'{data.tx_t3sbootstrap_container}',then:' {data.tx_t3sbootstrap_container}')}">
 			<f:for each="{col_279}" as="row">
 				{row.renderedContent -> f:format.raw()}
 			</f:for>
 			</div>
+
+			<f:if condition="{modal.prevModal} || {modal.nextModal}">
+				<div class="modal-footer d-block">
+					<f:if condition="{modal.prevModal}">
+						<button type="button" class="btn btn-secondary float-start" data-bs-dismiss="modal" data-bs-toggle="modal"
+						 id="toModal-{modal.prevModal}" data-bs-target="#modal-{modal.prevModal}" aria-label="Prev">
+							Previous Modal
+						</button>
+					</f:if>
+					<f:if condition="{modal.nextModal}">
+						<button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" data-bs-toggle="modal"
+						 id="toModal-{modal.nextModal}" data-bs-target="#modal-{modal.nextModal}" aria-label="Prev">
+							Next Modal
+						</button>
+					</f:if>
+				</div>
+			</f:if>
+
 <f:comment>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>

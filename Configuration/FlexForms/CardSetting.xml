@@ -485,7 +485,7 @@
 							<type>link</type>
 						</config>
 					</multiImage.socialmedia.facebook>
-					<multiImage.socialmedia.twitter>
+					<multiImage.socialmedia.x-twitter>
 						<label>Twitter</label>
 						<displayCond>
 							<and>
@@ -496,8 +496,8 @@
 						<config>
 							<type>link</type>
 						</config>
-					</multiImage.socialmedia.twitter>
-					<multiImage.socialmedia.google>
+					</multiImage.socialmedia.x-twitter>
+					<multiImage.socialmedia.google-plus>
 						<label>Google-plus</label>
 						<displayCond>
 							<and>
@@ -508,7 +508,7 @@
 						<config>
 							<type>link</type>
 						</config>
-					</multiImage.socialmedia.google>
+					</multiImage.socialmedia.google-plus>
 					<multiImage.socialmedia.linkedin>
 						<label>Linkedin</label>
 						<displayCond>

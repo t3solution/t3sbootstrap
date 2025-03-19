@@ -164,15 +164,19 @@
 		<f:if condition="{settings.fullHeightSection.icon}">
 			<f:then>
 				<button id="full-height-icon" onclick="scrollDown()" title="down">
-
 					<f:format.raw>{settings.fullHeightSection.icon}</f:format.raw>
-
 				</button>
 			</f:then>
 			<f:else>
 				<button id="full-height-icon" onclick="scrollDown()" title="down">
-<t3sb:icon iconfig="fa6:solid,chevron-down" />
-
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa6:solid,chevron-down" />	
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-chevron-down"></i>
+						</f:else>	
+					</f:if>
 				</button>
 			</f:else>
 		</f:if>

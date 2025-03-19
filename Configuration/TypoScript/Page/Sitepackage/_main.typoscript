@@ -10,6 +10,3 @@
 
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/IncludeDefault.typoscript'
 
-[{$bootstrap.cdn.enable} == 0]
-@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Sitepackage/Fontawesome.typoscript'
-[END]

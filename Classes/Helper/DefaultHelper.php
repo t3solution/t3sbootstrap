@@ -59,7 +59,7 @@ class DefaultHelper implements SingletonInterface
 			$processedData['container'] = trim($container);
 		} else {
 			$processedData['containerError'] = FALSE;
-			if ($processedData['be_layout'] === 'OneCol' && !empty($containerConfig['containerError']) ) {
+			if ( ($processedData['be_layout'] === 'OneCol' || $processedData['be_layout'] === 'OneCol_Extra') && !empty($containerConfig['containerError']) ) {
 				$processedData['containerError'] = self::getContainerError($processedData['data'], $containerConfig);
 			}
 		}

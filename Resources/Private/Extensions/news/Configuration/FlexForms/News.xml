@@ -92,6 +92,16 @@
 				</config>
 			</settings.dummyImageUid>
 
+			<settings.list.noimage>
+				<label>No images in "Horizontal Cards" list view - 100% width for "card-body"</label>				
+				<displayCond>FIELD:template.settings.templateLayout:=:71</displayCond>
+				<config>
+					<type>check</type>
+				</config>
+			</settings.list.noimage>
+
+
+
 			<!-- Detail PlugIn -->
 
 			<settings.detail.imageRatio>

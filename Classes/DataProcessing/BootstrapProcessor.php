@@ -87,7 +87,10 @@ class BootstrapProcessor implements DataProcessorInterface
         $cType = $processedData['data']['CType'];
         $parentCType = '';
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-        $flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['tx_t3sbootstrap_flexform']);
+		$flexconf = [];
+        if (!empty($processedData['data']['tx_t3sbootstrap_flexform'])) {
+            $flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['tx_t3sbootstrap_flexform']);
+        }
         $parentflexconf = [];
         $parentContainer = [];
         $parentUid = $processedData['data']['tx_container_parent'];
@@ -478,7 +481,6 @@ class BootstrapProcessor implements DataProcessorInterface
         }
         return $s;
     }
-
 
 
     function getChapterIndex(array $processedData, ServerRequestInterface $request): array

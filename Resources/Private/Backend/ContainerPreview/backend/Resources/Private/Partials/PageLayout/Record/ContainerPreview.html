@@ -1,13 +1,5 @@
 {namespace core = TYPO3\CMS\Core\ViewHelpers}
 
-<f:asset.css identifier="t3sbce-{item.record.uid}">
-#element-tt_content-{item.record.uid} .card-body .t3-page-column-header,
-#element-tt_content-{item.record.uid} .card-body .element-preview-header {
-	display: none !important;
-}
-</f:asset.css>
-
-
 <f:variable name="emconf" value="<t3sb:emconf />" />
 <f:if condition="{emconf.previewClosedCollapsible} == '1'">
 	<f:then>
@@ -215,6 +207,7 @@
 	  </div>
 	</div>
 </f:if>
+
 
 <f:comment>
 <!-- still open for column layouts -->

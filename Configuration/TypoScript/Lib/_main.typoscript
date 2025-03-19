@@ -92,3 +92,27 @@ lib.printButton {
 lib.printButton.stdWrap.typolink.title = Druckversion dieser Seite in einem neuen Fenster öffnen
 [global]
 
+
+lib.parseFunc_RTE {
+  externalBlocks {
+    table {
+      stdWrap {
+        wrap = <div class="table-responsive">|</div>
+ 
+        HTMLparser {
+          tags {
+            table {
+              fixAttrib {
+                class {
+                  default = table
+                  always = 1
+                  list = table, table-bordered, table-striped, table-hover, table-sm
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

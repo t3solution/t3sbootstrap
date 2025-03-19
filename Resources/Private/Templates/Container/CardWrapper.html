@@ -35,7 +35,15 @@ function t3sbCardFlipper() {
 			var cardBody = backside.querySelector('.card-body');
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
-			el.innerHTML = '<p class="square-backlink"><t3sb:icon iconfig="fa6:solid,minus-square,size:2x" additionalAttributes="{class:'mx-auto'}" />
+			el.innerHTML = '<p class="square-backlink">
+				<f:if condition="{settings.iconpack.loaded}">
+					<f:then>
+						<t3sb:icon iconfig="fa6:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" />	
+					</f:then>
+					<f:else>
+						<i class="fa-solid fa-square-minus fa-2x mx-auto"></i>
+					</f:else>	
+				</f:if>
 			</p>';
 			insertAfter(cardBody, el);
 			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
@@ -87,7 +95,6 @@ function insertAfter(referenceNode, newNode) {
 			 integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 		</f:then>
 		<f:else>
-
 			<f:if condition="{settings.sitepackage}">
 				<f:then>
 					<f:asset.script identifier="masonry" src="EXT:t3sb_package/Resources/Public/T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
@@ -96,9 +103,6 @@ function insertAfter(referenceNode, newNode) {
 					<f:asset.script identifier="masonry" src="fileadmin/T3SB/Resources/Public/T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
 				</f:else>
 			</f:if>
-
-
-
 		</f:else>
 	</f:if>
 	<div class="row{class}"
@@ -264,7 +268,14 @@ function insertAfter(referenceNode, newNode) {
 									<f:else>
 										<f:if condition="{settings.cardFlipperOnClick}">
 											<p class="square-link">
-												<t3sb:icon iconfig="fa6:solid,plus-square,size:2x" additionalAttributes="{class:'mx-auto'}" />
+												<f:if condition="{settings.iconpack.loaded}">
+													<f:then>
+														<t3sb:icon iconfig="fa6:solid,square-plus,size:2x" additionalAttributes="{class:'mx-auto'}" />
+													</f:then>
+													<f:else>
+														<i class="fa-solid fa-square-plus fa-2x mx-auto"></i>
+													</f:else>	
+												</f:if>
 											</p>
 										</f:if>
 									</f:else>

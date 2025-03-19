@@ -186,8 +186,13 @@ function t3sbShrinkingNavbar(navbar, padding) {
 	let navShrinkColorschemes = navbar.getAttribute('data-shrinkcolorschemes'),
 		navShrinkColor = 'navbar-'+navbar.getAttribute('data-shrinkcolor'),
 		navColorschemes = navbar.getAttribute('data-colorschemes'),
-		navColor = navbar.getAttribute('data-color'),
+		navColor = navbar.getAttribute('data-color');
+
+	let gradient = [];
+	if (navShrinkColorschemes != null) {
 		gradient = navShrinkColorschemes.split(' ');
+	}
+
 	if (gradient[1]) {
 		navShrinkColorschemes = gradient[0];
 	}

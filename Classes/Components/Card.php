@@ -144,7 +144,7 @@ class Card implements SingletonInterface
             $cardData['multiImage']['border'] = $flexconf['multiImage']['borderWidth'].$borderColor.$shadow;
             $cardData['multiImage']['slope'] =	$flexconf['multiImage']['diagonal'] ? $flexconf['multiImage']['slope'] : 0;
             $cardData['multiImage']['socialmedia']['enable'] = $flexconf['multiImage']['socialmedia']['enable'];
-            $cardData['multiImage']['socialmedia']['footer'] = $flexconf['multiImage']['socialmedia']['footer'];
+            $cardData['multiImage']['socialmedia']['footer'] = !empty($flexconf['multiImage']['socialmedia']['footer']) ? $flexconf['multiImage']['socialmedia']['footer'] : '';
             if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
                 foreach ($flexconf['multiImage']['socialmedia'] as $key=>$socialmedia) {
                     if ($key != 'enable' && $key != 'footer' &&  !empty($socialmedia)) {
@@ -187,7 +187,7 @@ class Card implements SingletonInterface
         // addmedia
         $processedData['addmedia']['imgclass'] = $cardData['image']['class'];
         $processedData['addmedia']['imgclass'] .= !empty($flexconf['horizontal']) ? ' rounded-start' : '';
-        $processedData['addmedia']['figureclass'] = ' text-center mx-auto';
+        $processedData['addmedia']['figureclass'] = ' text-center';
         $processedData['addmedia']['figureclass'] .= !empty($flexconf['horizontal']) ? ' d-block' : '';
 
         if (!empty($cardData['square']['enable'])) {

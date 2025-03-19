@@ -202,6 +202,24 @@
 							<default>0</default>
 						</config>
 					</rotate>
+					<prevModal>
+						<label>Previous Modal UID</label>
+						<description>Creates a button in the modal footer to open the previous modal</description>
+						<config>
+							<type>number</type>
+							<size>5</size>
+							<default></default>
+						</config>
+					</prevModal>
+					<nextModal>
+						<label>Next Modal UID</label>
+						<description>Creates a button in the modal footer to open the next modal</description>
+						<config>
+							<type>number</type>
+							<size>5</size>
+							<default></default>
+						</config>
+					</nextModal>
 				</el>
 			</ROOT>
 		</general>

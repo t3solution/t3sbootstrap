@@ -21,9 +21,6 @@ editor:
      - Indent
      - IndentBlock
 
-   contentsCss:
-     - 'EXT:t3sbootstrap/Resources/Public/Backend/RTE/t3sbootstrap.css'
-
    toolbar:
      items:
        - selectAll
@@ -172,6 +169,14 @@ editor:
        - { name: 'Pill Badge Info', element: 'span', 'classes': ['badge rounded-pill text-bg-info'] }
        - { name: 'Pill Badge Light', element: 'span', 'classes': ['badge rounded-pill text-bg-light'] }
        - { name: 'Pill Badge Dark', element: 'span', 'classes': ['badge rounded-pill text-bg-dark'] }
+
+       # List
+       - { name: 'List Unstyled', element: 'ul', 'classes': ['list-unstyled'] }
+       - { name: 'List Inline', element: 'ul', 'classes': ['list-inline'] }
+       # Table
+       - { name: 'Table', element: 'table', 'classes': ['table'] }
+       - { name: 'Table Hover', element: 'table', 'classes': ['table table-hover'] }
+       - { name: 'Table Striped', element: 'table', 'classes': ['table table-striped'] }
 
    alignment:
      options:

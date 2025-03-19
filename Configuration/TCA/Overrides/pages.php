@@ -1,10 +1,8 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Information\Typo3Version;
 
 defined('TYPO3') || die();
-
 
 $tempPagesColumns = [
     'tx_t3sbootstrap_smallColumns' => [
@@ -181,13 +179,15 @@ ExtensionManagementUtility::addToAllTCAtypes(
     'after:backend_layout'
 );
 
-ExtensionManagementUtility::addFieldsToPalette(
-    'pages',
-    'title',
-    'tx_t3sbootstrap_icon_only',
-    'after:title'
-);
-
+# if iconpack is loaded
+if (ExtensionManagementUtility::isLoaded('iconpack')) {
+	ExtensionManagementUtility::addFieldsToPalette(
+	    'pages',
+	    'title',
+	    'tx_t3sbootstrap_icon_only',
+	    'after:title'
+	);
+}
 
 
 $menuheader = 198;
