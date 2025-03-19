@@ -20,6 +20,7 @@
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
+
 			<f:if condition="{item.record.assets}">
 				<f:then>
 					Max. Image width: {flexForm.width}px | Padding (top & bottom): {flexForm.paddingTopBottom}rem
@@ -44,8 +45,6 @@
 							</f:if>
 						</f:else>
 					</f:if>
-					
-
 
 					<f:if condition="{item.record.tx_t3sbootstrap_bgopacity}">
 					 | Opacity: {item.record.tx_t3sbootstrap_bgopacity}

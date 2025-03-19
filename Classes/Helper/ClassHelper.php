@@ -65,8 +65,8 @@ class ClassHelper implements SingletonInterface
         if (!empty($data['layout'])) {
 			$request = $GLOBALS['TYPO3_REQUEST'];
 			$site = $request->getAttribute('site');
-			$this->rootPageId = $site->getRootPageId();
-			$pageTs = BackendUtility::getPagesTSconfig($this->rootPageId);
+			# $this->rootPageId = $site->getRootPageId();
+			$pageTs = BackendUtility::getPagesTSconfig($site->getRootPageId());
 			if (!empty($pageTs['TCEFORM.']['tt_content.']['layout.']['classes.'][$data['layout']])) {
 	            $class .= $pageTs['TCEFORM.']['tt_content.']['layout.']['classes.'][$data['layout']];
 			} else {

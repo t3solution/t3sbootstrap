@@ -13,6 +13,7 @@ templates.t3sbs/t3sbootstrap.1739329199 = t3sbs/t3sbootstrap:Resources/Private/B
 
 [t3sbootstrap('extNews') === '1']
 @import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig'
+@import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/presets.tsconfig'
 [END]
 
 [loaded('ke_search')]

@@ -46,6 +46,8 @@ class Modal implements SingletonInterface
 		if (!empty($flexconf['whiteclosebutton'])) {
 			$processedData['modal']['whiteclosebutton'] = TRUE;
 		}
+		$processedData['modal']['nextModal'] = !empty($flexconf['nextModal']) ? $flexconf['nextModal'] : '0';
+		$processedData['modal']['prevModal'] = !empty($flexconf['prevModal']) ? $flexconf['prevModal'] : '0';
 
 		return $processedData;
 	}

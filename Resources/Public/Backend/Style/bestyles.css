@@ -34,6 +34,10 @@
 	display: none;
 }
 
+.t3sb-config .panel-heading .caret {
+  --typo3-caret-color: #fff !important;
+}
+
 [data-colpos="211"] {background: #eee0ff; color: #7e00b4;}
 [data-colpos="211"] > .t3-page-column-header {color: #7e00b4 !important;}
 [data-colpos="212"] {background: #eee0ff; color: #7e00b4;}
@@ -109,8 +113,21 @@
 
 
 
-
-
+/* RTE / CKEditor Style */
+.ck-content .list-unstyled {
+  padding-left:0;
+  list-style:none
+}
+.ck-content .list-inline {
+  padding-left:0;
+  list-style:none
+}
+.ck-content .list-inline li {
+  display:inline-block
+}
+.ck-content .list-inline li:not(:last-child) {
+  margin-right:0.5rem
+}
 
 
 

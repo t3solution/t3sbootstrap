@@ -2,13 +2,20 @@
 <div class="tx-indexedsearch-res card mb-3">
 <div class="card-body">
 	<h4 class="card-title">
-		<t3sb:icon iconfig="fa6:solid,file-lines" />		
+		<f:if condition="{settings.iconpack.loaded}">
+			<f:then>
+				<t3sb:icon iconfig="fa6:solid,file-lines" />	
+			</f:then>
+			<f:else>
+				<i class="fa-solid fa-file-lines"></i>
+			</f:else>	
+		</f:if>
 		<f:if condition="{settings.displayResultNumber}"><span class="tx-indexedsearch-result-number">{row.result_number}</span></f:if>
 		<span class="tx-indexedsearch-title{row.CSSsuffix}">{row.title -> f:format.raw()}</span>
 		<span class="tx-indexedsearch-percent">{row.rating}</span>
 	</h4>
 	<f:if condition="{row.headerOnly} == 0">
-	<p class="tx-indexedsearch-description">{row.description -> f:format.raw()}</p>
+	<p class="tx-indesxedsearch-description">{row.description -> f:format.raw()}</p>
 	<ul class="tx-indexedsearch-info list-inline mb-0">
 		<li class="tx-indexedsearch-text-item-size list-inline-item me-3"><strong><f:translate key="result.size" /></strong> {row.size}</li>
 		<li class="tx-indexedsearch-text-item-crdate list-inline-item me-3"><strong><f:translate key="result.created" /></strong> <f:format.date>@{row.created}</f:format.date></li>

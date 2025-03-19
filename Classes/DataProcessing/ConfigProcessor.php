@@ -81,8 +81,6 @@ class ConfigProcessor implements DataProcessorInterface
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 
 		// global override page data
-
-
 		if (!empty($contentObjectConfiguration['settings.']['pages.']['override.'])) {
 			foreach ($contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override) {
 				if (!empty($override)) {

@@ -22,8 +22,8 @@ $tempSysFileReferenceColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    [ 'center', 'mx-auto', ],
-                    [ 'right', 'float-end', ],
+                    [ 'center (mx-auto)', 'mx-auto', ],
+                    [ 'right (float-end)', 'float-end', ],
                     [ 'm-3 (margin)', 'm-3', ],
                     [ 'mt-3 (margin-top)', 'mt-3', ],
                     [ 'mb-3 (margin-bottom)', 'mb-3', ],

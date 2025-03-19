@@ -60,8 +60,7 @@ chapter = 0
 # cat=different/enable/30; type=boolean; label=Custom CSS code editor in the language tab - ADMIN ONLY: if editors receive a prepared content element for copy & past and this element requires its own CSS, you should activate and use this option.
 cssCodeEditor = 0
 
-# cat=Advanced/enable/10; type=boolean; label=Font Awesome: min. Fontawesome CSS for RTE link-icons etc.
-fontawesomeCss = 0
+
 # cat=Advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache)
 animateCss = 0
 # cat=Advanced/enable/30; type=boolean; label=Link Hover Effect: for images - include a select field in the FAL (sys_file_reference) and some CSS - (clear cache)

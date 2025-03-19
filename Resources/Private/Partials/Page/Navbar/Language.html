@@ -4,7 +4,14 @@
 	<a class="nav-link dropdown-toggle dropdown-item-language-menu" id="language" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">
 		<f:if condition="{settings.config.langMenuWithFaIcon}">
 			<f:then>
-				<t3sb:icon iconfig="fa6:solid,globe" additionalAttributes="{class:'me-1'}" />
+				<f:if condition="{settings.iconpack.loaded}">
+					<f:then>
+						<t3sb:icon iconfig="fa6:solid,globe" additionalAttributes="{class:'me-1'}" />	
+					</f:then>
+					<f:else>
+						<i class="fa-solid fa-globe me-1"></i>
+					</f:else>	
+				</f:if>
 			</f:then>
 			<f:else>
 				<f:for each="{languageNavigation}" as="item">
@@ -37,7 +44,14 @@
 	</div>
 	<f:if condition="{config.navbar.navbarPlusicon}">
 		<button type="button" class="nav-link ps-0 btn btn-link dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-			<t3sb:icon iconfig="fa6:solid,square-plus" />
+			<f:if condition="{settings.iconpack.loaded}">
+				<f:then>
+					<t3sb:icon iconfig="fa6:solid,square-plus" />		
+				</f:then>
+				<f:else>
+					<i class="fa-solid fa-square-plus"></i>
+				</f:else>	
+			</f:if>
 		</button>
 	</f:if>
 </div>

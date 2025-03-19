@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+data-namespace-typo3-fluid="true">
+<n:excludeDisplayedNews newsItem="{newsItem}"/>
+<div class="col-md-4">
+	<f:if condition="{newsItem.mediaPreviews}">
+		<!-- media preview element -->
+		<f:then>
+			<f:alias map="{mediaElement: '{newsItem.mediaPreviews.0}'}">
+				<f:if condition="{mediaElement.originalResource.type} == 2">
+					<f:render partial="List/Media/Image" arguments="{file: mediaElement}" />
+				</f:if>
+				<f:if condition="{mediaElement.originalResource.type} == 3 || {mediaElement.originalResource.type} == 4">
+					<f:render partial="List/Media/Video" arguments="{mediaElement: mediaElement}" />
+				</f:if>
+				<f:if condition="{mediaElement.originalResource.type} == 5">
+					<f:render partial="List/Media/File" arguments="{mediaElement: mediaElement}" />
+				</f:if>
+			</f:alias>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.displayDummyIfNoMedia}">
+				<f:if condition="{settings.dummyImageUid} && <t3sb:dummyImage uid='{settings.dummyImageUid}' />">
+					<f:then>
+						<f:variable name="dummyImage" value="<t3sb:dummyImage uid='{settings.dummyImageUid}' />" />
+						<f:render partial="List/Media/Image" arguments="{file: dummyImage}" />						
+					</f:then>
+					<f:else>
+						<f:render partial="List/Media/Dummy" />						
+					</f:else>
+				</f:if>
+			</f:if>
+		</f:else>
+	</f:if>
+</div>
+<div class="col-md-8">
+	<div class="card-body h-100">
+		<f:render partial="List/Body/Item" arguments="{newsItem: newsItem, link: 'false'}" />
+	</div>
+</div>
+</html>

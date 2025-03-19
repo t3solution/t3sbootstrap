@@ -1,0 +1,4 @@
+// mandatory categories
+#$GLOBALS['TCA']['tx_news_domain_model_news']['columns']['categories']['config']['minitems'] = '1';
+// default showinpreview
+$GLOBALS['TCA']['sys_file_reference']['columns']['showinpreview']['config']['default'] = '1';

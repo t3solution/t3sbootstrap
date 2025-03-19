@@ -64,7 +64,7 @@
 										<a class="nav-link dd-link{f:if(condition: item.active, then:'', else:' collapsed')}{f:if(condition: item.current, then:'')}"
 											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
 												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">
-											<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />											
+											<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />							
 											{f:if(condition:'{item.data.tx_t3sbootstrap_icon_only}',else:' {item.title}')}
 										</a>
 									</f:then>
