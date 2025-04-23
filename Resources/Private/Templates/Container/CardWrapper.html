@@ -36,15 +36,7 @@ function t3sbCardFlipper() {
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
 			el.innerHTML = '<p class="square-backlink">
-				<f:if condition="{settings.iconpack.loaded}">
-					<f:then>
-						<t3sb:icon iconfig="fa6:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" />	
-					</f:then>
-					<f:else>
-						<i class="fa-solid fa-square-minus fa-2x mx-auto"></i>
-					</f:else>	
-				</f:if>
-			</p>';
+				<f:if condition="{settings.iconpack.loaded}"><t3sb:icon iconfig="fa6:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>';
 			insertAfter(cardBody, el);
 			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
 				backside.style.transform = 'rotateY(180deg)';
