@@ -1,0 +1,14 @@
+
+<f:if condition="{bodytext} && {tx_t3sbootstrap_bodytext}">
+	<f:then>
+		Contains custom CSS & JS
+	</f:then>
+	<f:else>
+		<f:if condition="{bodytext}">
+			Contains custom JS
+		</f:if>
+		<f:if condition="{tx_t3sbootstrap_bodytext}">
+			Contains custom CSS
+		</f:if>
+	</f:else>
+</f:if>

@@ -1,0 +1,35 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+ xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" data-namespace-typo3-fluid="true">
+
+<f:variable name="imgObject" value="" />
+<f:if condition="{assets}">
+<f:variable name="imgObject" value="<t3sb:backend.infoImage uid='{uid}' />" />
+</f:if>
+<f:variable name="flexForm" value="<t3sb:flexform data='{tx_t3sbootstrap_flexform}' />" />
+<f:if condition="{imgObject.0}">
+<be:thumbnail image="{imgObject.0}" width="64" height="64" class="inline-block me-3 img-fluid" />
+</f:if>
+<f:if condition="{flexForm.horizontal}">
+	<f:then>
+		<strong>Horizontal card:</strong> true
+	</f:then>
+	<f:else>
+		<strong>Horizontal card:</strong> false
+	</f:else>
+</f:if>
+<f:if condition="{flexForm.maxwidth}">
+	<f:then>
+	|	<strong>Card width == image width:</strong> true
+	</f:then>
+	<f:else>
+	|	<strong>Card width == image width:</strong> false
+	</f:else>
+</f:if>
+<f:if condition="{flexForm.effect} == 'one'">
+	| <strong>Card Hover Effect:</strong> zoom and border
+</f:if>
+
+<f:if condition="{flexForm.multiImage.enable}">
+	|	<strong>Enable Profile Card:</strong> true
+</f:if>
+</html>

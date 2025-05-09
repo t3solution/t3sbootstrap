@@ -48,7 +48,7 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 					    ->where(
 					        $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($statement['uid'], Connection::PARAM_INT))
 					    )
-					    ->set($fieldName, self::replaceFaIcons($statement[$fieldName]))
+					    ->set($fieldName, $this->replaceFaIcons($statement[$fieldName]))
 					    ->executeStatement();
 				}
 			}
@@ -117,13 +117,13 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 		$contentSArr = explode('<i class="fas ', $stringreplace);
 		$contentBArr = explode('<i class="fab ', $stringreplace);
 
-		$faArr['regular'] = self::replaceArr($contentRegularArr, 'regular', 'fa-regular');
-		$faArr['solid'] = self::replaceArr($contentSolidArr, 'solid', 'fa-solid');
-		$faArr['brands'] = self::replaceArr($contentBrandArr, 'brands', 'fa-brands');
+		$faArr['regular'] = $this->replaceArr($contentRegularArr, 'regular', 'fa-regular');
+		$faArr['solid'] = $this->replaceArr($contentSolidArr, 'solid', 'fa-solid');
+		$faArr['brands'] = $this->replaceArr($contentBrandArr, 'brands', 'fa-brands');
 
-		$faArr['far'] = self::replaceArr($contentRArr, 'regular', 'far');
-		$faArr['fas'] = self::replaceArr($contentSArr, 'solid', 'fas');
-		$faArr['fab'] = self::replaceArr($contentBArr, 'brands', 'fab');
+		$faArr['far'] = $this->replaceArr($contentRArr, 'regular', 'far');
+		$faArr['fas'] = $this->replaceArr($contentSArr, 'solid', 'fas');
+		$faArr['fab'] = $this->replaceArr($contentBArr, 'brands', 'fab');
 
 		foreach ( $faArr as $type=>$replaceArr ) {
 			foreach ( $replaceArr as $replace ) {

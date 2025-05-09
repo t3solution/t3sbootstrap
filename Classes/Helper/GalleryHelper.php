@@ -20,11 +20,11 @@ class GalleryHelper implements SingletonInterface
 	public function getGalleryRowWidth(array $processedData): array
 	{
 		// Gallery row with 25, 33, 50, 66, 75 or 100%
-		if ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] == 'auto' ) {
+		if ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] === 'auto' ) {
 
 			if ($processedData['data']['bodytext']) {
 
-				if ( !empty($processedData['gallery']['position']['vertical']) && $processedData['gallery']['position']['vertical'] == 'intext' ) {
+				if ( !empty($processedData['gallery']['position']['vertical']) && $processedData['gallery']['position']['vertical'] === 'intext' ) {
 					if ( $processedData['gallery']['count']['columns'] == 1) {
 						$processedData['rowwidth'] = ' w-33';
 						$processedData['restrowwidth'] = ' w-66';
@@ -54,7 +54,7 @@ class GalleryHelper implements SingletonInterface
 
 			}
 
-		} elseif ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] == 'none' ) {
+		} elseif ( $processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'] === 'none' ) {
 
 				$processedData['rowwidth'] = '';
 				$processedData['restrowwidth'] = '';
@@ -139,7 +139,7 @@ class GalleryHelper implements SingletonInterface
 		$processedData['gallery']['class'] = trim($galleryClass);
 		$processedData['gallery']['rowClass'] = trim($galleryRowClass);
 		$header_position = empty($processedData['data']['tx_t3sbootstrap_header_position']) ? 'above' : $processedData['data']['tx_t3sbootstrap_header_position'];
-		$processedData['gallery']['headerBeside'] = $header_position == 'beside' ? TRUE : FALSE;
+		$processedData['gallery']['headerBeside'] = $header_position === 'beside' ? TRUE : FALSE;
 
 		return $processedData;
 	}

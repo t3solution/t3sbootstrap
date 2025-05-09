@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Backend\Attribute\Controller;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -17,7 +15,6 @@ use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Service\CacheService;
 
 /*
@@ -56,6 +53,11 @@ final class ConfigController extends AbstractController
             $cdnHint = true;
         }
 
+        $assignedOptions['idNull'] = FALSE;
+        if ($this->request->getQueryParams()['id'] === '0') {
+            $assignedOptions['idNull'] = TRUE;
+        }
+    
         if ($this->isSiteroot && $this->rootPageId) {
             $pidList = parent::getTreeList($this->rootPageId, 999999, 0, '1');
             $allConfig = [];
@@ -110,7 +112,9 @@ final class ConfigController extends AbstractController
         if ( !file_exists($new_raster) ) {
             $folder = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/');
             if (!is_dir($folder)) {
-                mkdir($folder, 0777, true);
+                if (!mkdir($folder, 0777, true) && !is_dir($folder)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $folder));
+                }
             }
             $orig_raster = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Public/Images/raster.png');
             copy($orig_raster, $new_raster);

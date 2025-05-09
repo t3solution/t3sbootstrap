@@ -10,8 +10,8 @@ mod.wizards {
 			special.elements {
 				t3sbsassets {
 					iconIdentifier = cssJsIcon
-					title = Plain CSS or JavaScript
-					description = With this element you can insert raw JS or CSS code on the page.
+					title = CSS or JavaScript
+					description = With this element you can insert raw JS or CSS code or files on the page.
 					tt_content_defValues.CType = t3sbs_assets
 				}				
 			}

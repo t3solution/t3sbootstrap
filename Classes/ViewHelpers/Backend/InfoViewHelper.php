@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace T3SBS\T3sbootstrap\ViewHelpers;
+namespace T3SBS\T3sbootstrap\ViewHelpers\Backend;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -31,7 +31,6 @@ class InfoViewHelper extends AbstractViewHelper
 		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);	
 		$ts = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$config = $ts['page.']['10.']['settings.']['config.'];
-
 		$backendLayout = !empty($this->arguments['backendLayout']) ? $this->arguments['backendLayout'] : '';
 		$record	  = !empty($this->arguments['record']) ? $this->arguments['record'] : '';
 		$info = '';
@@ -91,7 +90,7 @@ class InfoViewHelper extends AbstractViewHelper
 				}
 
 			}
-	
+
 			if (!empty($extraClass)) {
 				if (!empty($info)) {$info .= ' | ';}
 				$info .= '<strong>Extra Class:</strong> '.$extraClass.' ';
@@ -130,6 +129,7 @@ class InfoViewHelper extends AbstractViewHelper
 			}
 	
 		} 	
+
 		return $info;
 	}
 }

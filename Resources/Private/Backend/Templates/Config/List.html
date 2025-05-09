@@ -1,188 +1,197 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 <f:section name="content">
-<f:if condition="{deleted}">
-	<f:asset.script identifier="identifiertest">
-		require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
-			Notification.info('Deleted', 'The object was deleted.');
-		});
-	</f:asset.script>
-</f:if>
-<f:if condition="{created}">
-	<f:asset.script identifier="identifiertest">
-		require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
-			Notification.success('Created', 'The new configuration was successfully created.');
-		});
-	</f:asset.script>
-</f:if>
-<f:if condition="{updateScss}">
-	<f:asset.script identifier="identifiertest">
-		require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
-			Notification.success('Updated', 'Save custom-variables.scss & clean up temporary files.');
-		});
-	</f:asset.script>
-</f:if>
-<div class="card" style="margin-top: 60px;">
-	<div class="card-header card-header-light">
-		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
-			<h2><f:render section="Gear" /> Configuration</h2>
-		</div>
-	</div>
-	<div class="card-body">
-		<f:if condition="{rootTemplate}">
-			<f:then>
-				<f:if condition="{config}">
-					<f:then>
-						<f:link.action action="edit" arguments="{config : config}" class="btn btn-block edit-btn mb-3" style="background-color: #6a10f3; color: #fff;">
-							Edit this configuration
-						</f:link.action>
-						<f:if condition="{isSiteroot}">
-							<f:then>
-								<div class="panel-group" id="accordionList">
-									<f:if condition="{admin} && {settings.enableInfo}">
-										<f:render section="Hints" arguments="{_all}" />
-									</f:if>
-									<f:if condition="{utilColors} && {settings.enableUtilityColors}">
-										<f:render section="UtilityColors" arguments="{_all}" />
-									</f:if>
+<f:if condition="{idNull}">
+	<f:then>
+		<div class="alert alert-danger" style="margin: 50px; text-align: center; font-size: 1.2rem;" role="alert">Unfortunately, you cannot use the page with "id=0".</div>
+	</f:then>
+	<f:else>
 
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title" id="pages-heading-panel">
-												<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#pages-panel" aria-expanded="false" aria-controls="pages-panel">
-													<span class="caret"></span>
-													Pages with T3SB Configuration
-												</a>
-											</h3>
-										</div>
-										<div id="pages-panel" class="collapse" aria-labelledby="pages-heading-panel" data-bs-parent="#accordionList">
-											<div class="panel-body">
-												<table class="table table-striped">
-													<thead class="thead-default text-white">
-													<tr>
-														<th style="background-color: #17a2b8;border-color: #17a2b8;">uid</th>
-														<th style="background-color: #17a2b8;border-color: #17a2b8;">page uid</th>
-														<th style="background-color: #17a2b8;border-color: #17a2b8;">page title</th>
-													</tr>
-													</thead>
-													<tbody>
-														<f:for each="{allConfig}" as="config" iteration="iterator">
+		<f:if condition="{deleted}">
+			<f:asset.script identifier="identifiertest">
+				require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
+					Notification.info('Deleted', 'The object was deleted.');
+				});
+			</f:asset.script>
+		</f:if>
+		<f:if condition="{created}">
+			<f:asset.script identifier="identifiertest">
+				require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
+					Notification.success('Created', 'The new configuration was successfully created.');
+				});
+			</f:asset.script>
+		</f:if>
+		<f:if condition="{updateScss}">
+			<f:asset.script identifier="identifiertest">
+				require(['TYPO3/CMS/Backend/Notification'], function(Notification) {
+					Notification.success('Updated', 'Save custom-variables.scss & clean up temporary files.');
+				});
+			</f:asset.script>
+		</f:if>
+		<div class="card" style="margin-top: 60px;">
+			<div class="card-header card-header-light">
+				<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
+					<h2><f:render section="Gear" /> Configuration</h2>
+				</div>
+			</div>
+			<div class="card-body">
+				<f:if condition="{rootTemplate}">
+					<f:then>
+						<f:if condition="{config}">
+							<f:then>
+								<f:link.action action="edit" arguments="{config : config}" class="btn btn-block edit-btn mb-3" style="background-color: #6a10f3; color: #fff;">
+									Edit this configuration
+								</f:link.action>
+								<f:if condition="{isSiteroot}">
+									<f:then>
+										<div class="panel-group" id="accordionList">
+											<f:if condition="{admin} && {settings.enableInfo}">
+												<f:render section="Hints" arguments="{_all}" />
+											</f:if>
+											<f:if condition="{utilColors} && {settings.enableUtilityColors}">
+												<f:render section="UtilityColors" arguments="{_all}" />
+											</f:if>
+		
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title" id="pages-heading-panel">
+														<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#pages-panel" aria-expanded="false" aria-controls="pages-panel">
+															<span class="caret"></span>
+															Pages with T3SB Configuration
+														</a>
+													</h3>
+												</div>
+												<div id="pages-panel" class="collapse" aria-labelledby="pages-heading-panel" data-bs-parent="#accordionList">
+													<div class="panel-body">
+														<table class="table table-striped">
+															<thead class="thead-default text-white">
 															<tr>
-																<th scope="row">{config.confUid}</th>
-																<td>{config.uid}</td>
-																<td>{config.title}</td>
+																<th style="background-color: #17a2b8;border-color: #17a2b8;">uid</th>
+																<th style="background-color: #17a2b8;border-color: #17a2b8;">page uid</th>
+																<th style="background-color: #17a2b8;border-color: #17a2b8;">page title</th>
 															</tr>
-														</f:for>
-													</tbody>
-												</table>
+															</thead>
+															<tbody>
+																<f:for each="{allConfig}" as="config" iteration="iterator">
+																	<tr>
+																		<th scope="row">{config.confUid}</th>
+																		<td>{config.uid}</td>
+																		<td>{config.title}</td>
+																	</tr>
+																</f:for>
+															</tbody>
+														</table>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-								</div>
-								<f:if condition="{pagesOverride}">
-									<div class="bs-callout bs-callout-primary bg-white">
-										<h3>Global pages override is set in Constant Editor:</h3>
-										<ul class="list-unstyled">
-											<f:for each="{pagesOverride}" as="override" key="field">
-												<f:if condition="{override}">
-													<li>{field} = {override}</li>
-												</f:if>
-											</f:for>
-										</ul>
-									</div>
+										<f:if condition="{pagesOverride}">
+											<div class="bs-callout bs-callout-primary bg-white">
+												<h3>Global pages override is set in Constant Editor:</h3>
+												<ul class="list-unstyled">
+													<f:for each="{pagesOverride}" as="override" key="field">
+														<f:if condition="{override}">
+															<li>{field} = {override}</li>
+														</f:if>
+													</f:for>
+												</ul>
+											</div>
+										</f:if>
+									</f:then>
+									<f:else>
+										<f:if condition="{admin}">
+											<f:link.action action="delete" arguments="{config : config}" class="btn btn-danger btn-block"
+											additionalAttributes="{onclick: 'return confirm(\'Are you sure want to delete this configuration?\')'}">
+												Delete this configuration
+											</f:link.action>
+										</f:if>
+									</f:else>
 								</f:if>
 							</f:then>
 							<f:else>
 								<f:if condition="{admin}">
-									<f:link.action action="delete" arguments="{config : config}" class="btn btn-danger btn-block"
-									 additionalAttributes="{onclick: 'return confirm(\'Are you sure want to delete this configuration?\')'}">
-										Delete this configuration
-									</f:link.action>
+									<f:if condition="{isSiteroot}">
+										<f:then>
+											<f:link.action action="new" class="btn btn-primary btn-block">New main configuration</f:link.action>
+										</f:then>
+										<f:else>
+											<f:if condition="{rootConfig}">
+												<f:then>
+													<f:link.action action="new" class="btn btn-warning btn-block">Override configuration</f:link.action>
+												</f:then>
+												<f:else>
+													<div class="alert alert-danger" role="alert">The main configuration has to be created first on the root page.</div>
+												</f:else>
+											</f:if>
+										</f:else>
+									</f:if>
 								</f:if>
 							</f:else>
 						</f:if>
 					</f:then>
 					<f:else>
-						<f:if condition="{admin}">
-							<f:if condition="{isSiteroot}">
+						<div class="alert alert-danger" role="alert">A template is expected on this side.</div>
+					</f:else>
+				</f:if>
+			</div>
+		</div>
+		
+		<f:if condition="{admin}">
+			<f:if condition="{settings.customScss}">
+				<f:then>
+					<f:if condition="{customScss}">
+						<f:then>
+							<div class="text-center">
+								<span class="lead mt-3 d-block" style="color: #107c10; font-size: 1.25rem;">Custom scss is activated!</span>
+							</div>
+							<f:if condition="{settings.editScss} && {isSiteroot}">
 								<f:then>
-									<f:link.action action="new" class="btn btn-primary btn-block">New main configuration</f:link.action>
+									<f:form class="form-horizontal mx-3" action="list" name="custom-variables" arguments="{updateSss: 'TRUE'}" >
+										<p class="text-center text-secondary">You can override default <strong>Bootstrap</strong> variables here:</p>
+										<f:form.textarea name="t3sbootstrap[custom-variables]" class="form-control"
+										rows="16" style="padding:1rem; margin-bottom:1rem;background-color:#f5f5f5" value="{custom-variables -> f:format.raw()}" />
+										<f:if condition="{settings.bootswatch}">
+											<f:then>
+												<p class="text-center text-secondary">
+													You can override default <strong>Bootswatch</strong> SCSS <small>(Theme: {settings.bootswatch})</small> here:
+												</p>
+											</f:then>
+											<f:else>
+												<p class="text-center text-secondary">You can set your <strong>own</strong> SCSS here:</p>
+											</f:else>
+										</f:if>
+										<f:form.textarea name="t3sbootstrap[custom]" class="form-control"
+										rows="16" style="padding:1rem;background-color:#f5f5f5" value="{custom -> f:format.raw()}" />
+										<f:form.submit value="Save custom-variables.scss & clean up temporary files in typo3temp/assets/t3sbootstrap/css/"
+										class="btn btn-success btn-block" style="margin: 3rem 0;" />
+									</f:form>
 								</f:then>
 								<f:else>
-									<f:if condition="{rootConfig}">
-										<f:then>
-											<f:link.action action="new" class="btn btn-warning btn-block">Override configuration</f:link.action>
-										</f:then>
-										<f:else>
-											<div class="alert alert-danger" role="alert">The main configuration has to be created first on the root page.</div>
-										</f:else>
+									<f:if condition="{settings.editScss}">
+										<p class="text-center text-secondary">You can override default Bootstrap variables on the root page.</p>
 									</f:if>
 								</f:else>
 							</f:if>
-						</f:if>
-					</f:else>
-				</f:if>
-			</f:then>
-			<f:else>
-				<div class="alert alert-danger" role="alert">A template is expected on this side.</div>
-			</f:else>
-		</f:if>
-	</div>
-</div>
-
-<f:if condition="{admin}">
-	<f:if condition="{settings.customScss}">
-		<f:then>
-			<f:if condition="{customScss}">
-				<f:then>
-					<div class="text-center">
-						<span class="lead mt-3 d-block" style="color: #107c10; font-size: 1.25rem;">Custom scss is activated!</span>
-					</div>
-					<f:if condition="{settings.editScss} && {isSiteroot}">
-						<f:then>
-							<f:form class="form-horizontal mx-3" action="list" name="custom-variables" arguments="{updateSss: 'TRUE'}" >
-								<p class="text-center text-secondary">You can override default <strong>Bootstrap</strong> variables here:</p>
-								<f:form.textarea name="t3sbootstrap[custom-variables]" class="form-control"
-								rows="16" style="padding:1rem; margin-bottom:1rem;background-color:#f5f5f5" value="{custom-variables -> f:format.raw()}" />
-								<f:if condition="{settings.bootswatch}">
-									<f:then>
-										<p class="text-center text-secondary">
-											You can override default <strong>Bootswatch</strong> SCSS <small>(Theme: {settings.bootswatch})</small> here:
-										</p>
-									</f:then>
-									<f:else>
-										<p class="text-center text-secondary">You can set your <strong>own</strong> SCSS here:</p>
-									</f:else>
-								</f:if>
-								<f:form.textarea name="t3sbootstrap[custom]" class="form-control"
-								rows="16" style="padding:1rem;background-color:#f5f5f5" value="{custom -> f:format.raw()}" />
-								<f:form.submit value="Save custom-variables.scss & clean up temporary files in typo3temp/assets/t3sbootstrap/css/"
-								class="btn btn-success btn-block" style="margin: 3rem 0;" />
-							</f:form>
 						</f:then>
 						<f:else>
-							<f:if condition="{settings.editScss}">
-								<p class="text-center text-secondary">You can override default Bootstrap variables on the root page.</p>
-							</f:if>
+							<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
+								Custom SCSS is activated but no custom-variables.scss file exist!<br /> Run the schedular task "T3SB Custom Scss" to write the file.
+							</p>
 						</f:else>
 					</f:if>
 				</f:then>
 				<f:else>
 					<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
-						Custom SCSS is activated but no custom-variables.scss file exist!<br /> Run the schedular task "T3SB Custom Scss" to write the file.
+						Custom SCSS is not activated.
 					</p>
 				</f:else>
 			</f:if>
-		</f:then>
-		<f:else>
-			<p class="text-danger text-center lead" style="margin:3rem 0 1rem 0;">
-				Custom SCSS is not activated.
-			</p>
-		</f:else>
-	</f:if>
+		</f:if>
+
+	</f:else>
 </f:if>
-</html>
 </f:section>
+</html>
 
 
 <f:section name="UtilityColors">

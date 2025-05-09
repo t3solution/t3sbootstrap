@@ -27,23 +27,26 @@ class CommandBase extends Command
 			return -2;
 		}
 		while ($entry = @readdir($dir)) {
-			if ($entry == '.' || $entry == '..') continue;
+			if ($entry === '.' || $entry === '..') continue;
 			if (is_dir ($path.'/'.$entry)) {
 				$res = self::rmDir ($path.'/'.$entry);
 				if ($res == -1) {
 					@closedir ($dir);
 					return -2;
-				} else if ($res == -2) {
-					@closedir ($dir);
-					return -2;
-				} else if ($res == -3) {
-					@closedir ($dir);
-					return -3;
-				} else if ($res != 0) {
-					@closedir ($dir);
-					return -2;
 				}
-			} else if (is_file ($path.'/'.$entry) || is_link ($path.'/'.$entry)) {
+                if ($res == -2) {
+                    @closedir ($dir);
+                    return -2;
+                }
+                if ($res == -3) {
+                    @closedir ($dir);
+                    return -3;
+                }
+                if ($res != 0) {
+                    @closedir ($dir);
+                    return -2;
+                }
+            } else if (is_file ($path.'/'.$entry) || is_link ($path.'/'.$entry)) {
 				$res = @unlink ($path.'/'.$entry);
 				if (!$res) {
 					@closedir ($dir);

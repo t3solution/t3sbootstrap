@@ -4,6 +4,7 @@
 <f:comment>no header here</f:comment>
 </f:section>
 <f:section name="Main">
+
 <f:if condition="{appearance} == 'accordion' && !{settings.disableAccordionScrollToTop}">
 	<f:asset.script identifier="collapsible_function">
 // Collapsible - Templates/Container/CollapsibleContainer.html
@@ -86,25 +87,15 @@ function t3sbCollapsible(fixedNavbar, navbarHeight) {
 		</f:then>
 		<f:else>
 			<p>
-
-
-
 				<f:for each="{col_277}" as="row" iteration="iterator">
-
-
 					<f:variable name="flexForm" value="<t3sb:flexform data='{row.tx_t3sbootstrap_flexform}' />" />
-
-
 					<a id="c{col_277.{iterator.index}.uid}" class="btn me-1 btn-{flexForm.style} {row.tx_t3sbootstrap_header_class}"
 						 data-bs-toggle="collapse" href="#collapse-{col_277.{iterator.index}.uid}"
 						 role="button" aria-expanded="{flexForm.active}" aria-controls="collapse-{col_277.{iterator.index}.uid}">
 
-
-			<f:if condition="{row.header_icon}">
-				<t3sb:icon iconfig="{row.header_icon}" additionalAttributes="{class:'me-1'}" />
-			</f:if>
-
-
+						<f:if condition="{row.header_icon}">
+							<t3sb:icon iconfig="{row.header_icon}" additionalAttributes="{class:'me-1'}" />
+						</f:if>
 
 						{f:if(condition: '{col_277.{iterator.index}.header}',
 						 then: '{col_277.{iterator.index}.header -> f:format.raw()}', else: 'Button-{col_277.{iterator.index}.uid}')}

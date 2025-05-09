@@ -2,6 +2,7 @@
 <f:if condition="{noConfig}">
 	<f:then>
 		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
+		<p class="text-danger text-center">In some cases it is necessary to save the main configuration again!</p>
 	</f:then>
 	<f:else>
 		<f:if condition="{settings.gtm}">
@@ -16,20 +17,7 @@
 			<f:render partial="MainAssets" arguments="{_all}" />
 			<f:comment> Skip links </f:comment>
 			<f:if condition="{settings.skiplinks}">
-				<a class="skip-link" href="#main-navbar">Skip to main navigation</a>
-				<a class="skip-link" href="#page-content">Skip to main content</a>
-				<a class="skip-link" href="#page-footer">Skip to page footer</a>
-<f:asset.css identifier="t3sbs_skiplink">
-.skip-link:not(:focus) {
-	position: absolute;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	clip: rect(0 0 0 0);
-	clip-path: inset(100%);
-	white-space: nowrap;
-}
-</f:asset.css>
+				<f:render partial="Page/Skiplinks" arguments="{_all}" />
 			</f:if>
 			<f:comment> LOADING SPINNER </f:comment>
 			<f:if condition="{settings.config.loadingSpinner}">

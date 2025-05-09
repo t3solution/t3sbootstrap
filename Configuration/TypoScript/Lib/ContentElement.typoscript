@@ -89,7 +89,7 @@ lib.contentElement {
 		cardFlipperOnClick = {$bootstrap.config.cardFlipperOnClick}
 		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
-		btnSlideOutCorrection = 21
+		btnSlideOutCorrection = 0
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		sectionMenuClass = {$bootstrap.config.sectionMenuClass}
 		sitepackage = {$bootstrap.extconf.sitepackage}
@@ -109,6 +109,7 @@ lib.contentElement {
 			xl = {$bootstrap.navbar.breakpoint.xl}
 			xxl = {$bootstrap.navbar.breakpoint.xxl}
 		}
+		iconpack.loaded = {$bootstrap.ext.iconpack}
 	}
 	variables {
 		be_layout = TEXT

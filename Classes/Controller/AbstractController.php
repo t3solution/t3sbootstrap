@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Controller;
 
-use Psr\Http\Message\ResponseInterface;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -12,13 +11,11 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -35,7 +32,6 @@ abstract class AbstractController extends ActionController
     protected $tcaColumns;
     protected $isAdmin;
     protected $rootConfig;
-    protected $rootTemplates;
     protected $persistenceManager;
     protected $countRootTemplates;
     protected $baseDir;
@@ -45,10 +41,10 @@ abstract class AbstractController extends ActionController
      * init all actions
      */
     public function initializeAction(): void
-    {
+    { 
         $site = $this->request->getAttribute('site');
         $this->rootPageId = $site->getRootPageId();
-        $this->currentUid = (int) $this->request->getQueryParams()['id'];
+        $this->currentUid = !empty($this->request->getQueryParams()['id']) ? (int) $this->request->getQueryParams()['id'] : 1;
         $this->isSiteroot = $this->rootPageId === $this->currentUid ? true : false;
         $this->tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
         $this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
@@ -66,12 +62,10 @@ abstract class AbstractController extends ActionController
             ->executeQuery()->fetchOne();
         if (empty($this->settings['sitepackage'])) {
             $this->baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
+        } elseif (ExtensionManagementUtility::isLoaded('t3sb_package')) {
+            $this->baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
         } else {
-            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $this->baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
-            } else {
-                throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
-            }
+            throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
         }
 
     }
@@ -105,7 +99,7 @@ abstract class AbstractController extends ActionController
         $customScssFileName = '';
 
         foreach ($siteroots as $key=>$siteroot) {
-            if ($siteroot['uid'] == $this->currentUid) {
+            if ($siteroot['uid'] === $this->currentUid) {
                 if ($key === 0) {
                     $customScssFileName = $file.'.scss';
                 } else {
@@ -117,7 +111,7 @@ abstract class AbstractController extends ActionController
         $customScssFile = $customScssFilePath.$customScssFileName;
 
         if (file_exists($customScssFile)) {
-            if ($file == 'custom') {
+            if ($file === 'custom') {
                 $assignedOptions['customScss'] = true;
             }
             $arguments = $this->request->getArguments();
@@ -131,10 +125,10 @@ abstract class AbstractController extends ActionController
                 $handle = fopen($customScssFile, 'w') or die('Cannot open file:	 '.$customScssFile);
                 fwrite($handle, $scss);
                 fclose($handle);
-                if ($file == 'custom') {
+                if ($file === 'custom') {
                     // clean typo3temp/assets/t3sbootstrap/css/
                     $tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
-                    self::deleteFilesFromDirectory($tempPath);
+                    $this->deleteFilesFromDirectory($tempPath);
                 }
             } else {
                 $handle = fopen($customScssFile, 'r');
@@ -159,7 +153,7 @@ abstract class AbstractController extends ActionController
     {
         foreach ($this->tcaColumns as $field=>$columns) {
             // is select-field
-            if ($columns['config']['type'] == 'select' && $columns['config']['renderType'] == 'selectSingle') {
+            if ($columns['config']['type'] === 'select' && $columns['config']['renderType'] === 'selectSingle') {
                 $var = GeneralUtility::underscoredToLowerCamelCase($field).'Options';
                 foreach ($columns['config']['items'] as $key=>$entry) {
                     $option = new \stdClass();
@@ -262,7 +256,7 @@ abstract class AbstractController extends ActionController
         if (is_dir($directory)) {
             if ($dh = opendir($directory)) {
                 while (($file = readdir($dh)) !== false) {
-                    if ($file!='.' && $file !='..' && $file[0] != '_') {
+                    if ($file !== '.' && $file !== '..' && $file[0] !== '_') {
                         unlink(''.$directory.''.$file.'');
                     }
                 }
@@ -281,7 +275,7 @@ abstract class AbstractController extends ActionController
         if ($this->countRootTemplates) {
             $configRepository = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
             $navbarBreakpoint = $configRepository->getNavbarBreakpoint();
-            $breakpointWidth = $navbarBreakpoint == 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
+            $breakpointWidth = $navbarBreakpoint === 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
             $siteroots = [];
             $filecontent = '';
             foreach ($this->configRepository->findAll() as $config) {
@@ -310,11 +304,11 @@ abstract class AbstractController extends ActionController
                 if ($config->getPid() == $config->getHomepageUid()) {
                     // is root page
                     if (count($siteroots) === 1) {
-                        $filecontent .= self::getConstants($config, true);
+                        $filecontent .= $this->getConstants($config, true);
                         $filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
                     } else {
                         $filecontent .= '['.$config->getPid().' in tree.rootLineIds]'.PHP_EOL;
-                        $filecontent .= self::getConstants($config, true);
+                        $filecontent .= $this->getConstants($config, true);
                         $filecontent .= 'bootstrap.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
                         $filecontent .= '[END]'.PHP_EOL.PHP_EOL;
                     }
@@ -325,9 +319,9 @@ abstract class AbstractController extends ActionController
                         $filecontent .= '[traverse(page, "uid") == '.$config->getPid().']'.PHP_EOL;
                     }
                     if ($config->getGeneralOverride()) {
-                        $filecontent .= self::getConstants($config, true);
+                        $filecontent .= $this->getConstants($config, true);
                     } else {
-                        $filecontent .= self::getConstants($config, false);
+                        $filecontent .= $this->getConstants($config, false);
                     }
                     $filecontent .= '[END]'.PHP_EOL.PHP_EOL;
                 }
@@ -340,7 +334,9 @@ abstract class AbstractController extends ActionController
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             // constants
             GeneralUtility::writeFile($customFile, $filecontent);
@@ -352,7 +348,9 @@ abstract class AbstractController extends ActionController
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             // setup
             GeneralUtility::writeFile($customFile, $setup);
@@ -385,9 +383,9 @@ abstract class AbstractController extends ActionController
             $var = str_replace(' ', '_', $field);
             $getField = 'get'.GeneralUtility::underscoredToUpperCamelCase($field);
             $value = $config->$getField() == '' ? 0 : $config->$getField();
-            if ($var == 'jumbotronCarouselPause' && $value == 1) {
+            if ($var === 'jumbotronCarouselPause' && $value == 1) {
                 $value = 'hover';
-            } elseif ($var == 'jumbotronCarouselPause' && $value == 0) {
+            } elseif ($var === 'jumbotronCarouselPause' && $value === 0) {
                 $value = '';
             }
             if ($isRoot) {
@@ -404,24 +402,40 @@ abstract class AbstractController extends ActionController
 
 
     /**
-     * Get the Tca Columns
+     * Get the TCA Columns and organize them into a structured array.
+     *
+     * @return array The structured TCA columns grouped by accordion_id and accordion_sub.
      */
     protected function getTcaColumns(): array
     {
-        foreach ($this->tcaColumns as $key=>$column) {
-            if (!empty($column['accordion_id'])) {
-                if (!empty($column['accordion_sub'])) {
-                    $sub = $column['accordion_sub'];
-                    $tca[$column['accordion_id']][$sub][$key] = $column;
-                    $tca[$column['accordion_id']][$sub][$key]['property'] = GeneralUtility::underscoredToLowerCamelCase($key);
-                    $tca[$column['accordion_id']][$sub][$key]['type'] = ucfirst($column['config']['type']);
-                    $tca[$column['accordion_id']][$sub][$key]['noSub'] = false;
-                } else {
-                    $tca[$column['accordion_id']][$key] = $column;
-                    $tca[$column['accordion_id']][$key]['property'] = GeneralUtility::underscoredToLowerCamelCase($key);
-                    $tca[$column['accordion_id']][$key]['type'] = ucfirst($column['config']['type']);
-                    $tca[$column['accordion_id']][$key]['noSub'] = true;
-                }
+        $tca = []; // Explicitly initialize the array.
+
+        foreach ($this->tcaColumns as $key => $column) {
+            // Ensure 'accordion_id' key exists.
+            if (empty($column['accordion_id'])) {
+                continue; // Skip columns without an accordion ID.
+            }
+
+            $accordionId = $column['accordion_id'];
+            $property = GeneralUtility::underscoredToLowerCamelCase($key);
+            $type = ucfirst($column['config']['type']);
+            $noSub = empty($column['accordion_sub']);
+
+            // If 'accordion_sub' exists, group by subcategory.
+            if (!$noSub) {
+                $sub = $column['accordion_sub'];
+                $tca[$accordionId][$sub][$key] = array_merge($column, [
+                    'property' => $property,
+                    'type' => $type,
+                    'noSub' => false,
+                ]);
+            } else {
+                // Otherwise, group directly under accordion_id.
+                $tca[$accordionId][$key] = array_merge($column, [
+                    'property' => $property,
+                    'type' => $type,
+                    'noSub' => true,
+                ]);
             }
         }
 
@@ -441,7 +455,7 @@ abstract class AbstractController extends ActionController
         $defaultUtilityColors = [];
         $defaultcolors = [];
 
-        $customScss = self::getCustomScss('custom-variables');
+        $customScss = $this->getCustomScss('custom-variables');
         $custom_variables = empty($customScss['custom-variables']) ? '' : preg_replace('/\s+/', ' ', trim($customScss['custom-variables']));
         $default = '// Overrides Bootstrap variables // $enable-shadows: true; // $enable-gradients: true; // $enable-negative-margins: true;';
 
@@ -501,13 +515,13 @@ abstract class AbstractController extends ActionController
                 $colorArr = array_merge($defaultUtilityColors, $utilityColors);
                 ksort($colorArr);
                 return $colorArr;
-            } else {
-                ksort($defaultUtilityColors);
-                return $defaultUtilityColors;
             }
-        } else {
-            return [];
+
+            ksort($defaultUtilityColors);
+            return $defaultUtilityColors;
         }
+
+        return [];
     }
 
 

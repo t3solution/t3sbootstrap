@@ -21,32 +21,44 @@
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
 
+
 		<f:if condition="{flexForm.equalHeight}">
 			<f:then>
-Equal height: true
+<strong>Equal height:</strong> true
 			</f:then>
 			<f:else>
-Equal height: false			
+<strong>Equal height:</strong> false			
 			</f:else>
 		</f:if>
 		<f:if condition="{flexForm.equalWidth}">
- | Equal width: true
+ | <strong>Equal width:</strong> true
 		</f:if>
 
 		<f:if condition="{flexForm.horizontalGutters}">
- | Horizontal gutters: {flexForm.horizontalGutters}
+			<f:then>
+ | <strong>Horizontal gutters:</strong> {flexForm.horizontalGutters}
+			 </f:then>
+			 <f:else>
+ | <strong>Horizontal gutters:</strong> gx-4		
+			 </f:else>
 		</f:if>
+			 
 		<f:if condition="{flexForm.verticalGutters}">
- | Vertical gutters: {flexForm.verticalGutters}
+			<f:then>
+ | <strong>Vertical gutters:</strong> {flexForm.verticalGutters}
+			 </f:then>
+			 <f:else>
+ | <strong>Vertical gutters:</strong> gx-4		
+			 </f:else>
 		</f:if>
 		<f:if condition="{flexForm.bgimages}">
- | Background Image: true
+ | <strong>Background Image:</strong> true
 
 			<f:if condition="{flexForm.colHeight}">
- | Min.-Height: {flexForm.colHeight}
+ | <strong>Min.-Height:</strong> {flexForm.colHeight}
 			</f:if>
 			<f:if condition="{flexForm.verticalAlign}">
- | Vertical Alignment: {flexForm.verticalAlign}
+ | <strong>Vertical Alignment:</strong> {flexForm.verticalAlign}
 			</f:if>
 		</f:if>
 

@@ -6,8 +6,6 @@ namespace T3SBS\T3sbootstrap\Layouts;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use T3SBS\T3sbootstrap\Layouts\Grid;
-use T3SBS\T3sbootstrap\Layouts\Gutters;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.

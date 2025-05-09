@@ -10,7 +10,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use Psr\Http\Message\ServerRequestInterface;
 
 /*
@@ -41,7 +40,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 
         if (!empty($processorConfiguration['lastModifiedContentElement'])) {
             $processorConfiguration = [];
-            $processorConfiguration['pidInList'] = self::getCurrentUid();
+            $processorConfiguration['pidInList'] = $this->getCurrentUid();
             $records = $cObj->getRecords('tt_content', $processorConfiguration);
 
             foreach ($records as $record) {
@@ -59,8 +58,8 @@ class LastModifiedProcessor implements DataProcessorInterface
 
         if (!empty($processorConfiguration['recentlyUpdatedContentElements'])) {
             $setMaxResults = !empty($processorConfiguration['setMaxResults']) ? $processorConfiguration['setMaxResults'] : 10;
-            if (self::isMenuRecentlyUpdatedOnPage()) {
-                $processedData['recentlyUpdatedContentElements'] = self::getRecentlyUpdated((int) $setMaxResults);
+            if ($this->isMenuRecentlyUpdatedOnPage()) {
+                $processedData['recentlyUpdatedContentElements'] = $this->getRecentlyUpdated((int) $setMaxResults);
             }
         }
 
@@ -83,7 +82,7 @@ class LastModifiedProcessor implements DataProcessorInterface
              ->from('tt_content')
              ->where(
                  $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)),
-                 $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), Connection::PARAM_INT)),
+                 $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($this->getCurrentUid(), Connection::PARAM_INT)),
                  $queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('menu_recently_updated'))
              )
              ->executeQuery()
@@ -110,7 +109,7 @@ class LastModifiedProcessor implements DataProcessorInterface
              ->orderBy('tstamp', 'DESC')
              ->where(
                  $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)),
-                 $queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter(self::getCurrentUid(), Connection::PARAM_INT))
+                 $queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter($this->getCurrentUid(), Connection::PARAM_INT))
              )
              ->setMaxResults($setMaxResults)
              ->executeQuery()
@@ -120,7 +119,7 @@ class LastModifiedProcessor implements DataProcessorInterface
 
         if (!empty($result)) {
             foreach ($result as $ce) {
-                $pageTitle = self::getPageTitle($ce['pid']);
+                $pageTitle = $this->getPageTitle($ce['pid']);
                 if ($pageTitle) {
                     $mdtm[$ce['uid']][$pageTitle] = $ce;
                 }
@@ -167,7 +166,6 @@ class LastModifiedProcessor implements DataProcessorInterface
      */
     protected function getCurrentUid(): int
     {
-        $pageArguments = $this->request->getAttribute('routing');
-        return $pageArguments->getPageId();
+        return $this->request->getAttribute('routing')->getPageId();
     }
 }

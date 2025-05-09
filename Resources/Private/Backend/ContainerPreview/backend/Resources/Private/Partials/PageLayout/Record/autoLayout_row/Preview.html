@@ -18,5 +18,34 @@
 		</f:if>
 	</div>
 
+	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
+
+	<div class="t3-page-ce-footer mt-2">
+		<div class="t3-page-ce-info">
+	<strong>Justify content:</strong> {flexForm.justify}
+	| <strong>Align items:</strong> {flexForm.alignItem}
+	| <strong>Responsive variations:</strong> {flexForm.responsiveVariations}
+
+		<f:if condition="{flexForm.horizontalGutters}">
+			<f:then>
+ | <strong>Horizontal gutters:</strong> {flexForm.horizontalGutters}
+			 </f:then>
+			 <f:else>
+ | <strong>Horizontal gutters:</strong> gx-4		
+			 </f:else>
+		</f:if>
+
+		 <f:if condition="{flexForm.verticalGutters}">
+			<f:then>
+ | <strong>Vertical gutters:</strong> {flexForm.verticalGutters}
+			 </f:then>
+			 <f:else>
+ | <strong>Vertical gutters:</strong> gx-4		
+			 </f:else>
+		</f:if>
+							
+		</div>
+	</div>
+	
 </f:if>
 <f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />

@@ -20,19 +20,42 @@
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">	
-	Slider Style: {flexForm.sliderStyle} | Max. Image width: {flexForm.width}px
-<f:if condition="{flexForm.ratio}">
- | Aspect ratio: {flexForm.ratio}
+
+<f:if condition="{flexForm.sliderStyle} != 'Default'">
+	<f:then>
+		<strong>Slider Style:</strong> {flexForm.sliderStyle}
+
+		| <strong>Image width:</strong> {flexForm.width}px
+		
+		<f:if condition="{flexForm.ratio}">
+		 | <strong>Ratio:</strong> {flexForm.ratio}
+		</f:if>
+		
+	</f:then>
+	<f:else>
+
+		<strong>Image width:</strong> {flexForm.width}px
+
+		<f:if condition="{flexForm.ratio}">
+		 | <strong>Ratio:</strong> {flexForm.ratio}
+		</f:if>
+		<f:if condition="{flexForm.navigation}">
+		 | <strong>Navigation:</strong> true
+		</f:if>
+		<f:if condition="{flexForm.pagination}">
+		 | <strong>Pagination:</strong> true
+		</f:if>
+		<f:if condition="{flexForm.autoplay}">
+		 | <strong>Autoplay:</strong> true
+		</f:if>
+		<f:if condition="{flexForm.useCustomSwiperJs}">
+		 | <strong>Custom JS:</strong> true
+		</f:if>
+	
+	</f:else>
 </f:if>
-<f:if condition="{flexForm.navigation}">
- | Navigation: true
-</f:if>
-<f:if condition="{flexForm.pagination}">
- | Pagination: true
-</f:if>
-<f:if condition="{flexForm.autoplay}">
- | Autoplay: true
-</f:if>
+
+
 	    </div>
 	</div>
 </f:if>

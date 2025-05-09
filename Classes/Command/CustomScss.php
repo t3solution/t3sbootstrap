@@ -25,11 +25,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class CustomScss extends CommandBase
 {
 
-    public function initializeAction(): void
-    {
-        parent::initializeAction();
-    }
-
     /**
      * Defines the allowed options for this command
      *
@@ -72,22 +67,26 @@ class CustomScss extends CommandBase
             $bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : $settings['cdn']['bootstraplatest'];
             $bootstrapScssPath = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/';
             if (!is_dir($bootstrapScssPath)) {
-                mkdir($bootstrapScssPath, 0777, true);
+                if (!mkdir($bootstrapScssPath, 0777, true) && !is_dir($bootstrapScssPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $bootstrapScssPath));
+                }
             }
             if ($settings['cdn']['noZip']) {
-                self::getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath, $baseDir);
+                $this->getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath, $baseDir);
             } else {
-                self::getBootstrapFiles($bootstrapVersion, $baseDir);
+                $this->getBootstrapFiles($bootstrapVersion, $baseDir);
             }
             if (!file_exists($baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss')) {
-                self::getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath, $baseDir);
+                $this->getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath, $baseDir);
             }
 
             # Custom
             $customPath = $baseDir.'Resources/Public/T3SB-SCSS/';
 
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
 
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
@@ -112,15 +111,15 @@ class CustomScss extends CommandBase
                     $boottstrapFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
                 }
 
-                self::writeCustomFile($customPath, $customFileName, $settings, '_variables');
-                self::writeCustomFile($customPath, $customFileNameOverride, $settings, '_bootswatch');
+                $this->writeCustomFile($customPath, $customFileName, $settings, '_variables');
+                $this->writeCustomFile($customPath, $customFileNameOverride, $settings, '_bootswatch');
 
                 # Include
                 $includeDir = 'uploads/tx_t3sbootstrap/';
                 $includePath = GeneralUtility::getFileAbsFileName($includeDir);
 
                 if ($key === 0) {
-                    self::deleteFilesFromDirectory($includePath);
+                    $this->deleteFilesFromDirectory($includePath);
                     $includeFileName = 'bootstrap.scss';
                 } else {
                     $includeFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
@@ -130,7 +129,9 @@ class CustomScss extends CommandBase
 
                 if (!file_exists($includeFile)) {
                     if (!is_dir($includePath)) {
-                        mkdir($includePath, 0777, true);
+                        if (!mkdir($includePath, 0777, true) && !is_dir($includePath)) {
+                            throw new \RuntimeException(sprintf('Directory "%s" was not created', $includePath));
+                        }
                     }
 
                     $customDir = $baseDir.'Resources/Public/T3SB-SCSS/';
@@ -152,7 +153,7 @@ class CustomScss extends CommandBase
             }
 
             $tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
-            self::deleteFilesFromDirectory($tempPath);
+            $this->deleteFilesFromDirectory($tempPath);
             $customPath = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap/scss/';
             $customFileName = 'bootstrap.scss';
             $customFile = $customPath.$customFileName;
@@ -175,23 +176,22 @@ class CustomScss extends CommandBase
                     unlink($customFile);
                 }
                 if (!is_dir($customPath)) {
-                    mkdir($customPath, 0777, true);
+                    if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                        throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                    }
                 }
                 GeneralUtility::writeFile($customFile, $customContent);
             }
 
             if (is_dir($baseDir.'Resources/Public/Contrib/Bootstrap/scss/')) {
                 return Command::SUCCESS;
-            } else {
-                throw new \InvalidArgumentException('Check the bootstrap version in the constant editor for validity!', 1657204821);
-
-                return Command::FAILURE;
             }
-        } else {
-            throw new \InvalidArgumentException('You have to activate SCSS in the EM config!', 1657204821);
 
-            return Command::FAILURE;
+            throw new \InvalidArgumentException('Check the bootstrap version in the constant editor for validity!', 1657204821);
+
         }
+
+        throw new \InvalidArgumentException('You have to activate SCSS in the EM config!', 1657204821);
     }
 
 
@@ -205,20 +205,23 @@ class CustomScss extends CommandBase
 
             if (!copy($customFile, $copyFile)) {
                 return false;
-            } elseif (empty($keepVariables)) {
+            }
+            if (empty($keepVariables)) {
                 unlink($customFile);
             }
         }
 
         if (!file_exists($customFile) && empty($keepVariables)) {
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
-            $customContent = $name == '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' : '// Your own SCSS';
+            $customContent = $name === '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' : '// Your own SCSS';
 
             if (!empty($settings['bootswatch'])) {
                 $customContent = @file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
-                if ($name == '_variables') {
+                if ($name === '_variables') {
                     $customContent = str_replace(' !default', '', $customContent);
                 }
             }
@@ -235,7 +238,7 @@ class CustomScss extends CommandBase
         if (is_dir($directory)) {
             if ($dh = opendir($directory)) {
                 while (($file = readdir($dh)) !== false) {
-                    if ($file!='.' && $file !='..' && $file[0] != '_') {
+                    if ($file !== '.' && $file !== '..' && $file[0] !== '_') {
                         unlink(''.$directory.''.$file.'');
                     }
                 }
@@ -252,7 +255,9 @@ class CustomScss extends CommandBase
         if (is_dir($localZipPath)) {
             parent::rmDir($localZipPath);
         }
-        mkdir($localZipPath, 0777, true);
+        if (!mkdir($localZipPath, 0777, true) && !is_dir($localZipPath)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $localZipPath));
+        }
         $localZipFile = $baseDir.'Resources/Public/Contrib/Bootstrap/t3sb.zip';
         $zipFilename = 'v'.$bootstrapVersion.'.zip';
         $requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
@@ -318,7 +323,9 @@ class CustomScss extends CommandBase
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             GeneralUtility::writeFile($customFile, $customContent);
         }
@@ -334,7 +341,9 @@ class CustomScss extends CommandBase
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             GeneralUtility::writeFile($customFile, $customContent);
         }
@@ -350,7 +359,9 @@ class CustomScss extends CommandBase
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             GeneralUtility::writeFile($customFile, $customContent);
         }
@@ -366,7 +377,9 @@ class CustomScss extends CommandBase
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             GeneralUtility::writeFile($customFile, $customContent);
         }
@@ -381,7 +394,9 @@ class CustomScss extends CommandBase
                 unlink($customFile);
             }
             if (!is_dir($customPath)) {
-                mkdir($customPath, 0777, true);
+                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+                }
             }
             GeneralUtility::writeFile($customFile, $customContent);
         }
@@ -395,7 +410,9 @@ class CustomScss extends CommandBase
             unlink($customFile);
         }
         if (!is_dir($customPath)) {
-            mkdir($customPath, 0777, true);
+            if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+            }
         }
         GeneralUtility::writeFile($customFile, $customContent);
     }

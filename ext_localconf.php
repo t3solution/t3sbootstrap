@@ -1,11 +1,8 @@
 <?php
 
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-use TYPO3\CMS\Backend\Preview\StandardPreviewRendererResolver;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
 use T3SBS\T3sbootstrap\Controller\ConsentController;

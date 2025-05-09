@@ -27,7 +27,7 @@ class Card implements SingletonInterface
         // crop max characters
         $cardData['cropMaxCharacters'] = !empty($parentflexconf['cropMaxCharacters']) ? $parentflexconf['cropMaxCharacters'] : '';
         // image position
-        if ((int)$processedData['data']['imageorient'] == 8) {
+        if ((int)$processedData['data']['imageorient'] === 8) {
             $processedData['data']['imageorient'] = 'bottom';
         } else {
             $processedData['data']['imageorient'] = 'top';
@@ -72,7 +72,7 @@ class Card implements SingletonInterface
                 # card-img-overlay for mobile < 576 by JS and class overlay
                 $cardData['mobile']['overlay'] = 'img-overlay';
             }
-            if ($processedData['data']['imageorient'] == 'top') {
+            if ($processedData['data']['imageorient'] === 'top') {
                 if (!empty($cardData['title']['onTop']) || !empty($processedData['data']['tx_t3sbootstrap_cardheader'])) {
                     $cardData['image']['class'] = 'img-fluid';
                 } else {
@@ -147,7 +147,7 @@ class Card implements SingletonInterface
             $cardData['multiImage']['socialmedia']['footer'] = !empty($flexconf['multiImage']['socialmedia']['footer']) ? $flexconf['multiImage']['socialmedia']['footer'] : '';
             if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
                 foreach ($flexconf['multiImage']['socialmedia'] as $key=>$socialmedia) {
-                    if ($key != 'enable' && $key != 'footer' &&  !empty($socialmedia)) {
+                    if ($key !== 'enable' && $key !== 'footer' &&  !empty($socialmedia)) {
                         $cardData['multiImage']['socialmediaLinks'][$key] = $socialmedia;
                     }
                 }
@@ -157,10 +157,10 @@ class Card implements SingletonInterface
         // header position
         if ($processedData['data']['header_position']) {
             $headerPosition = $processedData['data']['header_position'];
-            if ($headerPosition == 'left') {
+            if ($headerPosition === 'left') {
                 $headerPosition = 'start';
             }
-            if ($headerPosition == 'right') {
+            if ($headerPosition === 'right') {
                 $headerPosition = 'end';
             }
             $cardClass .= ' text-'.$headerPosition;

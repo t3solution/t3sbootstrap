@@ -28,14 +28,12 @@ class FlexformViewHelper extends AbstractViewHelper
 	}
 
 	public function render(): array
-	{
-	 
+	{ 
 		if (!empty($this->arguments['data'])) {
-			$flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-			return $flexFormService->convertFlexFormContentToArray($this->arguments['data']);	
-		} else {
-			return [];
+            return GeneralUtility::makeInstance(FlexFormService::class)->convertFlexFormContentToArray($this->arguments['data']);
 		}
-	}
+
+        return [];
+    }
 
 }

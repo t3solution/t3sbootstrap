@@ -741,6 +741,14 @@ $tempContentColumns = [
         'exclude' => 1,
         'config' => [
             'type' => 'number',
+            'format' => 'decimal',
+            'range' => [
+                'lower' => 0,
+                'upper' => 5,
+            ],
+            'slider' => [
+                'step' => 0.1,
+            ],
             'size' => 10
         ]
     ],
@@ -749,6 +757,14 @@ $tempContentColumns = [
         'exclude' => 1,
         'config' => [
             'type' => 'number',
+            'format' => 'decimal',
+            'range' => [
+                'lower' => 0,
+                'upper' => 5,
+            ],
+            'slider' => [
+                'step' => 0.1,
+            ],
             'size' => 10
         ]
     ],
@@ -853,7 +869,31 @@ $tempContentColumns = [
             'wrap' => 'virtual',
         ]
     ],
+    'tx_t3sbootstrap_iconPositionBehind' => [
+        'exclude' => 1,
+        'label' => 'Icon position behind the header',
+        'config' => [
+            'type' => 'check'
+        ]
+    ],
 
+    'tx_t3sbootstrap_jsfile' => [
+        'label' => 'My JS File',
+        'config' => [
+            'type' => 'file',
+            'maxitems' => 6,
+            'allowed' => ['js'],
+        ],
+    ],
+    
+    'tx_t3sbootstrap_cssfile' => [
+        'label' => 'My CSS File',
+        'config' => [
+            'type' => 'file',
+            'maxitems' => 6,
+            'allowed' => ['css'],
+        ],
+    ],
 
 ];
 
@@ -871,10 +911,10 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
                 --palette--;;general,
                         header; Internal title (not displayed),
         --div--;Java Script,
-                bodytext;JavaScript,
-                pi_flexform; Inline JavaScript Settings,
+                bodytext;JavaScript Inline,tx_t3sbootstrap_jsfile;JavaScript File,
+                pi_flexform; JavaScript Settings,
         --div--;CSS,
-                tx_t3sbootstrap_bodytext;CSS,
+                tx_t3sbootstrap_bodytext;CSS,tx_t3sbootstrap_cssfile;CSS File,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                 --palette--;;hidden
         ',
@@ -1129,6 +1169,14 @@ ExtensionManagementUtility::addFieldsToPalette(
     'after:header_link'
 );
 
+if (ExtensionManagementUtility::isLoaded('iconpack')) {
+    ExtensionManagementUtility::addFieldsToPalette(
+        'tt_content',
+        'headers',
+        'tx_t3sbootstrap_iconPositionBehind',
+        'after:tx_t3sbootstrap_header_position'
+    );
+}
 
 if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
 	ExtensionManagementUtility::addFieldsToPalette(

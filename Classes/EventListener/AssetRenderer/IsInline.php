@@ -121,56 +121,55 @@ class IsInline
             }
 
             return;
-        } else {
+        }
 
-            // Inline Java Scripts
-            $assetJsInline = $event->getAssetCollector()->getInlineJavaScripts();
-            $addheight ='';
-            $jquery ='';
-            $js = '';
-            $function = '';
+        // Inline Java Scripts
+        $assetJsInline = $event->getAssetCollector()->getInlineJavaScripts();
+        $addheight ='';
+        $jquery ='';
+        $js = '';
+        $function = '';
 
-            foreach ($assetJsInline as $library => $source) {
-                if (str_ends_with($library, 'function')) {
-                    $function .= $source['source'] .LF.LF;
-                } elseif (str_starts_with($library, 'vanilla')) {
-                    $js .= $source['source'] .LF;
-                } elseif (str_starts_with($library, 'addheight-')) {
-                    $addheight .= $source['source'] .LF.LF;
-                } else {
-                    $jquery .= $source['source'] .LF.LF;
-                }
-                $event->getAssetCollector()->removeInlineJavaScript($library);
+        foreach ($assetJsInline as $library => $source) {
+            if (str_ends_with($library, 'function')) {
+                $function .= $source['source'] .LF.LF;
+            } elseif (str_starts_with($library, 'vanilla')) {
+                $js .= $source['source'] .LF;
+            } elseif (str_starts_with($library, 'addheight-')) {
+                $addheight .= $source['source'] .LF.LF;
+            } else {
+                $jquery .= $source['source'] .LF.LF;
             }
+            $event->getAssetCollector()->removeInlineJavaScript($library);
+        }
 
-            if ($addheight) {
-                $addheight = "
-	// Autoheight for background images
-	var TYPO3 = TYPO3 || {};
-	TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight), ",")."}};" .LF;
-            }
+        if ($addheight) {
+            $addheight = "
+// Autoheight for background images
+var TYPO3 = TYPO3 || {};
+TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight), ",")."}};" .LF;
+        }
 
-            $source = '';
-            if (!empty($function)) {
-                $source .= $function.LF;
-            }
+        $source = '';
+        if (!empty($function)) {
+            $source .= $function.LF;
+        }
 
-            $source .= "function ready(fn) {".LF."	if (document.readyState != 'loading'){".LF."fn();".LF."	} else {".LF."document.addEventListener('DOMContentLoaded', fn);".LF."	}".LF."}".LF."ready(() => {".$addheight.$js."});".LF;
+        $source .= "function ready(fn) {".LF."	if (document.readyState != 'loading'){".LF."fn();".LF."	} else {".LF."document.addEventListener('DOMContentLoaded', fn);".LF."	}".LF."}".LF."ready(() => {".$addheight.$js."});".LF;
 
-            if (!empty($jquery)) {
-                $source .= LF."(function($){'use strict';".LF. $jquery .LF."})(jQuery);".LF;
-            }
+        if (!empty($jquery)) {
+            $source .= LF."(function($){'use strict';".LF. $jquery .LF."})(jQuery);".LF;
+        }
 
-            if (!empty($settings['t3sbminify'])) {
-                $url = 'https://www.toptal.com/developers/javascript-minifier/api/raw';
-                $source = self::minifyData($url, $source);
-            }
+        if (!empty($settings['t3sbminify'])) {
+            $url = 'https://www.toptal.com/developers/javascript-minifier/api/raw';
+            $source = self::minifyData($url, $source);
+        }
 
-            if (!empty($source)) {
-                $jsFile = self::inline2TempFile($source, 'js');
-                if ($jsFile) {
-                    $event->getAssetCollector()->addJavaScript('t3sbootstrapjs', $jsFile);
-                }
+        if (!empty($source)) {
+            $jsFile = self::inline2TempFile($source, 'js');
+            if ($jsFile) {
+                $event->getAssetCollector()->addJavaScript('t3sbootstrapjs', $jsFile);
             }
         }
     }

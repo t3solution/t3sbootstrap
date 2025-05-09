@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\ExpressionLanguage;
 
 use TYPO3\CMS\Core\ExpressionLanguage\AbstractProvider;
-use T3SBS\T3sbootstrap\ExpressionLanguage\T3sbConditionFunctionsProvider;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.

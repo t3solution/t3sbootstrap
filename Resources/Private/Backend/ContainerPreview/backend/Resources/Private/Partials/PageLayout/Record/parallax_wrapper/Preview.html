@@ -1,3 +1,8 @@
+<f:variable name="imgObject" value="" />
+<f:if condition="{item.record.assets}">
+<f:variable name="imgObject" value="<t3sb:backend.infoImage uid='{item.record.uid}' />" />
+</f:if>
+
 <f:if condition="{item.editable} && {allowEditContent}">
 	<div class="element-preview-header">
 		<f:if condition="{item.record.header}">
@@ -20,7 +25,11 @@
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
-	Max. Image width: {flexForm.width}px | Parallax effect speed: {flexForm.speedFactor}
+			<f:if condition="{imgObject} && {imgObject.0.properties.hidden} == 0">
+				<be:thumbnail image="{imgObject.0}" width="114" height="64" class="inline-block me-2 img-fluid" />	
+				<strong>Max. BG-Image width:</strong> {flexForm.width}px | <strong>Parallax effect speed:</strong> {flexForm.speedFactor}
+| <strong>Surcharge height:</strong> {flexForm.addHeight}px
+			</f:if>
 	    </div>
 	</div>
 </f:if>

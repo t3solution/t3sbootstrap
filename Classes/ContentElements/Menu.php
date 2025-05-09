@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\ContentElements;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -23,11 +22,11 @@ class Menu implements SingletonInterface
 	{
 			$processedData['menudirection'] = !empty($flexconf['menudirection']) ? ' '.$flexconf['menudirection'] : null;
 			$processedData['menupills'] = !empty($flexconf['menupills']) ? ' nav-pills' :'';
-			if ($processedData['menudirection'] == ' flex-row') {
+			if ($processedData['menudirection'] === ' flex-row') {
 				$processedData['menuHorizontalAlignment'] = !empty($flexconf['menuHorizontalAlignment'])
 				 ? ' '.$flexconf['menuHorizontalAlignment'] : ' justify-content-end';
 			}
-			if ( $cType == 'menu_section' ) {
+			if ( $cType === 'menu_section' ) {
 				$processedData['pageLink'] = FALSE;
 				# if more than 1 page for section-menu
 				if (count(explode( ',' , (string) $processedData['data']['pages'])) > 1) {
@@ -43,7 +42,7 @@ class Menu implements SingletonInterface
 					}
 				}
 			}
-			if (!empty($flexconf['menuHorizontalAlignment']) && $flexconf['menuHorizontalAlignment'] == 'nav-fill variant') {
+			if (!empty($flexconf['menuHorizontalAlignment']) && $flexconf['menuHorizontalAlignment'] === 'nav-fill variant') {
 				$processedData['menupills'] = '';
 			}
 

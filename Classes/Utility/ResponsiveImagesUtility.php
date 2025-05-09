@@ -11,9 +11,7 @@ use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -102,8 +100,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$tag = $tag ?: GeneralUtility::makeInstance(TagBuilder::class, 'picture');
 		$fallbackTag = $fallbackTag ?: GeneralUtility::makeInstance(TagBuilder::class, 'img');
 
-		$settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-
 		// Deal with file formats that can't be cropped separately
 		if ($this->hasIgnoredFileExtension($originalImage, $ignoreFileExtensions)) {
 			return $this->createSimpleImageTag(
@@ -129,8 +125,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Use last breakpoint as fallback image if it doesn't define a media query
 		$lastBreakpoint = array_pop($breakpoints);
 
-		$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
-
 		if ($lastBreakpoint && !$lastBreakpoint['media'] && $picturefillMarkup) {
 			// Generate different image sizes for last breakpoint
 			$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
@@ -147,14 +141,14 @@ class ResponsiveImagesUtility implements SingletonInterface
 			$fallbackTag->addAttribute($attributePrefix . 'srcset', $this->generateSrcsetAttribute($srcset));
 
 			// Set sizes query for fallback image
-			if ($srcsetMode == 'w' && $lastBreakpoint['sizes']) {
+			if ($srcsetMode === 'w' && $lastBreakpoint['sizes']) {
 				$fallbackTag->addAttribute('sizes', sprintf($lastBreakpoint['sizes'], $referenceWidth));
 			}
 		} else {
 
 			// Breakpoint can't be used as fallback
 			if ($lastBreakpoint) {
-				array_push($breakpoints, $lastBreakpoint);
+				$breakpoints[] = $lastBreakpoint;
 			}
 
 			// Set srcset attribute for fallback image (not src as advised by picturefill)
@@ -261,7 +255,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		if ($mediaQuery) {
 			$sourceTag->addAttribute('media', $mediaQuery);
 		}
-		if ($srcsetMode == 'w' && $sizesQuery) {
+		if ($srcsetMode === 'w' && $sizesQuery) {
 			$sourceTag->addAttribute('sizes', sprintf($sizesQuery, $defaultWidth));
 		}
 
@@ -463,10 +457,10 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		if ($inline) {
 			return $this->generateDataUri($processedImage);
-		} else {
-			return $this->imageService->getImageUri($processedImage, $absoluteUri);
 		}
-	}
+
+        return $this->imageService->getImageUri($processedImage, $absoluteUri);
+    }
 
 	/**
 	 * Generates a data URI for the specified image file
@@ -519,15 +513,18 @@ class ResponsiveImagesUtility implements SingletonInterface
 	{
 		foreach ($breakpoints as &$breakpoint) {
 
-		if (!is_array($breakpoint)) {
-			$breakpoint = [$breakpoint];
-		}
+            if (!is_array($breakpoint)) {
+                $breakpoint = [$breakpoint];
+            }
 			$breakpoint = array_replace($this->breakpointPrototype, $breakpoint);
 		}
+        unset($breakpoint);
+
 		ksort($breakpoints);
 
 		return $breakpoints;
 	}
+
 
 	/**
 	 * Check if the image has a file format that can't be cropped

@@ -16,7 +16,7 @@
 
 
 <f:section name="NavbarInner">
-<nav id="main-navbar" class="navbar {config.navbar.class}"{config.navbar.styleAttr -> f:format.raw()}{config.navbar.dataAttr -> f:format.raw()}>
+<nav id="main-navbar"  aria-label="Main navbar" tabindex="-1" class="navbar {config.navbar.class}"{config.navbar.styleAttr -> f:format.raw()}{config.navbar.dataAttr -> f:format.raw()}>
 	<div class="{config.navbar.innercontainer}">
 		<f:if condition="{config.navbar.brandAlignment} == 'left'">
 			<f:render section="NavbarToggler" arguments="{_all}" />
@@ -143,29 +143,31 @@
 			</f:if>
 		</f:else>
 	</f:if>
-	<div class="navbar-nav mb-2 mb-lg-0{f:if(condition: '{config.navbar.alignment} == left' , then:' ms-auto', else:' me-auto')}">
-		<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
-			<f:render partial="Page/Navbar/Language" arguments="{_all}" />
+	<f:if condition="{languageNavigation} || {navbarMenuRight -> f:count()} || {settings.config.navbarDarkMode}">
+		<div class="navbar-nav mb-2 mb-lg-0{f:if(condition: '{config.navbar.alignment} == left' , then:' ms-auto')}">
+			<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
+				<f:render partial="Page/Navbar/Language" arguments="{_all}" />
+				<f:if condition="{navbarMenuRight -> f:count()}">
+					<div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+						<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+						<hr class="d-lg-none my-2 text-white-50">
+					</div>
+				</f:if>
+			</f:if>
 			<f:if condition="{navbarMenuRight -> f:count()}">
-				<div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-					<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-					<hr class="d-lg-none my-2 text-white-50">
-				</div>
+				<f:render partial="Page/Navbar/MenuRight" arguments="{_all}" />
+				<f:if condition="{settings.config.navbarDarkMode}">
+					<div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+						<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+						<hr class="d-lg-none my-2 text-white-50">
+					</div>
+				</f:if>
 			</f:if>
-		</f:if>
-		<f:if condition="{navbarMenuRight -> f:count()}">
-			<f:render partial="Page/Navbar/MenuRight" arguments="{_all}" />
 			<f:if condition="{settings.config.navbarDarkMode}">
-				<div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-					<div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-					<hr class="d-lg-none my-2 text-white-50">
-				</div>
+				<f:render partial="Page/Navbar/DarkModeToggler" arguments="{_all}" />
 			</f:if>
-		</f:if>
-		<f:if condition="{settings.config.navbarDarkMode}">
-			<f:render partial="Page/Navbar/DarkModeToggler" arguments="{_all}" />
-		</f:if>
-	</div>
+		</div>
+	</f:if>
 </f:if>
 </f:section>
 
@@ -174,13 +176,13 @@
 	<f:then>
 	<f:switch expression="{config.navbar.brand}">
 		<f:case value="imgText">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
+			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="Link {data.title}">
 				<f:render section="BrandImage" arguments="{_all}" />
 				{config.general.company}
 			</f:link.typolink>
 		</f:case>
 		<f:case value="image">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
+			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="Link {data.title}">
 				<f:render section="BrandImage" arguments="{_all}" />
 			</f:link.typolink>
 		</f:case>
@@ -188,7 +190,7 @@
 			<span class="navbar-brand mb-0 h1">{config.general.company}</span>
 		</f:case>
 		<f:defaultCase>
-			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="{data.linkTitle}">
+			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="Link {data.linkTitle}">
 				{config.general.company}
 			</f:link.typolink>
 		</f:defaultCase>
@@ -201,7 +203,7 @@
 </f:section>
 
 <f:section name="BrandImage">
-	<f:image src="{config.navbar.image}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}"
+	<f:image src="{f:uri.image(src: '{config.navbar.image}')}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}"
 	 class="img-fluid{config.navbar.brandClass}" alt="{settings.navbar.image.altText}" />
 </f:section>
 
@@ -248,7 +250,7 @@
 								<a class="nav-link{navbarItem.activeClass}"
 									href="{navbarItem.link}"
 									 target="{navbarItem.target}"
-									 title="{navbarItem.linkTitle}" tabindex="0">
+									 title="Link {navbarItem.linkTitle}" tabindex="0">
 									<f:render section="Title" arguments="{item: navbarItem}" />
 								</a>
 							</f:else>
@@ -328,7 +330,7 @@
 			data-bs-toggle="{config.navbar.bstoggle}"
 			role="button"
 			aria-expanded="false"
-			title="{navbarItem.linkTitle}"
+			title="Link {navbarItem.linkTitle}"
 			{f:if(condition: navbarItem.current, then:' aria-current="page"')}>
 			<f:render section="Title" arguments="{item: navbarItem}" />
 		</a>
@@ -373,7 +375,7 @@
 							<f:else>
 								<a class="dropdown-item dropdown-item-{child.data.uid}{child.activeClass}"
 									href="{child.link}"
-									title="{child.title -> f:format.raw()}"
+									title="Link {child.title -> f:format.raw()}"
 									target="{child.target}"
 									{f:if(condition: child.current, then:' aria-current="page"')}>
 									<f:render section="Title" arguments="{item: child}" />
@@ -473,7 +475,7 @@
 		</f:then>
 		<f:else>
 			<a class="dropdown-item dropdown-item-{child.data.uid}{child.activeClass}"
-				href="{child.link}" title="{child.title -> f:format.raw()}"
+				href="{child.link}" title="Link {child.title -> f:format.raw()}"
 				target="{child.target}"
 				{f:if(condition: child.current, then:' aria-current="page"')} >
 				<f:render section="Title" arguments="{item: child}" />
@@ -484,7 +486,7 @@
 
 <f:section name="GrandchildLink">
 	<a class="dropdown-item dropdown-item-{grandchild.data.uid}{grandchild.activeClass}"
-		href="{grandchild.link}" title="{grandchild.title -> f:format.raw()}"
+		href="{grandchild.link}" title="Link {grandchild.title -> f:format.raw()}"
 		target="{grandchild.target}"
 		{f:if(condition: grandchild.current, then:' aria-current="page"')}>
 		<f:render section="Title" arguments="{item: grandchild}" />

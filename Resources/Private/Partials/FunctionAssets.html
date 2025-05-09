@@ -276,11 +276,13 @@ function t3sbNavbarSearchbox(vw, bp) {
 		}
 		form.classList.add('mt-3');
 	} else {
-		if (form.classList.contains('xl-ms-auto')) {
-			form.classList.add('ms-auto');
-			form.classList.remove('xl-ms-auto');
+		if (form) {
+			if (form.classList.contains('xl-ms-auto')) {
+				form.classList.add('ms-auto');
+				form.classList.remove('xl-ms-auto');
+			}
+			form.classList.remove('mt-3');
 		}
-		form.classList.remove('mt-3');
 	}
 }
 	</f:asset.script>

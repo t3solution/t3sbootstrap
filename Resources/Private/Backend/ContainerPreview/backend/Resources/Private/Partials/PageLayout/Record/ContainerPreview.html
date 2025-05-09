@@ -269,3 +269,19 @@
 	</div>
 </f:if>
 
+<f:if condition="{item.record.CType} == 'collapsible_container'">
+	<p class="d-inline-flex gap-1 mb-0">
+		<a title="toggle" data-bs-toggle="collapse" href="#collapsibleContainer-{item.record.uid}" aria-expanded="{expanded}"
+			 aria-controls="collapsibleContainer-{item.record.uid}" style="color: #7e00b4;">
+			<core:icon identifier="actions-chevron-down" size="medium" />
+		</a>
+	</p>
+	<div class="{classname}" id="collapsibleContainer-{item.record.uid}">
+	  <div class="card card-body">
+		{item.preview -> f:format.raw()}
+	  </div>
+	</div>
+</f:if>
+
+
+

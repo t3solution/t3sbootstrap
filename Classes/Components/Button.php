@@ -6,6 +6,7 @@ namespace T3SBS\T3sbootstrap\Components;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -23,11 +24,12 @@ class Button implements SingletonInterface
         $btnDropdownItem = [];
         if (!empty($flexconf['dropdownItems']) && is_array($flexconf['dropdownItems'])) {
             $processedData['dropdowndirection'] = !empty($flexconf['direction']) ? ' '.$flexconf['direction'] : '';
-
             foreach ($flexconf['dropdownItems'] as $key=>$dropdownItem) {
-				$pid = (int) substr(explode(' ', $dropdownItem['list']['group'])[0], -1);
+                $pid = (int) substr(explode(' ', $dropdownItem['list']['group'])[0], -1);
                 $btnDropdownItem[$key]['pid'] = $pid;
-                $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', intval($pid), 'page_icon')['page_icon'];
+                if (ExtensionManagementUtility::isLoaded('iconpack')) {
+                    $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', (int)$pid, 'page_icon')['page_icon'];
+                }
                 $btnDropdownItem[$key]['link'] = $dropdownItem['list']['group'];
                 $btnDropdownItem[$key]['target'] = explode('=', $dropdownItem['list']['group'])[1];
             }
@@ -36,7 +38,7 @@ class Button implements SingletonInterface
         $outline = !empty($flexconf['outline']) ? 'outline-' : '';
         $style = !empty($flexconf['style']) ? $flexconf['style'] : '';
         $typolinkButtonClass = ' btn btn-'.$outline.$style;
-        $typolinkButtonClass .= !empty($flexconf['btnsize']) && $flexconf['btnsize'] != 'default' ? ' '.$flexconf['btnsize'] : '';
+        $typolinkButtonClass .= !empty($flexconf['btnsize']) && $flexconf['btnsize'] !== 'default' ? ' '.$flexconf['btnsize'] : '';
         if (empty($parentflexconf)) {
             $processedData['btn-block'] = false;
             if (!empty($flexconf['block'])) {
@@ -46,13 +48,13 @@ class Button implements SingletonInterface
         $headerPosition = '';
         if ($processedData['data']['header_position']) {
             $headerPosition = $processedData['data']['header_position'];
-            if ($headerPosition == 'left') {
+            if ($headerPosition === 'left') {
                 $headerPosition = '';
             }
-            if ($headerPosition == 'center') {
+            if ($headerPosition === 'center') {
                 $headerPosition = 'text-center';
             }
-            if ($headerPosition == 'right') {
+            if ($headerPosition === 'right') {
                 $headerPosition = 'd-md-flex justify-content-md-end';
             }
         }
@@ -70,7 +72,7 @@ class Button implements SingletonInterface
         $processedData['slideInButtonFaIcon'] = false;
 
         if (!empty($parentflexconf['fixedPosition'])
-         && $parentflexconf['fixedPosition'] == 'right'
+         && $parentflexconf['fixedPosition'] === 'right'
          && $parentflexconf['slideIn']
          && $parentflexconf['visiblePart']
          && $parentflexconf['vertical']

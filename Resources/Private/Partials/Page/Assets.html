@@ -18,6 +18,7 @@
 // Fixed button on left or right browser edge - Page/Assets.html
 function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {
 	fixedButtons.forEach( fixedButton => {
+
 		if (fixedButton !== null && fixedButton !== '') {
 			fixedButton.style.opacity = '0';
 			fixedButton.classList.remove('d-none');
@@ -46,7 +47,7 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBt
 					if (slideInButtons !== null && slideInButtons !== '') {
 						var slideIn = 0,
 							slideOut = 0,
-							boxWidth = fixedButton.clientWidth,
+							boxWidth = fixedButton.clientWidth + btnSlideOutCorrection,
 							boxHalfHeight = fixedButton.clientHeight / 2;
 						if (isBtnGroup) {
 							Array.from(slideInButtons.children).forEach( slideInButton => {

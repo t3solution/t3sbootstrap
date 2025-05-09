@@ -20,7 +20,7 @@ templates.t3sbs/t3sbootstrap.1739329199 = t3sbs/t3sbootstrap:Resources/Private/B
 @import 'EXT:t3sbootstrap/Resources/Private/Extensions/ke_search/Configuration/TSconfig/templateLayouts.tsconfig'
 [END]
 
-# Custom BE preview
+# Custom BE container preview
 [t3sbootstrap('preview') === '1']
 templates.typo3/cms-backend.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Backend/ContainerPreview/backend/Resources/Private
 [END]
@@ -29,3 +29,15 @@ templates.typo3/cms-backend.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Ba
 [t3sbootstrap('footerInfo') === '1']
 templates.typo3/cms-backend.partialsRootPaths = t3sbs/t3sbootstrap:Resources/Private/Backend/TemplateOverrides/typo3/cms-backend
 [END]
+
+# Previews for custom content types
+mod.web_layout {
+	tt_content {
+		preview {
+			t3sbs_card = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Card.html
+			t3sbs_assets = EXT:t3sbootstrap/Resources/Private/Templates/Preview/AssetsInline.html
+			t3sbs_button = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Button.html
+			t3sbs_carousel = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Carousel.html
+		}
+	}
+}

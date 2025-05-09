@@ -84,7 +84,7 @@ class FlexFormManipulation implements FormDataProviderInterface
 																 && $name['config']['type'] === 'select'
 																 && substr($field, 0, -1) === $key) {
 																	$addArr = ['label' => trim($add), 'value' => lcfirst(GeneralUtility::underscoredToUpperCamelCase(trim($add)))];
-																	array_push($dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'], $addArr);
+																	$dataStructure['sheets'][$sheetName]['ROOT']['el'][$key]['config']['items'][] = $addArr;
 															}
 														}
 													}

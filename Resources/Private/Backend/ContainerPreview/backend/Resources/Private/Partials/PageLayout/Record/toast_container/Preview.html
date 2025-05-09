@@ -20,9 +20,17 @@
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
-			Placement: {flexForm.placement}
 			<f:if condition="{flexForm.multipleToast}">
-			 | Several "Toasts" instead of other Content Elements
+				<f:then>
+					<strong>"Several Toasts"</strong>
+					| <strong>Placement:</strong> {flexForm.placement}	
+				</f:then>
+				<f:else>
+					<strong>Placement:</strong> {flexForm.placement}
+					| <strong>Width:</strong> {flexForm.toastwidth}px			
+					| <strong>Autohide:</strong> {flexForm.autohide}			
+					| <strong>Cookie:</strong> {flexForm.cookie}
+				</f:else>
 			</f:if>
 	    </div>
 	</div>

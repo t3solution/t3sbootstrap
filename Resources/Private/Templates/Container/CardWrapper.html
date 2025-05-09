@@ -20,7 +20,7 @@
 <f:section name="Default">
 <f:if condition="{settings.cardFlipperOnClick}">
 	<f:asset.script identifier="cardwrapperFlipper_function">
-// Card-flipper rotate on click - CarouselWrapper.html
+// Card-flipper rotate on click - CardWrapper.html
 function t3sbCardFlipper() {
 	document.querySelectorAll('.card-flipper').forEach( cf => {
 		cf.classList.add('cardflipper');
@@ -35,8 +35,7 @@ function t3sbCardFlipper() {
 			var cardBody = backside.querySelector('.card-body');
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
-			el.innerHTML = '<p class="square-backlink">
-				<f:if condition="{settings.iconpack.loaded}"><t3sb:icon iconfig="fa6:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>';
+			el.innerHTML = '<p class="square-backlink"><t3sb:icon iconfig="fa6:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>';
 			insertAfter(cardBody, el);
 			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
 				backside.style.transform = 'rotateY(180deg)';
@@ -56,7 +55,7 @@ function insertAfter(referenceNode, newNode) {
 }
 	</f:asset.script>
 	<f:asset.script identifier="vanilla_cardwrapper_flipper">
-	// Card-flipper rotate on click - CarouselWrapper.html
+	// Card-flipper rotate on click - CardWrapper.html
 	t3sbCardFlipper()
 	</f:asset.script>
 </f:if>
@@ -259,16 +258,7 @@ function insertAfter(referenceNode, newNode) {
 									</f:then>
 									<f:else>
 										<f:if condition="{settings.cardFlipperOnClick}">
-											<p class="square-link">
-												<f:if condition="{settings.iconpack.loaded}">
-													<f:then>
-														<t3sb:icon iconfig="fa6:solid,square-plus,size:2x" additionalAttributes="{class:'mx-auto'}" />
-													</f:then>
-													<f:else>
-														<i class="fa-solid fa-square-plus fa-2x mx-auto"></i>
-													</f:else>	
-												</f:if>
-											</p>
+											<p class="square-link"><t3sb:icon iconfig="fa6:solid,square-plus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>
 										</f:if>
 									</f:else>
 								</f:if>
