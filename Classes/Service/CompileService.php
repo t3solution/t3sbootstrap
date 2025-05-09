@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Service;
 
 use T3SBS\T3sbootstrap\Parser\ParserInterface;
-use T3SBS\T3sbootstrap\Utility\TypoScriptUtility;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;

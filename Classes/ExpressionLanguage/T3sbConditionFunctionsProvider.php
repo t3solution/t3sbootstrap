@@ -7,11 +7,8 @@ namespace T3SBS\T3sbootstrap\ExpressionLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Http\ApplicationType;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
-use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
-use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 
@@ -46,14 +43,16 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
 			if ($str === 'extNews') {	
 				if ( !empty($extConf[$str]) && ExtensionManagementUtility::isLoaded('news') ) {
 					return '1';
-				} else {
-					return '0';
 				}
-			} else {
-	            if ( !empty($extConf[$str]) ) {
-	                return '1';
-	            }
-			}
+
+                return '0';
+            }
+
+            if ( !empty($extConf[$str]) ) {
+                return '1';
+            }
+
+            return '0';
         });
     }
 
@@ -133,22 +132,22 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
                         if ( !empty($config['footer_enable']) )  {
                             // Content, Jumbotron & Footer
                             if ( empty($config['expandedcontent_enabletop']) && empty($config['expandedcontent_enablebottom']) ) {
-                                if ($str == 'All') {
+                                if ($str === 'All') {
                                     $result = true;
                                 }
                             } else {
                                 if ( !empty($config['expandedcontent_enabletop']) && !empty($config['expandedcontent_enablebottom']) ) {
-                                    if ($str == 'AllandTopBottom') {
+                                    if ($str === 'AllandTopBottom') {
                                         $result = true;
                                     }
                                 } else {
                                     if ( !empty($config['expandedcontent_enabletop']) ) {
-                                        if ($str == 'AllandTop') {
+                                        if ($str === 'AllandTop') {
                                             $result = true;
                                         }
                                     }
                                     if ( !empty($config['expandedcontent_enablebottom']) ) {
-                                        if ($str == 'AllandBottom') {
+                                        if ($str === 'AllandBottom') {
                                             $result = true;
                                         }
                                     }
@@ -157,23 +156,23 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
                         } else {
                             // Content & Jumbotron
                             if ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
-                                if ($str == 'Jumbotron') {
+                                if ($str === 'Jumbotron') {
                                     $result = true;
                                 }
                             } else {
                                 if ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
-                                    if ($str == 'JumbotronandTopBottom') {
+                                    if ($str === 'JumbotronandTopBottom') {
                                         $result = true;
                                     }
                                 } else {
 
                                     if ( $config['expandedcontent_enabletop'] ) {
-                                        if ($str == 'JumbotronandTop') {
+                                        if ($str === 'JumbotronandTop') {
                                             $result = true;
                                         }
                                     }
                                     if ($config['expandedcontent_enablebottom']) {
-                                        if ($str == 'JumbotronandBottom') {
+                                        if ($str === 'JumbotronandBottom') {
                                             $result = true;
                                         }
                                     }
@@ -184,59 +183,44 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
                         if ($config['footer_enable']) {
                             // Content & Footer
                             if ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
-                                if ($str == 'Footer') {
+                                if ($str === 'Footer') {
                                     $result = true;
                                 }
                             } else {
                                 if ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
-                                    if ($str == 'FooterandTopBottom') {
+                                    if ($str === 'FooterandTopBottom') {
                                         $result = true;
                                     }
                                 } else {
-                                    if ( $config['expandedcontent_enabletop'] ) {
-                                        if ($str == 'FooterandTop') {
-                                            $result = true;
-                                        }
+                                    if ($config['expandedcontent_enabletop'] && $str === 'FooterandTop') {
+                                        $result = true;
                                     }
-                                    if ($config['expandedcontent_enablebottom']) {
-                                        if ($str == 'FooterandBottom') {
-                                            $result = true;
-                                        }
+                                    if ($config['expandedcontent_enablebottom'] && $str === 'FooterandBottom') {
+                                        $result = true;
                                     }
                                 }
                             }
+                        } elseif ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
+                            if ($str === 'Content') {
+                                $result = true;
+                            }
+                        } elseif ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
+                            if ($str === 'ContentandTopBottom') {
+                                $result = true;
+                            }
                         } else {
-                            // Content only
-                            if ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
-                                if ($str == 'Content') {
-                                    $result = true;
-                                }
-                            } else {
-                                if ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
-                                    if ($str == 'ContentandTopBottom') {
-                                        $result = true;
-                                    }
-                                } else {
-                                    if ( $config['expandedcontent_enabletop'] ) {
-                                        if ($str == 'ContentandTop') {
-                                            $result = true;
-                                        }
-                                    }
-                                    if ($config['expandedcontent_enablebottom']) {
-                                        if ($str == 'ContentandBottom') {
-                                            $result = true;
-                                        }
-                                    }
-                                }
+                            if ($config['expandedcontent_enabletop'] && $str === 'ContentandTop') {
+                                $result = true;
+                            }
+                            if ($config['expandedcontent_enablebottom'] && $str === 'ContentandBottom') {
+                                $result = true;
                             }
                         }
                     }
                 }
             }
 
-            if ( $result === true ) {
-                return $result;
-            }
+            return $result === true;
         });
     }
 
@@ -249,6 +233,5 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             	return ExtensionManagementUtility::isLoaded($extKey);
         });
     }
-
 
 }

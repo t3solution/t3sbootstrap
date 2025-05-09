@@ -7,8 +7,6 @@ namespace T3SBS\T3sbootstrap\Layouts;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
-use T3SBS\T3sbootstrap\Layouts\Grid;
-use T3SBS\T3sbootstrap\Layouts\Gutters;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -55,7 +53,6 @@ class TwoColumns implements SingletonInterface
             }
         }
         $processedData['equalHeight'] = !empty($flexconf['equalHeight']) ? ' d-flex align-items-stretch' : '';
-
 
         return $processedData;
     }

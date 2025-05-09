@@ -49,7 +49,7 @@ class CardWrapper implements SingletonInterface
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
             // Flipper defaults
-            if ($flexconf['card_wrapper'] == 'flipper') {
+            if ($flexconf['card_wrapper'] === 'flipper') {
                 switch (count($children)) {
                      case 1:
                         $processedData['flipper']['class'] = 'col-xs-12 col-sm-12 col-md-12';
@@ -86,7 +86,7 @@ class CardWrapper implements SingletonInterface
                 }
                 $children[$key]['imgwidth'] = !empty($child['imagewidth']) ? $child['imagewidth'] : $flipperWidth;
                 if (!empty($fileObjects)) {
-                    if ($flexconf['card_wrapper'] == 'flipper') {
+                    if ($flexconf['card_wrapper'] === 'flipper') {
 
 						$children[$key]['hFa'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                         
@@ -112,7 +112,7 @@ class CardWrapper implements SingletonInterface
             $processedData['cards'] = $children;
 
             // swiperjs
-            if ($flexconf['card_wrapper'] == 'slider') {
+            if ($flexconf['card_wrapper'] === 'slider') {
                 $processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;
                 $processedData['cols'] = floor(12 / $processedData['visibleCards']);
                 $processedData['width'] = !empty($flexconf['width']) ? $flexconf['width'] : '';

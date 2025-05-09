@@ -39,8 +39,8 @@ class Modal implements SingletonInterface
 		}
 		if ($processedData['data']['header_position']) {
 			$headerPosition = $processedData['data']['header_position'];
-			if ( $headerPosition == 'left' ) $headerPosition = 'start';
-			if ( $headerPosition == 'right' ) $headerPosition = 'end';
+			if ( $headerPosition === 'left' ) $headerPosition = 'start';
+			if ( $headerPosition === 'right' ) $headerPosition = 'end';
 			$processedData['class'] .= ' text-'.$headerPosition;
 		}
 		if (!empty($flexconf['whiteclosebutton'])) {

@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Helper;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 
 /*
@@ -60,7 +56,7 @@ class DefaultHelper implements SingletonInterface
 		} else {
 			$processedData['containerError'] = FALSE;
 			if ( ($processedData['be_layout'] === 'OneCol' || $processedData['be_layout'] === 'OneCol_Extra') && !empty($containerConfig['containerError']) ) {
-				$processedData['containerError'] = self::getContainerError($processedData['data'], $containerConfig);
+				$processedData['containerError'] = $this->getContainerError($processedData['data'], $containerConfig);
 			}
 		}
 
@@ -133,12 +129,12 @@ class DefaultHelper implements SingletonInterface
 
 		if ( ($processedData['data']['tx_t3sbootstrap_header_celink'] && $processedData['data']['header_link'])
 			|| (!empty($flexconf['bgwlink']) && $processedData['data']['header_link']) ) {
-			if ( $cType == 't3sbs_card' ) {
+			if ( $cType === 't3sbs_card' ) {
 				if (!empty($flexconf['button']['enable'])) {
 					$processedData['card']['button']['link'] = $processedData['data']['header_link'];
 				}
 			}
-			if ( $parentCType != 'listGroup_wrapper' ) {
+			if ( $parentCType !== 'listGroup_wrapper' ) {
 				$processedData['class'] .= ' ce-link-content';
 			}
 			$processedData['celink'] = $processedData['data']['header_link'];
@@ -150,7 +146,7 @@ class DefaultHelper implements SingletonInterface
 
 		// animate css for all CEs exept t3sbs_carousel & collapsible_accordion
 		if ($animateCss && (!empty($processedData['data']['tx_t3sbootstrap_animateCss']) || !empty($flexconf['animate']))
-		 && $cType != 't3sbs_carousel' && $cType != 'collapsible_accordion')
+		 && $cType !== 't3sbs_carousel' && $cType !== 'collapsible_accordion')
 		{
 			$processedData['isAnimateCss'] = TRUE;
 			if ( !empty($processedData['data']['tx_t3sbootstrap_animateCss']) ) {
@@ -160,11 +156,13 @@ class DefaultHelper implements SingletonInterface
 					$processedData['class'] .= ' bt_hidden';
 					$processedData['animateCssRepeat'] = TRUE;
 				}
-				if ($processedData['data']['tx_t3sbootstrap_animateCssDuration'] ) {
-					$processedData['style'] .= ' animation-duration: '.$processedData['data']['tx_t3sbootstrap_animateCssDuration'].'s;';
+				$cssDelay = substr($processedData['data']['tx_t3sbootstrap_animateCssDelay'], 0, -1);
+				$cssDuration = substr($processedData['data']['tx_t3sbootstrap_animateCssDuration'], 0, -1);
+				if (!empty($cssDuration) && $cssDuration !== '0.0' ) {
+					$processedData['style'] .= ' animation-duration: '.$cssDuration.'s;';
 				}
-				if ($processedData['data']['tx_t3sbootstrap_animateCssDelay'] ) {
-					$processedData['style'] .= ' animation-delay: '.$processedData['data']['tx_t3sbootstrap_animateCssDelay'].'s;';
+				if (!empty($cssDelay) && $cssDelay !== '0.0' ) {
+					$processedData['style'] .= ' animation-delay: '.$cssDelay.'s;';
 				}
 			}
 		}

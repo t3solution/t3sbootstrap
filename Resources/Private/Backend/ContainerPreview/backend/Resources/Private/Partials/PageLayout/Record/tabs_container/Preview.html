@@ -18,21 +18,21 @@
 		</f:if>
 	</div>
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
-	<f:variable name="effect" value="{f:if(condition: flexForm.switch_effect, then:' | Fade effect: {flexForm.switch_effect}', else: '')}" />
-	<f:variable name="fill" value="{f:if(condition: flexForm.fill, then:' | Fill and justify: {flexForm.fill}', else: '')}" />
+	<f:variable name="effect" value="{f:if(condition: flexForm.switch_effect, then:' | <strong>Fade effect:</strong> {flexForm.switch_effect}', else: '')}" />
+	<f:variable name="fill" value="{f:if(condition: flexForm.fill, then:' | <strong>Fill and justify:</strong> {flexForm.fill}', else: '')}" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
 			<f:if condition="{flexForm.display_type} == 'tabs'">
 				<f:variable name="type" value="Tabs ({flexForm.display_type})" />
-	Display type: {type}{effect}{fill}
+	<strong>Display type:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
 			</f:if>
 			<f:if condition="{flexForm.display_type} == 'pills'">
 				<f:variable name="type" value="Pills ({flexForm.display_type})" />
-	Display type: {type}{effect}{fill}
+	<strong>Display type:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
 			</f:if>
 			<f:if condition="{flexForm.display_type} == 'verticalpills'">
 				<f:variable name="type" value="Vertical Pills ({flexForm.display_type})" />
-	Display type: {type}{effect}{fill}
+	<strong>Display type:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
 			</f:if>
 	    </div>
 	</div>

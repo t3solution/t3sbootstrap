@@ -1,4 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">	
 <f:if condition="{header.hLine}">
 	<f:render section="inlineCSS" arguments="{_all}" />
 </f:if>
@@ -29,6 +29,7 @@
 		link: data.header_link,
 		class: header.hClass,
 		hFa: data.header_icon,
+		iconPositionBehind: data.tx_t3sbootstrap_iconPositionBehind,
 		hLinkClass: header.hLinkClass,
 		default: header.default
 		}" />

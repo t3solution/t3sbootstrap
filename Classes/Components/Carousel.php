@@ -27,16 +27,16 @@ class Carousel implements SingletonInterface
 		$processedData['carouselLink'] = $parentflexconf['link'] ?? '';
 		$processedData['mobileNoRatio'] = $parentflexconf['mobileNoRatio'] ?? '';
 
-		if (!empty($parentflexconf['link']) && $parentflexconf['link'] == 'button' && $processedData['data']['header_link']) {
+		if (!empty($parentflexconf['link']) && $parentflexconf['link'] === 'button' && $processedData['data']['header_link']) {
 			$processedData['data']['button_link'] = $processedData['data']['header_link'];
 			$processedData['data']['header_link'] = '';
 		}
 
 		$flexconf['captionVAlign'] = !empty($flexconf['captionVAlign']) ? $flexconf['captionVAlign'] : 'end';
-		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'caption') {
+		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'caption') {
 			$innerCaptionStyle = $processedData['style'].' padding:15px 0; z-index:1';
 			$processedData['style'] = '';
-		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'image') {
+		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'image') {
 			$innerCaptionStyle = 'z-index:1';
 		} else {
 			$processedData['style'] = '';
@@ -52,7 +52,7 @@ class Carousel implements SingletonInterface
 			}
 		}
 
-		$animateCss = $animateCss ? (string)$processedData['data']['tx_t3sbootstrap_animateCss'] : false;
+		$animateCss = $animateCss ? (string)$processedData['data']['tx_t3sbootstrap_animateCss'] : '';
 		$parentAnimateCss = !empty($parentflexconf['animate']) ? (string)$parentflexconf['animate'] : '';
 
 		if ($animateCss) {
@@ -66,10 +66,10 @@ class Carousel implements SingletonInterface
 			$processedData['animate'] = $parentAnimateCss ?
 			 ' caption-animated animated align-items-'.$flexconf['captionVAlign'].' '.$parentAnimateCss : '';
 		} elseif ($processedData['data']['tx_t3sbootstrap_bgcolor']) {
-			$height = $flexconf['captionVAlign'] == 'top' ? '' : 'h-100';
+			$height = $flexconf['captionVAlign'] === 'top' ? '' : 'h-100';
 			$processedData['animate'] = ' '.$height.' d-flex align-items-'.$flexconf['captionVAlign'];
 		} else {
-			$height = $flexconf['captionVAlign'] == 'end' ? '' : 'h-100';
+			$height = $flexconf['captionVAlign'] === 'end' ? '' : 'h-100';
 			$processedData['animate'] = ' '.$height.' d-flex align-items-'.$flexconf['captionVAlign'];
 			$processedData['innerStyle'] = '';
 		}
@@ -78,7 +78,7 @@ class Carousel implements SingletonInterface
 			$processedData['animateCssRepeat'] = $processedData['data']['tx_t3sbootstrap_animateCssRepeat'];
 		}
 		$animate = ($animateCss && $parentAnimateCss) || $processedData['data']['tx_t3sbootstrap_bgcolor'] ? TRUE : FALSE;
-		$processedData['style'] .= self::getCarouselCaptionStyle( $flexconf, $animate );
+		$processedData['style'] .= $this->getCarouselCaptionStyle( $flexconf, $animate );
 
 		if (!empty($processedData['files'])) {
 			$file = $processedData['files'][0];
@@ -90,8 +90,8 @@ class Carousel implements SingletonInterface
 		}
 		$processedData['localVideoPath'] = '';
 		if (!empty($file)) {
-			if ($file->getMimeType() == 'video/mp4' || $file->getMimeType() == 'video/webm' || $file->getMimeType() == 'video/wav'
-			 || $file->getMimeType() == 'video/ogg' || $file->getMimeType() == 'video/flac' || $file->getMimeType() == 'video/opus') {
+			if ($file->getMimeType() === 'video/mp4' || $file->getMimeType() === 'video/webm' || $file->getMimeType() === 'video/wav'
+			 || $file->getMimeType() === 'video/ogg' || $file->getMimeType() === 'video/flac' || $file->getMimeType() === 'video/opus') {
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
 			}
 			$processedData['autoplay'] = $file->getProperties()['autoplay'];
@@ -99,7 +99,7 @@ class Carousel implements SingletonInterface
 			$muted = !empty($flexconf['muted']) ? $flexconf['muted'] : FALSE;
 			$processedData['muted'] = !empty($file->getProperties()['autoplay']) ? TRUE : $muted;
 			$processedData['playsinline'] = !empty($flexconf['playsinline']) ? TRUE : FALSE;
-			$btnlink = !empty($parentflexconf['link']) && $parentflexconf['link'] == 'button' ? TRUE : FALSE;
+			$btnlink = !empty($parentflexconf['link']) && $parentflexconf['link'] === 'button' ? TRUE : FALSE;
 			if ($processedData['data']['header'] || $processedData['data']['bodytext']
 			 || ( $processedData['data']['header_link'] && $btnlink) ) {
 				$processedData['controls'] = 0;
@@ -133,7 +133,7 @@ class Carousel implements SingletonInterface
 			$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
 			$processedData['animate'] .= ' position-static';
 			$processedData['style'] .= ' min-height:'.$noImgHeight.'px;';
-			$processedData['style'] .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+			$processedData['style'] .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
 		}
 		$processedData['zoom'] = $parentflexconf['zoom'] ?? '';
 		$processedData['ratio'] = '';
@@ -175,18 +175,18 @@ class Carousel implements SingletonInterface
 	public function getCarouselCaptionStyle( $flexconf, $animate ): string
 	{
 		$style = '';
-		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'caption') {
+		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'caption') {
 			$captionStyle = ' top:0; left:15%; right:15%; bottom:0;';
-			$captionStyle .= $flexconf['captionVAlign'] == 'top' ? ' bottom:inherit;' : '';
-			$captionStyle .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+			$captionStyle .= $flexconf['captionVAlign'] === 'top' ? ' bottom:inherit;' : '';
+			$captionStyle .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
 
-		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] == 'image') {
+		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'image') {
 			$captionStyle = ' top:0; left:0; right:0; bottom:0;';
-			$captionStyle .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+			$captionStyle .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
 		} else {
-			$style .= $flexconf['captionVAlign'] == 'top' ? ' top:0;' : '';
-			$style .= $flexconf['captionVAlign'] == 'center' ? ' bottom:0;' : '';
-			$style .= $flexconf['captionVAlign'] == 'end' ? ' padding-bottom:50px;' : '';
+			$style .= $flexconf['captionVAlign'] === 'top' ? ' top:0;' : '';
+			$style .= $flexconf['captionVAlign'] === 'center' ? ' bottom:0;' : '';
+			$style .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
 			$captionStyle = '';
 		}
 		if ($animate){

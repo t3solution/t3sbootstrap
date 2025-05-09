@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Page\AssetCollector;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -37,7 +35,7 @@ class BackgroundImageUtility implements SingletonInterface
      * return mixed
      */
     public function getBgImage(
-        int $uid,
+        int|string $uid,
         string $table='tt_content',
         bool $jumbotron=false,
         bool $bgColorOnly=false,
@@ -60,7 +58,7 @@ class BackgroundImageUtility implements SingletonInterface
         $css = '';
 
         if (count($filesFromRepository) > 1 && $body == false) {
-            if (!empty($flexconf['bgimagePosition']) && ($flexconf['bgimagePosition'] == 1 || $flexconf['bgimagePosition'] == 2)) {
+            if (!empty($flexconf['bgimagePosition']) && ($flexconf['bgimagePosition'] === 1 || $flexconf['bgimagePosition'] === 2)) {
                 // bg-images in two-columns
                 // in the case if two images available but only one is selected in the flexform
                 $file = $filesFromRepository[0];

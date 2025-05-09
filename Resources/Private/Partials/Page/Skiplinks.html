@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<a class="visually-hidden-focusable skip-link" onClick="removehash()" href="#main-navbar"><span>Skip to main navigation</span></a>
+<a class="visually-hidden-focusable skip-link" onClick="removehash()" href="#page-content"><span>Skip to main content</span></a>
+<a class="visually-hidden-focusable skip-link" onClick="removehash()" href="#page-footer"><span>Skip to page footer</span></a>
+
+<f:asset.css identifier="t3sbs_skiplink">
+.skip-link {
+	width: 100%;
+	text-align: center;
+	display: block;
+	padding: 4rem !important;
+	background-color: aliceblue;
+}
+.skip-link span {
+	padding: .5rem;
+	width: 100%;
+	text-align: center;
+}
+
+a:focus-visible,
+.nav-link:focus-visible {
+	outline: 2px solid crimson !important;
+	border-radius: 3px !important;
+	padding: 5px !important;
+}
+a.skip-link:focus-visible {
+	outline: none !important;
+}
+</f:asset.css>
+
+
+<f:asset.script identifier="skiplink_function">
+function removehash(){
+	setTimeout(function(){
+		history.replaceState('', document.title, window.location.pathname);
+	}, 1);
+}
+</f:asset.script>
+
+</html>

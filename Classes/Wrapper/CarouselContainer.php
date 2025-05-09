@@ -47,8 +47,8 @@ class CarouselContainer implements SingletonInterface
         foreach ($statement as $element) {
             $file = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);
             if (!empty($file)) {
-                if ($file[0]->getMimeType() == 'video/mp4' || $file[0]->getMimeType() == 'video/webm' || $file[0]->getMimeType() == 'video/wav'
-                 || $file[0]->getMimeType() == 'video/ogg' || $file[0]->getMimeType() == 'video/flac' || $file[0]->getMimeType() == 'video/opus') {
+                if ($file[0]->getMimeType() === 'video/mp4' || $file[0]->getMimeType() === 'video/webm' || $file[0]->getMimeType() === 'video/wav'
+                 || $file[0]->getMimeType() === 'video/ogg' || $file[0]->getMimeType() === 'video/flac' || $file[0]->getMimeType() === 'video/opus') {
                     $processedData['containsVideo'] = true;
                 }
             }

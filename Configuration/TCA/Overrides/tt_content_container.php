@@ -425,7 +425,14 @@ $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides']
 		],
 	]
 ];
- 
+$GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['columnsOverrides'] = [
+	'assets' => [
+		'config' => [
+			'maxitems' => 1,
+			'required' => true,
+		],
+	]
+];
  
 $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
@@ -446,4 +453,3 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 $GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['swiper_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['toast_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
-

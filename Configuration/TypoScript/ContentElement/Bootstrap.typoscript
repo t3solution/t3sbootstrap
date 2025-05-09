@@ -6,9 +6,20 @@ tt_content {
 	# **********************************************************
 	# Assets Inline
 	# **********************************************************
-    t3sbs_assets =< lib.contentElement
-    t3sbs_assets.templateName = AssetsInline
-	t3sbs_assets.stdWrap.editIcons = tt_content
+	t3sbs_assets =< lib.contentElement
+	t3sbs_assets.templateName = AssetsInline
+	t3sbs_assets.dataProcessing {
+		10 = files
+		10 {
+			references.fieldName = tx_t3sbootstrap_jsfile
+			as = jsfiles
+		}
+		20 = files
+		20 {
+			references.fieldName = tx_t3sbootstrap_cssfile
+			as = cssfiles
+		}
+	}
 
 	# **********************************************************
 	# BOOTSTAP: Button

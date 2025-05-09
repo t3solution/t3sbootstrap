@@ -312,7 +312,7 @@ $tempSysFileReferenceColumns = [
 ExtensionManagementUtility::addTCAcolumns('sys_file_reference', $tempSysFileReferenceColumns);
 unset($tempSysFileReferenceColumns);
 
-ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette', '--linebreak--,tx_t3sbootstrap_description_align', 'after:title');
+ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette', '--linebreak--,tx_t3sbootstrap_description_align', 'after:description');
 
 ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette', '--linebreak--,tx_t3sbootstrap_extra_class', 'after:tx_t3sbootstrap_description_align');
 

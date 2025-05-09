@@ -38,7 +38,7 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
 
-            if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'autoLayout_row') {
+            if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'autoLayout_row') {
                 $parent = true;
             }
         }
@@ -64,7 +64,7 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
 
-            if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'button_group') {
+            if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'button_group') {
                 $parent = false;
             }
         }
@@ -103,7 +103,7 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
 
-            if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'card_wrapper') {
+            if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'card_wrapper') {
                 $parent = false;
             }
         }
@@ -130,7 +130,7 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
 
-            if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'two_columns') {
+            if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'two_columns') {
                 $parent = true;
             }
         }
@@ -195,14 +195,10 @@ class TcaMatcher
     public function color_1(array $arguments): bool
     {
         if (!empty($arguments['record']['CType']) && !empty($arguments['record']['CType'][0])) {
-            if ($arguments['record']['CType'][0] == 'parallax_wrapper') {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
+            return $arguments['record']['CType'][0] !== 'parallax_wrapper';
         }
+
+        return true;
     }
 
     /**
@@ -238,7 +234,7 @@ class TcaMatcher
 
                 $parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
-                if (!empty($parent_rec['CType']) && $parent_rec['CType'] == 'container' && $parent_flexconf['flexContainer']) {
+                if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'container' && $parent_flexconf['flexContainer']) {
                     $parent = true;
                 }
             }
@@ -268,7 +264,7 @@ class TcaMatcher
             $parent_rec = $result->fetchAllAssociative();
             if (!empty($parent_rec)) {
                 $flexconf = $flexformService->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
-                if ($flexconf['appearance'] == 'button') {
+                if ($flexconf['appearance'] === 'button') {
                     $button = true;
                 }
             }
@@ -284,7 +280,7 @@ class TcaMatcher
     {
         $menu = false;
         if (!empty($arguments['record']['CType']) && !empty($arguments['record']['CType'][0])) {
-            if (substr($arguments['record']['CType'][0], 0, 4) == 'menu') {
+            if (substr($arguments['record']['CType'][0], 0, 4) === 'menu') {
                 $menu = true;
             }
         }
@@ -456,7 +452,7 @@ class TcaMatcher
                   )
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
-            if ($parent_rec['CType'] == 'toast_container') {
+            if ($parent_rec['CType'] === 'toast_container') {
                 $parent = false;
             }
         }

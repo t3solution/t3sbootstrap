@@ -20,7 +20,7 @@ class ButtonGroup implements SingletonInterface
     public function getProcessedData(array $processedData, array $flexconf): array
     {
         $processedData['class'] .= !empty($flexconf['vertical']) ? ' btn-group-vertical' : ' btn-group';
-        $processedData['class'] .= !empty($flexconf['btnsize']) && $flexconf['btnsize'] != 'null' ? ' '.$flexconf['btnsize'] : '';
+        $processedData['class'] .= !empty($flexconf['btnsize']) && $flexconf['btnsize'] !== 'null' ? ' '.$flexconf['btnsize'] : '';
         $processedData['buttonGroupClass'] = !empty($flexconf['align']) ? $flexconf['align'] : '';
         $processedData['visiblePart'] = '';
 
@@ -29,7 +29,7 @@ class ButtonGroup implements SingletonInterface
             $processedData['class'] .= !empty($flexconf['rotate']) ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
             $processedData['class'] .= !empty($flexconf['vertical']) ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
             $processedData['fixedButton'] = true;
-            if (!empty($flexconf['slideIn']) && !empty($flexconf['vertical']) && $flexconf['fixedPosition'] == 'right') {
+            if (!empty($flexconf['slideIn']) && !empty($flexconf['vertical']) && $flexconf['fixedPosition'] === 'right') {
                 $processedData['class'] .= ' slideInButton';
                 $processedData['visiblePart'] = $flexconf['visiblePart'] ? (int)$flexconf['visiblePart'] : 37;
                 $processedData['slideIn'] = $flexconf['slideIn'];

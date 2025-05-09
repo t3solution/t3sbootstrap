@@ -20,7 +20,25 @@
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
-	Flex behaviors: {f:if(condition: flexForm.flexContainer, then:'{flexForm.flexContainer}', else: 'none')}
+			<f:if condition="{flexForm.flexContainer}">
+				<f:then>
+					<strong>Flex behaviors:</strong> '{flexForm.flexContainer}
+				
+					| <strong>Responsive variations:</strong> {f:if(condition: flexForm.responsiveVariations, then:'{flexForm.responsiveVariations}', else: 'none')}
+				
+					| <strong>Direction:</strong> {f:if(condition: flexForm.direction, then:'{flexForm.direction}', else: 'none')}
+				
+					| <strong>Justify:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
+				
+					| <strong>Align:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
+				
+					| <strong>Wrap:</strong> {f:if(condition: flexForm.wrap, then:'{flexForm.wrap}', else: 'none')}
+				</f:then>
+				<f:else>
+					<strong>Flex behaviors:</strong> none
+				</f:else>
+			</f:if>
+
 	    </div>
 	</div>
 </f:if>

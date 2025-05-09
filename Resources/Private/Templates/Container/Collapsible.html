@@ -27,8 +27,6 @@
 </html>
 
 
-
-
 <f:section name="Accordion">
 <div id="c{data.uid}" class="accordion-item">
 	<h2 class="accordion-header" id="heading-{data.uid}">
@@ -50,7 +48,7 @@
 					hshift="{media.properties.tx_t3sbootstrap_shift_horizontal}"
 				/>
 			</f:if>
-			<f:if condition="{data.header_icon}">
+			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
 			{f:if(condition: '{data.header}', then: '{data.header -> f:format.raw()}', else: 'Accordion-{data.uid}')}
@@ -58,6 +56,9 @@
 				<small class="ms-3">
 					{data.subheader -> f:format.raw()}
 				</small>
+			</f:if>
+			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
+				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-2'}" />
 			</f:if>
 		</button>
 	</h2>

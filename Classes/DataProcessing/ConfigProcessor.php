@@ -8,9 +8,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Database\Query\QueryHelper;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
@@ -19,7 +16,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Routing\PageArguments;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -49,7 +45,6 @@ class ConfigProcessor implements DataProcessorInterface
 			return $processedData;
 		}
 		$currentPageUid = $request->getAttribute('routing')->getPageId();
-
 
 		/**
 		 * General
@@ -84,11 +79,11 @@ class ConfigProcessor implements DataProcessorInterface
 		if (!empty($contentObjectConfiguration['settings.']['pages.']['override.'])) {
 			foreach ($contentObjectConfiguration['settings.']['pages.']['override.'] as $field=>$override) {
 				if (!empty($override)) {
-					if ($field == 'smallColumns') {
+					if ($field === 'smallColumns') {
 						$processedData['colAside'] = $override;
 						$processedData['data'][$field] = $override;
 						$smallColumns = $override;
-					} elseif ($field == 'tx_t3sbootstrap_container') {
+					} elseif ($field === 'tx_t3sbootstrap_container') {
 						if (($backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra') && $processedData['data']['tx_t3sbootstrap_container'] === '0') {
 							// no override if container = none
 						} else {
@@ -107,15 +102,15 @@ class ConfigProcessor implements DataProcessorInterface
 
 		// chapter section
 		if (!empty($extConf['chapter'])) {
-			$processedData = self::chapterSection($processedData, $currentPageUid);
+			$processedData = $this->chapterSection($processedData, $currentPageUid);
 		}
 
 		/**
 		 * Backend layout & smallColumns
 		 */
 		if (!empty($backendLayout)) {
-			$oneCol = $backendLayout == 'OneCol' || $backendLayout == 'OneCol_Extra' ? true : false;
-			$threeCol = $backendLayout == 'ThreeCol' || $backendLayout == 'ThreeCol_Extra' ? true : false;
+			$oneCol = $backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra' ? true : false;
+			$threeCol = $backendLayout === 'ThreeCol' || $backendLayout === 'ThreeCol_Extra' ? true : false;
 		}
 
 		if ($oneCol === false) {
@@ -145,7 +140,7 @@ class ConfigProcessor implements DataProcessorInterface
 		/**
 		 * Language Navigation
 		 */
-		if ($processedRecordVariables['navbarEnable'] && $processedRecordVariables['navbarLangmenu']) {
+		if ($processedRecordVariables['navbarLangmenu']) {
 			$site = $request->getAttribute('site');
 			$langUid = [];
 			foreach ($site->getLanguages() as $lang) {
@@ -203,8 +198,8 @@ class ConfigProcessor implements DataProcessorInterface
 						$mainMenu[$key]['activeClass'] = '';
 					}
 					if (!empty($navbarMenu['children'][0])) {
-						if (self::getChildItems($navbarMenu['children'])) {
-							$mainMenu[$key]['children'] = self::getChildItems($navbarMenu['children']);
+						if ($this->getChildItems($navbarMenu['children'])) {
+							$mainMenu[$key]['children'] = $this->getChildItems($navbarMenu['children']);
 						}
 					}
 				}
@@ -294,7 +289,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 			// shrinking navbar on scrolling
 			$navBarAttr = '';
-			if ($processedRecordVariables['navbarPlacement'] == 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
+			if ($processedRecordVariables['navbarPlacement'] === 'fixed-top' && $processedRecordVariables['navbarShrinkcolor'] ) {
 				$processedData['config']['navbar']['transparent'] = false;
 				$navbarClass .= ' shrink py-'.$processedRecordVariables['shrinkingNavPadding'];
 				$navbarShrinkcolorschemes = $processedRecordVariables['navbarShrinkcolorschemes'];
@@ -325,7 +320,7 @@ class ConfigProcessor implements DataProcessorInterface
 					$navbarClass .= ' '.$processedRecordVariables['navbarPlacement'];
 				}
 			}
-			$dropdown = $processedRecordVariables['navbarPlacement'] == 'fixed-bottom' ? 'dropup' : 'dropdown';
+			$dropdown = $processedRecordVariables['navbarPlacement'] === 'fixed-bottom' ? 'dropup' : 'dropdown';
 			$processedData['config']['navbar']['dropdown'] = $dropdown;
 
 			// set class
@@ -333,15 +328,15 @@ class ConfigProcessor implements DataProcessorInterface
 
 			// alignment
 			$processedData['config']['navbar']['alignment'] = $processedRecordVariables['navbarAlignment'];
-			if ($processedRecordVariables['navbarAlignment'] == 'fill') {
+			if ($processedRecordVariables['navbarAlignment'] === 'fill') {
 				$processedData['config']['navbar']['mauto'] = ' nav-fill w-100';
-			} elseif ($processedRecordVariables['navbarAlignment'] == 'justified') {
+			} elseif ($processedRecordVariables['navbarAlignment'] === 'justified') {
 				$processedData['config']['navbar']['mauto'] = ' nav-justified w-100';
-			} elseif ($processedRecordVariables['navbarAlignment'] == 'center') {
+			} elseif ($processedRecordVariables['navbarAlignment'] === 'center') {
 				$processedData['config']['navbar']['navbarCenter'] = ' justify-content-center';
 				$processedData['config']['navbar']['mauto'] = '';
 			} else {
-				$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] == 'right') ? ' ms-auto' : ' me-auto';
+				$processedData['config']['navbar']['mauto'] = ($processedRecordVariables['navbarAlignment'] === 'right') ? ' ms-auto' : ' me-auto';
 			}
 
 			// extra row
@@ -354,21 +349,21 @@ class ConfigProcessor implements DataProcessorInterface
 				$processedData['config']['navbar']['offcanvas'] = $processedRecordVariables['navbarOffcanvas'];
 				$processedData['config']['navbar']['dataToggle'] = 'offcanvas';
 				$processedData['config']['navbar']['offcanvasBgColorClass'] = 'bg-'.$processedRecordVariables['navbarColor'];
-				if ($processedRecordVariables['navbarEnable'] == 'dark') {
+				if ($processedRecordVariables['navbarEnable'] === 'dark') {
 					$processedData['config']['navbar']['offcanvasTitleColor'] = 'rgba(255, 255, 255, 0.75)';
 					$processedData['config']['navbar']['offcanvasCross'] = 'white';
 				} else {
 					$processedData['config']['navbar']['offcanvasTitleColor'] = 'rgba(0, 0, 0, 0.75)';
 					$processedData['config']['navbar']['offcanvasCross'] = 'dark';
 				}
-				if ($processedRecordVariables['navbarAlignment'] == 'left') {
+				if ($processedRecordVariables['navbarAlignment'] === 'left') {
 					$processedData['config']['navbar']['navbarAlignment'] = 'start';
-				} elseif ($processedRecordVariables['navbarAlignment'] == 'right') {
+				} elseif ($processedRecordVariables['navbarAlignment'] === 'right') {
 					$processedData['config']['navbar']['navbarAlignment'] = 'end';
 				} else {
 					$processedData['config']['navbar']['navbarAlignment'] = 'center';
 				}
-				if ($processedRecordVariables['navbarToggler'] == 'left') {
+				if ($processedRecordVariables['navbarToggler'] === 'left') {
 					$processedData['config']['navbar']['offcanvasAlign'] = 'start';
 				} else {
 					$processedData['config']['navbar']['offcanvasAlign'] = 'end';
@@ -379,14 +374,14 @@ class ConfigProcessor implements DataProcessorInterface
 			// searchbox
 			if ($processedRecordVariables['navbarSearchbox']) {
 				$processedData['config']['navbar']['searchbox'] = $processedRecordVariables['navbarSearchbox'];
-				$processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbarEnable'] == 'light' ? 'dark' : 'light';
-				if ($processedData['config']['navbar']['mauto'] == ' me-auto') {
+				$processedData['config']['navbar']['searchboxcolor'] = $processedRecordVariables['navbarEnable'] === 'light' ? 'dark' : 'light';
+				if ($processedData['config']['navbar']['mauto'] === ' me-auto') {
 					$processedData['config']['navbar']['sbmauto'] = ' ms-auto';
 				}
-				if ($processedData['config']['navbar']['mauto'] == ' ms-auto') {
+				if ($processedData['config']['navbar']['mauto'] === ' ms-auto') {
 					$processedData['config']['navbar']['sbmauto'] = ' float-end ms-3';
 				}
-				if ($processedData['config']['navbar']['mauto'] == 'center') {
+				if ($processedData['config']['navbar']['mauto'] === 'center') {
 					$processedData['config']['navbar']['sbmauto'] = '';
 				}
 			}
@@ -433,7 +428,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
 
-			if ($processedRecordVariables['jumbotronBgimage'] == 'root') {
+			if ($processedRecordVariables['jumbotronBgimage'] === 'root') {
 				// slide in rootline
 				foreach ($frontendController->rootLine as $page) {
 					$fileObjects = $fileRepository->findByRelation('pages', 'media', $page['uid']);
@@ -446,7 +441,7 @@ class ConfigProcessor implements DataProcessorInterface
 				if (count($fileObjects) > 1) {
 					if (!empty($settings['multiplePagesMedia'])) {
 						// background images
-						$bgSlides = self::getBackgroundImageUtility()->getBgImage(
+						$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
 							$uid,
 							'pages',
 							true,
@@ -461,7 +456,7 @@ class ConfigProcessor implements DataProcessorInterface
 					} else {
 						// slider
 						$processedData['config']['jumbotron']['alignItem'] = '';
-						$bgSlides = self::getBackgroundImageUtility()->getBgImage(
+						$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
 							$uid,
 							'pages',
 							true,
@@ -475,7 +470,7 @@ class ConfigProcessor implements DataProcessorInterface
 					}
 				} else {
 					// background image
-					$bgSlides = self::getBackgroundImageUtility()->getBgImage(
+					$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
 						$uid,
 						'pages',
 						true,
@@ -490,13 +485,13 @@ class ConfigProcessor implements DataProcessorInterface
 						$processedData['config']['jumbotron']['multiplePagesMedia'] = false;
 					}
 				}
-			} elseif ($processedRecordVariables['jumbotronBgimage'] == 'page') {
+			} elseif ($processedRecordVariables['jumbotronBgimage'] === 'page') {
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				$hasBgImages = count($fileObjects);
 				if (count($fileObjects) > 1) {
 					// slider
 					$processedData['config']['jumbotron']['alignItem'] = '';
-					$bgSlides = self::getBackgroundImageUtility()->getBgImage(
+					$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
 						$frontendController->id,
 						'pages',
 						true,
@@ -509,7 +504,7 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['bgSlides'] = $bgSlides;
 				} else {
 					// background image
-					$bgSlides = self::getBackgroundImageUtility()->getBgImage(
+					$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
 						$frontendController->id,
 						'pages',
 						true,
@@ -542,7 +537,7 @@ class ConfigProcessor implements DataProcessorInterface
 		 * Background Image (body)
 		 */
 		if ($processedRecordVariables['backgroundImageEnable']) {
-			$BodyBgImage = self::getBackgroundImageUtility()->getBgImage(
+			$BodyBgImage = $this->getBackgroundImageUtility()->getBgImage(
 				$frontendController->id,
 				'pages',
 				false,
@@ -555,7 +550,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$bgImage = is_array($BodyBgImage) ? $BodyBgImage[1] : '';
 			if (empty($BodyBgImage) && $processedRecordVariables['backgroundImageSlide']) {
 				foreach ($frontendController->rootLine as $page) {
-					$BodyBgImage = self::getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', false, false, [], true, $frontendController->id);
+					$BodyBgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', false, false, [], true, $frontendController->id);
 					if ($BodyBgImage) {
 						break;
 					}
@@ -588,7 +583,7 @@ class ConfigProcessor implements DataProcessorInterface
 		 */
 		if ($processedRecordVariables['sidebarEnable']) {
 			$processedData['config']['sidebar']['left'] = $processedRecordVariables['sidebarEnable'];
-			if ($processedRecordVariables['sidebarEnable'] == 'Section') {
+			if ($processedRecordVariables['sidebarEnable'] === 'Section') {
 				$processedData['config']['sidebar']['enable'] = true;
 				$processedData['config']['sidebar']['stickTopClass'] = $processedRecordVariables['sectionmenuStickyTop'] ? ' sticky-top' : '';
 				$topOffset = (int)$processedRecordVariables['sectionmenuAnchorOffset'] + (int)$processedRecordVariables['navbarHeight'];
@@ -597,7 +592,7 @@ class ConfigProcessor implements DataProcessorInterface
 			} else {
 				if (!empty($processedData['subNavigation']) && is_array($processedData['subNavigation'])) {
 					$processedData['subNavigation'] =
-					 self::getSubNavigation($processedData['subNavigation'], (int)$processedRecordVariables['navbarClickableparent']);
+					 $this->getSubNavigation($processedData['subNavigation'], (int)$processedRecordVariables['navbarClickableparent']);
 				}
 			}
 			$processedData['config']['sidebar']['sticky'] = $processedRecordVariables['submenuSticky'];

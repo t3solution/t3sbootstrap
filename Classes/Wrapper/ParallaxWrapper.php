@@ -43,13 +43,13 @@ class ParallaxWrapper implements SingletonInterface
 				} else {
 				// local video
 					$processedData['local'] = TRUE;
-					if ( $file->getMimeType() == 'video/mp4' ) {
+					if ( $file->getMimeType() === 'video/mp4' ) {
 						$processedData['mimeType'] = 'mp4' ;
 					}
-					if ( $file->getMimeType() == 'video/webm' ) {
+					if ( $file->getMimeType() === 'video/webm' ) {
 						$processedData['mimeType'] = 'webm' ;
 					}
-					if ( $file->getMimeType() == 'video/ogv' ) {
+					if ( $file->getMimeType() === 'video/ogv' ) {
 						$processedData['mimeType'] = 'ogv' ;
 					}
 					$processedData['file'] = $file;

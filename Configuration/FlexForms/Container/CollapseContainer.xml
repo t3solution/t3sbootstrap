@@ -144,7 +144,6 @@
 					<btnsize>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
 						<displayCond>FIELD:sDEF.appearance:=:button</displayCond>
-						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -164,9 +163,7 @@
 							</items>
 							<default>default</default>
 						</config>
-					</btnsize>
-					
-					
+					</btnsize>	
 				</el>
 			</ROOT>
 		</sDEF>

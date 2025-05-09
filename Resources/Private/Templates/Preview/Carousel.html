@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+ xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" data-namespace-typo3-fluid="true">
+
+<f:variable name="imgObject" value="" />
+<f:if condition="{assets}">
+<f:variable name="imgObject" value="<t3sb:backend.infoImage uid='{uid}' />" />
+</f:if>
+<f:variable name="flexForm" value="<t3sb:flexform data='{tx_t3sbootstrap_flexform}' />" />
+
+<be:thumbnail image="{imgObject.0}" width="64" height="64" class="inline-block me-3 img-fluid" />
+
+
+<f:if condition="{flexForm.bgOverlay}">
+	<f:then>
+		<strong>Background color for caption:</strong> {flexForm.bgOverlay}
+	</f:then>
+	<f:else>
+		<strong>Background color for caption:</strong> none
+	</f:else>
+</f:if>
+
+	|	<strong>Caption vertical align:</strong> {flexForm.captionVAlign}
+
+
+
+</html>
+
+

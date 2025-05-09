@@ -6,7 +6,6 @@ namespace T3SBS\T3sbootstrap\Wrapper;
 
 use TYPO3\CMS\Core\SingletonInterface;
 
-
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
@@ -21,10 +20,10 @@ class TabsContainer implements SingletonInterface
 	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-		if ($processedData['data']['CType'] == 'tabs_container') {
-			if ( !empty($flexconf['display_type']) && $flexconf['display_type'] == 'verticalpills') {
-				$processedData['pill']['asideWidth'] = (int)$flexconf['aside_width'];
-				$processedData['pill']['mainWidth'] = $flexconf['aside_width'] ? 12 - (int)$flexconf['aside_width'] : 9;
+		if ($processedData['data']['CType'] === 'tabs_container') {
+			if ( !empty($flexconf['display_type']) && $flexconf['display_type'] === 'verticalpills') {
+				$processedData['pill']['asideWidth'] = !empty($flexconf['aside_width']) ? (int)$flexconf['aside_width'] : 3;
+				$processedData['pill']['mainWidth'] = $processedData['pill']['asideWidth'] ? 12 - (int)$processedData['pill']['asideWidth'] : 9;
 			}
 			$processedData['tab']['displayType'] = !empty($flexconf['display_type']) ? $flexconf['display_type'] : '';
 			$processedData['tab']['switchEffect'] =	!empty($parentflexconf['switch_effect']) ? $parentflexconf['switch_effect'] : '';

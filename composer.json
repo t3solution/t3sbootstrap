@@ -13,13 +13,13 @@
       "email": "info@t3solution.de"
     }
   ],
-  "license": "GPL-2.0-or-later",
+  "license": ["GPL-2.0-or-later"],
   "type": "typo3-cms-extension",
   "require": {
     "php": "^8.1 || ^8.2 || ^8.3",
     "typo3/cms-core": "^12.4 || ^13.4",
     "b13/container": "^3.1",
-    "ichhabrecht/content-defender": "^3.4"
+    "ichhabrecht/content-defender": "^3.5"
   },
   "autoload": {
     "psr-4": {

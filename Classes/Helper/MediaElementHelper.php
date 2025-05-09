@@ -6,7 +6,6 @@ namespace T3SBS\T3sbootstrap\Helper;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use T3SBS\T3sbootstrap\Helper\GalleryHelper;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -46,10 +45,10 @@ class MediaElementHelper implements SingletonInterface
 		$processedData['addmedia']['CType'] = $cType;
 		$processedData['addmedia']['ratio'] = $processedData['data']['tx_t3sbootstrap_image_ratio'];
 
-		if ( $cType == 'textmedia'
-		 || $cType == 'textpic'
-		 || $cType == 'image'
-		 || $cType == 't3sbs_card' )
+		if ( $cType === 'textmedia'
+		 || $cType === 'textpic'
+		 || $cType === 'image'
+		 || $cType === 't3sbs_card' )
 		{
 			$imageorient = $processedData['data']['imageorient'];
 			// hover effect
@@ -68,7 +67,7 @@ class MediaElementHelper implements SingletonInterface
 			$processedData['addmedia']['figureclass'] .= !empty($processedData['data']['image_zoom']) ? ' gallery' : '';
 		}
 
-		if ($cType != 't3sbs_carousel') {
+		if ($cType !== 't3sbs_carousel') {
 			$processedData['addmedia']['origImg'] = $processedData['data']['tx_t3sbootstrap_image_orig'];
 		}
 

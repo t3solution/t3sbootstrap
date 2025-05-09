@@ -71,10 +71,13 @@
 			class="{trimClass}"
 			title="{linkTitle}"
 			additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
-			<f:if condition="{data.header_icon}">
+			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
 			{data.header -> f:format.raw()}
+			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
+				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
+			</f:if>
 		</f:link.typolink>
 	</f:else>
 </f:if>
@@ -103,10 +106,13 @@
 			class="m-0 rounded-0{class}"
 			title="{linkTitle}"
 			additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
-			<f:if condition="{data.header_icon}">
+			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
 			{data.header -> f:format.raw()}
+			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
+				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
+			</f:if>
 		</f:link.typolink>
 	</f:then>
 	<f:else>
@@ -115,10 +121,13 @@
 			class="m-0 rounded-0{class}"
 			title="{linkTitle}"
 			additionalAttributes="{id: 'c{data.uid}', role: 'button'}">
-			<f:if condition="{data.header_icon}">
+			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
 			{data.header -> f:format.raw()}
+			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
+				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
+			</f:if>
 		</f:link.typolink>
 	</f:else>
 </f:if>
@@ -130,10 +139,13 @@
 		class="{trimClass} dropdown-toggle"
 		title="{linkTitle}"
 		additionalAttributes="{id: 'c{data.uid}', role: 'button', data-bs-toggle: 'dropdown', aria-expanded: 'false'}">
-		<f:if condition="{data.header_icon}">
+			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 			<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 		</f:if>
 		{data.header -> f:format.raw()}
+		<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
+			<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
+		</f:if>
 	</f:link.typolink>
 	<ul class="dropdown-menu" aria-labelledby="c{data.uid}">
 		<f:for each="{dropdownItems}" as="dropdownItem">

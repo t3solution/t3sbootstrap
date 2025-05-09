@@ -29,8 +29,8 @@ class Grid implements SingletonInterface
 
 		foreach ($flexconf as $key=>$grid) {
 
-			if ( $key == 'extraClass_one' || $key == 'extraClass_two' || $key == 'extraClass_three'
-			 || $key == 'extraClass_four' || $key == 'extraClass_five' || $key == 'extraClass_six' ) {
+			if ( $key === 'extraClass_one' || $key === 'extraClass_two' || $key === 'extraClass_three'
+			 || $key === 'extraClass_four' || $key === 'extraClass_five' || $key === 'extraClass_six' ) {
 
 				switch ( $key ) {
 					 case 'extraClass_one':
@@ -75,53 +75,53 @@ class Grid implements SingletonInterface
 
 			foreach ($flexconf as $key=>$grid) {
 
-				if ( substr($key, 0, 2) != 'ex' ) {
+				if ( substr($key, 0, 2) !== 'ex' ) {
 
-					if ( $key != 'extraClass_one' || $key != 'extraClass_two' || $key != 'extraClass_three'
-					 || $key != 'extraClass_four' || $key != 'extraClass_five' || $key != 'extraClass_six' ) {
+					if ( $key !== 'extraClass_one' || $key !== 'extraClass_two' || $key !== 'extraClass_three'
+					 || $key !== 'extraClass_four' || $key !== 'extraClass_five' || $key !== 'extraClass_six' ) {
 
 						if ($grid) {
 
-							if ( substr($key, 0, 2) == 'xs' ) {
+							if ( substr($key, 0, 2) === 'xs' ) {
 
-								if ( substr($key, -3) == 'one' ) {
+								if ( substr($key, -3) === 'one' ) {
 									$colOne .= ' col-'.$grid;
 								}
-								if ( substr($key, -3) == 'two' ) {
+								if ( substr($key, -3) === 'two' ) {
 									$colTwo .= ' col-'.$grid;
 								}
-								if ( substr($key, -5) == 'three' ) {
+								if ( substr($key, -5) === 'three' ) {
 									$colThree .= ' col-'.$grid;
 								}
-								if ( substr($key, -4) == 'four' ) {
+								if ( substr($key, -4) === 'four' ) {
 									$colFour .= ' col-'.$grid;
 								}
 
-								if ( substr($key, -4) == 'five' ) {
+								if ( substr($key, -4) === 'five' ) {
 									$colFive .= ' col-'.$grid;
 								}
-								if ( substr($key, -3) == 'six' ) {
+								if ( substr($key, -3) === 'six' ) {
 									$colSix .= ' col-'.$grid;
 								}
 
 							} else {
-								if ( substr($key, -3) == 'one' ) {
+								if ( substr($key, -3) === 'one' ) {
 									$colOne .= ' col-'.substr($key, 0, -4).'-'.$grid;
 								}
-								if ( substr($key, -3) == 'two' ) {
+								if ( substr($key, -3) === 'two' ) {
 									$colTwo .= ' col-'.substr($key, 0, -4).'-'.$grid;
 								}
-								if ( substr($key, -5) == 'three' ) {
+								if ( substr($key, -5) === 'three' ) {
 									$colThree .= ' col-'.substr($key, 0, -6).'-'.$grid;
 								}
-								if ( substr($key, -4) == 'four' ) {
+								if ( substr($key, -4) === 'four' ) {
 									$colFour .= ' col-'.substr($key, 0, -5).'-'.$grid;
 								}
 
-								if ( substr($key, -4) == 'five' ) {
+								if ( substr($key, -4) === 'five' ) {
 									$colFive .= ' col-'.substr($key, 0, -5).'-'.$grid;
 								}
-								if ( substr($key, -3) == 'six' ) {
+								if ( substr($key, -3) === 'six' ) {
 									$colSix .= ' col-'.substr($key, 0, -4).'-'.$grid;
 								}
 							}

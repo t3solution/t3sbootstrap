@@ -46,7 +46,8 @@
 				link: link,
 				hLinkClass: hLinkClass,
 				hFa: hFa,
-				class: class}"/>
+				iconPositionBehind: iconPositionBehind,
+				class: class}"/>				
 		</f:if>
 	</f:defaultCase>
 </f:switch>
@@ -59,22 +60,36 @@
 			<f:if condition="{hLinkClass}">
 				<f:then>
 					<f:link.typolink parameter="{link}" class="{hLinkClass}">
-						<f:if condition="{hFa}">
+						<f:if condition="{hFa} && !{iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>						
 						{header -> f:format.raw()}
+						<f:if condition="{hFa} && {iconPositionBehind}">
+							<t3sb:icon iconfig="{hFa}" />
+						</f:if>
 					</f:link.typolink>
 				</f:then>
 				<f:else>
-					<f:link.typolink parameter="{link}"><t3sb:icon iconfig="{hFa}" />{header -> f:format.raw()}</f:link.typolink>
+					<f:link.typolink parameter="{link}">
+						<f:if condition="{hFa} && !{iconPositionBehind}">
+							<t3sb:icon iconfig="{hFa}" />
+						</f:if>						
+						{header -> f:format.raw()}
+						<f:if condition="{hFa} && {iconPositionBehind}">
+							<t3sb:icon iconfig="{hFa}" />
+						</f:if>					
+					</f:link.typolink>
 				</f:else>
 			</f:if>
 		</f:then>
 		<f:else>
-			<f:if condition="{hFa}">
+			<f:if condition="{hFa} && !{iconPositionBehind}">
 				<t3sb:icon iconfig="{hFa}" />
 			</f:if>	
 			{header -> f:format.raw()}
+			<f:if condition="{hFa} && {iconPositionBehind}">
+				<t3sb:icon iconfig="{hFa}" />
+			</f:if>
 		</f:else>
 	</f:if>
 </f:section>

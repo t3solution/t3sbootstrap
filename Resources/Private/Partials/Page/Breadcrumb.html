@@ -22,7 +22,7 @@
 
 <f:section name="Default">
 	<nav aria-label="breadcrumb"{f:if(condition:'{config.breadcrumb.class}',then:' class="{config.breadcrumb.class}"')}>
-		<ol class="breadcrumb{config.breadcrumb.ol-class}">
+		<ol class="breadcrumb{config.breadcrumb.ol-class}" role="list">
 			<f:render section="Breadcrumb" arguments="{_all}" />
 			<f:cObject typoscriptObjectPath="lib.newsTitle"/>
 		</ol>
@@ -32,7 +32,7 @@
 <f:section name="Inside">
 	<nav aria-label="breadcrumb"{f:if(condition:'{config.breadcrumb.class}',then:' class="{config.breadcrumb.class}"')}>
 		<div class="{config.breadcrumb.container}">
-			<ol class="breadcrumb{config.breadcrumb.ol-class}">
+			<ol class="breadcrumb{config.breadcrumb.ol-class}" role="list">
 				<f:render section="Breadcrumb" arguments="{_all}" />
 				<f:cObject typoscriptObjectPath="lib.newsTitle"/>
 			</ol>
@@ -43,7 +43,7 @@
 <f:section name="Outside">
 	<div class="{config.breadcrumb.container}">
 		<nav aria-label="breadcrumb"{f:if(condition:'{config.breadcrumb.class}',then:' class="{config.breadcrumb.class}"')}>
-			<ol class="breadcrumb{config.breadcrumb.ol-class}">
+			<ol class="breadcrumb{config.breadcrumb.ol-class}" role="list">
 				<f:render section="Breadcrumb" arguments="{_all}" />
 				<f:cObject typoscriptObjectPath="lib.newsTitle"/>
 			</ol>
@@ -63,7 +63,7 @@
 				<f:if condition="{config.navbar.clickableparent} || {iterator.isFirst}">
 					<f:then>
 						<li class="breadcrumb-item">
-							<a href="{breadcrumbItem.link}" title="{breadcrumbItem.title}"{f:if(condition:'{breadcrumbItem.current}',then:' class="active"')}
+							<a href="{breadcrumbItem.link}" title="Link {breadcrumbItem.title}"{f:if(condition:'{breadcrumbItem.current}',then:' class="active"')}
 								{f:if(condition:'{breadcrumbItem.current}',then:' aria-current="page"')} >
 								<f:render section="Text" arguments="{_all}" />
 							</a>

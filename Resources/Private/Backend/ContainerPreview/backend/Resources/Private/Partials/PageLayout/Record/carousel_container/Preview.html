@@ -20,7 +20,18 @@
 	<f:variable name="flexForm" value="<t3sb:flexform data='{item.record.tx_t3sbootstrap_flexform}' />" />
 	<div class="t3-page-ce-footer mt-2">
 	    <div class="t3-page-ce-info">
-	Max. Image width: {flexForm.width}px | Image aspect ratio: {flexForm.ratio} | Interval: {flexForm.interval}
+
+
+	<strong>Image width:</strong> {flexForm.width}px
+	
+	<f:if condition="{flexForm.ratio}">
+	 | <strong>Aspect ratio:</strong> {flexForm.ratio}
+	</f:if>
+ 
+	 | <strong>Interval:</strong> {flexForm.interval}
+
+
+
 	    </div>
 	</div>
 </f:if>

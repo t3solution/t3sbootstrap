@@ -64,7 +64,7 @@ class BackgroundWrapper implements SingletonInterface
                         // local video
                         $processedData['file'] = $file;
                         // align content items
-                        $processedData['alignItem'] = $flexconf['alignVideoItem'] != 'none' ? ' '.$flexconf['alignVideoItem'] : '';
+                        $processedData['alignItem'] = $flexconf['alignVideoItem'] !== 'none' ? ' '.$flexconf['alignVideoItem'] : '';
                         // video shift
                         $processedData['shift'] = $flexconf['shift'];
                         $processedData['horizontalShift'] = !empty($flexconf['horizontalShift']) ? $flexconf['horizontalShift'] : 0;
@@ -84,12 +84,13 @@ class BackgroundWrapper implements SingletonInterface
                         $loop = $flexconf['loop'];
                         $mute = $autoplay ? true : $flexconf['mute'];
                         $processedData['localVideo']['inlineCSS'] = '';
-                        $mobileHeight = $flexconf['mobileHeight'] != 'none' ? (int) trim($flexconf['mobileHeight']) : '';
-                        $mobileWidth = $flexconf['mobileWidth'] != 'none' ? (int) trim($flexconf['mobileWidth']) : '';
+                        $mobileHeight = $flexconf['mobileHeight'] !== 'none' ? (int) trim($flexconf['mobileHeight']) : '';
+                        $mobileWidth = $flexconf['mobileWidth'] !== 'none' ? (int) trim($flexconf['mobileWidth']) : '';
                         // max-width:575px
                         $processedData['localVideo']['inlineCSS'] = '@media (max-width:768px){#s-'.$processedData['data']['uid'].
                         ' figure.video{width:'.$mobileWidth.'%; max-height:'.$mobileHeight.'px; margin-left:'.$processedData['horizontalShift'].'%}}';
-                        $ratio = end(explode('/', $flexconf['aspectRatio'])).'x9';
+                        $rArray = explode('/', $flexconf['aspectRatio']);
+                        $ratio = end($rArray).'x9';
                         $ratioArr = explode('x', $ratio);
                         $x = $ratio;
                         $y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';

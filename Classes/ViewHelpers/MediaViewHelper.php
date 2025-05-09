@@ -7,16 +7,13 @@ namespace T3SBS\T3sbootstrap\ViewHelpers;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileReference;
-use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
-use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Resource\Rendering\RendererRegistry;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
-
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
+use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -39,10 +36,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	 */
 	public function initializeArguments(): void
 	{
-#		parent::initializeArguments();
+		parent::initializeArguments();
 
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('alt', 'string', 'Specifies an alternate text for an image', false);
         $this->registerArgument('file', 'object', 'File', true);
         $this->registerArgument('additionalConfig', 'array', 'This array can hold additional configuration that is passed though to the Renderer object', false, []);
         $this->registerArgument('width', 'string', 'This can be a numeric value representing the fixed width of in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
@@ -90,11 +85,11 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
      */
     public function render(): string
     {
-        $file = $this->arguments['file'];
-        $additionalConfig = (array)$this->arguments['additionalConfig'];
-        $width = $this->arguments['width'];
-        $height = $this->arguments['height'];
-
+		$file = $this->arguments['file'] ?? null;
+		$additionalConfig = (array)($this->arguments['additionalConfig'] ?? []);
+		$width = ($this->arguments['width'] ?? 0);
+		$height = ($this->arguments['height'] ?? 0);
+		
         // get Resource Object (non ExtBase version)
         if (is_callable([$file, 'getOriginalResource'])) {
             // We have a domain model, so we need to fetch the FAL resource object from there
@@ -105,22 +100,32 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
             throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface.', 1454252193);
         }
 
-        if ((string)$this->arguments['fileExtension'] && !GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], (string)$this->arguments['fileExtension'])) {
-            throw new Exception(
-                'The extension ' . $this->arguments['fileExtension'] . ' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
-                . ' as a valid image file extension and can not be processed.',
-                1619030957
-            );
-        }
+		if ((string)($this->arguments['fileExtension'] ?? '') && !GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], (string)$this->arguments['fileExtension'])) {
+			throw new Exception(
+				'The extension ' . $this->arguments['fileExtension'] . ' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
+				. ' as a valid image file extension and can not be processed.',
+				1619030957
+			);
+		}
+		
+		$fileRenderer = GeneralUtility::makeInstance(RendererRegistry::class)->getRenderer($file);
 
-        $fileRenderer = GeneralUtility::makeInstance(RendererRegistry::class)->getRenderer($file);
+		// Fallback to image when no renderer is found
+		if ($fileRenderer === null) {
+			return $this->renderImage($file, $width, $height, $this->arguments['fileExtension'] ?? null);
+		}
 
-        // Fallback to image when no renderer is found
-        if ($fileRenderer === null) {
-            return $this->renderImage($file, $width, $height, $this->arguments['fileExtension'] ?? null);
-        }
-        $additionalConfig = array_merge_recursive($this->arguments, $additionalConfig);
-        return $fileRenderer->render($file, $width, $height, $additionalConfig);
+		$arguments = [];
+		foreach (array_merge($this->arguments, $this->additionalArguments) as $argumentName => $argumentValue) {
+			// Prevent "null" when given in fluid
+			if (!empty($argumentValue) && $argumentValue !== 'null') {
+				$arguments[$argumentName] = $argumentValue;
+			}
+		}
+
+		$additionalConfig = array_merge_recursive($arguments, $additionalConfig);
+		return $fileRenderer->render($file, $width, $height, $additionalConfig);
+
     }
 
 
@@ -135,16 +140,15 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	 */
 	protected function renderImage(FileInterface $image, $width, $height, ?string $fileExtension=null)
 	{
-		if (!empty($this->arguments['imgtag'])) {
-			return self::renderImageTag($image, $width, $height, $fileExtension);
-		} else {
-			if (!empty($this->arguments['breakpoints'])) {
-				return $this->renderPicture($image, $width, $height);
-			} else {
-				return parent::renderImage($image, $width, $height, $fileExtension);
-			}
-		}
-	}
+        if (!empty($this->arguments['imgtag'])) {
+            return $this->renderImageTag($image, $width, $height, $fileExtension);
+        }
+        if (!empty($this->arguments['breakpoints'])) {
+            return $this->renderPicture($image, $width, $height);
+        }
+
+        return self::renderImage($image, $width, $height, $fileExtension);
+    }
 
 	/**
 	 * Render picture tag
@@ -168,7 +172,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		}
 
 		if ( $this->arguments['ratio'] && $image->getExtension() !== 'pdf') {
-			$cropString = self::getCropString($image, $cropString);
+			$cropString = $this->getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
 				$cropObject->mobile = $mobileImgManipulation;
@@ -267,7 +271,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			'width' => $width,
 			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 		];
-		$imageService = self::getImageService();
+		$imageService = $this->getImageService();
 		$fallbackImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
 		return $fallbackImage;
@@ -292,7 +296,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		}
 
 		if ( $this->arguments['ratio'] ) {
-			$cropString = self::getCropString($image, $cropString);
+			$cropString = $this->getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
 				$cropObject->mobile = $mobileImgManipulation;
@@ -316,11 +320,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		if (!empty($fileExtension)) {
 			$processingInstructions['fileExtension'] = $fileExtension;
 		}
-		$imageService = self::getImageService();
+		$imageService = $this->getImageService();
 		$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
-
-		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-		$settings = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
 		$imageUri = $imageService->getImageUri($processedImage);
 
@@ -340,12 +341,13 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		 $alt = $image->getProperty('alternative');
 		 $title = $image->getProperty('title');
 
-		 // The alt-attribute is mandatory to have valid html-code, therefore add it even if it is empty
-		if (empty($this->arguments['alt'])) {
-			$this->tag->addAttribute('alt', $alt);
+
+		// The alt-attribute is mandatory to have valid html-code, therefore add it even if it is empty
+		 if (empty($this->additionalArguments['alt'])) {
+			 $this->tag->addAttribute('alt', $alt);
 		 }
-		 if (empty($this->arguments['title']) && $title) {
-			$this->tag->addAttribute('title', $title);
+		 if (empty($this->additionalArguments['title']) && !empty($title)) {
+			 $this->tag->addAttribute('title', $title);
 		 }
 
 		 return $this->tag->render();

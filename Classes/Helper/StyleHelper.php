@@ -25,7 +25,7 @@ class StyleHelper implements SingletonInterface
          && !$data['tx_t3sbootstrap_contextcolor']) {
             if ($data['tx_t3sbootstrap_bgopacity'] && $data['tx_t3sbootstrap_bgopacity'] != 1) {
                 // if opacity
-                $rgba = self::hex2RGB($data['tx_t3sbootstrap_bgcolor']).','.$data['tx_t3sbootstrap_bgopacity'];
+                $rgba = $this->hex2RGB($data['tx_t3sbootstrap_bgcolor']).','.$data['tx_t3sbootstrap_bgopacity'];
                 $color = 'background-color: rgba('.$rgba.');';
             } elseif ($hexdec) {
                 $color = 'background-color: '.$data['tx_t3sbootstrap_bgcolor'].';';
@@ -53,11 +53,11 @@ class StyleHelper implements SingletonInterface
             $rgbArray['green'] = 0xFF & ($colorVal >> 0x8);
             $rgbArray['blue'] = 0xFF & $colorVal;
         } elseif (strlen($hexStr) == 3) { //if shorthand notation, need some string manipulations
-            $rgbArray['red'] = hexdec(str_repeat(substr($hexStr, 0, 1), 2));
-            $rgbArray['green'] = hexdec(str_repeat(substr($hexStr, 1, 1), 2));
-            $rgbArray['blue'] = hexdec(str_repeat(substr($hexStr, 2, 1), 2));
+            $rgbArray['red'] = hexdec(str_repeat($hexStr[0], 2));
+            $rgbArray['green'] = hexdec(str_repeat($hexStr[1], 2));
+            $rgbArray['blue'] = hexdec(str_repeat($hexStr[2], 2));
         } else {
-            return false; //Invalid hex color code
+            return ''; //Invalid hex color code
         }
         return implode($seperator, $rgbArray);
     }
