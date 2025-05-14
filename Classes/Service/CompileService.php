@@ -81,4 +81,13 @@ class CompileService
         return null;
     }
 
+    
+    /**
+     * Clear all caches for the compiler.
+     */
+    protected function clearCompilerCaches(): void
+    {
+        GeneralUtility::rmdir(Environment::getPublicPath() . '/' . $this->tempDirectory, true);
+    }
+    
 }
