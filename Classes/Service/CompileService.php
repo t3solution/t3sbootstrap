@@ -71,7 +71,6 @@ class CompileService
                     try {
                         return $parser->compile($file, $settings);
                     } catch (\Exception $e) {
-                        $this->clearCompilerCaches();
                         throw $e;
                     }
                 }
@@ -79,15 +78,6 @@ class CompileService
         }
 
         return null;
-    }
-
-    
-    /**
-     * Clear all caches for the compiler.
-     */
-    protected function clearCompilerCaches(): void
-    {
-        GeneralUtility::rmdir(Environment::getPublicPath() . '/' . $this->tempDirectory, true);
     }
     
 }
