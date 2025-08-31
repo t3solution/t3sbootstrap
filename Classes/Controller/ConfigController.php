@@ -108,9 +108,15 @@ final class ConfigController extends AbstractController
             }
         }
 
-        $new_raster = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/raster.png');
-        if ( !file_exists($new_raster) ) {
+        if (empty($this->settings['sitepackage'])) {
+            $new_raster = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/raster.png');
             $folder = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/Resources/Public/Images/');
+        } else {
+            $new_raster = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/T3SB/Resources/Public/Images/raster.png');
+            $folder = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/T3SB/Resources/Public/Images/');
+        }
+		
+        if ( !file_exists($new_raster) ) {
             if (!is_dir($folder)) {
                 if (!mkdir($folder, 0777, true) && !is_dir($folder)) {
                     throw new \RuntimeException(sprintf('Directory "%s" was not created', $folder));
