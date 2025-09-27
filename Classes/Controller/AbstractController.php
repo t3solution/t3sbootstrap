@@ -275,7 +275,11 @@ abstract class AbstractController extends ActionController
         if ($this->countRootTemplates) {
             $configRepository = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
             $navbarBreakpoint = $configRepository->getNavbarBreakpoint();
-            $breakpointWidth = $navbarBreakpoint === 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
+            if (!empty($this->settings['breakpoint'])) {
+                $breakpointWidth = $navbarBreakpoint === 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
+            } else {
+                $breakpointWidth = 'sm';
+            }
             $siteroots = [];
             $filecontent = '';
             foreach ($this->configRepository->findAll() as $config) {

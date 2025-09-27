@@ -258,7 +258,7 @@ class CdnToLocal extends CommandBase
                 $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
             }
             $css = '';
-            $headerData = '';
+
             foreach ($sliceArr as $fontFamily=>$googlePath) {
 
                 $gp = explode('.', $googlePath[0]);
@@ -318,7 +318,6 @@ class CdnToLocal extends CommandBase
                 $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
             }
             $css = '';
-            $headerData = '';
 
             foreach ($sliceArr as $fontFamily=>$googlePath) {
 

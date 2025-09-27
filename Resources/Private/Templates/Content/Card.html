@@ -93,49 +93,48 @@
 
 <f:section name="TextTop">
 	<f:if condition="({card.image.overlay} || {card.mobile.overlay})">
-		<div class="align-items-center{f:if(condition: card.image.overlay,then: ' {card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: ' {card.mobile.overlay}')}"{f:if(condition: card.image.overlay,then: ' style="z-index:1;"')}>
-	</f:if>
-	<div class="card-body">
-		<f:comment>Card Title (default)</f:comment>
-		<f:if condition="({card.title.position} == 'default') && ({data.header} || {data.subheader})">
-			<f:render partial="Header/All" arguments="{_all}"/>
-		</f:if>
-		<div class="card-text">
-			<f:if condition="{card.cropMaxCharacters}">
-				<f:then>
-					{data.bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
-				</f:then>
-				<f:else>
-					{data.bodytext -> f:format.html()}
-				</f:else>
-			</f:if>
-			<f:if condition="{data.tx_t3sbootstrap_bodytext} && ({card.image.overlay} || {card.mobile.overlay})">
-				<f:if condition="{card.cropMaxCharacters}">
-					<f:then>
-						{data.tx_t3sbootstrap_bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
-					</f:then>
-					<f:else>
-						{data.tx_t3sbootstrap_bodytext -> f:format.html()}
-					</f:else>
-				</f:if>
-			</f:if>
-		</div>
-		<f:if condition="{card.button.position} == 'top' && !{card.button.footer}">
-			<f:render section="Button" arguments="{_all}" />
-		</f:if>
-	</div>
-	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
-		</div>
+		<f:then>
+			<div class="align-items-center{f:if(condition: card.image.overlay,then: ' {card.image.overlay}')}{f:if(condition: card.mobile.overlay,then: ' {card.mobile.overlay}')}"{f:if(condition: card.image.overlay,then: ' style="z-index:1;"')}>
+				<f:render section="CardBodyTop" arguments="{_all}" />
+			</div>
+		</f:then>
+		<f:else>
+			<f:render section="CardBodyTop" arguments="{_all}" />
+		</f:else>
 	</f:if>
 </f:section>
 
 <f:section name="TextBottom">
 	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
-		<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,
-			then: '{card.mobile.overlay}')}"{f:if(condition: card.image.overlay,then: ' style="z-index:1;"')}>
+		<f:then>
+			<div class="{f:if(condition: card.image.overlay,then: '{card.image.overlay}')}{f:if(condition: card.mobile.overlay,
+				then: '{card.mobile.overlay}')}"{f:if(condition: card.image.overlay,then: ' style="z-index:1;"')}>
+				<f:render section="CardBodyBottom" arguments="{_all}" />
+			</div>
+		</f:then>
+		<f:else>
+			<f:render section="CardBodyBottom" arguments="{_all}" />
+		</f:else>
 	</f:if>
-	<div class="card-body">
-		<div class="card-text">
+</f:section>
+
+
+<f:section name="CardBodyTop">
+<div class="card-body">
+	<f:comment>Card Title (default)</f:comment>
+	<f:if condition="({card.title.position} == 'default') && ({data.header} || {data.subheader})">
+		<f:render partial="Header/All" arguments="{_all}"/>
+	</f:if>
+	<div class="card-text">
+		<f:if condition="{card.cropMaxCharacters}">
+			<f:then>
+				{data.bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+			</f:then>
+			<f:else>
+				{data.bodytext -> f:format.html()}
+			</f:else>
+		</f:if>
+		<f:if condition="{data.tx_t3sbootstrap_bodytext} && ({card.image.overlay} || {card.mobile.overlay})">
 			<f:if condition="{card.cropMaxCharacters}">
 				<f:then>
 					{data.tx_t3sbootstrap_bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
@@ -144,14 +143,27 @@
 					{data.tx_t3sbootstrap_bodytext -> f:format.html()}
 				</f:else>
 			</f:if>
-		</div>
-		<f:if condition="{card.button.position} == 'bottom' && !{card.button.footer}">
-			<f:render section="Button" arguments="{_all}" />
 		</f:if>
 	</div>
-	<f:if condition="({card.image.overlay} || {card.mobile.overlay}) ">
-		</div>
+	<f:if condition="!{card.button.footer}">
+		<f:render section="Button" arguments="{_all}" />
 	</f:if>
+</div>
+</f:section>
+
+<f:section name="CardBodyBottom">
+<div class="card-body">
+	<div class="card-text">
+		<f:if condition="{card.cropMaxCharacters}">
+			<f:then>
+				{data.tx_t3sbootstrap_bodytext -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1') -> f:format.html()}
+			</f:then>
+			<f:else>
+				{data.tx_t3sbootstrap_bodytext -> f:format.html()}
+			</f:else>
+		</f:if>
+	</div>
+</div>
 </f:section>
 
 <f:section name="ListGroup">
@@ -160,11 +172,6 @@
 			<li class="list-group-item">{listItem.listitem -> f:format.raw()}</li>
 		</f:for>
 	</ul>
-	<f:if condition="{card.button.position} == 'list' && {card.button.enable} && {card.button.link} && !{card.button.footer}">
-		<div class="card-body">
-			<f:render section="Button" arguments="{_all}" />
-		</div>
-	</f:if>
 </f:section>
 
 <f:section name="Button">

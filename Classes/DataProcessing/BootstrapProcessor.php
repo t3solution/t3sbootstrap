@@ -272,7 +272,7 @@ class BootstrapProcessor implements DataProcessorInterface
             }
             if ($cType === 'background_wrapper') {
                 $processedData = GeneralUtility::makeInstance(BackgroundWrapper::class)
-                ->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['bgMediaQueries']);
+                ->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['bgMediaQueries'], (int) $contentObjectConfiguration['settings.']['sitepackage']);
             }
             if ($cType === 'parallax_wrapper') {
                 $processedData = GeneralUtility::makeInstance(ParallaxWrapper::class)

@@ -35,18 +35,23 @@ function t3sbTabs(fixedNavbar, navbarHeight) {
 			}
 			var scrollTo = Math.round(t3sbOffsetTop(targetElement)-offsetSize);
 			window.scroll({ top: scrollTo, behavior: 'smooth' });
+
+			var parrend = targetElement.closest(".nav.tabcontainer");
+			while (parrend != null) {
+			  parrend.classList.add("foundhash");
+			  parrend = parrend.closest(".nav.tabcontainer:not(.foundhash)");
+			}
 		}
-	} else {
-		var tabs = document.querySelectorAll('.nav.tabcontainer');
-		if ( tabs.length ) {
-			tabs.forEach( tabcontainer => {
-				if (tabcontainer.id) {
-					var firstTabEl = document.querySelector('#'+tabcontainer.id+' li:first-child button');
-					var firstTab = new bootstrap.Tab(document.getElementById(firstTabEl.id));
-					firstTab.show();
-				}
-			});
-		}
+	}  
+	var tabs = document.querySelectorAll('.nav.tabcontainer:not(.foundhash)');
+	if ( tabs.length ) {
+		tabs.forEach( tabcontainer => {
+			if (tabcontainer.id) {
+				var firstTabEl = document.querySelector('#'+tabcontainer.id+' li:first-child button');
+				var firstTab = new bootstrap.Tab(document.getElementById(firstTabEl.id));
+				firstTab.show();
+			}
+		});
 	}
 }
 </f:asset.script>

@@ -158,6 +158,7 @@ class GalleryProcessor implements DataProcessorInterface
         $this->beLayout = $this->processedData['be_layout'];
         $this->colPos = (int)$this->processedData['data']['colPos'];
         $this->minimumWidth = $this->getConfigurationValue('minimumWidth');
+        $this->minimumWidthIfEmpty = $this->getConfigurationValue('minimumWidthIfEmpty');
         $this->bodytext = $this->processedData['data']['bodytext'];
         $this->cType = $this->processedData['data']['CType'];
         $this->rowWidth = $this->processedData['data']['tx_t3sbootstrap_inTextImgRowWidth'];
@@ -900,7 +901,8 @@ class GalleryProcessor implements DataProcessorInterface
      */
     protected function checkMediaWidth($mediaWidth): int
     {
-        if ($this->minimumWidth && $mediaWidth < self::minimumWidth) {
+        #if ($this->minimumWidth && $mediaWidth < self::minimumWidth) {
+        if ($this->minimumWidth && empty($mediaWidth)) {
             // set to 575px and therefore 100% wide on mobile (constant: minimumWidth=1)
             $mediaWidth = self::minimumWidth;
         }

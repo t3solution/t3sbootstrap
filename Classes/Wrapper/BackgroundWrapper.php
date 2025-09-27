@@ -111,7 +111,7 @@ class BackgroundWrapper implements SingletonInterface
                     $processedData['ingWidth'] = !empty($flexconf['width']) ? $flexconf['width'] : 1296;
                 } else {
                     $bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-                        ->getBgImage($processedData['data']['uid'], 'tt_content', false, true, $flexconf, false, 0, $bgMediaQueries, $files);
+                        ->getBgImage($processedData['data']['uid'], 'tt_content', false, true, $flexconf, false, 0, $bgMediaQueries);
                     $processedData['bgImage'] = $bgImage;
                     if (!empty($flexconf['paddingTopBottom'])) {
                         $processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 0;';

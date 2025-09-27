@@ -220,4 +220,17 @@ a{outline:0}.subheader{margin:0}.alert{display:grid}.code{padding:.2rem .4rem;fo
 .fa-10x {font-size: 10em;}
 
 
+body.bgi::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}
 

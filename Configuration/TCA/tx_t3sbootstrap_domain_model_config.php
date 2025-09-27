@@ -626,7 +626,7 @@ return [
             'config' => [
                 'type' => 'check',
                 'items' => [
-                    ['label' => 'Enable extra row(s) in the navbar - (fileadmin)/Resources/Private/Partials/Page/NavbarExtraRow.html',],
+                    ['label' => 'Enable extra row(s) in the navbar - (fileadmin)/Resources/Private/Partials/Page/Navbar/NavbarExtraRow.html',],
                 ]
             ]
         ],
