@@ -44,10 +44,12 @@ class BackgroundImageUtility implements SingletonInterface
         int $currentUid=0,
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ) {
+
         $request = $GLOBALS['TYPO3_REQUEST'];
         $frontendController = $request->getAttribute('frontend.controller');
         $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
         $filesFromRepository = $fileRepository->findByRelation($table, 'assets', $uid);
+
         if (empty($filesFromRepository)) {
             $filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
         }
@@ -143,6 +145,7 @@ class BackgroundImageUtility implements SingletonInterface
         bool $body=false,
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ): string {
+
         $imageRaster = !empty($flexconf['imageRaster']) ? 'url("/fileadmin/T3SB/Resources/Public/Images/raster.png"), ' : '';
         $processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
         $cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
