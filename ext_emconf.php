@@ -10,11 +10,11 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF['t3sbootstrap'] = [
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Bootstrap Components',
     'description' => 'Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: www.t3sbootstrap.de',
     'category' => 'templates',
-    'version' => '5.3.25',
+    'version' => '5.3.26',
     'state' => 'stable',
     'author' => 'Helmut Hackbarth',
     'author_email' => 'typo3@t3solution.de',

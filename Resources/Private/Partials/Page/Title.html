@@ -1,4 +1,17 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.general.pageTitleIndexedSearch}">
+	<f:then>
+		<!--TYPO3SEARCH_begin-->
+		<f:render section="TitleAlign" arguments="{_all}" />
+		<!--TYPO3SEARCH_end-->
+	</f:then>
+	<f:else>
+		<f:render section="TitleAlign" arguments="{_all}" />
+	</f:else>
+</f:if>
+</html>
+
+<f:section name="TitleAlign">
 <f:if condition="{config.general.pageTitlealign}">
 	<f:then>
 		<div class="page-title text-{config.general.pageTitlealign}{f:if(condition:'{config.general.pageTitleclass}',then:' {config.general.pageTitleclass}')}">
@@ -11,8 +24,7 @@
 		</div>
 	</f:else>
 </f:if>
-</html>
-
+</f:section>
 
 <f:section name="Pagetitle">
 <h1 class="display-1"{f:if(condition:'{data.tx_t3sbootstrap_titlecolor}',then:' style="color: {data.tx_t3sbootstrap_titlecolor};"')}>

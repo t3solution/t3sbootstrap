@@ -58,8 +58,8 @@ lib.content.footerFromPid {
 	if.isTrue = {$bootstrap.config.footerPid}
 }
 
-# if indexed_search is loaded
-[loaded('indexed_search')]
+# if indexed_search is loaded && doktype = 1
+[loaded('indexed_search') && traverse(page, "doktype") in [1]]
 lib.dynamicContent.10.wrap = <!--TYPO3SEARCH_begin-->|<!--TYPO3SEARCH_end-->
 lib.dynamicContentSlide.10.wrap = <!--TYPO3SEARCH_begin-->|<!--TYPO3SEARCH_end-->
 [global]

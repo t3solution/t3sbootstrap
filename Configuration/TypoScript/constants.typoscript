@@ -74,11 +74,11 @@ bootstrap.cdn {
 	swiper = 11
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT
+	bootstrapCssIntegrity = sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
 	bootstrapJsIntegrity = sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
-	bootstrapBundleJsIntegrity = sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO
+	bootstrapBundleJsIntegrity = sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI
 	# cat=bootstrap-cdn/c-integrity/13; type=small; label=Popper js:
 	popperjsIntegrity = sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r
 	# cat=bootstrap-cdn/c-integrity/14; type=small; label=Masonry js:
@@ -228,6 +228,8 @@ bootstrap.print.enable = 0
 
 # disable default CSS - t3sbootstrap.css
 bootstrap.config.disableDefaultCss = 0
+# disable default CSS - t3sbfontawseome.css
+bootstrap.config.disableFaCss = 0
 
 # back to top button
 bootstrap.backToTopTitle = to top

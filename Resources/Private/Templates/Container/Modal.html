@@ -6,6 +6,12 @@
 <f:section name="Main">
 <f:if condition="{col_279 -> f:count()}">
 	<f:then>
+		<f:if condition="{modal.onPageLoad} && {modal.showOnPageLoad}">
+			<f:asset.script identifier="vanilla_modaljs-{data.uid}">
+			var myModal = new bootstrap.Modal(document.getElementById('modal-{data.uid}'));
+			myModal.show();
+			</f:asset.script>
+		</f:if>
 		<f:render section="Default" arguments="{_all}" />
 	</f:then>
 	<f:else>
@@ -21,30 +27,32 @@
 
 
 <f:section name="Default">
-<f:if condition="{modal.button}">
-	<f:then>
-		<f:if condition="{modal.fixedButton}">
-			<f:then>
-				<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
-				<div class="d-none {modal.fixedClass}">
-					<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
-						<t3sb:icon iconfig="{data.header_icon}" /> {modal.buttonText -> f:format.raw()}
-					</button>
-				</div>
-			</f:then>
-			<f:else>
-				<div class="d-grid">
-					<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
-						<t3sb:icon iconfig="{data.header_icon}" />{modal.buttonText -> f:format.raw()}
-					</button>
-				</div>
-			</f:else>
-		</f:if>
-	</f:then>
-	<f:else>
-		<a class="modal-link{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}" style="cursor:pointer;">
-			<t3sb:icon iconfig="{data.header_icon}" />{modal.buttonText -> f:format.raw()}</a>
-	</f:else>
+<f:if condition="{modal.showHeader}">
+	<f:if condition="{modal.button} ">
+		<f:then>
+			<f:if condition="{modal.fixedButton}">
+				<f:then>
+					<f:render partial="Page/Assets" arguments="{fixedbutton:'true'}" />
+					<div class="d-none {modal.fixedClass}">
+						<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
+							<t3sb:icon iconfig="{data.header_icon}" /> {modal.buttonText -> f:format.raw()}
+						</button>
+					</div>
+				</f:then>
+				<f:else>
+					<div class="d-grid">
+						<button type="button" class="btn btn-{modal.style}{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}">
+							<t3sb:icon iconfig="{data.header_icon}" />{modal.buttonText -> f:format.raw()}
+						</button>
+					</div>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<a class="modal-link{class}" data-bs-toggle="modal" data-bs-target="#modal-{data.uid}" style="cursor:pointer;">
+				<t3sb:icon iconfig="{data.header_icon}" />{modal.buttonText -> f:format.raw()}</a>
+		</f:else>
+	</f:if>
 </f:if>
 
 <div class="modal{f:if(condition:'{modal.animation}',then:' fade')}" id="modal-{data.uid}" tabindex="-1" role="dialog" aria-hidden="true">

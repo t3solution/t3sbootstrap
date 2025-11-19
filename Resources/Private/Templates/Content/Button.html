@@ -147,16 +147,26 @@
 			<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
 		</f:if>
 	</f:link.typolink>
+
 	<ul class="dropdown-menu" aria-labelledby="c{data.uid}">
 		<f:for each="{dropdownItems}" as="dropdownItem">
-			<li>
-				<f:link.typolink parameter="{dropdownItem.link}" class="dropdown-item {dropdownItem.class}" target="{dropdownItem.target}">
-					<f:if condition="{dropdownItem.page_icon}">
-						<t3sb:icon iconfig="{dropdownItem.page_icon}" additionalAttributes="{class:'me-1'}" />
-					</f:if>
-					<f:cObject typoscriptObjectPath="lib.linkTitle" data='{dropdownItem.target}'/>
-				</f:link.typolink>
-			</li>
+			<f:if condition="{dropdownItem.link}">
+				<li>
+					<f:link.typolink parameter="{dropdownItem.link}" class="dropdown-item {dropdownItem.class}" target="{dropdownItem.target}">
+						<f:if condition="{dropdownItem.page_icon}">
+							<t3sb:icon iconfig="{dropdownItem.page_icon}" additionalAttributes="{class:'me-1'}" />
+						</f:if>
+						{dropdownItem.title}
+					</f:link.typolink>
+				</li>
+			</f:if>
+			<f:if condition="{dropdownItem.emailAddress}">
+				<li>
+					<f:link.email email="{dropdownItem.emailAddress}" subject="{dropdownItem.subject}" class="dropdown-item {dropdownItem.class}">
+						{dropdownItem.title}
+					</f:link.email>
+				</li>
+			</f:if>
 		</f:for>
 	</ul>
 </f:section>

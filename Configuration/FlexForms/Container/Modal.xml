@@ -62,6 +62,22 @@
 							<default>1</default>
 						</config>
 					</animation>
+					<onPageLoad>
+						<label>Launch Modal on Page Load</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
+					</onPageLoad>
+					<cookie>
+						<label>Set cookie if approved</label>
+						<displayCond>FIELD:general.onPageLoad:=:1</displayCond>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
+					</cookie>
 					<size>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.modalsize</label>
 						<config>
@@ -94,6 +110,7 @@
 					</size>
 					<buttonText>
 						<label>Link or Button Text (header if empty)</label>
+						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<config>
 							<type>input</type>
 							<size>20</size>
@@ -102,6 +119,7 @@
 					</buttonText>
 					<whiteclosebutton>
 						<label>White close button</label>
+						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<config>
 							<type>check</type>
 							<default>0</default>
@@ -109,7 +127,8 @@
 					</whiteclosebutton>
 					<button>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.usebutton</label>
-							<onChange>reload</onChange>
+						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
+						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 							<default>1</default>
@@ -117,7 +136,12 @@
 					</button>
 					<style>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.buttonstyle</label>
-						<displayCond>FIELD:general.button:=:1</displayCond>
+						<displayCond>
+							<AND>
+								<numIndex index="0">FIELD:general.button:=:1</numIndex>
+								<numIndex index="1">FIELD:general.onPageLoad:=:0</numIndex>
+							</AND>
+						</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -153,7 +177,12 @@
 					<fixedPosition>
 						<label>Fixed position</label>
 						<onChange>reload</onChange>
-						<displayCond>FIELD:general.button:=:1</displayCond>
+						<displayCond>
+							<AND>
+								<numIndex index="0">FIELD:general.button:=:1</numIndex>
+								<numIndex index="1">FIELD:general.onPageLoad:=:0</numIndex>
+							</AND>
+						</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -204,6 +233,7 @@
 					</rotate>
 					<prevModal>
 						<label>Previous Modal UID</label>
+						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<description>Creates a button in the modal footer to open the previous modal</description>
 						<config>
 							<type>number</type>
@@ -213,6 +243,7 @@
 					</prevModal>
 					<nextModal>
 						<label>Next Modal UID</label>
+						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<description>Creates a button in the modal footer to open the next modal</description>
 						<config>
 							<type>number</type>
