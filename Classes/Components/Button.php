@@ -22,19 +22,47 @@ class Button implements SingletonInterface
     public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf): array
     {
         $btnDropdownItem = [];
+
         if (!empty($flexconf['dropdownItems']) && is_array($flexconf['dropdownItems'])) {
             $processedData['dropdowndirection'] = !empty($flexconf['direction']) ? ' '.$flexconf['direction'] : '';
             foreach ($flexconf['dropdownItems'] as $key=>$dropdownItem) {
-                $pid = (int) substr(explode(' ', $dropdownItem['list']['group'])[0], -1);
-                $btnDropdownItem[$key]['pid'] = $pid;
-                if (ExtensionManagementUtility::isLoaded('iconpack')) {
-                    $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', (int)$pid, 'page_icon')['page_icon'];
+                # pages
+                if (str_starts_with($dropdownItem['list']['group'], 't3:')) {
+                    $btnDropdownItem[$key]['link'] = $dropdownItem['list']['group'];
+                    if (ExtensionManagementUtility::isLoaded('iconpack')) {
+                        $pid = (int) explode('=', $dropdownItem['list']['group'])[1];
+                        $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', (int)$pid, 'page_icon')['page_icon'];
+                    }
+                    $tile = '';
+                    if (!empty($dropdownItem['list']['title'])) {
+                        $tile = $dropdownItem['list']['title'];
+                    } else {
+                        if (str_contains($dropdownItem['list']['group'], '"')) {
+                            $tile = explode('"', $dropdownItem['list']['group'])[1];
+                        } else {
+                            $tile = end(explode(' ', $dropdownItem['list']['group']));
+                        }
+                    }
+                    $btnDropdownItem[$key]['title'] = !empty($tile) ? $tile : '* no title assigned *';
                 }
-                $btnDropdownItem[$key]['link'] = $dropdownItem['list']['group'];
-                $btnDropdownItem[$key]['target'] = explode('=', $dropdownItem['list']['group'])[1];
+                # mail
+                if (str_starts_with($dropdownItem['list']['group'], 'mailto:')) {
+                    $groupArr = explode('?', $dropdownItem['list']['group']);
+                    $emailAddress = $groupArr[0];
+                    if (str_starts_with($groupArr[1], 'subject=')) {
+                        $subjectArr = explode('&', $groupArr[1])[0];
+                        $subject = explode('=', $subjectArr);
+                        $subject = str_replace('%20', ' ', $subject[1]);
+                        $btnDropdownItem[$key]['subject'] = !empty($subject) ? $subject : '';
+                    }
+                    $btnDropdownItem[$key]['emailAddress'] = $emailAddress;
+                    $btnDropdownItem[$key]['title'] = !empty($dropdownItem['list']['title']) ? $dropdownItem['list']['title'] : '* no title assigned *';
+                }
+                $btnDropdownItem[$key]['target'] = '_self';
             }
         }
-        $processedData['dropdownItems'] = !empty($btnDropdownItem) ? $btnDropdownItem : [];
+
+        $processedData['dropdownItems'] = $btnDropdownItem;
         $outline = !empty($flexconf['outline']) ? 'outline-' : '';
         $style = !empty($flexconf['style']) ? $flexconf['style'] : '';
         $typolinkButtonClass = ' btn btn-'.$outline.$style;

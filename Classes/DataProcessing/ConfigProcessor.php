@@ -16,6 +16,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -60,12 +61,7 @@ class ConfigProcessor implements DataProcessorInterface
 		} else {
 			$company = $companyArr[0] ?: $company;
 		}
-		$processedData['config']['general']['company'] = !empty($company) ? trim($company) : 'Company Name';
-		$processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepageUid'] ?: 1;
-		$processedData['config']['general']['pageTitle'] = $processedRecordVariables['pageTitle'] ?: '';
-		$processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['pageTitlealign'] ?: '';
-		$processedData['config']['general']['pageTitleclass'] = $processedRecordVariables['pageTitleclass'] ?: '';
-
+	
 		// flexible small columns
 		$currentPage = $frontendController->page;
 		$smallColumnsCurrent = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
@@ -74,6 +70,15 @@ class ConfigProcessor implements DataProcessorInterface
 		$smallColumnsRootline = !empty($rootlinePage['tx_t3sbootstrap_smallColumns'])
 		 ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
+
+		$processedData['config']['general']['company'] = !empty($company) ? trim($company) : 'Company Name';
+		$processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepageUid'] ?: 1;
+		$processedData['config']['general']['pageTitle'] = $processedRecordVariables['pageTitle'] ?: '';
+		$processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['pageTitlealign'] ?: '';
+		$processedData['config']['general']['pageTitleclass'] = $processedRecordVariables['pageTitleclass'] ?: '';
+		if (ExtensionManagementUtility::isLoaded('indexed_search') && $currentPage['doktype'] == 1) {
+			$processedData['config']['general']['pageTitleIndexedSearch'] = true;
+		}
 
 		// global override page data
 		if (!empty($contentObjectConfiguration['settings.']['pages.']['override.'])) {

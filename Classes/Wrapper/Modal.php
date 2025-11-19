@@ -22,6 +22,10 @@ class Modal implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
 		$processedData['modal']['animation'] = $flexconf['animation'];
+		$processedData['modal']['onPageLoad'] = !empty($flexconf['onPageLoad']) ? true : false;
+		$processedData['modal']['showOnPageLoad'] = $processedData['modal']['onPageLoad'] ? true : false;
+		$processedData['modal']['cookie'] = !empty($flexconf['cookie']) ? true : false;
+		$processedData['modal']['showHeader'] = true;
 		$processedData['modal']['size'] = $flexconf['size'];
 		$processedData['modal']['button'] = $flexconf['button'];
 		$processedData['modal']['style'] = $flexconf['style'];
@@ -48,6 +52,23 @@ class Modal implements SingletonInterface
 		}
 		$processedData['modal']['nextModal'] = !empty($flexconf['nextModal']) ? $flexconf['nextModal'] : '0';
 		$processedData['modal']['prevModal'] = !empty($flexconf['prevModal']) ? $flexconf['prevModal'] : '0';
+
+		// Launch Modal on Page Load
+		if ($processedData['modal']['onPageLoad']) {
+			$processedData['modal']['showHeader'] = false;
+			$uid = 't3sb_modal-'.$processedData['data']['uid'];
+			if ( array_key_exists($uid, $_COOKIE) && $_COOKIE[$uid] === 'allow' ) {
+				if ($processedData['modal']['cookie']) {
+					$processedData['modal']['showOnPageLoad'] = false;
+				} else {
+					setcookie($uid, '', time() - (3600), '/');
+				}
+			} else {
+				if ($processedData['modal']['cookie']) {
+					setcookie($uid, 'allow', time() + (86400), '/');
+				}
+			}
+		}
 
 		return $processedData;
 	}
