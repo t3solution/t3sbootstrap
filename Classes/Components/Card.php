@@ -21,7 +21,7 @@ class Card implements SingletonInterface
     /**
      * Returns the $processedData
      */
-    public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf): array
+    public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, bool $minimumWidth): array
     {
 
         $cardData = $flexconf;
@@ -204,6 +204,10 @@ class Card implements SingletonInterface
         }
 
         $processedData['card'] = $cardData;
+
+        if (empty($processedData['data']['imagewidth']) && $minimumWidth) {
+            $processedData['data']['imagewidth'] = 575;
+        }
 
         if (!empty($processedData['data']['imagewidth']) && !empty($flexconf['maxwidth'])) {
             $processedData['style'] .= ' max-width: '.$processedData['data']['imagewidth'].'px;';

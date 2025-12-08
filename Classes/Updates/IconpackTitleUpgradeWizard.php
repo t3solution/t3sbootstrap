@@ -17,7 +17,7 @@ final class IconpackTitleUpgradeWizard implements UpgradeWizardInterface
    
 	public function getTitle(): string
 	{
-		return 'EXT:t3sbootstrap: Migrate FA6 free icons in pages:tx_t3sbootstrap_fontawesome_icon to use with EXT:iconpack & EXT:iconpack_fontawesome';
+		return 'EXT:t3sbootstrap: Migrate FA7 free icons in pages:tx_t3sbootstrap_fontawesome_icon to use with EXT:iconpack & EXT:iconpack_fontawesome';
 	}
 
 	public function getDescription(): string
@@ -45,7 +45,7 @@ final class IconpackTitleUpgradeWizard implements UpgradeWizardInterface
 				$string = $statement[$fieldName];
 
 				if (!empty($string)) {
-					$erg = 	'fa6:';
+					$erg = 	'fa7:';
 				if ( str_contains($string, 'fa-solid') ) {
 					$erg .= 'solid,';
 				}

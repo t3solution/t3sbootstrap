@@ -9,8 +9,8 @@ plugin.tx_indexedsearch {
 	}
 	settings {
 		# Set the target page UID for the extbase variant of the plugin.
-		targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+		targetPid = {$indexedsearch.targetPid}
 		# A list of integer which should be root-pages to search from.
-		rootPidList = {$plugin.tx_indexedsearch.settings.rootPidList}
+		rootPidList = {$indexedsearch.rootPidList}
 	}
 }

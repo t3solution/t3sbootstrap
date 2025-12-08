@@ -1,0 +1,34 @@
+editor:
+  tiptap:
+    config:
+      enableContentDragAndDrop: true
+
+      contentCss:
+        - 'EXT:sitepackage/Resources/Public/Css/content.css'
+        
+      plugins:
+        - path: "@typo3-tiptap/tiptap/plugins/headings.js"
+          config: { levels: [1, 2, 3, 4, 5, 6] }
+        - path: "@typo3-tiptap/tiptap/plugins/history.js"
+          config: { types: [ "undo", "redo" ] }
+        - path: "@typo3-tiptap/tiptap/plugins/bold.js"
+        - path: "@typo3-tiptap/tiptap/plugins/underline.js"
+        - path: "@typo3-tiptap/tiptap/plugins/italic.js"
+        - path: "@typo3-tiptap/tiptap/plugins/strikethrough.js"
+        - path: "@typo3-tiptap/tiptap/plugins/link.js"
+        - path: "@typo3-tiptap/tiptap/plugins/list.js"
+          config:
+            types: [ "ordered", "bullet" ]
+        - path: "@typo3-tiptap/tiptap/plugins/blockquote.js"
+        - path: "@typo3-tiptap/tiptap/plugins/justify.js"
+          config:
+            types: [ "justify-left", "justify-center", "justify-right" ]
+        - path: "@typo3-tiptap/tiptap/plugins/source.js"
+        - path: "@typo3-tiptap/tiptap/plugins/styles.js"
+          config:
+            styles:
+              - { name: "color: primary", element: "h2", classes: "text-primary" }
+              - { name: "color: primary", element: "h3", classes: "text-primary" }
+              - { name: "color: primary", element: "h4", classes: "text-primary" }
+              - { name: "color: primary", element: "p", classes: "text-primary" }
+              - { name: "color: primary", element: "p", classes: "text-primary" }

@@ -55,7 +55,6 @@ class CdnToLocal extends CommandBase
                 throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
             }
         }
-
         if (!empty($settings['cdn']['googlefonts']) && empty($settings['cdn']['noZip'])) {
             if (empty($settings['sitepackage'])) {
                 $this->getGoogleFonts($settings['cdn']['googlefonts'], $settings['gooleFontsWeights'], $baseDir);
@@ -108,25 +107,10 @@ class CdnToLocal extends CommandBase
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
-
-            if ($key === 'jqueryEasing') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
-                $customFileName = 'jquery.easing.min.js';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
             if ($key === 'lazyload') {
                 $customPath = $baseDir.'Resources/Public/T3SB-JS/';
                 $customFileName = 'lazyload.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'picturefill') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
-                $customFileName = 'picturefill.min.js';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/picturefill/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
@@ -209,7 +193,6 @@ class CdnToLocal extends CommandBase
     {
         $customFile = $customPath.$customFileName;
         $customContent = GeneralUtility::getURL($cdnPath);
-
         if ($extend && str_contains((string)$customContent, '/*#')) {
             $customContentArr = explode('/*#', $customContent);
             $customContent = $customContentArr[0];

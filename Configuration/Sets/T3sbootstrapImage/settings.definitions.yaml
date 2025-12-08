@@ -1,0 +1,108 @@
+categories:
+  Bootstrap:
+    label: 'Bootstrap Components'
+
+  Bootstrap.config.image:
+    label: 'T3SB Image settings'
+    parent: Bootstrap
+  
+  Bootstrap.config.image.size:
+    label: 'Default Image Size'
+    parent: Bootstrap.config.image
+  
+  Bootstrap.config.image.additional:
+    label: 'Additional image sizes'
+    parent: Bootstrap.config.image
+    description: '(srcset) that should be generated for each content image'
+  
+  Bootstrap.config.image.lazyload:
+    label: 'Lazyloading Threshold'
+    parent: Bootstrap.config.image
+
+
+settings:
+  bootstrap.image.viewportWidthCookie:
+    label: 'Set Cookie with viewport width'
+    category: Bootstrap.config.image
+    description: 'Usefull if using container "fluid-container" and auto image width.'
+    type: bool
+    default: false
+
+  bootstrap.image.minimumWidth:
+    label: 'Min. width'
+    category: Bootstrap.config.image.size
+    description: 'If enabled the minimum "equalMediaWidth" is set to 575px and therefore 100% wide on mobile. You can override this setting.'
+    type: bool
+    default: false
+  
+  bootstrap.image.ratioWithHeight:
+    label: 'Ratio'
+    category: Bootstrap.config.image.size
+    description: 'If enabled use width and height for ratio in textmedia, textpic, image, card and media object.'
+    type: bool
+    default: false
+  
+  bootstrap.image.maxWidthMediaObject:
+    label: 'Max. image width Media object'
+    category: Bootstrap.config.image.size
+    description: 'The default max. width for the media object.'
+    type: int
+    default: 200
+  
+  bootstrap.image.maxWidthToast:
+    label: 'Max. image width Toast'
+    category: Bootstrap.config.image.size
+    description: 'The default max. width for Bootstrap toast.'
+    type: int
+    default: 20
+  
+  bootstrap.image.disableAutoRow:
+    label: 'Disable auto row'
+    category: Bootstrap.config.image.size
+    description: 'The default "Gallery row width in % = auto" is set to "none" if activated'
+    type: bool
+    default: false
+  
+  
+  bootstrap.image.srcsetDesktop:
+    label: 'Additional Image Sizes for Desktop min-width 1200px'
+    category: Bootstrap.config.image.additional
+    description: 'Comma-separated list of either image widths specified in pixels.'
+    type: string
+    default: '576, 768, 992, 1200, 1440, 1920, 2650'
+  
+  bootstrap.image.srcsetTablet:
+    label: 'Additional Image Sizes for Tablet min-width 576px'
+    category: Bootstrap.config.image.additional
+    description: 'Comma-separated list of either image widths specified in pixels.'
+    type: string
+    default: '125, 255, 385, 576, 768, 992, 1200'
+  
+  bootstrap.image.srcsetMobile:
+    label: 'Additional Image Sizes for Mobile max-width 575px'
+    category: Bootstrap.config.image.additional
+    description: 'Comma-separated list of either image widths specified in pixels.'
+    type: string
+    default: '60, 100, 200, 385, 575'
+  
+  bootstrap.image.bgMediaQueries:
+    label: 'Additional Image Sizes for Background-Image'
+    category: Bootstrap.config.image.additional
+    description: 'Comma-separated list of either image widths specified in pixels.'
+    type: string
+    default: '2560, 1920, 1200, 992, 768, 576'
+  
+  bootstrap.image.lazyLoadThreshold:
+    label: 'Threshold for Lazy load'
+    category: Bootstrap.config.image.lazyload
+    description: 'If "lazyLoad" is activated in the EM config, the distance out of the viewport, expressed in pixel, before which to start loading the images.'
+    type: int
+    default: 0
+  
+  bootstrap.image.lazyLoadBgWrapperImage:
+    label: 'Lazy load for images in the BG-Wrapper'
+    category: Bootstrap.config.image.lazyload
+    description: 'Not the BG-image'
+    type: bool
+    default: false
+

@@ -1,12 +1,10 @@
-
-[{$bootstrap.extconf.customScss} == 1 && {$bootstrap.cdn.enable} == 0]
+[{$bootstrap.extconf.customScss} == 1 && constant('{$bootstrap.cdn.enable}') == 0]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Fileadmin/IncludeLocal.typoscript'
 [END]
 
-[{$bootstrap.extconf.customScss} == 0 && {$bootstrap.cdn.enable} == 0]
+[{$bootstrap.extconf.customScss} == 0 && constant('{$bootstrap.cdn.enable}') == 0]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Fileadmin/IncludeBootstrapCss.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Fileadmin/IncludeLocal.typoscript'
 [END]
 
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Fileadmin/IncludeDefault.typoscript'
-

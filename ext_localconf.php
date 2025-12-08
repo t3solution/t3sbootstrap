@@ -3,6 +3,7 @@
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
 use T3SBS\T3sbootstrap\Controller\ConsentController;
@@ -41,6 +42,7 @@ defined('TYPO3') || die();
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomepagetitle = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.chapter = 0');
+    ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.navbarmodal = 0');
 
 	// Global namespace import
 	$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['t3sb'] = [
@@ -96,8 +98,13 @@ defined('TYPO3') || die();
                  'before' => [TcaFlexProcess::class,],
         ];
     }
-    // CKEditor
-    $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
+    // CKEditor: Setup custom editor configuration
+    if (ExtensionManagementUtility::isLoaded('typo3-tiptap')) {
+        // experimental
+        $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/TipTap.yaml';
+    } else {
+        $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
+    }
     // Optional sitepackage
     if (ExtensionManagementUtility::isLoaded('t3sb_package') && array_key_exists('sitepackage', $extconf) && !empty($extconf['sitepackage'])) {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sitepackage = 1');
@@ -126,6 +133,10 @@ defined('TYPO3') || die();
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.t3sbminify = 1');
     }
 
+    // Optional doktype "Modal"
+    if (array_key_exists('navbarmodal', $extconf) && $extconf['navbarmodal'] === '1') {
+        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.navbarmodal = 1');
+    }
 	// Optional icon in page title
 	if (array_key_exists('fontawesomepagetitle', $extconf) && $extconf['fontawesomepagetitle'] === '1') {
 	    ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomepagetitle = 1');
@@ -185,6 +196,7 @@ defined('TYPO3') || die();
     } else {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.sectionOrder = sorting');
     }
+    
     /***************
      * Override preview of tt_content elements in page module
      */
@@ -195,12 +207,10 @@ defined('TYPO3') || die();
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.preview = 0');
     }
 
-
     # TYPO3 branch
-    $branch = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class)->getBranch();
+    $branch = GeneralUtility::makeInstance(Typo3Version::class)->getBranch();
 
     if ( $branch === '12.4' ) {
-    
         /***************
         * Add RootLine Fields: keywords & description
         */

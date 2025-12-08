@@ -1,4 +1,16 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<!-- Modal -->
+<f:if condition="{settings.navbar.navbarmodal}">
+	<f:for each="{navbarMenu}" as="page">
+		<f:if condition="{page.data.doktype} == 197">
+			<f:then>
+				<f:render partial="Page/Navbar/Modal" arguments="{page}" />
+			</f:then>
+		</f:if>
+	</f:for>
+</f:if>
+
 <f:if condition="{config.navbar.enable} && {config.navbar.enable} != 'none'">
 	<f:render partial="Page/Navbar/Assets" arguments="{_all}" />
 	<f:if condition="{config.navbar.container}">
@@ -110,7 +122,7 @@
 		<span class="nav-link fe-user ms-1">
 			<f:if condition="{settings.iconpack.loaded}">
 				<f:then>
-					<t3sb:icon iconfig="fa6:solid,user" additionalAttributes="{class:'me-1'}" />		
+					<t3sb:icon iconfig="fa7:solid,user" additionalAttributes="{class:'me-1'}" />		
 				</f:then>
 				<f:else>
 					<i class="fa-solid fa-user me-1"></i>
@@ -133,7 +145,7 @@
 				<f:link.page class="nav-link" pageUid="{settings.navbar.searchboxLink}">
 					<f:if condition="{settings.iconpack.loaded}">
 						<f:then>
-							<t3sb:icon iconfig="fa6:solid,magnifying-glass" additionalAttributes="{class:'me-3'}" />		
+							<t3sb:icon iconfig="fa7:solid,magnifying-glass" additionalAttributes="{class:'me-3'}" />		
 						</f:then>
 						<f:else>
 							<i class="fa-solid fa-user me-3"></i>
@@ -176,13 +188,13 @@
 	<f:then>
 	<f:switch expression="{config.navbar.brand}">
 		<f:case value="imgText">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="Link {data.title}">
+			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
 				<f:render section="BrandImage" arguments="{_all}" />
 				{config.general.company}
 			</f:link.typolink>
 		</f:case>
 		<f:case value="image">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="Link {data.title}">
+			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
 				<f:render section="BrandImage" arguments="{_all}" />
 			</f:link.typolink>
 		</f:case>
@@ -190,7 +202,7 @@
 			<span class="navbar-brand mb-0 h1">{config.general.company}</span>
 		</f:case>
 		<f:defaultCase>
-			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="Link {data.linkTitle}">
+			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="{data.linkTitle}">
 				{config.general.company}
 			</f:link.typolink>
 		</f:defaultCase>
@@ -236,23 +248,33 @@
 								<f:render section="Dropdown" arguments="{_all}" />
 							</f:then>
 							<f:else>
-								<f:if condition="{navbarItem.active} && {navbarItem.current}">
+								<f:if condition="{navbarItem.data.doktype} == 197">
 									<f:then>
-										<f:variable name="activeItem" value=" active" />
+										<f:comment><![CDATA[<!-- Button trigger modal -->]]></f:comment>
+										<a class="nav-link{navbarItem.activeClass}" data-bs-toggle="modal" data-bs-target="#navbarModal-{navbarItem.data.uid}" style="cursor: pointer;">
+											{navbarItem.title}
+										</a>
 									</f:then>
 									<f:else>
-										<f:variable name="activeItem" value="" />
+										<f:if condition="{navbarItem.active} && {navbarItem.current}">
+											<f:then>
+												<f:variable name="activeItem" value=" active" />
+											</f:then>
+											<f:else>
+												<f:variable name="activeItem" value="" />
+											</f:else>
+										</f:if>
+										<f:if condition="{navbarItem.data.shortcut} && {data.is_siteroot} && {data.slug} == {navbarItem.link}">
+											<f:variable name="activeItem" value=" active" />
+										</f:if>
+										<a class="nav-link{navbarItem.activeClass}"
+											href="{navbarItem.link}"
+											target="{navbarItem.target}"
+											title="{navbarItem.linkTitle}" tabindex="0">
+											<f:render section="Title" arguments="{item: navbarItem}" />
+										</a>
 									</f:else>
 								</f:if>
-								<f:if condition="{navbarItem.data.shortcut} && {data.is_siteroot} && {data.slug} == {navbarItem.link}">
-									<f:variable name="activeItem" value=" active" />
-								</f:if>
-								<a class="nav-link{navbarItem.activeClass}"
-									href="{navbarItem.link}"
-									 target="{navbarItem.target}"
-									 title="Link {navbarItem.linkTitle}" tabindex="0">
-									<f:render section="Title" arguments="{item: navbarItem}" />
-								</a>
 							</f:else>
 						</f:if>
 					</f:else>
@@ -315,7 +337,7 @@
 			 data-bs-toggle="dropdown" aria-expanded="false" href="#">
 				<f:if condition="{settings.iconpack.loaded}">
 					<f:then>
-						<t3sb:icon iconfig="fa6:solid,square-plus" />		
+						<t3sb:icon iconfig="fa7:solid,square-plus" />		
 					</f:then>
 					<f:else>
 						<i class="fa-solid fa-square-plus"></i>
@@ -330,7 +352,7 @@
 			data-bs-toggle="{config.navbar.bstoggle}"
 			role="button"
 			aria-expanded="false"
-			title="Link {navbarItem.linkTitle}"
+			title="{navbarItem.linkTitle}"
 			{f:if(condition: navbarItem.current, then:' aria-current="page"')}>
 			<f:render section="Title" arguments="{item: navbarItem}" />
 		</a>
@@ -345,7 +367,7 @@
 			</div>
 			<f:comment> removed by JS if wider than navbarBreakpoint :: don't remove show-{navbarBreakpoint} </f:comment>
 			<div class="dropdown-menu show-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
-			 	<f:render section="DropdownItem" arguments="{_all}" />
+				 <f:render section="DropdownItem" arguments="{_all}" />
 			</div>
 		</f:then>
 		<f:else>
@@ -375,7 +397,7 @@
 							<f:else>
 								<a class="dropdown-item dropdown-item-{child.data.uid}{child.activeClass}"
 									href="{child.link}"
-									title="Link {child.title -> f:format.raw()}"
+									title="{child.linkTitle -> f:format.raw()}"
 									target="{child.target}"
 									{f:if(condition: child.current, then:' aria-current="page"')}>
 									<f:render section="Title" arguments="{item: child}" />
@@ -402,7 +424,7 @@
 						<button type="button" class="btn btn-link ps-0 dropdown-toggle dropdown-toggle-split{child.activeClass}" data-bs-toggle="dropdown" aria-expanded="false" href="#">
 							<f:if condition="{settings.iconpack.loaded}">
 								<f:then>
-									<t3sb:icon iconfig="fa6:solid,square-plus" />		
+									<t3sb:icon iconfig="fa7:solid,square-plus" />		
 								</f:then>
 								<f:else>
 									<i class="fa-solid fa-square-plus"></i>
@@ -475,7 +497,7 @@
 		</f:then>
 		<f:else>
 			<a class="dropdown-item dropdown-item-{child.data.uid}{child.activeClass}"
-				href="{child.link}" title="Link {child.title -> f:format.raw()}"
+				href="{child.link}" title="{child.title -> f:format.raw()}"
 				target="{child.target}"
 				{f:if(condition: child.current, then:' aria-current="page"')} >
 				<f:render section="Title" arguments="{item: child}" />
@@ -486,7 +508,7 @@
 
 <f:section name="GrandchildLink">
 	<a class="dropdown-item dropdown-item-{grandchild.data.uid}{grandchild.activeClass}"
-		href="{grandchild.link}" title="Link {grandchild.title -> f:format.raw()}"
+		href="{grandchild.link}" title="{grandchild.title -> f:format.raw()}"
 		target="{grandchild.target}"
 		{f:if(condition: grandchild.current, then:' aria-current="page"')}>
 		<f:render section="Title" arguments="{item: grandchild}" />

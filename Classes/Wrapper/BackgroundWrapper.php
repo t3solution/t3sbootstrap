@@ -89,8 +89,13 @@ class BackgroundWrapper implements SingletonInterface
                         // max-width:575px
                         $processedData['localVideo']['inlineCSS'] = '@media (max-width:768px){#s-'.$processedData['data']['uid'].
                         ' figure.video{width:'.$mobileWidth.'%; max-height:'.$mobileHeight.'px; margin-left:'.$processedData['horizontalShift'].'%}}';
-                        $rArray = explode('/', $flexconf['aspectRatio']);
-                        $ratio = end($rArray).'x9';
+                        if ( str_contains($flexconf['aspectRatio'], '/') ) {
+                            $rArray = explode('/', $flexconf['aspectRatio']);
+                            $ratio = $rArray[1].'x'.$rArray[0];
+                        } elseif ( str_contains($flexconf['aspectRatio'], ':') ) {
+                            $rArray = explode(':', $flexconf['aspectRatio']);
+                            $ratio = $rArray[0].'x'.$rArray[1];
+                        }
                         $ratioArr = explode('x', $ratio);
                         $x = $ratio;
                         $y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';

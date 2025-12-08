@@ -1,0 +1,185 @@
+categories:
+  Bootstrap:
+    label: 'Bootstrap Components'
+  
+  Bootstrap.config.optimize:
+    label: 'T3SB OPTIMIZE-Bootstrap'
+    parent: Bootstrap
+    description: 'Optimize Bootstrap - Lean Sass imports When using "Custom SCSS", make sure you optimize Bootstrap by only @importing the components you need. For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below. progress, tooltip, popover and placeholders are not used by t3sbootstrap! After that execute the scheduler task "t3sbootstrap:customScss".'
+
+
+settings:
+  bootstrap.optimize.tables:
+    label: 'tables'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.forms:
+    label: 'forms'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.buttons:
+    label: 'buttons'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.transitions:
+    label: 'transitions'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.dropdown:
+    label: 'dropdown'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.button-group:
+    label: 'button-group'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.nav:
+    label: 'nav'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.navbar:
+    label: 'navbar'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.card:
+    label: 'card'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.accordion:
+    label: 'accordion'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.breadcrumb:
+    label: 'breadcrumb'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.pagination:
+    label: 'pagination'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.badge:
+    label: 'badge'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.alert:
+    label: 'alert'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.progress:
+    label: 'progress'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.list-group:
+    label: 'list-group'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.close:
+    label: 'close'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.toasts:
+    label: 'toasts'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.modal:
+    label: 'modal'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.tooltip:
+    label: 'tooltip'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.popover:
+    label: 'popover'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.carousel:
+    label: 'carousel'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.spinners:
+    label: 'spinners'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.offcanvas:
+    label: 'offcanvas'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.optimize.placeholders:
+    label: 'placeholders'
+    category: Bootstrap.config.optimize
+    description: ''
+    type: bool
+    default: true

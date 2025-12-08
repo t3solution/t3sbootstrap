@@ -10,9 +10,7 @@
 	<f:if condition="{config.general.pageTitle} == 'content'">
 		<f:render partial="Page/Title" arguments="{_all}" />
 	</f:if>
-
-
-	<f:if condition="{data.tx_t3sbootstrap_container}">
+	<f:if condition="{data.tx_t3sbootstrap_container} && {data.tx_t3sbootstrap_container} != 'none'">
 		<f:then>
 			<div class="{data.tx_t3sbootstrap_container}">
 				<f:render section="MainContent" arguments="{_all}" />

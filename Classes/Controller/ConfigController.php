@@ -44,15 +44,9 @@ final class ConfigController extends AbstractController
     public function listAction(
         bool $deleted = false,
         bool $created = false,
-        bool $updateSss = false
+        bool $updateScss = false
     ): ResponseInterface
     {
-        $cdnHint = false;
-        $file = $this->baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss';
-        if (file_exists($file) && $this->settings['cdn']['enable']) {
-            $cdnHint = true;
-        }
-
         $assignedOptions['idNull'] = FALSE;
         if ($this->request->getQueryParams()['id'] === '0') {
             $assignedOptions['idNull'] = TRUE;
@@ -83,10 +77,9 @@ final class ConfigController extends AbstractController
         $assignedOptions['admin'] = $this->isAdmin;
         $assignedOptions['customScss'] = false;
         $assignedOptions['action'] = 'list';
-        $assignedOptions['updateScss'] = $updateSss;
+        $assignedOptions['updateScss'] = $updateScss;
         $assignedOptions['deleted'] = $deleted;
         $assignedOptions['created'] = $created;
-        $assignedOptions['cdnHint'] = $cdnHint;
 		$assignedOptions['settings'] = $this->settings;
 
         if (!empty($this->settings['customScss']) && (int)$this->settings['customScss'] === 1) {
@@ -176,7 +169,8 @@ final class ConfigController extends AbstractController
         $newConfig = parent::setDefaults($newConfig);
         $this->configRepository->add($newConfig);
         parent::setDefaultBackendLayout();
-        parent::writeConstants();
+        parent::writeConstants($newConfig);
+
         return $this->redirect('list', null, null, ['created' => true]);
     }
 
@@ -226,7 +220,7 @@ final class ConfigController extends AbstractController
         $config->setHomepageUid($this->rootPageId);
         $this->configRepository->update($config);
 		$this->persistenceManager->persistAll();
-        parent::writeConstants();
+        parent::writeConstants($config);
 		if (!empty($this->settings['clearPageCache'])) {
 	        $cacheService = GeneralUtility::makeInstance(CacheService::class);
 	        $cacheService->clearPageCache();
@@ -242,7 +236,7 @@ final class ConfigController extends AbstractController
     public function deleteAction(Config $config): ResponseInterface
     {
         $this->configRepository->remove($config);
-        parent::writeConstants();
+        parent::writeConstants($config);
         return $this->redirect('list', null, null, array('deleted' => true));
     }
 

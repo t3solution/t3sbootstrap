@@ -1,1 +1,2 @@
+# Import constants globally until dropping TYPO3 12 support
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/constants.typoscript'

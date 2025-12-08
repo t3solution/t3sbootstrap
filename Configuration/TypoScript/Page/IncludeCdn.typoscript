@@ -35,18 +35,6 @@ page {
 
 		##########################################################################################################
 		#
-		# JQUERY EASING
-		#
-		##########################################################################################################
-
-		t3sbjqueryeasingCDN = https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/{$bootstrap.cdn.jqueryEasing}/jquery.easing.min.js
-		t3sbjqueryeasingCDN.integrity = {$bootstrap.cdn.jqueryEasingIntegrity}
-		t3sbjqueryeasingCDN.external = 1
-		t3sbjqueryeasingCDN.forceOnTop = 1
-		t3sbjqueryeasingCDN.if.isFalse = {$bootstrap.disable.jquery}
-
-		##########################################################################################################
-		#
 		# LAZYLOAD
 		#
 		##########################################################################################################
@@ -58,17 +46,6 @@ page {
 			value = 1,2
 			isInList = {$bootstrap.extconf.lazyLoad}
 		}
-
-		##########################################################################################################
-		#
-		# PICTUREFILL
-		#
-		##########################################################################################################
-
-		picturefillCDN = https://cdnjs.cloudflare.com/ajax/libs/picturefill/{$bootstrap.cdn.picturefill}/picturefill.min.js
-		picturefillCDN.integrity = {$bootstrap.cdn.picturefillIntegrity}
-		picturefillCDN.external = 1
-		picturefillCDN.if.isTrue = {$bootstrap.image.picturefill}
 
 	}
 }

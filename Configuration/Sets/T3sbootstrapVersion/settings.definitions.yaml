@@ -1,0 +1,166 @@
+categories:
+  Bootstrap:
+    label: 'Bootstrap Components'
+  
+  Bootstrap.version:
+    label: 'T3SB - Version-Settings'
+    parent: Bootstrap
+    description: 'Versions used for CDN and in the scheduler task "T3SB CDN to local" - must be valid'
+  
+  Bootstrap.cdn:
+    label: 'CDN Versions'
+    parent: Bootstrap.version
+  
+  Bootstrap.integrity:
+    label: 'CDN Integrity'
+    parent: Bootstrap.version
+
+
+settings:
+  bootstrap.cdn.bootstrap:
+    label: 'Bootstrap'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '5.3.8'
+  
+  bootstrap.cdn.popperjs:
+    label: 'Popper JS'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '2.11.8'
+  
+  bootstrap.cdn.masonry:
+    label: 'Masonry JS'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '4.2.2'
+  
+  bootstrap.cdn.jquery:
+    label: 'jQuery library'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '3.7.1'
+  
+  bootstrap.cdn.lazyload:
+    label: 'Lazyload'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '17.8.5'
+  
+  bootstrap.cdn.animate:
+    label: 'Animate CSS'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '4.1.1'
+  
+  bootstrap.cdn.baguetteBox:
+    label: 'Baguette Box'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '1.11.1'
+  
+  bootstrap.cdn.halkabox:
+    label: 'Halkabox'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '1.6.0'
+  
+  bootstrap.cdn.glightbox:
+    label: 'G Lightbox'
+    category: Bootstrap.cdn
+    description: ''
+    type: string
+    default: '3.2.0'
+  
+  bootstrap.cdn.jarallax:
+    label: 'Jarallax'
+    category: Bootstrap.cdn
+    description: 'Set to 2 only to get v2.x (latest)'
+    type: string
+    default: '2'
+  
+  bootstrap.cdn.swiper:
+    label: 'Swiper'
+    category: Bootstrap.cdn
+    description: 'Set to 12 only to get v12.x (latest)'
+    type: string
+    default: '12'
+  
+  
+  bootstrap.cdn.bootstrapCssIntegrity:
+    label: 'Bootstrap CSS'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: 'sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB'
+  
+  bootstrap.cdn.bootstrapJsIntegrity:
+    label: 'Bootstrap JS'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: 'sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y'
+  
+  bootstrap.cdn.bootstrapBundleJsIntegrity:
+    label: 'Bootstrap Bundle JS'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: 'sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI'
+  
+  bootstrap.cdn.popperjsIntegrity:
+    label: 'Popper JS'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
+  
+  bootstrap.cdn.masonryIntegrity:
+    label: 'Masonry JS'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: 'sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D'
+  
+  bootstrap.cdn.jqueryIntegrity:
+    label: 'jQuery library'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: 'sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo='
+  
+  bootstrap.cdn.lazyloadIntegrity:
+    label: 'Lazyload'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: ''
+  
+  bootstrap.cdn.baguetteBoxIntegrity:
+    label: 'Baguette Box'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: ''
+  
+  bootstrap.cdn.halkaboxIntegrity:
+    label: 'Halkabox'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: ''
+  
+  bootstrap.cdn.glightboxIntegrity:
+    label: 'G Lightbox'
+    category: Bootstrap.integrity
+    description: ''
+    type: string
+    default: ''

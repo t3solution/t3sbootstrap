@@ -72,14 +72,13 @@ lib.contentElement {
 		subheaderColor = {$bootstrap.config.subheaderColor}
 		sectionmenuStickyTop = {$bootstrap.config.sectionmenuStickyTop}
 		magnifying = {$bootstrap.config.magnifying}
-		picturefill = {$bootstrap.image.picturefill}
 		srcsetDesktop = {$bootstrap.image.srcsetDesktop}
 		srcsetTablet = {$bootstrap.image.srcsetTablet}
 		srcsetMobile = {$bootstrap.image.srcsetMobile}
 		bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 		lazyLoadBgWrapperImage = {$bootstrap.image.lazyLoadBgWrapperImage}
 		lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
-		cdnEnable = {$bootstrap.cdn.enable}
+#		cdnEnable = {$bootstrap.cdn.enable}
 		containerError = {$bootstrap.config.containerError}
 		sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 		sectionmenuScrollspy = {$bootstrap.config.sectionmenuScrollspy}
@@ -125,6 +124,7 @@ lib.contentElement {
 		224 {
 			defaultHeaderType = {$styles.content.defaultHeaderType}
 			contentMarginTop = {$bootstrap.config.contentMarginTop}
+			minimumWidth = {$bootstrap.image.minimumWidth}
 			configuid = {$bootstrap.config.uid}
 			disableAutoRow = {$bootstrap.image.disableAutoRow}
 			footerPid = {$bootstrap.config.footerPid}
@@ -149,8 +149,9 @@ lib.contentElement {
 lib.contentElement.settings.srcsetMobile = 575
 [END]
 
+
 # 2 == halkabox - https://github.com/ahmednooor/halkaBox.js
-[{$bootstrap.config.lightboxSelection} == '2']
+[{$bootstrap.config.lightboxSelection} == 2]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
 	linkParams.ATagParams.dataWrap = class="gallery-{file:current:uid_foreign}"  data-title="{file:current:description}"
@@ -159,7 +160,7 @@ lib.contentElement.settings.media.popup {
 [END]
 
 # 3 == LightBox Plugin - glightbox.js - https://github.com/biati-digital/glightbox
-[{$bootstrap.config.lightboxSelection} == '3']
+[{$bootstrap.config.lightboxSelection} == 3]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
 	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="glightbox" data-glightbox="title:{file:current:description}" data-gallery="gallery-{file:current:uid_foreign}" data-effect="fade"

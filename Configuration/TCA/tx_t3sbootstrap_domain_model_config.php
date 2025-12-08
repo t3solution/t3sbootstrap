@@ -1036,26 +1036,16 @@ return [
             'exclude' => false,
             'label' => 'Background image ratio',
             'accordion_id' => 4,
-            'info' => 'Only to be used with a background image - not with videos or "Full height section".',
+            'info' => 'Only to be used with a background image - not with videos (use Background-Wrapper) or "Full height section". <br> <strong>e.g.: 37by9 == 37/9 || 37:9 || 37x9</strong>',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    ['label' => 'none', 'value' => '',],
-                    ['label' => '67:9', 'value' => '67x9',],
-                    ['label' => '56:9', 'value' => '56x9',],
-                    ['label' => '46:9', 'value' => '46x9',],
-                    ['label' => '37:9', 'value' => '37x9',],
-                    ['label' => '29:9', 'value' => '29x9',],
-                    ['label' => '21:9', 'value' => '21x9',],
-                ]
+                'type' => 'input',
             ]
         ],
         'jumbotron_alignitem' => [
             'exclude' => false,
             'label' => 'Align content items',
             'accordion_id' => 4,
-            'info' => 'Vertical align for the content',
+            'info' => 'Vertical align for the content (An inside container must be selected)',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1177,7 +1167,6 @@ return [
             'exclude' => false,
             'label' => 'Page title (h1)',
             'accordion_id' => 5,
-#            'info' => 'Image replacement: Replace h1 with the brand image (enable in Navbar). INFO: http://getbootstrap.com/docs/4.0/utilities/image-replacement/',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1186,7 +1175,6 @@ return [
                     ['label' => 'in the Jumbotron [jumbotron]','value' => 'jumbotron',],
                     ['label' => 'in the Main Content [content]','value' => 'content',],
                     ['label' => 'above the Breadcrumb [breadcrumb]','value' => 'breadcrumb',],
-#					['label' => 'Image replacement [replace]','value' => 'replace',],
                     ['label' => 'in the Expanded top content (if enabled) [expanded]','value' => 'expanded',],
                 ]
             ]

@@ -25,10 +25,12 @@ extraStyle = 0
 
 # cat=page/enable/20; type=boolean; label=Icon in Page Title: Enable the page_icon (from EXT:iconpicker) in the page title (clear cache)
 fontawesomepagetitle = 1
+# cat=page/enable/30; type=boolean; label=Modal in Navbar: Enable a new doktype "Modal" (197) (clear cache)
+navbarmodal = 0
 
 # cat=custom scss/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
 customScss = 0
-# cat=custom scss/a-config/30; type=options[none, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
+# cat=custom scss/a-config/30; type=options[none, Brite, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
 bootswatch = none
 # cat=custom scss/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache)
 editScss = 0

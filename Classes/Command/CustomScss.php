@@ -25,6 +25,8 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class CustomScss extends CommandBase
 {
 
+    public const BOOTSTRAPLATEST = '5.3.8';
+
     /**
      * Defines the allowed options for this command
      *
@@ -64,7 +66,7 @@ class CustomScss extends CommandBase
 
         if ($settings['customScss'] && array_key_exists('customScss', $extConf) && $extConf['customScss'] === '1') {
             # get the Boostrap SCSS-Files
-            $bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : $settings['cdn']['bootstraplatest'];
+            $bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : self::BOOTSTRAPLATEST;
             $bootstrapScssPath = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/';
             if (!is_dir($bootstrapScssPath)) {
                 if (!mkdir($bootstrapScssPath, 0777, true) && !is_dir($bootstrapScssPath)) {
@@ -273,7 +275,7 @@ class CustomScss extends CommandBase
                 $zip->extractTo($extractTo);
                 $zip->close();
             } else {
-                throw new \InvalidArgumentException('Sorry ZIP creation failed at this time! Set the constant "bootstrap.cdn.noZip=1" and try again.', 1657464538);
+                throw new \InvalidArgumentException('Sorry ZIP creation failed at this time! Set the setup "module.tx_t3sbootstrap.settings.cdn.noZip=1" and try again.', 1657464538);
             }
 
             $renameFrom = $baseDir.'Resources/Public/Contrib/Bootstrap/bootstrap-'.$bootstrapVersion.'/scss';

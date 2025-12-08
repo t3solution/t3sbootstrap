@@ -65,7 +65,7 @@ class Modal implements SingletonInterface
 				}
 			} else {
 				if ($processedData['modal']['cookie']) {
-					setcookie($uid, 'allow', time() + (86400), '/');
+					setcookie($uid, 'allow', time() + (3600), '/');
 				}
 			}
 		}

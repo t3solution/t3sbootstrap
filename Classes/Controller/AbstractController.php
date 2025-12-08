@@ -67,7 +67,6 @@ abstract class AbstractController extends ActionController
         } else {
             throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
         }
-
     }
 
 
@@ -269,19 +268,19 @@ abstract class AbstractController extends ActionController
     /**
      * Write data from DB to constant file and import in sys_template
      */
-    protected function writeConstants(): void
+    protected function writeConstants(Config $currentConfig): void
     {
         $this->persistenceManager->persistAll();
         if ($this->countRootTemplates) {
-            $configRepository = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
-            $navbarBreakpoint = $configRepository->getNavbarBreakpoint();
-            if (!empty($this->settings['breakpoint'])) {
+            $navbarBreakpoint = $currentConfig->getNavbarBreakpoint();
+            if (!empty($this->settings['breakpoint']) && !empty($navbarBreakpoint)) {
                 $breakpointWidth = $navbarBreakpoint === 'no' ? '' : $this->settings['breakpoint'][$navbarBreakpoint];
             } else {
                 $breakpointWidth = 'sm';
             }
             $siteroots = [];
             $filecontent = '';
+
             foreach ($this->configRepository->findAll() as $config) {
                 $page = GeneralUtility::makeInstance(PageRepository::class)->getPage($config->getPid());
 	            if (!empty($page['uid']) && $page['hidden'] === 0 && $page['deleted'] === 0) {
@@ -395,8 +394,14 @@ abstract class AbstractController extends ActionController
             if ($isRoot) {
                 $constants .= 'bootstrap.config.'.$var.' = '.$value .PHP_EOL;
             } else {
-                if ($config->$getField() != $this->rootConfig->$getField()) {
-                    $constants .= 'bootstrap.config.'.$var.' = '.$value .PHP_EOL;
+
+                if ($getField == 'getHomepageuid') {
+                    $getField = 'getHomepageUid';
+                }
+                if (!empty($this->rootConfig)) {
+                    if ($config->$getField() != $this->rootConfig->$getField()) {
+                        $constants .= 'bootstrap.config.'.$var.' = '.$value .PHP_EOL;
+                    }
                 }
             }
         }
@@ -485,23 +490,32 @@ abstract class AbstractController extends ActionController
         }
 
         if (empty($this->settings['sitepackage'])) {
-            $variablesSCSS = 'fileadmin/T3SB/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
+            $variablesSCSS = 'fileadmin/T3SB/Resources/Public/T3SB-SCSS/custom-variables.scss';
         } else {
-            $variablesSCSS = 'EXT:t3sb_package/Resources/Public/Contrib/Bootstrap/scss/_variables.scss';
+            $variablesSCSS = 'EXT:t3sb_package/Resources/Public/T3SB-SCSS/custom-variables.scss';
         }
 
         $variablesSCSS = GeneralUtility::getFileAbsFileName($variablesSCSS);
         $variablesSCSS = GeneralUtility::getURL($variablesSCSS);
+        $defaultUtilColors = [];
+        $varUtilColors = [];
 
         if (!empty($variablesSCSS)) {
             foreach (GeneralUtility::trimExplode(';', $variablesSCSS) as $defaultVariables) {
-                $defaultScssColor = GeneralUtility::trimExplode(':', $defaultVariables);
-                if (str_starts_with((string)$defaultVariables, '$') && GeneralUtility::inList($defaultUtilColorsList, $defaultScssColor[0])
-                     && (str_starts_with((string)$defaultScssColor[1], '$') || str_starts_with((string)$defaultScssColor[1], '#'))) {
-                    $scsscolor = GeneralUtility::trimExplode(':', $defaultVariables);
-                    $defaultUtilColors[$scsscolor[0]] = substr($scsscolor[1], 0, -9);
+                $scssColorArr = GeneralUtility::trimExplode(':', $defaultVariables);
+                if (!empty($scssColorArr[0]) && str_starts_with((string)$scssColorArr[0], '$') && !empty($scssColorArr[1]) && (str_starts_with((string)$scssColorArr[1], '#'))) {
+                    if (!empty($scssColorArr[1])) {
+                        $defaultUtilColors[$scssColorArr[0]] = $scssColorArr[1];
+                    }
+                } elseif (!empty($scssColorArr[1]) &&  str_starts_with((string)$scssColorArr[1], '$') && !empty($scssColorArr[0]) && GeneralUtility::inList($defaultUtilColorsList, $scssColorArr[0])) {
+                    if (!empty($defaultUtilColors[$scssColorArr[1]])) {
+                        $varUtilColors[$scssColorArr[0]] = $defaultUtilColors[$scssColorArr[1]];
+                    }
                 }
             }
+
+            $defaultUtilColors = array_merge($defaultUtilColors, $varUtilColors);
+
             foreach ($defaultUtilColors as $key=>$customvariables) {
                 if (str_starts_with((string)$customvariables, '$')) {
                     if (!empty($customScssArr[$customvariables]) && $customScssArr[$customvariables]) {
@@ -582,6 +596,7 @@ abstract class AbstractController extends ActionController
         $newConfig->setNavbarLangFlags(1);
         $newConfig->setSectionmenuScrollspyThreshold('0.1, 0.5, 1');
         $newConfig->setSectionmenuScrollspyRootMargin('0px 0px -75%');
+        $newConfig->setJumbotronBgimageratio('37:9');
 
         return $newConfig;
     }

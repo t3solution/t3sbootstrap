@@ -73,7 +73,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param	Area					 $focusArea
 	 * @param	TagBuilder			 $tag
 	 * @param	TagBuilder			 $fallbackTag
-	 * @param	bool					 $picturefillMarkup
 	 * @param	bool					 $absoluteUri
 	 * @param	int					$lazyload
 	 * @param	array|string			 $ignoreFileExtensions
@@ -90,7 +89,6 @@ class ResponsiveImagesUtility implements SingletonInterface
 		Area $focusArea = null,
 		TagBuilder $tag = null,
 		TagBuilder $fallbackTag = null,
-		bool $picturefillMarkup = true,
 		bool $absoluteUri = false,
 		int $lazyload = 0,
 		$ignoreFileExtensions = 'svg',
@@ -125,40 +123,13 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Use last breakpoint as fallback image if it doesn't define a media query
 		$lastBreakpoint = array_pop($breakpoints);
 
-		if ($lastBreakpoint && !$lastBreakpoint['media'] && $picturefillMarkup) {
-			// Generate different image sizes for last breakpoint
-			$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
-			$srcset = $this->generateSrcsetImages(
-				$originalImage,
-				$referenceWidth,
-				$lastBreakpoint['srcset'],
-				$cropArea,
-				$absoluteUri
-			);
-			$srcsetMode = substr(key($srcset), -1); // x or w
-
-			// Set srcset attribute for fallback image
-			$fallbackTag->addAttribute($attributePrefix . 'srcset', $this->generateSrcsetAttribute($srcset));
-
-			// Set sizes query for fallback image
-			if ($srcsetMode === 'w' && $lastBreakpoint['sizes']) {
-				$fallbackTag->addAttribute('sizes', sprintf($lastBreakpoint['sizes'], $referenceWidth));
-			}
-		} else {
-
-			// Breakpoint can't be used as fallback
-			if ($lastBreakpoint) {
-				$breakpoints[] = $lastBreakpoint;
-			}
-
-			// Set srcset attribute for fallback image (not src as advised by picturefill)
-			$fallbackImageUri =	$this->imageService->getImageUri($fallbackImage, $absoluteUri);
-			if ($picturefillMarkup) {
-				$fallbackTag->addAttribute($attributePrefix . 'srcset', $fallbackImageUri);
-			} else {
-				$fallbackTag->addAttribute($attributePrefix . 'src', $fallbackImageUri);
-			}
+		// Breakpoint can't be used as fallback
+		if ($lastBreakpoint) {
+			$breakpoints[] = $lastBreakpoint;
 		}
+
+		$fallbackImageUri =	$this->imageService->getImageUri($fallbackImage, $absoluteUri);
+		$fallbackTag->addAttribute($attributePrefix . 'src', $fallbackImageUri);
 
 		$cropArea = $cropVariantCollection->getCropArea($lastBreakpoint['cropVariant']);
 

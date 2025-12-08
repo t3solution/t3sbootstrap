@@ -314,39 +314,44 @@
 						</config>
 					</mute>
 					<aspectRatio>
-						<label>Aspect ratios</label>
+						<label>Aspect ratio</label>
+						<description>e.g.: 37by9 == 9/37 || 37:9</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
-							<type>select</type>
-							<renderType>selectSingle</renderType>
-							<items>
-								<numIndex index="0">
-									<label>53by9</label>
-									<value>9/53</value>
-								</numIndex>
-								<numIndex index="1">
-									<label>48by9</label>
-									<value>9/48</value>
-								</numIndex>
-								<numIndex index="2">
-									<label>42by9</label>
-									<value>9/42</value>
-								</numIndex>
-								<numIndex index="3">
-									<label>37by9</label>
-									<value>9/37</value>
-								</numIndex>
-								<numIndex index="4">
-									<label>21by9</label>
-									<value>9/21</value>
-								</numIndex>
-								<numIndex index="5">
-									<label>16by9</label>
-									<value>9/16</value>
-								</numIndex>
-							</items>
+							<type>input</type>
+							<checkbox></checkbox>
+							<eval>trim</eval>
+							<size>20</size>
+							<max>99</max>
 							<default>9/37</default>
-							<size>1</size>
+							<valuePicker type="array">
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">53by9</numIndex>
+										<numIndex index="1">9/53</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">48by9</numIndex>
+										<numIndex index="1">9/48</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">42by9</numIndex>
+										<numIndex index="1">9/42</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">37by9</numIndex>
+										<numIndex index="1">9/37</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">21by9</numIndex>
+										<numIndex index="1">9/21</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">16by9</numIndex>
+										<numIndex index="1">9/16</numIndex>
+									</numIndex>
+								</items>
+							</valuePicker>
 						</config>
 					</aspectRatio>
 					<alignVideoItem>
@@ -423,8 +428,8 @@
 						</config>
 					</horizontalShift>
 					<mobileHeight>
-						 <label>Min. hight on mobile (max-width:767px)</label>
-						 <description>card-img-overlay min-height in px</description>
+						 <label>Max. hight on mobile (max-width:767px)</label>
+						 <description>figure.video max-height in px</description>
 						 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						 <config>
 							<type>number</type>

@@ -1,0 +1,311 @@
+categories:
+  Bootstrap:
+    label: 'Bootstrap Components'
+  
+  Bootstrap.optional.div:
+    label: 'T3SB Other'
+    parent: Bootstrap
+    description: 'Additional settings that were not previously in the constant editor'
+
+
+  Bootstrap.optional.miscellaneous:
+    label: 'Miscellaneous'
+    parent: Bootstrap.optional.div
+
+  Bootstrap.optional.pagebrowser:
+    label: 'Pagebrowser'
+    parent: Bootstrap.optional.div
+    description: 'MORE INFO: https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html#special-browse'
+
+  Bootstrap.optional.backbutton:
+    label: 'Back to top button'
+    parent: Bootstrap.optional.div
+
+  Bootstrap.optional.jquery:
+    label: 'jQuery'
+    parent: Bootstrap.optional.div
+
+  Bootstrap.optional.navbar:
+    label: 'Navbar'
+    parent: Bootstrap.optional.div
+
+
+settings:
+  bootstrap.bundle.enable:
+    label: 'Include Bootstraps bundle.min.js (include popper.js) instead of 2 files'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.config.enableUtilityColors:
+    label: 'Enable the currently available utility colors in the BE Modul'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.config.enableInfo:
+    label: 'Hints to increase the website speed in the BE Modul'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: true
+
+  bootstrap.config.sectionMenuClass:
+    label: 'Add class "section-index" to each content element'
+    category: Bootstrap.optional.miscellaneous
+    description: 'Is used in a few rare situations'
+    type: bool
+    default: false
+
+  bootstrap.print.enable:
+    label: 'Include print template'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.config.disableDefaultCss:
+    label: 'Disable default CSS - t3sbootstrap.css'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.config.disableFaCss:
+    label: 'Disable Fontawesome CSS - t3sb-fontawseome.css'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.extconf.clearPageCache:
+    label: 'Clears the cache'
+    category: Bootstrap.optional.miscellaneous
+    description: 'When the T3SB config is saved'
+    type: bool
+    default: true
+
+  bootstrap.disable.accordion.scrollToTop:
+    label: 'Disable scroll to top for accordions'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.skiplinks:
+    label: 'creating "Skip Links" to navigation, content or footer'
+    category: Bootstrap.optional.miscellaneous
+    description: 'For barrier-free accessibility if activated (in Main.html)'
+    type: bool
+    default: false
+
+  bootstrap.shortcutsremove:
+    label: 'Remove any string (e.g. a class name) from shortcuts if in parent CE/wrapper'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.submenu.styleOne:
+    label: 'Style one for the submenu'
+    category: Bootstrap.optional.miscellaneous
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.colorMode.enable:
+    label: 'Enable color mode toggler'
+    category: Bootstrap.optional.miscellaneous
+    description: 'Only if "bootstrap.config.navbarDarkMode" is disabled'
+    type: bool
+    default: false
+
+  bootstrap.colorMode.position:
+    label: 'Position-fixed bottom-0 start-0 mb-3 ms-3'
+    category: Bootstrap.optional.miscellaneous
+    description: 'Info: https://getbootstrap.com/docs/5.3/utilities/position/#center-elements'
+    type: string
+    default: 'position-fixed bottom-0 end-0 mb-3 me-3'
+
+
+  bootstrap.navbar.noLinkTitle:
+    label: 'No link title in the navbar links'
+    category: Bootstrap.optional.navbar
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.navbar.image.defaultPath:
+    label: 'Navbar brand image path'
+    category: Bootstrap.optional.navbar
+    description: ''
+    type: string
+    default: 'EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg'
+
+  bootstrap.navbar.image.width:
+    label: 'Navbar brand image width'
+    category: Bootstrap.optional.navbar
+    description: 'In px'
+    type: int
+    default: 30
+
+  bootstrap.navbar.image.height:
+    label: 'Navbar brand image height'
+    category: Bootstrap.optional.navbar
+    description: 'In px'
+    type: int
+    default: 24
+
+  bootstrap.navbar.image.altText:
+    label: 'Navbar brand image alt text'
+    category: Bootstrap.optional.navbar
+    description: ''
+    type: string
+    default: 'Company Logo'
+
+  bootstrap.navbar.breakpoint.sm:
+    label: 'Default small breakpoint (sm)'
+    category: Bootstrap.optional.navbar
+    description: 'Used as condition for inlineJS e.g. navbar hover'
+    type: int
+    default: 576
+
+  bootstrap.navbar.breakpoint.md:
+    label: 'Default medium breakpoint (md)'
+    category: Bootstrap.optional.navbar
+    description: 'Used as condition for inlineJS e.g. navbar hover'
+    type: int
+    default: 768
+
+  bootstrap.navbar.breakpoint.lg:
+    label: 'Default large breakpoint (lg)'
+    category: Bootstrap.optional.navbar
+    description: 'Used as condition for inlineJS e.g. navbar hover'
+    type: int
+    default: 992
+
+  bootstrap.navbar.breakpoint.xl:
+    label: 'Default extra large breakpoint (xl)'
+    category: Bootstrap.optional.navbar
+    description: 'Used as condition for inlineJS e.g. navbar hover'
+    type: int
+    default: 1200
+
+  bootstrap.navbar.breakpoint.xxl:
+    label: 'Default extra extra large breakpoint (xxl)'
+    category: Bootstrap.optional.navbar
+    description: 'Used as condition for inlineJS e.g. navbar hover'
+    type: int
+    default: 1400
+
+  bootstrap.navbar.subdropdown.twoColumns:
+    label: 'Subdropdown with two columns if items greater or equal'
+    category: Bootstrap.optional.navbar
+    description: ''
+    type: int
+    default: 30
+
+  bootstrap.navbar.searchboxLink:
+    label: 'Page UID with search plugin'
+    category: Bootstrap.optional.navbar
+    description: 'Link to your search plugin'
+    type: int
+    default: 0
+
+  bootstrap.navbar.feUserName:
+    label: 'Fe user name in navbar - if logged in'
+    category: Bootstrap.optional.navbar
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.navbar.floatDropdownIconRight:
+    label: 'Dropdown icon float right'
+    category: Bootstrap.optional.navbar
+    description: ''
+    type: bool
+    default: false
+
+
+  bootstrap.disable.jquery:
+    label: 'Disable jQuery by default (true by default)'
+    category: Bootstrap.optional.jquery
+    description: 'Disable this option if you require jQuery'
+    type: bool
+    default: true
+
+  bootstrap.config.jqueryHeader:
+    label: 'Load jQuery into the header'
+    category: Bootstrap.optional.jquery
+    description: ''
+    type: bool
+    default: false
+
+
+  bootstrap.backToTopTitle:
+    label: 'Link Title'
+    category: Bootstrap.optional.backbutton
+    description: ''
+    type: string
+    default: 'to top'
+
+  bootstrap.backToTopClass:
+    label: 'Class'
+    category: Bootstrap.optional.backbutton
+    description: 'Font Awesome HTML class'
+    type: string
+    default: 'fa-solid fa-circle-chevron-up fa-4x'
+
+  bootstrap.backToTopIconpack:
+    label: 'Iconpack Class'
+    category: Bootstrap.optional.backbutton
+    description: 'If EXT:iconpack is loaded'
+    type: string
+    default: 'fa7:solid,circle-chevron-up,size:4x'
+
+  bootstrap.backToTopForAllPages:
+    label: 'Back to top icon for all pages'
+    category: Bootstrap.optional.backbutton
+    description: ''
+    type: bool
+    default: false
+
+
+  bootstrap.pagebrowser.enable:
+    label: 'Enable Pagebrowser'
+    category: Bootstrap.optional.pagebrowser
+    description: ''
+    type: bool
+    default: false
+
+  bootstrap.pagebrowser.prevnextToSection:
+    label: 'Prev and next navigation'
+    category: Bootstrap.optional.pagebrowser
+    description: 'If set, the prev and next navigation will jump to the next section when it reaches the end of pages in the current section. That way prev and next will also link to the first page of the next section / to the last page of the previous section.'
+    type: bool
+    default: true
+
+  bootstrap.pagebrowser.prevItem:
+    label: 'Prev item'
+    category: Bootstrap.optional.pagebrowser
+    description: 'Options: index|up|nextsection|next|prev|prevsection'
+    type: string
+    default: 'prev|prevsection'
+
+  bootstrap.pagebrowser.nextItem:
+    label: 'Next item'
+    category: Bootstrap.optional.pagebrowser
+    description: 'Options: index|up|nextsection|next|prev|prevsection'
+    type: string
+    default: 'nextsection|next'
+
+
+  bootstrap.pagebrowser.entryLevel:
+    label: 'Entry Level'
+    category: Bootstrap.optional.pagebrowser
+    description: ''
+    type: int
+    default: 1
+ 

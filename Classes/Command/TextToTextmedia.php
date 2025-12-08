@@ -40,7 +40,7 @@ class TextToTextmedia extends CommandBase
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$contentQueryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
         $texts = $contentQueryBuilder
-             ->select('uid',)
+             ->select('uid')
              ->from('tt_content')
              ->where(
                  $contentQueryBuilder->expr()->eq('CType', $contentQueryBuilder->createNamedParameter('text'))

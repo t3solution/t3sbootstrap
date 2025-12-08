@@ -1,0 +1,91 @@
+categories:
+  Bootstrap:
+    label: 'Bootstrap Components'
+
+  Bootstrap.templates:
+    label: 'T3SB Templates'
+    parent: Bootstrap
+
+  Bootstrap.config.cdn:
+    label: 'T3SB CDN and Google Fonts'
+    parent: Bootstrap
+
+
+settings:
+
+  bootstrap.view.layoutRootPath:
+    label: 'Path of Fluid Layouts'
+    category: Bootstrap.templates
+    description: 'Path to the layouts'
+    type: string
+    default: 'EXT:t3sbootstrap/Resources/Private/Layouts/'
+
+  bootstrap.view.partialRootPath:
+    label: 'Path of Fluid Partials'
+    category: Bootstrap.templates
+    description: 'Path to the partials'
+    type: string
+    default: 'EXT:t3sbootstrap/Resources/Private/Partials/'
+
+  bootstrap.view.templateRootPath:
+    label: 'Path of Fluid Templates'
+    category: Bootstrap.templates
+    description: 'Path to the templates'
+    type: string
+    default: 'EXT:t3sbootstrap/Resources/Private/Templates/'
+
+
+  bootstrap.cdn.enable:
+    label: 'Enable CDN - please consider the "GDPR" ("DSGVO")'
+    category: Bootstrap.config.cdn
+    description: 'Before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/ or EXT:t3sb_package/'
+    type: bool
+    default: true
+
+  bootstrap.cdn.bootswatch:
+    label: 'Bootswatch Themes CDN'
+    category: Bootstrap.config.cdn
+    description: 'Override default Bootstrap values with selected Bootswatch Theme, if SCSS is NOT selected in the EM config - Info: https://bootswatch.com/.'
+    type: string
+    enum:
+      '': 'none'
+      brite: 'Brite'
+      cerulean: 'Cerulean'
+      cosmo: 'Cosmo'
+      cyborg: 'Cyborg'
+      darkly: 'Darkly'
+      flatly: 'Flatly'
+      journal: 'Journal'
+      litera: 'Litera'
+      lux: 'Lux'
+      materia: 'Materia'
+      minty: 'Minty'
+      morph: 'Morph'
+      pulse: 'Pulse'
+      quartz: 'Quartz'
+      sandstone: 'Sandstone'
+      simplex: 'Simplex'
+      sketchy: 'Sketchy'
+      slate: 'Slate'
+      solar: 'Solar'
+      spacelab: 'Spacelab'
+      superhero: 'Superhero'
+      united: 'United'
+      vapor: 'Vapor'
+      yeti: 'Yeti'
+      zephyr: 'Zephyr'
+    default: ''
+ 
+  bootstrap.cdn.googlefonts:
+    label: 'Comma separated list with google fonts'
+    category: Bootstrap.config.cdn
+    description: 'Integrate Google Fonts "GDPR"-compliant locally with "Custom SCSS" into your website (e.g.: Montserrat,Fira Sans)'
+    type: string
+    default: ''
+
+  bootstrap.gooleFontsWeights:
+    label: 'Font-weights for Google fonts (regular == 400)'
+    category: Bootstrap.config.cdn
+    description: 'Used in the scheduler task "T3SB CDN to local'
+    type: string
+    default: '300, regular, 700'

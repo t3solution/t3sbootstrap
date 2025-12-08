@@ -86,9 +86,9 @@
 											</div>
 										</div>
 										<f:if condition="{pagesOverride}">
-											<div class="bs-callout bs-callout-primary bg-white">
-												<h3>Global pages override is set in Constant Editor:</h3>
-												<ul class="list-unstyled">
+											<div class="bs-callout bs-callout-primary bg-white p-3">
+												<h3>Global pages override is set in Constant Editor or Site Settings:</h3>
+												<ul class="list-unstyled m-0">
 													<f:for each="{pagesOverride}" as="override" key="field">
 														<f:if condition="{override}">
 															<li>{field} = {override}</li>
@@ -146,7 +146,7 @@
 							</div>
 							<f:if condition="{settings.editScss} && {isSiteroot}">
 								<f:then>
-									<f:form class="form-horizontal mx-3" action="list" name="custom-variables" arguments="{updateSss: 'TRUE'}" >
+									<f:form class="form-horizontal mx-3" action="list" name="custom-variables" arguments="{updateScss: 'TRUE'}" >
 										<p class="text-center text-secondary">You can override default <strong>Bootstrap</strong> variables here:</p>
 										<f:form.textarea name="t3sbootstrap[custom-variables]" class="form-control"
 										rows="16" style="padding:1rem; margin-bottom:1rem;background-color:#f5f5f5" value="{custom-variables -> f:format.raw()}" />
@@ -206,7 +206,6 @@
 		</div>
 		<div id="utility-panel" class="collapse" aria-labelledby="utility-heading-panel" data-bs-parent="#accordionList">
 			<div class="panel-body">
-
 				<div class="p-0 mb-0">
 					<p>Currently available utility colors:</p>
 					<table class="table table-striped util-table">
@@ -285,7 +284,7 @@
 				</p>
 				<div class="collapse" id="collapseOptimize">
 					<div class="card card-body p-0">
-						<p>Make sure you optimize Bootstrap by only @importing the components you need.</p>
+						<p class="p-3 m-0">Make sure you optimize Bootstrap by only @importing the components you need.</p>
 						<table class="table">
 							<f:for each="{settings.optimize}" as="optimize" iteration="iterator" key="label">
 								<tr{f:if(condition: '{optimize}',then: '  class="table-warning"', else: ' class="table-success"')}>

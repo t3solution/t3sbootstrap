@@ -61,6 +61,11 @@ class ConfigProcessor implements DataProcessorInterface
 		} else {
 			$company = $companyArr[0] ?: $company;
 		}
+		$processedData['config']['general']['company'] = !empty($company) ? trim($company) : 'Company Name';
+		$processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepageUid'] ?: 1;
+		$processedData['config']['general']['pageTitle'] = $processedRecordVariables['pageTitle'] ?: '';
+		$processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['pageTitlealign'] ?: '';
+		$processedData['config']['general']['pageTitleclass'] = $processedRecordVariables['pageTitleclass'] ?: '';
 	
 		// flexible small columns
 		$currentPage = $frontendController->page;
@@ -71,13 +76,8 @@ class ConfigProcessor implements DataProcessorInterface
 		 ? (int)$rootlinePage['tx_t3sbootstrap_smallColumns'] : 3;
 		$smallColumns = $smallColumnsCurrent ?: $smallColumnsRootline;
 
-		$processedData['config']['general']['company'] = !empty($company) ? trim($company) : 'Company Name';
-		$processedData['config']['general']['homepageUid'] = $processedRecordVariables['homepageUid'] ?: 1;
-		$processedData['config']['general']['pageTitle'] = $processedRecordVariables['pageTitle'] ?: '';
-		$processedData['config']['general']['pageTitlealign'] = $processedRecordVariables['pageTitlealign'] ?: '';
-		$processedData['config']['general']['pageTitleclass'] = $processedRecordVariables['pageTitleclass'] ?: '';
-		if (ExtensionManagementUtility::isLoaded('indexed_search') && $currentPage['doktype'] == 1) {
-			$processedData['config']['general']['pageTitleIndexedSearch'] = true;
+		if (ExtensionManagementUtility::isLoaded('indexed_search') && $currentPage['doktype']) {
+			$processedData['config']['general']['pageTitleSearch'] = true;
 		}
 
 		// global override page data
@@ -89,7 +89,7 @@ class ConfigProcessor implements DataProcessorInterface
 						$processedData['data'][$field] = $override;
 						$smallColumns = $override;
 					} elseif ($field === 'tx_t3sbootstrap_container') {
-						if (($backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra') && $processedData['data']['tx_t3sbootstrap_container'] === '0') {
+						if (($backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra') && $override === 'none') {
 							// no override if container = none
 						} else {
 							$processedData['data']['tx_t3sbootstrap_container'] = $override;
@@ -522,12 +522,25 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
 				}
 			}
-
-			if ($hasBgImages && empty($currentPage['tx_t3sbootstrap_fullheightsection']) && !empty($processedRecordVariables['jumbotronBgimageratio'])) {
+			
+			$jumbotronBgimageratio = $processedRecordVariables['jumbotronBgimageratio'];
+			$jumbotronBgimageratio = empty($jumbotronBgimageratio) ? '37x9' : $jumbotronBgimageratio;
+			if ($hasBgImages && empty($currentPage['tx_t3sbootstrap_fullheightsection'])) {
+				if (str_contains($jumbotronBgimageratio, ':')) {
+					$jumbotronBgimageratio = str_replace(':', 'x', $jumbotronBgimageratio);
+				} elseif (str_contains($jumbotronBgimageratio, '/')) {
+					$jumbotronBgimageratio = str_replace('/', 'x', $jumbotronBgimageratio);
+				} elseif (str_contains($jumbotronBgimageratio, 'by')) {
+					$jumbotronBgimageratio = str_replace('by', 'x', $jumbotronBgimageratio);
+				} elseif (str_contains($jumbotronBgimageratio, 'x')) {
+					// do nothing
+				} else {
+					$jumbotronBgimageratio = '37x9';
+				}
 				$processedData['config']['jumbotron']['noBgRatio'] = false;
-				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$processedRecordVariables['jumbotronBgimageratio'];
-				$ratioArr = explode('x', $processedRecordVariables['jumbotronBgimageratio']);
-				$x = $processedRecordVariables['jumbotronBgimageratio'];
+				$processedData['config']['jumbotron']['class'] .= ' ratio ratio-'.$jumbotronBgimageratio;
+				$ratioArr = explode('x', $jumbotronBgimageratio);
+				$x = $jumbotronBgimageratio;
 				$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';
 				$processedData['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
 			} else {
@@ -535,7 +548,6 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['config']['jumbotron']['class'] = ' ratio';
 				}
 			}
-
 		}
 
 		/**

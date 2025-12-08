@@ -1,0 +1,92 @@
+categories:
+  Bootstrap:
+    label: 'Bootstrap Components'
+  
+  Bootstrap.pages.override:
+    label: 'Global pages override'
+    parent: Bootstrap
+
+
+settings:
+  bootstrap.pages.override.container:
+    label: 'Container (for the whole page)'
+    category: Bootstrap.pages.override
+    description: ''
+    type: string
+    enum:
+      0: 'none'
+      container: 'container'
+      container-sm: 'container-sm'
+      container-md: 'container-md'
+      container-lg: 'container-lg'
+      container-xl: 'container-xl'
+      container-xxl: 'container-xxl'
+      container-fluid: 'container-fluid'
+      none-container: 'none-container'
+    default: '0'
+  
+  bootstrap.pages.override.smallColumns:
+    label: 'Aside columns width'
+    category: Bootstrap.pages.override
+    description: ''
+    type: int
+    enum:
+      0: 0
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+      5: 5
+      6: 6
+    default: 0
+  
+  bootstrap.pages.override.dropdownRight:
+    label: 'Dropdown menu right'
+    category: Bootstrap.pages.override
+    description: ''
+    type: bool
+    default: false
+  
+  bootstrap.pages.override.mobileOrder:
+    label: 'Aside order on mobile'
+    category: Bootstrap.pages.override
+    description: ''
+    type: string
+    enum:
+      0: '0'
+      default: 'default'
+      top: 'top'
+      bottom: 'bottom'
+      leftTop: 'leftTop'
+      leftBottom: 'leftBottom'
+      rightTop: 'rightTop'
+      rightBottom: 'rightBottom'
+    default: '0'
+  
+  bootstrap.pages.override.breakpoint:
+    label: 'Breakpoint'
+    category: Bootstrap.pages.override
+    description: ''
+    type: string
+    enum:
+      0: '0'
+      sm: 'sm'
+      md: 'md'
+      lg: 'lg'
+      xl: 'xl'
+      xxl: 'xxl'
+    default: 0
+  
+  bootstrap.pages.override.titlecolor:
+    label: 'Title color'
+    category: Bootstrap.pages.override
+    description: 'Hex color codes, RGB or CSS variables e.g. var(--bs-primary)'
+    type: string
+    default: ''
+  
+  bootstrap.pages.override.subtitlecolor:
+    label: 'Subtitle color'
+    category: Bootstrap.pages.override
+    description: 'Hex color codes, RGB or CSS variables e.g. var(--bs-primary)'
+    type: string
+    default: ''

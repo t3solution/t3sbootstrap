@@ -92,7 +92,7 @@ class BootstrapProcessor implements DataProcessorInterface
             $flexconf = $flexFormService->convertFlexFormContentToArray($processedData['data']['tx_t3sbootstrap_flexform']);
         }
         $parentflexconf = [];
-        $parentContainer = [];
+
         $parentUid = $processedData['data']['tx_container_parent'];
         $t3sbsElement = false;
         if (str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) && $cType !== 'list') {
@@ -111,7 +111,6 @@ class BootstrapProcessor implements DataProcessorInterface
 	                $parentflexconf = $flexformHelper->addMissingElements($parentflexconf, $parentCType, $t3sbsElement);
 	            }
 			}
-            $parentContainer = $parentData['tx_container_parent'];
         }
 
         $processedData['parentCType'] = $parentCType;
@@ -201,7 +200,7 @@ class BootstrapProcessor implements DataProcessorInterface
             }
             if ($cType === 't3sbs_card') {
                 $processedData = GeneralUtility::makeInstance(Card::class)
-                ->getProcessedData($processedData, $flexconf, $parentflexconf);
+                ->getProcessedData($processedData, $flexconf, $parentflexconf, (bool)$processorConfiguration['minimumWidth']);
             }
             if ($cType === 't3sbs_carousel') {
                 $processedData = GeneralUtility::makeInstance(Carousel::class)

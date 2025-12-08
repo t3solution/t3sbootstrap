@@ -3,7 +3,7 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Register.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/BodyTag.typoscript'
 
-[{$bootstrap.extconf.customScss} == 1 && {$bootstrap.cdn.enable} == 0]
+[{$bootstrap.extconf.customScss} == 1 && constant('{$bootstrap.cdn.enable}') == 0]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapScss.typoscript'
 [END]
 
@@ -44,8 +44,9 @@ page {
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
 		t3sbootstrap.if.isFalse = {$bootstrap.config.disableDefaultCss}
 
-		t3sbFa = EXT:t3sbootstrap/Resources/Public/Styles/t3sbfontawseome.css
+		t3sbFa = EXT:t3sbootstrap/Resources/Public/Styles/t3sb-fontawseome.css
 		t3sbFa.if.isFalse = {$bootstrap.config.disableFaCss}
+
 	}
 
 }

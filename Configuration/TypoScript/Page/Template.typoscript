@@ -1,3 +1,4 @@
+
 page {
 	# Page template
 	10 = FLUIDTEMPLATE
@@ -27,11 +28,8 @@ page {
 		}
 		settings {
 			module.cdn < module.tx_t3sbootstrap.settings.cdn
-
-fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
-
+			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			skiplinks = {$bootstrap.skiplinks}
-			disableDefaultCss = {$bootstrap.config.disableDefaultCss}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
 			lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
 			iconpack.loaded = {$bootstrap.ext.iconpack}
@@ -51,6 +49,7 @@ fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			viewportWidthCookie = {$bootstrap.image.viewportWidthCookie}
 			sitepackage = {$bootstrap.extconf.sitepackage}
 			navbar {
+				navbarmodal = {$bootstrap.extconf.navbarmodal}
 				noLinkTitle = {$bootstrap.navbar.noLinkTitle}
 				image.defaultPath = {$bootstrap.navbar.image.defaultPath}
 				image.width = {$bootstrap.navbar.image.width}
@@ -74,7 +73,6 @@ fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 					breakpoint = {$bootstrap.pages.override.breakpoint}
 					dropdownRight = {$bootstrap.pages.override.dropdownRight}
 					container = {$bootstrap.pages.override.container}
-					linkToTop = {$bootstrap.pages.override.linkToTop}
 					mobileOrder = {$bootstrap.pages.override.mobileOrder}
 					tx_t3sbootstrap_titlecolor = {$bootstrap.pages.override.titlecolor}
 					tx_t3sbootstrap_subtitlecolor = {$bootstrap.pages.override.subtitlecolor}
@@ -82,7 +80,6 @@ fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 					tx_t3sbootstrap_breakpoint = {$bootstrap.pages.override.breakpoint}
 					tx_t3sbootstrap_dropdownRight = {$bootstrap.pages.override.dropdownRight}
 					tx_t3sbootstrap_container = {$bootstrap.pages.override.container}
-					tx_t3sbootstrap_linkToTop = {$bootstrap.pages.override.linkToTop}
 					tx_t3sbootstrap_mobileOrder = {$bootstrap.pages.override.mobileOrder}
 				}
 			}
@@ -351,7 +348,7 @@ lib.t3sbs.dispose = TEXT
 lib.t3sbs.dispose.value = Nicht mehr anzeigen
 
 [loaded('indexed_search')]
-page.10.settings.indexedsearch.targetPid = {$plugin.tx_indexedsearch.settings.targetPid}
+page.10.settings.indexedsearch.targetPid = {$indexedsearch.targetPid}
 [global]
 
 plugin.tx_felogin_login {
@@ -361,5 +358,6 @@ plugin.tx_felogin_login {
 		}
 	}
 }
+
 
 
