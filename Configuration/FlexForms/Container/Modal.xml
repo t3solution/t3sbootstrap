@@ -71,7 +71,7 @@
 						</config>
 					</onPageLoad>
 					<cookie>
-						<label>Set cookie if approved</label>
+						<label>Set cookie if approved (expire in 1 hour)</label>
 						<displayCond>FIELD:general.onPageLoad:=:1</displayCond>
 						<config>
 							<type>check</type>

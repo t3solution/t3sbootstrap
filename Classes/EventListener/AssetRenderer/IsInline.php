@@ -129,6 +129,7 @@ class IsInline
         $jquery ='';
         $js = '';
         $function = '';
+        $rawJs = '';
 
         foreach ($assetJsInline as $library => $source) {
             if (str_ends_with($library, 'function')) {
@@ -137,8 +138,10 @@ class IsInline
                 $js .= $source['source'] .LF;
             } elseif (str_starts_with($library, 'addheight-')) {
                 $addheight .= $source['source'] .LF.LF;
-            } else {
+            } elseif (str_starts_with($library, 'jquery')) {
                 $jquery .= $source['source'] .LF.LF;
+            } else {
+                $rawJs .= $source['source'] .LF.LF;
             }
             $event->getAssetCollector()->removeInlineJavaScript($library);
         }
@@ -159,6 +162,10 @@ TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight), ",")."}};" .LF;
 
         if (!empty($jquery)) {
             $source .= LF."(function($){'use strict';".LF. $jquery .LF."})(jQuery);".LF;
+        }
+
+        if (!empty($rawJs)) {
+            $source .= LF. $rawJs .LF;
         }
 
         if (!empty($settings['t3sbminify'])) {

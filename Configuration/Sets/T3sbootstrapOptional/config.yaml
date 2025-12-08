@@ -1,0 +1,4 @@
+name: t3sbs/t3sbootstrap-optional
+label: T3S Bootstrap - OTHER SETTINGS (optional)
+dependencies:
+  - t3sbs/t3sbootstrap

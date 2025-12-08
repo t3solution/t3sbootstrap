@@ -1,1 +1,53 @@
+# Import setup globally until dropping TYPO3 12 support
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/setup.typoscript'
+
+
+page.10 {
+	partialRootPaths {
+		3 = {$bootstrap.view.partialRootPath}
+		4 = {$bootstrap.view.partialRootPath}Content/
+	}
+	layoutRootPaths {
+		3 = {$bootstrap.view.layoutRootPath}
+		4 = {$bootstrap.view.layoutRootPath}Content/
+	}
+}
+
+lib.contentElement {
+	templateRootPaths {
+		3 = {$bootstrap.view.templateRootPath}
+		4 = {$bootstrap.view.templateRootPath}Content/
+	}
+	partialRootPaths {
+		3 = {$bootstrap.view.partialRootPath}
+		4 = {$bootstrap.view.partialRootPath}Content/
+	}
+	layoutRootPaths {
+		3 = {$bootstrap.view.layoutRootPath}
+		4 = {$bootstrap.view.layoutRootPath}Content/
+	}
+}
+
+tt_content {
+	two_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	three_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	four_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	six_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	row_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	card_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	button_group.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	background_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	parallax_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	autoLayout_row.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	carousel_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	collapsible_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	collapsible_accordion.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	modal.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	tabs_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	tabs_tab.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	listGroup_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	masonry_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	swiper_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+	toast_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
+}

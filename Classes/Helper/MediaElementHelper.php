@@ -63,6 +63,10 @@ class MediaElementHelper implements SingletonInterface
 			$processedData = $galleryUtility->getGalleryRowWidth( $processedData );
 			$processedData = $galleryUtility->getGalleryClasses( $processedData, $breakpoint );
 
+			if ($cType === 't3sbs_card' && $processedData['parentCType'] != 'card_wrapper') {
+				$processedData['addmedia']['figureclass'] .= !empty($processedData['data']['image_zoom']) ? ' gallery' : '';
+			}
+
 		} else {
 			$processedData['addmedia']['figureclass'] .= !empty($processedData['data']['image_zoom']) ? ' gallery' : '';
 		}

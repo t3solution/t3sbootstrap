@@ -2,13 +2,15 @@
 <f:if condition="{config.general.pageTitle} == 'content'">
 	<f:render partial="Page/Title" arguments="{_all}" />
 </f:if>
-<f:if condition="{data.tx_t3sbootstrap_container}">
+<f:if condition="{data.tx_t3sbootstrap_container} && {data.tx_t3sbootstrap_container} != 'none'">
 	<f:then>
+		<f:variable name="noContainer">false</f:variable>
 		<div class="{data.tx_t3sbootstrap_container}">
 			<f:render section="Order" arguments="{_all}" />
 		</div>
 	</f:then>
 	<f:else>
+		<f:variable name="noContainer">true</f:variable>
 		<f:render section="Order" arguments="{_all}" />
 	</f:else>
 </f:if>
@@ -16,7 +18,7 @@
 
 
 <f:section name="Order">
-	<div class="row content-row">
+	<div class="row content-row{f:if(condition: '{noContainer}', then: ' mx-1')}">
 	<f:switch expression="{data.tx_t3sbootstrap_mobileOrder}">
 		<f:case value="top">
 			<f:render section="Top" arguments="{_all}" />

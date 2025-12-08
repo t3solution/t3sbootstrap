@@ -2,40 +2,36 @@
 <nav class="page-pagination" aria-label="page pagination">
 	<ul class="pagination justify-content-center">
 		<f:if condition="{browsePrev}">
-			<f:for each="{browsePrev}" as="page" iteration="iterator" reverse="true">
-				<li class="page-item">
-					<a class="page-link" href="{page.link}">
-						<span aria-hidden="true">
-						<f:if condition="{settings.iconpack.loaded}">
-							<f:then>
-								<t3sb:icon iconfig="fa6:solid,chevron-left" />		
-							</f:then>
-							<f:else>
-								<i class="fa-solid fa-chevron-left"></i>
-							</f:else>	
-						</f:if>		
-						</span>
-						 {page.title}
-					</a>
-				</li>
-			</f:for>
+			<li class="page-item">
+				<a class="page-link" href="{browsePrev.0.link}">
+					<span aria-hidden="true">
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa7:solid,chevron-left" />		
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-chevron-left"></i>
+						</f:else>	
+					</f:if>		
+					</span>
+					 {browsePrev.0.title}
+				</a>
+			</li>
 		</f:if>
 		<f:if condition="{browseNext}">
-			<f:for each="{browseNext}" as="page" iteration="iterator" reverse="true">
-				<li class="page-item">
-					<a class="page-link" href="{page.link}">{page.title} <span aria-hidden="true">
-						<f:if condition="{settings.iconpack.loaded}">
-							<f:then>
-								<t3sb:icon iconfig="fa6:solid,chevron-right" />	
-							</f:then>
-							<f:else>
-								<i class="fa-solid fa-chevron-right"></i>
-							</f:else>	
-						</f:if>					
-					</span>
-					</a>
-				</li>
-			</f:for>
+			<li class="page-item">
+				<a class="page-link" href="{browseNext.0.link}">{browseNext.0.title} <span aria-hidden="true">
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="fa7:solid,chevron-right" />	
+						</f:then>
+						<f:else>
+							<i class="fa-solid fa-chevron-right"></i>
+						</f:else>	
+					</f:if>	
+				</span>
+				</a>
+			</li>
 		</f:if>
 	</ul>
 </nav>

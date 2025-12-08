@@ -45,46 +45,7 @@ function t3sbBackgroundVideo(div, params) {
 			<f:then>
 				<f:if condition="{enableAutoheight} && {addHeight} ">
 					<f:then>
-						<f:asset.script identifier="autoheight_function">
-// Autoheight for backgroundimages - BackgroundWrapper.html
-function t3sbAddHeight(TYPO3, objKey) {
-	var overlay = document.getElementById(objKey).nextElementSibling;
-	if (overlay) {
-		var totalHeight = 0;
-		var addHeight = 0;
-		var claimsArray = Object.entries(TYPO3.settings.ADDHEIGHT);
-		claimsArray.forEach(function (item, index) {
-			addHeight = parseInt(item[1]);
-		});
-		if ( overlay.querySelector('.container') ) {
-			Array.from(overlay.getElementsByClassName('container')[0].children).forEach( bgwContent => {
-				totalHeight = bgwContent.clientHeight;
-			});
-			totalHeight = totalHeight + addHeight;
-			document.getElementById(objKey).style.minHeight = totalHeight+'px';
-		} else {
-			totalHeight = overlay.children[0].children[0].clientHeight;
-			totalHeight = totalHeight + addHeight;
-			document.getElementById(objKey).style.minHeight = totalHeight+'px';
-		}
-	}
-	var mobile = false;
-	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		mobile = true;
-	}
-	if (mobile){
-		document.querySelectorAll('.background-image').forEach( bgimg => {
-			bgimg.classList.remove('background-fixed');
-		});
-	}
-}
-						</f:asset.script>
-						<f:asset.script identifier="vanilla_enableAutoheight">
-	// Autoheight for backgroundimages - BackgroundWrapper.html
-	document.querySelectorAll('.enableAutoheight').forEach(function(ah) {
-		t3sbAddHeight(TYPO3, ah.id);
-	});
-						</f:asset.script>
+						<f:render section="Autoheight" arguments="{_all}" />
 						<f:comment>	BG-Image : overlay and autoheight </f:comment>
 						<section id="s-{data.uid}" class="card rounded-0 border-0">
 							<f:comment>	background-image by css </f:comment>
@@ -125,6 +86,8 @@ function t3sbAddHeight(TYPO3, objKey) {
 										<f:then>
 											<f:comment>	Local video </f:comment>
 											<f:asset.script identifier="localVideo_function">
+
+
 // Local video - BackgroundWrapper.html
 function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoElement) {
 	videoElement.muted = mute;
@@ -191,7 +154,6 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 																1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 																2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 															}" 
-															picturefill="{settings.picturefill}"
 															lazyload="{settings.lazyLoad}" 
 															ratio="0" 
 															style="{style}" 
@@ -209,7 +171,6 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 																1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 																2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 															}" 
-															picturefill="{settings.picturefill}" 
 															lazyload="0" 
 															ratio="0" 
 															style="{style}" 
@@ -283,4 +244,48 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 		</f:if>
 	</div>
 </f:if>
+</f:section>
+
+
+<f:section name="Autoheight">
+	<f:asset.script identifier="autoheight_function">
+// Autoheight for backgroundimages - BackgroundWrapper.html
+function t3sbAddHeight(TYPO3, objKey) {
+	var overlay = document.getElementById(objKey).nextElementSibling;
+	if (overlay) {
+		var totalHeight = 0;
+		var addHeight = 0;
+		var claimsArray = Object.entries(TYPO3.settings.ADDHEIGHT);
+		claimsArray.forEach(function (item, index) {
+			addHeight = parseInt(item[1]);
+		});
+		if ( overlay.querySelector('.container') ) {
+			Array.from(overlay.getElementsByClassName('container')[0].children).forEach( bgwContent => {
+				totalHeight = bgwContent.clientHeight;
+			});
+			totalHeight = totalHeight + addHeight;
+			document.getElementById(objKey).style.minHeight = totalHeight+'px';
+		} else {
+			totalHeight = overlay.children[0].children[0].clientHeight;
+			totalHeight = totalHeight + addHeight;
+			document.getElementById(objKey).style.minHeight = totalHeight+'px';
+		}
+	}
+	var mobile = false;
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		mobile = true;
+	}
+	if (mobile){
+		document.querySelectorAll('.background-image').forEach( bgimg => {
+			bgimg.classList.remove('background-fixed');
+		});
+	}
+}
+	</f:asset.script>
+	<f:asset.script identifier="vanilla_enableAutoheight">
+	// Autoheight for backgroundimages - BackgroundWrapper.html
+	document.querySelectorAll('.enableAutoheight').forEach(function(ah) {
+		t3sbAddHeight(TYPO3, ah.id);
+	});
+	</f:asset.script>
 </f:section>

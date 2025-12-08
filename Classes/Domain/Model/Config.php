@@ -14,23 +14,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Config extends AbstractEntity
 {
 
-
- 	    
-    /**
-     * pid
-     *
-     * @var int
-
-    protected ?int $pid = null;
-     */
-    /**
-     * pid
-     *
-     * @var int
-
-    protected $pid;
-     */
-
     /**
      * company
      *
@@ -453,13 +436,6 @@ class Config extends AbstractEntity
      * @var bool
      */
     protected $breadcrumbFaicon = false;
-
-    /**
-     * breadcrumbFaicononly
-     *
-     * @var bool
-     */
-    protected $breadcrumbFaicononly = false;
 
     /**
      * breadcrumbNotOnRootpage
@@ -946,47 +922,12 @@ class Config extends AbstractEntity
      */
     protected $recentlyUpdatedContentElements = false;
 
-
-
     /**
      * updated
      *
      * @var int
      */
     protected $updated = 0;
-
-    /**
-     * gridupdated
-     *
-     * @var int
-     */
-    protected $gridupdated = 0;
-
-
-
-
-    /**
-     * @param int<0, max> $pid
-     */
-    public function setPid(int $pid): void
-    {
-        $this->pid = $pid;
-    }
-
-    /**
-     * @return int<0, max>|null
-     */
-#    public function getPid(): int|null
-    public function getPid(): ?int
-    {
-        if ($this->pid === null) {
-            return null;
-        }
-        return (int)$this->pid;
-    }
-
-
-
 
 
     /**
@@ -2387,37 +2328,6 @@ class Config extends AbstractEntity
     public function isBreadcrumbFaicon()
     {
         return $this->breadcrumbFaicon;
-    }
-
-    /**
-     * Returns the breadcrumbFaicononly
-     *
-     * @return bool $breadcrumbFaicononly
-     */
-    public function getBreadcrumbFaicononly()
-    {
-        return $this->breadcrumbFaicononly;
-    }
-
-    /**
-     * Sets the breadcrumbFaicononly
-     *
-     * @param bool $breadcrumbFaicononly
-     * @return void
-     */
-    public function setBreadcrumbFaicononly($breadcrumbFaicononly): void
-    {
-        $this->breadcrumbFaicononly = $breadcrumbFaicononly;
-    }
-
-    /**
-     * Returns the boolean state of isBreadcrumbFaicononly
-     *
-     * @return bool
-     */
-    public function isBreadcrumbFaicononly()
-    {
-        return $this->breadcrumbFaicononly;
     }
 
     /**
@@ -3915,7 +3825,6 @@ class Config extends AbstractEntity
      * Sets the lastModifiedContentElement
      *
      * @param bool $lastModifiedContentElement
-     * @return void
      */
     public function setLastModifiedContentElement($lastModifiedContentElement): void
     {
@@ -3936,7 +3845,6 @@ class Config extends AbstractEntity
      * Sets the recentlyUpdatedContentElements
      *
      * @param bool $recentlyUpdatedContentElements
-     * @return void
      */
     public function setRecentlyUpdatedContentElements($recentlyUpdatedContentElements): void
     {
@@ -3962,27 +3870,6 @@ class Config extends AbstractEntity
     public function setUpdated($updated): void
     {
         $this->updated = $updated;
-    }
-
-    /**
-     * Returns gridupdated
-     *
-     * @return int $gridupdated
-     */
-    public function getGridupdated()
-    {
-        return $this->gridupdated;
-    }
-
-    /**
-     * Sets the gridupdated
-     *
-     * @param int $gridupdated
-     * @return void
-     */
-    public function setGridupdated($gridupdated): void
-    {
-        $this->gridupdated = $gridupdated;
     }
 
     /**

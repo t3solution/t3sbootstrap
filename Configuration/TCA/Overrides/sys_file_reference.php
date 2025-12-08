@@ -290,7 +290,7 @@ $tempSysFileReferenceColumns = [
         'exclude' => 1,
         'label' => 'Custom aspect ratio (default: 16:9)',
         'description' => 'you can use any aspect ratio - e.g.: 4:3 (textmedia only)',
-        'displayCond' => 'FIELD:tablenames:=:tt_content',
+        'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->textmedia',
         'config' => [
             'type' => 'input',
             'size' => 10,

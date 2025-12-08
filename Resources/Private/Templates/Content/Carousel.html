@@ -113,11 +113,10 @@
 			1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 			2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 			 }"
-			 picturefill="{settings.picturefill}"
 			 lazyload="{f:if(condition: owlStyle, then: '', else: settings.lazyLoad)}"
 			 ratio="{ratio}"
-			 shift="{file.0.properties.tx_t3sbootstrap_shift_vertical}" 
-			 hshift="{file.0.properties.tx_t3sbootstrap_shift_horizontal}"
+			 shift="{files.0.properties.tx_t3sbootstrap_shift_vertical}" 
+			 hshift="{files.0.properties.tx_t3sbootstrap_shift_horizontal}"
 			 mobileNoRatio="{mobileNoRatio}" />
 	</f:else>
 </f:if>

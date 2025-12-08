@@ -486,7 +486,6 @@ class GalleryProcessor implements DataProcessorInterface
         }
 
 
-
         // User entered a predefined width
         if ($this->equalMediaWidth) {
             $mediaWidth = $this->checkMediaWidth($this->equalMediaWidth);
@@ -901,7 +900,7 @@ class GalleryProcessor implements DataProcessorInterface
     protected function checkMediaWidth($mediaWidth): int
     {
         #if ($this->minimumWidth && $mediaWidth < self::minimumWidth) {
-        if ($this->minimumWidth && empty($mediaWidth)) {
+        if ($this->minimumWidth && empty($this->equalMediaHeight)) {
             // set to 575px and therefore 100% wide on mobile (constant: minimumWidth=1)
             $mediaWidth = self::minimumWidth;
         }

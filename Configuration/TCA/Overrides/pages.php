@@ -1,8 +1,13 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 defined('TYPO3') || die();
+
+# Extension configuration
+$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 $tempPagesColumns = [
     'tx_t3sbootstrap_smallColumns' => [
@@ -168,7 +173,7 @@ $GLOBALS['TCA']['pages']['palettes']['bootstrap'] = [
 	'showitem' => 'tx_t3sbootstrap_smallColumns, tx_t3sbootstrap_mobileOrder, 
 	--linebreak--, tx_t3sbootstrap_container, tx_t3sbootstrap_breakpoint, 
 	--linebreak--, tx_t3sbootstrap_linkToTop, tx_t3sbootstrap_fullheightsection, 
-	--linebreak--, tx_t3sbootstrap_megamenu',
+	--linebreak--, tx_t3sbootstrap_megamenu, tx_t3sbootstrap_dropdownRight',
 	'canNotCollapse' => 1
 ];
 
@@ -205,6 +210,22 @@ ExtensionManagementUtility::addTcaSelectItem(
 // Add the icon to the icon class configuration
 $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes'][$menuheader] = 'content-header';
 
+if (!empty($extconf['navbarmodal'])) {
+    $menuheader = 197;
+    // Add the new doktype to the page type selector
+    ExtensionManagementUtility::addTcaSelectItem(
+        'pages',
+        'doktype',
+        [
+            'label' => 'Modal',
+            'value' => $menuheader,
+            'icon'  => 'actions-duplicate',
+            'group' => 'special',
+        ],
+    );
+    // Add the icon to the icon class configuration
+    $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes'][$menuheader] = 'actions-duplicate';
+}
 
 
 /***************

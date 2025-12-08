@@ -14,7 +14,6 @@ plugin.tx_t3sbootstrap {
 	}
 }
 
-
 bootstrap.cdn.bootstraplatest = 5.3.8
 bootstrap.cdn.noZip = 0
 
@@ -31,7 +30,6 @@ bootstrap.cdn.noZip = 0
 # customsubcategory=a-image=Default Image Size
 # customsubcategory=b-image=Additional image sizes (srcset) that should be generated for each content image.
 # customsubcategory=c-image=Lazyloading Threshold
-# customsubcategory=d-image=Picturefill
 
 # customcategory=bootstrap-optimize=T3SB OPTIMIZE-Bootstrap 
 # customsubcategory=c-enable=Optimize Bootstrap - Lean Sass imports When using "Custom SCSS", make sure you optimize Bootstrap by only @importing the components you need. For example, if you’re not using the carousel, remove that import to save some file size in your compiled CSS by disable the associated checkbox below. progress, tooltip, popover and placeholders are not used by t3sbootstrap! After that execute the scheduler task "t3sbootstrap:customScss".
@@ -54,12 +52,8 @@ bootstrap.cdn {
 	masonry = 4.2.2
 	# cat=bootstrap-cdn/b-version/20; type=small; label=jQuery library:
 	jquery = 3.7.1
-	# cat=bootstrap-cdn/b-version/22; type=small; label=jQuery Easing:
-	jqueryEasing = 1.4.1
 	# cat=bootstrap-cdn/b-version/30; type=small; label=Lazyload:
 	lazyload = 17.8.5
-	# cat=bootstrap-cdn/b-version/32; type=small; label=Picturefill:
-	picturefill = 3.0.3
 	# cat=bootstrap-cdn/b-version/37; type=small; label=Animate CSS:
 	animate = 4.1.1
 	# cat=bootstrap-cdn/b-version/40; type=small; label=Baguette Box:
@@ -70,11 +64,11 @@ bootstrap.cdn {
 	glightbox = 3.2.0
 	# cat=bootstrap-cdn/b-version/50; type=small; label=Jarallax: set to 2 only to get v2.x (latest)
 	jarallax = 2
-	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 11 only to get v11.x (latest)
-	swiper = 11
+	# cat=bootstrap-cdn/b-version/60; type=small; label=Swiper: set to 12 only to get v12.x (latest)
+	swiper = 12
 
 	# cat=bootstrap-cdn/c-integrity/10; type=small; label=Bootstrap CSS:
-	bootstrapCssIntegrity = sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB
+	bootstrapCssIntegrity = sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT
 	# cat=bootstrap-cdn/c-integrity/11; type=small; label=Bootstrap JS:
 	bootstrapJsIntegrity = sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D
 	# cat=bootstrap-cdn/c-integrity/12; type=small; label=Bootstrap Bundle JS:
@@ -85,12 +79,8 @@ bootstrap.cdn {
 	masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
 	# cat=bootstrap-cdn/c-integrity/20; type=small; label=jQuery library:
 	jqueryIntegrity = sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=
-	# cat=bootstrap-cdn/c-integrity/22; type=small; label=jQuery Easing:
-	jqueryEasingIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/30; type=small; label=Lazyload:
 	lazyloadIntegrity = 
-	# cat=bootstrap-cdn/c-integrity/32; type=small; label=Picturefill:
-	picturefillIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/37; type=small; label=Baguette Box:
 	baguetteBoxIntegrity = 
 	# cat=bootstrap-cdn/c-integrity/40; type=small; label=Halkabox:
@@ -124,8 +114,6 @@ bootstrap.image {
 	lazyLoadThreshold = 0
 	# cat=bootstrap-image/c-image/020; type=boolean; label=Lazy load for images in the BG-Wrapper: not the BG-image
 	lazyLoadBgWrapperImage = 0
-	# cat=bootstrap-image/d-image/40; type=boolean; label=A responsive image polyfill: Picturefill enables support for the picture element and associated features in browsers that do not yet support them.
-	picturefill = 0
 }
 
 bootstrap.optimize {
@@ -228,13 +216,13 @@ bootstrap.print.enable = 0
 
 # disable default CSS - t3sbootstrap.css
 bootstrap.config.disableDefaultCss = 0
-# disable default CSS - t3sbfontawseome.css
+# disable Font Awesome CSS - t3sb-fontawseome.css
 bootstrap.config.disableFaCss = 0
 
 # back to top button
 bootstrap.backToTopTitle = to top
 bootstrap.backToTopClass = fa-solid fa-circle-chevron-up fa-4x
-bootstrap.backToTopIconpack = fa6:solid,circle-chevron-up,size:4x
+bootstrap.backToTopIconpack = fa7:solid,circle-chevron-up,size:4x
 bootstrap.backToTopForAllPages = 0
 
 # font-weights for Google fonts (regular == 400)
@@ -312,3 +300,4 @@ styles.content.textmedia.borderPadding =
 [loaded('felogin')]
 plugin.tx_felogin_login.view.templateRootPath = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
 [END]
+

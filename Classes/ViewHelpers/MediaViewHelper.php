@@ -56,8 +56,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			'(min-width: %1$dpx) %1$dpx, 100vw'
 		);
 		$this->registerArgument('breakpoints', 'array', 'Image breakpoints from responsive design.', false, []);
-		$this->registerArgument('imgtag', 'bool', 'Use rendering suggested by picturefill.js', false, false);
-		$this->registerArgument('picturefill', 'bool', 'Use rendering suggested by picturefill.js', false, true);
+		$this->registerArgument('imgtag', 'bool', 'Generate image tag', false, false);
 		$this->registerArgument('lazyload', 'int', 'Generate markup that supports lazyloading', false, 0);
 		$this->registerArgument('ratio', 'string', 'Image ratio', false, '');
 		$this->registerArgument('mobileNoRatio', 'bool', 'no aspect ratio for mobile', false, '');
@@ -89,7 +88,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		$additionalConfig = (array)($this->arguments['additionalConfig'] ?? []);
 		$width = ($this->arguments['width'] ?? 0);
 		$height = ($this->arguments['height'] ?? 0);
-		
+
         // get Resource Object (non ExtBase version)
         if (is_callable([$file, 'getOriginalResource'])) {
             // We have a domain model, so we need to fetch the FAL resource object from there
@@ -244,7 +243,6 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			$focusArea,
 			null,
 			$this->tag,
-			$this->arguments['picturefill'],
 			false,
 			$lazyload,
 			$this->arguments['ignoreFileExtensions'],

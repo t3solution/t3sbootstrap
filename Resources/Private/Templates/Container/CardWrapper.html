@@ -35,7 +35,7 @@ function t3sbCardFlipper() {
 			var cardBody = backside.querySelector('.card-body');
 			var el = document.createElement('div');
 			el.classList.add('card-footer','jsfooter','text-center');
-			el.innerHTML = '<p class="square-backlink"><t3sb:icon iconfig="fa6:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>';
+			el.innerHTML = '<p class="square-backlink"><t3sb:icon iconfig="fa7:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>';
 			insertAfter(cardBody, el);
 			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
 				backside.style.transform = 'rotateY(180deg)';
@@ -258,7 +258,7 @@ function insertAfter(referenceNode, newNode) {
 									</f:then>
 									<f:else>
 										<f:if condition="{settings.cardFlipperOnClick}">
-											<p class="square-link"><t3sb:icon iconfig="fa6:solid,square-plus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>
+											<p class="square-link"><t3sb:icon iconfig="fa7:solid,square-plus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>
 										</f:if>
 									</f:else>
 								</f:if>
@@ -308,7 +308,6 @@ function insertAfter(referenceNode, newNode) {
 		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 	 }"
-	 picturefill="{settings.picturefill}"
 	 lazyload="{lazyload}"
 	 ratio="{ratio}"
 	 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"

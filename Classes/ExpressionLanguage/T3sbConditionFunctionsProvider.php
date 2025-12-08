@@ -30,6 +30,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             $this->getBrowser(),
             $this->getColPosList(),
             $this->getExtensionLoaded(),
+            $this->getConstant(),
         ];
     }
 
@@ -231,6 +232,22 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             // Not implemented, we only use the evaluator
         }, function ($arguments, $extKey) {
             	return ExtensionManagementUtility::isLoaded($extKey);
+        });
+    }
+
+
+    # Site Settings definition type=bool - condition bugfix
+    # e.g.: [{$bootstrap.cdn.enable} == 0] did not work but [constant('{$bootstrap.cdn.enable}') == 0]
+    protected function getConstant(): ExpressionFunction
+    {
+        return new ExpressionFunction('constant', function () {
+            // Not implemented, we only use the evaluator
+        }, function ($arguments, $constant) {
+            if (!empty($constant)) {
+                return 1;
+            } else {
+                return 0;
+            }
         });
     }
 

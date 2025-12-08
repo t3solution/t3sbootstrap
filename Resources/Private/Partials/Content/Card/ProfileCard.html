@@ -21,7 +21,7 @@
 			<a target="_blank" title="{company}" href="{socialmediaLink}">
 				<f:if condition="{settings.iconpack.loaded}">
 					<f:then>
-						<t3sb:icon iconfig="fa6:brands,{company}" additionalAttributes="{class:'mx-auto'}" />
+						<t3sb:icon iconfig="fa7:brands,{company}" additionalAttributes="{class:'mx-auto'}" />
 					</f:then>
 					<f:else>						
 						<i class="fa-brands fa-{company} mx-auto"></i>
@@ -43,7 +43,7 @@
 					<a target="_blank" title="{company}" href="{socialmediaLink}">
 						<f:if condition="{settings.iconpack.loaded}">
 							<f:then>
-								<t3sb:icon iconfig="fa6:brands,{company}" additionalAttributes="{class:'mx-auto'}" />
+								<t3sb:icon iconfig="fa7:brands,{company}" additionalAttributes="{class:'mx-auto'}" />
 							</f:then>
 							<f:else>						
 								<i class="fa-brands fa-{company} mx-auto"></i>
@@ -165,7 +165,6 @@
 				1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 				2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 			 }"
-			 picturefill="{settings.picturefill}"
 			 lazyload="{lazyload}"
 			 ratio="{addmedia.ratio}"
 			 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"
@@ -286,7 +285,6 @@ function t3sbProfileCardImage(multiImage) {
 				1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
 				2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
 			 }"
-			 picturefill="{settings.picturefill}"
 			 lazyload="{lazyload}"
 			 ratio="1:1"
 			 shift="{file.properties.tx_t3sbootstrap_shift_vertical}"

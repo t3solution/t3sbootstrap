@@ -459,4 +459,30 @@ class TcaMatcher
 
         return $parent;
     }
+
+    /**
+     * CType textmedia
+     */
+    public function textmedia(array $arguments): bool
+    {
+        $parent = false;
+        if (!empty($arguments['record']['uid_foreign'])) {
+            $uid = (int)$arguments['record']['uid_foreign'];
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $result = $queryBuilder
+                  ->select('*')
+                  ->from('tt_content')
+                  ->where(
+                      $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
+                  )
+                  ->executeQuery();
+            $contentElement = $result->fetchAssociative();
+            if (!empty($contentElement['CType']) && $contentElement['CType'] === 'textmedia') {
+                $parent = true;
+            }
+        }
+    
+        return $parent;
+    }
+
 }

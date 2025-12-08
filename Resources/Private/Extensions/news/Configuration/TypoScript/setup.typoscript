@@ -29,7 +29,6 @@ plugin.tx_news {
 		srcsetMobile = {$bootstrap.image.srcsetMobile}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
-		picturefill = {$bootstrap.image.picturefill}
 		magnifying = {$bootstrap.config.magnifying}
 		cdn = {$bootstrap.cdn.enable}
 		animateVersion = {$bootstrap.cdn.animate}

@@ -1,0 +1,10 @@
+
+If iconpack is loaded - in setup.typoscript - override partialRootPaths (5):
+
+[loaded('iconpack')]
+	lib.contentElement {
+		partialRootPaths {
+			6 = {$plugin.tx_t3sbootstrap.view.partialRootPath}FluidStyledContent/
+		}
+	}
+[END]

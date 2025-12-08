@@ -13,10 +13,8 @@ page {
 	}
 }
 
-
-
 # load jquery into the header
-[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 0]
+[{$bootstrap.config.jqueryHeader} == 1 && constant('{$bootstrap.cdn.enable}') == 0]
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
 	jquery = /fileadmin/T3SB/Resources/Public/T3SB-JS/jquery.min.js

@@ -1,3 +1,4 @@
+
 # Module configuration
 module.tx_t3sbootstrap {
 	view {
@@ -6,19 +7,23 @@ module.tx_t3sbootstrap {
 		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
 	}
 	settings {
+		bootswatchURL = https://bootswatch.com/5/
+
+		indexedsearch = {$bootstrap.ext.indexedsearch}
+
 		sitepackage = {$bootstrap.extconf.sitepackage}
 		customScss = {$bootstrap.extconf.customScss}
 		editScss = {$bootstrap.extconf.editScss}
 		bootswatch = {$bootstrap.extconf.bootswatch}
-		bootswatchURL = https://bootswatch.com/5/
 		keepVariables = {$bootstrap.extconf.keepVariables}
-		indexedsearch = {$bootstrap.ext.indexedsearch}
-		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
-		enableInfo = {$bootstrap.config.enableInfo}
 		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		t3sbminify = {$bootstrap.extconf.t3sbminify}
-		compress = {$bootstrap.config.compress}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
+		clearPageCache = {$bootstrap.extconf.clearPageCache}
+
+		enableUtilityColors = {$bootstrap.config.enableUtilityColors}
+		enableInfo = {$bootstrap.config.enableInfo}
+		compress = {$bootstrap.config.compress}
 		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
 		breakpoint.sm = {$bootstrap.navbar.breakpoint.sm}
 		breakpoint.md = {$bootstrap.navbar.breakpoint.md}
@@ -27,7 +32,7 @@ module.tx_t3sbootstrap {
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		disableJquery = {$bootstrap.disable.jquery}
 		gooleFontsWeights = {$bootstrap.gooleFontsWeights}
-		clearPageCache = {$bootstrap.extconf.clearPageCache}
+
 		cdn {
 			// Versions
 			enable = {$bootstrap.cdn.enable}
@@ -36,9 +41,7 @@ module.tx_t3sbootstrap {
 			popperjs = {$bootstrap.cdn.popperjs}
 			bootswatch = {$bootstrap.cdn.bootswatch}
 			jquery = {$bootstrap.cdn.jquery}
-			jqueryEasing = {$bootstrap.cdn.jqueryEasing}
 			lazyload = {$bootstrap.cdn.lazyload}
-			picturefill = {$bootstrap.cdn.picturefill}
 			animate = {$bootstrap.cdn.animate}
 			baguetteBox = {$bootstrap.cdn.baguetteBox}
 			halkabox = {$bootstrap.cdn.halkabox}
@@ -46,9 +49,9 @@ module.tx_t3sbootstrap {
 			masonry = {$bootstrap.cdn.masonry}
 			jarallax = {$bootstrap.cdn.jarallax}
 			swiper = {$bootstrap.cdn.swiper}
-			bootstraplatest = {$bootstrap.cdn.bootstraplatest}
-			noZip = {$bootstrap.cdn.noZip}
+			noZip = 0
 		}
+
 		optimize {
 			tables = {$bootstrap.optimize.tables}
 			forms = {$bootstrap.optimize.forms}
@@ -76,23 +79,23 @@ module.tx_t3sbootstrap {
 			offcanvas = {$bootstrap.optimize.offcanvas}
 			placeholders = {$bootstrap.optimize.placeholders}
 		}
+
 		pages {
 			override {
 				tx_t3sbootstrap_smallColumns = {$bootstrap.pages.override.smallColumns}
 				tx_t3sbootstrap_breakpoint = {$bootstrap.pages.override.breakpoint}
 				tx_t3sbootstrap_dropdownRight = {$bootstrap.pages.override.dropdownRight}
 				tx_t3sbootstrap_container = {$bootstrap.pages.override.container}
-				tx_t3sbootstrap_linkToTop = {$bootstrap.pages.override.linkToTop}
 				tx_t3sbootstrap_mobileOrder = {$bootstrap.pages.override.mobileOrder}
 				tx_t3sbootstrap_titlecolor = {$bootstrap.pages.override.titlecolor}
 				tx_t3sbootstrap_subtitlecolor = {$bootstrap.pages.override.subtitlecolor}
 			}
 		}
+
 	}
 }
 
 plugin.tx_t3sbootstrap {
-	view < module.tx_t3sbootstrap.view
 	settings {
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		# in days for contentconsent
@@ -136,11 +139,16 @@ config {
 [END]
 
 
-
 [typo3.branch == "12.4"]
 	module.tx_t3sbootstrap.settings.branch = 12
 [ELSE]
 	module.tx_t3sbootstrap.settings.branch = 13
 [END]
 
-
+[loaded('iconpack')]
+	lib.contentElement {
+		partialRootPaths {
+			8 = {$plugin.tx_t3sbootstrap.view.partialRootPath}FluidStyledContent/
+		}
+	}
+[END]

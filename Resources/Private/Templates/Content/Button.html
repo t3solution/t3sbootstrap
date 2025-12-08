@@ -56,9 +56,9 @@
 	<f:then>
 		<f:if condition="{parentCType} == 'button_group'">
 			 <f:then>
-			 	<div class="btn-group{f:if(condition: dropdowndirection,then: ' {dropdowndirection}')}" role="group">
+				 <div class="btn-group{f:if(condition: dropdowndirection,then: ' {dropdowndirection}')}" role="group">
 					<f:render section="ButtonGroupLink" arguments="{_all}" />
-			 	</div>
+				 </div>
 			 </f:then>
 			 <f:else>
 				<f:render section="ButtonGroupLink" arguments="{_all}" />

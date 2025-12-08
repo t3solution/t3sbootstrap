@@ -109,7 +109,7 @@ class Button implements SingletonInterface
             $processedData['slideInButton'] = true;
             $processedData['slideInButtonFaIcon'] = true;
             if ( empty($processedData['data']['header_icon']) ) {
-                $processedData['data']['header_icon'] = 'fa6:solid,ban';                
+                $processedData['data']['header_icon'] = 'fa7:solid,ban';
             }
         }
 

@@ -17,7 +17,7 @@ print {
 		bootstrapCDN.integrity = sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65
 		bootstrapCDN.external = 1
 		bootstrapCDN.forceOnTop = 1
-		t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
+		#t3sfontawesomeLink = EXT:t3sbootstrap/Resources/Public/Contrib/Fontawesome/css/fontawesomeLink.css
 		t3sbootstrap = EXT:t3sbootstrap/Resources/Public/Styles/t3sbootstrap.css
 		t3sprint = EXT:t3sbootstrap/Resources/Public/Styles/t3sprint.css
 	}
@@ -41,8 +41,8 @@ print {
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/
 			1 = EXT:t3sbootstrap/Resources/Private/Templates/Print/
-			2 = {$plugin.tx_t3sbootstrap.view.templateRootPath}
-			3 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Print/
+			2 = {$bootstrap.templateRootPath}
+			3 = {$bootstrap.templateRootPath}Print/
 			10 = {$styles.templates.partialRootPath}Print/
 		}
 		variables {

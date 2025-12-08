@@ -30,6 +30,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
@@ -48,6 +49,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
@@ -67,6 +69,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
@@ -88,6 +91,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # ROW CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -105,6 +109,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:container/Resources/Public/Icons/container-4col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # CARD WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -122,6 +127,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # BUTTON GROUP
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -139,6 +145,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/bars.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # AUTO LAYOUT
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -156,6 +163,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # BACKGROUND WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -173,6 +181,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-background_wrapper.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # PARALLAX WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -190,6 +199,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-parallax_wrapper.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -207,6 +217,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # CAROUSEL CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -224,6 +235,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # COLLAPSIBLE CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -241,6 +253,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # COLLAPSIBLE ELEMENT
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -258,6 +271,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-element.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # MODAL CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -275,6 +289,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # TAB CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -292,6 +307,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # TAB
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -309,6 +325,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # LIST GROUP WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -326,6 +343,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # MASONRY
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -343,6 +361,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # SWIPE CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -360,6 +379,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 # TOAST CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -377,6 +397,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->setGroup('T3S Container')
 );
 
 

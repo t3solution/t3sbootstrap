@@ -17,7 +17,7 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
    
 	public function getTitle(): string
 	{
-		return 'EXT:t3sbootstrap: Migrate FA6 free icons in tt_content:bodytext to use with EXT:iconpack & EXT:iconpack_fontawesome';
+		return 'EXT:t3sbootstrap: Migrate FA7 free icons in tt_content:bodytext to use with EXT:iconpack & EXT:iconpack_fontawesome';
 	}
 
 	public function getDescription(): string
@@ -141,7 +141,7 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 		$icons = [];
 		foreach ($iArr as $key=>$content) {
 			if (str_starts_with($content, 'fa')) {
-				$icons[$key][0] = '<span data-iconfig="fa6:'.$type.',';
+				$icons[$key][0] = '<span data-iconfig="fa7:'.$type.',';
 				$icons[$key][1] = '<i class="'.$toReplace.' fa-';
 				$brand = substr(explode('"', $content)[0], 3);
 				if (str_contains($brand, ' ')) {
