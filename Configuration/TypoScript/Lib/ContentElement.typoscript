@@ -115,6 +115,24 @@ lib.contentElement {
 		be_layout.value < temp.pagelayout
 	}
 	dataProcessing {
+
+		4 = flex-form
+		4.fieldName = pi_flexform
+		4.as = piFlexform
+		
+		5 = flex-form
+		5.fieldName = tx_t3sbootstrap_flexform
+		5.as = t3sbFlexform
+		
+		6 = site
+		6 {
+			as = siteSettings
+		}
+		
+		7 = files
+		7.references.table = tt_content
+		7.references.fieldName = assets
+
 		71 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
 		71.recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
 		71.setMaxResults = 10
@@ -145,7 +163,7 @@ lib.contentElement {
 }
 
 
-[{$bootstrap.image.minimumWidth} == 1]
+[traverse(site("configuration"), "settings/bootstrap/image/minimumWidth") == true]
 lib.contentElement.settings.srcsetMobile = 575
 [END]
 

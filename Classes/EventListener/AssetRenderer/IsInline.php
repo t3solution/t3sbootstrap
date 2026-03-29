@@ -132,18 +132,23 @@ class IsInline
         $rawJs = '';
 
         foreach ($assetJsInline as $library => $source) {
-            if (str_ends_with($library, 'function')) {
-                $function .= $source['source'] .LF.LF;
-            } elseif (str_starts_with($library, 'vanilla')) {
-                $js .= $source['source'] .LF;
-            } elseif (str_starts_with($library, 'addheight-')) {
-                $addheight .= $source['source'] .LF.LF;
-            } elseif (str_starts_with($library, 'jquery')) {
-                $jquery .= $source['source'] .LF.LF;
+            // json
+            if (str_starts_with($source['source'], '{"')) {
+                $js .= '';
             } else {
-                $rawJs .= $source['source'] .LF.LF;
+                if (str_ends_with($library, 'function')) {
+                    $function .= $source['source'] .LF.LF;
+                } elseif (str_starts_with($library, 'vanilla')) {
+                    $js .= $source['source'] .LF;
+                } elseif (str_starts_with($library, 'addheight-')) {
+                    $addheight .= $source['source'] .LF.LF;
+                } elseif (str_starts_with($library, 'jquery')) {
+                    $jquery .= $source['source'] .LF.LF;
+                } else {
+                    $rawJs .= $source['source'] .LF.LF;
+                }
+                $event->getAssetCollector()->removeInlineJavaScript($library);
             }
-            $event->getAssetCollector()->removeInlineJavaScript($library);
         }
 
         if ($addheight) {
@@ -200,6 +205,7 @@ TYPO3.settings = {'ADDHEIGHT':{".rtrim(trim($addheight), ",")."}};" .LF;
                  $script = 'typo3temp/assets/t3sbootstrap_' . substr(md5($str), 0, 10) . '.css';
                  break;
          }
+
         if ($script) {
             $pathSite = Environment::getPublicPath() . '/';
             if (!@is_file($pathSite . $script)) {

@@ -97,6 +97,26 @@ page {
 		}
 		dataProcessing {
 
+			6 = site
+			6 {
+				as = site
+			}
+			
+			7 = files
+			7 {
+				references.table = pages
+				references.fieldName = media
+				as = pagesMedia
+			}
+			
+			8 = files
+			8 {
+				references.fieldName = media
+				references.data = levelmedia: -1, slide
+				references.table = pages
+				as = rootFiles
+			}
+			
 			#
 			# NavBar / Main Navigation
 			#

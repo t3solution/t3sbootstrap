@@ -3,6 +3,7 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Register.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/BodyTag.typoscript'
 
+#[{$bootstrap.extconf.customScss} == 1 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 0]
 [{$bootstrap.extconf.customScss} == 1 && constant('{$bootstrap.cdn.enable}') == 0]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapScss.typoscript'
 [END]
@@ -13,11 +14,13 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Fileadmin/_main.typoscript'
 [END]
 
+#[{$bootstrap.extconf.customScss} == 1 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
 [{$bootstrap.extconf.customScss} == 1 && {$bootstrap.cdn.enable} == 1]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapScss.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeCdn.typoscript'
 [END]
 
+#[{$bootstrap.extconf.customScss} == 0 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
 [{$bootstrap.extconf.customScss} == 0 && {$bootstrap.cdn.enable} == 1]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapCdnCss.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeCdn.typoscript'
@@ -25,10 +28,9 @@
 
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Template.typoscript'
 
-[{$bootstrap.print.enable} == 1]
-@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Print.typoscript'
-[END]
-
+#[{$bootstrap.print.enable} == 1]
+#@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Print.typoscript'
+#[END]
 
 
 page {
@@ -62,9 +64,9 @@ page.cssInline {
 [END]
 
 
-
 # load jquery into the header
-[{$bootstrap.config.jqueryHeader} == 1 && {$bootstrap.cdn.enable} == 1]
+#[{$bootstrap.config.jqueryHeader} == 1 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
+[traverse(site("configuration"), "settings/bootstrap/config/jqueryHeader") == true && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
 page.includeJSFooterlibs.jqueryCDN >
 page.includeJSLibs {
 	jqueryCDN = https://code.jquery.com/jquery-{$bootstrap.cdn.jquery}.slim.min.js

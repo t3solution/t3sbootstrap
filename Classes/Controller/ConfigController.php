@@ -159,7 +159,7 @@ final class ConfigController extends AbstractController
     /**
      * action create
      */
-    public function createAction(Config $newConfig = null): ResponseInterface
+    public function createAction(?Config $newConfig = null): ResponseInterface
     {
 		if (empty($newConfig)) {
             $newConfig = new Config();

@@ -14,7 +14,7 @@ page {
 }
 
 # load jquery into the header
-[{$bootstrap.config.jqueryHeader} == 1 && constant('{$bootstrap.cdn.enable}') == 0]
+[traverse(site("configuration"), "settings/bootstrap/config/jqueryHeader") == true && constant('{$bootstrap.cdn.enable}') == 0]
 page.includeJSFooterlibs.jquery >
 page.includeJSLibs {
 	jquery = /fileadmin/T3SB/Resources/Public/T3SB-JS/jquery.min.js
@@ -22,3 +22,5 @@ page.includeJSLibs {
 	jquery.if.isFalse = {$bootstrap.disable.jquery}
 }
 [END]
+
+
