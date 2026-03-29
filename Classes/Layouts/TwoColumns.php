@@ -16,10 +16,12 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
  */
 class TwoColumns implements SingletonInterface
 {
-    /**
-     * Returns the $processedData
-     */
-    public function getProcessedData(array $processedData, array $flexconf, string $bgMediaQueries='2560,1920,1200,992,768,576'): array
+
+    public function getProcessedData(
+        array $processedData, 
+        array $flexconf, 
+        string $bgMediaQueries='2560,1920,1200,992,768,576'
+    ): array
     {
 
         $processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
@@ -28,31 +30,24 @@ class TwoColumns implements SingletonInterface
         $processedData['style'] .= !empty($flexconf['colHeight']) ? ' min-height: '.$flexconf['colHeight'].'px;' : '';
         $processedData['verticalAlign'] = !empty($flexconf['colHeight'])
              && !empty($flexconf['verticalAlign']) ? ' d-flex align-items-' . $flexconf['verticalAlign'] : '';
+        $processedData['equalHeight'] = !empty($flexconf['equalHeight']) ? ' d-flex align-items-stretch' : '';
         $processedData['bgimages'] = '';
         $processedData['bgimagePosition'] = '';
         $processedData['bgimageSize'] = '';
 		$processedData['files'] = !empty($processedData['files']) ? $processedData['files'] : '';
+
         if (!empty($flexconf['bgimages'])) {
-            $bgimages = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-            ->getBgImage(
-                $processedData['data']['uid'],
-                'tt_content',
-                false,
-                false,
-                $flexconf,
-                false,
-                $processedData['data']['uid'],
-                $bgMediaQueries,
-                $processedData['files']
+            $processedData['bgimages'] = $flexconf['bgimages'];
+            GeneralUtility::makeInstance(BackgroundImageUtility::class)
+                ->getTwoColumnBgImages(
+                    $processedData['data']['uid'],
+                    $flexconf
             );
-            if ($bgimages) {
-                $processedData['bgimages'] = $bgimages;
-                $processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
-                $processedData['bgimageSize'] = !empty($flexconf['bgimageSize']) ? $flexconf['bgimageSize'] : 'cover';
-                $processedData['class'] .= ' col-image';
-            }
+            $processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
+            $processedData['bgimageSize'] = !empty($flexconf['bgimageSize']) ? $flexconf['bgimageSize'] : 'cover';
+            $processedData['class'] .= ' col-image';
+
         }
-        $processedData['equalHeight'] = !empty($flexconf['equalHeight']) ? ' d-flex align-items-stretch' : '';
 
         return $processedData;
     }

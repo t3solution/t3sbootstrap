@@ -8,10 +8,10 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Core\Resource\FileRepository;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -21,128 +21,143 @@ use TYPO3\CMS\Core\Page\AssetCollector;
  */
 class BackgroundImageUtility implements SingletonInterface
 {
-    protected $imageService;
 
     public function __construct(
-        ImageService $imageService
-    ) {
-        $this->imageService = $imageService;
-    }
+        private readonly ImageService $imageService,
+        private readonly AssetCollector $assetCollector
+    ) {}
 
-    /**
-     * Writes a css file with the background images
-     *
-     * return mixed
-     */
-    public function getBgImage(
+
+    public function getJumbotronBgImage(
         int|string $uid,
-        string $table='tt_content',
-        bool $jumbotron=false,
-        bool $bgColorOnly=false,
-        array $flexconf=[],
-        bool $body=false,
-        int $currentUid=0,
-        string $bgMediaQueries='2560,1920,1200,992,768,576'
-    ) {
-
-        $request = $GLOBALS['TYPO3_REQUEST'];
-        $frontendController = $request->getAttribute('frontend.controller');
-        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-        $filesFromRepository = $fileRepository->findByRelation($table, 'assets', $uid);
-
-        if (empty($filesFromRepository)) {
-            $filesFromRepository = $fileRepository->findByRelation($table, 'media', $uid);
-        }
-        if (empty($filesFromRepository)) {
-            $filesFromRepository = $fileRepository->findByRelation($table, 'bgimages', $uid);
-        }
-
+        array $fileObjects=[],
+        string $bgMediaQueries='2560,1920,1200,992,768,576',
+        int $currentUid=0
+    ): array {
+        $imageUri_mobile = [];
         $css = '';
+        $uid = $currentUid ? $currentUid : $uid;
 
-        if (count($filesFromRepository) > 1 && $body == false) {
-            if (!empty($flexconf['bgimagePosition']) && ($flexconf['bgimagePosition'] === 1 || $flexconf['bgimagePosition'] === 2)) {
-                // bg-images in two-columns
-                // in the case if two images available but only one is selected in the flexform
-                $file = $filesFromRepository[0];
-                $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
-                $bgImages = $this->generateSrcsetImages($file, $image);
-                $imageUri_mobile = $bgImages[576];
-                $css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $flexconf, false, $bgMediaQueries);
-            } else {
-                // slider in jumbotron or two bg-images in two-columns
-                if ($jumbotron === true) {
-                    $uid = $frontendController->id;
-                }
-                foreach ($filesFromRepository as $fileKey=>$file) {
-                    $fileKey = $fileKey+1;
-                    $image[$fileKey] = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
-                    $bgImages[$fileKey] = $this->generateSrcsetImages($file, $image[$fileKey]);
-                    $imageUri_mobile[$fileKey] = $bgImages[$fileKey][576];
-                    $css .= $this->generateCss('s'.$uid.'-'.$fileKey, $file, $image[$fileKey], $flexconf, false, $bgMediaQueries);
-                }
-            }
-        } else {
-            // background-image
-            if (!empty($filesFromRepository)) {
-                $file = $filesFromRepository[0];
-                $image = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
-                $uid = $currentUid ?: $uid;
-                if (!empty($flexconf['bgimagePosition'])) {
-                    $uid = $uid . '-' . $flexconf['bgimagePosition'];
-                }
-                if ($jumbotron) {
-                    $css = $this->generateCss('s'.$uid, $file, $image, $flexconf, false, $bgMediaQueries);
-                } elseif ($body) {
-                    $css = $this->generateCss('page-'.$uid, $file, $image, $flexconf, true, $bgMediaQueries);
-                } else {
-                    if (!empty($flexconf['enableAutoheight'])) {
-                        if ($flexconf['addHeight']) {
-                            $inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
-                            if ($inline) {
-                                GeneralUtility::makeInstance(AssetCollector::class)
-                                  ->addInlineJavaScript('addheight-'.$uid, $inline);
-                            }
-                        }
-                        $css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, false, $bgMediaQueries);
-                    } else {
-                        $css = $this->generateCss('s'.$uid, $file, $image, $flexconf, false, $bgMediaQueries);
-                    }
-                }
-                $bgImages = $this->generateSrcsetImages($file, $image);
-                $imageUri_mobile = $bgImages[576];
-            } else {
-                $imageUri_mobile = '';
-                if ($bgColorOnly) {
-                    if ($flexconf['enableAutoheight']) {
-                        if ($flexconf['addHeight']) {
-                            $inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
-                            if ($inline) {
-                                GeneralUtility::makeInstance(AssetCollector::class)
-                                  ->addInlineJavaScript('addheight-'.$uid, $inline);
-                            }
-                        }
-                    }
-                }
-            }
+        if (!empty($fileObjects)) {
+            $file = $fileObjects[0];
+            $image = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
+            $css = $this->generateCss('s'.$uid, $file, $image, [], $bgMediaQueries);
+            $bgImages = $this->generateSrcsetImages($file, $image);
+            $imageUri_mobile[] = $bgImages[576];
         }
         if ($css) {
-            GeneralUtility::makeInstance(AssetCollector::class)
-             ->addInlineStyleSheet('bgimgutility-'.$uid, $css, [], ['priority' => true]);
+            $this->assetCollector->addInlineStyleSheet('jumbotronBgImage-'.$uid, $css, [], ['priority' => true]);
         }
 
         return $imageUri_mobile;
     }
 
 
-    /**
-     * generate CSS
-     */
+    public function getJumbotronBgSlider(
+        int|string $uid,
+        array $fileObjects=[],
+        string $bgMediaQueries='2560,1920,1200,992,768,576',
+        int $currentUid=0
+    ): array  {
+
+        $imageUri_mobile = [];
+        $css = '';
+        if (!empty($fileObjects)) {
+            foreach ($fileObjects as $key=>$file) {
+                $image = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
+                $css = $this->generateCss('s'.$currentUid.'-'.$key+1, $file, $image, [], $bgMediaQueries);
+                $bgImages = $this->generateSrcsetImages($file, $image);
+                $imageUri_mobile[$key] = $bgImages[576];
+                if ($css) {
+                    $this->assetCollector->addInlineStyleSheet('jumbotronBgSlider-'.$currentUid.'-'.$key+1, $css, [], ['priority' => true]);
+                }
+            }
+        }
+
+        return $imageUri_mobile;
+   }
+
+
+    public function getBgImage(
+       int|string $uid,
+       FileReference $file,
+       string $bgMediaQueries='2560,1920,1200,992,768,576'
+   ): void {
+       $css = '';
+       if ( !empty($file) && $file->getOriginalFile()->getType() === 2 ) {
+           $image = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
+           $css = $this->generateCss('page-'.$uid, $file, $image, [], $bgMediaQueries);
+           $bgImages = $this->generateSrcsetImages($file, $image);
+       }
+       if ( $css ) {
+           $this->assetCollector->addInlineStyleSheet('bgImage-'.$uid, $css, [], ['priority' => true]);
+       }
+   }
+
+
+    public function getTwoColumnBgImages(
+        int|string $uid,
+        array $flexconf=[],
+        string $bgMediaQueries='1200,992,768,576'
+    ): void {
+
+        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+        $fileObjects = $fileRepository->findByRelation('tt_content', 'bgimages', $uid);
+
+        $css = '';
+        if ((int) $flexconf['bgimages'] === 1 && (int) $flexconf['bgimagePosition'] < 3) {
+            // left or right
+            $file = $fileObjects[0];
+            $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+            $css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $flexconf, $bgMediaQueries);
+        } 
+        if ((int) $flexconf['bgimages'] === 2 && (int) $flexconf['bgimagePosition'] === 3) {
+            // both
+            foreach ($fileObjects as $fileKey=>$file) {
+                $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+                $css .= $this->generateCss('s'.$uid.'-'.$fileKey+1, $file, $image, $flexconf, $bgMediaQueries);
+            }
+        }
+        if (!empty($css)) {
+            $this->assetCollector->addInlineStyleSheet('twoColumnBgImages-'.$uid, $css, [], ['priority' => true]);
+        }
+
+    }
+
+
+    public function getBgWrapperImage(
+        int|string $uid,
+        FileReference $file,
+        array $flexconf,
+        string $bgMediaQueries='2560,1920,1200,992,768,576'
+    ): void {
+
+        $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
+
+        if (!empty($flexconf['enableAutoheight'])) {
+            if ($flexconf['addHeight']) {
+                $inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
+                if ($inline) {
+                    $this->assetCollector->addInlineJavaScript('addheight-'.$uid, $inline);
+                }
+            }
+            $css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, $bgMediaQueries);
+        } else {
+            $css = $this->generateCss('s'.$uid, $file, $image, $flexconf, $bgMediaQueries);
+        }
+
+        if (!empty($css)) {
+            $this->assetCollector->addInlineStyleSheet('bgWrapperImage-'.$uid, $css, [], ['priority' => true]);
+        }
+
+    }
+
+
     private function generateCss(
         string $uid,
         FileReference $file,
         File $image,
         array $flexconf=[],
-        bool $body=false,
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ): string {
 
@@ -156,9 +171,9 @@ class BackgroundImageUtility implements SingletonInterface
 
         foreach ($mediaQueries as $querie) {
             $querie = (int)$querie;
-            if ($querie == 576) {
+            if ($querie === 576) {
                 $cropVariant = 'mobile';
-            } elseif ($querie == 768) {
+            } elseif ($querie === 768) {
                 $cropVariant = 'tablet';
             } else {
                 $cropVariant = 'default';
@@ -170,11 +185,12 @@ class BackgroundImageUtility implements SingletonInterface
                 'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
             ];
             $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
+
             $css .= '@media (max-width: '.$querie.'px) {';
             $css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
             $css .= '}';
-
-            if ($minWidth == $querie) {
+            
+            if ($minWidth === $querie) {
                 $minQuerie = $querie +1;
                 $css .= '@media (min-width: '.$minQuerie.'px) {';
                 $css .= '#'.$uid.' {background-image:'.$imageRaster.' url("'.$this->imageService->getImageUri($processedImage).'") !important;}';
@@ -186,10 +202,7 @@ class BackgroundImageUtility implements SingletonInterface
     }
 
 
-    /**
-     * generateSrcsetImages
-     */
-    private function generateSrcsetImages($file, $image): array
+    private function generateSrcsetImages(FileReference $file, File $image): array 
     {
         $processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
         $cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);

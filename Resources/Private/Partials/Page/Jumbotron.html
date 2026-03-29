@@ -15,7 +15,7 @@
 		</f:asset.css>
 	</f:if>
 
-	<f:if condition="{bgSlides -> f:count()} > 1">
+	<f:if condition="{bgSlides -> f:count()} > 1 && !{localFullHeightBgVideo}">
 		<f:then>
 			<f:comment> SLIDER </f:comment>
 			<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
@@ -62,12 +62,19 @@
 			</f:if>
 		</f:then>
 		<f:else>
-			<f:if condition="{jumbotronContainer}">
+			<f:if condition="{localFullHeightBgVideo} && {data.tx_t3sbootstrap_fullheightsection}">
 				<f:then>
-					<f:render section="{config.jumbotron.containerposition}" arguments="{_all}" />
+					<f:render section="FullHeightBgVideo" arguments="{_all}" />
 				</f:then>
 				<f:else>
-					<f:render section="Default" arguments="{_all}" />
+					<f:if condition="{jumbotronContainer}">
+						<f:then>
+							<f:render section="{config.jumbotron.containerposition}" arguments="{_all}" />
+						</f:then>
+						<f:else>
+							<f:render section="Default" arguments="{_all}" />
+						</f:else>
+					</f:if>
 				</f:else>
 			</f:if>
 		</f:else>
@@ -183,6 +190,7 @@
 </f:section>
 
 <f:section name="Div">
+
 	<f:if condition="{config.jumbotron.bgImage}">
 		<f:then>
 			<f:if condition="{ratioCalcCss}">
@@ -250,3 +258,21 @@
 		</div>
 	</div>
 </f:section>
+
+<f:section name="FullHeightBgVideo">
+<div id="s{data.uid}" class="jumbotron background-video position-relative" style="position: relative; min-height:100%; overflow:hidden;">
+	<figure id="video-{data.uid}" class="video m-0 mx-auto">
+		<video  autoplay muted loop playsinline id="localFullHeightBgVideo" style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translateX(-50%) translateY(-50%);">
+			<source src="{baseUri}{bgSlides.0}" type="video/mp4">
+		</video>
+	</figure>
+	<div id="jumbotron-content-wrapper" class="d-flex card-img-overlay" style="z-index: 1">
+		<div class="container align-self-center w-100">
+			<f:render section="Content" arguments="{_all}" />
+		</div>	
+	</div>
+</div>
+
+</f:section>
+
+

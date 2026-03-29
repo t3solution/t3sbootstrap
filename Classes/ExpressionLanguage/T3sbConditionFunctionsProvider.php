@@ -86,7 +86,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
     protected function getColPosList(): ExpressionFunction
     {
 
-    return new ExpressionFunction(
+        return new ExpressionFunction(
         'colPosList',
         static fn () => null, // Not implemented, we only use the evaluator
         static function ($arguments, $str) {
@@ -243,6 +243,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         return new ExpressionFunction('constant', function () {
             // Not implemented, we only use the evaluator
         }, function ($arguments, $constant) {
+
             if (!empty($constant)) {
                 return 1;
             } else {

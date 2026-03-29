@@ -54,8 +54,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 * @param ImageService $imageService
 	 */
 	 public function __construct(
-	 	ImageService $imageService,
-	 	ConfigurationManager $configurationManager
+		 ImageService $imageService,
+		 ConfigurationManager $configurationManager
 	 )
 	{
 		$this->imageService = $imageService;
@@ -86,9 +86,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 		FileInterface $fallbackImage,
 		array $breakpoints,
 		CropVariantCollection $cropVariantCollection,
-		Area $focusArea = null,
-		TagBuilder $tag = null,
-		TagBuilder $fallbackTag = null,
+		?Area $focusArea = null,
+		?TagBuilder $tag = null,
+		?TagBuilder $fallbackTag = null,
 		bool $absoluteUri = false,
 		int $lazyload = 0,
 		$ignoreFileExtensions = 'svg',
@@ -205,7 +205,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		$srcset,
 		string $mediaQuery = '',
 		string $sizesQuery = '',
-		Area $cropArea = null,
+		?Area $cropArea = null,
 		bool $absoluteUri = false,
 		int $lazyload = 0,
 		string $type = ''
@@ -249,9 +249,9 @@ class ResponsiveImagesUtility implements SingletonInterface
 	 */
 	public function createSimpleImageTag(
 		FileInterface $originalImage,
-		FileInterface $fallbackImage = null,
-		TagBuilder $tag = null,
-		Area $focusArea = null,
+		?FileInterface $fallbackImage = null,
+		?TagBuilder $tag = null,
+		?Area $focusArea = null,
 		bool $absoluteUri = false,
 		int $lazyload = 0,
 		int $placeholderSize = 0,
@@ -302,7 +302,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		TagBuilder $tag,
 		FileInterface $originalImage,
 		FileInterface $fallbackImage,
-		Area $focusArea = null
+		?Area $focusArea = null
 	): void {
 		$focusArea = $focusArea ?: Area::createEmpty();
 
@@ -348,7 +348,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 		FileInterface $image,
 		int $defaultWidth,
 		$srcset,
-		Area $cropArea = null,
+		?Area $cropArea = null,
 		bool $absoluteUri = false,
 		string $type = ''
 	): array {
@@ -414,7 +414,7 @@ class ResponsiveImagesUtility implements SingletonInterface
 	public function generatePlaceholderImage(
 		FileInterface $image,
 		int $width = 20,
-		Area $cropArea = null,
+		?Area $cropArea = null,
 		bool $inline = false,
 		bool $absoluteUri = false
 	): string {
@@ -430,8 +430,8 @@ class ResponsiveImagesUtility implements SingletonInterface
 			return $this->generateDataUri($processedImage);
 		}
 
-        return $this->imageService->getImageUri($processedImage, $absoluteUri);
-    }
+		return $this->imageService->getImageUri($processedImage, $absoluteUri);
+	}
 
 	/**
 	 * Generates a data URI for the specified image file
@@ -484,12 +484,12 @@ class ResponsiveImagesUtility implements SingletonInterface
 	{
 		foreach ($breakpoints as &$breakpoint) {
 
-            if (!is_array($breakpoint)) {
-                $breakpoint = [$breakpoint];
-            }
+			if (!is_array($breakpoint)) {
+				$breakpoint = [$breakpoint];
+			}
 			$breakpoint = array_replace($this->breakpointPrototype, $breakpoint);
 		}
-        unset($breakpoint);
+		unset($breakpoint);
 
 		ksort($breakpoints);
 

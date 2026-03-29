@@ -36,6 +36,8 @@ class ConfigProcessor implements DataProcessorInterface
 	{
 		/** @var \Psr\Http\Message\ServerRequestInterface $request */
 		$request = $cObj->getRequest();
+		$pageInformation = $request->getAttribute('frontend.page.information');
+
 		$settings = $contentObjectConfiguration['settings.'];
 		$frontendController = $request->getAttribute('frontend.controller');
 		if (!empty($contentObjectConfiguration['settings.']['config.']['uid'])
@@ -419,7 +421,6 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['jumbotron']['class'] = ' '.trim($processedRecordVariables['jumbotronClass']);
 			$processedData['config']['jumbotron']['noBgRatio'] = true;
 
-			# Image from pages media
 			$hasBgImages = 0;
 			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 			$fileObjects = [];
@@ -434,7 +435,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$processedData['config']['jumbotron']['alignment'] = $processedRecordVariables['jumbotronAlignitem'];
 
 			if ($processedRecordVariables['jumbotronBgimage'] === 'root') {
-				// slide in rootline
+					// slide in rootline
 				foreach ($frontendController->rootLine as $page) {
 					$fileObjects = $fileRepository->findByRelation('pages', 'media', $page['uid']);
 					$uid = $page['uid'];
@@ -442,84 +443,87 @@ class ConfigProcessor implements DataProcessorInterface
 						break;
 					}
 				}
+
 				$hasBgImages = count($fileObjects);
+
 				if (count($fileObjects) > 1) {
-					if (!empty($settings['multiplePagesMedia'])) {
-						// background images
-						$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
-							$uid,
-							'pages',
-							true,
-							false,
-							[],
-							false,
-							$processedData['data']['uid'],
-							$contentObjectConfiguration['settings.']['bgMediaQueries']
-						);
-						$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
-						$processedData['config']['jumbotron']['multiplePagesMedia'] = true;
-					} else {
+
 						// slider
 						$processedData['config']['jumbotron']['alignItem'] = '';
-						$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
+						$bgSlides = $this->getBackgroundImageUtility()->getJumbotronBgSlider(
 							$uid,
-							'pages',
-							true,
-							false,
-							[],
-							false,
-							0,
-							$contentObjectConfiguration['settings.']['bgMediaQueries']
+							$fileObjects,
+							$contentObjectConfiguration['settings.']['bgMediaQueries'],
+							$pageInformation->getId()
 						);
+
 						$processedData['bgSlides'] = $bgSlides;
-					}
+
 				} else {
+
 					// background image
-					$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
+					$bgImage = $this->getBackgroundImageUtility()->getJumbotronBgImage(
 						$uid,
-						'pages',
-						true,
-						false,
-						[],
-						false,
-						$processedData['data']['uid'],
-						$contentObjectConfiguration['settings.']['bgMediaQueries']
+						$fileObjects,
+						$contentObjectConfiguration['settings.']['bgMediaQueries'],
+						$pageInformation->getId()
 					);
-					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
-					if (!empty($settings['multiplePagesMedia'])) {
-						$processedData['config']['jumbotron']['multiplePagesMedia'] = false;
-					}
+
+					$processedData['config']['jumbotron']['bgImage'] = $bgImage;
+					$processedData['bgSlides'] = $bgImage;
 				}
+
 			} elseif ($processedRecordVariables['jumbotronBgimage'] === 'page') {
+
 				$fileObjects = $fileRepository->findByRelation('pages', 'media', $frontendController->id);
 				$hasBgImages = count($fileObjects);
-				if (count($fileObjects) > 1) {
+
+				$localFullHeightBgVideo = FALSE;
+				if (!empty($fileObjects) && $fileObjects[0]->getOriginalFile()->getMimeType() === 'video/mp4') {
+					$localFullHeightBgVideo = TRUE;
+					$processedData['localFullHeightBgVideo'] = TRUE;
+				}
+
+				if ($hasBgImages > 1 && $localFullHeightBgVideo === FALSE) {
 					// slider
 					$processedData['config']['jumbotron']['alignItem'] = '';
-					$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
+					$bgSlides = $this->getBackgroundImageUtility()->getJumbotronBgSlider(
 						$frontendController->id,
-						'pages',
-						true,
-						false,
-						[],
-						false,
-						0,
-						$contentObjectConfiguration['settings.']['bgMediaQueries']
+						$fileObjects,
+						$contentObjectConfiguration['settings.']['bgMediaQueries'],
+						$pageInformation->getId()
 					);
+
 					$processedData['bgSlides'] = $bgSlides;
+
 				} else {
-					// background image
-					$bgSlides = $this->getBackgroundImageUtility()->getBgImage(
-						$frontendController->id,
-						'pages',
-						true,
-						false,
-						[],
-						false,
-						0,
-						$contentObjectConfiguration['settings.']['bgMediaQueries']
-					);
+
+					if ($localFullHeightBgVideo === TRUE) {
+					
+						$bgSlides = $this->getBackgroundImageUtility()->getJumbotronBgImage(
+							$frontendController->id,
+							$fileObjects,
+							$contentObjectConfiguration['settings.']['bgMediaQueries'],
+						);
+							
+						$host = $request->getServerParams()['HTTP_HOST'];
+						$scheme = $request->getServerParams()['REQUEST_SCHEME'];
+						$processedData['baseUri'] = $scheme.'://'.$host;
+						
+					} else {
+					
+						// background image	
+						$bgSlides[0] = $this->getBackgroundImageUtility()->getJumbotronBgImage(
+							$frontendController->id,
+							$fileObjects,
+							$contentObjectConfiguration['settings.']['bgMediaQueries']
+						);
+					
+					}
+					
 					$processedData['config']['jumbotron']['bgImage'] = $bgSlides;
+					$processedData['bgSlides'] = $bgSlides;
+
 				}
 			}
 			
@@ -550,30 +554,19 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 		}
 
+
+
 		/**
 		 * Background Image (body)
 		 */
 		if ($processedRecordVariables['backgroundImageEnable']) {
-			$BodyBgImage = $this->getBackgroundImageUtility()->getBgImage(
-				$frontendController->id,
-				'pages',
-				false,
-				false,
-				[],
-				true,
-				0,
-				$contentObjectConfiguration['settings.']['bgMediaQueries']
-			);
-			$bgImage = is_array($BodyBgImage) ? $BodyBgImage[1] : '';
-			if (empty($BodyBgImage) && $processedRecordVariables['backgroundImageSlide']) {
-				foreach ($frontendController->rootLine as $page) {
-					$BodyBgImage = $this->getBackgroundImageUtility()->getBgImage($page['uid'], 'pages', false, false, [], true, $frontendController->id);
-					if ($BodyBgImage) {
-						break;
-					}
-				}
-			}
-		}
+			 if ($processedRecordVariables['backgroundImageSlide'] && !empty($processedData['rootFiles'])) {
+				 $this->getBackgroundImageUtility()->getBgImage($pageInformation->getId(), $processedData['rootFiles'][0], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			 } elseif (!empty($processedData['pagesMedia'])) {
+				 $this->getBackgroundImageUtility()->getBgImage($pageInformation->getId(), $processedData['pagesMedia'][0], $contentObjectConfiguration['settings.']['bgMediaQueries']);
+			 }
+		 }
+		 
 
 		/**
 		 * Breadcrumb

@@ -7,7 +7,6 @@ namespace T3SBS\T3sbootstrap\Wrapper;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
 
 /*
@@ -56,8 +55,7 @@ class ParallaxWrapper implements SingletonInterface
 				}
 			} else {
 
-				$bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-				 ->getBgImage($processedData['data']['uid'], 'tt_content', FALSE, FALSE, [], FALSE, 0);
+				$bgImage = $processedData['files'][0];
 				$processedData['parallaxImage'] = $bgImage;
 			}
 

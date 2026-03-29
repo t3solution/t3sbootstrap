@@ -33,6 +33,7 @@ class BackgroundWrapper implements SingletonInterface
 
         $files = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']);
         $file = !empty($files) && is_array($files) ? $files[0] : '';
+
         // media
         if ($file) {
             // VIDEO type
@@ -109,18 +110,21 @@ class BackgroundWrapper implements SingletonInterface
                     }
                 }
             } elseif ($file->getType() === 2) {
+
                 // IMAGE
                 // orig. image option in flexform
                 if (!empty($flexconf['origImage'])) {
                     $processedData['file'] = $file;
                     $processedData['ingWidth'] = !empty($flexconf['width']) ? $flexconf['width'] : 1296;
                 } else {
+
                     $bgImage = GeneralUtility::makeInstance(BackgroundImageUtility::class)
-                        ->getBgImage($processedData['data']['uid'], 'tt_content', false, true, $flexconf, false, 0, $bgMediaQueries);
-                    $processedData['bgImage'] = $bgImage;
+                        ->getBgWrapperImage($processedData['data']['uid'], $file, $flexconf, $bgMediaQueries);
+                    $processedData['bgImage'] = $file;
                     if (!empty($flexconf['paddingTopBottom'])) {
                         $processedData['style'] .= ' padding: '.$flexconf['paddingTopBottom'].'rem 0;';
                     }
+
                 }
                 // align content items
                 $processedData['alignItem'] = !empty($flexconf['alignItem']) ? ' '.$flexconf['alignItem'] : '';
