@@ -14,14 +14,12 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Fileadmin/_main.typoscript'
 [END]
 
-#[{$bootstrap.extconf.customScss} == 1 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
-[{$bootstrap.extconf.customScss} == 1 && {$bootstrap.cdn.enable} == 1]
+[{$bootstrap.extconf.customScss} == 1 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapScss.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeCdn.typoscript'
 [END]
 
-#[{$bootstrap.extconf.customScss} == 0 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
-[{$bootstrap.extconf.customScss} == 0 && {$bootstrap.cdn.enable} == 1]
+[{$bootstrap.extconf.customScss} == 0 && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == 1]
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeBootstrapCdnCss.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeCdn.typoscript'
 [END]

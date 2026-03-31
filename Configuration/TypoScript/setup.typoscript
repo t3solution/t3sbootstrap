@@ -148,7 +148,7 @@ config {
 [loaded('iconpack')]
 	lib.contentElement {
 		partialRootPaths {
-			8 = {$plugin.tx_t3sbootstrap.view.partialRootPath}FluidStyledContent/
+			6 = EXT:t3sbootstrap/Resources/Private/Partials/FluidStyledContent/
 		}
 	}
 [END]
