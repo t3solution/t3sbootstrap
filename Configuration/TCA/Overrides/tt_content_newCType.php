@@ -814,8 +814,12 @@ $tempContentColumns = [
             'foreign_table' => 'tx_t3sbootstrap_list_item_inline',
             'foreign_field' => 'parentid',
             'foreign_table_field' => 'parenttable',
+            'behaviour' => [
+                 'allowLanguageSynchronization' => true
+            ]
         ],
     ],
+    
     'tx_t3sbootstrap_chapter' => [
         'exclude' => 1,
         'label' => 'Chapter type',
