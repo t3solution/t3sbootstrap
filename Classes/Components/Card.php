@@ -132,7 +132,6 @@ class Card implements SingletonInterface
                     ->select('listitem')
                     ->from('tx_t3sbootstrap_list_item_inline')
                     ->where(
-                        $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)),
                         $queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($parentid, Connection::PARAM_INT))
                     )
                     ->executeQuery()

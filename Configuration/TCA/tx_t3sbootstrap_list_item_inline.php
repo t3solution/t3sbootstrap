@@ -7,7 +7,7 @@ return [
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'enablecolumns' => [],
-		'hideTable' => 1,
+		'hideTable' => true,
 		'searchFields' => '',
 		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif',
 		'security' => [

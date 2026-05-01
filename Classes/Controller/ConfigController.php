@@ -51,7 +51,7 @@ final class ConfigController extends AbstractController
         if ($this->request->getQueryParams()['id'] === '0') {
             $assignedOptions['idNull'] = TRUE;
         }
-    
+
         if ($this->isSiteroot && $this->rootPageId) {
             $pidList = parent::getTreeList($this->rootPageId, 999999, 0, '1');
             $allConfig = [];
