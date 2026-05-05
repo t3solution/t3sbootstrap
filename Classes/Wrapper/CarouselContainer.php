@@ -1,66 +1,64 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Wrapper;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
+use TYPO3\CMS\Core\Resource\FileRepository;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class CarouselContainer implements SingletonInterface
 {
-    /**
-     * Returns the $processedData
-     */
+    public function __construct(
+        private readonly ConnectionPool               $connectionPool,
+        private readonly FileRepository               $fileRepository,
+        private readonly FrontendRestrictionContainer $frontendRestrictions,
+    ) {}
+
     public function getProcessedData(array $processedData, array $flexconf): array
     {
-        $processedData['maxWidth'] = $flexconf['width'] ? $flexconf['width'].'px' : '1440px';
-        $processedData['interval'] = $flexconf['interval'];
-        $processedData['darkVariant'] = !empty($flexconf['darkVariant']) ? $flexconf['darkVariant'] : 'light';
-        $processedData['carouselFade'] = !empty($flexconf['carouselFade']) ? ' carousel-fade' : '';
-        $processedData['carouselFade'] .= !empty($flexconf['darkVariant']) ? ' carousel-dark' : '';
-        $processedData['thumbnails'] = !empty($flexconf['thumbnails']) ? true : false;
+        $processedData['maxWidth']         = $flexconf['width'] ? $flexconf['width'] . 'px' : '1440px';
+        $processedData['interval']         = $flexconf['interval'] ?? 5000;
+        $processedData['darkVariant']      = !empty($flexconf['darkVariant']) ? $flexconf['darkVariant'] : 'light';
+        $processedData['thumbnails']       = !empty($flexconf['thumbnails']);
         $processedData['mobileIndicators'] = !empty($flexconf['mobileIndicators']) ? '' : ' d-none d-md-block';
 
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-        $statement = $queryBuilder
+        // carousel-fade und carousel-dark als separate Keys — klarer im Template
+        $carouselFade  = !empty($flexconf['carouselFade'])  ? ' carousel-fade' : '';
+        $carouselFade .= !empty($flexconf['darkVariant'])   ? ' carousel-dark' : '';
+        $processedData['carouselFade'] = $carouselFade;
+
+        $carouselUids = $this->fetchCarouselUids((int)$processedData['data']['uid']);
+
+        $carouselSlides = [];
+        foreach ($carouselUids as $row) {
+            $files = $this->fileRepository->findByRelation('tt_content', 'assets', $row['uid']);
+            $carouselSlides[$row['uid']] = $files[0] ?? '';
+        }
+
+        $processedData['carouselSlides'] = $carouselSlides;
+
+        return $processedData;
+    }
+
+    private function fetchCarouselUids(int $parentUid): array
+    {
+        $qb = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $qb->setRestrictions($this->frontendRestrictions);
+
+        return $qb
             ->select('uid')
             ->from('tt_content')
             ->where(
-                $queryBuilder->expr()->eq('tx_container_parent', $queryBuilder->createNamedParameter($processedData['data']['uid'], Connection::PARAM_INT))
+                $qb->expr()->eq(
+                    'tx_container_parent',
+                    $qb->createNamedParameter($parentUid, Connection::PARAM_INT)
+                )
             )
+            ->orderBy('sorting')
             ->executeQuery()
             ->fetchAllAssociative();
-
-        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-        $carouselSlides = [];
-        foreach ($statement as $element) {
-            $file = $fileRepository->findByRelation('tt_content', 'assets', $element['uid']);
-            if (!empty($file)) {
-                if ($file[0]->getMimeType() === 'video/mp4' || $file[0]->getMimeType() === 'video/webm' || $file[0]->getMimeType() === 'video/wav'
-                 || $file[0]->getMimeType() === 'video/ogg' || $file[0]->getMimeType() === 'video/flac' || $file[0]->getMimeType() === 'video/opus') {
-                    $processedData['containsVideo'] = true;
-                }
-            }
-            if (!empty($file[0])) {
-                $carouselSlides[$element['uid']] = $file[0];
-            } else {
-                $carouselSlides[$element['uid']] = '';
-            }
-        }
-
-        $processedData['carouselSlides'] = !empty($carouselSlides) ? $carouselSlides : '';
-
-        return $processedData;
     }
 }

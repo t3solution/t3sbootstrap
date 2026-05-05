@@ -140,7 +140,7 @@ class Parser
      * @param bool                 $cssOnly
      * @param LoggerInterface|null $logger
      */
-    public function __construct($sourceName, $sourceIndex = 0, $encoding = 'utf-8', Cache $cache = null, $cssOnly = false, LoggerInterface $logger = null)
+    public function __construct($sourceName, $sourceIndex = 0, $encoding = 'utf-8', ?Cache $cache = null, $cssOnly = false, ?LoggerInterface $logger = null)
     {
         $this->sourceName       = $sourceName ?: '(stdin)';
         $this->sourceIndex      = $sourceIndex;
@@ -892,12 +892,12 @@ class Parser
                     $dirName = [Type::T_STRING, '', $dirName];
                 }
                 if (
-                    ! empty($this->env->parent) &&
-                    $this->env->type &&
-                    ! \in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA])
+                    // @extensionScannerIgnoreLine
+                    ! empty($this->env->parent) && $this->env->type && ! \in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA])
                 ) {
                     $plain = \trim(\substr($this->buffer, $s, $this->count - $s));
                     throw $this->parseError(
+                        // @extensionScannerIgnoreLine
                         "Unknown directive `{$plain}` not allowed in `" . $this->env->type . "` block"
                     );
                 }
@@ -923,8 +923,8 @@ class Parser
 
         $inCssSelector = null;
         if ($this->cssOnly) {
-            $inCssSelector = (! empty($this->env->parent) &&
-                ! in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA]));
+            // @extensionScannerIgnoreLine
+            $inCssSelector = (! empty($this->env->parent) && ! in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA]));
         }
         // custom properties : right part is static
         if (($this->customProperty($name) ) && $this->matchChar(':', false)) {
@@ -1063,7 +1063,7 @@ class Parser
         // closing a block
         if ($this->matchChar('}', false)) {
             $block = $this->popBlock();
-
+            // @extensionScannerIgnoreLine
             if (! isset($block->type) || $block->type !== Type::T_IF) {
                 assert($this->env !== null);
 
@@ -1079,6 +1079,7 @@ class Parser
                 $include[3] = $block;
                 $this->append($include, $s);
             } elseif (!$block instanceof ElseBlock && !$block instanceof ElseifBlock) {
+                // @extensionScannerIgnoreLine
                 $type = isset($block->type) ? $block->type : Type::T_BLOCK;
                 $this->append([$type, $block], $s);
             }
@@ -1176,6 +1177,7 @@ class Parser
     protected function pushSpecialBlock($type, $pos)
     {
         $block = $this->pushBlock(null, $pos);
+        // @extensionScannerIgnoreLine
         $block->type = $type;
 
         return $block;
@@ -1203,7 +1205,7 @@ class Parser
         if (empty($block->parent)) {
             throw $this->parseError('unexpected }');
         }
-
+        // @extensionScannerIgnoreLine
         if ($block->type == Type::T_AT_ROOT) {
             // keeps the parent in case of self selector &
             $block->selfParent = $block->parent;

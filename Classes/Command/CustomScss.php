@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
@@ -7,415 +6,289 @@ namespace T3SBS\T3sbootstrap\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-class CustomScss extends CommandBase
+#[AsCommand('t3sbootstrap:customScss', 'T3SB Custom Scss - write a custom scss file')]
+final class CustomScss extends CommandBase
 {
 
     public const BOOTSTRAPLATEST = '5.3.8';
+    public const BOOTSWATCHURL   = 'https://bootswatch.com/5/';
+    public const BASEDIR         = 'EXT:t3sb_package/Resources/';
+    public const SCSSPATH        = self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss/';
+    public const VARIABLESPATH   = self::BASEDIR.'Public/T3SB-SCSS/';
+    public const BOOTSTRAPPATH   = self::BASEDIR.'Public/T3SB-SCSS/Bootstrap/';
 
+    
+   public function __construct(
+       private readonly SiteFinder $siteFinder,
+       private readonly ConfigRepository $configRepository,
+       private readonly PersistenceManager $persistenceManager,
+       private readonly RequestFactory $requestFactory,
+   ) {
+       parent::__construct();
+   }
+    
+    
     /**
      * Defines the allowed options for this command
      *
-     * @inheritdoc
      */
-    protected function configure()
-    {
-        $this->setDescription('T3SB Custom Scss - write a custom scss file');
-    }
-
+   protected function configure(): void
+   {
+   $this
+      ->setHelp('This command accepts arguments')
+      ->addArgument(
+            'rootPageId',
+            InputArgument::REQUIRED,
+            'Root page ID',
+      );
+   }
+        
 
     /**
      * Update all records
      *
-     * @inheritdoc
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $settings = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            't3sbootstrap',
-            'm1'
-        );
+         if (!extension_loaded('zip')) {
+            $this->addCustomMessage('The PHP extension “zip” must be loaded.', 'ERROR');
+         }
 
-        if (empty($settings['sitepackage'])) {
-            $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
-        } else {
-            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/");
-            } else {
-                throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
-            }
-        }
+         if ( !is_numeric($input->getArgument('rootPageId')) ) {
+            $this->addCustomMessage('Root page ID should be a number!', 'ERROR');
+         }
 
-        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+         $rootPageId = (int) $input->getArgument('rootPageId');
+         $configuration = $this->siteFinder->getSiteByPageId($rootPageId)->getConfiguration();
+         $settings = $configuration['settings'];
 
-        if ($settings['customScss'] && array_key_exists('customScss', $extConf) && $extConf['customScss'] === '1') {
-            # get the Boostrap SCSS-Files
-            $bootstrapVersion = str_starts_with($settings['cdn']['bootstrap'], '5.') ? $settings['cdn']['bootstrap'] : self::BOOTSTRAPLATEST;
-            $bootstrapScssPath = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/';
-            if (!is_dir($bootstrapScssPath)) {
-                if (!mkdir($bootstrapScssPath, 0777, true) && !is_dir($bootstrapScssPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $bootstrapScssPath));
-                }
-            }
-            if ($settings['cdn']['noZip']) {
-                $this->getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath, $baseDir);
-            } else {
-                $this->getBootstrapFiles($bootstrapVersion, $baseDir);
-            }
-            if (!file_exists($baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap.scss')) {
-                $this->getBootstrapFilesNoZip($settings, $bootstrapVersion, $bootstrapScssPath, $baseDir);
-            }
+         if (empty($settings['bootstrap']['cdn']['bootstrap'])) {
+            $this->addCustomMessage('The optional site set “T3S Bootstrap – VERSION” should be integrated.', 'ERROR');
+         }
 
-            # Custom
-            $customPath = $baseDir.'Resources/Public/T3SB-SCSS/';
+         $isSiteroot = BackendUtility::getRecord('pages', $rootPageId, 'is_siteroot')['is_siteroot'];
+         if (empty($isSiteroot)) {
+            $this->addCustomMessage('Your selection is not a root page.', 'ERROR');
+         }
 
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+         if ($settings['bootstrap']['cdn']['customScss'] === true && $settings['bootstrap']['cdn']['enable'] === false) {
+
+            $bootstrapScssAbsPath = GeneralUtility::getFileAbsFileName(self::SCSSPATH);
+            $uploadScssAbsPath = GeneralUtility::getFileAbsFileName(self::BOOTSTRAPPATH);
+
+            if (!is_dir($bootstrapScssAbsPath)) {
+                if (!mkdir($bootstrapScssAbsPath, 0755, true) && !is_dir($bootstrapScssAbsPath)) {
+                    $this->addCustomMessage(sprintf('Directory "%s" for SCSS files was not created.', $bootstrapScssAbsPath), 'ERROR');
                 }
             }
 
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
-            $result = $queryBuilder
-                ->select('*')
-                ->from('pages')
-                ->where(
-                    $queryBuilder->expr()->eq('sys_language_uid', 0),
-                    $queryBuilder->expr()->eq('is_siteroot', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT))
-                )
-                ->executeQuery();
-            $siteroots = $result->fetchAllAssociative();
-
-            foreach ($siteroots as $key=>$siteroot) {
-                if ($key === 0) {
-                    $customFileName = 'custom-variables.scss';
-                    $customFileNameOverride = 'custom.scss';
-                    $boottstrapFileName = 'bootstrap.scss';
-                } else {
-                    $customFileName = 'custom-variables-'.$siteroot['uid'].'.scss';
-                    $customFileNameOverride = 'custom-'.$siteroot['uid'].'.scss';
-                    $boottstrapFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
+            if (!is_dir($uploadScssAbsPath)) {
+                if (!mkdir($uploadScssAbsPath, 0755, true) && !is_dir($uploadScssAbsPath)) {
+                    $this->addCustomMessage(sprintf('Directory "%s" was not created', $uploadScssAbsPath), 'ERROR');
                 }
+            }
 
-                $this->writeCustomFile($customPath, $customFileName, $settings, '_variables');
-                $this->writeCustomFile($customPath, $customFileNameOverride, $settings, '_bootswatch');
+            $bootstrapVersion = str_starts_with($settings['bootstrap']['cdn']['bootstrap'], '5.') ? $settings['bootstrap']['cdn']['bootstrap'] : self::BOOTSTRAPLATEST;
+            $this->getBootstrapFiles($bootstrapVersion);
 
-                # Include
-                $includeDir = 'uploads/tx_t3sbootstrap/';
-                $includePath = GeneralUtility::getFileAbsFileName($includeDir);
+            $customFileName = 'custom-variables-'.$rootPageId.'.scss';
+            $customFileNameOverride = 'custom-'.$rootPageId.'.scss';
 
-                if ($key === 0) {
-                    $this->deleteFilesFromDirectory($includePath);
-                    $includeFileName = 'bootstrap.scss';
-                } else {
-                    $includeFileName = 'bootstrap-'.$siteroot['uid'].'.scss';
-                }
+            $this->writeCustomFile($settings['bootstrap']['cdn']['keepVariables'], $rootPageId, $customFileName, $settings, '_variables');
+            $this->writeCustomFile($settings['bootstrap']['cdn']['keepVariables'], $rootPageId, $customFileNameOverride, $settings, '_bootswatch');
 
-                $includeFile = $includePath.$includeFileName;
+            $includeFileName = 'bootstrap-'.$rootPageId.'.scss';
+            $includeFile = $uploadScssAbsPath.$includeFileName;
 
-                if (!file_exists($includeFile)) {
-                    if (!is_dir($includePath)) {
-                        if (!mkdir($includePath, 0777, true) && !is_dir($includePath)) {
-                            throw new \RuntimeException(sprintf('Directory "%s" was not created', $includePath));
-                        }
-                    }
+            if (!file_exists($includeFile)) {
 
-                    $customDir = $baseDir.'Resources/Public/T3SB-SCSS/';
-                    if ($key === 0) {
-                        $includeContent = '
-@import "'.$customDir.'custom-variables";
-@import "'.$baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap";
-@import "'.$customDir.'custom";
-						';
-                    } else {
-                        $includeContent = '
-@import "'.$customDir.'custom-variables-'.$siteroot['uid'].'";
-@import "'.$baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap";
-@import "'.$customDir.'custom-'.$siteroot['uid'].'";
-						';
-                    }
-                    GeneralUtility::writeFile($includeFile, $includeContent);
-                }
+               $customDir = self::VARIABLESPATH;
+
+               $includeContent = '
+@import "'.$customDir.'custom-variables-'.$rootPageId.'";
+@import "'.self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss/bootstrap";
+@import "'.$customDir.'custom-'.$rootPageId.'";
+            ';
+
+                GeneralUtility::writeFile($includeFile, $includeContent);
             }
 
             $tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
             $this->deleteFilesFromDirectory($tempPath);
-            $customPath = $baseDir.'Resources/Public/Contrib/Bootstrap/scss/bootstrap/scss/';
+
             $customFileName = 'bootstrap.scss';
-            $customFile = $customPath.$customFileName;
+            $customFile = $bootstrapScssAbsPath.$customFileName;
             $customContent = GeneralUtility::getURL($customFile);
-            $length = 0;
-            if ($customContent) {
-                $length = strlen($customContent);
-            }
 
-            foreach ($settings['optimize'] as $component=>$import) {
-                if (!$import && $customContent) {
-                    $find = '@import "'.$component.'";';
-                    $replace = '// @import "'.$component.'";';
-                    $customContent = str_replace($find, $replace, $customContent);
-                }
-            }
-
-            if ($customContent && $length < strlen($customContent)) {
-                if (file_exists($customFile)) {
-                    unlink($customFile);
-                }
-                if (!is_dir($customPath)) {
-                    if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                        throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+            if ( !empty($settings['optimize']) ) {
+                // if site set bootstrap-optimize is set
+                foreach ($settings['optimize'] as $component=>$import) {
+                    if (!$import && $customContent) {
+                        $find = '@import "'.$component.'";';
+                        $replace = '// @import "'.$component.'";';
+                        $customContent = str_replace($find, $replace, $customContent);
                     }
                 }
-                GeneralUtility::writeFile($customFile, $customContent);
             }
+   
+            GeneralUtility::writeFile($customFile, $customContent);
 
-            if (is_dir($baseDir.'Resources/Public/Contrib/Bootstrap/scss/')) {
+            if (is_dir(GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss/'))) {
                 return Command::SUCCESS;
             }
 
-            throw new \InvalidArgumentException('Check the bootstrap version in the constant editor for validity!', 1657204821);
-
+            $this->addCustomMessage('Check the bootstrap version in the site set editor for validity!', 'ERROR');
+            
+            return Command::FAILURE;
         }
 
-        throw new \InvalidArgumentException('You have to activate SCSS in the EM config!', 1657204821);
-    }
+        $this->addCustomMessage('You have to activate SCSS in the Site Set!', 'ERROR');
+        
+        return Command::FAILURE;
+   }
 
 
-    private function writeCustomFile($customPath, $customFileName, $settings, $name): bool
-    {
-        $customFile = $customPath.$customFileName;
+   private function writeCustomFile(bool $keepVariables, int $rootPageId, string $customFileName, array $settings, string $name): void
+   {
+         $bootstrapVariablesAbsPath = GeneralUtility::getFileAbsFileName(self::VARIABLESPATH);         
+         // delete all files with timestamp except the last 30 (true)
+         $this->deleteFilesFromDirectory($bootstrapVariablesAbsPath, true);
 
-        $keepVariables = (int)$settings['keepVariables'];
-        if (file_exists($customFile)) {
-            $copyFile = $customPath.'_'.time().'-'.$customFileName;
+         $customFile = $bootstrapVariablesAbsPath.$customFileName;
 
-            if (!copy($customFile, $copyFile)) {
-                return false;
-            }
-            if (empty($keepVariables)) {
-                unlink($customFile);
-            }
-        }
+         if (file_exists($customFile)) {
+             $copyFile = $bootstrapVariablesAbsPath.'_'.time().'-'.$customFileName;
+             if (!copy($customFile, $copyFile)) {
+                 $this->addCustomMessage('Copy of "Write Custom File" faild', 'ERROR');
+             }
+             if ($keepVariables === false) {
+                 unlink($customFile);
+             }
+         }
 
-        if (!file_exists($customFile) && empty($keepVariables)) {
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-                }
+         if (!file_exists($customFile) && $keepVariables === false) {
+
+            $config = $this->configRepository->findOneBy(['pid' => $rootPageId]);
+            if (!is_dir($bootstrapVariablesAbsPath)) {
+               if (!mkdir($bootstrapVariablesAbsPath, 0755, true) && !is_dir($bootstrapVariablesAbsPath)) {
+                     throw new \RuntimeException(sprintf('Directory "%s" was not created', $bootstrapVariablesAbsPath));
+               }
             }
             $customContent = $name === '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' : '// Your own SCSS';
-
-            if (!empty($settings['bootswatch'])) {
-                $customContent = @file_get_contents($settings['bootswatchURL'].strtolower($settings['bootswatch']).'/'.$name.'.scss');
-                if ($name === '_variables') {
-                    $customContent = str_replace(' !default', '', $customContent);
-                }
+            
+            $bootswatch = $settings['bootstrap']['cdn']['bootswatch'];
+            if (!empty($bootswatch)) {
+               $customContent = @file_get_contents(self::BOOTSWATCHURL.strtolower($bootswatch).'/'.$name.'.scss');
+               if ($name === '_variables') {
+                  $customContent = str_replace(' !default', '', $customContent);
+               }
+            }
+            if ($name === '_variables') {
+               $config->setCustomVariablesScss($customContent);
+            } else {
+               $config->setCustomScss($customContent);
             }
 
-            GeneralUtility::writeFile($customFile, $customContent);
-        }
+            $this->configRepository->update($config);
+            $this->persistenceManager->persistAll();
+             
+             GeneralUtility::writeFile($customFile, $customContent);
+         }
+     }
 
-        return true;
-    }
 
-
-    private function deleteFilesFromDirectory($directory): void
+    private function deleteFilesFromDirectory(string $directory, bool $onlyunderlined=false): void
     {
         if (is_dir($directory)) {
             if ($dh = opendir($directory)) {
-                while (($file = readdir($dh)) !== false) {
-                    if ($file !== '.' && $file !== '..' && $file[0] !== '_') {
-                        unlink(''.$directory.''.$file.'');
-                    }
-                }
-                closedir($dh);
+               $n = 1;
+               while (($file = readdir($dh)) !== false) {
+                  if (!in_array($file,['.','..'])) {
+                     if ($onlyunderlined === true) {
+                        if (str_starts_with($file, '_')) {
+                           $n++;
+                           if ($n > 30) {
+                              unlink($directory.$file);
+                           }
+                        }
+                     } else {
+                        unlink($directory.$file);
+                     }
+                  }
+               }
+               closedir($dh);
             }
         }
     }
 
 
-    public function getBootstrapFiles($bootstrapVersion, $baseDir): void
-    {
-        $localZipPath = $baseDir.'Resources/Public/Contrib/Bootstrap/';
+   private function getBootstrapFiles(string $bootstrapVersion): void
+   {
+      $localZipPath = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/');
+      $localZipFile = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/t3sb.zip');
+      $extractTo = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/');
 
-        if (is_dir($localZipPath)) {
-            parent::rmDir($localZipPath);
-        }
-        if (!mkdir($localZipPath, 0777, true) && !is_dir($localZipPath)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $localZipPath));
-        }
-        $localZipFile = $baseDir.'Resources/Public/Contrib/Bootstrap/t3sb.zip';
-        $zipFilename = 'v'.$bootstrapVersion.'.zip';
-        $requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
-        # from cdn to local
-        $zipFilePath = 'https://github.com/twbs/bootstrap/archive/';
-        $zipContent = $requestFactory->request($zipFilePath . $zipFilename)->getBody()->getContents();
+      if (is_dir($localZipPath)) {
+         $this->rmDir($localZipPath);
+      }
+      if (!mkdir($localZipPath, 0755, true) && !is_dir($localZipPath)) {
+         $this->addCustomMessage(sprintf('Directory "%s" was not created', $localZipPath), 'ERROR');
+      }
+      $zipFilename = 'v'.$bootstrapVersion.'.zip';
+      $zipFilePath = 'https://github.com/twbs/bootstrap/archive/';
+      $zipContent = $this->requestFactory->request($zipFilePath . $zipFilename)->getBody()->getContents();
 
-        if ($zipContent) {
-            GeneralUtility::writeFile($localZipFile, $zipContent);
-            $extractTo = $localZipPath;
-            $zip = new \ZipArchive();
-            if ($zip->open($localZipFile) === true) {
-                $zip->extractTo($extractTo);
-                $zip->close();
-            } else {
-                throw new \InvalidArgumentException('Sorry ZIP creation failed at this time! Set the setup "module.tx_t3sbootstrap.settings.cdn.noZip=1" and try again.', 1657464538);
-            }
+      if (!empty($zipContent)) {
+         GeneralUtility::writeFile($localZipFile, $zipContent);
+         $zip = new \ZipArchive();
+         if ($zip->open($localZipFile) === true) {
+             $zip->extractTo($extractTo);
+             $zip->close();
+         } else {
+             $this->addCustomMessage('Sorry ZIP creation failed at this time! Try again later.', 'ERROR');
+         }
 
-            $renameFrom = $baseDir.'Resources/Public/Contrib/Bootstrap/bootstrap-'.$bootstrapVersion.'/scss';
-            $renameTo = $baseDir.'Resources/Public/Contrib/Bootstrap/scss';
-            if (is_dir($renameFrom)) {
-                rename($renameFrom, $renameTo);
-            }
+         $renameFrom = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/bootstrap-'.$bootstrapVersion.'/scss');
+         $renameTo = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss');
 
-            parent::rmDir($baseDir.'Resources/Public/Contrib/Bootstrap/bootstrap-'.$bootstrapVersion);
-            $zipFile = $baseDir.'Resources/Public/Contrib/Bootstrap/t3sb.zip';
+         if (is_dir($renameFrom)) {
+             rename($renameFrom, $renameTo);
+         }
 
-            if (file_exists($zipFile)) {
-                unlink($zipFile);
-            }
-        } else {
-            throw new \InvalidArgumentException('No content from GitHub archive!', 1657464783);
-        }
-    }
+         $this->rmDir(GeneralUtility::getFileAbsFileName(self::BASEDIR . 'Public/T3SB-Bootstrap/Bootstrap/bootstrap-' . $bootstrapVersion));
+
+         if (file_exists($localZipFile)) {
+            unlink($localZipFile);
+         }
+      } else {
+         $this->addCustomMessage('No content from GitHub archive!', 'ERROR');
+      }
+   }
 
 
-    public function getBootstrapFilesNoZip($settings, $bootstrapVersion, $customPath, $baseDir): void
-    {
-        $gitURL = 'https://raw.githubusercontent.com/twbs/bootstrap/';
-        $bootstrapPath = $baseDir.'Resources/Public/Contrib/Bootstrap/scss';
-
-        # get the Boostrap SCSS-Files
-        if ($bootstrapVersion > '5.1.3') {
-            $scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _maps.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables-dark.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
-        } else {
-            $scssList = '_accordion.scss, _alert.scss, _badge.scss, _breadcrumb.scss, _button-group.scss, _buttons.scss, _card.scss, _carousel.scss, _close.scss, _containers.scss, _dropdown.scss, _forms.scss, _functions.scss, _grid.scss, _helpers.scss, _images.scss, _list-group.scss, _mixins.scss, _modal.scss, _nav.scss, _navbar.scss, _offcanvas.scss, _pagination.scss, _placeholders.scss, _popover.scss, _progress.scss, _reboot.scss, _root.scss, _spinners.scss, _tables.scss, _toasts.scss, _tooltip.scss, _transitions.scss, _type.scss, _utilities.scss, _variables.scss, bootstrap-grid.scss, bootstrap-reboot.scss, bootstrap-utilities.scss, bootstrap.scss';
-        }
-
-        $mixinsList = '_alert.scss, _backdrop.scss, _banner.scss, _border-radius.scss, _box-shadow.scss, _breakpoints.scss, _buttons.scss, _caret.scss, _clearfix.scss, _color-scheme.scss, _container.scss, _deprecate.scss, _forms.scss, _gradients.scss, _grid.scss, _image.scss, _list-group.scss, _lists.scss, _pagination.scss, _reset-text.scss, _resize.scss, _table-variants.scss, _text-truncate.scss, _transition.scss, _utilities.scss, _visually-hidden.scss';
-
-        $utilitiesList = '_api.scss';
-
-        $formsList = '_floating-labels.scss, _form-check.scss, _form-control.scss, _form-range.scss, _form-select.scss, _form-text.scss, _input-group.scss, _labels.scss, _validation.scss';
-
-        $helpersList = '_clearfix.scss, _color-bg.scss, _colored-links.scss, _position.scss, _ratio.scss, _stacks.scss, _stretched-link.scss, _text-truncation.scss, _visually-hidden.scss, _vr.scss';
-
-        foreach (explode(',', $scssList) as $scss) {
-            $customFileName = trim($scss);
-            $customFile = $customPath.$customFileName;
-            $cdnPath = $gitURL.'v'.trim($bootstrapVersion).'/scss/'.$customFileName;
-            $customContent = GeneralUtility::getURL($cdnPath);
-            if (file_exists($customFile)) {
-                unlink($customFile);
-            }
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-                }
-            }
-            GeneralUtility::writeFile($customFile, $customContent);
-        }
-
-        $customPath = $bootstrapPath.'/mixins/';
-
-        foreach (explode(',', $mixinsList) as $mixins) {
-            $customFileName = trim($mixins);
-            $customFile = $customPath.$customFileName;
-            $cdnPath = $gitURL.'v'.trim($bootstrapVersion).'/scss/mixins/'.$customFileName;
-            $customContent = GeneralUtility::getURL($cdnPath);
-            if (file_exists($customFile)) {
-                unlink($customFile);
-            }
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-                }
-            }
-            GeneralUtility::writeFile($customFile, $customContent);
-        }
-
-        $customPath = $bootstrapPath.'/utilities/';
-
-        foreach (explode(',', $utilitiesList) as $utils) {
-            $customFileName = trim($utils);
-            $customFile = $customPath.$customFileName;
-            $cdnPath = $gitURL.'v'.trim($bootstrapVersion).'/scss/utilities/'.$customFileName;
-            $customContent = GeneralUtility::getURL($cdnPath);
-            if (file_exists($customFile)) {
-                unlink($customFile);
-            }
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-                }
-            }
-            GeneralUtility::writeFile($customFile, $customContent);
-        }
-
-        $customPath = $bootstrapPath.'/forms/';
-
-        foreach (explode(',', $formsList) as $forms) {
-            $customFileName = trim($forms);
-            $customFile = $customPath.$customFileName;
-            $cdnPath = $gitURL.'v'.trim($bootstrapVersion).'/scss/forms/'.$customFileName;
-            $customContent = GeneralUtility::getURL($cdnPath);
-            if (file_exists($customFile)) {
-                unlink($customFile);
-            }
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-                }
-            }
-            GeneralUtility::writeFile($customFile, $customContent);
-        }
-
-        $customPath = $bootstrapPath.'/helpers/';
-        foreach (explode(',', $helpersList) as $helpers) {
-            $customFileName = trim($helpers);
-            $customFile = $customPath.$customFileName;
-            $cdnPath = $gitURL.'v'.trim($bootstrapVersion).'/scss/helpers/'.$customFileName;
-            $customContent = GeneralUtility::getURL($cdnPath);
-            if (file_exists($customFile)) {
-                unlink($customFile);
-            }
-            if (!is_dir($customPath)) {
-                if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-                }
-            }
-            GeneralUtility::writeFile($customFile, $customContent);
-        }
-
-        $customPath = $bootstrapPath.'/vendor/';
-        $customFileName = '_rfs.scss';
-        $customFile = $customPath.$customFileName;
-        $cdnPath = $gitURL.'v'.trim($bootstrapVersion).'/scss/vendor/_rfs.scss';
-        $customContent = GeneralUtility::getURL($cdnPath);
-        if (file_exists($customFile)) {
-            unlink($customFile);
-        }
-        if (!is_dir($customPath)) {
-            if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
-            }
-        }
-        GeneralUtility::writeFile($customFile, $customContent);
-    }
+   private function addCustomMessage(string $text, string $header): void
+   {
+      $message = GeneralUtility::makeInstance(
+         FlashMessage::class,
+         $text,
+         $header,
+         ContextualFeedbackSeverity::ERROR
+      );
+      $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+      $defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+      $defaultFlashMessageQueue->enqueue($message);
+   }
+    
 }

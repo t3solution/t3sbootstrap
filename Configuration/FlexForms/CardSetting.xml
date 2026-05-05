@@ -79,16 +79,18 @@
 
 					<maxwidth>
 						<label>Card max-width == image width</label>
-						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</displayCond>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</displayCond>
+						<description>Helpful for single cards outside the card wrapper </description> 
 						<config>
 							<type>check</type>
 						</config>
 					</maxwidth>
 					<image.overlay>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.imageOverlay</label>
+						<description>The card body overlays the image</description> 
 						<displayCond>
 							<and>
-								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</numIndex>
 								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
 							</and>
 						</displayCond>
@@ -100,7 +102,7 @@
 						<label>Image overlay - mobile view only</label>
 						<displayCond>
 							<and>
-								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</numIndex>
 								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
 							</and>
 						</displayCond>
@@ -108,12 +110,18 @@
 							<type>check</type>
 						</config>
 					</mobile.overlay>
+					<title.onTop>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.titleOnTop</label>
+						<config>
+							<type>check</type>
+						</config>
+					</title.onTop>
 					<flipcard>
 						<label>Flip Card with Text or Image</label>
 						<description>Frontside with image - Backside with text (if "Text Top" available) or image (second image)</description>
 						<displayCond>
 							<and>
-								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->cardWrapperParent</numIndex>
+								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</numIndex>
 								<numIndex index="1">FIELD:sDEF.multiImage.enable:=:0</numIndex>
 							</and>
 						</displayCond>
@@ -145,12 +153,6 @@
 							<default>180deg</default>
 						</config>
 					</rotateY>
-					<title.onTop>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.titleOnTop</label>
-						<config>
-							<type>check</type>
-						</config>
-					</title.onTop>
 					<button.enable>
 						<onChange>reload</onChange>
 						<label>Enable button with header_link</label>
@@ -297,10 +299,34 @@
 					</cardborderstyle>
 					<horizontal>
 						<label>Horizontal</label>
+						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 						</config>
 					</horizontal>
+
+					<alignSelfCenter>
+						<label>Align Self Center</label>
+						<description>The content is aligned vertically.</description>
+						<displayCond>FIELD:sDEF.horizontal:=:1</displayCond>
+						<config>
+							<type>check</type>
+						</config>
+					</alignSelfCenter>
+
+					<imageColumnsWidth>
+						<label>Image columns width</label>
+						<description>e.g. 1,2,3,4 ...</description>
+						<displayCond>FIELD:sDEF.horizontal:=:1</displayCond>
+						<config>
+							<type>number</type>
+							<size>4</size>
+							<max>1</max>
+							<default>4</default>
+							<checkbox>0</checkbox>
+						</config>
+					</imageColumnsWidth>
+					
 					<multiImage.enable>
 						<label>Enable Profile Card</label>
 						<description>You need at least two images for the profile card. The second is the circular, smaller image</description>
@@ -422,37 +448,6 @@
 							<default>1</default>
 						</config>
 					</multiImage.shadow>
-					<multiImage.diagonal>
-						<label>Cut image diagonally</label>
-						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
-						<onChange>reload</onChange>
-						<config>
-							<type>check</type>
-						</config>
-					</multiImage.diagonal>
-					<multiImage.slope>
-						<label>Height of the slope (in %)</label>
-						 <displayCond>
-							<and>
-								<numIndex index="0">FIELD:sDEF.multiImage.enable:=:1</numIndex>
-								<numIndex index="1">FIELD:sDEF.multiImage.diagonal:=:1</numIndex>
-							</and>
-						 </displayCond>
-						<config>
-							<type>number</type>
-							<size>5</size>
-							<default>50</default>
-							<eval>trim</eval>
-							<range>
-								<lower>10</lower>
-								<upper>90</upper>
-							</range>
-							<slider>
-								<step>5</step>
-								<width>200</width>
-							</slider>
-						</config>
-					</multiImage.slope>
 					<multiImage.socialmedia.enable>
 						<label>Add some Social Media Links</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>

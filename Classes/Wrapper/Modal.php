@@ -1,76 +1,104 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Wrapper;
 
 use TYPO3\CMS\Core\SingletonInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class Modal implements SingletonInterface
 {
-
-	/**
-	 * Returns the $processedData
-	 */
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-		$processedData['modal']['animation'] = $flexconf['animation'];
-		$processedData['modal']['onPageLoad'] = !empty($flexconf['onPageLoad']) ? true : false;
-		$processedData['modal']['showOnPageLoad'] = $processedData['modal']['onPageLoad'] ? true : false;
-		$processedData['modal']['cookie'] = !empty($flexconf['cookie']) ? true : false;
-		$processedData['modal']['showHeader'] = true;
-		$processedData['modal']['size'] = $flexconf['size'];
-		$processedData['modal']['button'] = $flexconf['button'];
-		$processedData['modal']['style'] = $flexconf['style'];
-		if ( !empty($flexconf['buttonText']) ) {
-			$processedData['modal']['buttonText'] = $flexconf['buttonText'];
-		} elseif ( $processedData['data']['header'] ) {
-			$processedData['modal']['buttonText'] = $processedData['data']['header'];
-		} else {
-			$processedData['modal']['buttonText'] = $processedData['modal']['button'] ? 'Modal-Button' :'Modal-Link';
-		}
-		if ( !empty($flexconf['fixedPosition']) ) {
-			$processedData['modal']['fixedClass'] = 'fixedModalButton fixedPosition fixedPosition-'.$flexconf['fixedPosition'];
-			$processedData['class'] .= $flexconf['rotate'] ? ' rotateFixedPosition rotate-'.$flexconf['rotate'] : '';
-			$processedData['modal']['fixedButton'] = TRUE;
-		}
-		if ($processedData['data']['header_position']) {
-			$headerPosition = $processedData['data']['header_position'];
-			if ( $headerPosition === 'left' ) $headerPosition = 'start';
-			if ( $headerPosition === 'right' ) $headerPosition = 'end';
-			$processedData['class'] .= ' text-'.$headerPosition;
-		}
-		if (!empty($flexconf['whiteclosebutton'])) {
-			$processedData['modal']['whiteclosebutton'] = TRUE;
-		}
-		$processedData['modal']['nextModal'] = !empty($flexconf['nextModal']) ? $flexconf['nextModal'] : '0';
-		$processedData['modal']['prevModal'] = !empty($flexconf['prevModal']) ? $flexconf['prevModal'] : '0';
+		$processedData['class']  = $processedData['class'] ?? '';
+		$onPageLoad              = !empty($flexconf['onPageLoad']);
 
-		// Launch Modal on Page Load
-		if ($processedData['modal']['onPageLoad']) {
-			$processedData['modal']['showHeader'] = false;
-			$uid = 't3sb_modal-'.$processedData['data']['uid'];
-			if ( array_key_exists($uid, $_COOKIE) && $_COOKIE[$uid] === 'allow' ) {
-				if ($processedData['modal']['cookie']) {
-					$processedData['modal']['showOnPageLoad'] = false;
-				} else {
-					setcookie($uid, '', time() - (3600), '/');
-				}
+		$processedData['modal'] = [
+			'animation'     => $flexconf['animation']  ?? '',
+			'size'          => $flexconf['size']        ?? '',
+			'button'        => $flexconf['button']      ?? '',
+			'style'         => $flexconf['style']       ?? '',
+			'onPageLoad'    => $onPageLoad,
+			'showOnPageLoad'=> $onPageLoad,
+			'cookie'        => !empty($flexconf['cookie']),
+			'showHeader'    => true,
+			'nextModal'     => $flexconf['nextModal'] ?? '0',
+			'prevModal'     => $flexconf['prevModal'] ?? '0',
+		];
+
+		$processedData['modal']['buttonText'] = $this->resolveButtonText($processedData, $flexconf);
+
+		if (!empty($flexconf['fixedPosition'])) {
+			$processedData['modal']['fixedClass']  =
+				'fixedModalButton fixedPosition fixedPosition-' . $flexconf['fixedPosition'];
+			$processedData['modal']['fixedButton'] = true;
+
+			if (!empty($flexconf['rotate'])) {
+				$processedData['class'] .= ' rotateFixedPosition rotate-' . $flexconf['rotate'];
+			}
+		}
+
+		if (!empty($processedData['data']['header_position'])) {
+			$position = match ($processedData['data']['header_position']) {
+				'left'  => 'start',
+				'right' => 'end',
+				default => $processedData['data']['header_position'],
+			};
+			$processedData['class'] .= ' text-' . $position;
+		}
+
+		if (!empty($flexconf['whiteclosebutton'])) {
+			$processedData['modal']['whiteclosebutton'] = true;
+		}
+
+		if ($onPageLoad) {
+			$processedData = $this->applyPageLoadCookieLogic($processedData);
+		}
+
+		return $processedData;
+	}
+
+	private function resolveButtonText(array $processedData, array $flexconf): string
+	{
+		if (!empty($flexconf['buttonText'])) {
+			return $flexconf['buttonText'];
+		}
+
+		if (!empty($processedData['data']['header'])) {
+			return $processedData['data']['header'];
+		}
+
+		return !empty($processedData['modal']['button']) ? 'Modal-Button' : 'Modal-Link';
+	}
+
+	private function applyPageLoadCookieLogic(array $processedData): array
+	{
+		$processedData['modal']['showHeader'] = false;
+
+		$uid     = 't3sb_modal-' . $processedData['data']['uid'];
+		$request = $this->getRequest();
+		$cookies = $request->getCookieParams();
+		$hasCookie = isset($cookies[$uid]) && $cookies[$uid] === 'allow';
+
+		if ($hasCookie) {
+			if ($processedData['modal']['cookie']) {
+				$processedData['modal']['showOnPageLoad'] = false;
 			} else {
-				if ($processedData['modal']['cookie']) {
-					setcookie($uid, 'allow', time() + (3600), '/');
-				}
+				// Cookie ablaufen lassen — Hinweis: setcookie() hier nur als Notlösung,
+				// besser über PSR-7 Response in einem Middleware-Layer setzen
+				setcookie($uid, '', time() - 3600, '/');
+			}
+		} else {
+			if ($processedData['modal']['cookie']) {
+				setcookie($uid, 'allow', time() + 3600, '/');
 			}
 		}
 
 		return $processedData;
 	}
 
+	private function getRequest(): ServerRequestInterface
+	{
+		return $GLOBALS['TYPO3_REQUEST'];
+	}
 }

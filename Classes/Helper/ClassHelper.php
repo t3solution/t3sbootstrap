@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
@@ -7,18 +6,17 @@ namespace T3SBS\T3sbootstrap\Helper;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class ClassHelper implements SingletonInterface
 {
     /**
      * Returns the CSS-class for default elements
      */
-    public function getDefaultClass(array $data, array $flexconf, string $cTypeClass, string $sectionMenuClass): string
+    public function getDefaultClass(
+        array $data, 
+        array $flexconf, 
+        string $cTypeClass, 
+        string $sectionMenuClass
+    ): string
     {
         // class
         if (!empty($cTypeClass)) {
@@ -143,9 +141,9 @@ class ClassHelper implements SingletonInterface
         /**
          * Background Wrapper
          */
-        if ($data['CType'] === 'background_wrapper' && $isVideo == false) {
+        if ($data['CType'] === 'background_wrapper' && $isVideo === FALSE) {
             $class .= !empty($flexconf['bgAttachmentFixed']) ? ' background-fixed' : '';
-            if ((!$data['assets'] && !empty($flexconf['imageRaster'])) || (!empty($flexconf['origImage']) && !empty($flexconf['imageRaster']))) {
+            if ((!empty($data['assets']) || !empty($flexconf['origImage'])) && !empty($flexconf['imageRaster'])) {
                 $class .= ' bg-raster';
             }
         }
@@ -222,6 +220,9 @@ class ClassHelper implements SingletonInterface
             }
             if (str_contains($data['tx_t3sbootstrap_header_class'], 'h-line-2')) {
                 $header['hLine'] = 'h-line-2';
+            }
+            if (str_contains($data['tx_t3sbootstrap_header_class'], 'h-line-3')) {
+                $header['hLine'] = 'h-line-3';
             }
             $textColors = explode(',', 'text-primary,text-secondary,text-danger,text-success,text-warning,
 			text-info,text-light,text-dark,text-body,text-muted,text-white');

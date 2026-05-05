@@ -43,6 +43,7 @@ $tempPagesColumns = [
                 ['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
                 ['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
                 ['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
+['label' => 'no container - even if pages override', 'value' => 'none',],
             ],
             'default' => 'container'
         ]
@@ -123,12 +124,12 @@ $tempPagesColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    ['var(--bs-primary)', 'var(--bs-primary)'],
-                    ['var(--bs-secondary)', 'var(--bs-secondary)'],
-                    ['var(--bs-success)', 'var(--bs-success)'],
-                    ['var(--bs-danger)', 'var(--bs-danger)'],
-                    ['var(--bs-warning)', 'var(--bs-warning)'],
-                    ['var(--bs-info)', 'var(--bs-info)']
+                    ['label' => 'var(--bs-primary)', 'value' => 'var(--bs-primary)'],
+                    ['label' => 'var(--bs-secondary)', 'value' => 'var(--bs-secondary)'],
+                    ['label' => 'var(--bs-success)', 'value' => 'var(--bs-success)'],
+                    ['label' => 'var(--bs-danger)', 'value' => 'var(--bs-danger)'],
+                    ['label' => 'var(--bs-warning)', 'value' => 'var(--bs-warning)'],
+                    ['label' => 'var(--bs-info)', 'value' => 'var(--bs-info)']
                 ],
             ],
         ],
@@ -143,12 +144,12 @@ $tempPagesColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    ['var(--bs-primary)', 'var(--bs-primary)'],
-                    ['var(--bs-secondary)', 'var(--bs-secondary)'],
-                    ['var(--bs-success)', 'var(--bs-success)'],
-                    ['var(--bs-danger)', 'var(--bs-danger)'],
-                    ['var(--bs-warning)', 'var(--bs-warning)'],
-                    ['var(--bs-info)', 'var(--bs-info)']
+                    ['label' => 'var(--bs-primary)', 'value' => 'var(--bs-primary)'],
+                    ['label' => 'var(--bs-secondary)', 'value' => 'var(--bs-secondary)'],
+                    ['label' => 'var(--bs-success)', 'value' => 'var(--bs-success)'],
+                    ['label' => 'var(--bs-danger)', 'value' => 'var(--bs-danger)'],
+                    ['label' => 'var(--bs-warning)', 'value' => 'var(--bs-warning)'],
+                    ['label' => 'var(--bs-info)', 'value' => 'var(--bs-info)']
                 ],
             ],
         ],
@@ -157,7 +158,7 @@ $tempPagesColumns = [
     'tx_t3sbootstrap_fullheightsection' => [
         'exclude' => 1,
         'label' => 'Full height section',
-        'description' => 'Make a fullscreen section that`s full height of browser window',
+        'description' => 'Make a fullscreen section that`s full height of browser window.'.PHP_EOL.' An MP4 video can also be shown here.',
         'config' => [
             'type' => 'check'
         ]

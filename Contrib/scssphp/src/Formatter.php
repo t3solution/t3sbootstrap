@@ -251,7 +251,7 @@ abstract class Formatter
                     $isEmpty = false;
                     continue;
                 }
-
+                // @extensionScannerIgnoreLine
                 if ($child->type === Type::T_MEDIA || $child->type === Type::T_DIRECTIVE) {
                     $child->children = [];
                     $child->selectors = null;
@@ -272,7 +272,7 @@ abstract class Formatter
      *
      * @return string
      */
-    public function format(OutputBlock $block, SourceMapGenerator $sourceMapGenerator = null)
+    public function format(OutputBlock $block, ?SourceMapGenerator $sourceMapGenerator = null)
     {
         $this->sourceMapGenerator = null;
 

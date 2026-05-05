@@ -3,39 +3,11 @@
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Information\Typo3Version;
 
 defined('TYPO3') || die();
 
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-# TYPO3 branch
-$branch = GeneralUtility::makeInstance(Typo3Version::class)->getBranch();
-
-if ( $branch == '12.4') {
-    $codeEditor = 't3editor';
-} else {
-    $codeEditor = 'codeEditor';
-}
-
-if (!empty($extconf['flexformNoDefault'])) {
-    $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsNoDefaults.xml';
-    $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumnsNoDefaults.xml';
-    $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsNoDefaults.xml';
-    $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsNoDefaults.xml';
-} else {
-    if (!empty($extconf['flexformMinCol'])) {
-        $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsMin.xml';
-        $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumnsMin.xml';
-        $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsMin.xml';
-        $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsMin.xml';
-    } else {
-        $flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml';
-        $flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml';
-        $flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml';
-        $flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml';
-    }
-}
 
 /***************
  * Add new CTypes
@@ -91,7 +63,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'label' => 'Bootstrap Carousel Item (in carousel- or swiper-container)',
         'value' => 't3sbs_carousel',
         'icon' => 'content-carousel-item-textandimage',
-        'group' => 'T3S Bootstrap',
+        'group' => 'T3S Slider',
         'description' => 'A slideshow component for cycling through elements—images or slides of text—like a carousel.',
     ]
 );
@@ -129,7 +101,6 @@ ExtensionManagementUtility::addTcaSelectItem(
     ]
 );
 
-
 /***************
  * New fields in table:tt_content
  */
@@ -161,24 +132,25 @@ $tempContentColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    ['m-3 (margin)', 'm-3'],
-                    ['mt-3 (margin-top)', 'mt-3'],
-                    ['mb-3 (margin-bottom)', 'mb-3'],
-                    ['ms-3 (margin-left)', 'ms-3'],
-                    ['me-3 (margin-right)', 'me-3'],
-                    ['mx-3 (margin-left and -right)', 'mx-3'],
-                    ['my-3 (margin-top and -bottom)', 'my-3'],
-                    ['text-primary', 'text-primary'],
-                    ['text-secondary', 'text-secondary'],
-                    ['text-danger', 'text-danger'],
-                    ['text-success', 'text-success'],
-                    ['text-warning', 'text-warning'],
-                    ['text-info', 'text-info'],
-                    ['text-black', 'text-black'],
-                    ['text-white', 'text-white'],
-                    ['text-uppercase', 'text-uppercase'],
-                    ['One line left and right', 'h-line-1'],
-                    ['Two lines left and right', 'h-line-2']
+                    ['label' => 'm-3 (margin)', 'value' => 'm-3'],
+                    ['label' => 'mt-3 (margin-top)', 'value' => 'mt-3'],
+                    ['label' => 'mb-3 (margin-bottom)', 'value' => 'mb-3'],
+                    ['label' => 'ms-3 (margin-left)', 'value' => 'ms-3'],
+                    ['label' => 'me-3 (margin-right)', 'value' => 'me-3'],
+                    ['label' => 'mx-3 (margin-left and -right)', 'value' => 'mx-3'],
+                    ['label' => 'my-3 (margin-top and -bottom)', 'value' => 'my-3'],
+                    ['label' => 'text-primary', 'value' => 'text-primary'],
+                    ['label' => 'text-secondary', 'value' => 'text-secondary'],
+                    ['label' => 'text-danger', 'value' => 'text-danger'],
+                    ['label' => 'text-success', 'value' => 'text-success'],
+                    ['label' => 'text-warning', 'value' => 'text-warning'],
+                    ['label' => 'text-info', 'value' => 'text-info'],
+                    ['label' => 'text-black', 'value' => 'text-black'],
+                    ['label' => 'text-white', 'value' => 'text-white'],
+                    ['label' => 'text-uppercase', 'value' => 'text-uppercase'],
+                    ['label' => 'One line left and right', 'value' => 'h-line-1'],
+                    ['label' => 'Two lines left and right', 'value' => 'h-line-2'],
+                    ['label' => 'A short line below', 'value' => 'h-line-3']
                 ],
             ],
         ],
@@ -317,40 +289,10 @@ $tempContentColumns = [
     ],
     'tx_t3sbootstrap_flexform' => [
         'exclude' => 1,
-        'l10n_display' => 'hideDiff',
         'label' => ' ',
         'config' => [
             'type' => 'flex',
-            'ds_pointerField' => 'CType',
-            'ds' => [
-                'default' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Bootstrap.xml',
-                't3sbs_card' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
-                't3sbs_toast' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/ToastSetting.xml',
-                't3sbs_carousel' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Carousel.xml',
-                't3sbs_button' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
-                't3sbs_mediaobject' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
-                'table' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Table.xml',
-                'two_columns' => $flexformTwoColumns,
-                'three_columns' => $flexformThreeColumns,
-                'four_columns' => $flexformFourColumns,
-                'six_columns' => $flexformSixColumns,
-                'card_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CardWrapper.xml',
-                'button_group' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Buttongroup.xml',
-                'autoLayout_row' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/AutoLayoutRow.xml',
-                'background_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/BackgroundWrapper.xml',
-                'parallax_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ParallaxWrapper.xml',
-                'container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Container.xml',
-                'carousel_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CarouselContainer.xml',
-                'collapsible_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CollapseContainer.xml',
-                'collapsible_accordion' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Collapse.xml',
-                'modal' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Modal.xml',
-                'tabs_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Tabs.xml',
-                'tabs_tab' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml',
-                'masonry_wrapper' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml',
-                'swiper_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SwiperContainer.xml',
-                'toast_container' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ToastContainer.xml',
-                'row_columns' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/RowColumns.xml',
-            ]
+            'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Bootstrap.xml'
         ]
     ],
     'tx_t3sbootstrap_extra_class' => [
@@ -371,11 +313,14 @@ $tempContentColumns = [
     ],
     'tx_t3sbootstrap_bgcolor' => [
         'label' => 'Background color',
+        'description' => 'Only applies if "Context color" is set to "none"',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->color_' . $extconf['color'],
         'config' => [
             'type' => 'color',
-            'size' => 20
+            'size' => 20,
+            'opacity' => true,
+            'searchable' => false
         ],
     ],
     'tx_t3sbootstrap_inTextImgColumns' => [
@@ -421,6 +366,7 @@ $tempContentColumns = [
     ],
     'tx_t3sbootstrap_contextcolor' => [
         'label' => 'Context color',
+        'description' => 'Overwrites the "Background color" setting',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->color_' . $extconf['color'],
         'config' => [
@@ -527,7 +473,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_verticalgutters' => [
-        'label' => 'Vertical gutters',
+        'label' => 'Vertical gutters/margin',
         'exclude' => 1,
         'description' => 'INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#vertical-gutters',
         'displayCond' => [
@@ -542,12 +488,12 @@ $tempContentColumns = [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['label' => 'gy-0 (no gutters)', 'value' => 'mb-0',],
-                ['label' => 'gy-1', 'value' => 'mb-1',],
-                ['label' => 'gy-2', 'value' => 'mb-2',],
-                ['label' => 'gy-3', 'value' => 'mb-3',],
-                ['label' => 'gy-4 (default)', 'value' => 'mb-4',],
-                ['label' => 'gy-5', 'value' => 'mb-5',],
+                ['label' => 'mb-0 (no gutters)', 'value' => 'mb-0',],
+                ['label' => 'mb-1', 'value' => 'mb-1',],
+                ['label' => 'mb-2', 'value' => 'mb-2',],
+                ['label' => 'mb-3', 'value' => 'mb-3',],
+                ['label' => 'mb-4 (default)', 'value' => 'mb-4',],
+                ['label' => 'mb-5', 'value' => 'mb-5',],
             ],
             'default' => 'mb-4'
         ]
@@ -645,7 +591,6 @@ $tempContentColumns = [
 
     'tx_t3sbootstrap_animateCss' => [
         'exclude' => 1,
-        'l10n_display' => 'hideDiff',
         'label' => 'Animate.css',
         'config' => [
             'type' => 'select',
@@ -783,10 +728,7 @@ $tempContentColumns = [
             'type' => 'text',
             'cols' => 80,
             'rows' => 15,
-            'softref' => 'typolink_tag,email[subst],url',
-            'search' => [
-                'andWhere' => '{#CType}=\'t3sbs_card\'',
-            ],
+            'softref' => 'typolink_tag,email[subst],url'
         ],
     ],
     'tx_t3sbootstrap_cardheader' => [
@@ -814,12 +756,8 @@ $tempContentColumns = [
             'foreign_table' => 'tx_t3sbootstrap_list_item_inline',
             'foreign_field' => 'parentid',
             'foreign_table_field' => 'parenttable',
-            'behaviour' => [
-                 'allowLanguageSynchronization' => true
-            ]
         ],
     ],
-    
     'tx_t3sbootstrap_chapter' => [
         'exclude' => 1,
         'label' => 'Chapter type',
@@ -852,7 +790,7 @@ $tempContentColumns = [
         ],
         'config' => [
             'type' => 'text',
-            'renderType' => $codeEditor,
+            'renderType' => 'codeEditor',
             'format' => 'css',
             'rows' => 15,
             'wrap' => 'virtual',
@@ -870,7 +808,7 @@ $tempContentColumns = [
         ],
         'config' => [
             'type' => 'text',
-            'renderType' => $codeEditor,
+            'renderType' => 'codeEditor',
             'format' => 'javascript',
             'rows' => 15,
             'wrap' => 'virtual',
@@ -899,6 +837,18 @@ $tempContentColumns = [
             'type' => 'file',
             'maxitems' => 6,
             'allowed' => ['css'],
+        ],
+    ],
+    
+    'tx_t3sbootstrap_supraheader' => [
+        'exclude' => 1,
+        'label' => 'Supraheader',
+        'description' => 'A short text element placed directly above the heading',
+        'config' => [
+            'type' => 'input',
+            'size' => 50,
+            'max' => 255,
+            'eval' => 'trim',
         ],
     ],
 
@@ -930,7 +880,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
             'config' => [
                 'type' => 'text',
                 'format' => 'javascript',
-                'renderType' => $codeEditor,
+                'renderType' => 'codeEditor',
                 'wrap' => 'virtual',
                 'rows' => 15,
             ],
@@ -938,7 +888,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
         'tx_t3sbootstrap_bodytext' => [
             'config' => [
                 'type' => 'text',
-                'renderType' => $codeEditor,
+                'renderType' => 'codeEditor',
                 'format' => 'css',
                 'rows' => 15,
                 'wrap' => 'virtual',
@@ -947,11 +897,8 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets'] = [
     ],
 ];
 
-ExtensionManagementUtility::addPiFlexFormValue(
-    '*',
-    'FILE:EXT:t3sbootstrap/Configuration/FlexForms/AssetInline.xml',
-    't3sbs_assets'
-);
+
+$GLOBALS['TCA']['tt_content']['types']['t3sbs_assets']['columnsOverrides']['pi_flexform']['config']['ds'] = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/AssetInline.xml';
 
 
 /***************
@@ -987,6 +934,11 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
             'required' => true,
             'eval' => 'trim'
         ]
+    ],
+    'tx_t3sbootstrap_flexform' => [
+        'config' => [
+            'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
+        ],
     ],
 ];
 
@@ -1026,9 +978,15 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
             'config' => [
                 'maxitems' => 1
             ]
-        ]
+        ],
+        'tx_t3sbootstrap_flexform' => [
+            'config' => [
+                'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Carousel.xml',
+            ],
+        ],
     ]
 ];
+
 
 /***************
  * Media object - t3sbs_mediaobject
@@ -1044,7 +1002,12 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject']['columnsOverrides'] 
         'config' => [
             'maxitems' => 1
         ]
-    ]
+    ],
+    'tx_t3sbootstrap_flexform' => [
+        'config' => [
+            'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
+        ],
+    ],
 ];
 
 
@@ -1094,7 +1057,12 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
             'config' => [
                 'maxitems' => 2
             ]
-        ]
+        ],
+        'tx_t3sbootstrap_flexform' => [
+            'config' => [
+                'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
+            ],
+        ],
     ]
 ];
 
@@ -1103,6 +1071,11 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
  * Toasts - t3sbs_toast
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast'] = $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject'];
+$GLOBALS['TCA']['tt_content']['types']['t3sbs_toast']['columnsOverrides']['tx_t3sbootstrap_flexform'] = [
+    'config' => [
+        'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/ToastSetting.xml',
+    ],
+];
 
 
 /***************
@@ -1110,26 +1083,25 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast'] = $GLOBALS['TCA']['tt_cont
  */
 // add extra column
 $GLOBALS['TCA']['tt_content']['columns']['bullets_type']['config']['items'] = [
-    ['label' => '0', 'value' => 0,],
+    ['label' => 'Default list', 'value' => 0,],
     ['label' => 'BS Inline list', 'value' => 2,],
     ['label' => 'BS Unstyled list', 'value' => 3,],
     ['label' => 'BS Listengruppen', 'value' => 4,],
     ['label' => 'BS Definition list (use pipe "|")', 'value' => 5,],
 ];
-#$GLOBALS['TCA']['tt_content']['columns']['bullets_type']['config']['default'] = 2;
 
 
 /***************
  * FluidTemplate
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_fluidtemplate']['showitem'] = '
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
         header;Data Variable (optional),
         subheader;Path to your Fluid-Template,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
-                hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access
+            hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access
 ';
 
 
@@ -1138,23 +1110,28 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_fluidtemplate']['showitem'] = '
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
     'showitem' => '
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,assets,
-                LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
-                --linebreak--, file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
-                --linebreak--, filelink_sorting,
-                --palette--;;mediaAdjustments,imagecols,
+            LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
+            --linebreak--, file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
+            --linebreak--, filelink_sorting,
+            --palette--;;mediaAdjustments,imagecols,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
-                hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+            hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
     '
 ];
 
+
+/***************
+ * table
+ */
+ $GLOBALS['TCA']['tt_content']['types']['table']['columnsOverrides']['tx_t3sbootstrap_flexform']['config']['ds'] = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Table.xml';
 
 ExtensionManagementUtility::addFieldsToPalette(
     'tt_content',
@@ -1231,6 +1208,7 @@ ExtensionManagementUtility::addFieldsToPalette(
     'tt_content',
     'imageGutters',
     'tx_t3sbootstrap_gutters',
+    'after:tx_t3sbootstrap_bordercolor'
 );
 ExtensionManagementUtility::addFieldsToPalette(
     'tt_content',
@@ -1290,13 +1268,13 @@ ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
     '--palette--;T3SB Image Settings;imageSettings',
     '',
-    'after:mediaAdjustments'
+    'after:imageborder'
 );
 ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
     '--palette--;T3SB Image Gutters;imageGutters',
     '',
-    'after:mediaAdjustments'
+    'after:imageborder'
 );
 
 
@@ -1308,6 +1286,10 @@ if (!ExtensionManagementUtility::isLoaded('content_animations')) {
         '',
         'after:layout'
     );
+}
+
+if (array_key_exists('supraheader', $extconf) && $extconf['supraheader'] === '1') {
+    ExtensionManagementUtility::addToAllTCAtypes('tt_content', 'tx_t3sbootstrap_supraheader', '', 'before:header');
 }
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
@@ -1327,6 +1309,7 @@ if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] === '1') 
             tx_t3sbootstrap_animateCssRepeat'
     ];
 }
+
 
 if (array_key_exists('sectionOrder', $extconf) && $extconf['sectionOrder'] === '1') {
     ExtensionManagementUtility::addFieldsToPalette(

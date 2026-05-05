@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
@@ -10,13 +9,6 @@ use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 
-
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class AssetHelper implements SingletonInterface
 {
 	/**
@@ -33,6 +25,7 @@ class AssetHelper implements SingletonInterface
 				$basePath = substr($basePath, 0, -1);
 			}
 			$identifier = $cssfile->getIdentifier();
+			// @extensionScannerIgnoreLine
 			$assetCollector->addStyleSheet($cssfile->getName(), $basePath.$identifier);
 		}
 	}

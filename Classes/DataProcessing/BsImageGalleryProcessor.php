@@ -1,5 +1,4 @@
 <?php
-	
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
@@ -9,24 +8,15 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\Resource\FileCollector;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class BsImageGalleryProcessor implements DataProcessorInterface
 {
-	/**
-	 * Process data of a record to resolve File objects to the view
-	 *
-	 * @param ContentObjectRenderer $cObj The data of the content element or page
-	 * @param array $contentObjectConfiguration The configuration of Content Object
-	 * @param array $processorConfiguration The configuration of this processor
-	 * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
-	 * @return array the processed data as key/value store
-	 */
-	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
+
+	public function process(
+		ContentObjectRenderer $cObj, 
+		array $contentObjectConfiguration, 
+		array $processorConfiguration, 
+		array $processedData
+	): array
 	{
 		if (!empty($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
 			return $processedData;
@@ -46,6 +36,7 @@ class BsImageGalleryProcessor implements DataProcessorInterface
 				// Fetch the references of the default element
 				$relationTable = $cObj->stdWrapValue('table', $referenceConfiguration, $cObj->getCurrentTable());
 				if (!empty($relationTable)) {
+					// @extensionScannerIgnoreLine
 					$fileCollector->addFilesFromRelation($relationTable, $relationField, $cObj->data);
 				}
 			}
@@ -84,11 +75,10 @@ class BsImageGalleryProcessor implements DataProcessorInterface
 			$fileCollector->sort($sortingProperty, $sortingDirection);
 		}
 
-		$numberOfColumns = $processedData['data']['imagecols'] ? (int)$processedData['data']['imagecols'] : 3;
-		$galleryChunk = [];
-		if ($fileCollector->getFiles()) {
-			$galleryChunk = array_chunk($fileCollector->getFiles(), $numberOfColumns);
-		}
+		$numberOfColumns = (int)($processedData['data']['imagecols'] ?: 3);
+
+		$files = $fileCollector->getFiles();
+		$galleryChunk = $files ? array_chunk($files, $numberOfColumns) : [];
 
 		// set the files into a variable, default "files"
 		$targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, 'files');

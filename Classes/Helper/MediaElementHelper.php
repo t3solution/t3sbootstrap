@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
@@ -7,22 +6,20 @@ namespace T3SBS\T3sbootstrap\Helper;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class MediaElementHelper implements SingletonInterface
 {
 
 	/**
 	 * Returns the $processedData
 	 */
-	public function getProcessedData(array $processedData, array $extConf, $breakpoint, $parentflexconf): array
+	public function getProcessedData(
+		array $processedData, 
+		array $extConf, 
+		string $breakpoint, 
+		array $parentflexconf
+	): array
 	{
 		$cType = $processedData['data']['CType'];
-
 		$processedData['addmedia']['imgclass'] = !empty($processedData['addmedia']['imgclass']) ? $processedData['addmedia']['imgclass'] : 'img-fluid';
 		$processedData['addmedia']['imgclass'] .= $processedData['data']['imageborder'] ? ' border' :'';
 		$processedData['addmedia']['imgclass'] .= $processedData['data']['tx_t3sbootstrap_bordercolor'] && $processedData['data']['imageborder']

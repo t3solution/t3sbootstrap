@@ -21,10 +21,6 @@ categories:
     label: 'Back to top button'
     parent: Bootstrap.optional.div
 
-  Bootstrap.optional.jquery:
-    label: 'jQuery'
-    parent: Bootstrap.optional.div
-
   Bootstrap.optional.navbar:
     label: 'Navbar'
     parent: Bootstrap.optional.div
@@ -38,31 +34,10 @@ settings:
     type: bool
     default: true
 
-  bootstrap.config.enableUtilityColors:
-    label: 'Enable the currently available utility colors in the BE Modul'
-    category: Bootstrap.optional.miscellaneous
-    description: ''
-    type: bool
-    default: true
-
-  bootstrap.config.enableInfo:
-    label: 'Hints to increase the website speed in the BE Modul'
-    category: Bootstrap.optional.miscellaneous
-    description: ''
-    type: bool
-    default: true
-
   bootstrap.config.sectionMenuClass:
     label: 'Add class "section-index" to each content element'
     category: Bootstrap.optional.miscellaneous
     description: 'Is used in a few rare situations'
-    type: bool
-    default: false
-
-  bootstrap.print.enable:
-    label: 'Include print template'
-    category: Bootstrap.optional.miscellaneous
-    description: ''
     type: bool
     default: false
 
@@ -97,7 +72,7 @@ settings:
   bootstrap.skiplinks:
     label: 'creating "Skip Links" to navigation, content or footer'
     category: Bootstrap.optional.miscellaneous
-    description: 'For barrier-free accessibility if activated (in Main.html)'
+    description: 'For barrier-free accessibility if activated (in Main.fluid.html)'
     type: bool
     default: false
 
@@ -227,22 +202,6 @@ settings:
     description: ''
     type: bool
     default: false
-
-
-  bootstrap.disable.jquery:
-    label: 'Disable jQuery by default (true by default)'
-    category: Bootstrap.optional.jquery
-    description: 'Disable this option if you require jQuery'
-    type: bool
-    default: true
-
-  bootstrap.config.jqueryHeader:
-    label: 'Load jQuery into the header'
-    category: Bootstrap.optional.jquery
-    description: ''
-    type: bool
-    default: false
-
 
   bootstrap.backToTopTitle:
     label: 'Link Title'

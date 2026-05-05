@@ -1,25 +1,24 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
-
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class DefaultHelper implements SingletonInterface
 {
 
 	/**
 	 * Returns the $processedData
 	 */
-	public function getContainerClass(array $processedData, string $extConfContainer, array $containerConfig): array
+	public function getContainerClass(
+		array $processedData, 
+		string $extConfContainer, 
+		array $containerConfig
+	): array
 	{
 		$container = '';
 
@@ -53,49 +52,10 @@ class DefaultHelper implements SingletonInterface
 			$processedData['containerPre'] = '<div class="'.trim($container).'">';
 			$processedData['containerPost'] = '</div>';
 			$processedData['container'] = trim($container);
-		} else {
-			$processedData['containerError'] = FALSE;
-			if ( ($processedData['be_layout'] === 'OneCol' || $processedData['be_layout'] === 'OneCol_Extra') && !empty($containerConfig['containerError']) ) {
-				$processedData['containerError'] = $this->getContainerError($processedData['data'], $containerConfig);
-			}
 		}
 
 		return $processedData;
 	}
-
-
-	/**
-	 * Returns the Container Error
-	 */
-	public function getContainerError(array $data, array $containerConfig): bool
-	{
-		$error = FALSE;
-		if ( $data['tx_container_parent'] === 0 ) {
-			if ( $containerConfig['footerPid'] === $data['pid'] ) {
-				if ( $containerConfig['footerContainer'] === 'none' && $data['colPos'] === 0 ) {
-					$error = TRUE;
-				}
-				if ( $containerConfig['pageContainer'] === FALSE && $data['colPos'] === 0 ) {
-					$error = TRUE;
-				}
-				if ( $containerConfig['jumbotronContainer'] === 'none' && $data['colPos'] === 3 ) {
-					$error = TRUE;
-				}
-				if ( $containerConfig['expandedcontentContainertop'] === 'none' && $data['colPos'] === 20 ) {
-					$error = TRUE;
-				}
-				if ( $containerConfig['expandedcontentContainerbottom'] === 'none' && $data['colPos'] === 21 ) {
-					$error = TRUE;
-				}
-				if ( $containerConfig['footerContainer'] === 'none' && $data['colPos'] === 4 ) {
-					$error = TRUE;
-				}
-			}
-		}
-
-		return $error;
-	}
-
 
 
 	/**
@@ -175,10 +135,7 @@ class DefaultHelper implements SingletonInterface
 
 		# default margin-top for each content-element if no margin-top
 		$hasMarginTop = strpos($processedData['class'], 'mt-') || strpos($processedData['class'], 'my-') || strpos($processedData['class'], 'm-');
-
-
-
-		if ($contentMarginTop && $processedData['data']['colPos'] == 0 && $hasMarginTop == FALSE ) {
+		if ($contentMarginTop && $processedData['data']['colPos'] === 0 && $hasMarginTop === FALSE ) {
 			$processedData['class'] .= ' '.$contentMarginTop;
 		}
 

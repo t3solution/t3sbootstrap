@@ -1,10 +1,12 @@
 
 # cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview with collapsible container preview always open (clear cache)
 preview = 1
-# cat=preview/enable/20; type=boolean; label=Closed Collapsible: Collapsible container preview always closed - only in conjunction with active "Backend Preview" (clear cache).
+# cat=preview/enable/20; type=boolean; label=Closed Collapsible: Collapsible container preview always closed (except the grid layouts) - only in conjunction with active "Backend Preview" (clear cache).
 previewClosedCollapsible = 0
 # cat=preview/enable/30; type=boolean; label=Footer Info: If active, a footer label of the content element is displayed with some information: container ("1 Column" backend layout" only), extra class, layout & frame_class - If EXT:content_animations is loaded you have to activate the EM config "Hide the Animation Footer Label" there. (clear cache)
 footerInfo = 1
+# cat=preview/enable/40; type=boolean; label=Show "Page Info" in page module:
+pageInfo = 1
 
 # cat=content/enable/10; type=boolean; label=Spacing: Shows select-fields for padding and margin in any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache)
 spacing = 0
@@ -13,7 +15,7 @@ container = 1
 # cat=content/enable/30; type=boolean; label=Color: Shows palette "Bootstrap Color" in almost any content element if enabled. You can set those classes also in the input-field "Extra Class" (clear cache)
 color = 1
 # cat=content/enable/40; type=boolean; label=Aspect ratio: Shows an option for "Image ratio" in the palette "Media Adjustments" and "Custom aspect ratio" in the FAL for videos if enabled. (clear cache)
-ratio = 0
+ratio = 1
 # cat=content/enable/41; type=boolean; label=Image Tag: Option in the FAL to output image in <img> - instead in <picture> tag in the FE.
 imgtag = 0
 # cat=content/enable/45; type=boolean; label=Original Image: Shows an option for "Use Original Image" in the palette "Media Adjustments" if enabled. (clear cache)
@@ -22,46 +24,31 @@ origimage = 0
 sectionOrder = 0
 # cat=content/enable/60; type=boolean; label=Custom "Extra Style" field: Custom style-field for tt_content. (clear cache)
 extraStyle = 0
+# cat=content/enable/70; type=boolean; label=Card and Carousel References: Allows references for cards in the Card Wrapper (clear cache)
+allowReferences = 0
+# cat=content/enable/80; type=boolean; label=Supraheader: A short text element placed directly above the heading (Latin supra = “above”)
+supraheader = 0
 
 # cat=page/enable/20; type=boolean; label=Icon in Page Title: Enable the page_icon (from EXT:iconpicker) in the page title (clear cache)
 fontawesomepagetitle = 1
 # cat=page/enable/30; type=boolean; label=Modal in Navbar: Enable a new doktype "Modal" (197) (clear cache)
 navbarmodal = 0
 
-# cat=custom scss/a-config/10; type=boolean; label=Custom SCSS: activate  (clear cache and run Scheduler).
-customScss = 0
-# cat=custom scss/a-config/30; type=options[none, Brite, Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, Lux, Materia, Minty, Morph, Pulse, Quartz, Sandstone, Simplex, Sketchy, Slate, Solar, Spacelab, Superhero, United, Vapor, Yeti, Zephyr]; label=Bootswatch Themes: Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/ (clear cache and run Scheduler).
-bootswatch = none
-# cat=custom scss/a-config/60; type=boolean; label=Edit in Backend: edit, save custom-variables.scss and clean up temporary files in typo3temp/assets/t3sbootstrap/css/ (clear cache)
-editScss = 0
-# cat=custom scss/a-config/70; type=boolean; label=Keep Bootstrap variables: keep your Bootstrap variables if run the Scheduler (clear cache)
-keepVariables = 0
-
-# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: e.g.: EXT:t3sb_package/Configuration/FlexForms/.. or /fileadmin/T3SB/FlexForms/Container/CarouselContainer.xml (clear cache)
+# cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: (clear cache)
 flexformExtend = 0
-# cat=flexform/enable/30; type=boolean; label=Modify flexforms select-fields: e.g.: plugin.tx_t3sbootstrap.flexform.button.style.add = My Style, Your Style (clear cache)
-flexformModify = 0
 # cat=flexform/enable/40; type=boolean; label=No default settings in columns "Col-md-*" and "Col-*":in two_columns, three_columns, four_columns or six_columns
 flexformNoDefault = 0
 # cat=flexform/enable/45; type=boolean; label=Minimum breakpoint setting - only "Col-md-*":in two_columns, three_columns, four_columns or six_columns (did not work with "No default settings ...")
 flexformMinCol = 0
 
-# cat=t3SB/enable/50; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache)
+# cat=t3SB/enable/10; type=boolean; label=CType in class: Shows the CType as ".class" for each content element in the sourcecode if enabled (clear cache)
 cTypeClass = 0
-# cat=t3SB/enable/70; type=boolean; label=Merge CSS- and JS files from t3sbootstrap and bundle bootstrap.js with popper.js: Concatenate CSS and JS files - best with "Compress" in T3SB config (clear cache)
-t3sbconcatenate = 0
-# cat=t3SB/enable/80; type=boolean; label=Minify CSS- and JS files from t3sbootstrap - EXPERIMENTAL: Minify CSS and JS with "toptal.com" if no error message is generated (clear cache)
-t3sbminify = 0
-# cat=t3SB/enable/90; type=boolean; label=Use Extension "t3sb_package" instead of "/fileadmin": for outsourced files from "CDN to local" and "Custom SCSS" (clear cache)
-sitepackage = 0
-
-# cat=different/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache)
+# cat=t3SB/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache)
 imgCopyright = 0
-# cat=different/enable/25; type=boolean; label=Chapter: Shows select field "Chapter type" in the header palette if enabled. (EXPERIMENTAL)
+# cat=t3SB/enable/25; type=boolean; label=Chapter: Shows select field "Chapter type" in the header palette if enabled. (EXPERIMENTAL)
 chapter = 0
-# cat=different/enable/30; type=boolean; label=Custom CSS code editor in the language tab - ADMIN ONLY: if editors receive a prepared content element for copy & past and this element requires its own CSS, you should activate and use this option.
+# cat=t3SB/enable/30; type=boolean; label=Custom CSS code editor in the language tab - ADMIN ONLY: if editors receive a prepared content element for copy & past and this element requires its own CSS, you should activate and use this option.
 cssCodeEditor = 0
-
 
 # cat=Advanced/enable/20; type=boolean; label=Animate CSS: include Animate CSS and Viewportchecker if EXT:content_animations is not loaded (clear cache)
 animateCss = 0
@@ -70,7 +57,7 @@ linkHoverEffect = 0
 # cat=Advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache)
 lazyLoad = 0
 # cat=Advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache)
-extNews = 1
+extNews = 0
 
 # cat=value picker presets/b-config/20; type=string; label=Custom "Extra Classes value picker" for table tt_content field tx_t3sbootstrap_header_class: comma separated list is expected
 customHeaderClass =

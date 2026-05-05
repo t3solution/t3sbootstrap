@@ -1,0 +1,50 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	   xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" 
+	   data-namespace-typo3-fluid="true">
+
+<f:variable name="imgObjects" value="" />
+<f:if condition="{record.assets}">
+	<f:variable name="imgObjects" value="<t3sb:backend.infoImage uid='{record.uid}' />" />
+</f:if>
+<f:variable name="imagewidth" value="auto" />
+<f:if condition="{record.imagewidth}">
+	<f:variable name="imagewidth" value="{record.imagewidth}px" />
+</f:if>
+<f:if condition="{imgObjects -> f:count()} > 1">
+	<f:then>
+		<span class="mb-1 small">{imgObjects -> f:count()} Images</span><br>
+	</f:then>
+	<f:else>
+		<span class="mb-1 small">1 Image</span><br>
+	</f:else>
+</f:if>
+
+<span class=" me-1 my-1">
+	<f:for each="{imgObjects}" as="image">
+		<be:thumbnail image="{image}" width="64" height="45" class="img-thumbnail img-fluid mb-1 me-1" />
+	</f:for>
+</span>
+
+<div class="d-flex mt-2">
+
+	<div class="flex-grow-1 ms-0 flex-info-content">
+
+		<strong>Image width:</strong> {imagewidth}
+		<f:if condition="{record.tx_t3sbootstrap_image_ratio}">
+				|	<strong>Image aspect ratio:</strong> {record.tx_t3sbootstrap_image_ratio}
+		</f:if>
+		<f:if condition="{record.imagecols}">
+				|	<strong>Number of Columns:</strong> {record.imagecols}
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_gutters}">
+				|	<strong>Horizontal gutters:</strong> {record.tx_t3sbootstrap_gutters}
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_verticalgutters}">
+				|	<strong>Vertical gutters:</strong> {record.tx_t3sbootstrap_verticalgutters}
+		</f:if>
+
+	</div>
+</div>
+
+</html>
+

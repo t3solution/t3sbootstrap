@@ -21,12 +21,6 @@ The recommended way to install the extension is by using Composer. In your Compo
 #### Installation as extension from TYPO3 Extension Repository (TER)
 
 Download and install the extension with the extension manager module.
-The following extensions must be installed before: container & content_defender.
 
-### 2) Minimal setup
-
-1) Include the static TypoScript of the extension.
-2) Delete the default PAGE object from your Setup.
-3) Create a configuration on the root page with the BE-Modul "T3SB Config"
 
 More infos & demos: https://www.t3sbootstrap.de/

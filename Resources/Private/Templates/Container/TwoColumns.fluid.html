@@ -1,0 +1,97 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+</f:section>
+<f:section name="Main">
+<f:if condition="{bgimageSize} == 'contain'">
+	<f:asset.css identifier="flipCard-{data.uid}">
+#c{data.uid} .background-image {
+	background-size: contain !important;
+}
+	</f:asset.css>
+</f:if>
+
+<f:if condition="{col_221} || {col_222}">
+	<f:then>
+		<f:if condition="{extraWrapperClass}">
+			<f:then>
+				<div class="{extraWrapperClass}">
+					<f:render section="Default" arguments="{_all}" />
+				</div>
+			</f:then>
+			<f:else>
+				<f:render section="Default" arguments="{_all}" />
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Two Columns (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
+	<div class="row{gutters}{class}"{styleAttr -> f:format.raw()}>
+		<f:if condition="{data.header} || {data.subheader} || {data.date}">
+			<div class="col-12 w-100">
+				<f:render partial="Content/Header/All" arguments="{_all}" />
+			</div>
+		</f:if>
+		<f:if condition="{t3sbFlexform.bgimages}">
+			<f:then>
+				<f:if condition="{t3sbFlexform.bgimagePosition} == 1">
+					<div id="s{data.uid}-1" class="even {columnOne} background-image{verticalAlign}{equalHeight}"{colHeight}>
+						<f:render section="LeftColumn" arguments="{_all}" />
+					</div>
+					<div id="s{data.uid}-2" class="odd {columnTwo}{verticalAlign}{equalHeight}"{colHeight}>
+						<f:render section="RightColumn" arguments="{_all}" />
+					</div>
+				</f:if>
+				<f:if condition="{t3sbFlexform.bgimagePosition} == 2">
+					<div id="s{data.uid}-1" class="even {columnOne}{verticalAlign}{equalHeight}"{colHeight}>
+						<f:render section="LeftColumn" arguments="{_all}" />
+					</div>
+					<div id="s{data.uid}-2" class="odd {columnTwo} background-image{verticalAlign}{equalHeight}"{colHeight}>
+						<f:render section="RightColumn" arguments="{_all}" />
+					</div>
+				</f:if>
+				<f:if condition="{t3sbFlexform.bgimagePosition} == 3">
+					<div id="s{data.uid}-1" class="even {columnOne} background-image{verticalAlign}{equalHeight}"{colHeight}>
+						<f:render section="LeftColumn" arguments="{_all}" />
+					</div>
+					<div id="s{data.uid}-2" class="odd {columnTwo} background-image{verticalAlign}{equalHeight}"{colHeight}>
+						<f:render section="RightColumn" arguments="{_all}" />
+					</div>
+				</f:if>
+			</f:then>
+			<f:else>
+				<div id="s{data.uid}-1" class="even {columnOne}{verticalAlign}{equalHeight}"{colHeight}>
+					<f:render section="LeftColumn" arguments="{_all}" />
+				</div>
+				<div id="s{data.uid}-2" class="odd {columnTwo}{verticalAlign}{equalHeight}"{colHeight}>
+					<f:render section="RightColumn" arguments="{_all}" />
+				</div>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="LeftColumn">
+	<f:if condition="{col_221}">
+		<f:for each="{col_221}" as="child">
+			{child.renderedContent -> f:format.raw()}
+		</f:for>
+	</f:if>
+</f:section>
+
+<f:section name="RightColumn">
+	<f:if condition="{col_222}">
+		<f:for each="{col_222}" as="child">
+			{child.renderedContent -> f:format.raw()}
+		</f:for>
+	</f:if>
+</f:section>

@@ -137,7 +137,7 @@
 						</config>
 					</outline>
 					<fixedPosition>
-						<label>Fixed position (activate required javascript in extConf)</label>
+						<label>Fixed position</label>
 						<onChange>reload</onChange>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 						<config>
@@ -161,14 +161,14 @@
 						</config>
 					</fixedPosition>
 					<rotate>
-						<label>Rotate the Button</label>
+						<label>Rotate the Button or Vertical Text</label>
 						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
 							<items>
 								<numIndex index="0">
-									<label>0 degree</label>
+									<label>none</label>
 									<value>0</value>
 								</numIndex>
 								<numIndex index="1">
@@ -178,6 +178,10 @@
 								<numIndex index="2">
 									<label>- 90 degree</label>
 									<value>minus</value>
+								</numIndex>
+								<numIndex index="3">
+									<label>Vertical Text</label>
+									<value>vertical</value>
 								</numIndex>
 							</items>
 							<default>0</default>

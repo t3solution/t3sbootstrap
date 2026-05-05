@@ -1,15 +1,17 @@
 #-------------------------------------------------------------------------------
 #	Pages
 #-------------------------------------------------------------------------------
+TCAdefaults.pages.backend_layout = pagets__OneCol
 TCAdefaults.pages.tx_t3sbootstrap_container = container
+TCAdefaults.pages.tx_t3sbootstrap_smallColumns = 3
 
 [tree.level in [2]]
-[else]
+[ELSE]
 TCEFORM.pages.tx_t3sbootstrap_dropdownRight.disabled = 1
-[global]
+[END]
 
 [traverse(page, "doktype") == 198]
 TCEFORM.pages.subtitle.disabled = 1
 TCEFORM.pages.nav_title.disabled = 1
 TCEFORM.pages.crdate.disabled = 1
-[global]
+[END]

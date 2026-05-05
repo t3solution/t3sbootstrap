@@ -1,0 +1,54 @@
+mod {
+	web_layout {
+		BackendLayouts {
+			OneCol_Extra {
+				title = 1 Column with extra rows (top and bottom)
+				config {
+					backend_layout {
+						colCount = 1
+						rowCount = 2
+						rows {
+							1 {
+								columns {
+									1 {
+										name = Expanded Content Top
+										colPos = 20
+										identifier = ExpandedContentTop
+									}
+								}
+							}
+							2 {
+								columns {
+									1 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
+										colPos = 0
+										identifier = Main
+									}
+								}
+							}
+							3 {
+								columns {
+									1 {
+										name =  Expanded Content Bottom
+										colPos = 21
+										identifier = ExpandedContentBottom
+									}
+								}
+							}
+							4 {
+								columns {
+									1 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
+										colPos = 4
+										identifier = Footer
+									}
+								}
+							}
+						}
+					}
+				}
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col_extra.svg
+			}
+		}
+	}
+}

@@ -1,0 +1,106 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{noConfig}">
+	<f:then>
+		<h3 class="text-danger text-center mt-5">The main configuration has to be created first on the root page.</h3>
+		<p class="text-danger text-center">In some cases it is necessary to save the main configuration again!</p>
+	</f:then>
+	<f:else>
+		<f:if condition="{customScss-cdn-dupe-set}">
+			<h1>Check your site settings: CDN &amp; CustomScss must not be enabled together!</h1>
+		</f:if>
+		<f:if condition="{settings.gtm}">
+			<f:comment> GOOGLE TAG MANAGER (noscript)</f:comment>
+			<!-- Google Tag Manager (noscript) -->
+			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={settings.gtm}"
+			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+			<!-- End Google Tag Manager (noscript) -->
+		</f:if>
+		<f:spaceless>
+			<f:render partial="FunctionAssets" arguments="{_all}" />
+			<f:render partial="MainAssets" arguments="{_all}" />
+			<f:comment> Skip links </f:comment>
+			<f:if condition="{settings.skiplinks}">
+				<f:render partial="Page/Skiplinks" arguments="{_all}" />
+			</f:if>
+			<f:comment> LOADING SPINNER </f:comment>
+			<f:if condition="{settings.config.loadingSpinner}">
+				<div id="site-preloader">
+					<div id="site-spinner" class="spinner-{settings.config.loadingSpinner} text-{settings.config.loadingSpinnerColor}"
+						 style="width: 3rem; height: 3rem;" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+				</div>
+			</f:if>
+			<div id="page-wrapper"{f:if(condition: '{settings.config.pageWrapperExtraClass}',then: ' class="{settings.config.pageWrapperExtraClass}"')} >
+				<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.config.contentOnlyOnRootpage}">
+					<f:else>
+						<f:comment> META NAVIGATION </f:comment>
+						<f:if condition="{metaNavigation} || {config.meta.text}">
+							<f:render partial="Page/Meta" arguments="{metaNavigation: metaNavigation, config: config}" />
+						</f:if>
+						<f:comment> NAVBAR | JUMBOTRON | BREADCRUMB </f:comment>
+						<f:if condition="{data.tx_t3sbootstrap_fullheightsection}">
+							<f:then>
+								<f:render partial="Page/_mainfullheight" arguments="{_all}" />
+							</f:then>
+							<f:else>
+								<f:render partial="Page/_main" arguments="{_all}" />
+							</f:else>
+						</f:if>
+						<f:comment> EXPERIMENTAL CHAPTER </f:comment>
+						<f:if condition="{settings.chapter}">
+							<f:render partial="Page/Chapter" arguments="{_all}" />
+						</f:if>
+					</f:else>
+				</f:if>
+				<f:comment> PAGE CONTENT </f:comment>
+				<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')} >
+					<f:if condition="{be_layout} && {be_layout} != 'default'">
+						<f:then>
+							<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
+						</f:then>
+						<f:else>
+							<f:render partial="BackendLayouts/OneCol" arguments="{_all}" />
+						</f:else>
+					</f:if>
+				</div>
+			</div>
+			<f:comment> BREADCRUMB BOTTOM </f:comment>
+			<f:if condition="{config.breadcrumb.bottom}">
+				<div class="breadcrumb-bottom">
+					<f:render partial="Page/Breadcrumb" arguments="{_all}" />
+				</div>
+			</f:if>
+			<f:comment> PAGEBROWSER </f:comment>
+			<f:if condition="{settings.pagebrowser.enable}">
+				<f:render partial="Page/Pagebrowser" arguments="{_all}" />
+			</f:if>
+			<f:comment> FOOTER </f:comment>
+			<f:if condition="{config.general.homepageUid} == {data.uid} && {settings.config.contentOnlyOnRootpage}">
+				<f:else>
+					<f:if condition="{config.footer.enable}">
+						<f:render partial="Page/Footer" arguments="{_all}" />
+					</f:if>
+				</f:else>
+			</f:if>
+			<f:comment> BACK TO TOP BUTTON </f:comment>
+			<f:if condition="{data.tx_t3sbootstrap_linkToTop} || {settings.backToTopForAllPages}">
+				<p class="back-to-top st-none" title="{settings.backToTopTitle}" style="cursor: pointer;">
+					<f:if condition="{settings.iconpack.loaded}">
+						<f:then>
+							<t3sb:icon iconfig="{settings.backToTopIconpack}" /> <span class="d-none">back-to-top</span>
+						</f:then>
+						<f:else>
+							<i class="{settings.backToTopClass}"></i> <span class="d-none">back-to-top</span>
+						</f:else>
+					</f:if>
+				</p>
+			</f:if>
+			<f:comment> Color Mode Toggler </f:comment>
+			<f:if condition="{settings.config.colorMode.enable} && !{settings.config.navbarDarkMode}">
+				<f:render partial="Page/ColorModeToggler" arguments="{_all}" />
+			</f:if>
+		</f:spaceless>
+	</f:else>
+</f:if>
+</html>

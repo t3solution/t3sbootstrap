@@ -733,6 +733,7 @@ class Compiler
     protected function makeOutputBlock($type, $selectors = null)
     {
         $out = new OutputBlock();
+        // @extensionScannerIgnoreLine
         $out->type      = $type;
         $out->lines     = [];
         $out->children  = [];
@@ -793,6 +794,7 @@ class Compiler
             $origin = $this->collapseSelectors($origin);
 
             $this->sourceLine = $block[Parser::SOURCE_LINE];
+            // @extensionScannerIgnoreLine
             throw $this->error("\"$origin\" failed to @extend \"$target\". The selector \"$target\" was not found.");
         }
     }
@@ -1380,6 +1382,7 @@ class Compiler
     protected function mediaParent(OutputBlock $scope)
     {
         while (! empty($scope->parent)) {
+            // @extensionScannerIgnoreLine
             if (! empty($scope->type) && $scope->type !== Type::T_MEDIA) {
                 break;
             }
@@ -1522,13 +1525,14 @@ class Compiler
     {
         $filteredScopes = [];
         $childStash = [];
-
+        // @extensionScannerIgnoreLine
         if ($scope->type === Type::T_ROOT) {
             return $scope;
         }
         assert($this->rootBlock !== null);
 
         // start from the root
+        // @extensionScannerIgnoreLine
         while ($scope->parent && $scope->parent->type !== Type::T_ROOT) {
             array_unshift($childStash, $scope);
             \assert($scope->parent !== null);
@@ -1545,7 +1549,7 @@ class Compiler
                 $s->children = [];
                 $s->lines    = [];
                 $s->parent   = null;
-
+                // @extensionScannerIgnoreLine
                 if ($s->type !== Type::T_MEDIA && $s->type !== Type::T_DIRECTIVE) {
                     $s->selectors = [];
                 }
@@ -1595,6 +1599,7 @@ class Compiler
      */
     protected function completeScope($scope, $previousScope)
     {
+        // @extensionScannerIgnoreLine
         if (! $scope->type && ! $scope->selectors && \count($scope->lines)) {
             $scope->selectors = $this->findScopeSelectors($previousScope, $scope->depth);
         }
@@ -1729,11 +1734,13 @@ class Compiler
      */
     protected function isWith($block, $with, $without)
     {
+        // @extensionScannerIgnoreLine
         if (isset($block->type)) {
+            // @extensionScannerIgnoreLine
             if ($block->type === Type::T_MEDIA) {
                 return $this->testWithWithout('media', $with, $without);
             }
-
+            // @extensionScannerIgnoreLine
             if ($block->type === Type::T_DIRECTIVE) {
                 assert($block instanceof DirectiveBlock || $block instanceof OutputBlock);
                 if (isset($block->name)) {
@@ -1803,7 +1810,7 @@ class Compiler
         $this->env = $this->extractEnv(array_filter($envs, function (Environment $e) {
             return ! isset($e->block->selectors);
         }));
-
+        // @extensionScannerIgnoreLine
         $this->scope = $this->makeOutputBlock($block->type, $selectors);
         $this->scope->depth = 1;
         assert($this->scope->parent !== null);
@@ -1830,7 +1837,7 @@ class Compiler
     {
         assert($block instanceof NestedPropertyBlock);
         $prefix = $this->compileValue($block->prefix) . '-';
-
+        // @extensionScannerIgnoreLine
         $nested = $this->makeOutputBlock($block->type);
         $nested->parent = $out;
 
@@ -1867,7 +1874,7 @@ class Compiler
     protected function compileNestedBlock(Block $block, $selectors)
     {
         $this->pushEnv($block);
-
+        // @extensionScannerIgnoreLine
         $this->scope = $this->makeOutputBlock($block->type, $selectors);
         assert($this->scope->parent !== null);
         $this->scope->parent->children[] = $this->scope;
@@ -2041,6 +2048,7 @@ class Compiler
             try {
                 $isValid = $parser->parseSelector($buffer, $newSelectors, true);
             } catch (ParserException $e) {
+                // @extensionScannerIgnoreLine
                 throw $this->error($e->getMessage());
             }
 
@@ -2341,7 +2349,7 @@ class Compiler
             // not displayed but you can var_dump it to deep debug
             $msg = $this->callStackMessage(true, 100);
             $msg = 'Infinite calling loop';
-
+            // @extensionScannerIgnoreLine
             throw $this->error($msg);
         }
     }
@@ -2412,6 +2420,7 @@ class Compiler
             }
 
             if (isset($ret)) {
+                // @extensionScannerIgnoreLine
                 throw $this->error('@return may only be used within a function');
             }
         }
@@ -2840,6 +2849,7 @@ class Compiler
         $i = 0;
 
         while ($i < \count($root->children)) {
+            // @extensionScannerIgnoreLine
             if (! isset($root->children[$i]->type) || ! \in_array($root->children[$i]->type, $allowed)) {
                 break;
             }
@@ -3116,6 +3126,7 @@ class Compiler
                 break;
 
             case Type::T_COMMENT:
+                // @extensionScannerIgnoreLine
                 if ($out->type === Type::T_ROOT) {
                     $this->compileComment($child);
                     break;
@@ -3131,6 +3142,7 @@ class Compiler
                 assert($block instanceof CallableBlock);
                 // the block need to be able to go up to it's parent env to resolve vars
                 $block->parentEnv = $this->getStoreEnv();
+                // @extensionScannerIgnoreLine
                 $this->set(static::$namespaces[$block->type] . $block->name, $block, true);
                 break;
 
@@ -3139,6 +3151,7 @@ class Compiler
                     $replacedSel = $this->replaceSelfSelector($sel);
 
                     if ($replacedSel !== $sel) {
+                        // @extensionScannerIgnoreLine
                         throw $this->error('Parent selectors aren\'t allowed here.');
                     }
 
@@ -3146,6 +3159,7 @@ class Compiler
 
                     foreach ($results as $result) {
                         if (\count($result) !== 1) {
+                            // @extensionScannerIgnoreLine
                             throw $this->error('complex selectors may not be extended.');
                         }
 
@@ -3304,6 +3318,7 @@ EOL;
                 $mixin = $this->get(static::$namespaces['mixin'] . $name, false);
 
                 if (! $mixin) {
+                    // @extensionScannerIgnoreLine
                     throw $this->error("Undefined mixin $name");
                 }
 
@@ -3363,6 +3378,7 @@ EOL;
                 if (! empty($mixin->parentEnv)) {
                     $this->env->declarationScopeParent = $mixin->parentEnv;
                 } else {
+                    // @extensionScannerIgnoreLine
                     throw $this->error("@mixin $name() without parentEnv");
                 }
 
@@ -3429,10 +3445,11 @@ EOL;
                 $fname = $this->getPrettyPath($this->sourceNames[$this->sourceIndex]);
                 $line  = $this->sourceLine;
                 $value = $this->compileValue($this->reduce($value, true));
-
+                // @extensionScannerIgnoreLine
                 throw $this->error("File $fname on line $line ERROR: $value\n");
 
             default:
+                // @extensionScannerIgnoreLine
                 throw $this->error("unknown child type: $child[0]");
         }
 
@@ -4240,6 +4257,7 @@ EOL;
 
                 case '%':
                     if ($rval == 0) {
+                        // @extensionScannerIgnoreLine
                         throw $this->error("color: Can't take modulo by zero");
                     }
 
@@ -4248,6 +4266,7 @@ EOL;
 
                 case '/':
                     if ($rval == 0) {
+                        // @extensionScannerIgnoreLine
                         throw $this->error("color: Can't divide by zero");
                     }
 
@@ -4261,6 +4280,7 @@ EOL;
                     return $this->opNeq($left, $right);
 
                 default:
+                    // @extensionScannerIgnoreLine
                     throw $this->error("color: unknown op $op");
             }
         }
@@ -4382,6 +4402,7 @@ EOL;
      */
     protected function opEqNumberNumber(Number $left, Number $right)
     {
+        // @extensionScannerIgnoreLine
         return $this->toBool($left->equals($right));
     }
 
@@ -4395,6 +4416,7 @@ EOL;
      */
     protected function opNeqNumberNumber(Number $left, Number $right)
     {
+        // @extensionScannerIgnoreLine
         return $this->toBool(!$left->equals($right));
     }
 
@@ -4534,6 +4556,7 @@ EOL;
         $value = $this->reduce($value);
 
         if ($value instanceof Number) {
+            // @extensionScannerIgnoreLine
             return $value->output($this);
         }
 
@@ -4798,6 +4821,7 @@ EOL;
                 return $this->compileCommentValue($value);
 
             default:
+                // @extensionScannerIgnoreLine
                 throw $this->error('unknown value type: ' . json_encode($value));
         }
     }
@@ -5036,16 +5060,17 @@ EOL;
      *
      * @return array
      */
-    protected function multiplyMedia(Environment $env = null, $childQueries = null)
+    protected function multiplyMedia(?Environment $env = null, $childQueries = null)
     {
         if (
-            ! isset($env) ||
-            ! empty($env->block->type) && $env->block->type !== Type::T_MEDIA
+            // @extensionScannerIgnoreLine
+            ! isset($env) || ! empty($env->block->type) && $env->block->type !== Type::T_MEDIA
         ) {
             return $childQueries;
         }
 
         // plain old block, skip
+        // @extensionScannerIgnoreLine
         if (empty($env->block->type)) {
             return $this->multiplyMedia($env->parent, $childQueries);
         }
@@ -5128,7 +5153,7 @@ EOL;
      *
      * @return \ScssPhp\ScssPhp\Compiler\Environment
      */
-    protected function pushEnv(Block $block = null)
+    protected function pushEnv(?Block $block = null)
     {
         $env = new Environment();
         $env->parent = $this->env;
@@ -5192,7 +5217,7 @@ EOL;
      *
      * @return void
      */
-    protected function set($name, $value, $shadow = false, Environment $env = null, $valueUnreduced = null)
+    protected function set($name, $value, $shadow = false, ?Environment $env = null, $valueUnreduced = null)
     {
         $name = $this->normalizeName($name);
 
@@ -5298,7 +5323,7 @@ EOL;
      *
      * @return mixed|null
      */
-    public function get($name, $shouldThrow = true, Environment $env = null, $unreduced = false)
+    public function get($name, $shouldThrow = true, ?Environment $env = null, $unreduced = false)
     {
         $normalizedName = $this->normalizeName($name);
         $specialContentKey = static::$namespaces['special'] . 'content';
@@ -5348,6 +5373,7 @@ EOL;
         }
 
         if ($shouldThrow) {
+            // @extensionScannerIgnoreLine
             throw $this->error("Undefined variable \$$name" . ($maxDepth <= 0 ? ' (infinite recursion)' : ''));
         }
 
@@ -5363,7 +5389,7 @@ EOL;
      *
      * @return bool
      */
-    protected function has($name, Environment $env = null)
+    protected function has($name, ?Environment $env = null)
     {
         return ! \is_null($this->get($name, false, $env));
     }
@@ -5760,7 +5786,7 @@ EOL;
             $this->sourceNames[] = $path;
             $this->sourceLine = 1;
             $this->sourceColumn = 1;
-
+            // @extensionScannerIgnoreLine
             throw $this->error('The Sass indented syntax is not implemented.');
         }
 
@@ -5899,7 +5925,7 @@ EOL;
                 return $path;
             }
         }
-
+        // @extensionScannerIgnoreLine
         throw $this->error("`$url` file not found for @import");
     }
 
@@ -5948,7 +5974,7 @@ EOL;
         foreach ($paths as $path) {
             $formattedPrettyPaths[] = '  ' . $this->getPrettyPath($path);
         }
-
+        // @extensionScannerIgnoreLine
         throw $this->error("It's not clear which file to import. Found:\n" . implode("\n", $formattedPrettyPaths));
     }
 
@@ -6110,7 +6136,7 @@ EOL;
             'The method "throwError" is deprecated. Use "error" and throw the exception in the caller instead',
             E_USER_DEPRECATED
         );
-
+        // @extensionScannerIgnoreLine
         throw $this->error(...func_get_args());
     }
 
@@ -6177,6 +6203,7 @@ EOL;
         $nbExpected = \count($ExpectedArgs);
 
         if ($nbActual > $nbExpected) {
+            // @extensionScannerIgnoreLine
             return $this->error(
                 'Error: Only %d arguments allowed in %s(), but %d were passed.',
                 $nbExpected,
@@ -6189,7 +6216,7 @@ EOL;
             while (count($ExpectedArgs) && count($ExpectedArgs) > $nbActual) {
                 array_unshift($missing, array_pop($ExpectedArgs));
             }
-
+            // @extensionScannerIgnoreLine
             return $this->error(
                 'Error: %s() argument%s %s missing.',
                 $functionName,
@@ -6256,6 +6283,7 @@ EOL;
             }
 
             if (realpath($file) === $name) {
+                // @extensionScannerIgnoreLine
                 throw $this->error('An @import loop has been found: %s imports %s', $file, basename($file));
             }
         }
@@ -6293,6 +6321,7 @@ EOL;
         if (! empty($func->parentEnv)) {
             $this->env->declarationScopeParent = $func->parentEnv;
         } else {
+            // @extensionScannerIgnoreLine
             throw $this->error("@function $name() without parentEnv");
         }
 
@@ -7309,6 +7338,7 @@ EOL;
                 } elseif ($value->hasUnit('%')) {
                     $num = $max * $value->getDimension() / 100;
                 } else {
+                    // @extensionScannerIgnoreLine
                     throw $this->error('Expected %s to have no units or "%%".', $value);
                 }
 
@@ -7444,6 +7474,7 @@ EOL;
     public function assertList($value)
     {
         if ($value[0] !== Type::T_LIST) {
+            // @extensionScannerIgnoreLine
             throw $this->error('expecting list, %s received', $value[0]);
         }
         assert(\is_array($value));
@@ -7777,6 +7808,7 @@ EOL;
         }
 
         if (! in_array($functionReference[0], [Type::T_FUNCTION_REFERENCE, Type::T_FUNCTION])) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Function reference expected, got ' . $functionReference[0]);
         }
 
@@ -7847,7 +7879,7 @@ EOL;
             foreach ($list[2] as $item) {
                 $key++;
                 $itemValue = $this->normalizeValue($item);
-
+                // @extensionScannerIgnoreLine
                 if ($itemValue instanceof Number && $value->equals($itemValue)) {
                     return new Number($key, '');
                 }
@@ -7973,6 +8005,7 @@ EOL;
 
             if (!$scale && $checkPercent) {
                 if (!$number->hasUnit('%')) {
+                    // @extensionScannerIgnoreLine
                     $warning = $this->error("{$name} Passing a number `$number` without unit % is deprecated.");
                     $this->logger->warn($warning->getMessage(), true);
                 }
@@ -8137,6 +8170,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Error: argument `$color` of `ie-hex-str($color)` must be a color');
         }
 
@@ -8151,6 +8185,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Error: argument `$color` of `red($color)` must be a color');
         }
 
@@ -8163,6 +8198,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Error: argument `$color` of `green($color)` must be a color');
         }
 
@@ -8175,6 +8211,7 @@ EOL;
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Error: argument `$color` of `blue($color)` must be a color');
         }
 
@@ -8749,7 +8786,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         if (!\is_null($min)) {
             return $min;
         }
-
+        // @extensionScannerIgnoreLine
         throw $this->error('At least one argument must be passed.');
     }
 
@@ -8772,7 +8809,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         if (!\is_null($max)) {
             return $max;
         }
-
+        // @extensionScannerIgnoreLine
         throw $this->error('At least one argument must be passed.');
     }
 
@@ -8836,6 +8873,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         }
 
         if (! isset($list[2][$n])) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Invalid argument for "n"');
         }
 
@@ -9406,6 +9444,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             ! $number1 instanceof Number ||
             ! $number2 instanceof Number
         ) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Invalid argument(s) for "comparable"');
         }
 
@@ -9843,10 +9882,12 @@ TXT;
     {
         // one and only one selector for each arg
         if (! $super) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Invalid super selector for isSuperSelector()');
         }
 
         if (! $sub) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Invalid sub selector for isSuperSelector()');
         }
 
@@ -9947,6 +9988,7 @@ TXT;
         $args = $args[2];
 
         if (\count($args) < 1) {
+            // @extensionScannerIgnoreLine
             throw $this->error('selector-append() needs at least 1 argument');
         }
 
@@ -9972,6 +10014,7 @@ TXT;
         $lastSelectors = array_pop($selectors);
 
         if (! $lastSelectors) {
+            // @extensionScannerIgnoreLine
             throw $this->error('Invalid selector list in selector-append()');
         }
 
@@ -9979,6 +10022,7 @@ TXT;
             $previousSelectors = array_pop($selectors);
 
             if (! $previousSelectors) {
+                // @extensionScannerIgnoreLine
                 throw $this->error('Invalid selector list in selector-append()');
             }
 
@@ -10019,6 +10063,7 @@ TXT;
         $extender  = $this->getSelectorArg($extender, 'extender');
 
         if (! $selectors || ! $extendee || ! $extender) {
+            // @extensionScannerIgnoreLine
             throw $this->error('selector-extend() invalid arguments');
         }
 
@@ -10040,6 +10085,7 @@ TXT;
         $replacement = $this->getSelectorArg($replacement, 'replacement');
 
         if (! $selectors || ! $original || ! $replacement) {
+            // @extensionScannerIgnoreLine
             throw $this->error('selector-replace() invalid arguments');
         }
 
@@ -10069,6 +10115,7 @@ TXT;
 
         foreach ($extendee as $es) {
             if (\count($es) !== 1) {
+                // @extensionScannerIgnoreLine
                 throw $this->error('Can\'t extend complex selector.');
             }
 
@@ -10107,6 +10154,7 @@ TXT;
         $args = $args[2];
 
         if (\count($args) < 1) {
+            // @extensionScannerIgnoreLine
             throw $this->error('selector-nest() needs at least 1 argument');
         }
 
@@ -10154,6 +10202,7 @@ TXT;
         $selectors2 = $this->getSelectorArg($selectors2, 'selectors2');
 
         if (! $selectors1 || ! $selectors2) {
+            // @extensionScannerIgnoreLine
             throw $this->error('selector-unify() invalid arguments');
         }
 

@@ -1,0 +1,133 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:kesearch="http://typo3.org/ns/Tpwd/KeSearch/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+<f:layout name="General" />
+<f:section name="content">
+<f:asset.css identifier="ke-search-filter">
+   #kesearch_filters .list { display: inline; }
+</f:asset.css>
+	<f:if condition="{conf.templateLayout} == 10">
+		<f:render section="defaultLayout" arguments="{_all}"/>
+	</f:if>
+	<f:if condition="{conf.templateLayout} == 20">
+		<f:render section="customLayout" arguments="{_all}"/>
+	</f:if>
+</f:section>
+</html>
+
+
+<f:section name="defaultLayout">
+	<form method="get" id="form_kesearch_pi1" name="form_kesearch_pi1"	 action="{f:uri.page(pageUid: targetpage)}">
+		<f:comment><!-- Replace the URL with the speaking URL --></f:comment>
+		<f:if condition="{isEmptySearch} == FALSE ">
+			<f:if condition="{conf.searchWordParameter} == 'tx_kesearch_pi1[sword]'">
+				<f:format.raw><script>history.replaceState(null,'','</f:format.raw><kesearch:link keepPiVars="1" uriOnly="1" /><f:format.raw>');</script></f:format.raw>
+			</f:if>
+		</f:if>
+		<fieldset class="kesearch_searchbox">
+			<f:if condition="{lparam}">
+				<input type="hidden" name="L" value="{lparam}" />
+			</f:if>
+			<f:if condition="{mpparam}">
+				<input type="hidden" name="MP" value="{mpparam}" />
+			</f:if>
+			<f:if condition="{typeparam}">
+				<input type="hidden" name="type" value="{typeparam}" />
+			</f:if>
+			<div class="kesearchbox">
+				<input type="search" id="ke_search_sword" name="{conf.searchWordParameter}" value="{searchword -> f:format.raw()}" placeholder="{searchwordDefault}" {f:if(condition: '{extConf.allowEmptySearch} == 0', then: 'required')} minlength="{extConf.searchWordLength}" />
+				<div class="clearer">&nbsp;</div>
+			</div>
+			<f:if condition="{page}">
+				<input id="kesearchpagenumber" type="hidden" name="tx_kesearch_pi1[page]" value="{page}" />
+			</f:if>
+			<input id="resetFilters" type="hidden" name="tx_kesearch_pi1[resetFilters]" value="0" />
+			<f:if condition="{sortByField}">
+				<input id="sortByField" type="hidden" name="tx_kesearch_pi1[sortByField]" value="{sortByField}" />
+			</f:if>
+			<f:if condition="{sortByDir}">
+				<input id="sortByDir" type="hidden" name="tx_kesearch_pi1[sortByDir]" value="{sortByDir}" />
+			</f:if>
+			<f:if condition="{filters}">
+				<div id="kesearch_filters"><f:render partial="Filters" arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, filters: filters}" /></div>
+			</f:if>
+			<span class="resetbutt"><a href="{resetUrl}" class="resetButton"><span><f:translate key="LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:reset_button" /></span></a></span>
+			<span class="submitbutt"><input type="submit" value="{f:translate(key: 'LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:submit')}" /></span>
+		</fieldset>
+	</form>
+</f:section>
+
+
+<f:section name="customLayout">
+<div class="row">
+	<div class="col-12 col-md-8 minHeight">
+		<div id="search-box" class="bg-secondary px-4 pt-4 h-100">
+			<form method="get" id="form_kesearch_pi1" name="form_kesearch_pi1"  action="{f:uri.page(pageUid: targetpage)}">
+				<f:comment><!-- Replace the URL with the speaking URL --></f:comment>
+				<f:if condition="{isEmptySearch} == FALSE">
+					<f:format.raw><script>history.replaceState(null,'','</f:format.raw><kesearch:link keepPiVars="1" uriOnly="1" /><f:format.raw>');</script></f:format.raw>
+				</f:if>
+				<fieldset class="kesearch_searchbox">
+					<f:if condition="{lparam}">
+						<input type="hidden" name="L" value="{lparam}" />
+					</f:if>
+					<f:if condition="{mpparam}">
+						<input type="hidden" name="MP" value="{mpparam}" />
+					</f:if>
+					<f:if condition="{typeparam}">
+						<input type="hidden" name="type" value="{typeparam}" />
+					</f:if>
+					<div class="kesearchbox mb-4">
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<div class="input-group mb-3">
+									<input type="search" id="ke_search_sword" class="form-control" name="tx_kesearch_pi1[sword]" value="{searchword -> f:format.raw()}"
+ 									placeholder="Suchbegriff" {f:if(condition: '{extConf.allowEmptySearch} == 0', then: 'required')} minlength="{extConf.searchWordLength}" aria-label="Suchbegriff" aria-describedby="submit-button">
+ 									<button id="submit-button" class="btn btn-outline-light" type="submit">
+							 			<f:if condition="{settings.iconpack.loaded}">
+											<f:then>
+												<t3sb:icon iconfig="fa7:solid,magnifying-glass" />	
+											</f:then>
+											<f:else>
+												<i class="fa-solid fa-magnifying-glass"></i>
+											</f:else>	
+										</f:if>
+ 									</button>
+								</div>
+							</div>
+							<div class="col-12 col-md-6">
+								<a href="{resetUrl}" class="btn btn-outline-light resetButton" role="button" style="margin: 0 auto; display: table;height: 44px;">
+									<f:translate key="LLL:EXT:ke_search/Resources/Private/Language/locallang_searchbox.xlf:reset_button" />
+								</a>
+							</div>
+						</div>
+					</div>
+					<f:if condition="{page}">
+						<input id="kesearchpagenumber" type="hidden" name="tx_kesearch_pi1[page]" value="{page}" />
+					</f:if>
+					<input id="resetFilters" type="hidden" name="tx_kesearch_pi1[resetFilters]" value="0" />
+					  <f:if condition="{sortByField}">
+						<input id="sortByField" type="hidden" name="tx_kesearch_pi1[sortByField]" value="{sortByField}" />
+					</f:if>
+					<f:if condition="{sortByDir}">
+						<input id="sortByDir" type="hidden" name="tx_kesearch_pi1[sortByDir]" value="{sortByDir}" />
+					</f:if>
+					<f:if condition="{filters}">
+						<div id="kesearch_filters"><f:render partial="T3SB/Filters"
+							 arguments="{conf: conf, numberofresults: numberofresults, resultrows: resultrows, filters: filters}" /></div>
+					</f:if>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<div class="col-12 col-md-4 minHeight">
+		<f:if condition="{searchword}">
+			<div class="d-flex bg-secondary text-light p-3 h-100">
+				<div class="align-self-center text-center w-100">
+					<p id="searchword" class="lead text-center m-0">Suche nach<br /><mark><strong>{f:if(condition: searchword, then: '{searchword -> f:format.raw()}')}</strong></mark></p>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</div>
+</f:section>

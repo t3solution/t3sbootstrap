@@ -1,0 +1,65 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+	data-namespace-typo3-fluid="true">
+
+<f:if condition="{isPageInfo}">
+	<div id="t3sb-pageinfo" class="callout callout-notice t3sbootstrap-page-info d-flex my-4 p-0 pt-3 pb-1">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-2 p-0">
+					<div class="flex-shrink-0 h-100">
+						<div class="text-center w-100" style="color:#808080;">
+							<h5 class="mb-3">T3SB Page settings</h5>
+							<core:icon identifier="bootstraplogo" size="large" title="You can deactivate this page info in the EMConfig if necessary"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-4">
+					<ul class="list-unstyled" style="color:	 #808080;">
+						<f:for each="{infoColOne}" as="infoOne" key="label">
+							<f:if condition="{infoOne} == 'FALSE - even if pages override'">
+								<f:then>
+									<li><strong>{label}</strong>: <span class="text-danger">{infoOne}</span></li>
+								</f:then>
+								<f:else>
+									<li><strong>{label}</strong>: {infoOne}</li>
+								</f:else>
+							</f:if>
+						</f:for>
+					</ul>
+				</div>
+				<div class="col-3">
+					<ul class="list-unstyled" style="color:#808080;">
+						<f:for each="{infoColTwo}" as="infoTwo" key="label">
+							<li><strong>{label}</strong>: {infoTwo}</li>
+						</f:for>
+					</ul>
+				</div>
+				<div class="col-3">
+					<f:if condition="{infoConfig}">
+						<h4 class="text-danger">T3SB Config</h4>
+						<ul class="list-unstyled" style="color:#808080;">
+							<f:for each="{infoConfig}" as="config" key="label">
+								<li><strong>{label}</strong>: {config}</li>
+							</f:for>
+						</ul>
+					</f:if>
+					<f:if condition="{countPagesOverrides}">
+						<h4 class="text-danger">Global pages override</h4>
+						<ul class="list-unstyled" style="color:#808080;">
+							<f:for each="{infoOverride}" as="override" key="label">
+								<f:if condition="{override}">
+									<li><strong>{label}</strong>: {override}</li>
+								</f:if>
+							</f:for>
+						</ul>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</div>
+</f:if>
+
+</html>

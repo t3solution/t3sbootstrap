@@ -1,0 +1,98 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+ xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" data-namespace-typo3-fluid="true">
+<f:variable name="imgObject" value="" />
+<f:variable name="margin" value="0" />
+<f:if condition="{record.assets}">
+	<f:variable name="imgObject" value="<t3sb:backend.infoImage uid='{record.uid}' />" />
+	<f:variable name="margin" value="2" />
+</f:if>
+
+<f:format.crop maxCharacters="100" respectWordBoundaries="true" respectHtml="false">
+{record.bodytext -> f:format.raw()}
+</f:format.crop>
+
+<div class="d-flex">
+	<f:if condition="{imgObject.0}">
+		<div class="flex-shrink-0">
+			<be:thumbnail image="{imgObject.0}" width="64" height="45" class="img-thumbnail" />
+		</div>
+	</f:if>
+	<div class="flex-grow-1 ms-{margin} flex-info-content">
+
+
+		<f:if condition="{imgObject.0}">
+			<f:then>
+				<f:if condition="{record.imagewidth}">
+				<f:then>
+					<strong>Image width:</strong> {record.imagewidth}px
+				</f:then>
+				<f:else>
+					<strong>Image width:</strong> from Site-Set
+				</f:else>
+				</f:if>
+		
+				<f:if condition="{record.tx_t3sbootstrap_flexform.toastwidth}">
+					| <strong>Toast width:</strong> {record.tx_t3sbootstrap_flexform.toastwidth}px
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:if condition="{record.tx_t3sbootstrap_flexform.toastwidth}">
+					<strong>Toast width:</strong> {record.tx_t3sbootstrap_flexform.toastwidth}px
+				</f:if>
+			</f:else>
+		</f:if>
+
+		<f:if condition="{record.tx_t3sbootstrap_flexform.autohide}">
+			| <strong>Auto hide:</strong> true
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.cookie}">
+			| <strong>Cookie:</strong> true
+		</f:if>
+		
+		<f:if condition="{record.imageorient} == 90">
+			| <strong>Alignment:</strong> Default
+		</f:if>
+		<f:if condition="{record.imageorient} == 91">
+			| <strong>Alignment:</strong> Center
+		</f:if>
+		<f:if condition="{record.imageorient} == 92">
+			| <strong>Alignment:</strong> Top
+		</f:if>
+		<f:if condition="{record.imageorient} == 93">
+			| <strong>Alignment:</strong> Bottom
+		</f:if>
+		
+		
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-0 start-50 translate-middle-x'">
+			| <strong>Placement:</strong> Top center
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-0 start-0'">
+			| <strong>Placement:</strong> Top left
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-0 end-0'">
+			| <strong>Placement:</strong> Top right
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-50 start-0 translate-middle-y'">
+			| <strong>Placement:</strong> Middle left
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-50 start-50 translate-middle'">
+			| <strong>Placement:</strong> Middle center
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-50 end-0 translate-middle-y'">
+			| <strong>Placement:</strong> Middle right
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'bottom-0 start-0'">
+			| <strong>Placement:</strong> Bottom left
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'bottom-0 start-50 translate-middle-x'">
+			| <strong>Placement:</strong> Bottom center
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'bottom-0 end-0'">
+			| <strong>Placement:</strong> Bottom right
+		</f:if>
+
+	</div>
+</div>
+
+
+</html>

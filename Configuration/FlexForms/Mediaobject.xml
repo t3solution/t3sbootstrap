@@ -78,6 +78,13 @@
 						</config>
 					</order>
 
+					<verticallyCenter>
+						<label>Vertically center (Text)</label>
+						<config>
+							<type>check</type>
+						</config>
+					</verticallyCenter>
+
 					<border>
 						<label>Border</label>
 						<onChange>reload</onChange>

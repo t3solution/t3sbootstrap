@@ -1,19 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-/**
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- */
 class FlexformViewHelper extends AbstractViewHelper
 {
 	/**
@@ -24,16 +18,31 @@ class FlexformViewHelper extends AbstractViewHelper
 	public function initializeArguments(): void
 	{
 		parent::initializeArguments();
-		$this->registerArgument('data', 'string', 'xml data', true);
+		$this->registerArgument('uid', 'int', 'data id', false);
+		$this->registerArgument('data', 'string', 'flexform data', false);
 	}
 
 	public function render(): array
-	{ 
-		if (!empty($this->arguments['data'])) {
-            return GeneralUtility::makeInstance(FlexFormService::class)->convertFlexFormContentToArray($this->arguments['data']);
+	{
+		if (!empty($this->arguments['uid'])) {
+			// BE Container Preview
+			$record = BackendUtility::getRecord('tt_content', $this->arguments['uid'], '*');
+					
+			if (!empty($record['tx_t3sbootstrap_flexform'])) {
+
+				return GeneralUtility::makeInstance(FlexFormTools::class)->convertFlexFormContentToArray($record['tx_t3sbootstrap_flexform']);
+
+			} else {
+				return [];
+			}
+
+		} elseif (!empty($this->arguments['data'])) {
+			// FE
+			return GeneralUtility::makeInstance(FlexFormTools::class)->convertFlexFormContentToArray($this->arguments['data']);
+
+		} else {
+
+			return [];
 		}
-
-        return [];
     }
-
 }

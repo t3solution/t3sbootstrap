@@ -1,0 +1,52 @@
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
+
+	<div class="d-flex">
+		<div class="flex-grow-1 ms-0 flex-info-content">
+	
+			<strong>Gutters:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
+			| <strong>Equal height:</strong> {f:if(condition: '{flexForm.equalHeight}', then: 'true', else: 'false')}
+					<f:if condition="{flexForm.equalWidth}">
+			| <strong>Equal width:</strong> true
+					</f:if>
+
+					<f:if condition="{flexForm.extraClass_one} || {flexForm.extraClass_two} || {flexForm.extraClass_three} || {flexForm.extraClass_four}">
+			<br>
+					</f:if>
+					<f:if condition="{flexForm.extraClass_one}">
+					<strong>Extra Class Column 1:</strong> {flexForm.extraClass_one}
+					</f:if>
+					<f:if condition="{flexForm.extraClass_two}">
+			{f:if(condition: '{flexForm.extraClass_one}', then: '| ', else: '')}<strong>Extra Class Column 2:</strong> {flexForm.extraClass_two}
+					</f:if>
+					<f:if condition="{flexForm.extraClass_three}">
+			{f:if(condition: '{flexForm.extraClass_one} || {flexForm.extraClass_two}', then: '| ', else: '')}<strong>Extra Class Column 3:</strong> {flexForm.extraClass_three}
+					</f:if>
+					<f:if condition="{flexForm.extraClass_four}">
+			{f:if(condition: '{flexForm.extraClass_one} || {flexForm.extraClass_two} || {flexForm.extraClass_three}', then: '| ', else: '')}<strong>Extra Class Column 4:</strong> {flexForm.extraClass_four}
+					</f:if>
+
+
+		</div>
+	</div>
+
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />

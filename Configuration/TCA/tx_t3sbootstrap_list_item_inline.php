@@ -7,8 +7,7 @@ return [
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'enablecolumns' => [],
-		'hideTable' => true,
-		'searchFields' => '',
+		'hideTable' => 1,
 		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif',
 		'security' => [
 			'ignorePageTypeRestriction' => true,
@@ -17,6 +16,7 @@ return [
 		'transOrigDiffSourceField' => 'l10n_diffsource',
 		'languageField' => 'sys_language_uid',
 		'translationSource' => 'l10n_source',
+		'versioningWS' => true
 	],
 
 	'columns' => [

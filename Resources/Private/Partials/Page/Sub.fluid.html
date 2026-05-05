@@ -1,0 +1,236 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{subNavigation}">
+<f:if condition="{config.navbar.clickableparent}">
+<f:asset.script identifier="vanilla_clickableparent">
+	// Clickableparent - Page/Sub.fluid.html
+	document.querySelectorAll('.submenu .nav [data-bs-toggle="collapse"]').forEach(function(sub) {
+		sub.addEventListener('click', function(e) {
+			if ( e.currentTarget.classList.contains('collapsed') ) {
+				href = e.currentTarget.getAttribute('href');
+				if(href != '#') {
+					location.href = href;
+				}
+			} else {
+				e.preventDefault();
+			}
+		});
+	});
+</f:asset.script>
+</f:if>
+
+
+
+<f:if condition="{settings.submenu.styleOne}">
+	<f:then>
+<f:asset.script identifier="vanilla_submenuStickyStyleOne">
+	var navItems = document.querySelectorAll('.submenu .nav-item');
+	navItems.forEach( navItem => {
+		navItem.addEventListener('click', (item) => {
+			if ( item.target.getAttribute('aria-expanded') == 'true' ) {
+				item.target.parentNode.classList.add('bg-primary', 'bg-opacity-10');
+				item.target.classList.add('bg-primary', 'bg-opacity-10');
+			} else {
+				item.target.parentNode.classList.remove('bg-primary', 'bg-opacity-10');
+				item.target.classList.remove('bg-primary', 'bg-opacity-10');
+			}
+		});
+	});
+</f:asset.script>
+		<f:render section="styleOne" arguments="{_all}"/>
+	</f:then>
+	<f:else>
+		<f:render section="default" arguments="{_all}"/>
+	</f:else>
+</f:if>
+</f:if>
+</html>
+
+
+<f:section name="default">
+
+<div class="d-md-flex mb-3 submenu{f:if(condition: config.sidebar.sticky, then:' sticky-top')}" style="top:{config.sidebar.stickTopOffset}">
+	<ul class="nav flex-column flex-nowrap nav-pills w-100">
+		<f:for each="{subNavigation}" as="item">
+			<li class="nav-item{f:if(condition: item.active, then:' active')}">
+				<f:if condition="{item.children}">
+					<f:then>
+						<f:if condition="{item.children.spacer}">
+							<f:then>
+								<hr class="dropdown-divider">
+							</f:then>
+							<f:else>
+								<f:if condition="{item.data.page_icon}">
+									<f:then>
+										<a class="nav-link dd-link{f:if(condition: item.active, then:'', else:' collapsed')}{f:if(condition: item.current, then:'')}"
+											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
+												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">
+											<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />							
+											{f:if(condition:'{item.data.tx_t3sbootstrap_icon_only}',else:' {item.title}')}
+										</a>
+									</f:then>
+									<f:else>
+										<a class="nav-link dd-link{f:if(condition: item.active, then:'', else:' collapsed')}{f:if(condition: item.current, then:'')}"
+											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
+												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">{item.title}</a>
+									</f:else>
+								</f:if>
+								<f:render section="submenu" arguments="{submenu: item.children, id: item.data.uid, show: item.active}"/>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{item.spacer}">
+							<f:then>
+								<hr class="dropdown-divider">
+							</f:then>
+							<f:else>
+								<f:render section="link" arguments="{item: item}"/>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</li>
+		</f:for>
+	</ul>
+</div>
+</f:section>
+
+
+<f:section name="styleOne">
+<div class="d-md-flex mb-3 submenu style-one{f:if(condition: config.sidebar.sticky, then:' sticky-top')}" style="top:{config.sidebar.stickTopOffset}">
+	<ul class="nav flex-column flex-nowrap nav-pills w-100">
+		<f:for each="{subNavigation}" as="item">
+			<li class="nav-item{f:if(condition: item.active, then:' active bg-primary bg-opacity-10')}">
+				<f:if condition="{item.children}">
+					<f:then>
+						<f:if condition="{item.children.spacer}">
+							<f:then>
+								<hr class="dropdown-divider">
+							</f:then>
+							<f:else>
+								<f:if condition="{item.data.page_icon}">
+									<f:then>
+										<a class="nav-link dd-item{f:if(condition: item.active, then:' bg-primary bg-opacity-10',
+											 else:' collapsed')}{f:if(condition: '{item.current} && {item.data.doktype} == 1', then:' active')}"
+											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
+												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">
+											<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />	
+											{f:if(condition:'{item.data.tx_t3sbootstrap_icon_only}',else:' {item.title}')}
+										</a>
+									</f:then>
+									<f:else>
+										<a class="nav-link dd-item{f:if(condition: item.active, then:' bg-primary bg-opacity-10',
+											 else:' collapsed')}{f:if(condition: '{item.current} && {item.data.doktype} == 1', then:' active')}"
+											href="{f:if(condition: config.navbar.clickableparent, then:'{item.link}', else:'#')}"
+												data-bs-toggle="collapse" data-bs-target="#submenu{item.data.uid}">{item.title}</a>
+									</f:else>
+								</f:if>
+								<f:render section="submenu" arguments="{submenu: item.children, id: item.data.uid, show: item.active}"/>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{item.spacer}">
+							<f:then>
+								<hr class="dropdown-divider">
+							</f:then>
+							<f:else>
+								<f:render section="link" arguments="{item: item}"/>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</li>
+		</f:for>
+	</ul>
+</div>
+</f:section>
+
+<f:section name="link">
+<f:if condition="{item.data.page_icon}">
+	<f:then>
+		<f:if condition="{item.data.target}">
+			<f:then>
+				<f:link.typolink parameter="{item.link}" class="nav-link{f:if(condition: item.current, then:' active')}" target="{item.data.target}">
+					<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" /> {f:if(condition:'{item.data.tx_t3sbootstrap_icon_only}',else:' {item.title}')}
+				</f:link.typolink>
+			</f:then>
+			<f:else>
+				<f:link.typolink parameter="{item.link}" class="nav-link{f:if(condition: item.current, then:' active')}">
+					<t3sb:icon iconfig="{item.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />{f:if(condition:'{item.data.tx_t3sbootstrap_icon_only}',else:' {item.title}')}
+				</f:link.typolink>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{item.data.target}">
+			<f:then>
+				<f:link.typolink parameter="{item.link}" class="nav-link{f:if(condition: item.current, then:' active')}" target="{item.data.target}">
+					{item.title}
+				</f:link.typolink>
+			</f:then>
+			<f:else>
+				<f:link.typolink parameter="{item.link}" class="nav-link{f:if(condition: item.current, then:' active')}">
+					{item.title}
+				</f:link.typolink>
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="submenu">
+<f:if condition="{submenu}">
+<div class="collapse{f:if(condition: show, then:' show')}" id="submenu{id}" aria-expanded="{f:if(condition: show, then:'true', else:'false')}">
+	<ul class="flex-column px-2 nav">
+		<f:for each="{submenu}" as="subItem">
+			<f:if condition="{subItem.data.doktype} == 198">
+				<f:then>
+					<h6 class="dropdown-header border-bottom">{subItem.title}</h6>
+				</f:then>
+				<f:else>
+					<f:if condition="{subItem.spacer}">
+						<f:then>
+							<hr class="dropdown-divider">
+						</f:then>
+						<f:else>
+							<f:if condition="{settings.submenu.styleOne}">
+								<f:then>
+									<f:variable name="hasSubpages" value="{f:if(condition: subItem.hasSubpages, then:' dd-item', else:'')}" />
+								</f:then>
+								<f:else>
+									<f:variable name="hasSubpages" value="{f:if(condition: subItem.hasSubpages, then:' dd-link', else:'')}" />
+								</f:else>
+							</f:if>
+							<li class="nav-item{f:if(condition: subItem.active, then:' active')}">
+								<f:if condition="{subItem.children}">
+									<f:then>
+										<a class="nav-link{f:if(condition: subItem.active, then:'',
+											 else:' collapsed')}{f:if(condition: subItem.current, then:' active')}{hasSubpages}"
+											href="{subItem.link}" data-bs-toggle="collapse" data-bs-target="#submenu{subItem.data.uid}">
+										<f:if condition="{subItem.data.page_icon}">
+											<f:then>
+												<t3sb:icon iconfig="{subItem.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />
+												{f:if(condition:'{subItem.data.tx_t3sbootstrap_icon_only}',else:' {subItem.title}')}
+											</f:then>
+											<f:else>
+												{subItem.title}
+											</f:else>
+										</f:if>
+										</a>
+										<f:render section="submenu" arguments="{submenu: subItem.children, id: subItem.data.uid, show: subItem.active}"/>
+									</f:then>
+									<f:else>
+										<f:render section="link" arguments="{item: subItem}"/>
+									</f:else>
+								</f:if>
+							</li>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+		</f:for>
+	</ul>
+</div>
+</f:if>
+</f:section>

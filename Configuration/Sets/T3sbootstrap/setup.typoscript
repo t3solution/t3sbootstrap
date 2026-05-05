@@ -1,53 +1,125 @@
-# Import setup globally until dropping TYPO3 12 support
-@import 'EXT:t3sbootstrap/Configuration/TypoScript/setup.typoscript'
 
-
-page.10 {
-	partialRootPaths {
-		3 = {$bootstrap.view.partialRootPath}
-		4 = {$bootstrap.view.partialRootPath}Content/
+# Module configuration
+module.tx_t3sbootstrap {
+	view {
+		templateRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Templates/
+		partialRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Partials/
+		layoutRootPaths.0 = EXT:t3sbootstrap/Resources/Private/Backend/Layouts/
 	}
-	layoutRootPaths {
-		3 = {$bootstrap.view.layoutRootPath}
-		4 = {$bootstrap.view.layoutRootPath}Content/
+	settings {
+		bootswatchURL = https://bootswatch.com/5/
+		bootswatch = {$bootstrap.cdn.bootswatch}
+		indexedsearch = {$bootstrap.ext.indexedsearch}
+		customScss = {$bootstrap.cdn.customScss}
+		keepVariables = {$bootstrap.cdn.keepVariables}		
+		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
+		t3sbminify = {$bootstrap.extconf.t3sbminify}
+		lazyLoad = {$bootstrap.extconf.lazyLoad}
+		navbarBreakpoint = {$bootstrap.config.navbarBreakpoint}
+		breakpoint.sm = {$bootstrap.navbar.breakpoint.sm}
+		breakpoint.md = {$bootstrap.navbar.breakpoint.md}
+		breakpoint.lg = {$bootstrap.navbar.breakpoint.lg}
+		breakpoint.xl = {$bootstrap.navbar.breakpoint.xl}
+		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
+		disableJquery = {$bootstrap.disable.jquery}
+		gooleFontsWeights = {$bootstrap.gooleFontsWeights}
+
+rasterPath = fileadmin/T3SB/Resources/Public/Images/raster.png
+
+		cdn {
+			enable = {$bootstrap.cdn.enable}
+			googlefonts = {$bootstrap.cdn.googlefonts}
+			// Versions
+			bootstrap = {$bootstrap.cdn.bootstrap}
+			popperjs = {$bootstrap.cdn.popperjs}
+			bootswatch = {$bootstrap.cdn.bootswatch}
+			jquery = {$bootstrap.cdn.jquery}
+			lazyload = {$bootstrap.cdn.lazyload}
+			animate = {$bootstrap.cdn.animate}
+			baguetteBox = {$bootstrap.cdn.baguetteBox}
+			halkabox = {$bootstrap.cdn.halkabox}
+			glightbox = {$bootstrap.cdn.glightbox}
+			masonry = {$bootstrap.cdn.masonry}
+			jarallax = {$bootstrap.cdn.jarallax}
+			swiper = {$bootstrap.cdn.swiper}
+		}
+
+		optimize {
+			tables = {$bootstrap.optimize.tables}
+			forms = {$bootstrap.optimize.forms}
+			buttons = {$bootstrap.optimize.buttons}
+			transitions = {$bootstrap.optimize.transitions}
+			dropdown = {$bootstrap.optimize.dropdown}
+			button-group = {$bootstrap.optimize.button-group}
+			nav = {$bootstrap.optimize.nav}
+			navbar = {$bootstrap.optimize.navbar}
+			card = {$bootstrap.optimize.card}
+			accordion = {$bootstrap.optimize.accordion}
+			breadcrumb = {$bootstrap.optimize.breadcrumb}
+			pagination = {$bootstrap.optimize.pagination}
+			badge = {$bootstrap.optimize.badge}
+			alert = {$bootstrap.optimize.alert}
+			progress = {$bootstrap.optimize.progress}
+			list-group = {$bootstrap.optimize.list-group}
+			close = {$bootstrap.optimize.close}
+			toasts = {$bootstrap.optimize.toasts}
+			modal = {$bootstrap.optimize.modal}
+			tooltip = {$bootstrap.optimize.tooltip}
+			popover = {$bootstrap.optimize.popover}
+			carousel = {$bootstrap.optimize.carousel}
+			spinners = {$bootstrap.optimize.spinners}
+			offcanvas = {$bootstrap.optimize.offcanvas}
+			placeholders = {$bootstrap.optimize.placeholders}
+		}
+
+		pages {
+			override {
+				tx_t3sbootstrap_smallColumns = {$bootstrap.pages.override.smallColumns}
+				tx_t3sbootstrap_breakpoint = {$bootstrap.pages.override.breakpoint}
+				tx_t3sbootstrap_dropdownRight = {$bootstrap.pages.override.dropdownRight}
+				tx_t3sbootstrap_container = {$bootstrap.pages.override.container}
+				tx_t3sbootstrap_mobileOrder = {$bootstrap.pages.override.mobileOrder}
+				tx_t3sbootstrap_titlecolor = {$bootstrap.pages.override.titlecolor}
+				tx_t3sbootstrap_subtitlecolor = {$bootstrap.pages.override.subtitlecolor}
+			}
+		}
+
 	}
 }
 
+plugin.tx_t3sbootstrap {
+	settings {
+		lazyLoad = {$bootstrap.extconf.lazyLoad}
+		t3sbminify = {$bootstrap.extconf.t3sbminify}
+		cdn = {$bootstrap.cdn.enable}
+		pageTitle.separator = |
+	}
+}
+
+
+plugin.tx_felogin_pi1._CSS_DEFAULT_STYLE >
+
+temp.pagelayout {
+	data = pagelayout
+	required = 1
+	split {
+		token = pagets__
+		cObjNum = 1
+		1.current = 1
+	}
+}
+
+
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript'
+@import 'EXT:t3sbootstrap/Configuration/TypoScript/ContentElement/_main.typoscript'
+
+
+[loaded('iconpack')]
 lib.contentElement {
-	templateRootPaths {
-		3 = {$bootstrap.view.templateRootPath}
-		4 = {$bootstrap.view.templateRootPath}Content/
-	}
 	partialRootPaths {
-		3 = {$bootstrap.view.partialRootPath}
-		4 = {$bootstrap.view.partialRootPath}Content/
-	}
-	layoutRootPaths {
-		3 = {$bootstrap.view.layoutRootPath}
-		4 = {$bootstrap.view.layoutRootPath}Content/
+		6 = EXT:t3sbootstrap/Resources/Private/Partials/FluidStyledContent/
 	}
 }
-
-tt_content {
-	two_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	three_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	four_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	six_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	row_columns.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	card_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	button_group.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	background_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	parallax_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	autoLayout_row.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	carousel_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	collapsible_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	collapsible_accordion.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	modal.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	tabs_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	tabs_tab.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	listGroup_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	masonry_wrapper.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	swiper_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-	toast_container.templateRootPaths.1 = {$bootstrap.view.templateRootPath}Container/
-}
+[END]

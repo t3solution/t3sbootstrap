@@ -1,0 +1,15 @@
+
+[traverse(site("configuration"), "settings/bootstrap/config/jqueryHeader") == true]
+
+	page.includeJSLibs {
+		jquery = EXT:t3sb_package/Resources/Public/T3SB-JS/jquery.min.js
+		jquery.forceOnTop = 1
+	}
+
+[ELSE]
+
+	page.includeJSFooterlibs {
+		jquery = EXT:t3sb_package/Resources/Public/T3SB-JS/jquery.min.js
+	}
+
+[END]

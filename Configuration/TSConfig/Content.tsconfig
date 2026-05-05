@@ -48,7 +48,6 @@ TCEFORM.tt_content {
 	}
 	frame_class {
 		types {
-#			collapsible_accordion.disabled = 1
 			t3sbs_toast.disabled = 1
 		}
 	}
@@ -290,6 +289,7 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 			t3sbs_carousel {
 				label.default = Caption background color (use with opacity - image link and zoom did not work)
 				label.de = Caption background color (use with opacity - image link and zoom did not work)
@@ -307,6 +307,7 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 			t3sbs_carousel {
 				label.default = Opacity for Caption background color
 				label.de = Opacity for Caption background color
@@ -319,6 +320,7 @@ TCEFORM.tt_content {
 			t3sbs_carousel.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 		}
 	}
 
@@ -327,6 +329,7 @@ TCEFORM.tt_content {
 			t3sbs_button.disabled = 1
 			t3sbs_toast.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 			t3sbs_carousel {
 				label.default = Text color for caption
 				label.de = Text color for caption
@@ -346,6 +349,7 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_padding_size {
@@ -354,6 +358,7 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_margin_sides {
@@ -362,6 +367,7 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_margin_size {
@@ -370,6 +376,7 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 			toast_container.disabled = 1
 			t3sbs_assets.disabled = 1
+			t3sbs_fluidtemplate.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_container {
@@ -378,6 +385,7 @@ TCEFORM.tt_content {
 			t3sbs_toast.disabled = 1
 			collapsible_accordion.disabled = 1
 			t3sbs_assets.disabled = 1
+			background_wrapper.label = Container
 			background_wrapper.label.default = Container inside
 			background_wrapper.label.de = Container inside
 		}		
@@ -416,21 +424,25 @@ TCEFORM.tt_content {
 	tx_t3sbootstrap_animateCss {
 		types {
 			collapsible_accordion.disabled = 1
+			background_wrapper.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssDuration {
 		types {
 			collapsible_accordion.disabled = 1
+			background_wrapper.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssDelay {
 		types {
 			collapsible_accordion.disabled = 1
+			background_wrapper.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_animateCssRepeat {
 		types {
 			collapsible_accordion.disabled = 1
+			background_wrapper.disabled = 1
 		}
 	}
 	tx_t3sbootstrap_header_sectionMenu {

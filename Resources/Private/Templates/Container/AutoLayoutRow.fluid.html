@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Main">
+<f:if condition="{col_272 -> f:count()}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Auto Layout Row (uid = {data.uid}) has no content!
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Default">
+	<div class="row{class}"{styleAttr -> f:format.raw()}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
+		<f:mark.contentArea colPos="272" txContainerParent="{record.uid}">
+			<f:for each="{col_272}" as="row">
+				{row.renderedContent -> f:format.raw()}
+			</f:for>
+		</f:mark.contentArea>
+	</div>
+</f:section>

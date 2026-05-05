@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ViewHelpers;
@@ -15,21 +14,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use T3SBS\T3sbootstrap\Utility\ResponsiveImagesUtility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- *
- * 	taken from https://extensions.typo3.org/extension/sms_responsive_images/ and modified
- */
 class MediaViewHelper extends AbstractTagBasedViewHelper
 {
 
-    /**
-     * @var string
-     */
-    protected $tagName = 'img';
+	/**
+	 * @var string
+	 */
+	protected $tagName = 'img';
 
 	/**
 	 * Initialize arguments.
@@ -38,15 +29,13 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	{
 		parent::initializeArguments();
 
-        $this->registerArgument('file', 'object', 'File', true);
-        $this->registerArgument('additionalConfig', 'array', 'This array can hold additional configuration that is passed though to the Renderer object', false, []);
-        $this->registerArgument('width', 'string', 'This can be a numeric value representing the fixed width of in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
-        $this->registerArgument('height', 'string', 'This can be a numeric value representing the fixed height in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
-        $this->registerArgument('cropVariant', 'string', 'select a cropping variant, in case multiple croppings have been specified or stored in FileReference', false, 'default');
-        $this->registerArgument('fileExtension', 'string', 'Custom file extension to use for images');
-        $this->registerArgument('loading', 'string', 'Native lazy-loading for images property. Can be "lazy", "eager" or "auto". Used on image files only.');
-        $this->registerArgument('decoding', 'string', 'Provides an image decoding hint to the browser. Can be "sync", "async" or "auto"', false);
-
+		$this->registerArgument('file', 'object', 'File', true);
+		$this->registerArgument('additionalConfig', 'array', 'This array can hold additional configuration that is passed though to the Renderer object', false, []);
+		$this->registerArgument('width', 'string', 'This can be a numeric value representing the fixed width of in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
+		$this->registerArgument('height', 'string', 'This can be a numeric value representing the fixed height in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
+		$this->registerArgument('cropVariant', 'string', 'select a cropping variant, in case multiple croppings have been specified or stored in FileReference', false, 'default');
+		$this->registerArgument('loading', 'string', 'Native lazy-loading for images property. Can be "lazy", "eager" or "auto". Used on image files only.');
+		$this->registerArgument('decoding', 'string', 'Provides an image decoding hint to the browser. Can be "sync", "async" or "auto"', false);
 		$this->registerArgument('srcset', 'mixed', 'Image sizes that should be rendered.', false);
 		$this->registerArgument(
 			'sizes',
@@ -65,7 +54,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		$this->registerArgument('columns', 'int', 'Columns for Image Gallery', false, 0);
 		$this->registerArgument('placeholderSize', 'int', 'Size of the placeholder image for lazyloading (0 = disabled)', false, 0);
 		$this->registerArgument('placeholderInline', 'bool', 'Embed placeholder image for lazyloading inline as data uri', false, false);
-		$this->registerArgument('additionalAttributes', 'string', 'additional Attributes', false, false);
+		$this->registerArgument('additionalAttributes', 'array', 'additional Attributes', false, false);
 		$this->registerArgument(
 			'ignoreFileExtensions',
 			'mixed',
@@ -76,42 +65,34 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	}
 
 
-    /**
-     * Render a given media file.
-     *
-     * @throws \UnexpectedValueException
-     * @throws Exception
-     */
-    public function render(): string
-    {
+	/**
+	 * Render a given media file.
+	 *
+	 * @throws \UnexpectedValueException
+	 * @throws Exception
+	 */
+	public function render(): string
+	{
 		$file = $this->arguments['file'] ?? null;
 		$additionalConfig = (array)($this->arguments['additionalConfig'] ?? []);
 		$width = ($this->arguments['width'] ?? 0);
 		$height = ($this->arguments['height'] ?? 0);
 
-        // get Resource Object (non ExtBase version)
-        if (is_callable([$file, 'getOriginalResource'])) {
-            // We have a domain model, so we need to fetch the FAL resource object from there
-            $file = $file->getOriginalResource();
-        }
+		// get Resource Object (non ExtBase version)
+		if (is_callable([$file, 'getOriginalResource'])) {
+			// We have a domain model, so we need to fetch the FAL resource object from there
+			$file = $file->getOriginalResource();
+		}
 
-        if (!$file instanceof FileInterface) {
-            throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface.', 1454252193);
-        }
-
-		if ((string)($this->arguments['fileExtension'] ?? '') && !GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], (string)$this->arguments['fileExtension'])) {
-			throw new Exception(
-				'The extension ' . $this->arguments['fileExtension'] . ' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
-				. ' as a valid image file extension and can not be processed.',
-				1619030957
-			);
+		if (!$file instanceof FileInterface) {
+			throw new \UnexpectedValueException('Supplied file object type ' . get_class($file) . ' must be FileInterface.', 1454252193);
 		}
 		
 		$fileRenderer = GeneralUtility::makeInstance(RendererRegistry::class)->getRenderer($file);
 
 		// Fallback to image when no renderer is found
 		if ($fileRenderer === null) {
-			return $this->renderImage($file, $width, $height, $this->arguments['fileExtension'] ?? null);
+			return $this->renderImage($file, (string) $width, (string) $height);
 		}
 
 		$arguments = [];
@@ -125,40 +106,28 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		$additionalConfig = array_merge_recursive($arguments, $additionalConfig);
 		return $fileRenderer->render($file, $width, $height, $additionalConfig);
 
-    }
+	}
 
 
 	/**
 	 * Render img tag
-	 *
-	 * @param	FileInterface $image
-	 * @param	string		 $width
-	 * @param	string		 $height
-	 * @param	string|null $fileExtension
-	 * @return string Rendered img tag
 	 */
-	protected function renderImage(FileInterface $image, $width, $height, ?string $fileExtension=null)
+	protected function renderImage(FileInterface $image, string $width, string $height): string
 	{
-        if (!empty($this->arguments['imgtag'])) {
-            return $this->renderImageTag($image, $width, $height, $fileExtension);
-        }
-        if (!empty($this->arguments['breakpoints'])) {
-            return $this->renderPicture($image, $width, $height);
-        }
+		if (!empty($this->arguments['imgtag'])) {
+			return $this->renderImageTag($image, $width, $height);
+		}
+		if (!empty($this->arguments['breakpoints'])) {
+			return $this->renderPicture($image, $width, $height);
+		}
 
-        return self::renderImage($image, $width, $height, $fileExtension);
-    }
+		return self::renderImage($image, $width, $height);
+	}
 
 	/**
 	 * Render picture tag
-	 *
-	 * @param	FileInterface $image
-	 * @param	string		 $width
-	 * @param	string		 $height
-	 *
-	 * @return string					Rendered picture tag
 	 */
-	protected function renderPicture(FileInterface $image, $width, $height)
+	protected function renderPicture(FileInterface $image, string $width, string $height): string
 	{
 		// Get crop variants
 		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
@@ -187,17 +156,17 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		// Generate fallback image
 		$fallbackImage = $this->generateFallbackImage($image, $width, $cropArea);
 
-		if ( !empty($GLOBALS['_GET']['type']) && $GLOBALS['_GET']['type'] == '98') {
+		if ( !empty($GLOBALS['_GET']['type']) && $GLOBALS['_GET']['type'] === '98') {
 			$lazyload = 0;
 		} else {
 			if ($this->arguments['lazyload']) {
-				if ($this->arguments['lazyload'] == 1) {
+				if ($this->arguments['lazyload'] === 1) {
 					$lazyload = 1;
-				} elseif ($this->arguments['lazyload'] == 3) {
+				} elseif ($this->arguments['lazyload'] === 3) {
 					$lazyload = 3;
 					$this->tag->addAttribute('loading', 'auto');
 				} else {
-					if ($this->arguments['lazyload'] == 2 && $image->getProperty('tx_t3sbootstrap_lazy_load')) {
+					if ($this->arguments['lazyload'] === 2 && $image->getProperty('tx_t3sbootstrap_lazy_load')) {
 						$lazyload = 2;
 					} else {
 						$lazyload = 0;
@@ -256,19 +225,14 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 
 	/**
 	 * Generates a fallback image for picture and srcset markup
-	 *
-	 * @param	FileInterface $image
-	 * @param	string		 $width
-	 * @param	Area			 $cropArea
-	 *
-	 * @return FileInterface
 	 */
-	protected function generateFallbackImage(FileInterface $image, $width, Area $cropArea)
+	protected function generateFallbackImage(FileInterface $image, $width, Area $cropArea): FileInterface
 	{
 		$processingInstructions = [
 			'width' => $width,
 			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 		];
+		
 		$imageService = $this->getImageService();
 		$fallbackImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
@@ -277,14 +241,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 
 	/**
 	 * Render image tag
-	 *
-	 * @param	FileInterface $image
-	 * @param	string		 $width
-	 * @param	string		 $height
-	 *
-	 * @return string					Rendered image tag
 	 */
-	protected function renderImageTag(FileInterface $image, $width, $height, $fileExtension)
+	protected function renderImageTag(FileInterface $image, string $width, string $height): string
 	{
 		 $cropVariant = 'default';
 		 $cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
@@ -315,9 +273,6 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
 		];
 
-		if (!empty($fileExtension)) {
-			$processingInstructions['fileExtension'] = $fileExtension;
-		}
 		$imageService = $this->getImageService();
 		$processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
 
@@ -332,7 +287,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		$this->tag->addAttribute('src', $imageUri);
 		$this->tag->addAttribute('width', $processedImage->getProperty('width'));
 		$this->tag->addAttribute('height', $processedImage->getProperty('height'));
-		if ($this->arguments['lazyload'] == 3) {
+		if ($this->arguments['lazyload'] === 3) {
 			$this->tag->addAttribute('loading', 'auto');
 		}
 
@@ -353,10 +308,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 
 	/**
 	 * Returns an $cropString
-	 *
-	 * @return string
 	 */
-	protected function getCropString($image, $cropString)
+	protected function getCropString(FileInterface $image, string $cropString): string
 	{
 		$cropObject = json_decode($cropString);
 		if (!empty($this->arguments['breakpoints'])) {
@@ -380,7 +333,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 						$cWidth = $pxWidth / $image->getProperties()['width'];
 						$cropObject->$cropVariant->cropArea->width = $cWidth;
 					}
-				} elseif ($rArr[0] == $rArr[1]) {
+				} elseif ($rArr[0] === $rArr[1]) {
 					// square
 					if ( $image->getProperties()['width'] > $image->getProperties()['height'] ) {
 						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
@@ -435,8 +388,8 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		return json_encode($cropObject);
 	}
 
-    protected function getImageService(): ImageService
-    {
-        return GeneralUtility::makeInstance(ImageService::class);
-    }
+	protected function getImageService(): ImageService
+	{
+		return GeneralUtility::makeInstance(ImageService::class);
+	}
 }

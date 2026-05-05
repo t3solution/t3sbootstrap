@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
@@ -8,24 +7,14 @@ use TYPO3\CMS\Core\Utility\CsvUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class CommaSeparatedValueProcessor implements DataProcessorInterface
 {
-	/**
-	 * Process CSV field data to split into a multi dimensional array
-	 *
-	 * @param ContentObjectRenderer $cObj The data of the content element or page
-	 * @param array $contentObjectConfiguration The configuration of Content Object
-	 * @param array $processorConfiguration The configuration of this processor
-	 * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
-	 * @return array the processed data as key/value store
-	 */
-	public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
+	public function process(
+		ContentObjectRenderer $cObj, 
+		array $contentObjectConfiguration, 
+		array $processorConfiguration, 
+		array $processedData
+	): array
 	{
 		if (!empty($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
 			return $processedData;
@@ -36,8 +25,12 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 		if (empty($fieldName)) {
 			return $processedData;
 		}
-
+		// @extensionScannerIgnoreLine
 		$originalValue = $cObj->data[$fieldName];
+
+		if (empty($originalValue)) {
+			return $processedData;
+		}
 
 		// Set the target variable
 		$targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, $fieldName);
@@ -58,33 +51,38 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 			(int)$maximumColumns
 		);
 
-		$tableClass = '';
+		$hasRowClass = false;
 		$croppedTable = [];
 
 		if (is_array($processedData['table'])) {
-			foreach ($processedData['table'] as $key=>$table) {
-				if ( str_starts_with($table[count($table)-1], 'ç') ) {
-					$tableClass = TRUE;
+		
+			// Prüfen ob Row-Klassen vorhanden
+			foreach ($processedData['table'] as $table) {
+				$lastIndex = count($table) - 1;
+				if (str_starts_with($table[$lastIndex], 'ç')) {
+					$hasRowClass = true;
 					break;
 				}
-
-                $tableClass = FALSE;
-            }
-			if ($tableClass) {
+			}
+		
+			if ($hasRowClass) {
 				foreach ($processedData['table'] as $tKey=>$table) {
+					$lastIndex = count($table) - 1;
 					foreach ($table as $key=>$row) {
-						if ( $key < count($table)-1 ) {
-							$rowClass = trim(str_replace('ç', '', $table[count($table)-1]));
+						if ($key < $lastIndex) {
+							$rowClass = trim(str_replace('ç', '', $table[$lastIndex]));
 							$processedData['table-row-class'][$tKey] = $rowClass;
 							$croppedTable[$tKey][$key] = $row;
 						}
 					}
 				}
 			}
+		
 			if (!empty($croppedTable)) {
 				$processedData['table'] = $croppedTable;
 			}
 		}
+		
 
 		return $processedData;
 	}

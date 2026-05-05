@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Layouts;
@@ -8,12 +7,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class TwoColumns implements SingletonInterface
 {
 
@@ -23,7 +16,6 @@ class TwoColumns implements SingletonInterface
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ): array
     {
-
         $processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
         $processedData = GeneralUtility::makeInstance(Grid::class)->getGrid($processedData, $flexconf);
 
@@ -37,18 +29,18 @@ class TwoColumns implements SingletonInterface
 		$processedData['files'] = !empty($processedData['files']) ? $processedData['files'] : '';
 
         if (!empty($flexconf['bgimages'])) {
-            $processedData['bgimages'] = $flexconf['bgimages'];
             GeneralUtility::makeInstance(BackgroundImageUtility::class)
                 ->getTwoColumnBgImages(
                     $processedData['data']['uid'],
-                    $flexconf
+                    $flexconf,
+                    $bgMediaQueries
             );
             $processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
             $processedData['bgimageSize'] = !empty($flexconf['bgimageSize']) ? $flexconf['bgimageSize'] : 'cover';
             $processedData['class'] .= ' col-image';
-
         }
 
         return $processedData;
     }
+
 }

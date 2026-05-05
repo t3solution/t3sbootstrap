@@ -6,7 +6,7 @@ tt_content {
 		templateName = TwoColumns
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -27,7 +27,7 @@ tt_content {
 		templateName = ThreeColumns
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -53,7 +53,7 @@ tt_content {
 		templateName = FourColumns
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -84,7 +84,7 @@ tt_content {
 		templateName = SixColumns
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -125,7 +125,7 @@ tt_content {
 		templateName = RowColumns
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -142,7 +142,7 @@ tt_content {
 		templateName = CardWrapper
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -159,7 +159,7 @@ tt_content {
 		templateName = Buttongroup
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -176,7 +176,7 @@ tt_content {
 		templateName = BackgroundWrapper
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -193,7 +193,7 @@ tt_content {
 		templateName = ParallaxWrapper
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -210,7 +210,7 @@ tt_content {
 		templateName = AutoLayoutRow
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -227,7 +227,7 @@ tt_content {
 		templateName = Container
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -244,7 +244,7 @@ tt_content {
 		templateName = CarouselContainer
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -261,7 +261,7 @@ tt_content {
 		templateName = CollapsibleContainer
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -278,7 +278,7 @@ tt_content {
 		templateName = Collapsible
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -295,7 +295,7 @@ tt_content {
 		templateName = Modal
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -312,7 +312,7 @@ tt_content {
 		templateName = TabContainer
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -329,7 +329,7 @@ tt_content {
 		templateName = Tab
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -346,7 +346,7 @@ tt_content {
 		templateName = ListGroupWrapper
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -363,7 +363,7 @@ tt_content {
 		templateName = MasonryWrapper
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -380,7 +380,7 @@ tt_content {
 		templateName = SwiperContainer
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 
@@ -397,7 +397,7 @@ tt_content {
 		templateName = ToastContainer
 		templateRootPaths {
 			0 = EXT:t3sbootstrap/Resources/Private/Templates/Container/
-			1 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Container/
+			1 = {$bootstrap.view.templateRootPath}Container/
 		}
 		dataProcessing {
 

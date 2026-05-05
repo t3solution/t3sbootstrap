@@ -1,0 +1,118 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers/"
+	xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Module" />
+<f:section name="Content">
+<f:flashMessages />
+
+<div class="card" style="margin:15px;">
+	<div class="card-header card-header-light">
+		<f:link.external class="d-block text-end" uri="https://www.t3sbootstrap.de" target="_blank">
+			<core:icon identifier="module-documentation" size="small" /> See documentation
+		</f:link.external>
+		<div class="d-flex flex-column flex-{settings.config.navbarBreakpoint}-row t3sb-header">
+			<h2>
+				<core:icon identifier="module-config" size="mega" />
+				T3S Bootstrap Configuration on page <span style="text-transform: uppercase;">"{title}"</span>
+			</h2>
+		</div>
+	</div>
+	<div class="card-body">
+		<f:if condition="{config}">
+			<f:then>
+
+<a class="btn btn-block edit-btn mb-3" style="background-color: #6a10f3; color: #fff;" 
+href="{be:uri.editRecord(uid:config.uid, table:'tx_t3sbootstrap_domain_model_config', returnUrl:'{f:be.uri(route: \'web_t3sbootstrap\', parameters=\'{id:currentUid}\')}')}">
+Edit Configuration
+</a>
+
+				<f:if condition="{isSiteroot}">
+					<div class="panel-group" id="accordionList">
+						<f:render section="Constants" arguments="{_all}" />
+					</div>
+					<f:if condition="{pagesOverride}">
+						<div class="bs-callout bs-callout-primary p-3 pages-override">
+							<h3>Global pages override is set in Site Settings:</h3>
+							<ul class="list-unstyled m-0">
+								<f:for each="{pagesOverride}" as="override" key="field">
+									<f:if condition="{override}">
+										<li>{field} = {override}</li>
+									</f:if>
+								</f:for>
+							</ul>
+						</div>
+					</f:if>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:comment>
+				<!--	No configuration specified -->
+				</f:comment>
+				
+				<f:if condition="{admin}">
+					<f:variable name="negativeCurrentUid">-{currentUid}</f:variable>
+		
+<a class="btn btn-block edit-btn mb-3" style="background-color: #6a10f3; color: #fff;" 
+href="{be:uri.newRecord(defaultValues:{tx_t3sbootstrap_domain_model_config: {homepage_uid:rootPageId}}, pid:currentUid,uid:negativeCurrentUid table:'tx_t3sbootstrap_domain_model_config', returnUrl:'{f:be.uri(route: \'web_t3sbootstrap\', parameters=\'{id:currentUid}\')}')}">
+New main configuration
+</a>
+
+				</f:if>
+			</f:else>
+		</f:if>
+	</div>
+</div>
+<f:if condition="{admin}">
+	<p class="text-danger text-center lead" style="margin:2rem 0 1rem 0;">
+		CDN: {f:if(condition: settings.cdn.enable, then: 'activated', else: 'deactivated')}<br>
+		Custom SCSS: {f:if(condition: settings.customScss, then: 'activated', else: 'deactivated')}<br>
+		<f:if condition="{settings.cdn.bootswatch}">
+			<f:then>
+				<f:link.external class="text-info" uri="https://bootswatch.com/{settings.cdn.bootswatch}/" target="_blank">
+					<core:icon identifier="actions-link" size="small" /> Bootswatch Theme: <span style="text-transform: uppercase;">{settings.cdn.bootswatch}</span>
+				</f:link.external>
+			</f:then>
+			<f:else>
+				<f:link.external class="text-info" uri="https://bootswatch.com/default/" target="_blank">
+					<core:icon identifier="actions-link" size="small" /> Basic Bootstrap Theme
+				</f:link.external>
+			</f:else>
+		</f:if>
+	</p>
+	<f:if condition="{customScssCdnDisabled}">
+		<f:then>
+			<div class="alert alert-danger mt-4 text-center" role="alert">
+				You have selected a Bootswatch Theme, but "CDN" & "Custom Scss" is deactivated in the Site Settings. One option must be activated in this case!
+			</div>
+		</f:then>
+		<f:else>
+			<f:if condition="{executeTask}">
+				<div class="alert alert-danger mt-4 text-center" role="alert">
+					Scheduler task “Custom Scss” still needs to be executed!
+				</div>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:if>
+</f:section>
+</html>
+
+
+<f:section name="Constants">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="constants-heading-panel">
+				<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#constants-panel" aria-expanded="false" aria-controls="constants-panel">
+					<span class="caret"></span>
+					Outsourced constants
+				</a>
+			</h3>
+		</div>
+		<div id="constants-panel" class="collapse" aria-labelledby="constants-heading-panel" data-bs-parent="#accordionList">
+			<div class="panel-body p-4">
+				<p>You can override the settings in your constants!</p>
+				<div id="constants" class="p-3 callout callout-notice"><pre>{filecontent}</pre></div>
+			</div>
+		</div>
+	</div>
+</f:section>

@@ -4,7 +4,7 @@ editor:
       enableContentDragAndDrop: true
 
       contentCss:
-        - 'EXT:sitepackage/Resources/Public/Css/content.css'
+        - 'EXT:t3sb_package/Resources/Public/Css/content.css'
         
       plugins:
         - path: "@typo3-tiptap/tiptap/plugins/headings.js"

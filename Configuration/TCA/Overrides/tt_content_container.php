@@ -30,7 +30,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Grid Layout')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
@@ -49,7 +49,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Grid Layout')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
@@ -69,7 +69,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Grid Layout')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
@@ -91,7 +91,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Grid Layout')
 );
 # ROW CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -109,7 +109,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:container/Resources/Public/Icons/container-4col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Grid Layout')
 );
 # CARD WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -127,7 +127,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Wrapper')
 );
 # BUTTON GROUP
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -163,7 +163,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Grid Layout')
 );
 # BACKGROUND WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -181,7 +181,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-background_wrapper.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Wrapper')
 );
 # PARALLAX WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -199,7 +199,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-parallax_wrapper.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Wrapper')
 );
 # CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -228,14 +228,17 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'A container for several Carousel slides (CE:t3sbs_carousel)',
 			[
 				[
-					['name' => 'Carousel Container', 'colPos' => 276, 'allowed' => ['CType' => 't3sbs_carousel']]
+					['name' => 'Carousel Container', 'colPos' => 276, 'disallowed' => ['CType' => 'two_columns,three_columns,four_columns,six_columns,row_columns'], 'allowed' => ['CType' => 't3sbs_carousel']]
 				]
+				
+				
+				
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Slider')
 );
 # COLLAPSIBLE CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -343,7 +346,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Wrapper')
 );
 # MASONRY
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -361,7 +364,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Wrapper')
 );
 # SWIPE CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -379,7 +382,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
-	->setGroup('T3S Container')
+	->setGroup('T3S Slider')
 );
 # TOAST CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -419,6 +422,28 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 			rowDescription,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 ';
+/*
+$GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides']['bgimages']['config']['maxitems'] => 2;
+$GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides'] = [
+	'bodytext' => [
+		'config' => [
+			'enableRichtext' => true
+		]
+	],
+	'bgimages' => [
+		'config' => [
+			'maxitems' => 1
+		]
+	],
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
+		],
+	],
+];
+*/
+
+
 $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
 			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
@@ -439,21 +464,7 @@ $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
 			rowDescription,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 ';
-$GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides'] = [
-	'assets' => [
-		'config' => [
-			'maxitems' => 1
-		],
-	]
-];
-$GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['columnsOverrides'] = [
-	'assets' => [
-		'config' => [
-			'maxitems' => 1,
-			'required' => true,
-		],
-	]
-];
+
  
 $GLOBALS['TCA']['tt_content']['types']['three_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['four_columns']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
@@ -474,3 +485,178 @@ $GLOBALS['TCA']['tt_content']['types']['listGroup_wrapper']['showitem'] = $GLOBA
 $GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['swiper_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['toast_container']['showitem'] = $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'];
+
+$GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides'] = [
+	'assets' => [
+		'config' => [
+			'maxitems' => 1
+		],
+	],
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/BackgroundWrapper.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['columnsOverrides'] = [
+	'assets' => [
+		'config' => [
+			'maxitems' => 1
+		],
+	],
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ParallaxWrapper.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['card_wrapper']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CardWrapper.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['button_group']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ButtonGroup.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['carousel_container']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CarouselContainer.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/AutolayoutRow.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['container']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Container.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['collapsible_container']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CollapsibleContainer.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CollapsibleAccordion.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['modal']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Modal.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['tabs_container']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsContainer.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['tabs_tab']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['swiper_container']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SwiperContainer.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['toast_container']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ToastContainer.xml',
+		],
+	]
+];
+$GLOBALS['TCA']['tt_content']['types']['row_columns']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/RowColumns.xml',
+		],
+	]
+];
+
+
+/***************
+ * Grid layout
+ */
+if (!empty($extconf['flexformNoDefault'])) {
+	$flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsNoDefaults.xml';
+	$flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumnsNoDefaults.xml';
+	$flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsNoDefaults.xml';
+	$flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsNoDefaults.xml';
+} else {
+	if (!empty($extconf['flexformMinCol'])) {
+		$flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumnsMin.xml';
+		$flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumnsMin.xml';
+		$flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumnsMin.xml';
+		$flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumnsMin.xml';
+	} else {
+		$flexformTwoColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TwoColumns.xml';
+		$flexformThreeColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ThreeColumns.xml';
+		$flexformFourColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/FourColumns.xml';
+		$flexformSixColumns = 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SixColumns.xml';
+	}
+}
+
+$GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => $flexformTwoColumns,
+		],
+	],
+];
+$GLOBALS['TCA']['tt_content']['types']['three_columns']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => $flexformThreeColumns,
+		],
+	],
+];
+$GLOBALS['TCA']['tt_content']['types']['four_columns']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => $flexformFourColumns,
+		],
+	],
+];
+$GLOBALS['TCA']['tt_content']['types']['six_columns']['columnsOverrides'] = [
+	'tx_t3sbootstrap_flexform' => [
+		'config' => [
+			'ds' => $flexformSixColumns,
+		],
+	],
+];

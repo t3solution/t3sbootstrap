@@ -158,7 +158,7 @@
 					<slideIn>
 						<label>Slide In / Slide Out</label>
 						<onChange>reload</onChange>
-						<description>With "Fixed position = Right browser edge", Vertical variation &amp; FA icon in t3sbs_button</description>
+						<description>With "Fixed position = Right browser edge", Vertical variation &amp; an icon (iconpack) in t3sbs_button</description>
 						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
 						<config>
 							<type>check</type>
