@@ -1,0 +1,30 @@
+page {
+
+	includeJSFooterlibs {
+
+		# Popper & Bootstrap
+		popper = EXT:t3sb_package/Resources/Public/T3SB-JS/popper.js
+		popper.if.isFalse = {$bootstrap.bundle.enable}
+
+		bootstrap = EXT:t3sb_package/Resources/Public/T3SB-JS/bootstrap.min.js
+		bootstrap.if.isFalse = {$bootstrap.bundle.enable}
+
+		bootstrapBundle = EXT:t3sb_package/Resources/Public/T3SB-JS/bootstrap.bundle.min.js
+		bootstrapBundle.if.isTrue = {$bootstrap.bundle.enable}
+
+	}
+
+	includeJSFooter {
+
+		# LAZYLOAD
+		lazyload = EXT:t3sb_package/Resources/Public/T3SB-JS/lazyload.min.js
+		lazyload.if.isTrue = {$bootstrap.extconf.lazyLoad}
+		lazyload.if {
+			value = 1,2
+			isInList = {$bootstrap.extconf.lazyLoad}
+		}
+
+	}
+
+}
+

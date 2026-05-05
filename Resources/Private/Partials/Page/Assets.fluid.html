@@ -1,0 +1,191 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>For assets used on more than one page</f:comment>
+<f:if condition="{carousel}">
+<f:comment>CardWrapper.fluid.html, CarouselContainer.fluid.html, Jumbotron.fluid.html</f:comment>
+<f:asset.script identifier="vanilla_carousel">
+	// Carousel - Page/Assets.fluid.html
+	var carousels = document.querySelectorAll('.carousel .carousel-inner .carousel-item:first-child');
+	if ( carousels.length ) {
+		carousels.forEach( carousel => {
+			carousel.classList.add('active');
+		});
+	}
+</f:asset.script>
+</f:if>
+
+<f:if condition="{fixedbutton}">
+
+	<f:asset.script identifier="fixedbutton_function">
+// Fixed button on left or right browser edge - Page/Assets.fluid.html
+function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBtnGroup) {
+	fixedButtons.forEach( fixedButton => {
+
+		if (fixedButton !== null && fixedButton !== '') {
+			fixedButton.style.opacity = '0';
+			fixedButton.classList.remove('d-none');
+			var button;
+			if ( fixedButton.classList.contains('fixedModalButton') ) {
+				button = fixedButton.querySelector('button');
+			} else {
+				if ( fixedButton.classList.contains('fixedGroupButton') ) {
+					button = fixedButton.querySelector('div');
+				}
+				if ( fixedButton.classList.contains('btn') ) {
+					button = fixedButton;
+				}
+			}
+			t3sbFadeInEffect(fixedButton);
+			if ( button.classList.contains('rotate-minus') || button.classList.contains('rotate-plus') ) {
+				let position = fixedButton.clientWidth / 2 - fixedButton.clientHeight / 2;
+				if ( fixedButton.classList.contains('fixedPosition-right') ) {
+					fixedButton.style.right = '-'+position+'px';
+				} else {
+					fixedButton.style.left = '-'+position+'px';
+				}
+			} else {
+				if (visiblePart) {
+					var slideInButtons = fixedButton.querySelector('.slideInButton');
+					if (slideInButtons !== null && slideInButtons !== '') {
+						var slideIn = 0,
+							slideOut = 0,
+							boxWidth = fixedButton.clientWidth + btnSlideOutCorrection,
+							boxHalfHeight = fixedButton.clientHeight / 2;
+						if (isBtnGroup) {
+							Array.from(slideInButtons.children).forEach( slideInButton => {
+								if ( typeof slideInButton.firstChild !== 'undefined' ) {
+									slideIn = boxWidth - visiblePart;
+									var	icon = slideInButton.querySelector('.fixedPosition svg.iconpack')
+									icon.classList.add('me-2');
+									slideInButton.style.width = 'auto';
+									slideInButton.style.right = '-'+slideIn+'px';
+									fixedButton.style.top = 'calc(50% - '+boxHalfHeight+'px)';
+									slideInButton.classList.add('mb-1', 'text-start', 'btnGroupSlider');
+									slideInButton.addEventListener('mouseenter', function(e) {
+										if(e.target.classList.contains('btn')) {
+											slideOut = slideInButton.clientWidth-visiblePart;
+											e.target.style.position = 'relative';
+											e.target.style.right = Math.abs(slideOut)+'px';
+											e.target.classList.add('btn-slide-out');
+											e.target.classList.remove('btn-slide-in');
+										}
+									},true);
+									slideInButton.addEventListener('mouseleave', function(e) {
+										if(e.target.classList.contains('btn')) {
+											e.target.style.right = 0;
+											e.target.classList.remove('btn-slide-out');
+											e.target.classList.add('btn-slide-in');
+											e.target.style.position = 'inherit';
+										}
+									},true);
+								}
+							});
+						}
+					}
+				}
+			}
+		}
+	});
+}
+
+function t3sbFadeInEffect(fadeTarget) {
+	window.setTimeout(() => {
+		var opacity = 0;
+		var interval = 50;
+		var duration = 400;
+		var gap = interval / duration;
+		var fading = window.setInterval(() => {
+			opacity = opacity + gap;
+			fadeTarget.style.opacity = opacity;
+			if (opacity <= 0) {
+				fadeTarget.style.visibility = 'hidden';
+			}
+			if (opacity <= 0 || opacity >= 1) {
+				window.clearInterval(fading);
+			}
+		}, interval);
+	}, 2000);
+}
+	</f:asset.script>
+	<f:comment>Button.fluid.html, Page/Assets.fluid.html</f:comment>
+	<f:if condition="{btnGroup} && {slideIn}">
+		<f:then>
+	<f:asset.script identifier="vanilla_fixedbuttonGroup">
+	// Fixed button group on left or right browser edge - Page/Assets.fluid.html
+	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
+	var visiblePart = {visiblePart};
+	var btnSlideOutCorrection = {settings.btnSlideOutCorrection};
+	if ( buttonsFixedPosition.length ) {
+		t3sbFixedButtons(buttonsFixedPosition, visiblePart, btnSlideOutCorrection, true);
+	}
+	</f:asset.script>
+		</f:then>
+		<f:else>
+	<f:asset.script identifier="vanilla_fixedbutton">
+	// Fixed button on left or right browser edge - Page/Assets.fluid.html
+	var buttonsFixedPosition = document.querySelectorAll('.fixedPosition');
+	if ( buttonsFixedPosition.length ) {
+		t3sbFixedButtons(buttonsFixedPosition, 0, 0, false);
+	}
+	</f:asset.script>
+		</f:else>
+	</f:if>
+</f:if>
+
+<f:if condition="{scrollspy}">
+	<f:variable name="navbarBreakpointWidth">
+		{f:if(condition: navbarBreakpointWidth, then: '{navbarBreakpointWidth}', else: 'null')}
+	</f:variable>
+
+	<f:variable name="sidebarSecMobile">
+		{f:if(condition: settings.config.sidebarSectionMobile, then: '{settings.config.sidebarSectionMobile}', else: 'false')}
+	</f:variable>
+
+
+	<f:comment>Page/Section.fluid.html, Page/MenuSection.fluid.html</f:comment>
+	<f:asset.script identifier="vanilla_scrollspy">
+	// Sectionmenu scrollspy - Page/Assets.fluid.html
+	const sectionmenu = document.getElementById('sectionmenu');
+	if (sectionmenu != null) {
+		var breakpointWidth = 768;
+		var sidebarSectionMobile = {sidebarSecMobile};
+		if ({navbarBreakpointWidth} != null) {
+			breakpointWidth = {navbarBreakpointWidth -> f:format.trim()};
+		}
+		if ( !sidebarSectionMobile && window.innerWidth < breakpointWidth ) {
+			sectionmenu.parentNode.removeChild(sectionmenu);
+		} else {
+			document.body.setAttribute('data-bs-spy', 'scroll');
+			document.body.setAttribute('data-bs-target', '#sectionmenu');
+			document.body.setAttribute('data-bs-smooth-scroll', 'true');
+			document.body.setAttribute('data-bs-root-margin', '{settings.config.sectionmenuScrollspyRootMargin}');
+			document.body.setAttribute('data-bs-threshold', '[{settings.config.sectionmenuScrollspyThreshold}]');
+			document.body.setAttribute('tabindex', '0');
+
+			sectionmenu.querySelectorAll('a').forEach( link => {
+				link.addEventListener('click', function(l) {
+					t3sbScrollToAnchor({settings.config.sectionmenuAnchorOffset as integer}, fixedNavbar, navbarHeight, l.currentTarget.getAttribute('href'));
+				});
+			});
+		}
+	}
+	</f:asset.script>
+</f:if>
+
+<f:if condition="{contentElement} && {settings.sectionmenuStickyTop}">
+<f:asset.script identifier="vanilla_stickyTop">
+	window.onscroll = function() {stickyFunction()};
+	var sticky = {settings.config.sectionmenuAnchorOffset};
+	var maincontent = document.getElementsByClassName('main-content');
+	function stickyFunction() {
+		if (window.pageYOffset + navbarHeight >= sticky) {
+			sectionmenu.style.width = maincontent[0].clientWidth+'px';
+			sectionmenu.style.position = 'fixed';
+			sectionmenu.style.top = navbarHeight+'px';
+		} else {
+			sectionmenu.style.position = 'inherit';
+		}
+	}
+</f:asset.script>
+</f:if>
+
+</html>

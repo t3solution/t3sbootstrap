@@ -1,11 +1,104 @@
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol.tsconfig'
 
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra.tsconfig'
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra.tsconfig'
+## Jumbotron=1 & Footer=1 & Extra=0
+[colPosList('JF')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol.tsconfig'
+[END]
 
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/BootstrapCondition.tsconfig'
+## Jumbotron=1 & Footer=0 & Extra=0
+[colPosList('J')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_J.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_J.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_J.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_J.tsconfig'
+[END]
+
+## Jumbotron=0 & Footer=1 & Extra=0
+[colPosList('F')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_F.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_F.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_F.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_F.tsconfig'
+[END]
+
+
+#######################
+
+
+## Jumbotron=1 & Footer=1 & Extra=1 :: DEFAULT
+[colPosList('ALL')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol.tsconfig'
+
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra.tsconfig'
+[END]
+
+
+#######################
+
+
+## Jumbotron=0 & Footer=0 & Extra=1
+[colPosList('E')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_E.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_E.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_E.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_E.tsconfig'
+
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra_E.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra_E.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra_E.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra_E.tsconfig'
+[END]
+
+## Jumbotron=1 & Footer=0 & Extra=1
+[colPosList('JE')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_JE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_JE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_JE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_JE.tsconfig'
+
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra_JE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra_JE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra_JE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra_JE.tsconfig'
+[END]
+
+## Jumbotron=0 & Footer=1 & Extra=1			[colPosList('FE')]
+[colPosList('FE')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_FE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_FE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_FE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_FE.tsconfig'
+
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra_FE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra_FE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra_FE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra_FE.tsconfig'
+[END]
+
+
+#######################
+
+	
+## Jumbotron=0 & Footer=0 & Extra=0			[colPosList('NO')]
+[colPosList('NONE')]
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_NONE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_NONE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_NONE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_NONE.tsconfig'
+
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/OneCol_Extra_NONE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_9-3_Extra_NONE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/TwoCol_3-9_Extra_NONE.tsconfig'
+	@import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/ThreeCol_Extra_NONE.tsconfig'
+[END]
+
+
+

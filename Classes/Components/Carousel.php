@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Components;
@@ -7,23 +6,18 @@ namespace T3SBS\T3sbootstrap\Components;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 
-/*
-* This file is part of the TYPO3 extension t3sbootstrap.
-*
-* For the full copyright and license information, please read the
-* LICENSE file that was distributed with this source code.
-*/
 class Carousel implements SingletonInterface
 {
 
-	/**
-	 * Returns the $processedData
-	 */
 	public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, string $animateCss): array
 	{
+		$storageRepository = GeneralUtility::makeInstance(StorageRepository::class);
+		// @extensionScannerIgnoreLine
+		$processedData['defaultStorage'] = $storageRepository->getDefaultStorage()->getStorageRecord()['name'];
 		$innerCaptionStyle = '';
-		$processedData['dimensions']['width'] = !empty($parentflexconf['width']) ? $parentflexconf['width'] : '';
+		$processedData['dimensions']['width'] = $parentflexconf['width'] ?? '';
 		$processedData['carouselLink'] = $parentflexconf['link'] ?? '';
 		$processedData['mobileNoRatio'] = $parentflexconf['mobileNoRatio'] ?? '';
 
@@ -58,9 +52,8 @@ class Carousel implements SingletonInterface
 		if ($animateCss) {
 			$parentAnimateCss = $animateCss;
 		}
-		$height = '';
 
-		$processedData['innerStyle'] = $innerCaptionStyle;
+        $processedData['innerStyle'] = $innerCaptionStyle;
 
 		if ( $parentAnimateCss ) {
 			$processedData['animate'] = $parentAnimateCss ?
@@ -74,10 +67,11 @@ class Carousel implements SingletonInterface
 			$processedData['innerStyle'] = '';
 		}
 		if ( $processedData['animate'] ) {
-			$processedData['dataAnimate'] = $animateCss ? $animateCss : '';
+			$processedData['dataAnimate'] = $animateCss ?: '';
 			$processedData['animateCssRepeat'] = $processedData['data']['tx_t3sbootstrap_animateCssRepeat'];
 		}
-		$animate = ($animateCss && $parentAnimateCss) || $processedData['data']['tx_t3sbootstrap_bgcolor'] ? TRUE : FALSE;
+
+		$animate = ($animateCss && $parentAnimateCss) || !empty($processedData['data']['tx_t3sbootstrap_bgcolor']);
 		$processedData['style'] .= $this->getCarouselCaptionStyle( $flexconf, $animate );
 
 		if (!empty($processedData['files'])) {
@@ -95,28 +89,26 @@ class Carousel implements SingletonInterface
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
 			}
 			$processedData['autoplay'] = $file->getProperties()['autoplay'];
-			$processedData['loop'] = !empty($flexconf['loop']) ? $flexconf['loop'] : FALSE;
-			$muted = !empty($flexconf['muted']) ? $flexconf['muted'] : FALSE;
-			$processedData['muted'] = !empty($file->getProperties()['autoplay']) ? TRUE : $muted;
-			$processedData['playsinline'] = !empty($flexconf['playsinline']) ? TRUE : FALSE;
-			$btnlink = !empty($parentflexconf['link']) && $parentflexconf['link'] === 'button' ? TRUE : FALSE;
+			$processedData['loop'] = !empty($flexconf['loop']) ? $flexconf['loop'] : false;
+			$muted = !empty($flexconf['muted']) ? $flexconf['muted'] : false;
+			$processedData['muted'] = !empty($file->getProperties()['autoplay']) ? true : $muted;
+			$processedData['playsinline'] = !empty($flexconf['playsinline']); 
+			$blink = !empty($parentflexconf['link']) && $parentflexconf['link'] === 'button'; 
 			if ($processedData['data']['header'] || $processedData['data']['bodytext']
-			 || ( $processedData['data']['header_link'] && $btnlink) ) {
+			 || ( $processedData['data']['header_link'] && $blink) ) {
 				$processedData['controls'] = 0;
 			} else {
 				$processedData['controls'] = !empty($flexconf['controls']) ? $flexconf['controls'] : 0;
 			}
 		}
 
-
 		$processedData['ratioCalc'] = '';
-
 		if (!empty($parentflexconf['ratio'])) {
 			$ratioArr = explode(':', $parentflexconf['ratio']);
 			$x = str_replace(':', 'x', $parentflexconf['ratio']);
 			$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
 			$processedData['ratioCalc'] .= '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
-			$processedData['videoRatio'] = str_replace(':', 'x', $parentflexconf['ratio']);
+			$processedData['videoRatio'] = $parentflexconf['ratio'] ? str_replace(':', 'x', $parentflexconf['ratio']) : '16:9';
 			$processedData['videoStyle'] = '';
 			if ( $parentflexconf['ratio'] !== '16:9') {
 				$processedData['videoStyle'] .= 'object-fit: cover;';
@@ -128,7 +120,7 @@ class Carousel implements SingletonInterface
 		}
 
 		if ( empty($processedData['files']) && !$processedData['localVideoPath'] ) {
-			$ratio = $parentflexconf['ratio'] ? $parentflexconf['ratio'] : '16:9';
+			$ratio = $parentflexconf['ratio'] ?: '16:9';
 			$noImgHeight = explode(':', (string) $ratio);
 			$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
 			$processedData['animate'] .= ' position-static';
@@ -151,14 +143,13 @@ class Carousel implements SingletonInterface
 			$negShift = (int)$flexconf['shift'] * -1;
 			$processedData['videoStyle'] .= 'top: '.$negShift.'% !important;';
 			$processedData['shift'] = (int)$flexconf['shift'] / 100;
-			$breakWidth = '576';
 		}
 
 		$videoStyle = $processedData['videoStyle'];
 		$processedData['videoStyle'] = ' style="'.$videoStyle.'"';
 
 		if ( !empty($parentflexconf['swiperJs']) ) {
-			$processedData['swiper'] = TRUE;
+			$processedData['swiper'] = true;
 		}
 
 		return $processedData;
@@ -168,11 +159,11 @@ class Carousel implements SingletonInterface
 	/**
 	 * Returns carousel caption style
 	 *
-	 * @param array	$flexconf
+	 * @param array $flexconf
 	 * @param bool	$animate
 	 *
 	 */
-	public function getCarouselCaptionStyle( $flexconf, $animate ): string
+	public function getCarouselCaptionStyle( array $flexconf, bool $animate ): string
 	{
 		$style = '';
 		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'caption') {

@@ -19,7 +19,7 @@ lib.newsTitle.data = register:newsTitle
 lib.newsTitle.stdWrap.wrap = <li class="breadcrumb-item active">|</li>
 lib.newsTitle.stdWrap.required = 1
 
-# used for subdropdown with 2 columns - Navbar.html
+# used for subdropdown with 2 columns - Navbar.fluid.html
 lib.mathCeil = TEXT
 lib.mathCeil {
 	current = 1
@@ -28,7 +28,7 @@ lib.mathCeil {
 	round.roundType = ceil
 }
 
-# used in Print.html
+
 lib.currentDate = TEXT
 lib.currentDate {
   data = date : U
@@ -41,64 +41,14 @@ lib.currentDomain {
 	stdWrap.htmlSpecialChars = 1
 }
 
-lib.printButton = COA
-lib.printButton {
-	10 = TEXT
-	10.value = <t3sb:icon iconfig="fa7:solid,print"></t3sb>
-	stdWrap.typolinkno_cache = 1
-	stdWrap.typolink.title = Open print version of this page in a new window
-	stdWrap.typolink.ATagParams = target = _blank
-	stdWrap.typolink.parameter.cObject = COA
-	stdWrap.typolink.parameter.cObject {
-		5 = TEXT
-		5.data = page:uid
-		5.wrap = index.php?id=|
-		5.required = 1
-
-		10 = TEXT
-		10.value = &no_cache=1
-
-	20 = TEXT
-	20.data = GP:L
-	20.wrap = &L=|
-	20.required = 1
-
-	30 = TEXT
-	30.data = GP:tx_news_pi1 | news
-	30.wrap = &tx_news_pi1[news]=|
-	30.required = 1
-
-	40 = TEXT
-	40.data = GP:tx_news_pi1 | controller
-	40.wrap = &tx_news_pi1[controller]=|
-	40.required = 1
-
-	50 = TEXT
-	50.data = GP:tx_news_pi1 | action
-	50.wrap = &tx_news_pi1[action]=|
-	50.required = 1
-
-	60 = TEXT
-	60.data = GP:cHash
-	60.wrap = &cHash=|
-	60.required = 1
-
-		70 = TEXT
-		70.value = &type=98
-	}
-}
-
-[siteLanguage("languageId") == "0"]
-lib.printButton.stdWrap.typolink.title = Druckversion dieser Seite in einem neuen Fenster öffnen
-[global]
-
 
 lib.parseFunc_RTE {
+  externalBlocks := addToList(pre)
+  externalBlocks.pre.stripNL = 1
   externalBlocks {
     table {
       stdWrap {
         wrap = <div class="table-responsive">|</div>
- 
         HTMLparser {
           tags {
             table {

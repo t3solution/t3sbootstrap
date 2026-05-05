@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\UserFunction;
@@ -7,19 +6,14 @@ namespace T3SBS\T3sbootstrap\UserFunction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Site\SiteFinder;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class TcaMatcher
 {
+
     /**
      * autoLayoutParent
      */
@@ -45,6 +39,7 @@ class TcaMatcher
 
         return $parent;
     }
+
 
     /**
      * buttonParent
@@ -72,6 +67,7 @@ class TcaMatcher
         return $parent;
     }
 
+
     /**
      * buttonGroup
      */
@@ -85,17 +81,19 @@ class TcaMatcher
         return $group;
     }
 
+
     /**
-     * cardWrapperParent
+     * noCardWrapperParent
      */
-    public function cardWrapperParent(array $arguments): bool
+    public function noCardWrapperParent(array $arguments): bool
     {
         $parent = true;
+
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
-                  ->select('*')
+                  ->select('CType')
                   ->from('tt_content')
                   ->where(
                       $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
@@ -147,6 +145,7 @@ class TcaMatcher
         return true;
     }
 
+
     /**
      * container_0 ($_EXTCONF['container'] in tt_content.php)
      */
@@ -155,6 +154,7 @@ class TcaMatcher
         return false;
     }
 
+
     /**
      * spacing_1 ($_EXTCONF['spacing'] in tt_content.php)
      */
@@ -162,6 +162,7 @@ class TcaMatcher
     {
         return true;
     }
+
 
     /**
      * ratio ($_EXTCONF['ratio'] in tt_content.php)
@@ -201,6 +202,7 @@ class TcaMatcher
         return true;
     }
 
+
     /**
      * color_0 ($_EXTCONF['color'] in tt_content.php)
      */
@@ -209,6 +211,7 @@ class TcaMatcher
         return false;
     }
 
+
     /**
      * is child of flex-container
      */
@@ -216,7 +219,7 @@ class TcaMatcher
     {
         $parent = false;
 
-        $flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+        $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
 
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
@@ -232,7 +235,7 @@ class TcaMatcher
 
             if (!empty($parent_rec['tx_t3sbootstrap_flexform'])) {
 
-                $parent_flexconf = $flexformService->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
+                $parent_flexconf = $flexFormTools->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
                 if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'container' && $parent_flexconf['flexContainer']) {
                     $parent = true;
@@ -243,13 +246,14 @@ class TcaMatcher
         return $parent;
     }
 
+
     /**
      * isButton
      */
     public function isButton(array $arguments): bool
     {
         $button = false;
-        $flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+        $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
 
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
@@ -263,7 +267,7 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAllAssociative();
             if (!empty($parent_rec)) {
-                $flexconf = $flexformService->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
+                $flexconf = $flexFormTools->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
                 if ($flexconf['appearance'] === 'button') {
                     $button = true;
                 }
@@ -272,6 +276,7 @@ class TcaMatcher
 
         return $button;
     }
+
 
     /**
      * isMenu
@@ -288,6 +293,7 @@ class TcaMatcher
         return $menu;
     }
 
+
     /**
      * animateCss
      */
@@ -301,6 +307,7 @@ class TcaMatcher
 
         return $animateCss;
     }
+
 
     /**
      * isYoutube
@@ -347,6 +354,7 @@ class TcaMatcher
         return $vimeo;
     }
 
+
     /**
      * isLocalVideo
      */
@@ -374,6 +382,7 @@ class TcaMatcher
         return $video;
     }
 
+
     /**
      * isNoMedia
      */
@@ -398,6 +407,7 @@ class TcaMatcher
         return $media;
     }
 
+
     /**
      * isImage
      */
@@ -421,24 +431,25 @@ class TcaMatcher
 
 
     /**
-     * isDropdownMenu
+     * allowReferences
      */
-    public function isDropdownMenu(array $arguments): bool
+    public function allowReferences(array $arguments): bool
     {
-        $level = false;
-        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-        $parentPage = $pageRepository->getPage($arguments['record']['pid']);
-        if (!empty($parentPage['is_siteroot'])) {
-            $level = true;
+        $cardWrapperReference = false;
+        $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+ 
+        if ($extconf['allowReferences']) {
+            $cardWrapperReference = true;
         }
-
-        return $level;
+    
+        return $cardWrapperReference;
     }
+
 
     /**
      * toastContainerParent
      */
-    public function toastContainerParent($arguments): bool
+    public function toastContainerParent(array $arguments): bool
     {
         $parent = true;
         if (!empty($arguments['record']['tx_container_parent'][0])) {
@@ -459,6 +470,7 @@ class TcaMatcher
 
         return $parent;
     }
+
 
     /**
      * CType textmedia
@@ -484,5 +496,26 @@ class TcaMatcher
     
         return $parent;
     }
+
+
+    /**
+     * scss condition
+     */
+    public function checkScssVisibility(array $arguments): bool
+    {
+        $show = FALSE;
+
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $site = $siteFinder->getSiteByPageId($arguments['record']['pid']);
+        $configuration = $site->getConfiguration();
+        $settings = $configuration['settings'];
+
+        if ($settings['bootstrap']['cdn']['customScss'] === TRUE) {
+           $show = TRUE;
+       }
+
+        return $show;
+    }
+
 
 }

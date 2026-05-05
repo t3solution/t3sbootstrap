@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+ xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" data-namespace-typo3-fluid="true">
+
+<div class="d-flex">
+	<div class="flex-grow-1 ms-0 flex-info-content">
+
+		<strong>Predefined style:</strong> {record.tx_t3sbootstrap_flexform.style}
+		| <strong>Button size:</strong> {record.tx_t3sbootstrap_flexform.btnsize}
+		
+		<f:if condition="{record.tx_t3sbootstrap_flexform.fixedPosition}">
+		| <strong>Fixed position:</strong> {record.tx_t3sbootstrap_flexform.fixedPosition}
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.fixedPosition} && {record.tx_t3sbootstrap_flexform.rotate}">
+			<f:if condition="{record.tx_t3sbootstrap_flexform.rotate} == 'vertical'">
+				<f:then>
+		| <strong>Rotate or Vertical Text:</strong> Vertical Text
+				</f:then>
+				<f:else>
+		| <strong>Rotate or Vertical Text:</strong> {record.tx_t3sbootstrap_flexform.rotate}
+				</f:else>
+			</f:if>
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.block}">
+		| <strong>Block level button:</strong> true
+		</f:if>
+		<f:if condition="{record.tx_t3sbootstrap_flexform.outline}">
+		| <strong>Outline button:</strong> true
+		</f:if>
+
+	</div>
+</div>
+
+</html>

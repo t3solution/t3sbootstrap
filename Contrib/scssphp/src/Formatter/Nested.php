@@ -87,7 +87,8 @@ class Nested extends Formatter
         static $closeBlock;
         static $previousEmpty;
         static $previousHasSelector;
-
+        
+        // @extensionScannerIgnoreLine
         if ($block->type === 'root') {
             $depths = [ 0 ];
             $downLevel = '';
@@ -96,8 +97,9 @@ class Nested extends Formatter
             $previousEmpty = false;
             $previousHasSelector = false;
         }
-
+        // @extensionScannerIgnoreLine
         $isMediaOrDirective = \in_array($block->type, [Type::T_DIRECTIVE, Type::T_MEDIA]);
+        // @extensionScannerIgnoreLine
         $isSupport = ($block->type === Type::T_DIRECTIVE
             && $block->selectors && strpos(implode('', $block->selectors), '@supports') !== false);
 
@@ -106,6 +108,7 @@ class Nested extends Formatter
             $this->depth--;
 
             if (
+                // @extensionScannerIgnoreLine
                 ! $this->depth && ($block->depth <= 1 || (! $this->indentLevel && $block->type === Type::T_COMMENT)) &&
                 (($block->selectors && ! $isMediaOrDirective) || $previousHasSelector)
             ) {
@@ -137,7 +140,7 @@ class Nested extends Formatter
                 }
             }
         }
-
+        // @extensionScannerIgnoreLine
         $previousEmpty = ($block->type === Type::T_COMMENT);
         $previousHasSelector = false;
 
@@ -188,6 +191,7 @@ class Nested extends Formatter
         }
 
         // reclear to not be spoiled by children if T_DIRECTIVE
+        // @extensionScannerIgnoreLine
         if ($block->type === Type::T_DIRECTIVE) {
             $previousHasSelector = false;
         }
@@ -212,7 +216,7 @@ class Nested extends Formatter
                 $previousHasSelector = true;
             }
         }
-
+        // @extensionScannerIgnoreLine
         if ($block->type === 'root') {
             $this->write($this->break);
         }

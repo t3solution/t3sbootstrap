@@ -16,10 +16,12 @@
   "license": ["GPL-2.0-or-later"],
   "type": "typo3-cms-extension",
   "require": {
-    "php": "^8.2 || ^8.3 || ^8.4",
-    "typo3/cms-core": "^12.4 || ^13.4",
-    "b13/container": "^3.1",
-    "ichhabrecht/content-defender": "^3.5"
+    "php": "^8.2 || ^8.3 || ^8.4 || ^8.5",
+    "typo3/cms-core": "^14.3",
+    "typo3/cms-rte-ckeditor": "^14.3",
+    "typo3/cms-fluid-styled-content": "^14.3",
+    "b13/container": "^3.2",
+    "t3sbs/t3sb-package": "^14.3"
   },
   "autoload": {
     "psr-4": {

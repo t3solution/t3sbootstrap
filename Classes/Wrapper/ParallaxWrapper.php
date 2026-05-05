@@ -1,71 +1,81 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Wrapper;
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use T3SBS\T3sbootstrap\Utility\YouTubeRenderer;
+use TYPO3\CMS\Core\Resource\StorageRepository;
+use TYPO3\CMS\Core\Resource\FileInterface;
+use T3SBS\T3sbootstrap\Utility\VideoRenderer;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class ParallaxWrapper implements SingletonInterface
 {
+	private const MIME_TYPE_MAP = [
+		'video/mp4'  => 'mp4',
+		'video/webm' => 'webm',
+		'video/ogv'  => 'ogv',
+	];
 
-	/**
-	 * Returns the $processedData
-	 */
+	public function __construct(
+		private readonly FileRepository    $fileRepository,
+		private readonly StorageRepository $storageRepository,
+		private readonly VideoRenderer     $videoRenderer,
+	) {}
+
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
+		// @extensionScannerIgnoreLine
+		$defaultStorage = $this->storageRepository->getDefaultStorage();
+		$processedData['defaultStorage'] = $defaultStorage?->getStorageRecord()['name'] ?? '';
 
-		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-		$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+		$file = $processedData['files'][0] ?? null;
 		$processedData['file'] = $file;
 
-		if ( $file ) {
-			if ( $file->getType() === 4 ) {
-				$processedData['video'] = TRUE;
-				if ( $file->getMimeType() === 'video/youtube' || $file->getExtension() === 'youtube' ) {
-				// youtube video
-					$processedData['youtube'] = TRUE;
-					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file);
-				} elseif ( $file->getMimeType() === 'video/vimeo' || $file->getExtension() === 'vimeo' ) {
-				// vimeo video
-					$processedData['vimeo'] = TRUE;
-					$processedData['videoId'] = GeneralUtility::makeInstance(YouTubeRenderer::class)->render($file);
-				} else {
-				// local video
-					$processedData['local'] = TRUE;
-					if ( $file->getMimeType() === 'video/mp4' ) {
-						$processedData['mimeType'] = 'mp4' ;
-					}
-					if ( $file->getMimeType() === 'video/webm' ) {
-						$processedData['mimeType'] = 'webm' ;
-					}
-					if ( $file->getMimeType() === 'video/ogv' ) {
-						$processedData['mimeType'] = 'ogv' ;
-					}
-					$processedData['file'] = $file;
-				}
-			} else {
-
-				$bgImage = $processedData['files'][0];
-				$processedData['parallaxImage'] = $bgImage;
-			}
-
-			$processedData['width'] = !empty($flexconf['width']) ? $flexconf['width'] : 'auto';
-			$processedData['speedFactor'] = $flexconf['speedFactor'] ?: 1;
-			$processedData['addHeight'] = !empty($flexconf['addHeight']) ? (int)$flexconf['addHeight'] : 0;
-			$processedData['no-mobile'] = $flexconf['mobile'] ? '/iPad|iPhone|iPod|Android/' : '-';
+		if (!$file instanceof FileInterface) {
+			return $processedData;
 		}
+
+		if ($file->getType() === 4) {
+			$processedData = $this->processVideo($processedData, $file);
+		} else {
+			$processedData['parallaxImage'] = $file;
+		}
+
+		$processedData['width']       = $flexconf['width'] ?? 'auto';
+		$processedData['speedFactor'] = $flexconf['speedFactor'] ?: 1;
+		$processedData['addHeight']   = !empty($flexconf['addHeight']) ? (int)$flexconf['addHeight'] : 0;
+		$processedData['no-mobile']   = !empty($flexconf['mobile']) ? '/iPad|iPhone|iPod|Android/' : '-';
 
 		return $processedData;
 	}
 
+	private function processVideo(array $processedData, FileInterface $file): array
+	{
+		$processedData['video'] = true;
+		$mimeType  = $file->getMimeType();
+		$extension = $file->getExtension();
+
+		if ($mimeType === 'video/youtube' || $extension === 'youtube') {
+			$processedData['youtube']        = true;
+			$processedData['videoAutoPlay']  = $file->getProperties()['autoplay'];
+			$processedData['videoId']        = $this->videoRenderer->render($file);
+
+			return $processedData;
+		}
+
+		if ($mimeType === 'video/vimeo' || $extension === 'vimeo') {
+			$processedData['vimeo']          = true;
+			$processedData['videoAutoPlay']  = $file->getProperties()['autoplay'];
+			$processedData['videoId']        = $this->videoRenderer->render($file);
+
+			return $processedData;
+		}
+
+		// Lokales Video
+		$processedData['local']    = true;
+		$processedData['mimeType'] = self::MIME_TYPE_MAP[$mimeType] ?? '';
+
+		return $processedData;
+	}
 }

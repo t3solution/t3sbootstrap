@@ -7,7 +7,12 @@ categories:
     parent: Bootstrap
 
   Bootstrap.config.cdn:
-    label: 'T3SB CDN and Google Fonts'
+    label: 'T3SB CDN, SCSS and Google Fonts'
+    description: 'After a change, a scheduler task must be executed to write the required files to EXT:t3sb_package/!'
+    parent: Bootstrap
+
+  Bootstrap.optional.jquery:
+    label: 'jQuery'
     parent: Bootstrap
 
 
@@ -38,14 +43,21 @@ settings:
   bootstrap.cdn.enable:
     label: 'Enable CDN - please consider the "GDPR" ("DSGVO")'
     category: Bootstrap.config.cdn
-    description: 'Before CDN can be disabled, run the scheduler task "T3SB CDN to local" to write the required files to fileadmin/T3SB/ or EXT:t3sb_package/'
+    description: 'Before CDN can be disabled, run the scheduler task "T3SB CDN to local"'
     type: bool
     default: true
 
-  bootstrap.cdn.bootswatch:
-    label: 'Bootswatch Themes CDN'
+  bootstrap.cdn.customScss:
+    label: 'Enable Custom SCSS'
     category: Bootstrap.config.cdn
-    description: 'Override default Bootstrap values with selected Bootswatch Theme, if SCSS is NOT selected in the EM config - Info: https://bootswatch.com/.'
+    description: 'Run the scheduler task "T3SB Custom SCSS"<br>Before "Enable Custom SCSS" can be activated, "Enable CDN" must be deactivated'
+    type: bool
+    default: false
+    
+  bootstrap.cdn.bootswatch:
+    label: 'Bootswatch Themes with "CDN" & "Custom SCSS"'
+    category: Bootstrap.config.cdn
+    description: 'Run the scheduler task "T3SB CDN to local" & "T3SB Custom SCSS" if "Custom SCSS" is enabled.<br> Override default Bootstrap values with selected Bootswatch Theme - Info: https://bootswatch.com/'
     type: string
     enum:
       '': 'none'
@@ -76,16 +88,39 @@ settings:
       zephyr: 'Zephyr'
     default: ''
  
+  bootstrap.cdn.keepVariables:
+    label: 'Keep Bootstrap variables'
+    category: Bootstrap.config.cdn
+    description: 'Keep your Bootstrap SCSS variables if run the Scheduler (for whatever reason)'
+    type: bool
+    default: false
+
   bootstrap.cdn.googlefonts:
     label: 'Comma separated list with google fonts'
     category: Bootstrap.config.cdn
-    description: 'Integrate Google Fonts "GDPR"-compliant locally with "Custom SCSS" into your website (e.g.: Montserrat,Fira Sans)'
+    description: 'Run the scheduler task "T3SB CDN to local"<br>Integrate Google Fonts "GDPR"-compliant locally into your website (e.g.: Montserrat,Fira Sans)'
     type: string
     default: ''
 
   bootstrap.gooleFontsWeights:
     label: 'Font-weights for Google fonts (regular == 400)'
     category: Bootstrap.config.cdn
-    description: 'Used in the scheduler task "T3SB CDN to local'
+    description: 'Run in the scheduler task "T3SB CDN to local"'
     type: string
     default: '300, regular, 700'
+
+
+  bootstrap.disable.jquery:
+      label: 'Disable jQuery (true by default)'
+      category: Bootstrap.optional.jquery
+      description: 'Disable this option if you require jQuery'
+      type: bool
+      default: true
+    
+  bootstrap.config.jqueryHeader:
+    label: 'Load jQuery into the header'
+    category: Bootstrap.optional.jquery
+    description: ''
+    type: bool
+    default: false
+

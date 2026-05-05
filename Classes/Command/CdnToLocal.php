@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
@@ -7,92 +6,98 @@ namespace T3SBS\T3sbootstrap\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Http\RequestFactory;
+use TYPO3\CMS\Core\Site\SiteFinder;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-class CdnToLocal extends CommandBase
+#[AsCommand('t3sbootstrap:cdnToLocal', 'Write required CSS and JS to EXT:t3sb_package/')]
+final class CdnToLocal extends CommandBase
 {
-    /**
-     * Defines the allowed options for this command
-     *
-     * @inheritdoc
-     */
-    protected function configure()
-    {
-        $this->setDescription('Write required CSS and JS to fileadmin/ or EXT:t3sb_package/');
+
+    public function __construct(
+        private readonly SiteFinder $siteFinder,
+    ) {
+        parent::__construct();
     }
 
-
-    /**
-     * Update all records
-     *
-     * @inheritdoc
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $settings = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            't3sbootstrap',
-            'm1'
-        );
+        
+        $getAllSites = $this->siteFinder->getAllSites();
+        $noZip = false;
+        if (!extension_loaded('zip')) {
+            // PHP extension Zip is disabled
+            $noZip = true;
+        }
 
-        if (empty($settings['sitepackage'])) {
-            $baseDir = GeneralUtility::getFileAbsFileName('fileadmin/T3SB/');
-        } else {
-            if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/');
-            } else {
-                throw new \InvalidArgumentException('Your t3sb_package is not loaded!', 1657464787);
+        // get settings from first site set
+        $settings = [];
+        foreach(array_reverse($getAllSites) as $siteSetting) {
+            if (is_array($siteSetting->getConfiguration()['settings']['bootstrap'])) {
+                $settings = $siteSetting->getConfiguration()['settings']['bootstrap'];
+                break;
             }
         }
-        if (!empty($settings['cdn']['googlefonts']) && empty($settings['cdn']['noZip'])) {
-            if (empty($settings['sitepackage'])) {
-                $this->getGoogleFonts($settings['cdn']['googlefonts'], $settings['gooleFontsWeights'], $baseDir);
-            } else {
-                $this->getGoogleFontsSitepackage($settings['cdn']['googlefonts'], $settings['gooleFontsWeights'], $baseDir);
+
+        // “T3S Bootstrap – VERSION” should be integrated
+        if (empty($settings['cdn']['bootstrap'])) {
+            throw new \RuntimeException('The optional site set “T3S Bootstrap – VERSION” should be integrated.', 1654474884);
+        }
+
+        // $baseDir for t3sb_package
+        $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Resources/');
+
+        // google fonts
+        $googleFontsArr = [];
+        // get google fonts from all site sets
+        foreach($getAllSites as $siteSetting) {
+            if (!empty($siteSetting->getConfiguration()['settings']['bootstrap']['cdn']['googlefonts'])) {
+                $googleFontsArr[] = $siteSetting->getConfiguration()['settings']['bootstrap']['cdn']['googlefonts'];
             }
+        }
+
+        if (!empty($googleFontsArr) && $noZip === false) {
+            $googleFonts = '';
+            foreach ($googleFontsArr as $googleFont) {
+                $googleFonts .= ', ' . $googleFont;
+            }
+            $googleFonts = substr($googleFonts, 2);
+
+            if (!empty($googleFonts)) {
+                $this->getGoogleFonts($googleFonts, $settings['gooleFontsWeights'], $baseDir);
+            }
+
         } else {
-            $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
+            // remove all googlefonts
+            $localZipPath = $baseDir.'Public/T3SB-CSS/googlefonts/';
+
             if (is_dir($localZipPath)) {
                 $this->rmDir($localZipPath);
             }
-            $cssFile = $baseDir.'Resources/Public/T3SB-CSS/googlefonts.css';
+            $cssFile = $baseDir.'Public/T3SB-CSS/googlefonts.css';
             if (file_exists($cssFile)) {
                 unlink($cssFile);
             }
         }
 
+        // version
         foreach ($settings['cdn'] as $key=>$version) {
             if ($key === 'jquery') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'jquery.min.js';
                 $cdnPath = 'https://code.jquery.com/jquery-'.$version.'.min.js';
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'bootstrap') {
-                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
+                $customPath = $baseDir.'Public/T3SB-CSS/';
                 $customFileName = 'bootstrap.min.css';
-                if ($settings['cdn']['bootswatch']) {
-                    $bootswatchTheme = $settings['cdn']['bootswatch'];
-                    $cdnPath = 'https://cdn.jsdelivr.net/npm/bootswatch@'.$version.'/dist/'.$bootswatchTheme.'/'.$customFileName;
-                    $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
-                } else {
-                    $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/css/'.$customFileName;
-                    $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
-                }
 
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/css/'.$customFileName;
+                $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
+
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'bootstrap.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -102,69 +107,69 @@ class CdnToLocal extends CommandBase
             }
 
             if ($key === 'popperjs') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'popper.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
             if ($key === 'lazyload') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'lazyload.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'animate') {
-                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
+                $customPath = $baseDir.'Public/T3SB-CSS/';
                 $customFileName = 'animate.compat.css';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'baguetteBox') {
-                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
+                $customPath = $baseDir.'Public/T3SB-CSS/';
                 $customFileName = 'baguetteBox.min.css';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
 
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'baguetteBox.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
             if ($key === 'halkabox') {
-                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
+                $customPath = $baseDir.'Public/T3SB-CSS/';
                 $customFileName = 'halkaBox.min.css';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
 
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'halkaBox.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'glightbox') {
-                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
+                $customPath = $baseDir.'Public/T3SB-CSS/';
                 $customFileName = 'glightbox.min.css';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/css/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
 
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'glightbox.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/js/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'masonry') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'masonry.pkgd.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/masonry/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'jarallax') {
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'jarallax.min.js';
                 $cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -174,11 +179,11 @@ class CdnToLocal extends CommandBase
             }
 
             if ($key === 'swiper') {
-                $customPath = $baseDir.'Resources/Public/T3SB-CSS/';
+                $customPath = $baseDir.'Public/T3SB-CSS/';
                 $customFileName = 'swiper-bundle.min.css';
                 $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-                $customPath = $baseDir.'Resources/Public/T3SB-JS/';
+                $customPath = $baseDir.'Public/T3SB-JS/';
                 $customFileName = 'swiper-bundle.min.js';
                 $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -189,7 +194,7 @@ class CdnToLocal extends CommandBase
     }
 
 
-    private function writeCustomFile($customPath, $customFileName, $cdnPath, $extend=false): void
+    private function writeCustomFile(string $customPath, string $customFileName, string $cdnPath, bool $extend = false): void
     {
         $customFile = $customPath.$customFileName;
         $customContent = GeneralUtility::getURL($cdnPath);
@@ -204,8 +209,8 @@ class CdnToLocal extends CommandBase
             unlink($customFile);
         }
         if (!is_dir($customPath)) {
-            if (!mkdir($customPath, 0777, true) && !is_dir($customPath)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath));
+            if (!mkdir($customPath, 0755, true) && !is_dir($customPath)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $customPath), 1657348966);
             }
         }
 
@@ -213,75 +218,17 @@ class CdnToLocal extends CommandBase
     }
 
 
-    private function getGoogleFonts($googleFonts, $gooleFontsWeights, $baseDir): void
+    private function getGoogleFonts(string $googleFonts, string $gooleFontsWeights, string $baseDir): void
     {
-        $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
+        $localZipPath = $baseDir.'Public/T3SB-CSS/googlefonts/';
         if (is_dir($localZipPath)) {
-            parent::rmDir($localZipPath);
+            $this->rmDir($localZipPath);
         }
-        if (!mkdir($localZipPath, 0777, true) && !is_dir($localZipPath)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $localZipPath));
+        if (!mkdir($localZipPath, 0755, true) && !is_dir($localZipPath)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $localZipPath), 1657363669);
         }
         $googleFontsArr = explode(',', $googleFonts);
-        foreach ($googleFontsArr as $font) {
-            $fontFamily = trim($font);
-            $font = str_replace(' ', '-', $fontFamily);
-            foreach (explode(',', $gooleFontsWeights) as $style) {
-                $style = trim($style);
-                $zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
-                $zipFilePath = 'https://gwfh.mranftl.com/api/fonts/';
-                $zipContent = GeneralUtility::makeInstance(RequestFactory::class)->request($zipFilePath . $zipFilename)->getBody()->getContents();
-                $fontArr[$fontFamily] = $this->getGoogleFiles($zipContent, $baseDir);
-            }
-        }
-
-        if (is_array($fontArr)) {
-            $basePath = '/fileadmin/T3SB/';
-            foreach ($fontArr as $fontFamily=>$googlePath) {
-                $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
-            }
-            $css = '';
-
-            foreach ($sliceArr as $fontFamily=>$googlePath) {
-
-                $gp = explode('.', $googlePath[0]);
-                $gp = explode('-', $gp[0]);
-                $replace = end($gp);
-
-                foreach (explode(',', $gooleFontsWeights) as $i=>$style) {
-                    $style = trim($style);
-                    $file = str_replace($replace, '', explode('.', $googlePath[0])[0]).$style;
-                    $style = $style === 'regular' ? '400' : $style;
-                    $css .= "@font-face {
-    font-family: '".$fontFamily."';
-    font-style: normal;
-    font-weight: ".$style.";
-    font-display: swap;
-    src: url('googlefonts/".$file.".woff2') format('woff2'),
-         url('googlefonts/".$file.".ttf') format('truetype');
-}".LF.LF;
-                }
-            }
-            if (!empty($css)) {
-                $cssFile = $baseDir.'Resources/Public/T3SB-CSS/googlefonts.css';
-                if (file_exists($cssFile)) {
-                    unlink($cssFile);
-                }
-                GeneralUtility::writeFile($cssFile, $css);
-            }
-        }
-    }
-
-    private function getGoogleFontsSitepackage($googleFonts, $gooleFontsWeights, $baseDir): void
-    {
-        $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
-        if (is_dir($localZipPath)) {
-            parent::rmDir($localZipPath);
-        }
-        if (!mkdir($localZipPath, 0777, true) && !is_dir($localZipPath)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $localZipPath));
-        }
-        $googleFontsArr = explode(',', $googleFonts);
+        $fontArr = [];
 
         foreach ($googleFontsArr as $font) {
             $fontFamily = trim($font);
@@ -296,49 +243,47 @@ class CdnToLocal extends CommandBase
             }
         }
 
-        if (is_array($fontArr)) {
-            foreach ($fontArr as $fontFamily=>$googlePath) {
-                $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
-            }
-            $css = '';
+        $sliceArr = [];
+        foreach ($fontArr as $fontFamily=>$googlePath) {
+            $sliceArr[$fontFamily] = array_slice($googlePath, 0, 1);
+        }
+        $css = '';
 
-            foreach ($sliceArr as $fontFamily=>$googlePath) {
+        foreach ($sliceArr as $fontFamily=>$googlePath) {
 
-                $gp = explode('.', $googlePath[0]);
-                $gp = explode('-', $gp[0]);
-                $replace = end($gp);
+            $gp = explode('.', $googlePath[0]);
+            $gp = explode('-', $gp[0]);
+            $replace = end($gp);
 
-                foreach (explode(',', $gooleFontsWeights) as $i=>$style) {
-                    $style = trim($style);
-                    $file = str_replace($replace, '', explode('.', $googlePath[0])[0]).$style;
-                    $style = $style === 'regular' ? '400' : $style;
-                    $googlefontsPath = 'googlefonts/';
-                    $css .= "@font-face {
-        font-family: '".$fontFamily."';
-        font-style: normal;
-        font-weight: ".$style.";
-        font-display: swap;
-        src: url('googlefonts/".$file.".woff2') format('woff2'),
-             url('googlefonts/".$file.".ttf') format('truetype');
-    }".LF.LF;
-                }
+            foreach (explode(',', $gooleFontsWeights) as $i=>$style) {
+                $style = trim($style);
+                $file = str_replace($replace, '', explode('.', $googlePath[0])[0]).$style;
+                $style = $style === 'regular' ? '400' : $style;
+                $css .= "@font-face {
+    font-family: '".$fontFamily."';
+    font-style: normal;
+    font-weight: ".$style.";
+    font-display: swap;
+    src: url('googlefonts/".$file.".woff2') format('woff2'),
+         url('googlefonts/".$file.".ttf') format('truetype');
+}".LF.LF;
             }
-            if (!empty($css)) {
-                $cssFile = $baseDir.'Resources/Public/T3SB-CSS/googlefonts.css';
-                if (file_exists($cssFile)) {
-                    unlink($cssFile);
-                }
-                GeneralUtility::writeFile($cssFile, $css);
+        }
+        if (!empty($css)) {
+            $cssFile = $baseDir.'Public/T3SB-CSS/googlefonts.css';
+            if (file_exists($cssFile)) {
+                unlink($cssFile);
             }
+            GeneralUtility::writeFile($cssFile, $css);
         }
     }
 
 
-    private function getGoogleFiles($zipContent, $baseDir='/'): array
+    private function getGoogleFiles(string $zipContent, string $baseDir = '/'): array
     {
         $googleFileArr = [];
         if ($zipContent) {
-            $localZipPath = $baseDir.'Resources/Public/T3SB-CSS/googlefonts/';
+            $localZipPath = $baseDir.'Public/T3SB-CSS/googlefonts/';
             $localZipFile = $localZipPath.'googlefont.zip';
             GeneralUtility::writeFile($localZipFile, $zipContent);
             $zip = new \ZipArchive();
@@ -346,13 +291,12 @@ class CdnToLocal extends CommandBase
                 $zip->extractTo($localZipPath);
                 $zip->close();
             } else {
-                throw new \InvalidArgumentException('Sorry ZIP creation failed at this time!', 1655291469);
+                throw new \InvalidArgumentException('Sorry ZIP creation failed at this time - try again later.', 1655291469);
             }
             if (file_exists($localZipFile)) {
                 unlink($localZipFile);
             }
             $googleFiles = scandir($localZipPath);
-            $css = '';
             foreach ($googleFiles as $googleFile) {
                 if (str_ends_with($googleFile, 'ttf')) {
                     $googleFileArr[] = $googleFile;
@@ -365,15 +309,4 @@ class CdnToLocal extends CommandBase
         return $googleFileArr;
     }
 
-
-    private function generateRandomString($length = 4): string
-    {
-        $characters = '0123456789';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[random_int(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
 }

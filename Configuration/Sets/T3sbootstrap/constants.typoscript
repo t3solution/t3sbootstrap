@@ -1,2 +1,136 @@
-# Import constants globally until dropping TYPO3 12 support
-@import 'EXT:t3sbootstrap/Configuration/TypoScript/constants.typoscript'
+
+#-------------------------------------------------------------------------------
+#	BOOTSTRAP VERSION (optional)
+#-------------------------------------------------------------------------------
+
+bootstrap.cdn.bootstrap = 5.3.8
+bootstrap.cdn.popperjs = 2.11.8
+bootstrap.cdn.masonry = 4.2.2
+bootstrap.cdn.jquery = 3.7.1
+bootstrap.cdn.lazyload = 17.8.5
+bootstrap.cdn.animate = 4.1.1
+bootstrap.cdn.baguetteBox = 1.11.1
+bootstrap.cdn.halkabox = 1.6.0
+bootstrap.cdn.glightbox = 3.2.0
+bootstrap.cdn.jarallax = 2
+bootstrap.cdn.swiper = 11
+bootstrap.cdn.bootstrapCssIntegrity = sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT
+bootstrap.cdn.bootstrapJsIntegrity = sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D
+bootstrap.cdn.bootstrapBundleJsIntegrity = sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI
+bootstrap.cdn.popperjsIntegrity = sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r
+bootstrap.cdn.masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
+bootstrap.cdn.jqueryIntegrity = sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=
+bootstrap.cdn.lazyloadIntegrity = 
+bootstrap.cdn.baguetteBoxIntegrity = 
+bootstrap.cdn.halkaboxIntegrity = 
+bootstrap.cdn.glightboxIntegrity = 
+
+
+#-------------------------------------------------------------------------------
+#	BOOTSTRAP OPTIMIZE (optional)
+#-------------------------------------------------------------------------------
+
+bootstrap.optimize.tables = 1
+bootstrap.optimize.forms = 1
+bootstrap.optimize.buttons = 1
+bootstrap.optimize.transitions = 1
+bootstrap.optimize.dropdown = 1
+bootstrap.optimize.button-group = 1
+bootstrap.optimize.nav = 1
+bootstrap.optimize.navbar = 1
+bootstrap.optimize.card = 1
+bootstrap.optimize.accordion = 1
+bootstrap.optimize.breadcrumb = 1
+bootstrap.optimize.pagination = 1
+bootstrap.optimize.badge = 1
+bootstrap.optimize.alert = 1
+bootstrap.optimize.progress = 1
+bootstrap.optimize.list-group = 1
+bootstrap.optimize.close = 1
+bootstrap.optimize.toasts = 1
+bootstrap.optimize.modal = 1
+bootstrap.optimize.tooltip = 1
+bootstrap.optimize.popover = 1
+bootstrap.optimize.carousel = 1
+bootstrap.optimize.spinners = 1
+bootstrap.optimize.offcanvas = 1
+bootstrap.optimize.placeholders = 1
+
+
+#-------------------------------------------------------------------------------
+#	PAGES OVERRIDE (optional)
+#-------------------------------------------------------------------------------
+
+bootstrap.pages.override.container = 0
+bootstrap.pages.override.smallColumns = 0
+bootstrap.pages.override.dropdownRight = 0
+bootstrap.pages.override.mobileOrder = 0
+bootstrap.pages.override.breakpoint = 0
+bootstrap.pages.override.titlecolor =
+bootstrap.pages.override.subtitlecolor =
+
+
+#-------------------------------------------------------------------------------
+#	IMAGE SETTINGS (optional)
+#-------------------------------------------------------------------------------
+
+bootstrap.image.viewportWidthCookie = 0
+bootstrap.image.minimumWidth = true
+bootstrap.image.ratioWithHeight = 0
+bootstrap.image.maxWidthMediaObject = 200
+bootstrap.image.maxWidthToast = 20
+bootstrap.image.disableAutoRow = 0
+bootstrap.image.srcsetDesktop = 576, 768, 992, 1200, 1440, 1920, 2650
+bootstrap.image.srcsetTablet = 125, 255, 385, 576, 768, 992, 1200
+bootstrap.image.srcsetMobile = 60, 100, 200, 385, 575
+bootstrap.image.bgMediaQueries = 2560, 1920, 1200, 992, 768, 576
+bootstrap.image.lazyLoadThreshold = 0
+bootstrap.image.lazyLoadBgWrapperImage = 0
+
+
+#-------------------------------------------------------------------------------
+#	OTHER SETTINGS (optional)
+#-------------------------------------------------------------------------------
+
+bootstrap.bundle.enable = 1
+bootstrap.pagebrowser.enable = 0
+bootstrap.pagebrowser.prevnextToSection = 1
+bootstrap.pagebrowser.prevItem = prev|prevsection
+bootstrap.pagebrowser.nextItem = nextsection|next
+bootstrap.pagebrowser.entryLevel = 1
+bootstrap.config.sectionMenuClass = 
+bootstrap.config.disableDefaultCss = 0
+bootstrap.config.disableFaCss = 0
+bootstrap.backToTopTitle = to tops
+bootstrap.backToTopClass = fa-solid fa-circle-chevron-up fa-4x
+bootstrap.backToTopIconpack = fa7:solid,circle-chevron-up,size:4x
+bootstrap.backToTopForAllPages = 0
+bootstrap.disable.jquery = 1
+bootstrap.config.jqueryHeader = 0
+bootstrap.disable.accordion.scrollToTop = 0
+bootstrap.navbar.noLinkTitle = 
+bootstrap.navbar.image.defaultPath = EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
+bootstrap.navbar.image.width = 30
+bootstrap.navbar.image.height = 24
+bootstrap.navbar.image.altText = Company Logo
+bootstrap.navbar.breakpoint.sm = 576
+bootstrap.navbar.breakpoint.md = 768
+bootstrap.navbar.breakpoint.lg = 992
+bootstrap.navbar.breakpoint.xl = 1200
+bootstrap.navbar.breakpoint.xxl = 1400
+bootstrap.navbar.subdropdown.twoColumns = 30
+bootstrap.navbar.searchboxLink = 0
+bootstrap.navbar.feUserName = 0
+bootstrap.navbar.floatDropdownIconRight = 0
+bootstrap.skiplinks = 0
+bootstrap.shortcutsremove = 0
+bootstrap.submenu.styleOne = 0
+bootstrap.colorMode.enable = 0
+bootstrap.colorMode.position = position-fixed bottom-0 end-0 mb-3 me-3
+
+
+[loaded('felogin')]
+plugin.tx_felogin_login.view.templateRootPath = EXT:t3sbootstrap/Resources/Private/Extensions/felogin/Resources/Private/Templates/
+[END]
+
+

@@ -1,0 +1,134 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.cardFlipperOnClick}">
+	<f:asset.script identifier="cardwrapperFlipper_function">
+// Card-flipper rotate on click - CardWrapper.html
+function t3sbCardFlipper() {
+	document.querySelectorAll('.card-flipper').forEach( cf => {
+		cf.classList.add('cardflipper');
+		cf.classList.remove('card-flipper');
+	});
+	document.querySelectorAll('.square-link').forEach( mainflipper => {
+		mainflipper.addEventListener('click', function(flipper) {
+			var frontside = flipper.currentTarget.parentNode.parentNode.parentNode;
+			frontside.style.transform = 'rotateY(180deg)';
+			var backside = flipper.currentTarget.parentNode.parentNode.parentNode.parentNode.querySelector('.backside');
+			backside.style.transform = 'rotateY(0deg)';
+			var cardBody = backside.querySelector('.card-body');
+			var el = document.createElement('div');
+			el.classList.add('card-footer','jsfooter','text-center');
+			el.innerHTML = '<p class="square-backlink"><t3sb:icon iconfig="fa7:solid,square-minus,size:2x" additionalAttributes="{class:'mx-auto'}" /></p>';
+			insertAfter(cardBody, el);
+			backside.querySelector('.square-backlink').addEventListener('click', function(minus) {
+				backside.style.transform = 'rotateY(180deg)';
+				frontside.style.transform = 'rotateY(0deg)';
+				if (backside.querySelector('.fa-minus-square') !== null && backside.querySelector('.fa-minus-square') !== '') {
+					if (backside.querySelector('.card-footer').classList.contains('jsfooter')) {
+						backside.querySelector('.card-footer').remove();
+					}
+				}
+			});
+		});
+	});
+}
+
+function insertAfter(referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+	</f:asset.script>
+
+	<f:asset.script identifier="vanilla_cardwrapper_flipper">
+	// Card-flipper rotate on click - CardWrapper.html
+	t3sbCardFlipper()
+	</f:asset.script>
+</f:if>
+
+
+<f:comment> CARD SLIDER (SWIPER JS) </f:comment>
+<f:if condition="{card_wrapper_layout} == 'slider'">
+	<f:asset.css identifier="swipercss-{data.uid}">
+#swiper-{data.uid} {
+	width: 100%;
+	height: auto;
+}
+#swiper-{data.uid} .card {
+	height: 100% !important;
+	display: block !important;
+}
+#swiper-{data.uid} .swiper-button-next,
+#swiper-{data.uid} .swiper-button-prev {
+	color: white;
+	text-shadow: 1px 1px 2px #000,0 0 25px #000,0 0 5px #000;
+}
+#swiper-{data.uid} .swiper-slide,
+#swiper-{data.uid} .swiper-wrapper {
+	height: auto !important;
+}
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: 0;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--bs-primary) !important;
+}
+
+	</f:asset.css>
+
+	<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
+	// Card Slider (swiper) - Container/CardWrapper.html
+	var spv = {t3sbFlexform.slidesPerView},
+		spb = {t3sbFlexform.spaceBetween},
+		spg = {t3sbFlexform.slidesPerGroup},
+		del = {t3sbFlexform.delay},
+		b10 = {t3sbFlexform.breakpoints10},
+		b576 = {t3sbFlexform.breakpoints576},
+		b768 = {t3sbFlexform.breakpoints768},
+		b992 = {t3sbFlexform.breakpoints992},
+		lop = {t3sbFlexform.loop},
+		uid = {data.uid};
+		if(spv === null || spv === '' || spv === 0) spv = 1;
+	var swiper = new Swiper("#swiper-{data.uid}", {
+		slidesPerView: spv,
+		spaceBetween: spb,
+		slidesPerGroup: spg,
+		loop: lop,
+		autoplay: {
+			delay: del,
+		},
+		pagination: {
+			el: ".swiper-paginate",
+			clickable: true,
+		},
+		navigation: {
+			nextEl: '.next-'+uid,
+			prevEl: '.prev-'+uid,
+		},
+		breakpoints: {
+			10: {
+				slidesPerView: b10,
+			},
+			576: {
+				slidesPerView: b576,
+			},
+			768: {
+				slidesPerView: b768,
+			},
+			992: {
+				slidesPerView: b992,
+			},
+		},
+	});
+		<f:if condition="{pagination} && {navigation}">
+	var swi = document.getElementById('swiper-{data.uid}'),
+		pag = swi.querySelector('.swiper-paginate'),
+		next = swi.getElementsByClassName('swiper-button-next'),
+		prev = swi.getElementsByClassName('swiper-button-prev'),
+		offset = pag.clientHeight - 5;
+	next[0].style.top = 'calc(50% - '+offset+'px)';
+	prev[0].style.top = 'calc(50% - '+offset+'px)';
+		</f:if>
+	</f:asset.script>
+</f:if>
+
+</html>

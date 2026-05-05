@@ -1,0 +1,82 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+   xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" 
+   data-namespace-typo3-fluid="true">
+
+<f:variable name="imgObject" value="" />
+<f:variable name="margin" value="0" />
+<f:if condition="{item.record.assets}">
+	<f:variable name="imgObject" value="<t3sb:backend.infoImage uid='{item.record.uid}' />" />
+	<f:variable name="margin" value="2" />
+</f:if>
+
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
+
+	
+	<div class="d-flex mt-1">
+		<f:if condition="{imgObject.0} && {imgObject.0.properties.hidden} == 0">
+			<div class="flex-shrink-0">
+				<be:thumbnail image="{imgObject.0}" width="64" height="40" class="img-thumbnail" />	
+			</div>
+		</f:if>
+		<div class="flex-grow-1 ms-{margin}">
+
+			<f:if condition="{imgObject} && {imgObject.0.properties.hidden} == 0">
+				<f:then>
+					<strong>Max. BG-Image width:</strong> {flexForm.width}px | <strong>Padding (top & bottom):</strong> {flexForm.paddingTopBottom}rem
+					<f:if condition="{flexForm.bgAttachmentFixed}">
+					| <strong>BG attachment:</strong> fixed
+					</f:if>
+					<f:if condition="{flexForm.imageRaster}">
+					| <strong>Raster over image:</strong> true
+					</f:if>
+				</f:then>
+				<f:else>
+					<strong>NO background-image</strong>
+				</f:else>
+			</f:if>
+			
+			<f:if condition="{item.record.tx_t3sbootstrap_bgcolor} && {item.record.tx_t3sbootstrap_contextcolor}">
+				<f:then>
+					| <strong>Context color:</strong> {item.record.tx_t3sbootstrap_contextcolor}
+				</f:then>
+				<f:else>
+					<f:if condition="{item.record.tx_t3sbootstrap_bgcolor}">
+						| <strong>Background color:</strong> {item.record.tx_t3sbootstrap_bgcolor}
+					</f:if>
+					<f:if condition="{item.record.tx_t3sbootstrap_contextcolor}">
+						| <strong>Context color:</strong> {item.record.tx_t3sbootstrap_contextcolor}
+					</f:if>
+				</f:else>
+			</f:if>
+			
+			<f:if condition="{item.record.tx_t3sbootstrap_bgopacity}">
+				<f:if condition="{item.record.tx_t3sbootstrap_bgcolor} || {item.record.tx_t3sbootstrap_contextcolor}">
+					| <strong>Opacity:</strong> {item.record.tx_t3sbootstrap_bgopacity}
+				</f:if>
+			</f:if>
+
+		</div>
+	</div>
+	
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />
+</html>

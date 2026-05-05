@@ -1,0 +1,98 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{config.expandedcontentTop.enable} && ( {be_layout} == 'OneCol_Extra' || {be_layout} == 'TwoCol_9-3_Extra' || {be_layout} == 'TwoCol_9-TwoCol_3-9_Extra' || {be_layout} == 'TwoCol_9-ThreeCol_Extra' )">
+	<f:render partial="Page/ExpandedContent/Top" arguments="{_all}" />
+</f:if>
+<f:if condition="{config.general.pageTitle} == 'content'">
+	<f:render partial="Page/Title" arguments="{_all}" />
+</f:if>
+<f:if condition="{data.tx_t3sbootstrap_container} && {data.tx_t3sbootstrap_container} != 'none'">
+	<f:then>
+		<f:variable name="noContainer">false</f:variable>
+		<div class="{data.tx_t3sbootstrap_container}">
+			<f:render section="Order" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<f:variable name="noContainer">true</f:variable>
+		<f:render section="Order" arguments="{_all}" />
+	</f:else>
+</f:if>
+<f:if condition="{config.expandedcontentBottom.enable} && ( {be_layout} == 'OneCol_Extra' || {be_layout} == 'TwoCol_9-3_Extra' || {be_layout} == 'TwoCol_9-TwoCol_3-9_Extra' || {be_layout} == 'TwoCol_9-ThreeCol_Extra' )">
+	<f:render partial="Page/ExpandedContent/Bottom" arguments="{_all}" />
+</f:if>
+</html>
+
+
+<f:section name="Order">
+	<div class="row content-row{f:if(condition: '{noContainer}', then: ' mx-1')}">
+		<f:switch expression="{data.tx_t3sbootstrap_mobileOrder}">
+			<f:case value="top">
+				<f:render section="Default" arguments="{_all}" />
+			</f:case>
+			<f:case value="bottom">
+				<f:render section="LeftBottom" arguments="{_all}" />
+			</f:case>
+			<f:case value="leftTop">
+				<f:render section="Default" arguments="{_all}" />
+			</f:case>
+			<f:case value="leftBottom">
+				<f:render section="LeftBottom" arguments="{_all}" />
+			</f:case>
+			<f:case value="rightTop">
+				<f:render section="Default" arguments="{_all}" />
+			</f:case>
+			<f:case value="rightBottom">
+				<f:render section="Default" arguments="{_all}" />
+			</f:case>
+			<f:defaultCase>
+				<f:render section="Default" arguments="{_all}" />
+			</f:defaultCase>
+		</f:switch>
+	</div>
+</f:section>
+
+<f:section name="Default">
+	<aside class="col-{gridBreakpoint}-{colAside}{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
+		<f:render section="Aside" arguments="{_all}" />
+	</aside>
+	<main class="col-{gridBreakpoint}-{colMain} main-content{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
+		<f:render section="MainContent" arguments="{_all}" />
+	</main>
+</f:section>
+
+<f:section name="LeftBottom">
+	<main class="col-{gridBreakpoint}-{colMain} main-content order-{gridBreakpoint}-2{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.mainExtraClass, then: ' {settings.config.mainExtraClass}')}">
+		<f:render section="MainContent" arguments="{_all}" />
+	</main>
+	<aside class="col-{gridBreakpoint}-{colAside} order-{gridBreakpoint}-1{f:if(condition: settings.config.globalPaddingTop, then: ' {settings.config.globalPaddingTop}')}{f:if(condition: settings.config.asideExtraClass, then: ' {settings.config.asideExtraClass}')}">
+		<f:render section="Aside" arguments="{_all}" />
+	</aside>
+</f:section>
+
+<f:section name="MainContent">
+	<f:if condition="{data.content_from_pid}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.content_from_pid}', colPos: '0'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '0'}"/>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Aside">
+	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'above'">
+		<f:render partial="Page/{config.sidebar.left}" arguments="{_all}" />
+	</f:if>
+	<f:if condition="{settings.config.slideLeftAside}">
+		<f:then>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '1'}"/>
+		</f:then>
+		<f:else>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '1'}"/>
+		</f:else>
+	</f:if>
+	<f:if condition="{config.sidebar.left} && {settings.config.sidebarMenuPosition} == 'below'">
+		<f:render partial="Page/{config.sidebar.left}" arguments="{_all}" />
+	</f:if>
+</f:section>

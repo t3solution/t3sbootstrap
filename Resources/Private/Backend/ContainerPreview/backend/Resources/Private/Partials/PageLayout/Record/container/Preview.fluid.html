@@ -1,0 +1,53 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+   xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" 
+   data-namespace-typo3-fluid="true">
+
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
+
+	<div class="d-flex">
+		<div class="flex-grow-1 ms-0 flex-info-content">
+	
+			<f:if condition="{flexForm.flexContainer}">
+				<f:then>
+					<strong>Flex behaviors:</strong> '{flexForm.flexContainer}
+				
+					| <strong>Responsive variations:</strong> {f:if(condition: flexForm.responsiveVariations, then:'{flexForm.responsiveVariations}', else: 'none')}
+				
+					| <strong>Direction:</strong> {f:if(condition: flexForm.direction, then:'{flexForm.direction}', else: 'none')}
+				
+					| <strong>Justify:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
+				
+					| <strong>Align:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
+				
+					| <strong>Wrap:</strong> {f:if(condition: flexForm.wrap, then:'{flexForm.wrap}', else: 'none')}
+				</f:then>
+				<f:else>
+					<strong>Flex behaviors:</strong> none
+				</f:else>
+			</f:if>
+		
+		</div>
+	</div>
+
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />
+</html>

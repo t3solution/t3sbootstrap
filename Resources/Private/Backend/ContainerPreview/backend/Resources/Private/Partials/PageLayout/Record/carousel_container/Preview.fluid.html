@@ -1,0 +1,44 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+   xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" 
+   data-namespace-typo3-fluid="true">
+
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+	<f:if condition="{item.record.tx_t3sbootstrap_flexform.width} || {item.record.tx_t3sbootstrap_flexform.ratio} || {item.record.tx_t3sbootstrap_flexform.interval}">
+
+		<div class="d-flex">
+			<div class="flex-grow-1 ms-0 flex-info-content">
+		
+				<f:if condition="{item.record.tx_t3sbootstrap_flexform.width}">
+					<strong>Image width:</strong> {item.record.tx_t3sbootstrap_flexform.width}px
+				</f:if>
+				<f:if condition="{item.record.tx_t3sbootstrap_flexform.ratio}">
+				| <strong>Aspect ratio:</strong> {item.record.tx_t3sbootstrap_flexform.ratio}
+				</f:if>
+				<f:if condition="{item.record.tx_t3sbootstrap_flexform.interval}">
+				| <strong>Interval:</strong> {item.record.tx_t3sbootstrap_flexform.interval}
+				</f:if>
+			</div>
+		</div>
+
+	</f:if>
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />
+</html>

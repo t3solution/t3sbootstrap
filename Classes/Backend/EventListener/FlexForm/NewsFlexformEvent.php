@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Backend\EventListener\FlexForm;
@@ -7,25 +6,35 @@ namespace T3SBS\T3sbootstrap\Backend\EventListener\FlexForm;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 
-class NewsFlexformEvent
+#[AsEventListener(
+	identifier: 't3sbootstrap/newsFlexParsing',
+	method: 'modifyDataStructure',
+)]
+final readonly class NewsFlexformEvent
 {
-    public function __invoke(AfterFlexFormDataStructureParsedEvent $event): void
-    {
-        $dataStructure = $event->getDataStructure();
-        $identifier = $event->getIdentifier();
+	
+	public function modifyDataStructure(AfterFlexFormDataStructureParsedEvent $event): void
+	{
+		$dataStructure = $event->getDataStructure();
+		$identifier = $event->getIdentifier();
 
-        if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-         && ($identifier['dataStructureKey'] === '*,news_pi1' || $identifier['dataStructureKey'] === '*,news_newsliststicky' || $identifier['dataStructureKey'] === '*,news_newsdetail')) {
-            $file = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml');
-            $content = file_get_contents($file);
+		$validKeys = ['news_pi1', 'news_newsliststicky', 'news_newsdetail', 'news_newsselectedlist'];
+		if ($identifier['type'] === 'tca'
+			&& $identifier['tableName'] === 'tt_content'
+			&& in_array($identifier['dataStructureKey'], $validKeys, true)) {
+			if (!empty($dataStructure['sheets']['template'])) {
+				$file = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml');
+				if (file_exists($file)) {
+					$content = file_get_contents($file);
+					if ($content && !empty($dataStructure)) {
+						ArrayUtility::mergeRecursiveWithOverrule($dataStructure['sheets'], GeneralUtility::xml2array($content));
+					}
+				}
+			}
+		}
 
-            if ($content) {
-                $extraDataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
-                ArrayUtility::mergeRecursiveWithOverrule($dataStructure, $extraDataStructure);
-            }
-        }
-
-        $event->setDataStructure($dataStructure);
-    }
+		$event->setDataStructure($dataStructure);
+	}
 }

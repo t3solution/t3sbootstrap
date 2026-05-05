@@ -1,34 +1,32 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Wrapper;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class CardWrapper implements SingletonInterface
 {
+    
+    public function __construct(
+        private readonly ConnectionPool $connectionPool,
+    ) {}
+    
+    
     /**
      * Returns the $processedData
      */
     public function getProcessedData(array $processedData, array $flexconf): array
     {
         $processedData['gutter'] = !empty($flexconf['gutter']) ? (int)$flexconf['gutter'] : 0;
-
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
         $children = $queryBuilder
             ->select('*')
@@ -41,11 +39,18 @@ class CardWrapper implements SingletonInterface
             ->executeQuery()
             ->fetchAllAssociative();
 
-        $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+
+        $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
         $processedData['colclass'] = !empty($flexconf['colclass']) ? $flexconf['colclass'] : '';
         $processedData['cropMaxCharacters'] = $flexconf['cropMaxCharacters'];
 
-        if (count($children)) {
+        $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+        $processedData['contentBy'] = [];
+        if ($extconf['allowReferences']) {
+            $processedData = $this->getReferences($processedData, $flexconf);
+        }
+
+        if (count($children) || count($processedData['contentBy'])) {
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
             // Flipper defaults
@@ -88,7 +93,7 @@ class CardWrapper implements SingletonInterface
                 if (!empty($fileObjects)) {
                     if ($flexconf['card_wrapper'] === 'flipper') {
 
-						$children[$key]['hFa'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
+                        $children[$key]['hFa'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                         
                         $children[$key]['file'] = $fileObjects;
                         $children[$key]['backheader'] = $child['tx_t3sbootstrap_cardheader'];
@@ -105,15 +110,14 @@ class CardWrapper implements SingletonInterface
                 $children[$key]['header_position'] = $child['header_position'] ? ' text-'.$child['header_position'] : '';
                 $children[$key]['tx_t3sbootstrap_header_display'] = $child['tx_t3sbootstrap_header_display'];
                 $children[$key]['tx_t3sbootstrap_header_class'] = $child['tx_t3sbootstrap_header_class'];
-				$children[$key]['header_icon'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
+                $children[$key]['header_icon'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                 $children[$key]['celink'] = $child['tx_t3sbootstrap_header_celink'];
-                $children[$key]['settings'] = $flexFormService->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
+                $children[$key]['settings'] = $flexFormTools->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
             }
             $processedData['cards'] = $children;
 
             // swiperjs
-            if ($flexconf['card_wrapper'] === 'slider') {
-                $processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;
+            if ($flexconf['card_wrapper'] === 'slider' && !empty($processedData['visibleCards'])) {
                 $processedData['cols'] = floor(12 / $processedData['visibleCards']);
                 $processedData['width'] = !empty($flexconf['width']) ? $flexconf['width'] : '';
                 $processedData['ratio'] = !empty($flexconf['ratio']) ? $flexconf['ratio'] : '';
@@ -138,4 +142,43 @@ class CardWrapper implements SingletonInterface
 
         return $processedData;
     }
+    
+
+    private function getReferences(array $processedData, array $flexconf): array
+    {
+        if (!empty($flexconf['contentByUid'])) {
+            $uidContent = explode(',', $flexconf['contentByUid']);
+            foreach ($uidContent as $uid) {
+                $contentByUid[]['uid'] = (int) $uid;
+            }
+        }
+        if (!empty($flexconf['contentByPid'])) {
+            $contentByPidArr = explode(',', $flexconf['contentByPid']);
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
+            $contentByPid = $queryBuilder
+                ->select('uid')
+                ->from('tt_content')
+                ->where(
+                    $queryBuilder->expr()->in('tx_container_parent', $queryBuilder->createNamedParameter($contentByPidArr, Connection::PARAM_INT_ARRAY)),
+                    $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($processedData['data']['sys_language_uid'], Connection::PARAM_INT))
+                )
+                ->orderBy('sorting')
+                ->executeQuery()
+                ->fetchAllAssociative();
+        }
+
+        $contentBy = [];
+        if ( !empty($contentByUid) && !empty($contentByPid) ) {
+            $contentBy = array_merge($contentByUid, $contentByPid);
+        } elseif ( !empty($contentByUid) ) {
+            $contentBy = $contentByUid;
+        } elseif ( !empty($contentByPid) ) {
+            $contentBy = $contentByPid;
+        }
+        $processedData['contentBy'] = $contentBy;
+        
+        return $processedData;
+    }
+
 }

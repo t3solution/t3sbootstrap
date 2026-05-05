@@ -14,6 +14,7 @@ mod {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
 										colspan = 3
 										colPos = 3
+										identifier = Jumbotron
 									}
 								}
 							}
@@ -23,6 +24,7 @@ mod {
 										name = Expanded Content Top
 										colspan = 3
 										colPos = 20
+										identifier = ExpandedContentTop
 									}
 								}
 							}
@@ -32,16 +34,19 @@ mod {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar-left
 										colspan = 1
 										colPos = 1
+										identifier = Left
 									}
 									2 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
 										colspan = 1
 										colPos = 0
+										identifier = Main
 									}
 									3 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar-right
 										colspan = 1
 										colPos = 2
+										identifier = Right
 									}
 								}
 							}
@@ -51,6 +56,7 @@ mod {
 										name = Expanded Content Bottom
 										colspan = 3
 										colPos = 21
+										identifier = ExpandedContentBottom
 									}
 								}
 							}
@@ -60,6 +66,7 @@ mod {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
 										colspan = 3
 										colPos = 4
+										identifier = Footer
 									}
 								}
 							}

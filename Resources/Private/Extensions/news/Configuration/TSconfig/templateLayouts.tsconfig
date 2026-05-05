@@ -19,3 +19,7 @@ tx_news.templateLayouts {
 	95 = Custom Template1 (detail view)
 	96 = Custom Template2 (detail view)
 }
+
+
+TCAdefaults.sys_file_reference.showinpreview = 1
+

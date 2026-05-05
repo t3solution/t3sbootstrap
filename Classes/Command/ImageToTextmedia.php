@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Command;
@@ -7,34 +6,15 @@ namespace T3SBS\T3sbootstrap\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
+#[AsCommand('t3sbootstrap:imageToTextmedia', 'Migrate CType image to textmedia')]
 class ImageToTextmedia extends CommandBase
 {
-    /**
-     * Defines the allowed options for this command
-     *
-     * @inheritdoc
-     */
-    protected function configure()
-    {
-        $this->setDescription('Migrate CType image to textmedia');
-    }
 
-
-    /**
-     * Update all records
-     *
-     * @inheritdoc
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);

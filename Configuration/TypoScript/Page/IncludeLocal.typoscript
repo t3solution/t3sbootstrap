@@ -1,0 +1,8 @@
+
+
+page {
+	includeCSSLibs {
+		bootstrapCSS = EXT:t3sb_package/Resources/Public/T3SB-CSS/bootstrap.min.css	
+	}
+}
+

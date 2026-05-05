@@ -1,0 +1,81 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+   xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers/" 
+   data-namespace-typo3-fluid="true">
+
+<f:if condition="{item.editable} && {allowEditContent}">
+	<div class="element-preview-header">
+		<f:if condition="{item.record.header}">
+			<div class="element-preview-header-header">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.header}
+		        </a>
+			</div>
+		</f:if>
+		<f:if condition="{item.record.subheader}">
+			<div class="element-preview-header-subheader">
+		        <a class="element-preview-header-header" href="{item.editUrl}" 
+			        title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:edit')}">
+		            {item.record.subheader}
+		        </a>
+			</div>
+		</f:if>
+	</div>
+
+	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
+
+	<f:switch expression="{flexForm.bgimagePosition}">
+		<f:case value="1"><f:variable name="position" value="left" /></f:case>
+		<f:case value="2"><f:variable name="position" value="right" /></f:case>
+		<f:case value="3"><f:variable name="position" value="both" /></f:case>
+		<f:defaultCase><f:variable name="position" value="left" /></f:defaultCase>
+	</f:switch>
+
+	<f:variable name="imgObjects" value="" />
+	<f:variable name="margin" value="0" />
+	<f:if condition="{flexForm.bgimages}">
+		<f:variable name="imgObjects" value="<t3sb:backend.infoImage uid='{item.record.uid}' />" />
+		<f:variable name="margin" value="2" />
+	</f:if>
+
+	<div class="d-flex">
+		<f:if condition="{flexForm.bgimages}">
+			<f:for each="{imgObjects}" as="image">
+				<be:thumbnail image="{image}" width="64" height="45" class="img-thumbnail mb-1 me-1" style="min-width: 64px; max-height: 45px;" />
+			</f:for>
+		</f:if>
+		<div class="flex-grow-1 ms-{margin} flex-info-content">
+
+			<strong>Gutters:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
+			| <strong>Equal height:</strong> {f:if(condition: '{flexForm.equalHeight}', then: 'true', else: 'false')}
+					<f:if condition="{flexForm.equalWidth}">
+			| <strong>Equal width:</strong> true
+					</f:if>
+			
+					<f:if condition="{flexForm.bgimages}">
+			| <strong>Background Image:</strong> {position}
+			
+						<f:if condition="{flexForm.colHeight}">
+			| <strong>Min.-Height:</strong> {flexForm.colHeight}
+						</f:if>
+						<f:if condition="{flexForm.verticalAlign}">
+			| <strong>Vertical Alignment:</strong> {flexForm.verticalAlign}
+						</f:if>
+					</f:if>
+					<f:if condition="{flexForm.extraClass_one} || {flexForm.extraClass_two}">
+			<br>
+					</f:if>
+					<f:if condition="{flexForm.extraClass_one}">
+					<strong>Extra Class Column 1:</strong> {flexForm.extraClass_one}
+					</f:if>
+					<f:if condition="{flexForm.extraClass_two}">
+			{f:if(condition: '{flexForm.extraClass_one}', then: '| ', else: '')}<strong>Extra Class Column 2:</strong> {flexForm.extraClass_two}
+					</f:if>
+
+		</div>
+	</div>
+
+</f:if>
+<f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />
+
+</html>

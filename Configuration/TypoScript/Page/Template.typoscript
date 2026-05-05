@@ -3,14 +3,14 @@ page {
 	# Page template
 	10 = FLUIDTEMPLATE
 	10 {
-		file = EXT:t3sbootstrap/Resources/Private/Templates/Main.html
+		file = EXT:t3sbootstrap/Resources/Private/Templates/Main.fluid.html
 		partialRootPaths >
 		partialRootPaths {
 			0 = EXT:fluid_styled_content/Resources/Private/Partials/
 			1 = EXT:t3sbootstrap/Resources/Private/Partials/
 			2 = EXT:t3sbootstrap/Resources/Private/Partials/Content/
-			3 = {$plugin.tx_t3sbootstrap.view.partialRootPath}
-			4 = {$plugin.tx_t3sbootstrap.view.partialRootPath}Content/
+			3 = {$bootstrap.view.partialRootPath}
+			4 = {$bootstrap.view.partialRootPath}Content/
 			10 = {$styles.templates.partialRootPath}
 		}
 		layoutRootPaths >
@@ -18,8 +18,8 @@ page {
 			0 = EXT:fluid_styled_content/Resources/Private/Layouts/
 			1 = EXT:t3sbootstrap/Resources/Private/Layouts/
 			2 = EXT:t3sbootstrap/Resources/Private/Layouts/Content/
-			3 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}
-			4 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}Content/
+			3 = {$bootstrap.view.layoutRootPath}
+			4 = {$bootstrap.view.layoutRootPath}Content/
 			10 = {$styles.templates.layoutRootPath}
 		}
 		variables {
@@ -27,7 +27,6 @@ page {
 			be_layout.value < temp.pagelayout
 		}
 		settings {
-			module.cdn < module.tx_t3sbootstrap.settings.cdn
 			fontawesome.pagetitle = {$bootstrap.extconf.fontawesomepagetitle}
 			skiplinks = {$bootstrap.skiplinks}
 			lazyLoad = {$bootstrap.extconf.lazyLoad}
@@ -35,9 +34,8 @@ page {
 			iconpack.loaded = {$bootstrap.ext.iconpack}
 			indexedsearch.loaded = {$bootstrap.ext.indexedsearch}
 			kesearch.loaded = {$bootstrap.ext.kesearch}
-			cdn = {$bootstrap.cdn.enable}
+			customScss = {$bootstrap.cdn.customScss}
 			googlefonts = {$bootstrap.cdn.googlefonts}
-			t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 			pagebrowser.enable = {$bootstrap.pagebrowser.enable}
 			backToTopTitle = {$bootstrap.backToTopTitle}
 			backToTopClass = {$bootstrap.backToTopClass}
@@ -47,7 +45,6 @@ page {
 			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 			submenu.styleOne = {$bootstrap.submenu.styleOne}
 			viewportWidthCookie = {$bootstrap.image.viewportWidthCookie}
-			sitepackage = {$bootstrap.extconf.sitepackage}
 			navbar {
 				navbarmodal = {$bootstrap.extconf.navbarmodal}
 				noLinkTitle = {$bootstrap.navbar.noLinkTitle}
@@ -92,8 +89,6 @@ page {
 			fullHeightSection {
 				icon =
 			}
-
-
 		}
 		dataProcessing {
 
@@ -116,7 +111,7 @@ page {
 				references.table = pages
 				as = rootFiles
 			}
-			
+
 			#
 			# NavBar / Main Navigation
 			#
@@ -169,6 +164,8 @@ page {
 				as = browseNext
 			}
 			12.if.isTrue = {$bootstrap.pagebrowser.enable}
+			#12.if.isTrue.data = siteSettings:bootstrap.pagebrowser.enable
+
 
 			13 = menu
 			13 {
@@ -179,6 +176,7 @@ page {
 				as = browsePrev
 			}
 			13.if.isTrue = {$bootstrap.pagebrowser.enable}
+			#13.if.isTrue.data = siteSettings:bootstrap.pagebrowser.enable
 
 			#
 			# Sub Navigation in Sidebar
@@ -348,17 +346,13 @@ page {
 			# Main Config
 			#
 			90 = T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor
-
-			#
-			# Site Config
-			#
-			#91 = site
+			90 {
+				configuid = {$bootstrap.config.uid}
+			}
 		}
 	}
 }
 
-# prevent error: Undefined array key "breadcrumb."
-config.pageTitleProviders.breadcrumb.provider =
 
 # Language in Toast
 lib.t3sbs.close = TEXT
@@ -369,7 +363,7 @@ lib.t3sbs.dispose.value = Nicht mehr anzeigen
 
 [loaded('indexed_search')]
 page.10.settings.indexedsearch.targetPid = {$indexedsearch.targetPid}
-[global]
+[END]
 
 plugin.tx_felogin_login {
 	view {
@@ -378,6 +372,3 @@ plugin.tx_felogin_login {
 		}
 	}
 }
-
-
-

@@ -114,7 +114,7 @@ class Debug extends Formatter
     protected function block(OutputBlock $block)
     {
         $indent = $this->indentStr();
-
+        // @extensionScannerIgnoreLine
         $this->write("{$indent}block->type: {$block->type}\n" .
              "{$indent}block->depth: {$block->depth}\n");
 

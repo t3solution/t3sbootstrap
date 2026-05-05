@@ -162,45 +162,45 @@
 							<valuePicker type="array">
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">fadeIn</numIndex>
-										<numIndex index="1">fadeIn</numIndex>
+										<label>fadeIn</label>
+										<value>fadeIn</value>
 									</numIndex>
 									<numIndex index="1" type="array">
-										<numIndex index="0">fadeInUpBig</numIndex>
-										<numIndex index="1">fadeInUpBig</numIndex>
+										<label>fadeInUpBig</label>
+										<value>fadeInUpBig</value>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">fadeInDownBig</numIndex>
-										<numIndex index="1">fadeInDownBig</numIndex>
+										<label>fadeInDownBig</label>
+										<value>fadeInDownBig</value>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">rotateIn</numIndex>
-										<numIndex index="1">rotateIn</numIndex>
+										<label>rotateIn</label>
+										<value>rotateIn</value>
 									</numIndex>
 									<numIndex index="4" type="array">
-										<numIndex index="0">slideInUp</numIndex>
-										<numIndex index="1">slideInUp</numIndex>
+										<label>slideInUp</label>
+										<value>slideInUp</value>
 									</numIndex>
 									<numIndex index="5" type="array">
-										<numIndex index="0">zoomIn</numIndex>
-										<numIndex index="1">zoomIn</numIndex>
+										<label>zoomIn</label>
+										<value>zoomIn</value>
 									</numIndex>
 									<numIndex index="6" type="array">
-										<numIndex index="0">zoomInUp</numIndex>
-										<numIndex index="1">zoomInUp</numIndex>
+										<label>zoomInUp</label>
+										<value>zoomInUp</value>
 									</numIndex>
 									<numIndex index="7" type="array">
-										<numIndex index="0">zoomInDown</numIndex>
-										<numIndex index="1">zoomInDown</numIndex>
+										<label>zoomInDown</label>
+										<value>zoomInDown</value>
 									</numIndex>
-
+									
 									<numIndex index="8" type="array">
-										<numIndex index="0">rubberBand</numIndex>
-										<numIndex index="1">rubberBand</numIndex>
+										<label>rubberBand</label>
+										<value>rubberBand</value>
 									</numIndex>
 									<numIndex index="9" type="array">
-										<numIndex index="0">rollIn</numIndex>
-										<numIndex index="1">rollIn</numIndex>
+										<label>rollIn</label>
+										<value>rollIn</value>
 									</numIndex>
 								</items>
 							</valuePicker>
@@ -219,6 +219,7 @@
 							<type>check</type>
 						</config>
 					</mobileIndicators>
+					
 				</el>
 			</ROOT>
 		</general>

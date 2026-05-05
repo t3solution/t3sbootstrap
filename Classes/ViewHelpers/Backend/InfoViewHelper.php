@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ViewHelpers\Backend;
@@ -8,13 +7,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-/**
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- */
 class InfoViewHelper extends AbstractViewHelper
 {
 	protected $escapeOutput = false;
@@ -23,19 +17,20 @@ class InfoViewHelper extends AbstractViewHelper
 	{
 		$this->registerArgument('pageContainer', 'string', 'page Container', true);
 		$this->registerArgument('backendLayout', 'string', 'backend Layout', true);
-		$this->registerArgument('record', 'array', 'record', true);
+		$this->registerArgument('recordUid', 'int', 'recordUid', true);
 	}
 
 	public function render(): string
 	{
 		$info = '';
-		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);	
+		$configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
 		$ts = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		if (!empty($ts['page.']['10.']['settings.']['config.'])) {
 			$config = $ts['page.']['10.']['settings.']['config.'];
 			$backendLayout = !empty($this->arguments['backendLayout']) ? $this->arguments['backendLayout'] : '';
-			$record	  = !empty($this->arguments['record']) ? $this->arguments['record'] : '';
-	
+			$recordUid	  = !empty($this->arguments['recordUid']) ? $this->arguments['recordUid'] : '';
+			$record = BackendUtility::getRecord('tt_content', $recordUid, '*');
+
 			if ( $record['hidden'] === 0 ) {
 		
 				$pageContainer 					= !empty($this->arguments['pageContainer']) ? $this->arguments['pageContainer'] : '';
@@ -46,14 +41,25 @@ class InfoViewHelper extends AbstractViewHelper
 				$expandedContentBottomContainer	= !empty($config['expandedcontentContainerbottom']) ? $config['expandedcontentContainerbottom'] : '';
 		
 				$extraClass 	= $record['tx_t3sbootstrap_extra_class'];
+				$headerExtraClass 	= $record['tx_t3sbootstrap_header_class'];
 				$frame 			= $record['frame_class'] === 'default' ? '': $record['frame_class'];
 				$layout 		= $record['layout'] === 0 ? '' : $record['layout'];
 				$colPos 		= $record['colPos'];
 				$oneColLayout 	= $backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra' ? TRUE : FALSE;
 		
 				if (!empty($container)) {
-	
-					if ($record['CType'] === 'background_wrapper') {
+
+					$pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'];
+					
+					if (!empty($pOverride)) {
+						if ($pageContainer === 'none') {
+							$pageContainer = 0;
+						} else {
+							$pageContainer = $pOverride;
+						}
+					}
+
+					if ($record['CType'] === 'background_wrapper' || $record['CType'] === 'parallax_wrapper') {
 						$info .= '<strong>Container (inside):</strong> '.$container.' ';
 					} else {
 							
@@ -96,6 +102,11 @@ class InfoViewHelper extends AbstractViewHelper
 					if (!empty($info)) {$info .= ' | ';}
 					$info .= '<strong>Extra Class:</strong> '.$extraClass.' ';
 				}
+				if (!empty($headerExtraClass)) {
+					if (!empty($info)) {$info .= ' | ';}
+					$info .= '<strong>Header Extra Class:</strong> '.$headerExtraClass.' ';
+				}
+
 				if (!empty($layout)) {
 					if (!empty($info)) {$info .= ' | ';}
 					$info .= '<strong>Layout:</strong> '.$layout.' ';
@@ -133,4 +144,5 @@ class InfoViewHelper extends AbstractViewHelper
 
 		return $info;
 	}
+
 }

@@ -45,7 +45,7 @@ tt_content {
 				minimumWidth = {$bootstrap.image.minimumWidth}
 				ratioWithHeight = {$bootstrap.image.ratioWithHeight}
 				maxWidthMediaObject = {$bootstrap.image.maxWidthMediaObject}
-				maxWidthToast =	 {$bootstrap.image.maxWidthToast}
+maxWidthToast =	 {$bootstrap.image.maxWidthToast}
 				overrideSmallColumns = {$bootstrap.pages.override.smallColumns}
 				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
@@ -61,12 +61,6 @@ tt_content {
 	t3sbs_carousel {
 		templateName = Carousel
 		settings.defaultHeaderType = 3
-		dataProcessing {
-			10 = files
-			10 {
-				references.fieldName = assets
-			}
-		}
 	}
 	t3sbs_carousel.stdWrap.editIcons = tt_content
 
@@ -154,7 +148,6 @@ tt_content {
 				overrideContainer = {$bootstrap.pages.override.container}
 				configuid = {$bootstrap.config.uid}
 			}
-
 		}
 	}
 	t3sbs_toast.stdWrap.editIcons = tt_content

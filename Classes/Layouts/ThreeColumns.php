@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Layouts;
@@ -7,12 +6,6 @@ namespace T3SBS\T3sbootstrap\Layouts;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class ThreeColumns implements SingletonInterface
 {
 
@@ -28,5 +21,4 @@ class ThreeColumns implements SingletonInterface
 
 		return $processedData;
 	}
-
 }

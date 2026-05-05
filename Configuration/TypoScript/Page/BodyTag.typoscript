@@ -47,10 +47,6 @@ page {
 			10.value = {$bootstrap.config.navbarHeight}
 			10.wrap = padding-top:|px;
 			if.isTrue = {$bootstrap.config.navbarHeight}
-
-#			20 = TEXT
-#			20.value = position:relative;
-#			20.if.isTrue = {$bootstrap.config.navbarSectionmenu}
 		}
 		40 = TEXT
 		40.value = {$bootstrap.config.navbarBreakpoint}

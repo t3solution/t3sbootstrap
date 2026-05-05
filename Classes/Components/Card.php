@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Components;
@@ -10,23 +9,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Context\Context;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class Card implements SingletonInterface
 {
-    /**
-     * Returns the $processedData
-     */
+
     public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, bool $minimumWidth): array
     {
 
         $cardData = $flexconf;
         // crop max characters
-        $cardData['cropMaxCharacters'] = !empty($parentflexconf['cropMaxCharacters']) ? $parentflexconf['cropMaxCharacters'] : '';
+        $cardData['cropMaxCharacters'] = $parentflexconf['cropMaxCharacters'] ?? '';
         // image position
         if ((int)$processedData['data']['imageorient'] === 8) {
             $processedData['data']['imageorient'] = 'bottom';
@@ -65,16 +56,18 @@ class Card implements SingletonInterface
         // image
         if (!empty($cardData['image']['overlay'])) {
             $cardClass .= ' overflow-hidden';
-            $cardData['image']['class'] = 'img-fluid';
+            $cardData['image']['class'] = 'img-fluid card-img';
             $cardData['image']['overlay'] = 'card-img-overlay d-flex';
             $cardData['mobile']['overlay'] = false;
         } else {
             if (!empty($cardData['mobile']['overlay'])) {
-                # card-img-overlay for mobile < 576 by JS and class overlay
+                // card-img-overlay for mobile < 576 by JS and class overlay
                 $cardData['mobile']['overlay'] = 'img-overlay';
             }
             if ($processedData['data']['imageorient'] === 'top') {
                 if (!empty($cardData['title']['onTop']) || !empty($processedData['data']['tx_t3sbootstrap_cardheader'])) {
+                    $cardData['image']['class'] = 'img-fluid';
+                } elseif (!empty($flexconf['horizontal'])) {
                     $cardData['image']['class'] = 'img-fluid';
                 } else {
                     $cardData['image']['class'] = 'card-img-top img-fluid';
@@ -82,18 +75,19 @@ class Card implements SingletonInterface
             } else {
                 if ($processedData['data']['tx_t3sbootstrap_cardfooter']) {
                     $cardData['image']['class'] = 'img-fluid';
+                } elseif (!empty($flexconf['horizontal'])) {
+                    $cardData['image']['class'] = 'img-fluid';
                 } else {
                     $cardData['image']['class'] = 'card-img-bottom img-fluid';
                 }
             }
         }
         // block
-        if (empty($processedData['data']['bodytext']) && empty($processedData['data']['tx_t3sbootstrap_bodytext'])
-             && empty($processedData['data']['header']) && empty($processedData['data']['subheader'])) {
-            $cardData['block']['enable'] = false;
-        } else {
-            $cardData['block']['enable'] = true;
-        }
+        $cardData['block']['enable'] = !empty($processedData['data']['bodytext'])
+        || !empty($processedData['data']['tx_t3sbootstrap_bodytext'])
+        || !empty($processedData['data']['header'])
+        || !empty($processedData['data']['subheader']);
+        
         // flip card
         if (!empty($flexconf['flipcard'])) {
             $backstyle = '';
@@ -147,10 +141,9 @@ class Card implements SingletonInterface
             $cardData['multiImage']['percent'] = '0.'.$flexconf['multiImage']['percent'];
             $cardData['multiImage']['style'] = 'top: -' . $flexconf['multiImage']['percent']/2 .'px';
             $borderColor = $flexconf['multiImage']['borderColor'] ? ' border-'.$flexconf['multiImage']['borderColor'] : '';
-            $shadow = $flexconf['multiImage']['shadow'] ? ' circularshadow' : '';
-            $cardData['multiImage']['shadow'] = $flexconf['multiImage']['shadow'] ? true : false;
+            $shadow = !empty($flexconf['multiImage']['shadow']) ? ' circularshadow' : '';
+            $cardData['multiImage']['shadow'] = !empty($flexconf['multiImage']['shadow']);
             $cardData['multiImage']['border'] = $flexconf['multiImage']['borderWidth'].$borderColor.$shadow;
-            $cardData['multiImage']['slope'] =	$flexconf['multiImage']['diagonal'] ? $flexconf['multiImage']['slope'] : 0;
             $cardData['multiImage']['socialmedia']['enable'] = $flexconf['multiImage']['socialmedia']['enable'];
             $cardData['multiImage']['socialmedia']['footer'] = !empty($flexconf['multiImage']['socialmedia']['footer']) ? $flexconf['multiImage']['socialmedia']['footer'] : '';
             if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
@@ -165,12 +158,11 @@ class Card implements SingletonInterface
         // header position
         if ($processedData['data']['header_position']) {
             $headerPosition = $processedData['data']['header_position'];
-            if ($headerPosition === 'left') {
-                $headerPosition = 'start';
-            }
-            if ($headerPosition === 'right') {
-                $headerPosition = 'end';
-            }
+            $headerPosition = match($headerPosition) {
+                'left'  => 'start',
+                'right' => 'end',
+                default => $headerPosition,
+            };
             $cardClass .= ' text-'.$headerPosition;
         }
         // effect

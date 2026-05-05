@@ -111,7 +111,7 @@ tt_content {
 			file.stdWrap.cObject.field = subheader
 			file.stdWrap.cObject.ifEmpty {
 				cObject = TEXT
-				cObject.value = EXT:t3sbootstrap/Resources/Private/Templates/Content/FluidTemplate.html
+				cObject.value = EXT:t3sbootstrap/Resources/Private/Templates/Content/FluidTemplate.fluid.html
 			}
 			variables < page.10.variables
 			settings < page.10.settings

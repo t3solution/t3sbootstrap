@@ -13,6 +13,7 @@ mod {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
 										colPos = 3
+										identifier = Jumbotron
 									}
 								}
 							}
@@ -21,6 +22,7 @@ mod {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
 										colPos = 0
+										identifier = Main
 									}
 								}
 							}
@@ -29,6 +31,7 @@ mod {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
 										colPos = 4
+										identifier = Footer
 									}
 								}
 							}

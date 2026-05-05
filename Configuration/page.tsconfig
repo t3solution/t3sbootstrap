@@ -3,18 +3,17 @@
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/Content.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/CKEditor.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/SysFileReference.tsconfig'
+@import 'EXT:t3sbootstrap/Configuration/TSConfig/DefaultValues.tsconfig'
 @import 'EXT:t3sbootstrap/Configuration/TSConfig/BackendLayouts/Default/_main.tsconfig'
+
+
 
 # T3SB BE templates
 templates.t3sbs/t3sbootstrap.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Backend
 
-[typo3.branch == "12.4"]
-@import 'EXT:t3sbootstrap/Configuration/TSConfig/NewContentElements.tsconfig'
-[END]
 
 [t3sbootstrap('extNews') === '1']
 @import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig'
-@import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/presets.tsconfig'
 [END]
 
 [loaded('ke_search')]
@@ -24,21 +23,23 @@ templates.t3sbs/t3sbootstrap.1739329199 = t3sbs/t3sbootstrap:Resources/Private/B
 # Custom BE container preview
 [t3sbootstrap('preview') === '1']
 templates.typo3/cms-backend.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Backend/ContainerPreview/backend/Resources/Private
+# Previews for custom content types
+mod.web_layout {
+	tt_content {
+		preview {
+			t3sbs_card = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Card.fluid.html
+			t3sbs_assets = EXT:t3sbootstrap/Resources/Private/Templates/Preview/AssetsInline.fluid.html
+			t3sbs_button = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Button.fluid.html
+			t3sbs_carousel = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Carousel.fluid.html
+#			t3sbs_gallery = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Gallery.fluid.html
+			t3sbs_mediaobject = EXT:t3sbootstrap/Resources/Private/Templates/Preview/MediaObject.fluid.html
+			t3sbs_toast = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Toast.fluid.html
+		}
+	}
+}
 [END]
 
 # Footer label info: container (oneCol), layout and frame_class & more info (custom css or js) for BE-User-Group: T3SAdmin
 [t3sbootstrap('footerInfo') === '1']
 templates.typo3/cms-backend.partialsRootPaths = t3sbs/t3sbootstrap:Resources/Private/Backend/TemplateOverrides/typo3/cms-backend
 [END]
-
-# Previews for custom content types
-mod.web_layout {
-	tt_content {
-		preview {
-			t3sbs_card = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Card.html
-			t3sbs_assets = EXT:t3sbootstrap/Resources/Private/Templates/Preview/AssetsInline.html
-			t3sbs_button = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Button.html
-			t3sbs_carousel = EXT:t3sbootstrap/Resources/Private/Templates/Preview/Carousel.html
-		}
-	}
-}

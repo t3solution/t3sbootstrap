@@ -81,7 +81,6 @@
 									<label>Bottom right</label>
 									<value>bottom-0 end-0</value>
 								</numIndex>
-
 							</items>
 							<default>top-0 start-50 translate-middle-x</default>
 						</config>

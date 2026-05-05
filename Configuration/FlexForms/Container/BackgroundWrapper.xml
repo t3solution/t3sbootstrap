@@ -327,28 +327,28 @@
 							<valuePicker type="array">
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">53by9</numIndex>
-										<numIndex index="1">9/53</numIndex>
+										<label>53by9</label>
+										<value>9/53</value>
 									</numIndex>
 									<numIndex index="1" type="array">
-										<numIndex index="0">48by9</numIndex>
-										<numIndex index="1">9/48</numIndex>
+										<label>48by9</label>
+										<value>9/48</value>
 									</numIndex>
 									<numIndex index="2" type="array">
-										<numIndex index="0">42by9</numIndex>
-										<numIndex index="1">9/42</numIndex>
+										<label>42by9</label>
+										<value>9/42</value>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">37by9</numIndex>
-										<numIndex index="1">9/37</numIndex>
+										<label>37by9</label>
+										<value>9/37</value>
 									</numIndex>
 									<numIndex index="4" type="array">
-										<numIndex index="0">21by9</numIndex>
-										<numIndex index="1">9/21</numIndex>
+										<label>21by9</label>
+										<value>9/21</value>
 									</numIndex>
 									<numIndex index="5" type="array">
-										<numIndex index="0">16by9</numIndex>
-										<numIndex index="1">9/16</numIndex>
+										<label>16by9</label>
+										<value>9/16</value>
 									</numIndex>
 								</items>
 							</valuePicker>
@@ -398,8 +398,8 @@
 							<size>5</size>
 							<default>0</default>
 							<range>
-								<lower>-100</lower>
-								<upper>100</upper>
+								<lower>-200</lower>
+								<upper>200</upper>
 							</range>
 							<slider>
 								<type>slider</type>

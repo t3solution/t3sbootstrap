@@ -568,7 +568,7 @@ class Number extends Node implements \ArrayAccess
      *
      * @return string
      */
-    public function output(Compiler $compiler = null)
+    public function output(?Compiler $compiler = null)
     {
         $dimension = round($this->dimension, self::PRECISION);
 

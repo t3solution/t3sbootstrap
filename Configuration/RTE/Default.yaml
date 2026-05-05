@@ -11,13 +11,13 @@ editor:
  config:
 
    importModules:
-     - { 'module': '@ckeditor/ckeditor5-font', 'exports': [ 'Font' ] }
+#     - { 'module': '@ckeditor/ckeditor5-font', 'exports': [ 'Font' ] }
      - { 'module': '@ckeditor/ckeditor5-indent', 'exports': [ 'IndentBlock' ] }
      - { 'module': '@ckeditor/ckeditor5-show-blocks', 'exports': ['ShowBlocks'] }
      - { 'module': '@ckeditor/ckeditor5-word-count', 'exports': ['WordCount'] }
 
    extraPlugins:
-     - Font
+#     - Font
      - Indent
      - IndentBlock
 
@@ -52,13 +52,14 @@ editor:
        - '|'
        - heading
        - '|'
-       - { label: 'Font', icon: false, items: [ 'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor' ] }
-       - '|'
+#       - { label: 'Font', icon: false, items: [ 'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor' ] }
+#       - '|'
        - alignment
        - insertTable
        - findAndReplace
        - specialCharacters
        - '|'
+       - code
        - outdent
        - indent
 
@@ -67,7 +68,7 @@ editor:
        - 'custom-block-indent-a'
        - 'custom-block-indent-b'
        - 'custom-block-indent-c'
-
+      
    fontColor:
      colors:
        - { label: 'Primary', color: 'var(--bs-primary)' }
@@ -115,9 +116,6 @@ editor:
        - { name: 'Uppercase', element: 'p', 'classes': ['text-uppercase'], isBlock: 'true' }
        - { name: 'Capitalize', element: 'p', 'classes': ['text-capitalize'], isBlock: 'true' }
        - { name: 'Indent', element: 'p', 'classes': ['text-indent'], isBlock: 'true' }
-       - { name: 'h2 block-class', element: 'p', classes: ['h2'], isBlock: 'true' }
-       - { name: 'h3 block-class', element: 'p', classes: ['h3'], isBlock: 'true' }
-       - { name: 'h4 block-class', element: 'p', classes: ['h4'], isBlock: 'true' }
 
        # Textstile
        - { name: 'Mark', element: 'span', classes: ['mark'] }
@@ -136,9 +134,6 @@ editor:
        - { name: 'Uppercase ', element: 'span', 'classes': ['text-uppercase'] }
        - { name: 'Capitalize ', element: 'span', 'classes': ['text-capitalize'] }
        - { name: 'Indent ', element: 'span', 'classes': ['text-indent'] }
-       - { name: 'h2 class', element: 'span', classes: ['h2'] }
-       - { name: 'h3 class', element: 'span', classes: ['h3'] }
-       - { name: 'h4 class', element: 'span', classes: ['h4'] }
 
        # Textstile - Buttons
        - { name: 'Button Primary', element: 'a', 'classes': ['btn btn-primary'] }
@@ -197,7 +192,6 @@ editor:
    htmlSupport:
        allowEmpty:
          - 'div'
-
        allow:
          - name: 'div'
            attributes: true

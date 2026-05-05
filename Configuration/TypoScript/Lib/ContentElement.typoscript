@@ -7,8 +7,8 @@ lib.contentElement {
 		0 = EXT:fluid_styled_content/Resources/Private/Templates/
 		1 = EXT:t3sbootstrap/Resources/Private/Templates/
 		2 = EXT:t3sbootstrap/Resources/Private/Templates/Content/
-		3 = {$plugin.tx_t3sbootstrap.view.templateRootPath}
-		4 = {$plugin.tx_t3sbootstrap.view.templateRootPath}Content/
+		3 = {$bootstrap.view.templateRootPath}
+		4 = {$bootstrap.view.templateRootPath}Content/
 		10 = {$styles.templates.templateRootPath}
 	}
 	partialRootPaths >
@@ -16,8 +16,8 @@ lib.contentElement {
 		0 = EXT:fluid_styled_content/Resources/Private/Partials/
 		1 = EXT:t3sbootstrap/Resources/Private/Partials/
 		2 = EXT:t3sbootstrap/Resources/Private/Partials/Content/
-		3 = {$plugin.tx_t3sbootstrap.view.partialRootPath}
-		4 = {$plugin.tx_t3sbootstrap.view.partialRootPath}Content/
+		3 = {$bootstrap.view.partialRootPath}
+		4 = {$bootstrap.view.partialRootPath}Content/
 		10 = {$styles.templates.partialRootPath}
 	}
 	layoutRootPaths >
@@ -25,8 +25,8 @@ lib.contentElement {
 		0 = EXT:fluid_styled_content/Resources/Private/Layouts/
 		1 = EXT:t3sbootstrap/Resources/Private/Layouts/
 		2 = EXT:t3sbootstrap/Resources/Private/Layouts/Content/
-		3 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}
-		4 = {$plugin.tx_t3sbootstrap.view.layoutRootPath}Content/
+		3 = {$bootstrap.view.layoutRootPath}
+		4 = {$bootstrap.view.layoutRootPath}Content/
 		10 = {$styles.templates.layoutRootPath}
 	}
 	settings {
@@ -55,6 +55,8 @@ lib.contentElement {
 				}
 			}
 		}
+
+		supraheader = {$bootstrap.extconf.supraheader}
 		linkHoverEffect = {$bootstrap.extconf.linkHoverEffect}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		imgCopyright = {$bootstrap.extconf.imgCopyright}
@@ -78,8 +80,6 @@ lib.contentElement {
 		bgMediaQueries = {$bootstrap.image.bgMediaQueries}
 		lazyLoadBgWrapperImage = {$bootstrap.image.lazyLoadBgWrapperImage}
 		lazyLoadThreshold = {$bootstrap.image.lazyLoadThreshold}
-#		cdnEnable = {$bootstrap.cdn.enable}
-		containerError = {$bootstrap.config.containerError}
 		sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
 		sectionmenuScrollspy = {$bootstrap.config.sectionmenuScrollspy}
 		sidebarSectionMobile = {$bootstrap.config.sidebarSectionMobile}
@@ -89,9 +89,7 @@ lib.contentElement {
 		sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 		disableAccordionScrollToTop = {$bootstrap.disable.accordion.scrollToTop}
 		btnSlideOutCorrection = 0
-		t3sbconcatenate = {$bootstrap.extconf.t3sbconcatenate}
 		sectionMenuClass = {$bootstrap.config.sectionMenuClass}
-		sitepackage = {$bootstrap.extconf.sitepackage}
 		shortcutsremove = {$bootstrap.shortcutsremove}
 		config {
 			sectionmenuAnchorOffset = {$bootstrap.config.sectionmenuAnchorOffset}
@@ -119,11 +117,11 @@ lib.contentElement {
 		4 = flex-form
 		4.fieldName = pi_flexform
 		4.as = piFlexform
-		
+
 		5 = flex-form
 		5.fieldName = tx_t3sbootstrap_flexform
 		5.as = t3sbFlexform
-		
+
 		6 = site
 		6 {
 			as = siteSettings
@@ -135,7 +133,7 @@ lib.contentElement {
 
 		71 = T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor
 		71.recentlyUpdatedContentElements = {$bootstrap.config.recentlyUpdatedContentElements}
-		71.setMaxResults = 10
+		71.setMaxResults = 20
 		71.if.isTrue = {$bootstrap.config.recentlyUpdatedContentElements}
 
 		224 = T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor
@@ -166,7 +164,6 @@ lib.contentElement {
 [traverse(site("configuration"), "settings/bootstrap/image/minimumWidth") == true]
 lib.contentElement.settings.srcsetMobile = 575
 [END]
-
 
 # 2 == halkabox - https://github.com/ahmednooor/halkaBox.js
 [{$bootstrap.config.lightboxSelection} == 2]

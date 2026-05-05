@@ -1,0 +1,64 @@
+mod {
+	web_layout {
+		BackendLayouts {
+			TwoCol_3-9 {
+				title = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.twoCol_3-9
+				config {
+					backend_layout {
+						colCount = 2
+						rowCount = 4
+						rows {
+							1 {
+								columns {
+									1 {
+										name = Expanded Content Top
+										colspan = 3
+										colPos = 20
+										identifier = ExpandedContentTop
+									}
+								}
+							}
+							2 {
+								columns {
+									1 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
+										colspan = 3
+										colPos = 3
+										identifier = Jumbotron
+									}
+								}
+							}
+							3 {
+								columns {
+									1 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar
+										colspan = 1
+										colPos = 1
+										identifier = Left
+									}
+									2 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
+										colspan = 2
+										colPos = 0
+										identifier = Main
+									}
+								}
+							}
+							4 {
+								columns {
+									1 {
+										name = Expanded Content Top
+										colspan = 3
+										colPos = 20
+										identifier = ExpandedContentBottom
+									}
+								}
+							}
+						}
+					}
+				}
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-2_col-3-9.svg
+			}
+		}
+	}
+}

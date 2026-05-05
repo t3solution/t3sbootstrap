@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers/"
+	xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Module" />
+<f:section name="Content">
+<f:flashMessages />
+<f:if condition="{notifications}">
+	<f:if condition="{notifications.idNull}">
+		<f:then>
+			<f:be.infobox
+				title="{notifications.idNull.title}"
+				message="{notifications.idNull.message}"
+				state="{f:constant(name: '\TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR')}"
+			/>
+		</f:then>
+		<f:else>
+			<f:if condition="{notifications.siteroot.title}">
+			<f:then>
+				<f:be.infobox
+					title="{notifications.siteroot.title}"
+					message="{notifications.siteroot.message}"
+					state="{f:constant(name: '\TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::INFO')}"
+				/>
+			</f:then>
+			<f:else>
+				<h2 class="mb-4">Before you can create a configuration, you must meet the following conditions</h2>
+				<table class="table">
+					<f:for each="{notifications}" as="notification" iteration="iterator" key="label">
+						<tr class="table-warning">
+							<td width="30%">{notification.title}</td>
+							<td>{notification.message}</td>
+						</tr>
+					</f:for>
+				</table>
+			</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:if>
+</f:section>
+</html>

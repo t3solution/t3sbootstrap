@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\ExpressionLanguage;
@@ -11,13 +10,8 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterface
 {
     /**
@@ -30,7 +24,6 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             $this->getBrowser(),
             $this->getColPosList(),
             $this->getExtensionLoaded(),
-            $this->getConstant(),
         ];
     }
 
@@ -41,10 +34,10 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         }, function ($arguments, $str) {
             $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
-			if ($str === 'extNews') {	
-				if ( !empty($extConf[$str]) && ExtensionManagementUtility::isLoaded('news') ) {
-					return '1';
-				}
+            if ($str === 'extNews') {	
+                if ( !empty($extConf[$str]) && ExtensionManagementUtility::isLoaded('news') ) {
+                    return '1';
+                }
 
                 return '0';
             }
@@ -65,17 +58,17 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             $user_agent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
             $browser = 'Other';
 
-            if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) {
+            if (str_contains($user_agent, 'Opera') || str_contains($user_agent, 'OPR/')) {
                 $browser = 'Opera';
-            } elseif (strpos($user_agent, 'Edge')) {
+            } elseif (str_contains($user_agent, 'Edge')) {
                 $browser = 'Edge';
-            } elseif (strpos($user_agent, 'Chrome')) {
+            } elseif (str_contains($user_agent, 'Chrome')) {
                 $browser = 'Chrome';
-            } elseif (strpos($user_agent, 'Safari')) {
+            } elseif (str_contains($user_agent, 'Safari')) {
                 $browser = 'Safari';
-            } elseif (strpos($user_agent, 'Firefox')) {
+            } elseif (str_contains($user_agent, 'Firefox')) {
                 $browser = 'Firefox';
-            } elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) {
+            } elseif (str_contains($user_agent, 'MSIE') || str_contains($user_agent, 'Trident/7')) {
                 $browser = 'Internet Explorer';
             }
 
@@ -83,145 +76,106 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         });
     }
 
+
     protected function getColPosList(): ExpressionFunction
     {
 
-        return new ExpressionFunction(
-        'colPosList',
-        static fn () => null, // Not implemented, we only use the evaluator
-        static function ($arguments, $str) {
+        return new ExpressionFunction('colPosList', function ($str) {
+            // Not implemented
+        }, function ($arguments, $str) {
 
             $result = false;
             if ( !empty($arguments['page']['uid']) ) {
                 $pid = $arguments['page']['uid'];
-
                 $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
                 $queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_domain_model_config');
-                $result = $queryBuilder
-                    ->select('jumbotron_enable', 'footer_enable', 'expandedcontent_enabletop', 'expandedcontent_enablebottom')
+                $config = $queryBuilder
+                    ->select('jumbotron_enable', 'footer_enable', 'expandedcontent_enabletop')
                     ->from('tx_t3sbootstrap_domain_model_config')
                     ->where(
                         $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT))
                     )
-                    ->executeQuery();
-
-                $config = $result->fetchAssociative();
+                    ->setMaxResults(1)
+                    ->executeQuery()
+                    ->fetchAssociative();
 
                 if (empty($config) && is_array($arguments['tree']->rootLineIds)) {
                     $rootLineIdsArray = array_reverse($arguments['tree']->rootLineIds);
-                    unset($rootLineIdsArray[count($rootLineIdsArray)-1]);
-                    unset($rootLineIdsArray[0]);
+                    array_pop($rootLineIdsArray);
+                    array_shift($rootLineIdsArray);
                     foreach ($rootLineIdsArray as $id) {
-
-                        $result = $queryBuilder
-                            ->select('jumbotron_enable', 'footer_enable', 'expandedcontent_enabletop', 'expandedcontent_enablebottom')
+                        $config = $queryBuilder
+                            ->select('jumbotron_enable', 'footer_enable', 'expandedcontent_enabletop')
                                 ->from('tx_t3sbootstrap_domain_model_config')
                             ->where(
                                 $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, Connection::PARAM_INT))
                             )
-                            ->executeQuery();
+                            ->setMaxResults(1)
+                            ->executeQuery()
+                            ->fetchAssociative();
 
-                        $config = $result->fetchAssociative();
                         if (!empty($config)) {
                             break;
                         }
                     }
                 }
 
-                if (!empty($config)) {
-                    if ( !empty($config['jumbotron_enable']) ) {
-                        if ( !empty($config['footer_enable']) )  {
-                            // Content, Jumbotron & Footer
-                            if ( empty($config['expandedcontent_enabletop']) && empty($config['expandedcontent_enablebottom']) ) {
-                                if ($str === 'All') {
-                                    $result = true;
-                                }
-                            } else {
-                                if ( !empty($config['expandedcontent_enabletop']) && !empty($config['expandedcontent_enablebottom']) ) {
-                                    if ($str === 'AllandTopBottom') {
-                                        $result = true;
-                                    }
-                                } else {
-                                    if ( !empty($config['expandedcontent_enabletop']) ) {
-                                        if ($str === 'AllandTop') {
-                                            $result = true;
-                                        }
-                                    }
-                                    if ( !empty($config['expandedcontent_enablebottom']) ) {
-                                        if ($str === 'AllandBottom') {
-                                            $result = true;
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            // Content & Jumbotron
-                            if ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
-                                if ($str === 'Jumbotron') {
-                                    $result = true;
-                                }
-                            } else {
-                                if ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
-                                    if ($str === 'JumbotronandTopBottom') {
-                                        $result = true;
-                                    }
-                                } else {
+                $jumbotron = !empty($config['jumbotron_enable']) ? $config['jumbotron_enable'] : 0;
+                $footer = !empty($config['footer_enable']) ? $config['footer_enable'] : 0;
+                $expandedcontent = !empty($config['expandedcontent_enabletop']) ? $config['expandedcontent_enabletop'] : 0;
 
-                                    if ( $config['expandedcontent_enabletop'] ) {
-                                        if ($str === 'JumbotronandTop') {
-                                            $result = true;
-                                        }
-                                    }
-                                    if ($config['expandedcontent_enablebottom']) {
-                                        if ($str === 'JumbotronandBottom') {
-                                            $result = true;
-                                        }
-                                    }
-                                }
-                            }
+                if (empty($expandedcontent)) {
+            
+                    if ( !empty($jumbotron) && !empty($footer) )  {
+                        if ($str === 'JF') {
+                            $result = true;
                         }
-                    } else {
-                        if ($config['footer_enable']) {
-                            // Content & Footer
-                            if ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
-                                if ($str === 'Footer') {
-                                    $result = true;
-                                }
-                            } else {
-                                if ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
-                                    if ($str === 'FooterandTopBottom') {
-                                        $result = true;
-                                    }
-                                } else {
-                                    if ($config['expandedcontent_enabletop'] && $str === 'FooterandTop') {
-                                        $result = true;
-                                    }
-                                    if ($config['expandedcontent_enablebottom'] && $str === 'FooterandBottom') {
-                                        $result = true;
-                                    }
-                                }
-                            }
-                        } elseif ( !$config['expandedcontent_enabletop'] && !$config['expandedcontent_enablebottom'] ) {
-                            if ($str === 'Content') {
-                                $result = true;
-                            }
-                        } elseif ( $config['expandedcontent_enabletop'] && $config['expandedcontent_enablebottom'] ) {
-                            if ($str === 'ContentandTopBottom') {
-                                $result = true;
-                            }
-                        } else {
-                            if ($config['expandedcontent_enabletop'] && $str === 'ContentandTop') {
-                                $result = true;
-                            }
-                            if ($config['expandedcontent_enablebottom'] && $str === 'ContentandBottom') {
-                                $result = true;
-                            }
+                    }
+                    if ( !empty($jumbotron) && empty($footer) )  {
+                        if ($str === 'J') {
+                            $result = true;
+                        }
+                    }
+                    if ( empty($jumbotron) && !empty($footer) )  {
+                        if ($str === 'F') {
+                            $result = true;
+                        }
+                    }
+                    if ( empty($jumbotron) && empty($footer) )  {
+                        if ($str === 'NONE') {
+                            $result = true;
+                        }
+                    }
+            
+                } else {
+            
+                    if ( !empty($jumbotron) && !empty($footer) )  {
+                        if ($str === 'ALL') {
+                            $result = true;
+                        }
+                    }
+            
+                    if ( empty($jumbotron) && empty($footer) )  {
+                        if ($str === 'E') {
+                            $result = true;
+                        }
+                    }
+                    
+                    if ( !empty($jumbotron) && empty($footer) )  {
+                        if ($str === 'JE') {
+                            $result = true;
+                        }
+                    }
+            
+                    if ( empty($jumbotron) && !empty($footer) )  {
+                        if ($str === 'FE') {
+                            $result = true;
                         }
                     }
                 }
             }
 
-            return $result === true;
+            return $result;
         });
     }
 
@@ -231,25 +185,8 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         return new ExpressionFunction('loaded', function () {
             // Not implemented, we only use the evaluator
         }, function ($arguments, $extKey) {
-            	return ExtensionManagementUtility::isLoaded($extKey);
+                return ExtensionManagementUtility::isLoaded($extKey);
         });
     }
-
-
-    # Site Settings definition type=bool - condition bugfix
-    # e.g.: [{$bootstrap.cdn.enable} == 0] did not work but [constant('{$bootstrap.cdn.enable}') == 0]
-    protected function getConstant(): ExpressionFunction
-    {
-        return new ExpressionFunction('constant', function () {
-            // Not implemented, we only use the evaluator
-        }, function ($arguments, $constant) {
-
-            if (!empty($constant)) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-    }
-
+    
 }

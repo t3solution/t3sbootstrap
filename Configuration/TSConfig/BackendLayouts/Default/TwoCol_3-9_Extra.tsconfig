@@ -5,8 +5,8 @@ mod {
 				title = 2 Columns (aside left) with extra rows (top and bottom)
 				config {
 					backend_layout {
-						colCount = 3
-						rowCount = 3
+						colCount = 2
+						rowCount = 5
 						rows {
 							1 {
 								columns {
@@ -14,6 +14,7 @@ mod {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
 										colspan = 3
 										colPos = 3
+										identifier = Jumbotron
 									}
 								}
 							}
@@ -23,6 +24,7 @@ mod {
 										name = Expanded Content Top
 										colspan = 3
 										colPos = 20
+										identifier = ExpandedContentTop
 									}
 								}
 							}
@@ -32,11 +34,13 @@ mod {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar
 										colspan = 1
 										colPos = 1
+										identifier = Left
 									}
 									2 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
 										colspan = 2
 										colPos = 0
+										identifier = Main
 									}
 								}
 							}
@@ -46,6 +50,7 @@ mod {
 										name = Expanded Content Bottom
 										colspan = 3
 										colPos = 21
+										identifier = ExpandedContentBottom
 									}
 								}
 							}

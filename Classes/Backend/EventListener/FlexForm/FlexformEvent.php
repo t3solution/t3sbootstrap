@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Backend\EventListener\FlexForm;
@@ -8,50 +7,93 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
-class FlexformEvent
+#[AsEventListener(
+    identifier: 't3sbootstrap/flexParsing',
+    method: 'modifyDataStructure',
+)]
+final readonly class FlexformEvent
 {
-    public function __invoke(AfterFlexFormDataStructureParsedEvent $event): void
+
+    public function modifyDataStructure(AfterFlexFormDataStructureParsedEvent $event): void
     {
-        $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
-        if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
-            $dataStructure = $event->getDataStructure();
-            $identifier = $event->getIdentifier();
-
-			if (ExtensionManagementUtility::isLoaded('t3sb_package')) {
-                $ffPath = 'EXT:t3sb_package/Configuration/FlexForms/';
-            } else {
-                $ffPath = '/fileadmin/T3SB/FlexForms/';
-            }
-
-            foreach ($GLOBALS['TCA']['tt_content']['columns']['tx_t3sbootstrap_flexform']['config']['ds'] as $key=>$flexForm) {
-                $flexForms[$key] = substr($flexForm, 46, -4);
-            }
-
-            if (array_key_exists($identifier['dataStructureKey'], $flexForms)) {
-                if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content'
-                && $identifier['fieldName'] === 'tx_t3sbootstrap_flexform' && $identifier['dataStructureKey']) {
- 					$file = GeneralUtility::getFileAbsFileName($ffPath.$flexForms[$identifier['dataStructureKey']].'.xml');
-                    if (file_exists($file)) {
-                        $content = @file_get_contents($file);
-                        if ($content) {
-                            $dataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
-
-                            $extraDataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
-                            ArrayUtility::mergeRecursiveWithOverrule($dataStructure, $extraDataStructure);
-                        }
-                    }
+        $dataStructure = $event->getDataStructure();
+        $identifier = $event->getIdentifier();
+        if ($identifier['fieldName'] === 'tx_t3sbootstrap_flexform') {
+    
+            $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+            if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
+    
+                if (!empty($dataStructure['sheets']['sDEF']['ROOT']['sheetTitle'])
+                && $dataStructure['sheets']['sDEF']['ROOT']['sheetTitle'] === 'Utility Settings') {
+                    $this->mergeFlexFormXml(
+                        GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/FlexForms/Bootstrap.xml'),
+                        $dataStructure
+                    );
                 }
-
-                $event->setDataStructure($dataStructure);
+    
+                $noContainerDirArr = [
+                    't3sbs_assets' => 'AssetInline.xml',
+                    't3sbs_button' => 'Button.xml',
+                    't3sbs_card' => 'CardSetting.xml',
+                    't3sbs_carousel' => 'Carousel.xml',
+                    't3sbs_mediaobject' => 'Mediaobject.xml',
+                    't3sbs_toast' => 'ToastSetting.xml',
+                ];
+    
+                $inContainerDirArr = [
+                    'autoLayout_row' => 'AutolayoutRow.xml',
+                    'background_wrapper' => 'BackgroundWrapper.xml',
+                    'button_group' => 'ButtonGroup.xml',
+                    'card_wrapper' => 'CardWrapper.xml',
+                    'carousel_container' => 'CarouselContainer.xml',
+                    'collapsible_accordion' => 'CollapsibleAccordion.xml',
+                    'collapsible_container' => 'CollapsibleContainer.xml',
+                    'container' => 'Container.xml',
+                    'four_columns' => 'FourColumns.xml',
+                    'masonry_wrapper' => 'MasonryWrapper.xml',
+                    'modal' => 'Modal.xml',
+                    'parallax_wrapper' => 'ParallaxWrapper.xml',
+                    'row_columns' => 'RowColumns.xml',
+                    'six_columns' => 'SixColumns.xml',
+                    'swiper_container' => 'SwiperContainer.xml',
+                    'tabs_container' => 'TabsContainer.xml',
+                    'tabs_tab' => 'TabsTab.xml',
+                    'three_columns' => 'ThreeColumns.xml',
+                    'toast_container' => 'ToastContainer.xml',
+                    'two_columns' => 'TwoColumns.xml',
+                ];
+    
+                $key = $identifier['dataStructureKey'];
+                if (isset($noContainerDirArr[$key])) {
+                    $this->mergeFlexFormXml(
+                        GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/FlexForms/'.$noContainerDirArr[$key]),
+                        $dataStructure
+                    );
+                }
+                if (isset($inContainerDirArr[$key])) {
+                    $this->mergeFlexFormXml(
+                        GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/FlexForms/Container/'.$inContainerDirArr[$key]),
+                        $dataStructure
+                    );
+                }
+            }
+        }
+    
+        $event->setDataStructure($dataStructure);
+    }
+    
+    private function mergeFlexFormXml(string $xmlFile, array &$dataStructure): void
+    {
+        if (file_exists($xmlFile)) {
+            $content = file_get_contents($xmlFile);
+            if ($content) {
+                $extraDataStructure = [];
+                $extraDataStructure['sheets']['extraEntry'] = GeneralUtility::xml2array($content);
+                ArrayUtility::mergeRecursiveWithOverrule($dataStructure, $extraDataStructure);
             }
         }
     }
+
 }

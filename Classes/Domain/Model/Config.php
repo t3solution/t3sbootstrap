@@ -1,18 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-
-/*
- * This file is part of the TYPO3 extension t3sbootstrap.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- */
 class Config extends AbstractEntity
 {
+    
+    /**
+     * uid
+     *
+     * @var ?int
+     */
+    protected ?int $uid = 0;
+
 
     /**
      * company
@@ -414,7 +416,7 @@ class Config extends AbstractEntity
      *
      * @var int
      */
-    protected $jumbotronCarouselInterval = false;
+    protected $jumbotronCarouselInterval = 0;
 
     /**
      * jumbotronCarouselPause
@@ -654,23 +656,6 @@ class Config extends AbstractEntity
      */
     protected $expandedcontentClassbottom = '';
 
-
-    /**
-     * generalRootline
-     *
-     * @var bool
-     */
-    protected $generalRootline = false;
-
-
-    /**
-     * generalRootline
-     *
-     * @var bool
-     */
-    protected $generalOverride = false;
-
-
     /**
      * contentOnlyOnRootpage
      *
@@ -679,25 +664,11 @@ class Config extends AbstractEntity
     protected $contentOnlyOnRootpage = false;
 
     /**
-     * compress
-     *
-     * @var bool
-     */
-    protected $compress = false;
-
-    /**
      * disablePrefixComment
      *
      * @var bool
      */
     protected $disablePrefixComment = false;
-
-    /**
-     * containerError
-     *
-     * @var bool
-     */
-    protected $containerError = false;
 
     /**
      * slideLeftAside
@@ -727,6 +698,14 @@ class Config extends AbstractEntity
      * @var string
      */
     protected $pageContentExtraClass = '';
+    
+    /**
+     * pageWrapperExtraClass
+     *
+     * @var string
+     */
+    protected $pageWrapperExtraClass = '';
+
 
     /**
      * bodyExtraClass
@@ -901,6 +880,7 @@ class Config extends AbstractEntity
      */
     protected $favicon = '';
 
+
     /**
      * cardFlipperOnClick
      *
@@ -929,7 +909,102 @@ class Config extends AbstractEntity
      */
     protected $updated = 0;
 
+    /**
+    * customVariablesScss
+    *
+    * @var string
+    */
+    protected $customVariablesScss = '';
+    
+    /**
+    * record_type
+    *
+    * @var string
+    */
+    protected $recordType = '';
+    
+    /**
+    * customScss
+    *
+    * @var string
+    */
+    protected $customScss = '';
+    
+    
+    /**
+     *
+     * @return ?int uid
+     */
+    public function getUid(): ?int
+    {
+        return $this->uid;
+    }
 
+
+    
+    /**
+     * Returns the customVariablesScss
+     *
+     * @return string $customVariablesScss
+     */
+    public function getCustomVariablesScss()
+    {
+        return $this->customVariablesScss;
+    }
+    
+    /**
+     * Sets the customVariablesScss
+     *
+     * @param string $customVariablesScss
+     * @return void
+     */
+    public function setCustomVariablesScss($customVariablesScss): void
+    {
+        $this->customVariablesScss = $customVariablesScss;
+    }
+
+    /**
+     * Returns the customScss
+     *
+     * @return string $customScss
+     */
+    public function getCustomScss()
+    {
+        return $this->customScss;
+    }
+    
+    /**
+     * Sets the customScss
+     *
+     * @param string $customScss
+     * @return void
+     */
+    public function setCustomScss($customScss): void
+    {
+        $this->customScss = $customScss;
+    }
+
+    /**
+     * Returns the recordType
+     *
+     * @return string $recordType
+     */
+    public function getRecordType()
+    {
+        return $this->recordType;
+    }
+    
+    /**
+     * Sets the $recordType
+     *
+     * @param string $recordType
+     * @return void
+     */
+    public function setRecordType($recordType): void
+    {
+        $this->recordType = $recordType;
+    }
+    
     /**
      * Returns the company
      *
@@ -3071,69 +3146,6 @@ class Config extends AbstractEntity
         $this->expandedcontentClassbottom = $expandedcontentClassbottom;
     }
 
-
-    /**
-     * Returns the generalRootline
-     *
-     * @return bool $generalRootline
-     */
-    public function getGeneralRootline()
-    {
-        return $this->generalRootline;
-    }
-
-    /**
-     * Sets the generalRootline
-     *
-     * @param bool $generalRootline
-     * @return void
-     */
-    public function setGeneralRootline($generalRootline): void
-    {
-        $this->generalRootline = $generalRootline;
-    }
-
-    /**
-     * Returns the boolean state of generalRootline
-     *
-     * @return bool
-     */
-    public function isGeneralRootline()
-    {
-        return $this->generalRootline;
-    }
-
-    /**
-     * Returns the generalOverride
-     *
-     * @return bool $generalOverride
-     */
-    public function getGeneralOverride()
-    {
-        return $this->generalOverride;
-    }
-
-    /**
-     * Sets the generalOverride
-     *
-     * @param bool $generalOverride
-     * @return void
-     */
-    public function setGeneralOverride($generalOverride): void
-    {
-        $this->generalOverride = $generalOverride;
-    }
-
-    /**
-     * Returns the boolean state of generalOverride
-     *
-     * @return bool
-     */
-    public function isGeneralOverride()
-    {
-        return $this->generalOverride;
-    }
-
     /**
      * Returns the contentOnlyOnRootpage
      *
@@ -3156,28 +3168,6 @@ class Config extends AbstractEntity
     }
 
     /**
-     * Returns the compress
-     *
-     * @return bool $compress
-     */
-    public function getCompress()
-    {
-        return $this->compress;
-    }
-
-    /**
-     * Sets the compress
-     *
-     * @param bool $compress
-     * @return void
-     */
-    public function setCompress($compress): void
-    {
-        $this->compress = $compress;
-    }
-
-
-    /**
      * Returns the disablePrefixComment
      *
      * @return bool $disablePrefixComment
@@ -3198,29 +3188,6 @@ class Config extends AbstractEntity
         $this->disablePrefixComment = $disablePrefixComment;
     }
 
-
-    /**
-     * Returns the containerError
-     *
-     * @return bool $containerError
-     */
-    public function getContainerError()
-    {
-        return $this->containerError;
-    }
-
-    /**
-     * Sets the containerError
-     *
-     * @param bool $containerError
-     * @return void
-     */
-    public function setContainerError($containerError): void
-    {
-        $this->containerError = $containerError;
-    }
-
-
     /**
      * Returns the slideLeftAside
      *
@@ -3234,7 +3201,7 @@ class Config extends AbstractEntity
     /**
      * Sets the $slideLeftAside
      *
-     * @param bool $containerError
+     * @param bool $slideLeftAside
      * @return void
      */
     public function setSlideLeftAside($slideLeftAside): void
@@ -3268,7 +3235,7 @@ class Config extends AbstractEntity
      *
      * @return bool $submenuSticky
      */
-    public function getsubmenuSticky()
+    public function getSubmenuSticky()
     {
         return $this->submenuSticky;
     }
@@ -3279,7 +3246,7 @@ class Config extends AbstractEntity
      * @param bool $submenuSticky
      * @return void
      */
-    public function setsubmenuSticky($submenuSticky): void
+    public function setSubmenuSticky($submenuSticky): void
     {
         $this->submenuSticky = $submenuSticky;
     }
@@ -3305,6 +3272,26 @@ class Config extends AbstractEntity
         $this->pageContentExtraClass = $pageContentExtraClass;
     }
 
+    /**
+     * Returns the pageWrapperExtraClass
+     *
+     * @return string pageWrapperExtraClass
+     */
+    public function getPageWrapperExtraClass()
+    {
+        return $this->pageWrapperExtraClass;
+    }
+    
+    /**
+     * Sets the pageWrapperExtraClass
+     *
+     * @param string $pageWrapperExtraClass
+     * @return void
+     */
+    public function setPageWrapperExtraClass($pageWrapperExtraClass): void
+    {
+        $this->pageWrapperExtraClass = $pageWrapperExtraClass;
+    }
 
     /**
      * Returns the bodyExtraClass
@@ -3913,8 +3900,6 @@ class Config extends AbstractEntity
     {
         $this->sectionmenuIcons = $sectionmenuIcons;
     }
-
-
 
     /**
      * Returns the navbarDarkMode

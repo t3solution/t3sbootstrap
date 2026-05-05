@@ -22,21 +22,21 @@ $tempSysFileReferenceColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    [ 'center (mx-auto)', 'mx-auto', ],
-                    [ 'right (float-end)', 'float-end', ],
-                    [ 'm-3 (margin)', 'm-3', ],
-                    [ 'mt-3 (margin-top)', 'mt-3', ],
-                    [ 'mb-3 (margin-bottom)', 'mb-3', ],
-                    [ 'ms-3 (margin-left)', 'ms-3', ],
-                    [ 'me-3 (margin-right)', 'me-3', ],
-                    [ 'mx-3 (margin-left and -right)', 'mx-3', ],
-                    [ 'my-3 (margin-top and -bottom)', 'my-3', ],
-                    [ 'Hover zoom (basic)', 'img-hover-zoom', ],
-                    [ 'Hover zoom (rotate)', 'img-hover-zoom--zoom-n-rotate', ],
-                    [ 'Hover zoom (slowmo)', 'img-hover-zoom--slowmo', ],
-                    [ 'Hover zoom (brightness)', 'img-hover-zoom--brightness', ],
-                    [ 'Hover zoom (blurzoom)', 'img-hover-zoom--blur', ],
-                    [ 'Hover zoom (colorize)', 'img-hover-zoom--colorize', ]
+                    [ 'label' => 'center (mx-auto)', 'value' => 'mx-auto', ],
+                    [ 'label' => 'right (float-end)', 'value' => 'float-end', ],
+                    [ 'label' => 'm-3 (margin)', 'value' => 'm-3', ],
+                    [ 'label' => 'mt-3 (margin-top)', 'value' => 'mt-3', ],
+                    [ 'label' => 'mb-3 (margin-bottom)', 'value' => 'mb-3', ],
+                    [ 'label' => 'ms-3 (margin-left)', 'value' => 'ms-3', ],
+                    [ 'label' =>  'me-3 (margin-right)', 'value' => 'me-3', ],
+                    [ 'label' => 'mx-3 (margin-left and -right)', 'value' => 'mx-3', ],
+                    [ 'label' => 'my-3 (margin-top and -bottom)', 'value' => 'my-3', ],
+                    [ 'label' => 'Hover zoom (basic)', 'value' => 'img-hover-zoom', ],
+                    [ 'label' => 'Hover zoom (rotate)', 'value' => 'img-hover-zoom--zoom-n-rotate', ],
+                    [ 'label' => 'Hover zoom (slowmo)', 'value' => 'img-hover-zoom--slowmo', ],
+                    [ 'label' => 'Hover zoom (brightness)', 'value' => 'img-hover-zoom--brightness', ],
+                    [ 'label' => 'Hover zoom (blurzoom)', 'value' => 'img-hover-zoom--blur', ],
+                    [ 'label' => 'Hover zoom (colorize)', 'value' => 'img-hover-zoom--colorize', ]
                 ],
             ],
         ],
@@ -50,10 +50,10 @@ $tempSysFileReferenceColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    [ 'img-transform scale', 'img-transform', ],
-                    [ 'rounded', 'rounded', ],
-                    [ 'rounded-circle', 'rounded-circle', ],
-                    [ 'img-thumbnail', 'img-thumbnail', ],
+                    [ 'label' => 'img-transform scale', 'value' => 'img-transform', ],
+                    [ 'label' => 'rounded', 'value' => 'rounded', ],
+                    [ 'label' => 'rounded-circle', 'value' => 'rounded-circle', ],
+                    [ 'label' => 'img-thumbnail', 'value' => 'img-thumbnail', ],
                 ],
             ],
         ],
@@ -297,16 +297,32 @@ $tempSysFileReferenceColumns = [
             'eval' => 'trim',
             'valuePicker' => [
                 'items' => [
-                    ['16:9 (widescreen)', '16:9'],
-                    ['9:16 (vertical)', '9:16'],
-                    ['1:1 (square)', '1:1'],
-                    ['4:3 (fullscreen)', '4:3'],
-                    ['21:9 (cinematic widescreen)', '21:9']
+                    [
+                        'label' => '16:9 (widescreen)', 
+                        'value' => '16:9'
+                    ],
+                    [
+                        'label' => '9:16 (vertical)', 
+                        'value' => '9:16'
+                    ],
+                    [
+                        'label' => '1:1 (square)', 
+                        'value' => '1:1'
+                    ],
+                    [
+                        'label' => '4:3 (fullscreen)', 
+                        'value' => '4:3'
+                    ],
+                    [
+                        'label' => '21:9 (cinematic widescreen)', 
+                        'value' => '21:9'
+                    ]
                 ],
             ],
             'default' => '16:9'
         ],
     ],
+
 ];
 
 ExtensionManagementUtility::addTCAcolumns('sys_file_reference', $tempSysFileReferenceColumns);

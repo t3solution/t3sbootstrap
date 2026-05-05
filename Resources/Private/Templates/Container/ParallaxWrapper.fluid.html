@@ -1,0 +1,136 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{parallaxImage} || {video}">
+	<f:then>
+		<f:render section="Default" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<div class="alert alert-danger my-3" role="alert">
+			Parallax Wrapper (uid = {data.uid}) no background-image or video is loaded!
+		</div>
+	</f:else>
+</f:if>
+</html>
+
+
+<f:section name="Default">
+<f:if condition="{settings.cdn}">
+	<f:then>
+		<f:asset.script identifier="jarallaxJs" src="https://unpkg.com/jarallax@{settings.jarallaxVersion}/dist/jarallax.min.js" />
+		<f:if condition="{video}">
+			<f:asset.script identifier="jarallaxVideoJs" src="https://unpkg.com/jarallax@{settings.jarallaxVersion}/dist/jarallax-video.min.js" />
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:asset.script identifier="jarallaxJs" src="EXT:t3sb_package/Resources/Public/T3SB-JS/jarallax.min.js" />
+		<f:if condition="{video}">
+		  	<f:asset.script identifier="jarallaxVideoJs" src="EXT:t3sb_package/Resources/Public/T3SB-JS/jarallax-video.min.js" />
+		</f:if>
+	</f:else>
+</f:if>
+<f:asset.css identifier="jarallaxCss">
+.jarallax {
+	z-index: 0;
+}
+.jarallax .jarallax-img {
+	position: absolute;
+	object-fit: cover;
+	font-family: 'object-fit: cover;';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+</f:asset.css>
+<f:asset.script identifier="jarallax_function">
+// Jarallax - ParallaxWrapper.fluid.html
+function t3sbParallax(addHeight, uid) {
+	let jarallax = document.getElementById('c'+uid),
+		textWrapper = document.getElementById('text-wrapper-'+uid);
+	if (textWrapper !== null && textWrapper !== '') {
+		jarallaxHeight = parseInt(textWrapper.clientHeight + addHeight);
+	} else {
+		jarallaxHeight = parseInt(300 + addHeight);
+	}
+	jarallax.style.minHeight = jarallaxHeight+'px';
+}
+</f:asset.script>
+<f:asset.script identifier="vanilla_jarallaxJs-{data.uid}">
+	// Parallax - ParallaxWrapper.fluid.html
+	t3sbParallax({addHeight}, {data.uid});
+	jarallax(document.getElementById('c{data.uid}'));
+</f:asset.script>
+<f:if condition="{video}">
+	<f:then>
+		<f:if condition="{vimeo}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="https://vimeo.com/{videoId}">
+				   <f:render section="OverlayInner" arguments="{_all}" />
+			</div>
+		</f:if>
+		<f:if condition="{youtube}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="https://youtube-nocookie.com/watch?v={videoId}">
+				   <f:render section="OverlayInner" arguments="{_all}" />
+			</div>
+		</f:if>
+		<f:if condition="{local}">
+			<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-video-src="{mimeType}:{defaultStorage}{file.identifier}">
+				   <f:render section="OverlayInner" arguments="{_all}" />
+			</div>
+		</f:if>
+	</f:then>
+	<f:else>
+		<div id="c{data.uid}" class="jarallax d-flex" data-speed="{speedFactor}" data-disable-parallax="{no-mobile}">
+			<figure class="jarallax-img">
+				<f:render section="Image" arguments="{_all}" />
+			</figure>
+			<f:render section="OverlayInner" arguments="{_all}" />
+		</div>
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="OverlayInner">
+<f:if condition="{col_274.0}">
+	<f:if condition="{container}">
+	<f:then>
+		<div class="d-flex {container}">
+			<div id="text-wrapper-{data.uid}" class="align-self-center w-100">
+				<f:mark.contentArea colPos="274" txContainerParent="{record.uid}">
+					<f:for each="{col_274}" as="row">
+						{row.renderedContent -> f:format.raw()}
+					</f:for>
+				</f:mark.contentArea>
+			</div>
+		</div>
+	</f:then>
+	<f:else>
+		<div class="d-flex w-100">
+			<div id="text-wrapper-{data.uid}" class="align-self-center w-100">
+				<f:mark.contentArea colPos="274" txContainerParent="{record.uid}">
+					<f:for each="{col_274}" as="row">
+						{row.renderedContent -> f:format.raw()}
+					</f:for>
+				</f:mark.contentArea>
+			</div>
+		</div>
+	</f:else>
+</f:if>
+</f:if>
+</f:section>
+
+<f:section name="Image">
+<t3sb:media file="{file}" width="{width}" height="auto"
+	class="jarallax-img"
+	breakpoints="{
+		0: {'cropVariant': 'default', 'media': '(min-width: 1200px)', 'srcset': '{settings.srcsetDesktop}'},
+		1: {'cropVariant': 'tablet', 'media': '(min-width: 576px)', 'srcset': '{settings.srcsetTablet}'},
+		2: {'cropVariant': 'mobile', 'media': '(max-width: 575px)', 'srcset': '{settings.srcsetMobile}'}
+	}"
+	lazyload="0"
+	ratio="0"
+	style="{style}"
+	imgtag="0"
+	fileExtension="{settings.media.fileExtension}"
+	/>
+</f:section>

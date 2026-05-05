@@ -54,7 +54,7 @@ settings:
     category: Bootstrap.config.image.size
     description: 'The default max. width for Bootstrap toast.'
     type: int
-    default: 20
+    default: 40
   
   bootstrap.image.disableAutoRow:
     label: 'Disable auto row'

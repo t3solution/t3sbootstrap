@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="Header">
+<f:comment>No header for t3sbs_mediaobject</f:comment>
+</f:section>
+<f:section name="Main">
+<div class="d-flex{f:if(condition: '{t3sbFlexform.verticallyCenter}', then: ' align-items-center')}">
+	<f:if condition="{mediaobject.order} == 'left'">
+		<div class="flex-shrink-0">
+			<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</div>
+	</f:if>
+	<div class="flex-grow-1{f:if(condition: '{mediaobject.order} == \'right\'', then: ' me-3', else: ' ms-3')}">
+		<f:render partial="Content/Header/All" arguments="{_all}" />
+		{record -> f:render.text(field: 'bodytext')}
+	</div>
+	<f:if condition="{mediaobject.order} == 'right'">
+		<div class="flex-shrink-0">
+			<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</div>
+	</f:if>
+</div>
+
+</f:section>
+</html>
