@@ -21,10 +21,8 @@
 	<f:render partial="Page/Assets" arguments="{fixedbutton:'true', visiblePart:'{visiblePart}', btnGroup:'1', slideIn:'{slideIn}'}" />
 </f:if>
 <div{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()} role="group" aria-label="btn-{data.uid}">
-	<f:mark.contentArea colPos="271" txContainerParent="{record.uid}">
-		<f:for each="{col_271}" as="button">
-			{button.renderedContent -> f:format.raw()}
-		</f:for>
-	</f:mark.contentArea>
+	<f:for each="{col_271}" as="button">
+		{button.renderedContent -> f:format.raw()}
+	</f:for>
 </div>
 </f:section>

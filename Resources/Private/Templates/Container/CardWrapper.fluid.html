@@ -231,11 +231,9 @@
 			<h4 class="card-title">
 				<f:link.typolink class="{f:if(condition: '{card.celink}', then: 'stretched-link')}"
 				parameter='{card.header_link}'>
-
 			<f:if condition="{card.hFa}">
 				<t3sb:icon iconfig="{card.hFa}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
-
 				{card.header -> f:format.raw()}</f:link.typolink>
 			</h4>
 			<h6 class="card-subtitle text-muted mb-4">{card.subheader -> f:format.raw()}</h6>
@@ -267,28 +265,26 @@
 
 <f:section name="Content">
 	<f:if condition="{col_270 -> f:count()}">
-		<f:mark.contentArea colPos="270" txContainerParent="{record.uid}">
-			<f:for each="{col_270}" as="card">
-				<f:if condition="{card_wrapper_layout} == 'group'">
+		<f:for each="{col_270}" as="card">
+			<f:if condition="{card_wrapper_layout} == 'group'">
+				{card.renderedContent -> f:format.raw()}
+			</f:if>
+			<f:if condition="{card_wrapper_layout} == 'deck'">
+				<div class="col{equalHeight}">
 					{card.renderedContent -> f:format.raw()}
-				</f:if>
-				<f:if condition="{card_wrapper_layout} == 'deck'">
-					<div class="col{equalHeight}">
-						{card.renderedContent -> f:format.raw()}
-					</div>
-				</f:if>
-				<f:if condition="{card_wrapper_layout} == 'columns'">
-					<div class="{colclass}">
-						{card.renderedContent -> f:format.raw()}
-					</div>
-				</f:if>
-				<f:if condition="{card_wrapper_layout} == 'slider'">
-					<div class="swiper-slide">
-						{card.renderedContent -> f:format.raw()}
-					</div>
-				</f:if>
-			</f:for>
-		</f:mark.contentArea>
+				</div>
+			</f:if>
+			<f:if condition="{card_wrapper_layout} == 'columns'">
+				<div class="{colclass}">
+					{card.renderedContent -> f:format.raw()}
+				</div>
+			</f:if>
+			<f:if condition="{card_wrapper_layout} == 'slider'">
+				<div class="swiper-slide">
+					{card.renderedContent -> f:format.raw()}
+				</div>
+			</f:if>
+		</f:for>
 	</f:if>
 	<f:if condition="{contentBy}">
 		<f:for each="{contentBy}" as="card">

@@ -42,7 +42,6 @@
 
 <f:section name="Tabs">
 <ul id="tabContainer-{currentUid}" class="nav nav-tabs tabcontainer mb-3{tab.fill}" role="tablist">
-	<f:mark.contentArea colPos="280" txContainerParent="{record.uid}">
 	<f:for each="{col_280}" as="tab">
 		<li class="nav-item" role="presentation">
 			<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
@@ -50,16 +49,13 @@
 				{tab.header -> f:format.raw()}
 			</button>
 		</li>
-	</f:for>
-	</f:mark.contentArea>
-	
+	</f:for>	
 </ul>
 <f:render section="Content" arguments="{_all}" />
 </f:section>
 
 <f:section name="Pills">
 <ul class="nav nav-pills tabcontainer mb-3{tab.fill}" id="tabContainer-{currentUid}" role="tablist">
-	<f:mark.contentArea colPos="280" txContainerParent="{record.uid}">
 	<f:for each="{col_280}" as="tab">
 		<li class="nav-item" role="presentation">
 			<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
@@ -68,7 +64,6 @@
 			</button>
 		</li>
 	</f:for>
-	</f:mark.contentArea>
 </ul>
 <f:render section="Content" arguments="{_all}" />
 </f:section>
@@ -77,7 +72,6 @@
 <div class="row">
 	<div class="col-{pill.asideWidth}">
 		<ul id="tabContainer-{currentUid}" class="nav flex-column nav-pills tabcontainer" role="tablist" aria-orientation="vertical">
-			<f:mark.contentArea colPos="280" txContainerParent="{record.uid}">
 			<f:for each="{col_280}" as="tab">
 				<li class="nav-item" role="presentation">
 					<button id="tab-{tab.uid}" class="nav-link" data-bs-target="#tab-content-{tab.uid}"
@@ -86,7 +80,6 @@
 					</button>
 				</li>
 			</f:for>
-			</f:mark.contentArea>
 		</ul>
 	</div>
 	<div class="col-{pill.mainWidth}">
@@ -97,11 +90,9 @@
 
 <f:section name="Content">
 <div id="tabContent-{currentUid}" class="tab-content">
-	<f:mark.contentArea colPos="280" txContainerParent="{record.uid}">
 	<f:for each="{col_280}" as="row">
 		{row.renderedContent -> f:format.raw()}
 	</f:for>
-	</f:mark.contentArea>
 </div>
 </f:section>
 

@@ -65,11 +65,9 @@
 			<f:if condition="{collapsibleByPid}">
 				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
 			</f:if>
-			<f:mark.contentArea colPos="278" txContainerParent="{record.uid}">
-				<f:for each="{col_278}" as="row">
-					{row.renderedContent -> f:format.raw()}
-				</f:for>
-			</f:mark.contentArea>
+			<f:for each="{col_278}" as="row">
+				{row.renderedContent -> f:format.raw()}
+			</f:for>
 		</div>
 	</div>
 </div>
@@ -81,11 +79,9 @@
 		<f:if condition="{collapsibleByPid}">
 			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
 		</f:if>
-		<f:mark.contentArea colPos="278" txContainerParent="{record.uid}">
-			<f:for each="{col_278}" as="row">
-				{row.renderedContent -> f:format.raw()}
-			</f:for>
-		</f:mark.contentArea>
+		<f:for each="{col_278}" as="row">
+			{row.renderedContent -> f:format.raw()}
+		</f:for>
 	</div>
 </div>
 </f:section>
