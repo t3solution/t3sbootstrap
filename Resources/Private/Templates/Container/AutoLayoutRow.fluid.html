@@ -17,10 +17,8 @@
 
 <f:section name="Default">
 	<div class="row{class}"{styleAttr -> f:format.raw()}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
-		<f:mark.contentArea colPos="272" txContainerParent="{record.uid}">
-			<f:for each="{col_272}" as="row">
-				{row.renderedContent -> f:format.raw()}
-			</f:for>
-		</f:mark.contentArea>
+		<f:for each="{col_272}" as="row">
+			{row.renderedContent -> f:format.raw()}
+		</f:for>
 	</div>
 </f:section>

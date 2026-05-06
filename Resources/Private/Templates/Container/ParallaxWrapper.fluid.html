@@ -96,22 +96,18 @@ function t3sbParallax(addHeight, uid) {
 	<f:then>
 		<div class="d-flex {container}">
 			<div id="text-wrapper-{data.uid}" class="align-self-center w-100">
-				<f:mark.contentArea colPos="274" txContainerParent="{record.uid}">
-					<f:for each="{col_274}" as="row">
-						{row.renderedContent -> f:format.raw()}
-					</f:for>
-				</f:mark.contentArea>
+				<f:for each="{col_274}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
 			</div>
 		</div>
 	</f:then>
 	<f:else>
 		<div class="d-flex w-100">
 			<div id="text-wrapper-{data.uid}" class="align-self-center w-100">
-				<f:mark.contentArea colPos="274" txContainerParent="{record.uid}">
-					<f:for each="{col_274}" as="row">
-						{row.renderedContent -> f:format.raw()}
-					</f:for>
-				</f:mark.contentArea>
+				<f:for each="{col_274}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
 			</div>
 		</div>
 	</f:else>

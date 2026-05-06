@@ -17,10 +17,8 @@
 	<f:if condition="{tab.contentByPid}">
 		<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{tab.contentByPid}', colPos: '0'}"/>
 	</f:if>
-	<f:mark.contentArea colPos="281" txContainerParent="{record.uid}">
 	<f:for each="{col_281}" as="row">
 		{row.renderedContent -> f:format.raw()}
 	</f:for>
-	</f:mark.contentArea>
 </div>
 </f:section>

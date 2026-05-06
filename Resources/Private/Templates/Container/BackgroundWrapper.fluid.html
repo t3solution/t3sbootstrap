@@ -107,11 +107,9 @@
 					<section id="s-{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
 						<f:if condition="{col_273.0}">
 							{containerPre -> f:format.raw()}
-								<f:mark.contentArea colPos="273" txContainerParent="{record.uid}">
 									<f:for each="{col_273}" as="row">
 										{row.renderedContent -> f:format.raw()}
 									</f:for>
-								</f:mark.contentArea>
 							{containerPost -> f:format.raw()}
 						</f:if>
 					</section>
@@ -127,11 +125,9 @@
 		<div class="d-flex h-100" style="z-index: 1;">
 			<div class="col{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 				{containerPre -> f:format.raw()}
-					<f:mark.contentArea colPos="273" txContainerParent="{record.uid}">
 						<f:for each="{col_273}" as="row">
 							{row.renderedContent -> f:format.raw()}
 						</f:for>
-					</f:mark.contentArea>
 				{containerPost -> f:format.raw()}
 			</div>
 		</div>
@@ -145,21 +141,17 @@
 			<f:then>
 				<div class="{container} d-flex">
 					<div class="card-text w-100{alignItem}">
-						<f:mark.contentArea colPos="273" txContainerParent="{record.uid}">
 							<f:for each="{col_273}" as="row">
 								{row.renderedContent -> f:format.raw()}
 							</f:for>
-						</f:mark.contentArea>
 					</div>
 				</div>
 			</f:then>
 			<f:else>
 				<div class="card-text w-100{alignItem}">
-					<f:mark.contentArea colPos="273" txContainerParent="{record.uid}">
 						<f:for each="{col_273}" as="row">
 							{row.renderedContent -> f:format.raw()}
 						</f:for>
-					</f:mark.contentArea>
 				</div>
 			</f:else>
 		</f:if>

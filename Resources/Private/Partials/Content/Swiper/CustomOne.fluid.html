@@ -24,17 +24,15 @@
 Example:
 <div id="mySwiper" class="swiper-container mx-auto my-5" style="overflow: hidden">
 	<div class="swiper-wrapper">
-		<f:mark.contentArea colPos="300" txContainerParent="{record.uid}">
-			<f:for each="{col_300}" as="slide">
-				<div class="swiper-slide">
-					<f:render section="Image" arguments="{ratio: '{ratio}', file: '{swiperSlides.{slide.uid}.0}', width: '{width}'}" />
-					<div class="slide-content ">
-						<h2 class="text-white">{slide.header}</h2>
-						<div class="d-none d-md-block">{slide.bodytext -> f:format.html()}</div>
-					</div>
+		<f:for each="{col_300}" as="slide">
+			<div class="swiper-slide">
+				<f:render section="Image" arguments="{ratio: '{ratio}', file: '{swiperSlides.{slide.uid}.0}', width: '{width}'}" />
+				<div class="slide-content ">
+					<h2 class="text-white">{slide.header}</h2>
+					<div class="d-none d-md-block">{slide.bodytext -> f:format.html()}</div>
 				</div>
-			</f:for>
-		</f:mark.contentArea>
+			</div>
+		</f:for>
 		<div class="swiper-pagination"></div>
 	</div>
 </div>

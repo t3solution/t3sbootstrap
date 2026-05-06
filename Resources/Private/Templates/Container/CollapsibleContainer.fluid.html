@@ -37,36 +37,30 @@
 	<f:if condition="{appearance} == 'accordion'">
 		<f:then>
 			<div id="accordion-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}" class="accordion{flush}">
-				<f:mark.contentArea colPos="277" txContainerParent="{record.uid}">
-					<f:for each="{col_277}" as="row">
-						{row.renderedContent -> f:format.raw()}
-					</f:for>
-				</f:mark.contentArea>
+				<f:for each="{col_277}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
 			</div>
 		</f:then>
 		<f:else>
 			<p>
 				<f:variable name="active" value="{f:if(condition: flexForm.active, then: 'true', else: 'false')}" />
-				<f:mark.contentArea colPos="277" txContainerParent="{record.uid}">
-					<f:for each="{col_277}" as="row" iteration="iterator">
-						<f:variable name="flexForm" value="<t3sb:flexform data='{row.tx_t3sbootstrap_flexform}' />" />
-						<a id="c{col_277.{iterator.index}.uid}" class="btn me-1 btn-{flexForm.style} {row.tx_t3sbootstrap_header_class}"
-							data-bs-toggle="collapse" href="#collapse-{col_277.{iterator.index}.uid}"
-							role="button" aria-expanded="{active}" aria-controls="collapse-{col_277.{iterator.index}.uid}">
-							<f:if condition="{row.header_icon}">
-								<t3sb:icon iconfig="{row.header_icon}" additionalAttributes="{class:'me-1'}" />
-							</f:if>
-							{f:if(condition: '{col_277.{iterator.index}.header}',
-							then: '{col_277.{iterator.index}.header -> f:format.raw()}', else: 'Button-{col_277.{iterator.index}.uid}')}
-						</a>
-					</f:for>
-				</f:mark.contentArea>
-			</p>
-			<f:mark.contentArea colPos="277" txContainerParent="{record.uid}">
 				<f:for each="{col_277}" as="row" iteration="iterator">
-						{row.renderedContent -> f:format.raw()}
+					<f:variable name="flexForm" value="<t3sb:flexform data='{row.tx_t3sbootstrap_flexform}' />" />
+					<a id="c{col_277.{iterator.index}.uid}" class="btn me-1 btn-{flexForm.style} {row.tx_t3sbootstrap_header_class}"
+						data-bs-toggle="collapse" href="#collapse-{col_277.{iterator.index}.uid}"
+						role="button" aria-expanded="{active}" aria-controls="collapse-{col_277.{iterator.index}.uid}">
+						<f:if condition="{row.header_icon}">
+							<t3sb:icon iconfig="{row.header_icon}" additionalAttributes="{class:'me-1'}" />
+						</f:if>
+						{f:if(condition: '{col_277.{iterator.index}.header}',
+						then: '{col_277.{iterator.index}.header -> f:format.raw()}', else: 'Button-{col_277.{iterator.index}.uid}')}
+					</a>
 				</f:for>
-			</f:mark.contentArea>
+			</p>
+			<f:for each="{col_277}" as="row" iteration="iterator">
+					{row.renderedContent -> f:format.raw()}
+			</f:for>
 		</f:else>
 	</f:if>
 </f:section>
