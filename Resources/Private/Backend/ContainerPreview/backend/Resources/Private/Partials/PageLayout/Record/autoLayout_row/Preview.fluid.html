@@ -26,19 +26,17 @@
 
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-
-			<strong>Gutters:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.gutter')}:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
 			
 				<f:if condition="{flexForm.justify}">
-			| <strong>Justify content:</strong> {flexForm.justify}
+			| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.justify')}:</strong> {flexForm.justify}
 				</f:if>
 				<f:if condition="{flexForm.alignItem}">
-			| <strong>Align items:</strong> {flexForm.alignItem}
+			| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alignItem')}:</strong> {flexForm.alignItem}
 				</f:if>
 				<f:if condition="{flexForm.responsiveVariations}">
-			| <strong>Responsive variations:</strong> {flexForm.responsiveVariations}
+			| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.responsiveVariations')}:</strong> {flexForm.responsiveVariations}
 				</f:if>
-	
 		</div>
 	</div>
 	

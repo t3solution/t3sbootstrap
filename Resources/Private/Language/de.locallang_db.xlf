@@ -1,2230 +1,2605 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="2.0"
 	   xmlns="urn:oasis:names:tc:xliff:document:2.0"
-	   srcLang="en">
+	   srcLang="en" trgLang="de">
 	<file id="t3sbootstrap">
-	
+
 		<unit id="tx_t3sbootstrap_domain_model_config.enabled">
 			<segment>
 				<source>Enabled</source>
+				<target>Aktiviert</target>
 			</segment>
 		</unit>
-	
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.disabled">
 			<segment>
 				<source>Disabled</source>
+				<target>Deaktiviert</target>
 			</segment>
 		</unit>
 
 		<unit id="tx_t3sbootstrap_domain_model_config.recordtype">
 			<segment>
 				<source>Configuration Type</source>
+				<target>Konfigurationstyp</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.recordtype.description">
 			<segment>
-				<source>A Bootstrap component can be selected here.</source>
+				<source>A Bootstrap component can be selected here:</source>
+				<target>Hier kann eine Bootstrap-Komponente ausgewählt werden:</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.generalsettings">
 			<segment>
 				<source>General Settings</source>
+				<target>Allgemeine Einstellungen</target>
 			</segment>
 		</unit>
 	
 		<unit id="tx_t3sbootstrap_domain_model_config.metanavigation">
 			<segment>
 				<source>Meta Navigation</source>
+				<target>Meta-Navigation</target>
 			</segment>
 		</unit>
 
 		<unit id="tx_t3sbootstrap_domain_model_config.navbar">
 			<segment>
 				<source>Navbar</source>
+				<target>Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarenable">
 			<segment>
 				<source>make your selection</source>
+				<target>Bitte auswählen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarenable.description">
 			<segment>
 				<source>Choose from navbar-light for use with light background colors, or navbar-dark for dark background colors</source>
+				<target>Wähle zwischen "navbar-light" für helle Hintergrundfarben oder "navbar-dark" für dunkle Hintergrundfarben</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarentrylevel">
 			<segment>
 				<source>Entry Level (int)</source>
+				<target>Entry-Level (int)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarentrylevel.description">
 			<segment>
 				<source>Defines at which level in the rootLine the menu should start</source>
+				<target>Legt fest, auf welcher Ebene in der rootLine das Menü beginnen soll</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarlevels">
 			<segment>
 				<source>Levels (int)</source>
+				<target>Levels (int)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarlevels.description">
 			<segment>
 				<source>The entry 1 for the first level always must exist</source>
+				<target>Der Eintrag 1 für die erste Ebene muss immer vorhanden sein</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarexcludeuiduist">
 			<segment>
 				<source>Exclude</source>
+				<target>Ausschließen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarexcludeuiduist.description">
 			<segment>
 				<source>Comma-separated list of page ids</source>
+				<target>Durch Kommas getrennte Liste von Seiten-IDs</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarrightmenuuidlist">
 			<segment>
 				<source>Right Menu</source>
+				<target>Rechtes Menü</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarrightmenuuidlist.description">
 			<segment>
 				<source>Comma-separated list of uid's (pages) for a right menu in the navbar</source>
+				<target>Durch Kommas getrennte Liste von UIDs (Seiten) für ein rechtes Menü in der Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbardarkmode">
 			<segment>
 				<source>Color mode toggler</source>
+				<target>Umschalter für den Farbmodus</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbardarkmode.description">
 			<segment>
 				<source>Enable as right menu dropdown - To allow visitors or users to toggle color modes</source>
+				<target>Als Dropdown-Menü auf der rechten Seite aktivieren – damit Besucher zwischen den Farbmodi wechseln können</target>
 			</segment>
 		</unit>
 
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotron">
 			<segment>
 				<source>Jumbotron</source>
+				<target>Jumbotron (Kopfbereich)</target>
 			</segment>
 		</unit>
 
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumb">
 			<segment>
 				<source>Breadcrumb</source>
+				<target>Navigationspfad</target>
 			</segment>
 		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebar">
 			<segment>
 				<source>Sidebar</source>
+				<target>Seitenleiste</target>
 			</segment>
 		</unit>
-		
-		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontent">
-			<segment>
-				<source>Expanded Content</source>
-			</segment>
-		</unit>
+
 		<unit id="tx_t3sbootstrap_domain_model_config.footer">
 			<segment>
 				<source>Footer</source>
+				<target>Fußzeile</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.homepageuid">
 			<segment>
 				<source>Homepage Uid</source>
+				<target>Uid der Startseite</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.contentonlyonrootpage">
 			<segment>
 				<source>Content Only On Rootpage</source>
+				<target>Inhalt nur auf der Startseite</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.contentonlyonrootpage.description">
 			<segment>
 				<source>disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled</source>
+				<target>Navigationsleiste, Jumbotron, Breadcrumb und Fußzeile auf der Startseite deaktivieren, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.disableprefixcomment">
 			<segment>
 				<source>Disable Prefix Comment</source>
+				<target>Prefix Comment deaktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.disableprefixcomment.description">
 			<segment>
 				<source>if set, the stdWrap property prefixComment will be disabled</source>
+				<target>wenn diese Option gesetzt ist, wird die Eigenschaft "prefixComment" von "stdWrap" deaktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.variousextraclasses">
 			<segment>
 				<source>Various Extra Classes</source>
+				<target>Diverse Extra Class(es)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.variousextraclasses.description">
 			<segment>
 				<source>Here you can apply any CSS "Extra Class" you like - e.g. bg-warning mt-4 or any other classes</source>
+				<target>Hier kannst du jede beliebige CSS-"Extra-Class(es)" anwenden – z. B. "bg-warning mt-4" oder andere Class(es)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.bodyclass">
 			<segment>
 				<source>Body</source>
+				<target>Hauptteil (body)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagecontent">
 			<segment>
 				<source>Page Content (#page-content)</source>
+				<target>Seiteninhalt (#page-content)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.main">
 			<segment>
 				<source>Main (.main-content)</source>
+				<target>Hauptinhalt (.main-content)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagewrapper">
 			<segment>
 				<source>Page Wrapper (#page-wrapper)</source>
+				<target>Seiten Wrapper (#page-wrapper)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.variousmarginandpadding">
 			<segment>
 				<source>Various Margin &amp; Padding</source>
+				<target>Diverse Abstände</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.globaltoppadding">
 			<segment>
 				<source>Global Top Padding</source>
+				<target>Gesamter oberer Abstand</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.globaltoppadding.description">
 			<segment>
 				<source>Extra Padding for colPos=0, 1 &amp; 2 (main- and aside-tag)</source>
+				<target>Zusätzlicher Innenabstand für colPos=0, 1 &amp; 2 (main- und aside-Tag)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.contentmargintop">
 			<segment>
 				<source>Content Element</source>
+				<target>Inhaltselement</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.contentmargintop.description">
 			<segment>
 				<source>here you can set the default space (margin-top) for each content-element (colPos=0). You can overwrite this value in the "Extra Class" field in each content-element.</source>
+				<target>Hier kannst du den Standardabstand (margin-top) für jedes Inhaltselement festlegen (colPos=0). Du kannst diesen Wert im Feld "Extra Class" überschreiben.</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.loadingspinner">
 			<segment>
 				<source>Loading Spinner</source>
+				<target>Ladekreisel</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.loadingspinner.description">
 			<segment>
 				<source>Bootstrap "spinners" can be used to show the loading state in your project. By default the spinner is built with "currentColor",so  you can easily change its appearance with text color utilities</source>
+				<target>Bootstrap-"Spinner" können verwendet werden, um den Ladestatus in deinem Projekt anzuzeigen. Standardmäßig wird der Spinner mit "currentColor" erstellt, sodass du sein Aussehen ganz einfach mit Funktionen zur Textfarbgestaltung anpassen kannst.</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.makeyourselection">
 			<segment>
 				<source>make your selection</source>
+				<target>Bitte auswählen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.spinner.item1">
 			<segment>
 				<source>Border spinner [border]</source>
+				<target>Randspinner [border]</target>
 			</segment>
 		</unit>
 		<unit id="tx_t3sbootstrap_domain_model_config.spinner.item2">
 			<segment>
 				<source>Growing spinner [grow]</source>
+				<target>Wachsender Spinner [grow]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.loadingspinnercolor">
 			<segment>
 				<source>Loading Spinner Color</source>
+				<target>Farbe des Ladekreisels</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.lightbox">
 			<segment>
 				<source>Lightbox</source>
+				<target>Lightbox</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.lightboxsettings">
 			<segment>
-				<source>Lightbox Settings</source>
+				<source>Lightbox</source>
+				<target>Lightbox-Einstellungen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.magnifyingglassicon">
 			<segment>
 				<source>Magnifying glass icon</source>
+				<target>Lupensymbol</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.magnifyingglassicon.description">
 			<segment>
 				<source>in the center of an image on hover</source>
+				<target>beim Darüberfahren mit der Maus in der Bildmitte</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenu">
 			<segment>
 				<source>Section Menu</source>
+				<target>Abschnittsmenü</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenusettings">
 			<segment>
 				<source>Section Menu Settings</source>
+				<target>Einstellungen Abschnittsmenü</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarsectionmenu">
 			<segment>
 				<source>One Page Layout</source>
+				<target>One Page Layout</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarsectionmenu.description">
 			<segment>
 				<source>Enable for "One Page Layout"</source>
+				<target>"Einseitiges Layout" aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.anchorextraoffset">
 			<segment>
 				<source>Anchor extra offset (int)</source>
+				<target>Zusätzlicher Anker-Versatz (int)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.anchorextraoffset.description">
 			<segment>
 				<source>for Section-Menu-Items and "OnePageLayout": in px - (default 29)</source>
+				<target>für Abschnittsmenüs und "OnePageLayout": in px – (Standardwert 29)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenuscrollspythreshold">
 			<segment>
 				<source>Scrollspy threshold (string)</source>
+				<target>Scrollspy threshold (string)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenuscrollspythreshold.description">
 			<segment>
 				<source>default: 0.1, 0.5, 1</source>
+				<target>Standard: 0.1, 0.5, 1</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenuscrollspyrootmargin">
 			<segment>
 				<source>Scrollspy rootMargin (string)</source>
+				<target>Scrollspy rootMargin (string)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenuscrollspyrootmargin.description">
 			<segment>
 				<source>default: 0px 0px -25%</source>
+				<target>Standard: 0px 0px -25%</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenuscrollspy">
 			<segment>
 				<source>Scrollspy</source>
+				<target>Scrollspy</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenuscrollspy.description">
 			<segment>
 				<source>activate/deactivate scrollspy</source>
+				<target>Scrollspy aktivieren/deaktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.icons">
 			<segment>
 				<source>Icons</source>
+				<target>Symbole</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.icons.description">
 			<segment>
 				<source>Shows Icons in section menu</source>
+				<target>Zeigt Symbole im Abschnittsmenü an</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenustickytop">
 			<segment>
 				<source>Sticky Top</source>
+				<target>Sticky Top</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenustickytop.description">
 			<segment>
 				<source>for #sectionmenu, .submenu or .make-me-sticky</source>
+				<target>für #sectionmenu, .submenu oder .make-me-sticky</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarsectionmobile">
 			<segment>
 				<source>Section mobile</source>
+				<target>Abschnittsmenü Mobile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarsectionmobile.description">
 			<segment>
 				<source>Shows the section menu also in the mobile if enabled</source>
+				<target>Zeigt das Abschnittsmenü auch auf Mobilgeräten an, sofern diese Option aktiviert ist</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.backgroundimage">
 			<segment>
 				<source>Background Image</source>
+				<target>Hintergrundbild</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.backgroundimageenable">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.backgroundimageenable.description">
 			<segment>
 				<source>first image from pages media</source>
+				<target>erstes Bild von Pages Media</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.backgroundimageslide">
 			<segment>
 				<source>Slide</source>
+				<target>Slide</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.backgroundimageslide.description">
 			<segment>
 				<source>rootline sliding for the background image</source>
+				<target>Hintergrundbild auch auf den Unterseiten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.othersettings">
 			<segment>
 				<source>Other Settings</source>
+				<target>Weitere Einstellungen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.subheadercolor">
 			<segment>
 				<source>Subheader Color</source>
+				<target>Farbe für Untertitel</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.subheadercolor.description">
 			<segment>
 				<source>Bootstrap contextual text classes</source>
+				<target>Bootstrap-Classen für den Kontext</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.dateformat">
 			<segment>
 				<source>Date Format</source>
+				<target>Datumsformat</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.dateformat.description">
 			<segment>
 				<source>the date format to use in ext:t3sbootstrap - default: d.m.Y</source>
+				<target>das in ext:t3sbootstrap zu verwendende Datumsformat – Standard: d.m.Y</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.favicon">
 			<segment>
 				<source>Favicon</source>
+				<target>Favicon</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.favicon.description">
 			<segment>
 				<source>path to your favicon e.g.: EXT:sitepackage/Resources/Public/Icons/favicon.ico</source>
+				<target>Pfad zu deinem Favicon, z. B.: EXT:sitepackage/Resources/Public/Icons/favicon.ico</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.cardflipperonclick">
 			<segment>
 				<source>Card Flipper</source>
+				<target>Card Flipper</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.cardflipperonclick.description">
 			<segment>
 				<source>rotate the cards on click (not on hover) if activated</source>
+				<target>Card beim klicken drehen (nicht beim "hover"), sofern diese Funktion aktiviert ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.lastmodifiedcontentelement">
 			<segment>
 				<source>Last Modified</source>
+				<target>Zuletzt geändert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.lastmodifiedcontentelement.description">
 			<segment>
 				<source>display the date of the last modified content on current page in the footer</source>
+				<target>Das Datum der letzten Änderung des Inhalts der aktuellen Seite in der Fußzeile anzeigen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.recentlyupdatedcontentelements">
 			<segment>
 				<source>Updated Content Elements</source>
+				<target>Aktualisierte Inhaltselemente</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.recentlyupdatedcontentelements.description">
 			<segment>
 				<source>another solution in the Template MenuRecentlyUpdated.fluid.html if enabled</source>
+				<target>eine weitere Lösung für das Template "MenuRecentlyUpdated.fluid.html", sofern diese aktiviert ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metaenable">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metaenable.item1">
 			<segment>
 				<source>Left align [start]</source>
+				<target>Linksbündig [start]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metaenable.item2">
 			<segment>
 				<source>Right align [end]</source>
+				<target>Rechtsbündig [end]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metaenable.item3">
 			<segment>
 				<source>Nav-scroller (only left align) [scroller]</source>
+				<target>Navigations-Scroller (nur linksbündig) [scroller]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metavalue">
 			<segment>
 				<source>Value</source>
+				<target>Wert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metavalue.description">
 			<segment>
 				<source>Comma-separated list of page ids</source>
+				<target>Durch Kommas getrennte Liste von Seiten-IDs</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metaclass">
 			<segment>
 				<source>Extra class</source>
+				<source>Zusätzliche Class</source>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metaclass.description">
 			<segment>
 				<source>e.g. text-white text-shadow bg-primary</source>
+				<target>z.B. text-white text-shadow bg-primary</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metatext">
 			<segment>
 				<source>Text only</source>
+				<target>Nur Text</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.metatext.description">
 			<segment>
 				<source>e.g. e-mail address and phone number</source>
+				<target>z.B. E-Mail-Adresse und Telefonnummer</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.varioussettings">
 			<segment>
 				<source>Various Settings</source>
+				<target>Diverse Einstellungen</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarmegamenu">
 			<segment>
 				<source>Megamenu</source>
+				<target>Megamenu</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarmegamenu.description">
 			<segment>
 				<source>Info: https://www.t3sbootstrap.de/demo/mega-menu/</source>
+				<target>Info: https://www.t3sbootstrap.de/demo/mega-menu/</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarincludespacer">
 			<segment>
 				<source>Include Spacer</source>
+				<target>Abstandhalter einfügen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarincludespacer.description">
 			<segment>
 				<source>Enable spacer in dropdown</source>
+				<target>Abstandhalter im Dropdown-Menü aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarhover">
 			<segment>
 				<source>Hover</source>
+				<target>Hover</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarhover.description">
 			<segment>
 				<source>Open dropdown on hover</source>
+				<target>Dropdown-Menü beim Darüberfahren mit der Maus öffnen</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarextrarow">
 			<segment>
 				<source>Extra Row</source>
+				<target>Zusätzliche Zeile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarextrarow.description">
 			<segment>
-				<source>Enable extra row(s) in the navbar - .../Resources/Private/Partials/Page/Navbar/NavbarExtraRow.fluid.html</source>
+				<source>Enable an extra row in the navbar - .../Resources/Private/Partials/Page/Navbar/NavbarExtraRow.fluid.html</source>
+				<target>Eine zusätzliche Zeile in der Navigationsleiste aktivieren - .../Resources/Private/Partials/Page/Navbar/NavbarExtraRow.fluid.html</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarclickableparent">
 			<segment>
 				<source>Clickable parent</source>
+				<target>Klickbares übergeordnetes Element</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarclickableparent.description">
 			<segment>
 				<source>Clickable parent if dropdown menu is open</source>
+				<target>wenn das Dropdown-Menü geöffnet ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplusicon">
 			<segment>
 				<source>Plus icon for dropdown</source>
+				<target>Plus-Symbol für Dropdown-Menü</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplusicon.description">
 			<segment>
 				<source>Extra plus icon to open dropdown (Hover is disabled by default if activated!)</source>
+				<target>"Extra"-Symbol zum Öffnen des Dropdown-Menüs (Die Hover-Funktion ist standardmäßig deaktiviert, wenn diese Option aktiviert ist!)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbardropdownanimate">
 			<segment>
 				<source>Dropdown animation</source>
+				<target>Dropdown-Animation</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.brand">
 			<segment>
 				<source>Brand (Logo)</source>
+				<target>Marke (Logo)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.brand.description">
 			<segment>
 				<source>Info: https://getbootstrap.com/docs/5.3/components/navbar/#brand</source>
+				<target>Info: https://getbootstrap.com/docs/5.3/components/navbar/#brand</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand">
 			<segment>
 				<source>make your selection</source>
+				<target>Bitte auswählen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand.item1">
 			<segment>
 				<source>As a link [link]</source>
+				<target>Als Link [link]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand.item2">
 			<segment>
 				<source>As a heading [heading]</source>
+				<target>Als Überschrift [heading]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand.item3">
 			<segment>
-				<source>Just an image [image]</source>
+				<source>Just an image (Logo) [image]</source>
+				<target>Als Bild (Logo) [image]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand.item4">
 			<segment>
 				<source>Image and text [imgText]</source>
+				<target>Bild (Logo) und Text [imgText]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrandalignment">
 			<segment>
 				<source>Alignment</source>
+				<target>Ausrichtung</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrandalignment.item1">
 			<segment>
 				<source>left</source>
+				<target>links</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrandalignment.item2">
 			<segment>
 				<source>right</source>
+				<target>rechts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.company">
 			<segment>
 				<source>Text</source>
+				<target>Text</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.company.description">
 			<segment>
 				<source>Text, e.g. Company name (Multilingual Support with pipe "|")</source>
+				<target>Text, z. B. Firmenname (mehrsprachige Unterstützung mit Pipe-Zeichen „|“)</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarimage">
 			<segment>
 				<source>Image</source>
+				<target>Bild</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarimage.description">
 			<segment>
 				<source>Path to your image - Only if "Brand Options" is "Just an image" or "Image and text"</source>
+				<target>Pfad zu deinem Bild – Nur wenn unter "Brand Options" "Bild" oder "Bild und Text" ausgewählt ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbackground">
 			<segment>
 				<source>Background Color</source>
+				<target>Hintergrundfarbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbackground.description">
 			<segment>
 				<source>HTML-color - Color schemes "bg-color" must be activated</source>
+				<target>HTML-Farbe – Farbschema „bg-color“ muss aktiviert sein</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarcolor">
 			<segment>
 				<source>Color scheme</source>
+				<target>Farbschema</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.backgroundcolor">
 			<segment>
 				<source>Background Color</source>
+				<target>Hintergrundfarbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbartransparent">
 			<segment>
 				<source>Transparent Navbar</source>
+				<target>Transparente Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbartransparent.description">
 			<segment>
-				<source>create a transparent navbar which changes its style on scroll - Placement must be "fixed-top"</source>
+				<source>create a transparent navbar which changes its style on scroll</source>
+				<target>Erstelle eine transparente Navigationsleiste, deren Stil sich beim Scrollen ändert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.layoutplacement">
 			<segment>
 				<source>Layout/Placement</source>
+				<target>Layout/Platzierung</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.layoutplacement.description">
 			<segment>
 				<source>Info: https://getbootstrap.com/docs/5.3/components/navbar/#placement</source>
+				<target>Info: https://getbootstrap.com/docs/5.3/components/navbar/#placement</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarinnercontainer">
 			<segment>
 				<source>Inner-Container</source>
+				<target>Container innen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplacement">
 			<segment>
 				<source>Placement</source>
+				<target>Platzierung</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplacement.item1">
 			<segment>
 				<source>default</source>
+				<target>Standard</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplacement.item2">
 			<segment>
 				<source>fixed-top</source>
+				<target>Oben fixiert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplacement.item3">
 			<segment>
 				<source>fixed-bottom</source>
+				<target>Unten fixiert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarplacement.item4">
 			<segment>
 				<source>sticky-top</source>
+				<target>Sticky-Top</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaralignment">
 			<segment>
 				<source>alignment</source>
+				<target>Ausrichtung</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaralignment.item1">
 			<segment>
 				<source>left</source>
+				<target>links</target>
 			</segment>
 		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaralignment.item2">
 			<segment>
 				<source>right</source>
+				<target>rechts</target>
 			</segment>
 		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaralignment.item3">
 			<segment>
 				<source>center</source>
+				<target>mittig</target>
 			</segment>
 		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaralignment.item4">
 			<segment>
 				<source>fill (every nav item will be the same width)</source>
+				<target>ausfüllen (alle Navigationselemente haben dieselbe Breite)</target>
 			</segment>
 		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaralignment.item5">
 			<segment>
 				<source>justified (all horizontal space will be occupied by nav links)</source>
+				<target>ausgerichtet (der gesamte horizontale Platz wird von den Navigationslinks eingenommen)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarclass">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarclass.description">
 			<segment>
 				<source>e.g. "mb-5" for margin-bottom: 3rem</source>
+				<target>z.B. "mb-5" für margin-bottom: 3rem</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarheight">
 			<segment>
 				<source>NavBar Height (int)</source>
+				<target>Höhe der Navigationsleiste (int)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarheight.description">
 			<segment>
 				<source>Is used as padding-top in the body tag - use only if NavBar is fixed-top (int+ px / default: "56")</source>
+				<target>Wird als "padding-top" im Body-Tag verwendet – nur, wenn die Navigationsleiste oben fixiert ist (int + px / Standard: „56“)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarsearchbox">
 			<segment>
 				<source>Searchbox</source>
+				<target>Suchfeld</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarsearchbox.item1">
 			<segment>
 				<source>Form only [form]</source>
+				<target>Nur Formular [form]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarsearchbox.item2">
 			<segment>
 				<source>Form &amp; Button [button]</source>
+				<target>Formular &amp; Button [button]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.shrinkingnavbar">
 			<segment>
 				<source>Shrinking Navbar</source>
+				<target>Zusammenklappbare Navigationsleiste (shrinking navbar)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.shrinkingnavbar.description">
 			<segment>
 				<source>Shrinking Navbar on scrolling: Set "Placement" to "fixed-top". Set "Navbar height" must be adapted for body-padding. Does not work with "Background color" only with "Color schemes". Transparency: "Color schemes" = "bg-color" and "Background color" &amp; "Navbar height" without entry.</source>
+				<target>Navigationsleiste beim Scrollen verkleinern: Setze „Platzierung“ auf „oben fixiert“. Die „Höhe der Navigationsleiste“ muss an den Abstand im Hauptbereich angepasst werden. Funktioniert nicht mit „Hintergrundfarbe“, sondern nur mit „Farbschemata“. Transparenz: „Farbschemata“ = „bg-color“ und „Hintergrundfarbe“ sowie „Höhe der Navigationsleiste“ ohne Eintrag.</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarshrinkcolor">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarshrinkcolor.description">
 			<segment>
 				<source>Choose from navbar-light for use with light background colors, or navbar-dark for dark background colors</source>
+				<target>Wähle zwischen "navbar-light" für helle Hintergrundfarben oder "navbar-dark" für dunkle Hintergrundfarben</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.shrinkingnavpadding">
 			<segment>
 				<source>Padding (top &amp; bottom)</source>
+				<target>Abstand (oben &amp; unten)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.shrinkingnavpadding.description">
 			<segment>
 				<source>py-x can be set by your stylesheet</source>
+				<target>py-x kann in deinem Stylesheet festgelegt werden</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarshrinkcolorschemes">
 			<segment>
 				<source>Color schemes</source>
+				<target>Farbschemata</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.responsiveBehaviors">
 			<segment>
 				<source>Responsive behaviors</source>
+				<target>Responsives Verhalten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.responsiveBehaviors.description">
 			<segment>
 				<source>Info: https://getbootstrap.com/docs/5.3/components/navbar/#responsive-behaviors</source>
+				<target>Info: https://getbootstrap.com/docs/5.3/components/navbar/#responsive-behaviors</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbartoggler">
 			<segment>
 				<source>Toggler position</source>
+				<target>Umschalter (toggler) Position</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbartoggler.item1">
 			<segment>
 				<source>left</source>
+				<target>links</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbartoggler.item2">
 			<segment>
 				<source>right</source>
-			</segment>
-		</unit>
-
-		<unit id="tx_t3sbootstrap_domain_model_config.navbaranimatedtoggler">
-			<segment>
-				<source>Animated Toggler</source>
-			</segment>
-		</unit>
-		
-		<unit id="tx_t3sbootstrap_domain_model_config.navbaranimatedtoggler.description">
-			<segment>
-				<source>Doing it with plain HTML &amp; pure CSS - does not work with "Offcanvas"</source>
+				<target>rechts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint">
 			<segment>
 				<source>Breakpoint</source>
+				<target>Breakpoint</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.description">
 			<segment>
 				<source>Grouping and hiding navbar contents by a parent breakpoint</source>
+				<target>Gruppieren und Ausblenden von Navigationsleisteninhalten anhand eines übergeordneten Haltepunkts (breakpoint)</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.navbaranimatedtoggler">
+			<segment>
+				<source>Animated Toggler</source>
+				<target>Animierter Umschalter (toggler)</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.navbaranimatedtoggler.description">
+			<segment>
+				<source>Doing it with plain HTML &amp; pure CSS - does not work with "Offcanvas"</source>
+				<target>Mit einfachem HTML &amp; CSS - funktioniert nicht mit "Offcanvas"</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.item1">
 			<segment>
 				<source>Small (≥576px) [sm]</source>
+				<target>Klein (≥576px) [sm]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.item2">
 			<segment>
-				<source>Medium (≥768px) [md]</source>
+				<source>Medium (≥768px [md]</source>
+				<target>Mittel (≥768px [md]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.item3">
 			<segment>
 				<source>Large (≥992px) [lg]</source>
+				<target>Groß (≥992px) [lg]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.item4">
 			<segment>
 				<source>Extra large (≥1200px) [xl]</source>
+				<target>Extra groß (≥1200px) [xl]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.item5">
 			<segment>
 				<source>Extra extra large (≥1400px) [xxl]</source>
+				<target>Extra, extra groß (≥1400px) [xxl]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbreakpoint.item6">
 			<segment>
 				<source>Never expand [no]</source>
+				<target>Niemals erweitern [no]</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaroffcanvas">
 			<segment>
 				<source>Offcanvas</source>
+				<target>Offcanvas</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbaroffcanvas.description">
 			<segment>
 				<source>Change navbar collapse to offcanvas on mobile screen</source>
+				<target>Auf Mobilgeräten die Navigationsleiste von „Collapse“ auf „Offcanvas“ umstellen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.languagemenu">
 			<segment>
 				<source>Language Menu</source>
+				<target>Sprachauswahl</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarlangmenu">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarlangmenu.description">
 			<segment>
 				<source>Setting is taken from the site configuration</source>
+				<target>Die Einstellung wird aus der Website-Konfiguration übernommen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.langmenuwithfaicon">
 			<segment>
 				<source>Style</source>
+				<target>Stil</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.langmenuwithfaicon.description">
 			<segment>
 				<source>Icon (globe) or current language with flag if enabled</source>
+				<target>Symbol (Globus) oder aktuelle Sprache mit Flagge, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarlangflags">
 			<segment>
 				<source>Flags</source>
+				<target>Flaggen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarlangflags.description">
 			<segment>
 				<source>Show flags in the language menu if enabled</source>
+				<target>Flaggen im Sprachmenü anzeigen, sofern diese Option aktiviert ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronenable">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronenable.description">
 			<segment>
 				<source>Enable Jumbotron in backend layout</source>
+				<target>Jumbotron im Backend-Layout aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronslide">
 			<segment>
 				<source>Slide</source>
+				<target>Slide</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronslide.description">
 			<segment>
 				<source>Content of Jumbotron "slide" through the rootline</source>
+				<target>Inhalt des Jumbotrons "slided" durch die Rootline</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronposition">
 			<segment>
 				<source>Position</source>
+				<target>Position</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronposition.item1">
 			<segment>
 				<source>Above the NavBar</source>
+				<target>Über der Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronposition.item2">
 			<segment>
 				<source>Below the NavBar</source>
+				<target>Unterhalb der Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotroncontainerposition">
 			<segment>
 				<source>Container position</source>
+				<target>Containerposition</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotroncontainerposition.item1">
 			<segment>
 				<source>inside</source>
+				<target>innen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotroncontainerposition.item2">
 			<segment>
 				<source>outside</source>
+				<target>außen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronclass">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronclass.description">
 			<segment>
 				<source>e.g. "mb-0" for margin-bottom: 0</source>
+				<target>z.B. "mb-0" für margin-bottom: 0</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem">
 			<segment>
 				<source>Align content items</source>
+				<target>Inhaltselemente ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.description">
 			<segment>
 				<source>Vertical align for the content (An inside container must be selected)</source>
+				<target>Vertikale Ausrichtung des Inhalts (Es muss ein innerer Container ausgewählt sein)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item1">
 			<segment>
 				<source>left (start)</source>
+				<target>links (start)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item2">
 			<segment>
 				<source>right (end)</source>
+				<target>rechts (end)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item3">
 			<segment>
 				<source>center</source>
+				<target>zentriert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item4">
 			<segment>
 				<source>baseline</source>
+				<target>Basislinie</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item5">
 			<segment>
 				<source>stretch</source>
+				<target>strecken</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitle">
 			<segment>
 				<source>Page title (h1)</source>
+				<target>Seitentitel (h1)</target>
 			</segment>
 		</unit>
-	
+
+
 		<unit id="tx_t3sbootstrap_domain_model_config.ptitle">
 			<segment>
 				<source>Page title</source>
+				<target>Seitentitel</target>
 			</segment>
 		</unit>
 
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitle.item1">
 			<segment>
-				<source>none (bad solution - you have to set the H1-tag by yourself.)</source>
+				<source>none (bad solution - you have to set the H1-tag by yourself)</source>
+				<target>keine (schlechte Lösung – du musst das H1-Tag selbst setzen)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitle.item2">
 			<segment>
 				<source>in the Jumbotron</source>
+				<target>im Jumbotron</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitle.item3">
 			<segment>
 				<source>in the Main Content</source>
+				<target>im Hauptinhalt</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitle.item4">
 			<segment>
 				<source>above the Breadcrumb</source>
+				<target>über der Breadcrumb-Navigation</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitle.item5">
 			<segment>
 				<source>in the Expanded top content</source>
+				<target>im erweiterten oberen Bereich</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlealign">
 			<segment>
 				<source>Alignment</source>
+				<target>Ausrichtung</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlealign.item1">
 			<segment>
 				<source>default</source>
+				<target>Standard</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlealign.item2">
 			<segment>
 				<source>center</source>
+				<target>mittig</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlealign.item3">
 			<segment>
 				<source>right</source>
+				<target>rechts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlealign.item4">
 			<segment>
 				<source>left</source>
+				<target>links</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.pagetitleclass">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumb.description">
 			<segment>
 				<source>indicate the current page's location within a navigational hierarchy. Info: https://getbootstrap.com/docs/5.3/components/breadcrumb/</source>
+				<target>Zeigt die Position der aktuellen Seite innerhalb einer Navigationshierarchie an. Info: https://getbootstrap.com/docs/5.3/components/breadcrumb/</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbenable">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbnotonrootpage">
 			<segment>
 				<source>Not on rootpage</source>
+				<target>Nicht auf der Startseite</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbcontainerposition">
 			<segment>
 				<source>Container position</source>
+				<target>Containerposition</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbcontainerposition.item1">
 			<segment>
 				<source>inside</source>
+				<target>innen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbcontainerposition.item2">
 			<segment>
 				<source>outside</source>
+				<target>außen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbposition">
 			<segment>
 				<source>Breadcrumb position</source>
+				<target>Position der Breadcrumb-Navigation</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbposition.item1">
 			<segment>
 				<source>Above the NavBar</source>
+				<target>über der Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbposition.item2">
 			<segment>
 				<source>Below the NavBar</source>
+				<target>unter der Navigationsleiste</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbposition.item3">
 			<segment>
 				<source>Above the Jumbotron</source>
+				<target>über dem Jumbotron</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbposition.item4">
 			<segment>
 				<source>Below the Jumbotron</source>
+				<target>unter dem Jumbotron</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbclass">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbclass.description">
 			<segment>
 				<source>e.g. "mb-0" for margin-bottom: 0</source>
+				<target>z.B. "mb-0" for margin-bottom: 0</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbbottom">
 			<segment>
 				<source>Below the content</source>
+				<target>Unterhalb des Inhalts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbbottom.description">
 			<segment>
 				<source>Show the breadcrumb menu below the content (only or also)</source>
+				<target>Das Breadcrumb-Menü unterhalb des Inhalts anzeigen (nur oder zusätzlich)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbfaicon">
 			<segment>
 				<source>Icon</source>
+				<target>Icon</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbfaicon.description">
 			<segment>
 				<source>Icon instead of text for level=0 only (e.g. Font Awesome icons)</source>
+				<target>Symbol/Icon statt Text nur für Level=0 (z.B. Font Awesome icons)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbcorner">
 			<segment>
 				<source>No rounded corner</source>
+				<target>Keine abgerundeten Ecken</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbcorner.description">
 			<segment>
 				<source>To make the breadcrumb without rounded corners</source>
+				<target>So erstellst du die Breadcrumb-Navigation ohne abgerundete Ecken</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarenable">
 			<segment>
 				<source>Enable in left Sidebar</source>
+				<target>In der linken Seitenleiste aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarenable.description">
 			<segment>
 				<source>if sidebar is available</source>
+				<target>sofern eine Seitenleiste verfügbar ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarrightenable">
 			<segment>
 				<source>Enable in right Sidebar</source>
+				<target>In der rechten Seitenleiste aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarrightenable.description">
 			<segment>
 				<source>if sidebar is available</source>
+				<target>sofern eine Seitenleiste verfügbar ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarentrylevel">
 			<segment>
 				<source>Entry Level (int)</source>
+				<target>Entry Level (int)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarentrylevel.description">
 			<segment>
 				<source>99 = Submenu of current page</source>
+				<target>99 = Untermenü der aktuellen Seite</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebar.item1">
 			<segment>
 				<source>submenu</source>
+				<target>Untermenü</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebar.item2">
 			<segment>
 				<source>sectionmenu</source>
+				<target>Abschnittsmenü (sectionmenu)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarexcludeuiduist">
 			<segment>
 				<source>Exclude</source>
+				<target>Ausgeschlossene Seiten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarexcludeuiduist.description">
 			<segment>
 				<source>Comma-separated list of page ids</source>
+				<target>Durch Kommas getrennte Liste von Seiten-IDs</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarincludespacer">
 			<segment>
 				<source>Spacer</source>
+				<target>Abstandhalter (spacer)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarincludespacer.description">
 			<segment>
 				<source>Enable spacer</source>
+				<target>Abstandhalter aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.slideleftaside">
 			<segment>
 				<source>Slide left Sidebar</source>
+				<target>In die linke Seitenleiste sliden</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.slideleftaside.description">
 			<segment>
 				<source>content slide for colPos=1 if enabled</source>
+				<target>Inhalt der Seitenleiste (colPos=1) "slided" durch die Rootline, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sliderightaside">
 			<segment>
 				<source>Slide right Sidebar</source>
+				<target>Rechte Seitenleiste "sliden"</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sliderightaside.description">
 			<segment>
 				<source>content slide for colPos=2 if enabled</source>
+				<target>Inhalt der Seitenleiste (colPos=2) "slided" durch die Rootline, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.submenusticky">
 			<segment>
 				<source>Sticky Top</source>
+				<target>Sticky Top</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.submenusticky.description">
 			<segment>
 				<source>If using sectionmenu check settings under "General Settings - position of the submenu at the top of the viewport"</source>
+				<target>Wenn das SectionMenu aktiviert wurde, überprüfe die Einstellungen unter „Allgemeine Einstellungen – Position des Untermenüs am oberen Rand des Browserfensters (viewport)“.</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.asideextraclass">
 			<segment>
 				<source>Extra Class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.asideextraclass.description">
 			<segment>
 				<source>e.g. bg-warning or any other classes</source>
+				<target>z.B. bg-warning oder jede andere Class</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarmenuposition">
 			<segment>
 				<source>Menu Position</source>
+				<target>Menüposition</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarmenuposition.description">
 			<segment>
 				<source>above or below the content</source>
+				<target>oberhalb oder unterhalb des Inhalts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarmenuposition.item1">
 			<segment>
 				<source>above</source>
+				<target>oberhalb</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarmenuposition.item2">
 			<segment>
 				<source>below</source>
+				<target>unterhalb</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontent">
+			<segment>
+				<source>Expanded Content</source>
+				<target>Erweiterte Inhalte</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentenabletop">
 			<segment>
-				<source>Enable to show Expanded Content Top &amp; Bottom in Backend Layout</source>
+				<source>Enable to show Expanded Content Top &amp; Bottom as Backend Layout</source>
+				<target>Aktiviere die Anzeige von erweitertem Inhalt oben &amp; unten als Backend-Layout</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentbottom">
 			<segment>
 				<source>Expanded Content Bottom</source>
+				<target>Erweiterte Inhalte unten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentslidetop">
 			<segment>
 				<source>Content slide</source>
+				<target>Inhalt "slided" durch die Rootline, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentcontainerpositiontop">
 			<segment>
 				<source>Container position</source>
+				<target>Containerposition</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentcontainerpositiontop.item1">
 			<segment>
 				<source>inside</source>
+				<target>innen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentcontainerpositiontop.item2">
 			<segment>
 				<source>outside</source>
+				<target>außen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentclasstop">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentclasstop.description">
 			<segment>
 				<source>e.g. "mb-0" for margin-bottom: 0</source>
+				<target>z.B. "mb-0" for margin-bottom: 0</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentslidebottom">
 			<segment>
 				<source>Content slide</source>
+				<target>Inhalt "slided" durch die Rootline, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentcontainerpositionbottom">
 			<segment>
 				<source>Container position</source>
+				<target>Containerposition</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentcontainerpositionbottom.item1">
 			<segment>
 				<source>inside</source>
+				<target>innen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentcontainerpositionbottom.item2">
 			<segment>
 				<source>outside</source>
+				<target>außen</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentclassbottom">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentclassbottom.description">
 			<segment>
 				<source>e.g. "mb-0" for margin-bottom: 0</source>
+				<target>z.B. "mb-0" for margin-bottom: 0</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerenable">
 			<segment>
 				<source>Enable</source>
+				<target>Aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerenable.description">
 			<segment>
 				<source>Enable Footer in backend layout</source>
+				<target>Fußzeile im Backend-Layout aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footersticky">
 			<segment>
 				<source>Sticky Footer</source>
+				<target>Feste Fußzeile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footersticky.description">
 			<segment>
 				<source>Pin a footer to the bottom of the viewport</source>
+				<target>Eine Fußzeile am unteren Rand des Browser-Fensters fixieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerslide">
 			<segment>
 				<source>Slide</source>
+				<target>Slide</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerslide.description">
 			<segment>
 				<source>Content of Footer "slide" through the rootline</source>
+				<target>Inhalt "slided" durch die Rootline, sofern aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footercontainerposition">
 			<segment>
 				<source>Container position</source>
+				<target>Containerposition</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footercontainerposition.description">
 			<segment>
 				<source>If "Container" is not "none"</source>
+				<target>Wenn "Container" nicht "none" ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerclass">
 			<segment>
 				<source>Extra class</source>
+				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerclass.description">
 			<segment>
 				<source>e.g. "mb-0" for margin-bottom: 0</source>
+				<target>z.B. "mb-0" for margin-bottom: 0</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerpid">
 			<segment>
 				<source>Content (int)</source>
+				<target>Inhalt (int)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.footerpid.description">
 			<segment>
 				<source>Page uid (int) for the footer content (colPos= 0)</source>
+				<target>Seiten-ID (int) für den Fußzeileninhalt (colPos= 0)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.stickyfooterextrapadding">
 			<segment>
 				<source>Extra padding</source>
+				<target>Zusätzlicher Abstand</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.stickyfooterextrapadding.description">
 			<segment>
 				<source>if "footer-sticky" is activated, the padding-bottom for the body is given by JS. If you like an extra space between the footer and the content, you can do it here (in px)</source>
+				<target>Wenn "footer-sticky" aktiviert ist, wird der Abstand nach unten für den Body-Block per JavaScript festgelegt. Wenn du einen zusätzlichen Abstand zwischen der Fußzeile und dem Inhalt wünschst, kannst du diesen hier festlegen (in px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.customscss">
 			<segment>
 				<source>Custom SCSS</source>
+				<target>Benutzerdefiniertes SCSS</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.customscss.description">
 			<segment>
 				<source>You can set your own SCSS here:</source>
+				<target>Hier kannst du dein SCSS editieren:</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.customvariablesscss">
 			<segment>
 				<source>Custom Variables Scss</source>
+				<target>Benutzerdefinierte Variablen in SCSS</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.customvariablesscss.description">
 			<segment>
 				<source>You can override default Bootstrap variables here:</source>
+				<target>Hier kannst du Standard-Bootstrap-Variablen überschreiben:</target>
 			</segment>
 		</unit>
+
 
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadercelink">
 			<segment>
 				<source>Link the entire Content Element (with header_link)</source>
+				<target>Das gesamte Inhaltselement verlinken (mit header_link)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderdisplay">
 			<segment>
 				<source>Display headings</source>
+				<target>Überschriften Anzeige</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderclass">
 			<segment>
 				<source>Header Extra Class</source>
+				<target>Zusätzliche Class für die Überschrift (extra class)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderposition">
 			<segment>
 				<source>Header Position</source>
+				<target>Position der Überschrift</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderposition.item1">
 			<segment>
 				<source>Above the image (default)</source>
+				<target>Über dem Bild (Standard)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderposition.item2">
 			<segment>
 				<source>Beside or under the image</source>
+				<target>neben oder unter dem Bild</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapgutters">
 			<segment>
 				<source>Horizontal gutters</source>
+				<target>Horizontale "gutters"</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapgutters.description">
 			<segment>
 				<source>Info: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters</source>
+				<target>Info: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapverticalgutters">
 			<segment>
 				<source>Vertical gutters/margin</source>
+				<target>Vertikale "gutters/margin"</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapverticalgutters.description">
 			<segment>
 				<source>Info: https://getbootstrap.com/docs/5.3/layout/gutters/#vertical-gutters</source>
+				<target>Info: https://getbootstrap.com/docs/5.3/layout/gutters/#vertical-gutters</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbsettings">
 			<segment>
 				<source>T3SB Image Settings</source>
+				<target>T3SB-Bildeinstellungen</target>
 			</segment>
 		</unit>
-		
-		
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.bootstrapSpacing">
 			<segment>
 				<source>Bootstrap Spacing</source>
+				<target>Bootstrap Abstände</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.bootstrapColor">
 			<segment>
 				<source>Bootstrap Color</source>
+				<target>Bootstrap Farben</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapimageratio">
 			<segment>
 				<source>Image Ratio</source>
+				<target>Bildformat</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapintextimgrowwidth">
 			<segment>
 				<source>Gallery row width in %</source>
+				<target>Breite der Galeriezeile in %</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapzoomorig">
 			<segment>
 				<source>Use Original Image for Lightbox</source>
+				<target>Originalbild für Lightbox verwenden</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapzoomorig.description">
 			<segment>
 				<source>Only useful with image manipulation (cropping)</source>
+				<target>Nur bei der Bildbearbeitung (Zuschneiden) nützlich</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapextraclass">
 			<segment>
 				<source>Extra Class</source>
+				<target>Zusätzliche Class</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapextrastyle">
 			<segment>
 				<source>Extra Style</source>
+				<target>Extra-Style</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbgopacity">
 			<segment>
 				<source>Opacity (background)</source>
+				<target>Deckkraft (Hintergrund)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbgcolor">
 			<segment>
 				<source>Background color</source>
+				<target>Hintergrundfarbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbgcolor.description">
 			<segment>
 				<source>Only applies if "Context color" is set to "none"</source>
+				<target>Gilt nur, wenn „Kontextfarbe“ auf "none" eingestellt ist</target>
 			</segment>
 		</unit>
 
 		<unit id="tt_content.t3sbs_card.header">
 			<segment>
 				<source>Card Header</source>
+				<target>Card Header</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_card.title">
 			<segment>
 				<source>Card Title</source>
+				<target>Card Titel</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_button.title">
 			<segment>
 				<source>Button text</source>
+				<target>Button Text</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_card.texttop">
 			<segment>
 				<source>Text top</source>
+				<target>Text oben</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_card.textbottom">
 			<segment>
 				<source>Text bottom</source>
+				<target>Text unten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_card.footer">
 			<segment>
 				<source>Card Footer</source>
+				<target>Fußzeile der Card</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_card.content">
 			<segment>
 				<source>Card Content</source>
+				<target>Card Inhalt</target>
 			</segment>
 		</unit>
 		
 		<unit id="tt_content.t3sbs_card.listgroup">
 			<segment>
 				<source>List Group</source>
+				<target>Listengruppe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapcontextcolor">
 			<segment>
 				<source>Context color</source>
+				<target>Kontextfarbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapcontextcolor.description">
 			<segment>
 				<source>Overwrites the "Background color" setting</source>
+				<target>Überschreibt die Einstellung "Hintergrundfarbe"</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstraptextcolor">
 			<segment>
 				<source>Text color</source>
+				<target>Textfarbe</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileExtraclass">
 			<segment>
 				<source>Extra Class - figure-tag</source>
+				<target>Extra-Class (figure-Tag)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileExtraclassImg">
 			<segment>
 				<source>Extra Class - img-tag</source>
+				<target>Extra-Class (img-Tag)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileHovereffect">
 			<segment>
 				<source>Link Hover Effect (title and/or description)</source>
+				<target>Hover-Effekt für Links (Titel und/oder Beschreibung)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileLazyload">
 			<segment>
 				<source>Lazy loading</source>
+				<target>Lazy Loading</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileDescriptionalign">
 			<segment>
 				<source>Description align</source>
+				<target>Beschreibung ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileDescriptionalign.item1">
 			<segment>
 				<source>left</source>
+				<target>links</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileDescriptionalign.item2">
 			<segment>
 				<source>center</source>
+				<target>mittig</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileDescriptionalign.item3">
 			<segment>
 				<source>right</source>
+				<target>rechts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileCopyright">
 			<segment>
 				<source>Copyright note</source>
+				<target>Urheberrechtshinweis</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileCopyrightColor">
 			<segment>
 				<source>Copyright color</source>
+				<target>Copyright Farbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileCopyrightSource">
 			<segment>
 				<source>Copyright source</source>
+				<target>Urheberrechtsquelle</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileImgtag">
 			<segment>
 				<source>Output image in &lt;img&gt; - instead in &lt;picture&gt; tag</source>
+				<target>Bild im &lt;img&gt;-Tag ausgeben – statt im &lt;picture&gt;-Tag</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileImgtag.description">
 			<segment>
 				<source>Only works with specific CTypes!</source>
+				<target>Funktioniert nur mit bestimmten CTypes!</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileShiftVertical">
 			<segment>
 				<source>Vertical shift - if the original image is higher than wide</source>
+				<target>Vertikale Verschiebung – wenn das Originalbild höher als breit ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileShiftVertical.description">
 			<segment>
 				<source>only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected</source>
+				<target>nur sinnvoll, wenn das Seitenverhältnis (tx_t3sbootstrap_image_ratio) verwendet wird</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileShiftHorizontal">
 			<segment>
 				<source>Horizontal shift - if the original is wider than high</source>
+				<target>Horizontale Verschiebung – wenn das Original breiter als hoch ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileShiftHorizontal.description">
 			<segment>
 				<source>only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected</source>
+				<target>nur sinnvoll, wenn das Seitenverhältnis (tx_t3sbootstrap_image_ratio) verwendet wird</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileShiftVideoRatio">
 			<segment>
 				<source>Custom aspect ratio (default: 16:9)</source>
+				<target>Benutzerdefiniertes Seitenverhältnis (Standard: 16:9)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapSysfileShiftVideoRatio.description">
 			<segment>
 				<source>you can use any aspect ratio - e.g.: 4:3 (textmedia only)</source>
+				<target>du kannst jedes Seitenverhältnis verwenden – z. B.: 4:3 (nur Textmedien)</target>
 			</segment>
 		</unit>
-		
-		
+
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadersectionMenu">
 			<segment>
 				<source>Section Menu Text</source>
+				<target>Text für das Abschnittsmenü</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderpaddingsides">
 			<segment>
 				<source>Padding spacing side</source>
+				<target>Abstand (innen) an Seite</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheaderpaddingsize">
 			<segment>
 				<source>Padding spacing size</source>
+				<target>Abstand (innen) Größe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadermarginsides">
 			<segment>
 				<source>Margin spacing side</source>
+				<target>Abstand (außen) an Seite</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadermarginsize">
 			<segment>
 				<source>Margin spacing size</source>
+				<target>Abstand (außen) Größe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapcontainer">
 			<segment>
 				<source>Container</source>
+				<target>Container</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapsectionOrder">
 			<segment>
 				<source>Custom order in section Menu</source>
+				<target>Benutzerdefinierte Reihenfolge im "Section Menü"</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbodytextBottom">
 			<segment>
 				<source>Text bottom</source>
+				<target>Text unten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbodycardfooter">
 			<segment>
 				<source>Card Footer</source>
+				<target>Card-Fußzeile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbodylistitem">
 			<segment>
 				<source>List Group</source>
+				<target>Listengruppe</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbodysupraheader">
 			<segment>
 				<source>Supraheader</source>
+				<target>Überkopfzeile (Supraheader)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbodysupraheader.description">
 			<segment>
 				<source>A short text element placed directly above the heading</source>
+				<target>Ein kurzes Textelement, das direkt über der Überschrift platziert ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapanimateCssDuration">
 			<segment>
 				<source>Duration in seconds</source>
+				<target>Dauer in Sekunden</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapanimateCssDelay">
 			<segment>
 				<source>Delay in seconds</source>
+				<target>Verzögerung in Sekunden</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapanimateCssRepeat">
 			<segment>
 				<source>Repeat</source>
+				<target>Wiederholen</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.smallColumnsWidth">
 			<segment>
 				<source>Aside columns width</source>
+				<target>Breite der Seitenleisten</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.smallColumnsWidth.description">
 			<segment>
 				<source>makes no sense for Backend Layout "1 Column"</source>
+				<target>macht beim Backend-Layout "1 Spalte" keinen Sinn</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.container">
 			<segment>
 				<source>Container (for the whole page)</source>
+				<target>Container (für die gesamte Seite)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.linkToTop">
 			<segment>
 				<source>Link to top</source>
+				<target>Link zum Seitenanfang</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.dropdownRight">
 			<segment>
 				<source>Dropdown menu right</source>
+				<target>Dropdown-Menü rechts</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.megamenu">
 			<segment>
 				<source>Mega menu</source>
+				<target>Mega-Menü</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.mobileOrder">
 			<segment>
 				<source>Aside order on mobile</source>
+				<target>Reihenfolge in Seitenspalten auf Mobile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.iconOnly">
 			<segment>
 				<source>Only the icon</source>
+				<target>Nur das Icon</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.iconOnly.description">
 			<segment>
 				<source>for nav-item not for page title</source>
+				<target>für das Navigationselement, nicht für den Seitentitel</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.fullheightsection">
 			<segment>
 				<source>Full height section</source>
+				<target>Full-Height-Bereich aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.fullheightsection.description">
 			<segment>
 				<source>Make a fullscreen section that's full height of browser window. An MP4 video can also be shown here.</source>
+				<target>Vollbildbereich, der die gesamte Höhe des Browserfensters einnimmt. Hier kann auch ein MP4-Video angezeigt werden.</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.dropdownmenuHeader">
 			<segment>
 				<source>Dropdownmenu header</source>
+				<target>Überschrift des Dropdown-Menüs</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarmodal">
 			<segment>
 				<source>Modal</source>
+				<target>Modal</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.titlecolor">
 			<segment>
 				<source>Page Title Color</source>
+				<target>Farbe des Seitentitels</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.subtitlecolor">
 			<segment>
 				<source>Page Subtitle Color</source>
+				<target>Farbe des Seitenuntertitels</target>
 			</segment>
 		</unit>
 

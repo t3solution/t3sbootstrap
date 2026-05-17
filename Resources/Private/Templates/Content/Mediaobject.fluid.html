@@ -4,10 +4,30 @@
 <f:comment>No header for t3sbs_mediaobject</f:comment>
 </f:section>
 <f:section name="Main">
+<f:if condition="{settings.iconpack.cssClass} && {t3sbFlexform.iconAsImg}">
+	<f:then>
+		<f:if condition="{record.tx_t3sbootstrap_bgopacity} < 1">
+			<f:then>
+				<f:variable name="iconColor">text-{record.tx_t3sbootstrap_contextcolor}</f:variable>
+			</f:then>
+			<f:else>
+				<f:variable name="iconColor"></f:variable>
+			</f:else>
+		</f:if>
+		<f:variable name="media">
+			<t3sb:icon iconfig="{t3sbFlexform.iconAsImg}" additionalAttributes="{class:'ms-2 mt-1 {iconColor}'}" />
+		</f:variable>
+	</f:then>
+	<f:else>
+		<f:variable name="media">
+			<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</f:variable>
+	</f:else>
+</f:if>
 <div class="d-flex{f:if(condition: '{t3sbFlexform.verticallyCenter}', then: ' align-items-center')}">
 	<f:if condition="{mediaobject.order} == 'left'">
 		<div class="flex-shrink-0">
-			<f:render partial="Media/RawGallery" arguments="{_all}" />
+			{media -> f:format.raw()}
 		</div>
 	</f:if>
 	<div class="flex-grow-1{f:if(condition: '{mediaobject.order} == \'right\'', then: ' me-3', else: ' ms-3')}">
@@ -16,10 +36,9 @@
 	</div>
 	<f:if condition="{mediaobject.order} == 'right'">
 		<div class="flex-shrink-0">
-			<f:render partial="Media/RawGallery" arguments="{_all}" />
+			{media -> f:format.raw()}
 		</div>
 	</f:if>
 </div>
-
 </f:section>
 </html>

@@ -3,9 +3,6 @@
 <f:section name="Main">
 <f:if condition="{menu}">
 <div class="submenu">
-	
-
-
 	<ul class="nav menusubpages{menudirection}{menupills}{menuHorizontalAlignment}">
 		<f:for each="{menu}" as="page">
 			<li class="nav-item">
@@ -16,10 +13,10 @@
 					</f:if>
 					<f:if condition="{page.nav_title}">
 						<f:then>
-							{page.nav_title}
+							{page.nav_title -> f:format.raw()}
 						</f:then>
 						<f:else>
-							{page.title}
+							{page.title -> f:format.raw()}
 						</f:else>
 					</f:if>
 				</a>

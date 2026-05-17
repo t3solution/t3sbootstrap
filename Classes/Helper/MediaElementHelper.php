@@ -5,13 +5,17 @@ namespace T3SBS\T3sbootstrap\Helper;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use T3SBS\T3sbootstrap\Helper\GalleryHelper;
 
 class MediaElementHelper implements SingletonInterface
 {
 
-	/**
-	 * Returns the $processedData
-	 */
+	public function __construct(
+		private readonly GalleryHelper $galleryHelper,
+		
+	) {}
+	
+	
 	public function getProcessedData(
 		array $processedData, 
 		array $extConf, 
@@ -55,10 +59,9 @@ class MediaElementHelper implements SingletonInterface
 					if ($file->getProperties()['tx_t3sbootstrap_hover_effect'])	$processedData['hoverEffect'] = TRUE;
 				}
 			}
-			$galleryUtility = GeneralUtility::makeInstance(GalleryHelper::class);
 			// Gallery row with 25, 33, 50, 66, 75 or 100%
-			$processedData = $galleryUtility->getGalleryRowWidth( $processedData );
-			$processedData = $galleryUtility->getGalleryClasses( $processedData, $breakpoint );
+			$processedData = $this->galleryHelper->getGalleryRowWidth( $processedData );
+			$processedData = $this->galleryHelper->getGalleryClasses( $processedData, $breakpoint );
 
 			if ($cType === 't3sbs_card' && $processedData['parentCType'] != 'card_wrapper') {
 				$processedData['addmedia']['figureclass'] .= !empty($processedData['data']['image_zoom']) ? ' gallery' : '';

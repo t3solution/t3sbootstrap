@@ -17,7 +17,8 @@ class BackgroundImageUtility implements SingletonInterface
 
     public function __construct(
         private readonly ImageService $imageService,
-        private readonly AssetCollector $assetCollector
+        private readonly AssetCollector $assetCollector,
+        private readonly FileRepository $fileRepository,
     ) {}
 
 
@@ -92,8 +93,7 @@ class BackgroundImageUtility implements SingletonInterface
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ): void {
 
-        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-        $fileObjects = $fileRepository->findByRelation('tt_content', 'bgimages', $uid);
+        $fileObjects = $this->fileRepository->findByRelation('tt_content', 'bgimages', $uid);
 
         $css = '';
         if ((int) $flexconf['bgimages'] === 1 && (int) $flexconf['bgimagePosition'] < 3) {

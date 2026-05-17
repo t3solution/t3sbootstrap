@@ -24,27 +24,24 @@
 	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
 
 	<div class="d-flex">
-		<div class="flex-grow-1 ms-0 flex-info-content">
-	
+		<div class="flex-grow-1 ms-0 flex-info-content">	
 			<f:if condition="{flexForm.flexContainer}">
 				<f:then>
-					<strong>Flex behaviors:</strong> '{flexForm.flexContainer}
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flexContainer')}:</strong> '{flexForm.flexContainer}
 				
-					| <strong>Responsive variations:</strong> {f:if(condition: flexForm.responsiveVariations, then:'{flexForm.responsiveVariations}', else: 'none')}
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.responsiveVariations')}:</strong> {f:if(condition: flexForm.responsiveVariations, then:'{flexForm.responsiveVariations}', else: 'none')}
 				
-					| <strong>Direction:</strong> {f:if(condition: flexForm.direction, then:'{flexForm.direction}', else: 'none')}
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.direction')}:</strong> {f:if(condition: flexForm.direction, then:'{flexForm.direction}', else: 'none')}
 				
-					| <strong>Justify:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
-				
-					| <strong>Align:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.justify')}:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alignItem')}:</strong> {f:if(condition: flexForm.justify, then:'{flexForm.justify}', else: 'none')}
 				
 					| <strong>Wrap:</strong> {f:if(condition: flexForm.wrap, then:'{flexForm.wrap}', else: 'none')}
 				</f:then>
 				<f:else>
-					<strong>Flex behaviors:</strong> none
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flexContainer')}:</strong> none
 				</f:else>
 			</f:if>
-		
 		</div>
 	</div>
 

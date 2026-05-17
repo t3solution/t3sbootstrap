@@ -25,15 +25,13 @@
 
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
 			<strong>Gutters:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
-			| <strong>Equal height:</strong> {f:if(condition: '{flexForm.equalHeight}', then: 'true', else: 'false')}
+			| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.equalHeight')}:</strong> {f:if(condition: '{flexForm.equalHeight}', then: 'true', else: 'false')}
 					<f:if condition="{flexForm.equalWidth}">
-			| <strong>Equal width:</strong> true
+			| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.equalWidth')}:</strong> true
 					</f:if>
-
 					<f:if condition="{flexForm.extraClass_one} || {flexForm.extraClass_two} || {flexForm.extraClass_three}">
-			<br>
+					<br>
 					</f:if>
 					<f:if condition="{flexForm.extraClass_one}">
 					<strong>Extra Class Column 1:</strong> {flexForm.extraClass_one}
@@ -44,7 +42,6 @@
 					<f:if condition="{flexForm.extraClass_three}">
 			{f:if(condition: '{flexForm.extraClass_one} || {flexForm.extraClass_two}', then: '| ', else: '')}<strong>Extra Class Column 3:</strong> {flexForm.extraClass_three}
 					</f:if>
-
 		</div>
 	</div>
 

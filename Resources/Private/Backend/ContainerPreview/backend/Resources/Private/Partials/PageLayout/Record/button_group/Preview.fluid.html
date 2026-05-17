@@ -22,17 +22,15 @@
 		</f:if>
 	</div>
 	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
-
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
-			<strong>Button size:</strong> {f:if(condition: flexForm.btnsize, then:'{flexForm.btnsize}', else: 'Default')} | 
-				<strong>Button Group Alignment:</strong> {f:if(condition: flexForm.align, then:'{flexForm.align}', else: 'Default')}
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.size')}:</strong> {f:if(condition: flexForm.btnsize, then:'{flexForm.btnsize}', else: 'Default')} | 
+				<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.align')}:</strong> {f:if(condition: flexForm.align, then:'{flexForm.align}', else: 'Default')}
 				<f:if condition="{flexForm.variationvertical}">
-				| <strong>Vertical variation:</strong> true
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.vertical')}:</strong> true
 				</f:if>
 				<f:if condition="{flexForm.fixedPosition}">
-				| <strong>Fixed position:</strong> {flexForm.fixedPosition}
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.fixedposition')}:</strong> {flexForm.fixedPosition}
 				</f:if>	
 		</div>
 	</div>

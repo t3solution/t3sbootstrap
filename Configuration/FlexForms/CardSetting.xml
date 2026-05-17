@@ -2,11 +2,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Card Settings</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.cardsettings</sheetTitle>
 				<type>array</type>
 				<el>
 					<effect>
-						<label>Card Hover Effect</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.effect</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -26,7 +26,7 @@
 					</effect>
 
 					<effectColor>
-						<label>Card Hover Effect Color</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.effectcolor</label>
 						<displayCond>FIELD:sDEF.effect:=:one</displayCond>
 						<config>
 							<type>select</type>
@@ -78,16 +78,16 @@
 					</effectColor>
 
 					<maxwidth>
-						<label>Card max-width == image width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.maxwidth</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.maxwidth.description</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</displayCond>
-						<description>Helpful for single cards outside the card wrapper </description> 
 						<config>
 							<type>check</type>
 						</config>
 					</maxwidth>
 					<image.overlay>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.imageOverlay</label>
-						<description>The card body overlays the image</description> 
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imageoverlay</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imageoverlay.description</description>
 						<displayCond>
 							<and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</numIndex>
@@ -99,7 +99,7 @@
 						</config>
 					</image.overlay>
 					<mobile.overlay>
-						<label>Image overlay - mobile view only</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imageoverlaymobile</label>
 						<displayCond>
 							<and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</numIndex>
@@ -111,14 +111,14 @@
 						</config>
 					</mobile.overlay>
 					<title.onTop>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.titleOnTop</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.titleOnTop</label>
 						<config>
 							<type>check</type>
 						</config>
 					</title.onTop>
 					<flipcard>
-						<label>Flip Card with Text or Image</label>
-						<description>Frontside with image - Backside with text (if "Text Top" available) or image (second image)</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.flipcard</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.flipcard.description</description>
 						<displayCond>
 							<and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->noCardWrapperParent</numIndex>
@@ -131,7 +131,7 @@
 						</config>
 					</flipcard>
 					<rotateY>
-						<label>Number of rotations in degree</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.rotateY</label>
 						<displayCond>FIELD:flipcard:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -155,20 +155,20 @@
 					</rotateY>
 					<button.enable>
 						<onChange>reload</onChange>
-						<label>Enable button with header_link</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.buttonenable</label>
 						<config>
 							<type>check</type>
 						</config>
 					</button.enable>
 					<button.stretchedLink>
-						<label>Stretched link (link the entire Card)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.buttonstretchedLink</label>
 						<displayCond>FIELD:button.enable:=:1</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</button.stretchedLink>
 					<button.style>
-						<label>Predefined button styles</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.buttonstyle</label>
 						<displayCond>FIELD:button.enable:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -207,7 +207,7 @@
 						</config>
 					</button.style>
 					<button.text>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.card.buttonText</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.buttontext</label>
 						<displayCond>FIELD:button.enable:=:1</displayCond>
 						<config>
 							<type>input</type>
@@ -219,35 +219,35 @@
 						</config>
 					</button.text>
 					<button.outline>
-						<label>Button Outline</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.outline</label>
 						<displayCond>FIELD:button.enable:=:1</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</button.outline>
 					<button.footer>
-						<label>Button in Card Footer</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.button.footer</label>
 						<displayCond>FIELD:button.enable:=:1</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</button.footer>
 					<button.block>
-						<label>Block level button</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.block</label>
 						<displayCond>FIELD:button.enable:=:1</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</button.block>
 					<cardborder>
-						<label>Custom Border</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.cardborder</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 						</config>
 					</cardborder>
 					<cardborderstyle>
-						<label>Predefined border styles</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.cardborderstyle</label>
 						<displayCond>FIELD:sDEF.cardborder:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -298,7 +298,7 @@
 						</config>
 					</cardborderstyle>
 					<horizontal>
-						<label>Horizontal</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.horizontal</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -306,8 +306,8 @@
 					</horizontal>
 
 					<alignSelfCenter>
-						<label>Align Self Center</label>
-						<description>The content is aligned vertically.</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.alignSelfCenter</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.alignSelfCenter.description</description>
 						<displayCond>FIELD:sDEF.horizontal:=:1</displayCond>
 						<config>
 							<type>check</type>
@@ -315,8 +315,8 @@
 					</alignSelfCenter>
 
 					<imageColumnsWidth>
-						<label>Image columns width</label>
-						<description>e.g. 1,2,3,4 ...</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imagecolumnswidth</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imagecolumnswidth.description</description>
 						<displayCond>FIELD:sDEF.horizontal:=:1</displayCond>
 						<config>
 							<type>number</type>
@@ -328,15 +328,15 @@
 					</imageColumnsWidth>
 					
 					<multiImage.enable>
-						<label>Enable Profile Card</label>
-						<description>You need at least two images for the profile card. The second is the circular, smaller image</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimageenable</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimageenable.description</description>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 						</config>
 					</multiImage.enable>
 					<multiImage.percent>
-						<label>Width of the circular image (in %)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimagepercent</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
 						<config>
 							<type>number</type>
@@ -354,7 +354,7 @@
 						</config>
 					</multiImage.percent>
 					<multiImage.borderWidth>
-						<label>Border width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimageborderwidth</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -390,7 +390,7 @@
 						</config>
 					</multiImage.borderWidth>
 					<multiImage.borderColor>
-						<label>Border color</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimagebordercolor</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -441,7 +441,7 @@
 						</config>
 					</multiImage.borderColor>
 					<multiImage.shadow>
-						<label>Shadow</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimagebshadow</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
 						<config>
 							<type>check</type>
@@ -449,7 +449,7 @@
 						</config>
 					</multiImage.shadow>
 					<multiImage.socialmedia.enable>
-						<label>Add some Social Media Links</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.multiimagesocialmedia.enable</label>
 						<displayCond>FIELD:sDEF.multiImage.enable:=:1</displayCond>
 						<onChange>reload</onChange>
 						<config>

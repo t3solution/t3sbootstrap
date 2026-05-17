@@ -9,13 +9,15 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
+$dbModel = 't3sbootstrap.db:tx_t3sbootstrap_domain_model_config';
+
 /**
  * Add extra field tx_t3sbootstrap_extra_class etc. to sys_file_reference record
  */
 $tempSysFileReferenceColumns = [
     'tx_t3sbootstrap_extra_class' => [
         'exclude' => 1,
-        'label' => 'Extra Class - figure-tag',
+        'label' => $dbModel.'.t3sbootstrapSysfileExtraclass',
         'config' => [
             'type' => 'input',
             'size' => 40,
@@ -43,7 +45,7 @@ $tempSysFileReferenceColumns = [
     ],
     'tx_t3sbootstrap_extra_imgclass' => [
         'exclude' => 1,
-        'label' => 'Extra Class - img-tag',
+        'label' => $dbModel.'.t3sbootstrapSysfileExtraclassImg',
         'config' => [
             'type' => 'input',
             'size' => 40,
@@ -59,7 +61,7 @@ $tempSysFileReferenceColumns = [
         ],
     ],
     'tx_t3sbootstrap_hover_effect' => [
-        'label' => 'Link Hover Effect (title and/or description)',
+        'label' => $dbModel.'.t3sbootstrapSysfileHovereffect',
         'exclude' => 1,
         'displayCond' => [
              'AND' => [
@@ -120,7 +122,7 @@ $tempSysFileReferenceColumns = [
         ]
     ],
     'tx_t3sbootstrap_lazy_load' => [
-        'label' => 'Lazy loading',
+        'label' => $dbModel.'.t3sbootstrapSysfileLazyload',
         'exclude' => 1,
         'displayCond' => [
             'OR' => [
@@ -135,22 +137,22 @@ $tempSysFileReferenceColumns = [
         ]
     ],
     'tx_t3sbootstrap_description_align' => [
-        'label' => 'Description align',
+        'label' => $dbModel.'.t3sbootstrapSysfileDescriptionalign',
         'exclude' => 1,
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
                 [
-                    'label' => 'left',
+                    'label' => $dbModel.'.t3sbootstrapSysfileDescriptionalign.item1',
                     'value' => 'start',
                 ],
                 [
-                    'label' => 'center',
+                    'label' => $dbModel.'.t3sbootstrapSysfileDescriptionalign.item2',
                     'value' => 'center',
                 ],
                 [
-                    'label' => 'right',
+                    'label' => $dbModel.'.t3sbootstrapSysfileDescriptionalign.item3',
                     'value' => 'end',
                 ],
             ],
@@ -159,7 +161,7 @@ $tempSysFileReferenceColumns = [
     ],
     'tx_t3sbootstrap_copyright' => [
         'exclude' => 1,
-        'label' => 'Copyright note',
+        'label' => $dbModel.'.t3sbootstrapSysfileCopyright',
         'config' => [
             'type' => 'input',
             'size' => 50,
@@ -168,7 +170,7 @@ $tempSysFileReferenceColumns = [
     ],
     'tx_t3sbootstrap_copyright_color' => [
         'exclude' => 1,
-        'label' => 'Copyright color',
+        'label' => $dbModel.'.t3sbootstrapSysfileCopyrightColor',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -217,7 +219,7 @@ $tempSysFileReferenceColumns = [
     ],
     'tx_t3sbootstrap_copyright_source' => [
         'exclude' => 1,
-        'label' => 'Copyright source',
+        'label' => $dbModel.'.t3sbootstrapSysfileCopyrightSource',
         'config' => [
             'type' => 'input',
             'size' => 50,
@@ -225,8 +227,8 @@ $tempSysFileReferenceColumns = [
         ],
     ],
     'tx_t3sbootstrap_imgtag' => [
-        'label' => 'Output image in <img> - instead in <picture> tag',
-        'description' => 'Did not work with any CType!',
+        'label' => $dbModel.'.t3sbootstrapSysfileImgtag',
+        'description' => $dbModel.'.t3sbootstrapSysfileImgtag.description',
         'exclude' => 1,
         'displayCond' => [
              'AND' => [
@@ -239,8 +241,8 @@ $tempSysFileReferenceColumns = [
         ]
     ],
     'tx_t3sbootstrap_shift_vertical' => [
-        'label' => 'Vertical shift - if the original image is higher than wide',
-        'description' => 'only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected',
+        'label' => $dbModel.'.t3sbootstrapSysfileShiftVertical',
+        'description' => $dbModel.'.t3sbootstrapSysfileShiftVertical.description',
         'displayCond' => [
              'AND' => [
                 'FIELD:tablenames:=:tt_content',
@@ -263,8 +265,8 @@ $tempSysFileReferenceColumns = [
         ],
     ],
     'tx_t3sbootstrap_shift_horizontal' => [
-        'label' => 'Horizontal shift - if the original is wider than high',
-        'description' => 'only useful if aspect ratio (tx_t3sbootstrap_image_ratio) is used - otherwise the input is rejected',
+        'label' => $dbModel.'.t3sbootstrapSysfileShiftHorizontal',
+        'description' => $dbModel.'.t3sbootstrapSysfileShiftHorizontal.description',
         'displayCond' => [
              'AND' => [
                 'FIELD:tablenames:=:tt_content',
@@ -288,8 +290,8 @@ $tempSysFileReferenceColumns = [
     ],
     'tx_t3sbootstrap_video_ratio' => [
         'exclude' => 1,
-        'label' => 'Custom aspect ratio (default: 16:9)',
-        'description' => 'you can use any aspect ratio - e.g.: 4:3 (textmedia only)',
+        'label' => $dbModel.'.t3sbootstrapSysfileShiftVideoRatio',
+        'description' => $dbModel.'.t3sbootstrapSysfileShiftVideoRatio.description',
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->textmedia',
         'config' => [
             'type' => 'input',

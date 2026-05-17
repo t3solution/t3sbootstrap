@@ -14,15 +14,15 @@ use TYPO3\CMS\Core\Database\Connection;
 #[AsCommand('t3sbootstrap:textpicToTextmedia', 'Migrate CType textpic to textmedia')]
 class TextpicToTextmedia extends CommandBase
 {
-    /**
-     * Update all records
-     *
-     * @inheritdoc
-     */
+	
+	public function __construct(
+		private readonly ConnectionPool $connectionPool,
+	) {}
+
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-		$contentQueryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$contentQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $textpics = $contentQueryBuilder
              ->select('uid', 'image')
              ->from('tt_content')
@@ -32,7 +32,7 @@ class TextpicToTextmedia extends CommandBase
              ->executeQuery()
              ->fetchAllAssociative();
 
-		$sysfileQueryBuilder = $connectionPool->getQueryBuilderForTable('sys_file_reference');
+		$sysfileQueryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_reference');
 
 		foreach ($textpics as $textpic) {
 		

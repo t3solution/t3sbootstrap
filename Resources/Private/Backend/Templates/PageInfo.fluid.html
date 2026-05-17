@@ -11,47 +11,79 @@
 				<div class="col-2 p-0">
 					<div class="flex-shrink-0 h-100">
 						<div class="text-center w-100" style="color:#808080;">
-							<h5 class="mb-3">T3SB Page settings</h5>
+							<h5 class="mb-3">{f:translate(key: 'pagesettings', extensionName: 't3sbootstrap')}</h5>
 							<core:icon identifier="bootstraplogo" size="large" title="You can deactivate this page info in the EMConfig if necessary"/>
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
-					<ul class="list-unstyled" style="color:	 #808080;">
+				<div class="col-3">
+					<ul class="list-unstyled" style="color:	 #808080; line-height: 1.8;">
 						<f:for each="{infoColOne}" as="infoOne" key="label">
-							<f:if condition="{infoOne} == 'FALSE - even if pages override'">
+							<f:if condition="{label} == 'container' && {infoOne} == 'FALSE - even if pages override'">
 								<f:then>
-									<li><strong>{label}</strong>: <span class="text-danger">{infoOne}</span></li>
+									<li><strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong>: <span class="text-danger">{infoOne}</span></li>
 								</f:then>
 								<f:else>
-									<li><strong>{label}</strong>: {infoOne}</li>
+									<f:if condition="{label} == 'fullHeightSection' && !{infoOne}">
+										<f:else>
+											<li><strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong>: {infoOne}</li>
+										</f:else>
+									</f:if>
 								</f:else>
 							</f:if>
 						</f:for>
 					</ul>
 				</div>
-				<div class="col-3">
+				<div class="col-3 text-center">
 					<ul class="list-unstyled" style="color:#808080;">
 						<f:for each="{infoColTwo}" as="infoTwo" key="label">
-							<li><strong>{label}</strong>: {infoTwo}</li>
+							<f:if condition="{label} == 'pageIcon' && {infoTwo}">
+								<f:then>
+									<li>
+										<strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong><br>
+										<t3sb:icon iconfig="{infoTwo -> f:format.raw()}"
+										additionalAttributes="{style:'width:50px; height:50px; margin:10px 0 5px 0;'}" />
+									</li>
+								</f:then>
+								<f:else>
+									<f:if condition="{infoTwo} && {infoTwo} != 'default'">
+										<li>
+											<strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong>
+										</li>
+									</f:if>
+								</f:else>
+							</f:if>
 						</f:for>
 					</ul>
+				</div>
+				<div class="col-1">
+					&nbsp;
 				</div>
 				<div class="col-3">
 					<f:if condition="{infoConfig}">
 						<h4 class="text-danger">T3SB Config</h4>
 						<ul class="list-unstyled" style="color:#808080;">
 							<f:for each="{infoConfig}" as="config" key="label">
-								<li><strong>{label}</strong>: {config}</li>
+								<li>
+									<strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong>
+								</li>
+
 							</f:for>
 						</ul>
 					</f:if>
 					<f:if condition="{countPagesOverrides}">
-						<h4 class="text-danger">Global pages override</h4>
+						<h4 class="text-danger">{f:translate(key: 'countPagesOverrides', extensionName: 't3sbootstrap')}</h4>
 						<ul class="list-unstyled" style="color:#808080;">
 							<f:for each="{infoOverride}" as="override" key="label">
 								<f:if condition="{override}">
-									<li><strong>{label}</strong>: {override}</li>
+									<f:if condition="{label} == 'titlecolor' || {label} == 'subtitlecolor'">
+										<f:then>
+											<li><strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong>: <span  style="color:{override};">{override}</span></li>
+										</f:then>
+										<f:else>
+											<li><strong>{f:translate(key: '{label}', extensionName: 't3sbootstrap')}</strong>: {override}</li>
+										</f:else>
+									</f:if>
 								</f:if>
 							</f:for>
 						</ul>
@@ -61,5 +93,4 @@
 		</div>
 	</div>
 </f:if>
-
 </html>

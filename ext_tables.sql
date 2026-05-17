@@ -40,7 +40,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	navbar_alignment varchar(9) DEFAULT 'left' NOT NULL,
 	navbar_class varchar(255) DEFAULT '' NOT NULL,
 	navbar_toggler varchar(20) DEFAULT '' NOT NULL,
-	navbar_breakpoint varchar(2) DEFAULT '' NOT NULL,
+	navbar_breakpoint varchar(3) DEFAULT '' NOT NULL,
 	navbar_offcanvas tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_animatedtoggler tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	navbar_height int(2) DEFAULT '56' NOT NULL,

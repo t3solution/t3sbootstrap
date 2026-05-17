@@ -10,12 +10,17 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
 
 class Carousel implements SingletonInterface
 {
+	
+	public function __construct(
+		private readonly StorageRepository $storageRepository,
+		private readonly FileRepository $fileRepository,
+	) {}
+	
 
 	public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, string $animateCss): array
 	{
-		$storageRepository = GeneralUtility::makeInstance(StorageRepository::class);
 		// @extensionScannerIgnoreLine
-		$processedData['defaultStorage'] = $storageRepository->getDefaultStorage()->getStorageRecord()['name'];
+		$processedData['defaultStorage'] = $this->storageRepository->getDefaultStorage()->getStorageRecord()['name'];
 		$innerCaptionStyle = '';
 		$processedData['dimensions']['width'] = $parentflexconf['width'] ?? '';
 		$processedData['carouselLink'] = $parentflexconf['link'] ?? '';
@@ -77,9 +82,8 @@ class Carousel implements SingletonInterface
 		if (!empty($processedData['files'])) {
 			$file = $processedData['files'][0];
 		} else {
-			$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-			if (!empty($fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']))) {
-				$file = $fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
+			if (!empty($this->fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid']))) {
+				$file = $this->fileRepository->findByRelation('tt_content', 'assets', (int)$processedData['data']['uid'])[0];
 			}
 		}
 		$processedData['localVideoPath'] = '';

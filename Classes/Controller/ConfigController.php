@@ -13,6 +13,10 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Backend\Template\Components\ComponentFactory;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Localization\LanguageService;
 
 #[AsController]
 final class ConfigController extends AbstractController
@@ -42,7 +46,8 @@ final class ConfigController extends AbstractController
     public function listAction(): ResponseInterface
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        if (!empty($this->request->getArgument('id') ?? 0)) {
+        if ($this->request->hasArgument('id') && !empty($this->request->getArgument('id'))) {
+
             $this->setUpDocHeader($moduleTemplate);
         }
 
@@ -56,7 +61,7 @@ final class ConfigController extends AbstractController
 
         $assignedOptions['rootPageId'] = $this->rootPageId;
         $assignedOptions['isSiteroot'] = $this->isSiteroot;
-        $assignedOptions['title'] = $this->currentPage['title'];
+        $assignedOptions['title'] = $this->currentPage['title'] ?? '';
 
         // Outsourced constants 
         $constantPath = $this->baseDir.self::T3SBCONSTANTSPATH;
@@ -120,7 +125,7 @@ final class ConfigController extends AbstractController
         $config = $this->configRepository->findOneBy(['pid' => $this->currentUid]);
         $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
         $returnUrl = $this->beUriBuilder->buildUriFromRequest($this->request, ['id' => $this->currentUid]);
-
+        
         // Edit page
         $editPageUri = $this->beUriBuilder->buildUriFromRoutePath(
             '/record/edit',
@@ -136,11 +141,28 @@ final class ConfigController extends AbstractController
 
         $rootButton = $this->componentFactory->createLinkButton()
             ->setHref((string)$editPageUri)
-            ->setTitle('Edit page properties')
+            ->setTitle((string)LocalizationUtility::translate('editpage', 't3sbootstrap'))
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-file-edit', IconSize::SMALL));
 
-        $buttonBar->addButton($rootButton, ButtonBar::BUTTON_POSITION_LEFT, 2);
+        $buttonBar->addButton($rootButton, ButtonBar::BUTTON_POSITION_LEFT, 3);
+
+        // View page
+        $previewDataAttributes = PreviewUriBuilder::create($this->rootPageId)
+            ->withRootLine(BackendUtility::BEgetRootLine($this->rootPageId))
+            ->buildDispatcherDataAttributes();
+        
+        $viewButton = $this->componentFactory->createLinkButton()
+            ->setHref('#')
+            ->setDataAttributes($previewDataAttributes ?? [])
+            ->setDisabled($previewDataAttributes === null)
+            ->setTitle($this->getLanguageService()->sL(
+                'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.showPage'
+            ))
+            ->setIcon($this->iconFactory->getIcon('actions-view-page', IconSize::SMALL))
+            ->setShowLabelText(true);
+        
+        $buttonBar->addButton($viewButton, ButtonBar::BUTTON_POSITION_LEFT, 2);   
 
         // Edit T3SB Configuration
         if (!empty($config)) {
@@ -151,12 +173,20 @@ final class ConfigController extends AbstractController
                 'id' => $this->currentUid,
                 'returnUrl' => (string)$returnUrl
             ]);
+
             $currentAction = $this->componentFactory->createLinkButton()
-                ->setHref($uriConfig->getPath().'?'.$uriConfig->getQuery())
-                ->setTitle('Edit Configuration')
+                ->setHref((string)$uriConfig)
+                ->setTitle(LocalizationUtility::translate('editconfig','t3sbootstrap'))
                 ->setShowLabelText(true)
                 ->setIcon($this->iconFactory->getIcon('bootstraplogo', IconSize::SMALL));
             $buttonBar->addButton($currentAction, ButtonBar::BUTTON_POSITION_LEFT, 1);
         }
     }
+    
+    
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
+    }
+
 }

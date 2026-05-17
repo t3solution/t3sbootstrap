@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
@@ -44,6 +43,9 @@ use T3SBS\T3sbootstrap\ContentElements\Table;
 use T3SBS\T3sbootstrap\Wrapper\MasonryWrapper;
 use T3SBS\T3sbootstrap\Wrapper\SwiperContainer;
 use T3SBS\T3sbootstrap\Utility\ConnectionPoolUtility;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
  *
@@ -55,6 +57,44 @@ class BootstrapProcessor implements DataProcessorInterface
     public const TX_CONTAINER_GRID = 'two_columns,three_columns,four_columns,six_columns,row_columns';
     public const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast,t3sbs_assets';
     public const TX_CONTAINER = 'button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container,card_wrapper';
+
+
+    public function __construct(
+        private readonly FileRepository $fileRepository,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly FlexFormTools $flexFormTools,
+        private readonly ConnectionPool $connectionPool,
+        private readonly ConfigurationManager $configurationManager,
+        private readonly ClassHelper $classHelper,
+        private readonly StyleHelper $styleHelper,
+        private readonly Card $card,
+        private readonly Mediaobject $mediaobject,
+        private readonly Carousel $carousel,
+        private readonly Button $button,
+        private readonly Toast $toast,
+        private readonly AssetHelper $assetHelper,
+        private readonly TwoColumns $twoColumns,
+        private readonly ThreeColumns $threeColumns,
+        private readonly FourColumns $fourColumns,
+        private readonly SixColumns $sixColumns,
+        private readonly RowColumns $rowColumns,
+        private readonly CardWrapper $cardWrapper,
+        private readonly ButtonGroup $buttonGroup,
+        private readonly BackgroundWrapper $backgroundWrapper,
+        private readonly ParallaxWrapper $parallaxWrapper,
+        private readonly CarouselContainer $carouselContainer,
+        private readonly CollapsibleAccordion $collapsibleAccordion,
+        private readonly Modal $modal,
+        private readonly TabsContainer $tabsContainer,
+        private readonly MasonryWrapper $masonryWrapper,
+        private readonly SwiperContainer $swiperContainer,
+        private readonly ToastContainer $toastContainer,
+        private readonly Menu $menu,
+        private readonly Table $table,
+        private readonly MediaElementHelper $mediaElementHelper,
+        private readonly DefaultHelper $defaultHelper,
+        private readonly ConnectionPoolUtility $connectionPoolUtility,
+    ) {}
 
 
     public function process(
@@ -72,8 +112,7 @@ class BootstrapProcessor implements DataProcessorInterface
         $request = $cObj->getRequest();
         /** @var PageInformation $pageInformation */
         $pageInformation = $request->getAttribute('frontend.page.information');
-
-        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+        $extConf = $this->extensionConfiguration->get('t3sbootstrap');
         $cType = $processedData['data']['CType'];
         $parentCType = '';
 
@@ -81,7 +120,7 @@ class BootstrapProcessor implements DataProcessorInterface
         if (!empty($processedData['t3sbFlexform'])) {
             $flexconf = $processedData['t3sbFlexform'];
         }
-        
+
         $parentflexconf = [];
         $parentUid = $processedData['data']['tx_container_parent'] ?? 0;
 
@@ -89,8 +128,7 @@ class BootstrapProcessor implements DataProcessorInterface
             $parentData = BackendUtility::getRecord('tt_content', $parentUid);
             $parentCType = !empty($parentData['CType']) ? $parentData['CType'] : '';
             if (!empty($parentData['tx_t3sbootstrap_flexform'])) {
-                $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
-                $parentflexconf = $flexFormTools->convertFlexFormContentToArray($parentData['tx_t3sbootstrap_flexform']);
+                $parentflexconf = $this->flexFormTools->convertFlexFormContentToArray($parentData['tx_t3sbootstrap_flexform']);
             }
         }
 
@@ -119,12 +157,44 @@ class BootstrapProcessor implements DataProcessorInterface
         $expandedcontentContainerbottom = !empty($processorConfiguration['expandedcontentContainerbottom'])
          ? (string) $processorConfiguration['expandedcontentContainerbottom'] : '';
 
+        if ($processedData['data']['CType'] === 'shortcut'
+            && !empty($processedData['parentCType']) 
+            && !empty($contentObjectConfiguration['settings.']['shortcutsremove']))
+        {
+            // empties any string (e.g. a class name) from shortcuts if in parent CE/wrapper
+            $dataContainer = $processedData['data']['tx_t3sbootstrap_container'];
+            $dataExtraClass = $processedData['data']['tx_t3sbootstrap_extra_class'];
+            $dataFrame = $processedData['data']['frame_class'];
+            $dataLayout = (string)$processedData['data']['layout'];
+
+            $uid = GeneralUtility::trimExplode('_', $processedData['data']['records'])[2];
+
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $shortcutRecord = $queryBuilder
+                ->select('*')
+                ->from('tt_content')
+                ->where(
+                    $queryBuilder->expr()->gt('uid', $queryBuilder->createNamedParameter((int)$uid, Connection::PARAM_INT))
+                )
+                ->executeQuery()
+                ->fetchAssociative();
+
+            $shortcutContainer = $shortcutRecord['tx_t3sbootstrap_container'];
+            $shortcutExtraClass = $shortcutRecord['tx_t3sbootstrap_extra_class'];
+            $shortcutFrame = $shortcutRecord['frame_class'];
+            $shortcutLayout = (string)$shortcutRecord['layout'];
+
+            $processedData['shortcuts'] = str_replace($shortcutContainer, $dataContainer, $processedData['shortcuts']);
+            $processedData['shortcuts'] = str_replace($shortcutExtraClass, $dataExtraClass, $processedData['shortcuts']);
+            $processedData['shortcuts'] = str_replace($shortcutFrame, $dataFrame, $processedData['shortcuts']);
+            $processedData['shortcuts'] = str_replace($shortcutLayout, $dataLayout, $processedData['shortcuts']);
+        }
+
 
         // container config
         $pageRecord = $pageInformation->getPageRecord();
         $pageContainer = !empty($pageRecord) ? $pageRecord['tx_t3sbootstrap_container'] : '';
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $ts = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $ts = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         $pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'];
         if (!empty($pOverride)) {
             $pageContainer = !empty($pageContainer) ? $pageContainer : '';
@@ -144,72 +214,41 @@ class BootstrapProcessor implements DataProcessorInterface
             'pageContainer' => !empty($pageContainer) ? true : false,
         ];
 
-        // remove any string (e.g. a class name) from shortcuts if in parent CE/wrapper
-        if (!empty($contentObjectConfiguration['settings.']['shortcutsremove'])) {
-            $pageArguments = $request->getAttribute('routing');
-            $currentUid = $pageArguments->getPageId();
-            $removeArr = GeneralUtility::trimExplode(',', $contentObjectConfiguration['settings.']['shortcutsremove']);
-            if ($processedData['data']['pid'] !== $currentUid && $processedData['data']['pid'] !== $footerPid && !empty($processedData['data']['frame_class'])) {
-                // if contentByPid for collapsible_accordion or tabs_tab
-                foreach($removeArr as $remove) {
-                    if (str_contains($processedData['data']['frame_class'], substr($remove,6))) {
-                        $processedData['data']['frame_class'] = 'default';
-                    }
-                }
-            }
-            if ($cType === 'shortcut' && !empty($parentCType) && !empty($processedData['shortcuts'])) {
-                // remove a class or any string from shortcuts if in parent ce/wrapper
-                foreach($removeArr as $remove) {
-                    if (str_contains($processedData['shortcuts'], $remove)) {
-                        $processedData['shortcuts'] = $this->removeChar($processedData['shortcuts'], $remove);
-                    }
-                }
-            }
-        }
-
         // class
-        $classHelper = GeneralUtility::makeInstance(ClassHelper::class);
-        $class = $classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass'], $sectionMenuClass);
+        $class = $this->classHelper->getDefaultClass($processedData['data'], $flexconf, $extConf['cTypeClass'], $sectionMenuClass);
         $processedData['class'] = !empty($processedData['class']) ? $processedData['class'].' '.$class : $class;
 
         // header class
-        $processedData['header'] = $classHelper->getHeaderClass($processedData['data']);
+        $processedData['header'] = $this->classHelper->getHeaderClass($processedData['data']);
 
         // style
-        $styleHelper = GeneralUtility::makeInstance(StyleHelper::class);
-        $processedData['style'] = $styleHelper->getBgColor($processedData['data']);
+        $processedData['style'] = $this->styleHelper->getBgColor($processedData['data']);
 
         // CSS-class for tx_container
         if ( GeneralUtility::inList(self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType) && !($cType === 'list')) {
             $isVideo = !empty($processedData['isVideo']);
-            $containerClass = $classHelper->getTxContainerClass($processedData['data'], $flexconf, $isVideo);
+            $containerClass = $this->classHelper->getTxContainerClass($processedData['data'], $flexconf, $isVideo);
             $processedData['class'] .= $containerClass ? ' '.$containerClass : '';
             $processedData['isTxContainer'] = true;
         }
-
 
         // T3SB Elements
 
         if (str_contains(self::T3SBS_ELEMENTS, $cType)) {
             if ($cType === 't3sbs_mediaobject') {
-                $processedData = GeneralUtility::makeInstance(Mediaobject::class)
-                ->getProcessedData($processedData, $flexconf);
+                $processedData = $this->mediaobject->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 't3sbs_card') {
-                $processedData = GeneralUtility::makeInstance(Card::class)
-                ->getProcessedData($processedData, $flexconf, $parentflexconf, (bool)$processorConfiguration['minimumWidth']);
+                $processedData = $this->card->getProcessedData($processedData, $flexconf, $parentflexconf, (bool)$processorConfiguration['minimumWidth']);
             }
             if ($cType === 't3sbs_carousel') {
-                $processedData = GeneralUtility::makeInstance(Carousel::class)
-                ->getProcessedData($processedData, $flexconf, $parentflexconf, $extConf['animateCss']);
+                $processedData = $this->carousel->getProcessedData($processedData, $flexconf, $parentflexconf, $extConf['animateCss']);
             }
             if ($cType === 't3sbs_button') {
-                $processedData = GeneralUtility::makeInstance(Button::class)
-                ->getProcessedData($processedData, $flexconf, $parentflexconf);
+                $processedData = $this->button->getProcessedData($processedData, $flexconf, $parentflexconf);
             }
             if ($cType === 't3sbs_toast') {
-                $processedData = GeneralUtility::makeInstance(Toast::class)
-                ->getProcessedData($processedData, $flexconf);
+                $processedData = $this->toast->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 't3sbs_assets') {
                 if (!empty($processedData['piFlexform'])) {
@@ -217,10 +256,10 @@ class BootstrapProcessor implements DataProcessorInterface
                     $processedData['assets']['priority'] = $processedData['piFlexform']['settings']['priority'];
                 }
                 if (!empty($processedData['cssfiles']) && is_array($processedData['cssfiles'])) {
-                    GeneralUtility::makeInstance(AssetHelper::class)->addCSS($processedData['cssfiles']);
+                    $this->assetHelper->addCSS($processedData['cssfiles']);
                 }
                 if (!empty($processedData['jsfiles']) && is_array($processedData['jsfiles'])) {
-                    GeneralUtility::makeInstance(AssetHelper::class)->addJS($processedData['jsfiles'], (int) $processedData['assets']['priority']);
+                    $this->assetHelper->addJS($processedData['jsfiles'], (int) $processedData['assets']['priority']);
                 }
             }
             //if ( $cType == 't3sbs_fluidtemplate' ) {}
@@ -231,23 +270,23 @@ class BootstrapProcessor implements DataProcessorInterface
 
         if (str_contains(self::TX_CONTAINER_GRID, $cType)) {
             if ($cType === 'two_columns') {
-                $processedData = GeneralUtility::makeInstance(TwoColumns::class)
+                $processedData = $this->twoColumns
                 ->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['bgMediaQueries']);
             }
             if ($cType === 'three_columns') {
-                $processedData = GeneralUtility::makeInstance(ThreeColumns::class)
+                $processedData = $this->threeColumns
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'four_columns') {
-                $processedData = GeneralUtility::makeInstance(FourColumns::class)
+                $processedData = $this->fourColumns
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'six_columns') {
-                $processedData = GeneralUtility::makeInstance(SixColumns::class)
+                $processedData = $this->sixColumns
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'row_columns') {
-                $processedData = GeneralUtility::makeInstance(RowColumns::class)
+                $processedData = $this->rowColumns
                 ->getProcessedData($processedData, $flexconf);
             }
         }
@@ -256,18 +295,18 @@ class BootstrapProcessor implements DataProcessorInterface
 
         if (str_contains(self::TX_CONTAINER, $cType) && !($cType === 'list')) {
             if ($cType === 'card_wrapper') {
-                $processedData = GeneralUtility::makeInstance(CardWrapper::class)->getProcessedData($processedData, $flexconf);
+                $processedData = $this->cardWrapper->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'button_group') {
-                $processedData = GeneralUtility::makeInstance(ButtonGroup::class)
+                $processedData = $this->buttonGroup
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'background_wrapper') {
-                $processedData = GeneralUtility::makeInstance(BackgroundWrapper::class)
+                $processedData = $this->backgroundWrapper
                 ->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']);
             }
             if ($cType === 'parallax_wrapper') {
-                $processedData = GeneralUtility::makeInstance(ParallaxWrapper::class)
+                $processedData = $this->parallaxWrapper
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'collapsible_container') {
@@ -277,31 +316,31 @@ class BootstrapProcessor implements DataProcessorInterface
                 }
             }
             if ($cType === 'carousel_container') {
-                $processedData = GeneralUtility::makeInstance(CarouselContainer::class)
+                $processedData = $this->carouselContainer
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'collapsible_accordion') {
-                $processedData = GeneralUtility::makeInstance(CollapsibleAccordion::class)
+                $processedData = $this->collapsibleAccordion
                 ->getProcessedData($processedData, $flexconf, $parentflexconf);
             }
             if ($cType === 'modal') {
-                $processedData = GeneralUtility::makeInstance(Modal::class)
+                $processedData = $this->modal
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'tabs_container' || $cType === 'tabs_tab') {
-                $processedData = GeneralUtility::makeInstance(TabsContainer::class)
+                $processedData = $this->tabsContainer
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'masonry_wrapper') {
-                $processedData = GeneralUtility::makeInstance(MasonryWrapper::class)
+                $processedData = $this->masonryWrapper
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'swiper_container') {
-                $processedData = GeneralUtility::makeInstance(SwiperContainer::class)
+                $processedData = $this->swiperContainer
                 ->getProcessedData($processedData, $flexconf);
             }
             if ($cType === 'toast_container') {
-                $processedData = GeneralUtility::makeInstance(ToastContainer::class)
+                $processedData = $this->toastContainer
                 ->getProcessedData($processedData, $flexconf, $contentObjectConfiguration['settings.']['navbarEnable']);
             }
             //if ( $cType == 'autoLayout_row' ) {}
@@ -313,10 +352,10 @@ class BootstrapProcessor implements DataProcessorInterface
 
         if (!str_contains(self::T3SBS_ELEMENTS.','.self::TX_CONTAINER_GRID.','.self::TX_CONTAINER, $cType)) {
             if (str_starts_with($cType, 'menu')) {
-                $processedData = GeneralUtility::makeInstance(Menu::class)->getProcessedData($processedData, $flexconf, $cType);
+                $processedData = $this->menu->getProcessedData($processedData, $flexconf, $cType);
             }
             if ($cType === 'table') {
-                $processedData = GeneralUtility::makeInstance(Table::class)->getProcessedData($processedData, $flexconf);
+                $processedData = $this->table->getProcessedData($processedData, $flexconf);
             }
         }
 
@@ -327,14 +366,12 @@ class BootstrapProcessor implements DataProcessorInterface
         }
 
         if ($processedData['data']['assets'] || $processedData['data']['image'] || $processedData['data']['media'] || $cType === 't3sbs_gallery') {
-            $mediaElementHelper = GeneralUtility::makeInstance(MediaElementHelper::class);
-            $processedData = $mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint'], $parentflexconf);
+            $processedData = $this->mediaElementHelper->getProcessedData($processedData, $extConf, $contentObjectConfiguration['settings.']['breakpoint'], $parentflexconf);
             $fileParts = [];
             $processedData['addmedia']['ratioClass'] = 'ratio-16x9';
             $processedData['addmedia']['origImageZoom'] = $processedData['data']['tx_t3sbootstrap_zoom_orig'];
 
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-            $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $processedData['data']['uid']);
+            $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $processedData['data']['uid']);
             foreach ($fileObjects as $key=>$fileObject) {
                     // local video
                 if ($fileObject->getMimeType() === 'video/mp4' || $fileObject->getMimeType() === 'video/webm' || $fileObject->getMimeType() === 'video/wav'
@@ -392,12 +429,12 @@ class BootstrapProcessor implements DataProcessorInterface
         // child of autoLayout_row
         if ($parentCType === 'autoLayout_row') {
             $processedData['newLine'] = !empty($flexconf['newLine']);
-            $processedData['class'] .= $classHelper->getAutoLayoutClass($flexconf);
+            $processedData['class'] .= $this->classHelper->getAutoLayoutClass($flexconf);
         }
 
         // child of container
         if ($parentCType === 'container') {
-            $processedData['class'] .= $classHelper->getContainerClass($parentflexconf, $flexconf);
+            $processedData['class'] .= $this->classHelper->getContainerClass($parentflexconf, $flexconf);
         }
 
         $processedData['dataAttr'] = '';
@@ -410,11 +447,10 @@ class BootstrapProcessor implements DataProcessorInterface
         }
 
         // container class
-        $defaultHelper = GeneralUtility::makeInstance(DefaultHelper::class);
-        $processedData = $defaultHelper->getContainerClass(  $processedData,  $extConf['container'], $containerConfig);
+        $processedData = $this->defaultHelper->getContainerClass(  $processedData,  $extConf['container'], $containerConfig);
 
         // defaults
-        $processedData = $defaultHelper->getDefaults(
+        $processedData = $this->defaultHelper->getDefaults(
             $processedData,
             $flexconf,
             (int)$processorConfiguration['defaultHeaderType'],
@@ -450,7 +486,7 @@ class BootstrapProcessor implements DataProcessorInterface
             $processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
             $processedData['trimClass'] = $trimClass;
         }
-
+        
         return $processedData;
     }
 
@@ -488,9 +524,7 @@ class BootstrapProcessor implements DataProcessorInterface
     {
         $pageArguments = $request->getAttribute('routing');
         $currentPageUid = $pageArguments->getPageId();
-
-        $connectionPoolUtility = GeneralUtility::makeInstance(ConnectionPoolUtility::class);
-        $result = $connectionPoolUtility->selectChapterIndex($currentPageUid);
+        $result = $this->connectionPoolUtility->selectChapterIndex($currentPageUid);
 
         if (!empty($result['tx_t3sbootstrap_chapter'])) {
             $i = 0;

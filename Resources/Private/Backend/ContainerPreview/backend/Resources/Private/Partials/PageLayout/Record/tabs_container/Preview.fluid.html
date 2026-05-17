@@ -27,23 +27,20 @@
 
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
 			<f:if condition="{flexForm.display_type} == 'tabs'">
 					<f:variable name="type" value="Tabs ({flexForm.display_type})" />
-		<strong>Display type:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
+		<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.displayType')}:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
 				</f:if>
 				<f:if condition="{flexForm.display_type} == 'pills'">
 					<f:variable name="type" value="Pills ({flexForm.display_type})" />
-		<strong>Display type:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
+		<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.displayType')}:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
 				</f:if>
 				<f:if condition="{flexForm.display_type} == 'verticalpills'">
 					<f:variable name="type" value="Vertical Pills ({flexForm.display_type})" />
-		<strong>Display type:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
+		<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.displayType')}:</strong> {type}{effect -> f:format.raw()}{fill -> f:format.raw()}
 				</f:if>
-	
 		</div>
 	</div>
-	
 
 </f:if>
 <f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />

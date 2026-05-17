@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 use TYPO3\CMS\Extbase\Service\CacheService;
+use TYPO3\CMS\Core\Site\SiteFinder;
 
 #[AsEventListener(
 	identifier: 't3sbootstrap/backend/write-files',
@@ -26,6 +27,9 @@ final readonly class OutsourcedFiles
 		private readonly CacheService $cacheService,
 		private readonly ConfigRepository $configRepository,
 		private readonly ConfigurationManager $configurationManager,
+		private readonly Config $config,
+		private readonly FlashMessageService $flashMessageService,
+		private readonly SiteFinder $siteFinder
 	) {}
 
 	public function writeOutsourcedFiles(RecordCreationEvent $event): void
@@ -39,14 +43,17 @@ final readonly class OutsourcedFiles
 			);
 			$currentUid = $event->getRawRecord()->getPid();		
 			$rootConfig = $this->configRepository->findOneBy(['pid' => $currentUid]);
-
-			$navbarBreakpoint = $rootConfig->getNavbarBreakpoint();
-			if (!empty($settings['breakpoint']) && !empty($navbarBreakpoint)) {
-				$breakpointWidth = $navbarBreakpoint === 'no' ? '' : $settings['breakpoint'][$navbarBreakpoint];
-			} else {
-				$breakpointWidth = 'sm';
-			}
 			
+			$site = $this->siteFinder->getSiteByPageId($currentUid);
+			$siteConfig = $site-> getConfiguration();
+			$t3sbSettings = $siteConfig['settings']['bootstrap'];
+
+			if ($rootConfig->getNavbarBreakpoint() !== 'no') {
+				$breakpointWidth = $t3sbSettings['navbar']['breakpoint'][$rootConfig->getNavbarBreakpoint()];
+			} else {
+				$breakpointWidth = '';
+			}
+
 			$siterootConfig = [];
 			$configurations = [];
 
@@ -59,14 +66,15 @@ final readonly class OutsourcedFiles
 			}
 
 			$setup = '';
-			$model = GeneralUtility::makeInstance(Config::class);
-		
-			foreach ($this->objectToArr($model) as $key=>$value) {
+			
+			// @extensionScannerIgnoreLine
+			foreach ($this->objectToArr($this->config) as $key=>$value) {
 				if (!str_starts_with($key, '_')) {
 					$setup .= 'page.10.settings.config.'.$key.' = {$bootstrap.config.'.$key.'}'.PHP_EOL;
 				}
 			}
-			$setup .= 'page.10.settings.config.navbarBreakpointWidth = {$bootstrap.config.navbarBreakpointWidth}'.PHP_EOL;
+			
+			$setup .= 'page.10.settings.config.navbarBreakpointWidth = '.$breakpointWidth.PHP_EOL;
 
 			// outsourced constants
 			$filecontent = '';
@@ -162,7 +170,6 @@ final readonly class OutsourcedFiles
 		$constants = 'bootstrap.config.uid = '.$config->getUid() .PHP_EOL;	
 		$tcaColumns = $GLOBALS['TCA']['tx_t3sbootstrap_domain_model_config']['columns'];
 
-
 		foreach ($tcaColumns as $f=>$columns) {
 			$field = GeneralUtility::underscoredToLowerCamelCase($f);
 			$var = str_replace(' ', '_', $field);
@@ -217,8 +224,7 @@ final readonly class OutsourcedFiles
 			$header,
 			ContextualFeedbackSeverity::ERROR
 		);
-		$flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-		$defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+		$defaultFlashMessageQueue = $this->flashMessageService->getMessageQueueByIdentifier();
 		$defaultFlashMessageQueue->enqueue($message);
 	}
 

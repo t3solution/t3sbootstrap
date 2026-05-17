@@ -2,11 +2,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Container Settings</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.settings</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -56,7 +56,7 @@
 						</config>
 					</hidden>
 					<colclass>
-						<label>Column class</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.colclass</label>
 						<description>default: "col-sm-6 col-lg-4 mb-4"</description>
 						<config>
 							 <type>input</type>

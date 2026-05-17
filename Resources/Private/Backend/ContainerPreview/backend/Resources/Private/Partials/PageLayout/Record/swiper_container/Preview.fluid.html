@@ -25,42 +25,37 @@
 
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
-<f:if condition="{flexForm.sliderStyle} != 'Default'">
-			<f:then>
-				<strong>Slider Style:</strong> {flexForm.sliderStyle}
-		
-				| <strong>Image width:</strong> {flexForm.width}px
-				
-				<f:if condition="{flexForm.ratio}">
-				 | <strong>Ratio:</strong> {flexForm.ratio}
-				</f:if>
-				
-			</f:then>
-			<f:else>
-		
-				<strong>Image width:</strong> {flexForm.width}px
-		
-				<f:if condition="{flexForm.ratio}">
-				 | <strong>Ratio:</strong> {flexForm.ratio}
-				</f:if>
-				<f:if condition="{flexForm.navigation}">
-				 | <strong>Navigation:</strong> true
-				</f:if>
-				<f:if condition="{flexForm.pagination}">
-				 | <strong>Pagination:</strong> true
-				</f:if>
-				<f:if condition="{flexForm.autoplay}">
-				 | <strong>Autoplay:</strong> true
-				</f:if>
-				<f:if condition="{flexForm.useCustomSwiperJs}">
-				 | <strong>Custom JS:</strong> true
-				</f:if>
+			<f:if condition="{flexForm.sliderStyle} != 'Default'">
+				<f:then>
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.sliderStyle')}:</strong> {flexForm.sliderStyle}
 			
-			</f:else>
-		</f:if>
-
-		
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imagecolumnswidth')}:</strong> {flexForm.width}px
+					
+					<f:if condition="{flexForm.ratio}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.aspectRatio')}:</strong> {flexForm.ratio}
+					</f:if>
+				</f:then>
+				<f:else>
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imagecolumnswidth')}:</strong> {flexForm.width}px
+			
+					<f:if condition="{flexForm.ratio}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.aspectRatio')}:</strong> {flexForm.ratio}
+					</f:if>
+					<f:if condition="{flexForm.navigation}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.flexform.cw.navigation')}:</strong> true
+					</f:if>
+					<f:if condition="{flexForm.pagination}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.flexform.cw.pagination')}:</strong> true
+					</f:if>
+					<f:if condition="{flexForm.autoplay}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.flexform.cw.autoplay')}:</strong> true
+					</f:if>
+					<f:if condition="{flexForm.useCustomSwiperJs}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.flexform.preview.customJS')}:</strong> true
+					</f:if>
+				
+				</f:else>
+			</f:if>
 		</div>
 	</div>
 

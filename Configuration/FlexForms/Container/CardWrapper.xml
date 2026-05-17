@@ -6,7 +6,7 @@
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -55,10 +55,9 @@
 							<default>0</default>
 						</config>
 					</hidden>
-
 					<!-- card wrapper: columns,group or deck  -->
 					<card_wrapper>
-						<label>Groups, Decks, Columns or Slider</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.cardwrapper</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -90,13 +89,8 @@
 					</card_wrapper>
 
 
-
-
-
-					
-					
 					<colclass>
-						<label>Column class</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.colclass</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:columns</displayCond>
 						<description>default - 3 columns: "col-sm-6 col-lg-4 mb-4"</description>
 						<config>
@@ -108,7 +102,7 @@
 					</colclass>
 
 					<visibleCards>
-						<label>Visible Cards</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.visibleCards</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
 						<config>
 							<type>select</type>
@@ -144,7 +138,7 @@
 					</visibleCards>
 
 					<gutter>
-						<label>Gutters (padding between your columns)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.gutter</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
 						<config>
 							<type>select</type>
@@ -180,8 +174,8 @@
 					</gutter>
 
 					<width>
-						<label>max. Image width</label>
-						<description>if "0" the cards width is used - or auto-width if the cards width is also empty (best practies)</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.maxwidth</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.maxwidth.description</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -192,7 +186,7 @@
 					</width>
 
 					<ratio>
-						<label>Image ratio - e.g.: 37:9</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.ratio</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>input</type>
@@ -202,8 +196,8 @@
 						</config>
 					</ratio>
 					<slidesPerView>
-						<label>Slides per view</label>
-						<description>slides visible at the same time on slider's container (can be empty if you use breakpoints)</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerView</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerView.description</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -212,8 +206,8 @@
 						</config>
 					</slidesPerView>
 					<breakpoints10>
-						<label>Slides per view - breakpoint > 10px</label>
-						<description>breakpoints allows to set different parameter for different responsive breakpoints (screen sizes)</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints10</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints10.description</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -222,7 +216,7 @@
 						</config>
 					</breakpoints10>
 					<breakpoints576>
-						<label>Slides per view - breakpoint > 576px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints576</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -231,7 +225,7 @@
 						</config>
 					</breakpoints576>
 					<breakpoints768>
-						<label>Slides per view - breakpoint > 768px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints768</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -240,7 +234,7 @@
 						</config>
 					</breakpoints768>
 					<breakpoints992>
-						<label>Slides per view - breakpoint > 992px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints992</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -249,8 +243,8 @@
 						</config>
 					</breakpoints992>
 					<slidesPerGroup>
-						<label>Slides per group</label>
-						<description>Set numbers of slides to define and enable group sliding</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerGroup</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerGroup.description</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -262,7 +256,7 @@
 						</config>
 					</slidesPerGroup>
 					<spaceBetween>
-						<label>Space between</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.spaceBetween</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>number</type>
@@ -271,7 +265,7 @@
 						</config>
 					</spaceBetween>
 					<loop>
-						<label>Loop</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.loop</label>
 						<description>amount of slides in loop mode should be at least 2x of "slidesPerView" value.</description>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
@@ -279,21 +273,21 @@
 						</config>
 					</loop>
 					<navigation>
-						<label>Navigation</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.navigation</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</navigation>
 					<pagination>
-						<label>Pagination</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.pagination</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</pagination>
 					<autoplay>
-						<label>Autoplay</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.autoplay</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:slider</displayCond>
 						<onChange>reload</onChange>
 						<config>
@@ -301,7 +295,7 @@
 						</config>
 					</autoplay>
 					<delay>
-						<label>Delay between transitions (in ms)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.delay</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:sDEF.card_wrapper:=:slider</value1>
@@ -312,24 +306,25 @@
 							<type>number</type>
 							<size>10</size>
 							<default>5000</default>
+							<trim>true</trim>
 						</config>
 					</delay>
 					<cropMaxCharacters>
-						<label>Length of card-bodytext (in chars)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.cropMaxCharacters</label>
 						<config>
 							<type>number</type>
 							<size>10</size>
 						</config>
 					</cropMaxCharacters>
 					<equalHeight>
-						<label>Equal Height</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.equalHeight</label>
 						<displayCond>FIELD:sDEF.card_wrapper:=:deck</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</equalHeight>
 					<contentByUid>
-						<label>Single card references</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.contentByUid</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->allowReferences</displayCond>
 						<config>
 							<type>select</type>
@@ -345,7 +340,7 @@
 						</config>
 					</contentByUid>
 					<contentByPid>
-						<label>Card Wrapper cards references</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.contentByPid</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->allowReferences</displayCond>
 						<config>
 							<type>select</type>

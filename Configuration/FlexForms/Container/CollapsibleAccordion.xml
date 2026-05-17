@@ -2,17 +2,16 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Settings</sheetTitle>
-				<type>array</type>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.settings</sheetTitle>
 				<el>
 					<active>
-						<label>Active</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.active</label>
 						<config>
 							<type>check</type>
 						</config>
 					</active>
 					<style>
-						<label>Button Style</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.buttonstyle</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isButton</displayCond>
 						<config>
 							<type>select</type>
@@ -60,7 +59,7 @@
 					</style>
 
 					<collapsibleByPid>
-						<label>Page for the Collapsible Element content (colPos=0)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.collapsibleByPid</label>
 						<config>
 							<type>group</type>
 							<allowed>pages</allowed>

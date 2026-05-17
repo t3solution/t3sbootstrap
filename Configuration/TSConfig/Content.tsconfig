@@ -74,18 +74,6 @@ TCEFORM.tt_content {
 			t3sbs_card.disabled = 1
 		}
 	}
-	header {
-		types {
-			t3sbs_button {
-				label.default = Button Text
-				label.de = Button Text
-			}
-			t3sbs_card {
-				label.default = Card Title
-				label.de = Card Titel
-			}
-		}
-	}
 	header_link {
 		types {
 			t3sbs_button {

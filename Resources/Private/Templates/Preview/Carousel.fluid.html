@@ -6,7 +6,6 @@
 	<f:variable name="imgObject" value="<t3sb:backend.infoImage uid='{record.uid}' />" />
 	<f:variable name="margin" value="2" />
 </f:if>
-
 <div class="d-flex">
 	<f:if condition="{imgObject.0}">
 		<div class="flex-shrink-0">
@@ -14,13 +13,10 @@
 		</div>
 	</f:if>
 	<div class="flex-grow-1 ms-{margin} flex-info-content">
-
-		<strong>Caption vertical align:</strong> {record.tx_t3sbootstrap_flexform.captionVAlign}
+		<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_carousel.captionVAlign')}:</strong> {record.tx_t3sbootstrap_flexform.captionVAlign}
 		<f:if condition="{record.tx_t3sbootstrap_flexform.bgOverlay}">
-			|	<strong>Background color for caption:</strong> {record.tx_t3sbootstrap_flexform.bgOverlay}
+			|	<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_carousel.bgOverlay')}:</strong> {record.tx_t3sbootstrap_flexform.bgOverlay}
 		</f:if>
-
 	</div>
 </div>
-
 </html>

@@ -15,10 +15,14 @@ use TYPO3\CMS\Core\Database\Connection;
 class ImageToTextmedia extends CommandBase
 {
 
+	public function __construct(
+		private readonly ConnectionPool $connectionPool,
+	) {}
+	
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-		$contentQueryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$contentQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $images = $contentQueryBuilder
              ->select('uid', 'image')
              ->from('tt_content')
@@ -28,7 +32,7 @@ class ImageToTextmedia extends CommandBase
              ->executeQuery()
              ->fetchAllAssociative();
 
-		$sysfileQueryBuilder = $connectionPool->getQueryBuilderForTable('sys_file_reference');
+		$sysfileQueryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_reference');
 
 		foreach ($images as $image) {
 		

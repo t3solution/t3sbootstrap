@@ -4,7 +4,6 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/BodyTag.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/Template.typoscript'
 
-
 # EXT:t3sbootstrap default CSS
 # --------------------------------------------------------------------------------------------------------------------------
 page {
@@ -92,4 +91,3 @@ page.cssInline {
 [traverse(site("configuration"), "settings/bootstrap/cdn/customScss") == true && traverse(site("configuration"), "settings/bootstrap/cdn/enable") == true]
 	@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/IncludeExternal.typoscript'
 [END]
-

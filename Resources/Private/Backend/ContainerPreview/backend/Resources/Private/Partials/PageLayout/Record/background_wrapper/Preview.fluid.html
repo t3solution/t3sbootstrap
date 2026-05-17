@@ -41,36 +41,37 @@
 
 			<f:if condition="{imgObject} && {imgObject.0.properties.hidden} == 0">
 				<f:then>
-					<strong>Max. BG-Image width:</strong> {flexForm.width}px | <strong>Padding (top & bottom):</strong> {flexForm.paddingTopBottom}rem
+				
+				
+				
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.maxBgImageWidth')}:</strong> {flexForm.width}px | <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.paddingTopBottom')}:</strong> {flexForm.paddingTopBottom}rem
 					<f:if condition="{flexForm.bgAttachmentFixed}">
 					| <strong>BG attachment:</strong> fixed
 					</f:if>
 					<f:if condition="{flexForm.imageRaster}">
-					| <strong>Raster over image:</strong> true
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rasterOverImage')}:</strong> true
 					</f:if>
 				</f:then>
 				<f:else>
-					<strong>NO background-image</strong>
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.noBackgroundImage')}</strong>
 				</f:else>
 			</f:if>
-			
 			<f:if condition="{item.record.tx_t3sbootstrap_bgcolor} && {item.record.tx_t3sbootstrap_contextcolor}">
 				<f:then>
-					| <strong>Context color:</strong> {item.record.tx_t3sbootstrap_contextcolor}
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tx_t3sbootstrap_domain_model_config.backgroundcolor')}:</strong> {item.record.tx_t3sbootstrap_contextcolor}
 				</f:then>
 				<f:else>
 					<f:if condition="{item.record.tx_t3sbootstrap_bgcolor}">
-						| <strong>Background color:</strong> {item.record.tx_t3sbootstrap_bgcolor}
+						| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tx_t3sbootstrap_domain_model_config.t3sbootstrapbgcolor')}:</strong> {item.record.tx_t3sbootstrap_bgcolor}
 					</f:if>
 					<f:if condition="{item.record.tx_t3sbootstrap_contextcolor}">
-						| <strong>Context color:</strong> {item.record.tx_t3sbootstrap_contextcolor}
+						| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tx_t3sbootstrap_domain_model_config.t3sbootstrapcontextcolor')}:</strong> {item.record.tx_t3sbootstrap_contextcolor}
 					</f:if>
 				</f:else>
-			</f:if>
-			
+			</f:if>			
 			<f:if condition="{item.record.tx_t3sbootstrap_bgopacity}">
 				<f:if condition="{item.record.tx_t3sbootstrap_bgcolor} || {item.record.tx_t3sbootstrap_contextcolor}">
-					| <strong>Opacity:</strong> {item.record.tx_t3sbootstrap_bgopacity}
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.imgOpacity')}:</strong> {item.record.tx_t3sbootstrap_bgopacity}
 				</f:if>
 			</f:if>
 

@@ -6,4 +6,21 @@ services:
 
   T3SBS\T3sbootstrap\:
     resource: '../Classes/*'
-    exclude: '../Classes/Domain/Model/*'
+    
+  T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor:
+    public: true
+    
+  T3SBS\T3sbootstrap\DataProcessing\BsImageGalleryProcessor:
+    public: true
+    
+  T3SBS\T3sbootstrap\DataProcessing\LastModifiedProcessor:
+    public: true
+    
+  T3SBS\T3sbootstrap\UserFunction\TcaMatcher:
+    public: true
+  
+  T3SBS\T3sbootstrap\DataProcessing\ConfigProcessor:
+    public: true
+
+  T3SBS\T3sbootstrap\Backend\ItemsProcFunc:
+    public: true

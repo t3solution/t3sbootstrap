@@ -20,11 +20,11 @@ class VideoRenderer implements SingletonInterface
 	protected $onlineMediaHelper;
 
 
-	/**
-	 * Get online media helper
-	 *
-	 * @return bool|OnlineMediaHelperInterface
-	 */
+	public function __construct(
+		private readonly OnlineMediaHelperRegistry $onlineMediaHelperRegistry,
+	) {}
+	
+	
 	protected function getOnlineMediaHelper(FileInterface $file): YouTubeHelper
 	{
 		if ($this->onlineMediaHelper === null) {
@@ -34,7 +34,7 @@ class VideoRenderer implements SingletonInterface
 			}
 
 			if ($origFile instanceof File) {
-				$this->onlineMediaHelper = GeneralUtility::makeInstance(OnlineMediaHelperRegistry::class)->getOnlineMediaHelper($origFile);
+				$this->onlineMediaHelper = $this->onlineMediaHelperRegistry->getOnlineMediaHelper($origFile);
 			} else {
 				$this->onlineMediaHelper = false;
 			}

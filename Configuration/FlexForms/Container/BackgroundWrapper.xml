@@ -2,11 +2,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>General</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.generalsheet</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -56,7 +56,7 @@
 						</config>
 					</hidden>
 					<bgwlink>
-						<label>Link the entire Content Element (with header_link)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tx_t3sbootstrap_domain_model_config.t3sbootstrapheadercelink</label>
 						<config>
 							<type>check</type>
 							<default>0</default>
@@ -68,11 +68,11 @@
 
 		<images>
 			<ROOT>
-				<sheetTitle>Image</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.imgsheet</sheetTitle>
 				<type>array</type>
 				<el>
 					<origImage>
-						<label>Image inside (no background-image but a real image)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.origImage</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<onChange>reload</onChange>
 						<config>
@@ -81,7 +81,7 @@
 						</config>
 					</origImage>
 					<width>
-						<label>max. Image width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.width</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
 							<type>number</type>
@@ -92,7 +92,7 @@
 						</config>
 					</width>
 					<bgAttachmentFixed>
-						<label>Background-attachment - fixed</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.bgAttachmentFixed</label>
 						<displayCond>
 							<AND>
 								<numIndex index="0">FIELD:images.origImage:=:0</numIndex>
@@ -104,7 +104,7 @@
 						</config>
 					</bgAttachmentFixed>
 					<enableAutoheight>
-						<label>Enable content overlay and autoheight for background-image (JS)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.enableAutoheight</label>
 						<onChange>reload</onChange>
 						<displayCond>
 							<AND>
@@ -118,7 +118,7 @@
 						</config>
 					</enableAutoheight>
 					<addHeight>
-						<label>Surcharge height to background-image (in px)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.addHeight</label>
 						<displayCond>
 							<AND>
 								<numIndex index="0">FIELD:images.enableAutoheight:=:1</numIndex>
@@ -139,7 +139,7 @@
 						</config>
 					</addHeight>
 					<alignItem>
-						<label>Align content items</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.alignItem</label>
 						<displayCond>
 							<AND>
 								<numIndex index="2">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</numIndex>
@@ -182,7 +182,7 @@
 						</config>
 					</alignItem>
 					<paddingTopBottom>
-						<label>Padding (top and bottom in rem)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.paddingTopBottom</label>
 						<displayCond>
 							<AND>
 								<numIndex index="0">FIELD:images.enableAutoheight:=:0</numIndex>
@@ -203,7 +203,7 @@
 						</config>
 					</paddingTopBottom>
 					<imgGrayscale>
-						<label>Grayscale</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.imgGrayscale</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
 							<type>number</type>
@@ -220,7 +220,7 @@
 						</config>
 					</imgGrayscale>
 					<imgSepia>
-						<label>Sepia</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.imgSepia</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
 							<type>number</type>
@@ -237,7 +237,7 @@
 						</config>
 					</imgSepia>
 					<imgOpacity>
-						<label>Opacity</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.imgOpacity</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
 							<type>number</type>
@@ -254,7 +254,7 @@
 						</config>
 					</imgOpacity>
 					<imageRaster>
-						<label>Raster over the image/color</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.imageRaster</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isImage</displayCond>
 						<config>
 							<type>check</type>
@@ -267,11 +267,11 @@
 
 		<background>
 			<ROOT>
-				<sheetTitle>No Media</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.sheetNomedia</sheetTitle>
 				<type>array</type>
 				<el>
 					<noMediaPaddingTopBottom>
-						<label>Padding (top and bottom in rem)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.noMediaPaddingTopBottom</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isNoMedia</displayCond>
 						<config>
 							<type>number</type>
@@ -286,11 +286,11 @@
 
 		<localvideo>
 			<ROOT>
-				<sheetTitle>Local Video</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.sheetLocalVideo</sheetTitle>
 				<type>array</type>
 				<el>
 					<localControls>
-						<label>Controls</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.localControls</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
 							<type>check</type>
@@ -298,7 +298,7 @@
 						</config>
 					</localControls>
 					<loop>
-						<label>Loop</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.loop</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
 							<type>check</type>
@@ -306,7 +306,7 @@
 						</config>
 					</loop>
 					<mute>
-						<label>Mute</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.mute</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
 							<type>check</type>
@@ -314,8 +314,8 @@
 						</config>
 					</mute>
 					<aspectRatio>
-						<label>Aspect ratio</label>
-						<description>e.g.: 37by9 == 9/37 || 37:9</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.aspectRatio</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.aspectRatio.description</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
 							<type>input</type>
@@ -355,7 +355,7 @@
 						</config>
 					</aspectRatio>
 					<alignVideoItem>
-						<label>Align content items</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.alignVideoItem</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						<config>
 							<type>select</type>
@@ -390,9 +390,9 @@
 						</config>
 					</alignVideoItem>
 					<shift>
-						<label>Extra vertical shift for the video</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.shift</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.shift.description</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-						<description>e.g.: 100 or -100</description>
 						<config>
 							<type>number</type>
 							<size>5</size>
@@ -409,9 +409,9 @@
 						</config>
 					</shift>
 					<horizontalShift>
-						<label>Extra horizontal shift for the video on mobile (max-width:767px)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.horizontalShift</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.shift.description</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
-						<description>e.g.: 100 or -100</description>
 						<config>
 							<type>number</type>
 							<size>5</size>
@@ -428,8 +428,8 @@
 						</config>
 					</horizontalShift>
 					<mobileHeight>
-						 <label>Max. hight on mobile (max-width:767px)</label>
-						 <description>figure.video max-height in px</description>
+						 <label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.mobileHeight</label>
+						 <description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.mobileHeight.description</description>
 						 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						 <config>
 							<type>number</type>
@@ -447,8 +447,8 @@
 						 </config>
 					</mobileHeight>
 					<mobileWidth>
-						 <label>Mobile width for higher videos on mobile (max-width:767px)</label>
-						 <description>figure.video width in %</description>
+						 <label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.mobileWidth</label>
+						 <description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.mobileWidth.description</description>
 						 <displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isLocalVideo</displayCond>
 						 <config>
 							<type>number</type>
@@ -471,11 +471,11 @@
 
 		<videoevents>
 			<ROOT>
-				<sheetTitle>Youtube/Vimeo Video</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.sheetVideo</sheetTitle>
 				<type>array</type>
 				<el>
 					<contentPosition>
-						<label>Content Position</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.contentPosition</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
@@ -515,7 +515,7 @@
 						</config>
 					</contentPosition>
 					<bgHeight>
-						<label>Height in px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.bgHeight</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
@@ -529,7 +529,7 @@
 						</config>
 					</bgHeight>
 					<ytshift>
-						<label>Extra shift for the video</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.ytshift</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
@@ -553,21 +553,21 @@
 						</config>
 					</ytshift>
 					<videoMute>
-						<label>Mute</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.mute</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.videoMute.description</description>
 						<displayCond>
 							<or>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</numIndex>
 								<numIndex index="1">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isVimeo</numIndex>
 							</or>
 						</displayCond>
-						<description>automatically activated if autoplay</description>
 						<config>
 							<type>check</type>
 							<default>1</default>
 						</config>
 					</videoMute>
 					<videoControls>
-						<label>Controls</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.localControls</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isYoutube</displayCond>
 						<config>
 							<type>check</type>

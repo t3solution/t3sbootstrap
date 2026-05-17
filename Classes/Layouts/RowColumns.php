@@ -11,13 +11,16 @@ use T3SBS\T3sbootstrap\Layouts\Gutters;
 class RowColumns implements SingletonInterface
 {
 
-	/**
-	 * Returns the $processedData
-	 */
+	public function __construct(
+		private readonly Gutters $gutters,
+		private readonly Grid $grid,
+	) {}
+	
+	
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
-		$processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
-		$processedData = GeneralUtility::makeInstance(Grid::class)->getGrid($processedData, $flexconf);
+		$processedData = $this->gutters->getGutters($processedData, $flexconf);
+		$processedData = $this->grid->getGrid($processedData, $flexconf);
 
 		$rowClass = [];
 		if ($flexconf['cols_extraClass'] ?? '') {

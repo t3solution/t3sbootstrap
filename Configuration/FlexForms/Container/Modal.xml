@@ -2,11 +2,11 @@
 	<sheets>
 		<general>
 			<ROOT>
-				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.settings</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.settings</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -56,14 +56,14 @@
 						</config>
 					</hidden>
 					<animation>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.animation</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.animation</label>
 						<config>
 							<type>check</type>
 							<default>1</default>
 						</config>
 					</animation>
 					<onPageLoad>
-						<label>Launch Modal on Page Load</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.onPageLoad</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -71,7 +71,7 @@
 						</config>
 					</onPageLoad>
 					<cookie>
-						<label>Set cookie if approved (expire in 1 hour)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cookie</label>
 						<displayCond>FIELD:general.onPageLoad:=:1</displayCond>
 						<config>
 							<type>check</type>
@@ -79,7 +79,7 @@
 						</config>
 					</cookie>
 					<size>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.modalsize</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.modalsize</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -109,7 +109,7 @@
 						</config>
 					</size>
 					<buttonText>
-						<label>Link or Button Text (header if empty)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.buttonText</label>
 						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<config>
 							<type>input</type>
@@ -117,8 +117,11 @@
 							<default></default>
 						</config>
 					</buttonText>
+					
+					
+					
 					<whiteclosebutton>
-						<label>White close button</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.whiteclosebutton</label>
 						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<config>
 							<type>check</type>
@@ -126,7 +129,7 @@
 						</config>
 					</whiteclosebutton>
 					<button>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.usebutton</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.usebutton</label>
 						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
 						<onChange>reload</onChange>
 						<config>
@@ -135,7 +138,7 @@
 						</config>
 					</button>
 					<style>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.buttonstyle</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.buttonstyle</label>
 						<displayCond>
 							<AND>
 								<numIndex index="0">FIELD:general.button:=:1</numIndex>
@@ -175,7 +178,7 @@
 						</config>
 					</style>
 					<fixedPosition>
-						<label>Fixed position</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.fixedposition</label>
 						<onChange>reload</onChange>
 						<displayCond>
 							<AND>
@@ -204,7 +207,7 @@
 						</config>
 					</fixedPosition>
 					<rotate>
-						<label>Rotate the Button</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rotate</label>
 						<displayCond>
 							<AND>
 								<numIndex index="0">FIELD:general.button:=:1</numIndex>
@@ -232,9 +235,9 @@
 						</config>
 					</rotate>
 					<prevModal>
-						<label>Previous Modal UID</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.prevModal</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.prevModal.description</description>
 						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>
-						<description>Creates a button in the modal footer to open the previous modal</description>
 						<config>
 							<type>number</type>
 							<size>5</size>

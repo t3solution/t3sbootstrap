@@ -2,7 +2,7 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Utility Settings</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.utilitysettings</sheetTitle>
 				<type>array</type>
 				<el>
 					<gridSystem>
@@ -34,14 +34,14 @@
 						</config>
 					</gridSystem>
 					<newLine>
-						<label>New line (break to a new line for multiple rows after this col)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.newline</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</newLine>
 					<alignSelf>
-						<label>Align self</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alignself</label>
 						 <displayCond>
 						   <or>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
@@ -73,7 +73,7 @@
 						</config>
 					</alignSelf>
 					<responsiveVariations>
-						<label>Responsive Variations</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.responsivevariations</label>
 							 <displayCond>
 							   <or>
 									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
@@ -118,7 +118,7 @@
 						</config>
 					</responsiveVariations>
 					<autoMargins>
-						<label>Auto margins</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.automargins</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</displayCond>
 						<config>
 							<type>select</type>
@@ -149,7 +149,7 @@
 						</config>
 					</autoMargins>
 					<order>
-						<label>Order</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.order</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->flexContainerParent</displayCond>
 						<config>
 							<type>select</type>
@@ -213,7 +213,7 @@
 						</config>
 					</order>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -263,7 +263,7 @@
 						</config>
 					</hidden>
 					<border>
-						<label>Border</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.border</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -298,7 +298,7 @@
 						</config>
 					</border>
 					<borderstyle>
-						<label>Predefined border styles</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.borderstyle</label>
 						<displayCond>FIELD:sDEF.border:!=:0</displayCond>
 						<config>
 							<type>select</type>
@@ -329,15 +329,15 @@
 									<value>danger</value>
 								</numIndex>
 								<numIndex index="6">
-									<label>Light</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:light</label>
 									<value>light</value>
 								</numIndex>
 								<numIndex index="7">
-									<label>Dark</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:dark</label>
 									<value>dark</value>
 								</numIndex>
 								<numIndex index="8">
-									<label>White</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:white</label>
 									<value>white</value>
 								</numIndex>
 							</items>
@@ -345,7 +345,7 @@
 						</config>
 					</borderstyle>
 					<borderradius>
-						<label>Predefined border radius</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.borderradius</label>
 						<displayCond>FIELD:sDEF.border:!=:0</displayCond>
 						<config>
 							<type>select</type>
@@ -388,7 +388,7 @@
 						</config>
 					</borderradius>
 					<menudirection>
-						<label>Menu in a column or row</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.menuhorizontalalignment</label>
 						<onChange>reload</onChange>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</displayCond>
 						<config>
@@ -408,7 +408,7 @@
 						</config>
 					</menudirection>
 					<menuHorizontalAlignment>
-						<label>Menu Horizontal Alignment (for flex-row only)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.menudirection</label>
 						 <displayCond>
 							  <and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</numIndex>
@@ -444,7 +444,7 @@
 						</config>
 					</menuHorizontalAlignment>
 					<menupills>
-						<label>Enable Pills (nav-pills)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.menupills</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->isMenu</displayCond>
 						<config>
 							<type>check</type>
@@ -459,7 +459,7 @@
 				<type>array</type>
 				<el>
 					<xsColumns>
-						<label>Columns</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.columns</label>
 						 <displayCond>
 						   <and>
 								<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
@@ -547,7 +547,7 @@
 				<type>array</type>
 				<el>
 					<smColumns>
-						<label>Columns</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.columns</label>
 							 <displayCond>
 							   <and>
 									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
@@ -632,7 +632,7 @@
 				<type>array</type>
 				<el>
 					<mdColumns>
-						<label>Columns</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.columns</label>
 							<displayCond>
 								<and>
 									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
@@ -717,7 +717,7 @@
 				<type>array</type>
 				<el>
 					<lgColumns>
-						<label>Columns</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.columns</label>
 							 <displayCond>
 							   <and>
 									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>
@@ -802,7 +802,7 @@
 				<type>array</type>
 				<el>
 					<xlColumns>
-						<label>Columns</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.columns</label>
 							 <displayCond>
 							   <and>
 									<numIndex index="0">USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->autoLayoutParent</numIndex>

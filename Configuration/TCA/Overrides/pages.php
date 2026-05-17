@@ -9,11 +9,13 @@ defined('TYPO3') || die();
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
+$dbModel = 't3sbootstrap.db:tx_t3sbootstrap_domain_model_config';
+
 $tempPagesColumns = [
     'tx_t3sbootstrap_smallColumns' => [
-        'label' => 'Aside columns width',
-        'exclude' => 1,
-        'description' => 'makes no sense for Backend Layout "1 Column"',
+        'label' => $dbModel.'.smallColumnsWidth',
+        'exclude' => true,
+        'description' => $dbModel.'.smallColumnsWidth.description',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -29,8 +31,8 @@ $tempPagesColumns = [
         ]
     ],
     'tx_t3sbootstrap_container' => [
-        'label' => 'Container (for the whole page)',
-        'exclude' => 1,
+        'label' => $dbModel.'.container',
+        'exclude' => true,
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -43,37 +45,37 @@ $tempPagesColumns = [
                 ['label' => 'container-xl (≥ 992px)', 'value' => 'container-xl',],
                 ['label' => 'container-xxl (≥ 1200px)', 'value' => 'container-xxl',],
                 ['label' => 'container-fluid (≥ 1400px)', 'value' => 'container-fluid',],
-['label' => 'no container - even if pages override', 'value' => 'none',],
+                ['label' => 'no container - even if pages override', 'value' => 'none',],
             ],
             'default' => 'container'
         ]
     ],
     'tx_t3sbootstrap_linkToTop' => [
-        'exclude' => 1,
-        'label' => 'Link to top',
+        'exclude' => true,
+        'label' => $dbModel.'.linkToTop',
         'config' => [
             'type' => 'check',
             'default' => 1
         ]
     ],
     'tx_t3sbootstrap_dropdownRight' => [
-        'exclude' => 1,
-        'label' => 'Dropdown menu right',
+        'exclude' => true,
+        'label' => $dbModel.'.dropdownRight',
         'config' => [
             'type' => 'check',
         ]
     ],
     'tx_t3sbootstrap_megamenu' => [
-        'exclude' => 1,
-        'label' => 'Mega menu',
+        'exclude' => true,
+        'label' => $dbModel.'.megamenu',
         'displayCond' => 'FIELD:doktype:=:4',
         'config' => [
             'type' => 'check',
         ]
     ],
     'tx_t3sbootstrap_mobileOrder' => [
-        'label' => 'Aside order on mobile',
-        'exclude' => 1,
+        'label' => $dbModel.'.mobileOrder',
+        'exclude' => true,
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -90,8 +92,8 @@ $tempPagesColumns = [
         ]
     ],
     'tx_t3sbootstrap_breakpoint' => [
-        'label' => 'Breakpoint',
-        'exclude' => 1,
+        'label' => $dbModel.'.navbarbreakpoint',
+        'exclude' => true,
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -107,16 +109,17 @@ $tempPagesColumns = [
         ]
     ],
     'tx_t3sbootstrap_icon_only' => [
-        'exclude' => 1,
-        'label' => 'Icon only',
-        'description' => 'for nav-item not for page title',
+        'exclude' => true,
+        'label' => $dbModel.'.iconOnly',
+        'description' => $dbModel.'.iconOnly.description',
         'config' => [
             'type' => 'check',
         ]
     ],
+
     'tx_t3sbootstrap_titlecolor' => [
-        'label' => 'Page Title Color',
-        'exclude' => 1,
+        'label' => $dbModel.'.titlecolor',
+        'exclude' => true,
         'description' => 'Hex color codes, RGB or CSS variables e.g. var(--bs-primary)',
         'config' => [
             'type' => 'input',
@@ -135,8 +138,8 @@ $tempPagesColumns = [
         ],
     ],
     'tx_t3sbootstrap_subtitlecolor' => [
-        'label' => 'Subtitle Color',
-        'exclude' => 1,
+        'label' => $dbModel.'.subtitlecolor',
+        'exclude' => true,
         'description' => 'Hex color codes, RGB or CSS variables e.g. var(--bs-primary)',
         'config' => [
             'type' => 'input',
@@ -156,9 +159,9 @@ $tempPagesColumns = [
     ],
 
     'tx_t3sbootstrap_fullheightsection' => [
-        'exclude' => 1,
-        'label' => 'Full height section',
-        'description' => 'Make a fullscreen section that`s full height of browser window.'.PHP_EOL.' An MP4 video can also be shown here.',
+        'exclude' => true,
+        'label' => $dbModel.'.fullheightsection',
+        'description' => $dbModel.'.fullheightsection.description',
         'config' => [
             'type' => 'check'
         ]
@@ -167,7 +170,6 @@ $tempPagesColumns = [
 ];
 
 ExtensionManagementUtility::addTCAcolumns('pages', $tempPagesColumns);
-unset($tempPagesColumns);
 
 
 $GLOBALS['TCA']['pages']['palettes']['bootstrap'] = [
@@ -185,47 +187,70 @@ ExtensionManagementUtility::addToAllTCAtypes(
     'after:backend_layout'
 );
 
+
+if (!empty($extconf['titlecolor'])) {
+    ExtensionManagementUtility::addFieldsToPalette(
+        'pages',
+        'title',
+        'tx_t3sbootstrap_titlecolor',
+        'after:title'
+    );
+    ExtensionManagementUtility::addFieldsToPalette(
+        'pages',
+        'title',
+        '--linebreak--, tx_t3sbootstrap_subtitlecolor',
+        'after:subtitle'
+    );
+}
+
 # if iconpack is loaded
 if (ExtensionManagementUtility::isLoaded('iconpack')) {
 	ExtensionManagementUtility::addFieldsToPalette(
 	    'pages',
 	    'title',
-	    'tx_t3sbootstrap_icon_only',
+	    'tx_t3sbootstrap_icon_only, --linebreak--',
 	    'after:title'
 	);
 }
 
-
-$menuheader = 198;
+$doktypeDropdownHeader = 198;
 // Add the new doktype to the page type selector
 ExtensionManagementUtility::addTcaSelectItem(
     'pages',
     'doktype',
     [
-        'label' => 'Dropdownmenu header',
-        'value' => $menuheader,
+        'label' => $dbModel.'.dropdownmenuHeader',
+        'value' => $doktypeDropdownHeader,
         'icon'  => 'content-header',
         'group' => 'special',
     ],
 );
 // Add the icon to the icon class configuration
-$GLOBALS['TCA']['pages']['ctrl']['typeicon_classes'][$menuheader] = 'content-header';
+$GLOBALS['TCA']['pages']['ctrl']['typeicon_classes'][$doktypeDropdownHeader] = 'content-header';
 
 if (!empty($extconf['navbarmodal'])) {
-    $menuheader = 197;
+    $doktypeModal = 197;
     // Add the new doktype to the page type selector
     ExtensionManagementUtility::addTcaSelectItem(
         'pages',
         'doktype',
         [
-            'label' => 'Modal',
-            'value' => $menuheader,
+            'label' => $dbModel.'.navbarmodal',
+            'value' => $doktypeModal,
             'icon'  => 'actions-duplicate',
             'group' => 'special',
         ],
     );
     // Add the icon to the icon class configuration
-    $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes'][$menuheader] = 'actions-duplicate';
+    $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes'][$doktypeModal] = 'actions-duplicate';
+}
+
+// Define a minimal fallback schema for doktype 197 & 198 to prevent the v14 crash
+if (!isset($GLOBALS['TCA']['pages']['types']['197'])) {
+    $GLOBALS['TCA']['pages']['types']['197'] = $GLOBALS['TCA']['pages']['types']['1'];
+}
+if (!isset($GLOBALS['TCA']['pages']['types']['198'])) {
+    $GLOBALS['TCA']['pages']['types']['198'] = $GLOBALS['TCA']['pages']['types']['1'];
 }
 
 

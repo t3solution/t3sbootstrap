@@ -2,11 +2,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Alignment</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_t3sbootstrap_domain_model_config.navbarbrandalignment</sheetTitle>
 				<type>array</type>
 				<el>
 					<justify>
-						<label>Justify content</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.justify</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -40,7 +40,7 @@
 						</config>
 					</justify>
 					<alignItem>
-						<label>Align items</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alignItem</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -74,7 +74,7 @@
 						</config>
 					</alignItem>
 					<responsiveVariations>
-						<label>Responsive Variations</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.responsiveVariations</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -113,7 +113,7 @@
 						</config>
 					</responsiveVariations>
 					<horizontalGutters>
-						<label>Horizontal gutters</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -147,7 +147,7 @@
 						</config>
 					</horizontalGutters>
 					<verticalGutters>
-						<label>Vertical gutters</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.verticalGutters</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>

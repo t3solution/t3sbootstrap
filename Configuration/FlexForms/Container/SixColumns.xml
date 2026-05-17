@@ -2,12 +2,10 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Settings</sheetTitle>
-				<type>array</type>
-				<type>array</type>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.settings</sheetTitle>
 				<el>
 					<equalWidth>
-						<label>Equal width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.equalWidth</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
@@ -15,15 +13,15 @@
 						</config>
 					</equalWidth>
 					<equalHeight>
-						<label>Equal height</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.equalHeight</label>
 						<config>
 							<type>check</type>
 							<default>0</default>
 						</config>
 					</equalHeight>
 					<horizontalGutters>
-						<label>Horizontal gutters</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#horizontal-gutters</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters.description</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -57,8 +55,8 @@
 						</config>
 					</horizontalGutters>
 					<verticalGutters>
-						<label>Vertical gutters</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#vertical-gutters</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.verticalGutters</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters.description</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -96,7 +94,7 @@
 		</sDEF>
 		<extraClass>
 			<ROOT>
-				<sheetTitle>Extra Class</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.extraClass</sheetTitle>
 				<type>array</type>
 				<el>
 					<extraClass_one>

@@ -11,6 +11,12 @@ use TYPO3\CMS\Core\Context\Context;
 
 class Card implements SingletonInterface
 {
+    
+    public function __construct(
+        private readonly ConnectionPool $connectionPool,
+        private readonly Context $context,
+    ) {}
+    
 
     public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, bool $minimumWidth): array
     {
@@ -82,7 +88,9 @@ class Card implements SingletonInterface
                 }
             }
         }
+
         // block
+        $cardData['block'] = [];
         $cardData['block']['enable'] = !empty($processedData['data']['bodytext'])
         || !empty($processedData['data']['tx_t3sbootstrap_bodytext'])
         || !empty($processedData['data']['header'])
@@ -114,14 +122,13 @@ class Card implements SingletonInterface
         // list group
         $cardData['list'] = [];
         if (!empty($processedData['data']['tx_t3sbootstrap_list_item'])) {
-            $languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+            $languageAspect = $this->context->getAspect('language');
             $sysLanguageUid = $languageAspect->getContentId() ?: 0;
             $parentid = $processedData['data']['uid'];
             if ( !empty($sysLanguageUid) && !empty($processedData['data']['_LOCALIZED_UID']) ) {
                 $parentid = $processedData['data']['_LOCALIZED_UID'];
             } 
-            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-            $queryBuilder = $connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
             $listGroup = $queryBuilder
                     ->select('listitem')
                     ->from('tx_t3sbootstrap_list_item_inline')

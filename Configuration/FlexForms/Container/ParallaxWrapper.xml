@@ -2,11 +2,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.general</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.general</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -56,8 +56,10 @@
 						</config>
 					</hidden>
 
+
+
 					<width>
-						<label>max. Image width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.width</label>
 						<config>
 							<type>number</type>
 							<size>10</size>
@@ -67,16 +69,15 @@
 					</width>
 
 					<speedFactor>
-						<label>Parallax effect speed. Provide numbers from -1.0 to 2.0</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.speedFactor</label>
 						<config>
 							<type>input</type>
 							<size>10</size>
 							<default>1</default>
 						</config>
 					</speedFactor>
-
 					<addHeight>
-						<label>Surcharge height to parallax view (in px)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.addHeight</label>
 						<config>
 							<type>number</type>
 							<size>10</size>
@@ -85,7 +86,7 @@
 					</addHeight>
 
 					<mobile>
-						<label>Disable on mobile devices</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.mobile</label>
 						<config>
 							<type>check</type>
 							<default>1</default>
