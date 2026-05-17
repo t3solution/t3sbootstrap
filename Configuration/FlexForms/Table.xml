@@ -5,11 +5,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Bootstrap Settings</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bootstrap.settings</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -60,7 +60,7 @@
 					</hidden>
 
 					<tableClass>
-						<label>Table class</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.tableClass</label>
 						<config>
 							<type>select</type>
 							<renderType>selectMultipleSideBySide</renderType>
@@ -70,71 +70,71 @@
 									<value>table</value>
 								</numIndex>
 								<numIndex index="1">
-									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.striped</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.striped</label>
 									<value>table table-striped</value>
 								</numIndex>
 								<numIndex index="2">
-									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.bordered</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.bordered</label>
 									<value>table table-bordered</value>
 								</numIndex>
 								<numIndex index="3">
-									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.hover</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.hover</label>
 									<value>table table-hover</value>
 								</numIndex>
 								<numIndex index="4">
-									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.table.small</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.small</label>
 									<value>table table-sm</value>
 								</numIndex>
 								<numIndex index="5">
-									<label>Table dark</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.dark</label>
 									<value>table table-dark</value>
 								</numIndex>
 								<numIndex index="6">
-									<label>Table borderless</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.borderless</label>
 									<value>table table-borderless</value>
 								</numIndex>
 								<numIndex index="7">
-									<label>Border primary</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.primary</label>
 									<value>table border-primary</value>
 								</numIndex>
 								<numIndex index="8">
-									<label>Border secondary</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.secondary</label>
 									<value>table border-secondary</value>
 								</numIndex>
 								<numIndex index="9">
-									<label>Border success</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.success</label>
 									<value>table border-success</value>
 								</numIndex>
 								<numIndex index="10">
-									<label>Border info</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.info</label>
 									<value>table border-info</value>
 								</numIndex>
 								<numIndex index="11">
-									<label>Border warning</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.warning</label>
 									<value>table border-warning</value>
 								</numIndex>
 								<numIndex index="12">
-									<label>Border danger</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.danger</label>
 									<value>table border-danger</value>
 								</numIndex>
 								<numIndex index="13">
-									<label>Border light</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.light</label>
 									<value>table border-light</value>
 								</numIndex>
 								<numIndex index="14">
-									<label>Border dark</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.border.dark</label>
 									<value>table border-dark</value>
 								</numIndex>
 								<numIndex index="15">
-									<label>Vertical align top</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.verticalaligntop</label>
 									<value>table align-top</value>
 								</numIndex>
 								<numIndex index="16">
-									<label>Vertical align middle</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.verticalalignmiddle</label>
 									<value>table align-middle</value>
 								</numIndex>
 								<numIndex index="17">
-									<label>Vertical align bottom</label>
+									<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.verticalalignbottom</label>
 									<value>table align-bottom</value>
 								</numIndex>
 							</items>
@@ -143,7 +143,7 @@
 					</tableClass>
 
 					<theadClass>
-						<label>Table head</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.theadclass</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -166,21 +166,22 @@
 					</theadClass>
 
 					<tableInverse>
-						<label>Table inverse/dark</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.tableinverse</label>
 						<config>
 							<type>check</type>
 						</config>
 					</tableInverse>
 
 					<tableResponsive>
-						<label>Responsive table</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.tableresponsive</label>
+						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 						</config>
 					</tableResponsive>
 
 					<tableResponsiveVariant>
-						<label>Responsive table variant</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.table.tableresponsivevariant</label>
 						<description>INFO: https://www.t3sbootstrap.de/demo/tabellen</description>
 						<displayCond>FIELD:sDEF.tableResponsive:=:1</displayCond>
 						<config>

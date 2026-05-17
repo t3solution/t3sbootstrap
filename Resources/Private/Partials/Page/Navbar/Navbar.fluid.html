@@ -70,9 +70,7 @@
 			<div class="navbar-nav main-navbarnav p-3 py-{navbarBreakpoint}-0 mb-2 mb-lg-0{config.navbar.sectionMenu}{config.navbar.mauto}">
 				<f:render section="NavbarNav" arguments="{_all}" />
 				<f:if condition="{settings.config.navbarExtraRow}">
-					<f:then>
-						<f:render section="RightMenu" arguments="{_all}" />
-					</f:then>
+					<f:render section="RightMenu" arguments="{_all}" />
 				</f:if>
 			</div>
 			<f:if condition="{settings.config.navbarExtraRow}">
@@ -156,7 +154,7 @@
 		</f:else>
 	</f:if>
 	<f:if condition="{settings.config.navbarLangmenu} || {navbarMenuRight -> f:count()} || {settings.config.navbarDarkMode}">
-		<div class="navbar-nav mb-2 mb-lg-0{f:if(condition: '{config.navbar.alignment} == left' , then:' ms-auto')}">
+		<div class="navbar-nav mb-2 mb-lg-0{f:if(condition: '{config.navbar.alignment} == \'left\'' , then:' ms-auto')}">
 			<f:if condition="{languageNavigation} && {config.lang.uid} && {config.lang.hreflang} && {config.lang.title}">
 				<f:render partial="Page/Navbar/Language" arguments="{_all}" />
 				<f:if condition="{navbarMenuRight -> f:count()}">
@@ -186,27 +184,27 @@
 <f:section name="Brand">
 <f:if condition="{config.navbar.brand}">
 	<f:then>
-	<f:switch expression="{config.navbar.brand}">
-		<f:case value="imgText">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
-				<f:render section="BrandImage" arguments="{_all}" />
-				{config.general.company}
-			</f:link.typolink>
-		</f:case>
-		<f:case value="image">
-			<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
-				<f:render section="BrandImage" arguments="{_all}" />
-			</f:link.typolink>
-		</f:case>
-		<f:case value="heading">
-			<span class="navbar-brand mb-0 h1">{config.general.company}</span>
-		</f:case>
-		<f:defaultCase>
-			<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="{data.linkTitle}">
-				{config.general.company}
-			</f:link.typolink>
-		</f:defaultCase>
-	</f:switch>
+		<f:switch expression="{config.navbar.brand}">
+			<f:case value="imgText">
+				<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
+					<f:render section="BrandImage" arguments="{_all}" />
+					{config.general.company}
+				</f:link.typolink>
+			</f:case>
+			<f:case value="image">
+				<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
+					<f:render section="BrandImage" arguments="{_all}" />
+				</f:link.typolink>
+			</f:case>
+			<f:case value="heading">
+				<span class="navbar-brand mb-0 h1">{config.general.company}</span>
+			</f:case>
+			<f:defaultCase>
+				<f:link.typolink class="navbar-brand" parameter="{config.general.homepageUid}" title="{data.linkTitle}">
+					{config.general.company}
+				</f:link.typolink>
+			</f:defaultCase>
+		</f:switch>
 	</f:then>
 	<f:else>
 		<span class="navbar-brand"></span>
@@ -215,8 +213,8 @@
 </f:section>
 
 <f:section name="BrandImage">
-	<f:image src="{f:uri.image(src: '{config.navbar.image}')}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}"
-	 class="img-fluid{config.navbar.brandClass}" alt="{settings.navbar.image.altText}" />
+	<f:image src="{config.navbar.image}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}"
+	  class="img-fluid{config.navbar.brandClass}" alt="{settings.navbar.image.altText}" />
 </f:section>
 
 <f:section name="Toggler">
@@ -250,23 +248,12 @@
 							<f:else>
 								<f:if condition="{navbarItem.data.doktype} == 197">
 									<f:then>
-										<f:comment><!-- Button trigger modal --></f:comment>
-										<a class="nav-link{navbarItem.activeClass}" data-bs-toggle="modal" data-bs-target="#navbarModal-{navbarItem.data.uid}" style="cursor: pointer;">
-											{navbarItem.title}
+										<f:comment> Button trigger modal </f:comment>
+										<a class="nav-link cursor-pointer{navbarItem.activeClass}" data-bs-toggle="modal" data-bs-target="#navbarModal-{navbarItem.data.uid}" >
+											{navbarItem.title -> f:format.raw()}
 										</a>
 									</f:then>
 									<f:else>
-										<f:if condition="{navbarItem.active} && {navbarItem.current}">
-											<f:then>
-												<f:variable name="activeItem" value=" active" />
-											</f:then>
-											<f:else>
-												<f:variable name="activeItem" value="" />
-											</f:else>
-										</f:if>
-										<f:if condition="{navbarItem.data.shortcut} && {data.is_siteroot} && {data.slug} == {navbarItem.link}">
-											<f:variable name="activeItem" value=" active" />
-										</f:if>
 										<a class="nav-link{navbarItem.activeClass}"
 											href="{navbarItem.link}"
 											target="{navbarItem.target}"
@@ -312,7 +299,7 @@
 <f:section name="Dropdown">
 	<f:if condition="{config.navbar.dropdown} == 'dropup'">
 		<f:then>
-			<f:asset.script identifier="bootstrap5-dropdown-ml-hack" src="EXT:t3sbootstrap/Resources/Public/Scripts/bootstrap5-dropup-ml-hack.js" />
+			<f:asset.script identifier="bootstrap5-dropup-ml-hack" src="EXT:t3sbootstrap/Resources/Public/Scripts/bootstrap5-dropup-ml-hack.js" />
 		</f:then>
 		<f:else>
 			<f:asset.script identifier="bootstrap5-dropdown-ml-hack" src="EXT:t3sbootstrap/Resources/Public/Scripts/bootstrap5-dropdown-ml-hack.js" />
@@ -337,7 +324,7 @@
 			 data-bs-toggle="dropdown" aria-expanded="false" href="#">
 				<f:if condition="{settings.iconpack.loaded}">
 					<f:then>
-						<t3sb:icon iconfig="fa7:solid,square-plus" />		
+						<t3sb:icon iconfig="fa7:solid,square-plus" />
 					</f:then>
 					<f:else>
 						<i class="fa-solid fa-square-plus"></i>
@@ -358,17 +345,21 @@
 		</a>
 		</f:else>
 	</f:if>
+
+
 	<f:if condition="{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}">
 		<f:then>
 			<f:asset.css identifier="megaNavbar" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />
-			<f:comment> removed by JS if narrower than navbarBreakpoint :: don't remove remove-{navbarBreakpoint} </f:comment>
+			<f:comment> removed by JS if narrower than navbarBreakpoint :: don't remove remove-{navbarBreakpoint}</f:comment>
 			<div class="dropdown-menu mega-dropdown-menu remove-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{navbarItem.data.uid}', colPos: '0'}"/>
 			</div>
+
 			<f:comment> removed by JS if wider than navbarBreakpoint :: don't remove show-{navbarBreakpoint} </f:comment>
 			<div class="dropdown-menu show-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 				 <f:render section="DropdownItem" arguments="{_all}" />
 			</div>
+
 		</f:then>
 		<f:else>
 			<div class="dropdown-menu{config.navbar.dropdownAnimate}{navbarItem.dropdownRightClass}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">

@@ -2,12 +2,11 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>Settings</sheetTitle>
-				<type>array</type>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.settings</sheetTitle>
 				<el>
 					<horizontalGutters>
-						<label>Horizontal gutters</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#horizontal-gutters</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters.description</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -41,8 +40,8 @@
 						</config>
 					</horizontalGutters>
 					<verticalGutters>
-						<label>Vertical gutters</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/gutters/#vertical-gutters</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.verticalGutters</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.horizontalGutters.description</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -76,8 +75,8 @@
 						</config>
 					</verticalGutters>
 					<cols_extraClass>
-						<label>Extra Class for "cols"</label>
-						<description>Comma separated list for each column - e.g.: bg-success p-5, bg-secondary text-white p-5</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.colsExtraClass</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.colsExtraClass.description</description>
 						<config>
 							<type>input</type>
 							<size>50</size>
@@ -92,8 +91,8 @@
 				<type>array</type>
 				<el>
 					<xxl_rowclass>
-						<label>Row Columns</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/grid/#row-columns</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns</label>
+						<description>INFO: https://getbootstrap.com/docs/5.3/layout/grid/#row-columns</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -143,8 +142,8 @@
 				<type>array</type>
 				<el>
 					<xl_rowclass>
-						<label>Row Columns</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/grid/#row-columns</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns</label>
+						<description>INFO: https://getbootstrap.com/docs/5.3/layout/grid/#row-columns</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -194,8 +193,8 @@
 				<type>array</type>
 				<el>
 					<lg_rowclass>
-						<label>Row Columns</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/grid/#row-columns</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns</label>
+						<description>INFO: https://getbootstrap.com/docs/5.3/layout/grid/#row-columns</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -245,8 +244,8 @@
 				<type>array</type>
 				<el>
 					<md_rowclass>
-						<label>Row Columns</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/grid/#row-columns</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns</label>
+						<description>INFO: https://getbootstrap.com/docs/5.3/layout/grid/#row-columns</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -296,8 +295,8 @@
 				<type>array</type>
 				<el>
 					<sm_rowclass>
-						<label>Row Columns</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/grid/#row-columns</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns</label>
+						<description>INFO: https://getbootstrap.com/docs/5.3/layout/grid/#row-columns</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -347,8 +346,8 @@
 				<type>array</type>
 				<el>
 					<xs_rowclass>
-						<label>Row Columns</label>
-						<description>INFO: https://getbootstrap.com/docs/5.1/layout/grid/#row-columns</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns</label>
+						<description>INFO: https://getbootstrap.com/docs/5.3/layout/grid/#row-columns</description>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>

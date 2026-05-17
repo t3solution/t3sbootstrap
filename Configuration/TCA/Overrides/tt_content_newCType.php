@@ -9,6 +9,8 @@ defined('TYPO3') || die();
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
+$dbModel = 't3sbootstrap.db:tx_t3sbootstrap_domain_model_config';
+
 /***************
  * Add new CTypes
  */
@@ -106,7 +108,7 @@ ExtensionManagementUtility::addTcaSelectItem(
  */
 $tempContentColumns = [
     'tx_t3sbootstrap_header_display' => [
-        'label' => 'Display headings',
+        'label' => $dbModel.'.t3sbootstrapheaderdisplay',
         'exclude' => 1,
         'config' => [
             'type' => 'select',
@@ -124,7 +126,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_header_class' => [
-        'label' => 'Header Extra Class',
+        'label' => $dbModel.'.t3sbootstrapheaderclass',
         'exclude' => 1,
         'config' => [
             'type' => 'input',
@@ -157,13 +159,13 @@ $tempContentColumns = [
     ],
     'tx_t3sbootstrap_header_celink' => [
         'exclude' => 1,
-        'label' => 'Link the entire Content Element',
+        'label' => $dbModel.'.t3sbootstrapheadercelink',
         'config' => [
             'type' => 'check'
         ]
     ],
     'tx_t3sbootstrap_header_position' => [
-        'label' => 'Header Position',
+        'label' => $dbModel.'.t3sbootstrapheaderposition',
         'exclude' => 1,
         'displayCond' => [
             'OR' => [
@@ -175,14 +177,14 @@ $tempContentColumns = [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['label' => 'Above the image (default)', 'value' => 'above',],
-                ['label' => 'Beside or under the image', 'value' => 'beside',],
+                ['label' => $dbModel.'.t3sbootstrapheaderposition.item1', 'value' => 'above',],
+                ['label' => $dbModel.'.t3sbootstrapheaderposition.item2', 'value' => 'beside',],
             ],
             'default' => 'above'
         ]
     ],
     'tx_t3sbootstrap_header_sectionMenu' => [
-        'label' => 'Section Menu Text',
+        'label' => $dbModel.'.t3sbootstrapheadersectionMenu',
         'exclude' => 1,
         'config' => [
             'type' => 'input',
@@ -191,7 +193,7 @@ $tempContentColumns = [
         ],
     ],
     'tx_t3sbootstrap_padding_sides' => [
-        'label' => 'Padding spacing side',
+        'label' => $dbModel.'.t3sbootstrapheaderpaddingsides',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->spacing_' . $extconf['spacing'],
         'config' => [
@@ -211,7 +213,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_padding_size' => [
-        'label' => 'Padding spacing size',
+        'label' => $dbModel.'.t3sbootstrapheaderpaddingsize',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->spacing_' . $extconf['spacing'],
         'config' => [
@@ -229,7 +231,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_margin_sides' => [
-        'label' => 'Margin spacing side',
+        'label' => $dbModel.'.t3sbootstrapheadermarginsides',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->spacing_' . $extconf['spacing'],
         'config' => [
@@ -249,7 +251,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_margin_size' => [
-        'label' => 'Margin spacing size',
+        'label' => $dbModel.'.t3sbootstrapheadermarginsize',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->spacing_' . $extconf['spacing'],
         'config' => [
@@ -267,7 +269,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_container' => [
-        'label' => 'Container',
+        'label' => $dbModel.'.t3sbootstrapcontainer',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->container_' . $extconf['container'],
         'config' => [
@@ -296,7 +298,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_extra_class' => [
-        'label' => 'Extra Class',
+        'label' => $dbModel.'.t3sbootstrapextraclass',
         'exclude' => 1,
         'config' => [
             'type' => 'input',
@@ -304,7 +306,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_extra_style' => [
-        'label' => 'Extra Style',
+        'label' => $dbModel.'.t3sbootstrapextrastyle',
         'exclude' => 1,
         'config' => [
             'type' => 'input',
@@ -312,8 +314,8 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_bgcolor' => [
-        'label' => 'Background color',
-        'description' => 'Only applies if "Context color" is set to "none"',
+        'label' => $dbModel.'.t3sbootstrapbgcolor',
+        'description' => $dbModel.'.t3sbootstrapbgcolor.description',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->color_' . $extconf['color'],
         'config' => [
@@ -347,7 +349,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_bgopacity' => [
-        'label' => 'Opacity (background)',
+        'label' => $dbModel.'.t3sbootstrapbgopacity',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->color_' . $extconf['color'],
         'config' => [
@@ -365,8 +367,8 @@ $tempContentColumns = [
         ],
     ],
     'tx_t3sbootstrap_contextcolor' => [
-        'label' => 'Context color',
-        'description' => 'Overwrites the "Background color" setting',
+        'label' => $dbModel.'.t3sbootstrapcontextcolor',
+        'description' => $dbModel.'.t3sbootstrapcontextcolor.description',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->color_' . $extconf['color'],
         'config' => [
@@ -391,7 +393,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_textcolor' => [
-        'label' => 'Text color',
+        'label' => $dbModel.'.t3sbootstraptextcolor',
         'exclude' => 1,
         'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->color_' . $extconf['color'],
         'config' => [
@@ -418,7 +420,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_inTextImgRowWidth' => [
-        'label' => 'Gallery row width in %',
+        'label' => $dbModel.'.t3sbootstrapintextimgrowwidth',
         'exclude' => 1,
         'displayCond' => [
             'OR' => [
@@ -447,9 +449,9 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_gutters' => [
-        'label' => 'Horizontal gutters',
         'exclude' => 1,
-        'description' => 'INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters',
+        'label' => $dbModel.'.t3sbootstrapgutters',
+        'description' => $dbModel.'.t3sbootstrapgutters.description',
         'displayCond' => [
             'OR' => [
                 'FIELD:CType:=:image',
@@ -473,9 +475,9 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_verticalgutters' => [
-        'label' => 'Vertical gutters/margin',
         'exclude' => 1,
-        'description' => 'INFO: https://getbootstrap.com/docs/5.3/layout/gutters/#vertical-gutters',
+        'label' => $dbModel.'.t3sbootstrapverticalgutters',
+        'description' => $dbModel.'.t3sbootstrapverticalgutters.description',
         'displayCond' => [
             'OR' => [
                 'FIELD:CType:=:image',
@@ -523,7 +525,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_image_ratio' => [
-        'label' => 'Image Ratio',
+        'label' => $dbModel.'.t3sbootstrapimageratio',
         'exclude' => 1,
         'displayCond' => [
             'OR' => [
@@ -571,8 +573,8 @@ $tempContentColumns = [
 
     'tx_t3sbootstrap_zoom_orig' => [
         'exclude' => 1,
-        'label' => 'Use Original Image for Lightbox',
-        'description' => 'Only useful with image manipulation (cropping)',
+        'label' => $dbModel.'.t3sbootstrapzoomorig',
+        'description' => $dbModel.'.t3sbootstrapzoomorig.description',
         'displayCond' => [
             'OR' => [
                 'FIELD:CType:=:textpic',
@@ -676,13 +678,13 @@ $tempContentColumns = [
     ],
     'tx_t3sbootstrap_animateCssRepeat' => [
         'exclude' => 1,
-        'label' => 'Repeat',
+        'label' => $dbModel.'.t3sbootstrapanimateCssRepeat',
         'config' => [
             'type' => 'check'
         ]
     ],
     'tx_t3sbootstrap_animateCssDuration' => [
-        'label' => 'Duration in seconds',
+        'label' => $dbModel.'.t3sbootstrapanimateCssDuration',
         'exclude' => 1,
         'config' => [
             'type' => 'number',
@@ -698,7 +700,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_animateCssDelay' => [
-        'label' => 'Delay in seconds',
+        'label' => $dbModel.'.t3sbootstrapanimateCssDelay',
         'exclude' => 1,
         'config' => [
             'type' => 'number',
@@ -714,7 +716,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_sectionOrder' => [
-        'label' => 'Custom order in section Menu',
+        'label' => $dbModel.'.t3sbootstrapsectionOrder',
         'exclude' => 1,
         'config' => [
             'type' => 'number',
@@ -722,8 +724,7 @@ $tempContentColumns = [
         ]
     ],
     'tx_t3sbootstrap_bodytext' => [
-        'l10n_mode' => 'prefixLangTitle',
-        'label' => 'Text bottom ',
+        'label' => $dbModel.'.t3sbootstrapbodytextBottom',
         'config' => [
             'type' => 'text',
             'cols' => 80,
@@ -740,8 +741,7 @@ $tempContentColumns = [
         ],
     ],
     'tx_t3sbootstrap_cardfooter' => [
-        'l10n_mode' => 'prefixLangTitle',
-        'label' => 'Card Header',
+        'label' => $dbModel.'.t3sbootstrapbodycardfooter',
         'config' => [
             'type' => 'input',
             'size' => 50,
@@ -749,8 +749,7 @@ $tempContentColumns = [
         ],
     ],
     'tx_t3sbootstrap_list_item' => [
-        'l10n_mode' => 'prefixLangTitle',
-        'label' => 'List Group',
+        'label' => $dbModel.'.t3sbootstrapbodylistitem',
         'config' => [
             'type' => 'inline',
             'foreign_table' => 'tx_t3sbootstrap_list_item_inline',
@@ -842,8 +841,8 @@ $tempContentColumns = [
     
     'tx_t3sbootstrap_supraheader' => [
         'exclude' => 1,
-        'label' => 'Supraheader',
-        'description' => 'A short text element placed directly above the heading',
+        'label' => $dbModel.'.t3sbootstrapbodysupraheader',
+        'description' => $dbModel.'.t3sbootstrapbodysupraheader.description',
         'config' => [
             'type' => 'input',
             'size' => 50,
@@ -940,6 +939,9 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
             'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
         ],
     ],
+    'header' => [
+        'label' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_button.title',
+    ],
 ];
 
 
@@ -1019,12 +1021,12 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
-        --div--;Content,pi_flexform;Card Content,
-                tx_t3sbootstrap_cardheader;Card Header,
-                bodytext;Text top,
-                tx_t3sbootstrap_list_item;List Group,
-                tx_t3sbootstrap_bodytext;Text bottom,
-                tx_t3sbootstrap_cardfooter;Card Footer,
+        --div--;Content,pi_flexform;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.content,
+                tx_t3sbootstrap_cardheader;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.header,
+                bodytext;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.texttop,
+                tx_t3sbootstrap_list_item;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.listgroup,
+                tx_t3sbootstrap_bodytext;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.textbottom,
+                tx_t3sbootstrap_cardfooter;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.footer,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,
                 assets,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.mediaAdjustments;mediaAdjustments,
@@ -1063,9 +1065,13 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
                 'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
             ],
         ],
+        'header' => [
+            'label' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.title',
+        ],
     ]
 ];
 
+ 
 
 /***************
  * Toasts - t3sbs_toast
@@ -1252,21 +1258,21 @@ ExtensionManagementUtility::addFieldsToPalette(
 # add palettes
 ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
-    '--palette--;Bootstrap Color;bootstrapColor',
+    '--palette--;'.$dbModel.'.bootstrapColor'.';bootstrapColor',
     '',
     'after:layout'
 );
 
 ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
-    '--palette--;Bootstrap Spacing;bootstrapSpacing',
+    '--palette--;'.$dbModel.'.bootstrapSpacing'.';bootstrapSpacing',
     '',
     'after:layout'
 );
 
 ExtensionManagementUtility::addToAllTCAtypes(
     'tt_content',
-    '--palette--;T3SB Image Settings;imageSettings',
+    '--palette--;'.$dbModel.'.t3sbsettings'.';imageSettings',
     '',
     'after:imageborder'
 );

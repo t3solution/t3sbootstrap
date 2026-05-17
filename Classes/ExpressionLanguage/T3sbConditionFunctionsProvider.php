@@ -10,13 +10,10 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Http\NormalizedParams;
 
 class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterface
 {
-    /**
-     * @return array
-     */
+
     public function getFunctions(): array
     {
         return [
@@ -55,6 +52,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         return new ExpressionFunction('browser', function ($str) {
             // Not implemented
         }, function ($arguments, $str) {
+            // @extensionScannerIgnoreLine
             $user_agent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
             $browser = 'Other';
 

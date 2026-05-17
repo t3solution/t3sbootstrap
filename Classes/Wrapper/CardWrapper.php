@@ -17,6 +17,9 @@ class CardWrapper implements SingletonInterface
     
     public function __construct(
         private readonly ConnectionPool $connectionPool,
+        private readonly FlexFormTools $flexFormTools,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly FileRepository $fileRepository,
     ) {}
     
     
@@ -26,8 +29,9 @@ class CardWrapper implements SingletonInterface
     public function getProcessedData(array $processedData, array $flexconf): array
     {
         $processedData['gutter'] = !empty($flexconf['gutter']) ? (int)$flexconf['gutter'] : 0;
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');        
         $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
+            
         $children = $queryBuilder
             ->select('*')
             ->from('tt_content')
@@ -39,20 +43,17 @@ class CardWrapper implements SingletonInterface
             ->executeQuery()
             ->fetchAllAssociative();
 
-
-        $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
         $processedData['colclass'] = !empty($flexconf['colclass']) ? $flexconf['colclass'] : '';
         $processedData['cropMaxCharacters'] = $flexconf['cropMaxCharacters'];
+        $processedData['cropMaxCharacters'] = !empty($flexconf['cropMaxCharacters']) ? $flexconf['cropMaxCharacters'] : '';
 
-        $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+        $extconf = $this->extensionConfiguration->get('t3sbootstrap');
         $processedData['contentBy'] = [];
-        if ($extconf['allowReferences']) {
+        if (!empty($extconf['allowReferences'])) {
             $processedData = $this->getReferences($processedData, $flexconf);
         }
 
         if (count($children) || count($processedData['contentBy'])) {
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-
             // Flipper defaults
             if ($flexconf['card_wrapper'] === 'flipper') {
                 switch (count($children)) {
@@ -83,7 +84,7 @@ class CardWrapper implements SingletonInterface
             }
 
             foreach ($children as $key=>$child) {
-                $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $child['uid']);
+                $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $child['uid']);
                 if (!empty($processedData['flipper']) && isset($processedData['flipper']['width'])) {
                     $flipperWidth = $processedData['flipper']['width'];
                 } else {
@@ -112,7 +113,7 @@ class CardWrapper implements SingletonInterface
                 $children[$key]['tx_t3sbootstrap_header_class'] = $child['tx_t3sbootstrap_header_class'];
                 $children[$key]['header_icon'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                 $children[$key]['celink'] = $child['tx_t3sbootstrap_header_celink'];
-                $children[$key]['settings'] = $flexFormTools->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
+                $children[$key]['settings'] = $this->flexFormTools->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
             }
             $processedData['cards'] = $children;
 
@@ -146,6 +147,9 @@ class CardWrapper implements SingletonInterface
 
     private function getReferences(array $processedData, array $flexconf): array
     {
+        $contentByUid = [];
+        $contentByPid = [];
+        
         if (!empty($flexconf['contentByUid'])) {
             $uidContent = explode(',', $flexconf['contentByUid']);
             foreach ($uidContent as $uid) {

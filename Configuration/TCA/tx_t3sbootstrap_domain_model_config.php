@@ -1,8 +1,10 @@
 <?php
 
+$dbModel = 't3sbootstrap.db:tx_t3sbootstrap_domain_model_config';
+
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tx_t3sbootstrap_domain_model_config',
+        'title'	=> '',
         'label' => '',
         'label_alt' => 'company,homepage_uid',
         'label_alt_force' => true,
@@ -24,45 +26,45 @@ return [
             'showitem' => '
                 record_type,--linebreak--,
                 --palette--;;generalSettings,
-            --div--;Various Extra Classes,
+            --div--;'.$dbModel.'.variousextraclasses,
                 --palette--;;variousExtraClasses,
-            --div--;Various Margin & Padding,
+            --div--;'.$dbModel.'.variousmarginandpadding,
                 --palette--;;variousMarginPadding,
-            --div--;Loading Spinner,
+            --div--;'.$dbModel.'.loadingspinner,
                 --palette--;;loadingSpinner,
-            --div--;Lightbox Settings,
+            --div--;'.$dbModel.'.lightbox,
                 --palette--;;lightboxSettings,
-            --div--;Section Menu,
+            --div--;'.$dbModel.'.sectionmenu,
                 --palette--;;sectionMenuSettings,
-            --div--;Background Image,
+            --div--;'.$dbModel.'.backgroundimage,
                 --palette--;;backgroundImage,
-            --div--;Other Settings,
+            --div--;'.$dbModel.'.othersettings,
                 --palette--;;otherSettings,
         '],
         'meta' => [
-            'title' =>  'Meta Navigation',
+            'title' => $dbModel.'.meta',
             'showitem' => '
                 record_type,--linebreak--,
                 --palette--;;metaNavigation',
         ],
         'navbar' => [
-            'title' =>  'Navbar',
+            'title' =>  $dbModel.'.navbar',
             'showitem' => '
                 record_type,--linebreak--,
                 --palette--;;navbar,
-            --div--;Various Settings,
+            --div--;'.$dbModel.'.varioussettings,
                 --palette--;;variousSettings,
-            --div--;Brand,
+            --div--;'.$dbModel.'.brand,
                 --palette--;;brand,
-            --div--; Background Color,
+            --div--;'.$dbModel.'.backgroundcolor,
                 --palette--;;backgroundColor,
-            --div--;Layout/Placement,
+            --div--;'.$dbModel.'.layoutplacement,
                 --palette--;;layoutPlacement,
             --div--;Shrinking Navbar,
                 --palette--;;shrinkingNavbar,
-            --div--;Responsive behaviors,
+            --div--;'.$dbModel.'.responsiveBehaviors,
                 --palette--;;responsiveBehaviors,
-            --div--; Language Menu,
+            --div--;'.$dbModel.'.languagemenu,
                 --palette--;;languageMenu,',
         ],
         'jumbo' => [
@@ -74,12 +76,15 @@ return [
                 --palette--;;background,
                 --palette--;;backgroundcarousel,',
         ],
+
         'ptitle' => [
-            'title' =>  'Page Title',
+            'title' => $dbModel.'.ptitle',
             'showitem' => '
                 record_type,--linebreak--,
                 --palette--;;pageTitle,',
         ],
+
+
         'breadcrumb' => [
             'title' =>  'Breadcrumb',
             'showitem' => '
@@ -137,46 +142,45 @@ return [
 
     'palettes' => [
         'generalSettings' => [
-            'label' => 'General Settings',
+            'label' => $dbModel.'.generalsettings',
             'showitem' => '
                 content_only_on_rootpage,--linebreak--,
                 disable_prefix_comment
             ',
         ],
         'variousExtraClasses' => [
-            'label' => 'Various Extra Classes',
-            'description' => 'Here you can apply any CSS "Extra Class" you like - e.g. bg-warning mt-4 or any other classes',
+            'label' =>  $dbModel.'.variousextraclasses',
+            'description' => $dbModel.'.variousextraclasses.description',
             'showitem' => '
                 body_extra_class,--linebreak--,
+                page_wrapper_extra_class,--linebreak--,
                 page_content_extra_class,--linebreak--,
-                main_extra_class,--linebreak--,
-                page_wrapper_extra_class,
+                main_extra_class,
             ',
         ],
         'variousMarginPadding' => [
-            'label' => 'Various Margin and Padding',
+            'label' => $dbModel.'.variousmarginandpadding',
             'showitem' => '
                 global_padding_top,--linebreak--,
                 content_margin_top,
             ',
         ],
         'loadingSpinner' => [
-            'label' => 'Loading Spinner',
-            'description' => 'Bootstrap “spinners” can be used to show the loading state in your project.
-            By default the spinner is built with "currentColor",so you can easily change its appearance with text color utilities',
+            'label' => $dbModel.'.loadingspinner',
+            'description' => $dbModel.'.loadingspinner.description',
             'showitem' => '
                 loading_spinner,loading_spinner_color,
             ',
         ],
         'lightboxSettings' => [
-            'label' => 'Lightbox Settings',
+            'label' => $dbModel.'.lightboxsettings',
             'showitem' => '
                 lightbox_selection,--linebreak--,
                 magnifying,
             ',
         ],
         'sectionMenuSettings' => [
-            'label' => 'Section Menu Settings',
+            'label' => $dbModel.'.sectionmenusettings',
             'description' => 'INFO:
                 https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#threshold
                 https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin',
@@ -187,13 +191,13 @@ return [
             ',
         ],
         'backgroundImage' => [
-            'label' => 'Background Image',
+            'label' => $dbModel.'.backgroundimage',
             'showitem' => '
                 background_image_enable,background_image_slide,
             ',
         ],
         'otherSettings' => [
-            'label' => 'Other Settings',
+            'label' => $dbModel.'.othersettings',
             'showitem' => '
                 subheader_color,date_format,favicon,--linebreak--,
                 card_flipper_on_Click,--linebreak--,
@@ -202,7 +206,7 @@ return [
             ',
         ],
         'metaNavigation' => [
-            'label' => 'Meta Navigation',
+            'label' => $dbModel.'.metanavigation',
             'showitem' => '
                 meta_enable,meta_container,--linebreak--,
                 meta_value,meta_class,--linebreak--,
@@ -210,7 +214,7 @@ return [
             ',
         ],
         'navbar' => [
-            'label' => 'Navbar',
+            'label' => $dbModel.'.navbar',
             'showitem' => '
                 navbar_enable,--linebreak--,
                 navbar_entrylevel,navbar_levels,--linebreak--,
@@ -220,7 +224,7 @@ return [
             ',
         ],
         'variousSettings' => [
-            'label' => 'Various Settings',
+            'label' => $dbModel.'.varioussettings',
             'showitem' => '
                 navbar_sectionmenu,navbar_megamenu,--linebreak--,
                 navbar_includespacer,navbar_hover,--linebreak--,
@@ -229,8 +233,8 @@ return [
             ',
         ],
         'brand' => [
-            'label' => 'Brand',
-            'description' => 'INFO: https://getbootstrap.com/docs/5.3/components/navbar/#brand',
+            'label' => $dbModel.'.brand',
+            'description' => $dbModel.'.brand.description',
             'showitem' => '
                 navbar_brand,--linebreak--,
                 navbarbrand_alignment,--linebreak--,
@@ -239,7 +243,7 @@ return [
             ',
         ],
         'backgroundColor' => [
-            'label' => 'Background Color',
+            'label' => $dbModel.'.backgroundcolor',
             'description' => 'INFO: https://getbootstrap.com/docs/5.3/components/navbar/#color-schemes',
             'showitem' => '
                 navbar_color,--linebreak--,
@@ -248,8 +252,8 @@ return [
             ',
         ],
         'layoutPlacement' => [
-            'label' => 'Layout/Placement',
-            'description' => 'INFO: https://getbootstrap.com/docs/5.3/components/navbar/#placement',
+            'label' => $dbModel.'.layoutplacement',
+            'description' => $dbModel.'.layoutplacement.description',
             'showitem' => '
                 navbar_container,navbar_innercontainer,--linebreak--,
                 navbar_placement,navbar_alignment,--linebreak--,
@@ -259,11 +263,8 @@ return [
             ',
         ],
         'shrinkingNavbar' => [
-            'label' => 'Shrinking Navbar',
-            'description' => 'Shrinking Navbar on scrolling: Set "Placement" to "fixed-top".
-            Set "Navbar height" must be adapted for body-padding.
-            Does not work with "Background color" only with "Color schemes".
-            Transparency: "Color schemes" = "bg-color" and "Background color" & "Navbar height" without entry.',
+            'label' => $dbModel.'.shrinkingnavbar',
+            'description' => $dbModel.'.shrinkingnavbar.description',
             'showitem' => '
                 navbar_shrinkcolor,--linebreak--,
                 shrinking_nav_padding,--linebreak--,
@@ -271,8 +272,8 @@ return [
             ',
         ],
         'responsiveBehaviors' => [
-            'label' => 'Responsive behaviors',
-            'description' => 'INFO: https://getbootstrap.com/docs/5.3/components/navbar/#responsive-behaviors',
+            'label' => $dbModel.'.responsiveBehaviors',
+            'description' => $dbModel.'.responsiveBehaviors.description',
             'showitem' => '
                 navbar_toggler,--linebreak--,
                 navbar_breakpoint,--linebreak--,
@@ -280,7 +281,7 @@ return [
             ',
         ],
         'languageMenu' => [
-            'label' => 'Language Menu',
+            'label' => $dbModel.'.languagemenu',
             'showitem' => '
                 navbar_langmenu,--linebreak--,
                 lang_menu_with_fa_icon,--linebreak--,
@@ -288,7 +289,7 @@ return [
             ',
         ],
         'jumbotron' => [
-            'label' => 'Jumbotron',
+            'label' => $dbModel.'.jumbotron',
             'showitem' => '
                 jumbotron_enable,jumbotron_slide,--linebreak--,
                 jumbotron_position,--linebreak--,
@@ -297,7 +298,7 @@ return [
             ',
         ],
         'background' => [
-            'label' => 'Background Image',
+            'label' => $dbModel.'.backgroundimage',
             'showitem' => '
                 jumbotron_bgimage,jumbotron_bgimageratio,
             ',
@@ -310,7 +311,7 @@ return [
             ',
         ],
         'pageTitle' => [
-            'label' => 'Page Title',
+            'label' => $dbModel.'.pagetitle',
             'showitem' => '
                 page_title,--linebreak--,
                 page_titlealign,--linebreak--,
@@ -319,9 +320,8 @@ return [
             ',
         ],
         'breadcrumb' => [
-            'label' => 'Breadcrumb',
-            'description' => 'indicate the current page’s location within a navigational hierarchy.
-            INFO: https://getbootstrap.com/docs/5.3/components/breadcrumb/',
+            'label' => $dbModel.'.breadcrumb',
+            'description' => $dbModel.'.breadcrumb.description',
             'showitem' => '
                 breadcrumb_enable,breadcrumb_notonrootpage,--linebreak--,
                 breadcrumb_container,breadcrumb_containerposition,--linebreak--,
@@ -330,7 +330,7 @@ return [
             ',
         ],
         'sidebar' => [
-            'label' => 'Sidebar',
+            'label' => $dbModel.'.sidebar',
             'showitem' => '
                 sidebar_enable,sidebar_rightenable,--linebreak--,
                 sidebar_entrylevel,sidebar_levels,--linebreak--,
@@ -342,7 +342,7 @@ return [
         ],
 
         'expandedContentTop' => [
-            'label' => 'Expanded Content Top',
+            'label' => $dbModel.'.expandedcontenttop',
             'showitem' => '
                 expandedcontent_slidetop,--linebreak--,
                 expandedcontent_containertop,expandedcontent_containerpositiontop,--linebreak--,
@@ -351,7 +351,7 @@ return [
         ],
 
         'expandedContentBottom' => [
-            'label' => 'Expanded Content Bottom',
+            'label' => $dbModel.'.expandedcontentbottom',
             'showitem' => '
                 expandedcontent_slidebottom,--linebreak--,
                 expandedcontent_containerbottom,expandedcontent_containerpositionbottom,--linebreak--,
@@ -360,7 +360,7 @@ return [
         ],
 
         'footer' => [
-            'label' => 'Footer',
+            'label' => $dbModel.'.footer',
             'showitem' => '
                 footer_enable,footer_sticky,footer_slide,--linebreak--,
                 footer_container,footer_containerposition,--linebreak--,
@@ -382,28 +382,28 @@ return [
 
         'record_type' => [
             'exclude' => false,
-            'label' => 'Configuration Type',
-            'description' => 'A Bootstrap component can be selected here.',
+            'label' => $dbModel.'.recordtype',
+            'description' => $dbModel.'.recordtype.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'General Settings', 'value' => 'general'],
-                    ['label' => 'Meta Navigation','value' => 'meta'],
-                    ['label' => 'Navbar','value' => 'navbar'],
-                    ['label' => 'Jumbotron','value' => 'jumbo'],
-                    ['label' => 'Page Title','value' => 'ptitle'],
-                    ['label' => 'Breadcrumb','value' => 'breadcrumb'],
-                    ['label' => 'Sidebar','value' => 'sidebar'],
-                    ['label' => 'Expanded Content','value' => 'extra'],
-                    ['label' => 'Footer','value' => 'footer'],
-                    ['label' => 'Custom SCSS','value' => 'scss'],
+                    ['label' => $dbModel.'.generalsettings', 'value' => 'general'],
+                    ['label' => $dbModel.'.metanavigation','value' => 'meta'],
+                    ['label' => $dbModel.'.navbar','value' => 'navbar'],
+                    ['label' => $dbModel.'.jumbotron','value' => 'jumbo'],
+                    ['label' => $dbModel.'.pagetitle','value' => 'ptitle'],
+                    ['label' => $dbModel.'.breadcrumb','value' => 'breadcrumb'],
+                    ['label' => $dbModel.'.sidebar','value' => 'sidebar'],
+                    ['label' => $dbModel.'.expandedcontent','value' => 'extra'],
+                    ['label' => $dbModel.'.footer','value' => 'footer'],
+                    ['label' => $dbModel.'.customscss','value' => 'scss'],
                 ],
             ],
         ],
         'homepage_uid' => [
             'exclude' => false,
-            'label' => 'Homepage Uid',
+            'label' => $dbModel.'.homepageuid',
             'config' => [
                 'type' => 'input',
                 'searchable' => false,
@@ -411,39 +411,39 @@ return [
         ],
         'content_only_on_rootpage' => [
             'exclude' => false,
-            'label' => 'Content Only On Rootpage',
-            'description' => 'disable navbar, jumbotron, breadcrumb and footer on rootpage if enabled',
+            'label' => $dbModel.'.contentonlyonrootpage',
+            'description' => $dbModel.'.contentonlyonrootpage.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ]
             ]
         ],
         'disable_prefix_comment' => [
             'exclude' => false,
-            'label' => 'Disable Prefix Comment',
-            'description' => 'if set, the stdWrap property prefixComment will be disabled',
+            'label' => $dbModel.'.disableprefixcomment',
+            'description' => $dbModel.'.disableprefixcomment.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'body_extra_class' => [
             'exclude' => false,
-            'label' => 'Body',
+            'label' => $dbModel.'.bodyclass',
             'config' => [
                 'type' => 'input',
                 'searchable' => false,
@@ -451,7 +451,7 @@ return [
         ],
         'page_content_extra_class' => [
             'exclude' => false,
-            'label' => 'Page Content',
+            'label' => $dbModel.'.pagecontent',
             'config' => [
                 'type' => 'input',
                 'searchable' => false,
@@ -459,7 +459,7 @@ return [
         ],
         'main_extra_class' => [
             'exclude' => false,
-            'label' => 'Main',
+            'label' => $dbModel.'.main',
             'config' => [
                 'type' => 'input',
                 'searchable' => false,
@@ -467,7 +467,7 @@ return [
         ],
         'page_wrapper_extra_class' => [
             'exclude' => false,
-            'label' => 'Page Wrapper',
+            'label' => $dbModel.'.pagewrapper',
             'config' => [
                 'type' => 'input',
                 'searchable' => false,
@@ -475,8 +475,8 @@ return [
         ],
        'global_padding_top' => [
             'exclude' => false,
-            'label' => 'Global Top Padding',
-            'description' => 'Extra Padding for colPos=0,1 & 2 (main- and aside-tag)',
+            'label' => $dbModel.'.globaltoppadding',
+            'description' => $dbModel.'.globaltoppadding.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -493,9 +493,8 @@ return [
         ],
         'content_margin_top' => [
             'exclude' => false,
-            'label' => 'Content Element',
-            'description' => 'here you can set the default space (margin-top) for each content-element (colPos=0).
-            You can overwrite this value in the “Extra Class” field in each content-element.',
+            'label' => $dbModel.'.contentmargintop',
+            'description' => $dbModel.'.contentmargintop.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -512,21 +511,21 @@ return [
         ],
         'loading_spinner' => [
             'exclude' => false,
-            'label' => 'make your selection',
+            'label' => $dbModel.'.makeyourselection',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => 'Border spinner [border]', 'value' => 'border'],
-                    ['label' => 'Growing spinner [grow]', 'value' => 'grow'],
+                    ['label' => $dbModel.'.spinner.item1', 'value' => 'border'],
+                    ['label' => $dbModel.'.spinner.item2', 'value' => 'grow'],
                 ],
                 'default' => '',
             ]
         ],
         'loading_spinner_color' => [
             'exclude' => false,
-            'label' => 'Loading Spinner Color',
+            'label' => $dbModel.'.loadingspinnercolor',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -537,7 +536,6 @@ return [
                     ['label' => 'success', 'value' => 'success'],
                     ['label' => 'danger', 'value' => 'danger'],
                     ['label' => 'warning', 'value' => 'warning'],
-                    ['label' => 'description', 'value' => 'description'],
                     ['label' => 'light', 'value' => 'light'],
                     ['label' => 'dark', 'value' => 'dark'],
                 ],
@@ -546,12 +544,11 @@ return [
         ],
         'lightbox_selection' => [
             'exclude' => false,
-            'label' => 'make your selection',
+            'label' => $dbModel.'.makeyourselection',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-#                    ['label' => 'none', 'value' => ''],
                     ['label' => 'none', 'value' => 0],
                     ['label' => 'Baguettbox', 'value' => 1],
                     ['label' => 'Halkabox', 'value' => 2],
@@ -562,24 +559,24 @@ return [
         ],
         'magnifying' => [
             'exclude' => false,
-            'label' => 'Magnifying glass icon',
-            'description' => 'in the center of an image on hover',
+            'label' => $dbModel.'.magnifyingglassicon',
+            'description' => $dbModel.'.magnifyingglassicon.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'sectionmenu_anchor_offset' => [
             'exclude' => false,
-            'label' => 'Anchor extra offset (int)',
-            'description' => 'for Section-Menu-Items and "OnePageLayout": in px - (default 29)',
+            'label' => $dbModel.'.anchorextraoffset',
+            'description' => $dbModel.'.anchorextraoffset.description',
             'config' => [
                 'type' => 'number',
                 'format' => 'integer',
@@ -588,8 +585,8 @@ return [
         ],
         'sectionmenu_scrollspy_threshold' => [
             'exclude' => false,
-            'label' => 'Scrollspy threshold (string)',
-            'description' => 'default: 0.1, 0.5, 1',
+            'label' => $dbModel.'.sectionmenuscrollspythreshold',
+            'description' => $dbModel.'.sectionmenuscrollspythreshold.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -597,8 +594,8 @@ return [
         ],
         'sectionmenu_scrollspy_root_margin' => [
             'exclude' => false,
-            'label' => 'Scrollspy rootMargin (string)',
-            'description' => 'default: 0px 0px -25%',
+            'label' => $dbModel.'.sectionmenuscrollspyrootmargin',
+            'description' => $dbModel.'.sectionmenuscrollspyrootmargin.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -606,104 +603,104 @@ return [
         ],
         'sectionmenu_scrollspy' => [
             'exclude' => false,
-            'label' => 'Scrollspy',
-            'description' => 'activate/deaktivate scrollspy',
+            'label' => $dbModel.'.sectionmenuscrollspy',
+            'description' => $dbModel.'.sectionmenuscrollspy.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'sectionmenu_sticky_top' => [
             'exclude' => false,
-            'label' => 'Sticky Top',
-            'description' => 'for #sectionmenu, .submenu or .make-me-sticky',
+            'label' => $dbModel.'.sectionmenustickytop',
+            'description' => $dbModel.'.sectionmenustickytop.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'sectionmenu_icons' => [
             'exclude' => false,
-            'label' => 'Icons',
-            'description' => 'Shows Icons in section menu',
+            'label' => $dbModel.'.icons',
+            'description' => $dbModel.'.icons.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'sidebar_section_mobile' => [
             'exclude' => false,
-            'label' => 'Section mobile',
-            'description' => 'Shows the section menu also in the mobile if enabled',
+            'label' => $dbModel.'.sidebarsectionmobile',
+            'description' => $dbModel.'.sidebarsectionmobile.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'background_image_enable' => [
             'exclude' => false,
-            'label' => 'Enable',
-            'description' => 'first image from pages media',
+            'label' => $dbModel.'.backgroundimageenable',
+            'description' => $dbModel.'.backgroundimageenable.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'background_image_slide' => [
             'exclude' => false,
-            'label' => 'Slide',
-            'description' => 'rootline sliding for the background image',
+            'label' => $dbModel.'.backgroundimageslide',
+            'description' => $dbModel.'.backgroundimageslide.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'subheader_color' => [
             'exclude' => false,
-            'label' => 'Subheader Color',
-            'description' => 'Bootstrap contextual text classes',
+            'label' => $dbModel.'.subheadercolor',
+            'description' => $dbModel.'.subheadercolor.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -714,7 +711,6 @@ return [
                     ['label' => 'success', 'value' => 'success'],
                     ['label' => 'danger', 'value' => 'danger'],
                     ['label' => 'warning', 'value' => 'warning'],
-                    ['label' => 'description', 'value' => 'description'],
                     ['label' => 'light', 'value' => 'light'],
                     ['label' => 'dark', 'value' => 'dark'],
                 ],
@@ -723,8 +719,8 @@ return [
         ],
         'date_format' => [
             'exclude' => false,
-            'label' => 'Date Format',
-            'description' => 'the date format to use in ext:t3sbootstrap - default: d.m.Y',
+            'label' => $dbModel.'.dateformat',
+            'description' => $dbModel.'.dateformat.description',
             'config' => [
                 'type' => 'text',
                 'cols' => 30,
@@ -734,8 +730,8 @@ return [
         ],
         'favicon' => [
             'exclude' => false,
-            'label' => 'Favicon',
-            'description' => 'path to your favicon e.g.: EXT:t3sbootstrap/Resources/Public/Icons/favicon.ico',
+            'label' => $dbModel.'.favicon',
+            'description' => $dbModel.'.favicon.description',
             'config' => [
                 'type' => 'text',
                 'cols' => 30,
@@ -745,80 +741,80 @@ return [
         ],
         'card_flipper_on_Click' => [
             'exclude' => false,
-            'label' => 'Card Flipper',
-            'description' => 'rotate the cards on click (not on hover) if activated',
+            'label' => $dbModel.'.cardflipperonclick',
+            'description' => $dbModel.'.cardflipperonclick.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'last_modified_content_element' => [
             'exclude' => false,
-            'label' => 'Last Modified',
-            'description' => 'display the date of the last modified content on current page in the footer',
+            'label' => $dbModel.'.lastmodifiedcontentelement',
+            'description' => $dbModel.'.lastmodifiedcontentelement.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'recently_updated_content_elements' => [
             'exclude' => false,
-            'label' => 'Updated Content Elements',
-            'description' => 'another solution in the Template MenuRecentlyUpdated.fluid.html if enabled',
+            'label' => $dbModel.'.recentlyupdatedcontentelements',
+            'description' => $dbModel.'.recentlyupdatedcontentelements.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'meta_enable' => [
             'exclude' => false,
-            'label' => 'Enable',
+            'label' => $dbModel.'.metaenable',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => 'Left align [start]', 'value' => 'start'],
-                    ['label' => 'Right align [end]', 'value' => 'end'],
-                    ['label' => 'Nav-scroller (only left align) [scroller]', 'value' => 'scroller'],
+                    ['label' => $dbModel.'.metaenable.item1', 'value' => 'start'],
+                    ['label' => $dbModel.'.metaenable.item2', 'value' => 'end'],
+                    ['label' => $dbModel.'.metaenable.item3', 'value' => 'scroller'],
                 ],
                 'default' => '',
             ]
         ],
         'meta_value' => [
             'exclude' => false,
-            'label' => 'Value',
-            'description' => 'Comma-separated list of page ids.',
+            'label' => $dbModel.'.metavalue',
+            'description' => $dbModel.'.metavalue.description',
             'config' => [
                 'type' => 'input',
-                'searchable' => false
+                'searchable' => false,
+                'size' => 50
             ],
-            'size' => 50,
         ],
         'meta_container' => [
             'exclude' => false,
-            'label' => 'Container',
+            'label' => $dbModel.'.container',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -836,8 +832,8 @@ return [
         ],
         'meta_class' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. text-white text-shadow bg-primary',
+            'label' => $dbModel.'.metaclass',
+            'description' => $dbModel.'.metaclass.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -845,8 +841,8 @@ return [
         ],
         'meta_text' => [
             'exclude' => false,
-            'label' => 'Text only',
-            'description' => 'e.g. e-mail address and phone number',
+            'label' => $dbModel.'.metatext',
+            'description' => $dbModel.'.metatext.description',
                 'config' => [
                 'type' => 'text',
                 'cols' => 30,
@@ -856,8 +852,8 @@ return [
         ],
         'navbar_enable' => [
             'exclude' => false,
-            'label' => 'NavBar',
-            'description' => 'Choose from navbar-light for use with light background colors, or navbar-dark for dark background colors',
+            'label' => $dbModel.'.navbarenable',
+            'description' => $dbModel.'.navbarenable.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -871,8 +867,8 @@ return [
         ],
         'navbar_entrylevel' => [
             'exclude' => false,
-            'label' => 'Entry Level (int)',
-            'description' => 'Defines at which level in the rootLine the menu should start.',
+            'label' => $dbModel.'.navbarentrylevel',
+            'description' => $dbModel.'.navbarentrylevel.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -880,8 +876,8 @@ return [
         ],
         'navbar_levels' => [
             'exclude' => false,
-            'label' => 'Levels (int)',
-            'description' => 'The entry 1 for the first level always must exist.',
+            'label' => $dbModel.'.navbarlevels',
+            'description' => $dbModel.'.navbarlevels.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -889,8 +885,8 @@ return [
         ],
         'navbar_excludeuiduist' => [
             'exclude' => false,
-            'label' => 'Exclude',
-            'description' => 'Comma-separated list of page ids.',
+            'label' => $dbModel.'.navbarexcludeuiduist',
+            'description' => $dbModel.'.navbarexcludeuiduist.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -898,8 +894,8 @@ return [
         ],
         'navbar_right_menu_uid_list' => [
             'exclude' => false,
-            'label' => 'Right Menu',
-            'description' => 'Comma-separated list of uid`s (pages) for a right menu in the navbar.',
+            'label' => $dbModel.'.navbarrightmenuuidlist',
+            'description' => $dbModel.'.navbarrightmenuuidlist.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -907,119 +903,119 @@ return [
         ],
         'navbar_dark_mode' => [
             'exclude' => false,
-            'label' => 'Color mode toggler',
-            'description' => 'Enable as right menu dropdown - To allow visitors or users to toggle color modes.',
+            'label' => $dbModel.'.navbardarkmode',
+            'description' => $dbModel.'.navbardarkmode.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_sectionmenu' => [
             'exclude' => false,
-            'label' => 'Sectionmenu',
-            'description' => 'Enable for "One Page Layout"',
+            'label' => $dbModel.'.navbarsectionmenu',
+            'description' => $dbModel.'.navbarsectionmenu.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_megamenu' => [
             'exclude' => false,
-            'label' => 'Megamenu',
-            'description' => 'description: https://www.t3sbootstrap.de/demo/mega-menu/',
+            'label' => $dbModel.'.navbarmegamenu',
+            'description' => $dbModel.'.navbarmegamenu.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_includespacer' => [
             'exclude' => false,
-            'label' => 'Include Spacer',
-            'description' => 'Enable spacer in dropdown',
+            'label' => $dbModel.'.navbarincludespacer',
+            'description' => $dbModel.'.navbarincludespacer.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_hover' => [
             'exclude' => false,
-            'label' => 'Hover',
-            'description' => 'Open dropdown on hover',
+            'label' => $dbModel.'.navbarhover',
+            'description' => $dbModel.'.navbarhover.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_clickableparent' => [
             'exclude' => false,
-            'label' => 'Clickable parent',
-            'description' => 'Clickable parent if dropdown menu is open',
+            'label' => $dbModel.'.navbarclickableparent',
+            'description' => $dbModel.'.navbarclickableparent.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_plusicon' => [
             'exclude' => false,
-            'label' => 'Plus icon for dropdown',
-            'description' => 'Extra plus icon to open dropdown (Hover is disabled by default if activated!)',
+            'label' => $dbModel.'.navbarplusicon',
+            'description' => $dbModel.'.navbarplusicon.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_dropdown_animate' => [
             'exclude' => false,
-            'label' => 'Dropdown animation',
+            'label' => $dbModel.'.navbardropdownanimate',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1033,52 +1029,52 @@ return [
         ],
         'navbar_extra_row' => [
             'exclude' => false,
-            'label' => 'Extra Row',
-            'description' => 'Enable extra row(s) in the navbar - .../Resources/Private/Partials/Page/Navbar/NavbarExtraRow.fluid.html',
+            'label' => $dbModel.'.navbarextrarow',
+            'description' => $dbModel.'.navbarextrarow.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_brand' => [
             'exclude' => false,
-            'label' => 'Options',
+            'label' => $dbModel.'.navbarbrand',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => 'As a link [link]', 'value' => 'link'],
-                    ['label' => 'As a heading [heading]', 'value' => 'heading'],
-                    ['label' => 'Just an image [image]', 'value' => 'image'],
-                    ['label' => 'Image and text [imgText]', 'value' => 'imgText'],
+                    ['label' => $dbModel.'.navbarbrand.item1', 'value' => 'link'],
+                    ['label' => $dbModel.'.navbarbrand.item2', 'value' => 'heading'],
+                    ['label' => $dbModel.'.navbarbrand.item3', 'value' => 'image'],
+                    ['label' => $dbModel.'.navbarbrand.item4', 'value' => 'imgText'],
                 ],
                 'default' => '',
             ]
         ],
         'navbarbrand_alignment' => [
             'exclude' => false,
-            'label' => 'Alignment',
+            'label' => $dbModel.'.navbarbrandalignment',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'left', 'value' => 'left'],
-                    ['label' => 'right', 'value' => 'right'],
+                    ['label' => $dbModel.'.navbarbrandalignment.item1', 'value' => 'left'],
+                    ['label' => $dbModel.'.navbarbrandalignment.item2', 'value' => 'right'],
                 ]
             ]
         ],
         'company' => [
             'exclude' => false,
-            'label' => 'Text',
-            'description' => 'e.g. Company name (Multilingual Support with pipe "|")',
+            'label' => $dbModel.'.company',
+            'description' => $dbModel.'.company.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1086,8 +1082,8 @@ return [
         ],
         'navbar_image' => [
             'exclude' => false,
-            'label' => 'Image',
-            'description' => 'Path to your image - Only if "Brand Options" is "Just an image" or "Image and text"',
+            'label' => $dbModel.'.navbarimage',
+            'description' => $dbModel.'.navbarimage.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1095,7 +1091,7 @@ return [
         ],
         'navbar_color' => [
             'exclude' => false,
-            'label' => 'Color scheme',
+            'label' => $dbModel.'.navbarcolor',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1125,8 +1121,8 @@ return [
         ],
         'navbar_background' => [
             'exclude' => false,
-            'label' => 'Background Color',
-            'description' => 'HTML-color - Color schemes "bg-color" must be activated',
+            'label' => $dbModel.'.navbarbackground',
+            'description' => $dbModel.'.navbarbackground.description',
             'config' => [
                 'type' => 'color',
                 'opacity' => true,
@@ -1136,24 +1132,23 @@ return [
         
         'navbar_transparent' => [
             'exclude' => false,
-            'label' => 'Transparent Navbar',
-            'description' => 'create a transparent navbar which changes its style on scroll',
-            'description' => 'Placement must be "fixed-top"',
+            'label' => $dbModel.'.navbartransparent',
+            'description' => $dbModel.'.navbartransparent.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_container' => [
             'exclude' => false,
-            'label' => 'Container',
+            'label' => $dbModel.'.container',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1172,7 +1167,7 @@ return [
         ],
         'navbar_innercontainer' => [
             'exclude' => false,
-            'label' => 'Inner-Container',
+            'label' => $dbModel.'.navbarinnercontainer',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1189,38 +1184,38 @@ return [
         ],
         'navbar_placement' => [
             'exclude' => false,
-            'label' => 'Placement',
+            'label' => $dbModel.'.navbarplacement',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'default','value' => ''],
-                    ['label' => 'fixed-top', 'value' => 'fixed-top'],
-                    ['label' => 'fixed-bottom', 'value' => 'fixed-bottom'],
-                    ['label' => 'sticky-top', 'value' => 'sticky-top'],
+                    ['label' => $dbModel.'.navbarplacement.item1', 'value' => ''],
+                    ['label' => $dbModel.'.navbarplacement.item2', 'value' => 'fixed-top'],
+                    ['label' => $dbModel.'.navbarplacement.item3', 'value' => 'fixed-bottom'],
+                    ['label' => $dbModel.'.navbarplacement.item4', 'value' => 'sticky-top'],
                 ],
                 'default' => '',
             ]
         ],
         'navbar_alignment' => [
             'exclude' => false,
-            'label' => 'Alignment',
+            'label' => $dbModel.'.navbaralignment',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'left','value' => 'left'],
-                    ['label' => 'right','value' => 'right'],
-                    ['label' => 'center','value' => 'center'],
-                    ['label' => 'fill (every nav item will be the same width)','value' => 'fill'],
-                    ['label' => 'justified (all horizontal space will be occupied by nav links)','value' => 'justified'],
+                    ['label' => $dbModel.'.navbaralignment.item1','value' => 'left'],
+                    ['label' => $dbModel.'.navbaralignment.item2','value' => 'right'],
+                    ['label' => $dbModel.'.navbaralignment.item3','value' => 'center'],
+                    ['label' => $dbModel.'.navbaralignment.item4','value' => 'fill'],
+                    ['label' => $dbModel.'.navbaralignment.item5','value' => 'justified'],
                 ]
             ]
         ],
         'navbar_class' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. "mb-5" for margin-bottom: 3rem',
+            'label' => $dbModel.'.navbarclass',
+            'description' => $dbModel.'.navbarclass.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1228,8 +1223,8 @@ return [
         ],
         'navbar_height' => [
             'exclude' => false,
-            'label' => 'NavBar Height (int)',
-            'description' => 'Is used as padding-top in the body tag - use only if NavBar is fixed-top (int+ px / default: "56")',
+            'label' => $dbModel.'.navbarheight',
+            'description' => $dbModel.'.navbarheight.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1237,22 +1232,22 @@ return [
         ],
         'navbar_searchbox' => [
             'exclude' => false,
-            'label' => 'Searchbox',
+            'label' => $dbModel.'.navbarsearchbox',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none','value' => ''],
-                    ['label' => 'Form only [form]','value' => 'form'],
-                    ['label' => 'Form & Button [button]','value' => 'button'],
+                    ['label' => $dbModel.'.navbarsearchbox.item1','value' => 'form'],
+                    ['label' => $dbModel.'.navbarsearchbox.item2','value' => 'button'],
                 ],
                 'default' => '',
             ]
         ],
         'navbar_shrinkcolor' => [
             'exclude' => false,
-            'label' => 'Enable',
-            'description' => 'Choose from navbar-light for use with light background colors, or navbar-dark for dark background colors',
+            'label' => $dbModel.'.navbarshrinkcolor',
+            'description' => $dbModel.'.navbarshrinkcolor.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1266,7 +1261,7 @@ return [
         ],
         'navbar_shrinkcolorschemes' => [
             'exclude' => false,
-            'label' => 'Color schemes',
+            'label' => $dbModel.'.navbarshrinkcolorschemes',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1295,8 +1290,8 @@ return [
         ],
         'shrinking_nav_padding' => [
             'exclude' => false,
-            'label' => 'Padding (top & bottom)',
-            'description' => 'py-x can be set by your stylesheet',
+            'label' => $dbModel.'.shrinkingnavpadding',
+            'description' => $dbModel.'.shrinkingnavpadding.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1312,94 +1307,93 @@ return [
         ],
         'navbar_toggler' => [
             'exclude' => false,
-            'label' => 'Toggler',
+            'label' => $dbModel.'.navbartoggler',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'left', 'value' => 'left'],
-                    ['label' => 'right', 'value' => 'right'],
-
+                    ['label' => $dbModel.'.navbartoggler.item1', 'value' => 'left'],
+                    ['label' => $dbModel.'.navbartoggler.item2', 'value' => 'right'],
                 ]
             ]
         ],
         'navbar_animatedtoggler' => [
             'exclude' => false,
-            'description' => 'Doing it with plain HTML and pure CSS - does not work with "Offcanvas"',
-            'label' => 'Animated Toggler',
+            'label' => $dbModel.'.navbaranimatedtoggler',
+            'description' => $dbModel.'.navbaranimatedtoggler.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_breakpoint' => [
             'exclude' => false,
-            'label' => 'Breakpoint',
-            'description' => 'Grouping and hiding navbar contents by a parent breakpoint',
+            'label' => $dbModel.'.navbarbreakpoint',
+            'description' => $dbModel.'.navbarbreakpoint.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'Small (≥576px) [sm]', 'value' => 'sm'],
-                    ['label' => 'Medium (≥768px [md]', 'value' => 'md'],
-                    ['label' => 'Large (≥992px) [lg]', 'value' => 'lg'],
-                    ['label' => 'Extra large (≥1200px) [xl]', 'value' => 'xl'],
-                    ['label' => 'Extra extra large (≥1400px) [xxl]', 'value' => 'xxl'],
-                    ['label' => 'Never expand [no]', 'value' => 'no'],
+                    ['label' => $dbModel.'.navbarbreakpoint.item1', 'value' => 'sm'],
+                    ['label' => $dbModel.'.navbarbreakpoint.item2', 'value' => 'md'],
+                    ['label' => $dbModel.'.navbarbreakpoint.item3', 'value' => 'lg'],
+                    ['label' => $dbModel.'.navbarbreakpoint.item4', 'value' => 'xl'],
+                    ['label' => $dbModel.'.navbarbreakpoint.item5', 'value' => 'xxl'],
+                    ['label' => $dbModel.'.navbarbreakpoint.item6', 'value' => 'no'],
                 ]
             ]
         ],
         'navbar_offcanvas' => [
             'exclude' => false,
+            'label' => $dbModel.'.navbaroffcanvas',
             'description' => 'Change navbar collapse to offcanvas on mobile screen',
-            'label' => 'Offcanvas',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'navbar_langmenu' => [
             'exclude' => false,
-            'label' => 'Enable',
-            'description' => 'Setting is taken from the site configuration',
+            'label' => $dbModel.'.navbarlangmenu',
+            'description' => $dbModel.'.navbarlangmenu.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'lang_menu_with_fa_icon' => [
             'exclude' => false,
-            'label' => 'Style',
-            'description' => 'Fontawesome icon (globe) or current language with flag if enabled',
+            'label' => $dbModel.'.langmenuwithfaicon',
+            'description' => $dbModel.'.langmenuwithfaicon.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
@@ -1407,39 +1401,39 @@ return [
 
         'navbar_lang_flags' => [
             'exclude' => false,
-            'label' => 'Flags',
-            'description' => 'Show flags in the language menu if enabled',
+            'label' => $dbModel.'.navbarlangflags',
+            'description' => $dbModel.'.navbarlangflags.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'jumbotron_enable' => [
             'exclude' => false,
-            'label' => 'Enable',
-            'description' => 'Enable Jumbotron in backend layout',
+            'label' => $dbModel.'.jumbotronenable',
+            'description' => $dbModel.'.jumbotronenable.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'jumbotron_bgimage' => [
             'exclude' => false,
-            'label' => 'Background image',
+            'label' => $dbModel.'.backgroundimage',
             'description' => 'Enable background image from pages media OR slider if more than 1 image.',
             'config' => [
                 'type' => 'select',
@@ -1463,47 +1457,47 @@ return [
         ],
         'jumbotron_alignitem' => [
             'exclude' => false,
-            'label' => 'Align content items',
-            'description' => 'Vertical align for the content (An inside container must be selected)',
+            'label' => $dbModel.'.jumbotronalignitem',
+            'description' => $dbModel.'.jumbotronalignitem.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => 'start', 'value' => 'start'],
-                    ['label' => 'end', 'value' => 'end'],
-                    ['label' => 'center', 'value' => 'center'],
-                    ['label' => 'baseline', 'value' => 'baseline'],
-                    ['label' => 'stretch', 'value' => 'stretch'],
+                    ['label' => $dbModel.'.jumbotronalignitem.item1', 'value' => 'start'],
+                    ['label' => $dbModel.'.jumbotronalignitem.item2', 'value' => 'end'],
+                    ['label' => $dbModel.'.jumbotronalignitem.item3', 'value' => 'center'],
+                    ['label' => $dbModel.'.jumbotronalignitem.item4', 'value' => 'baseline'],
+                    ['label' => $dbModel.'.jumbotronalignitem.item5', 'value' => 'stretch'],
                 ],
                 'default' => '',
             ]
         ],
         'jumbotron_slide' => [
             'exclude' => false,
-            'label' => 'Slide',
-            'description' => 'Content of Jumbotron "slide" through the rootline',
+            'label' => $dbModel.'.jumbotronslide',
+            'description' => $dbModel.'.jumbotronslide.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'jumbotron_position' => [
             'exclude' => false,
-            'label' => 'Position',
+            'label' => $dbModel.'.jumbotronposition',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'Above the NavBar [above]', 'value' => 'above'],
-                    ['label' => 'Below the NavBar [below]', 'value' => 'below'],
+                    ['label' => $dbModel.'.jumbotronposition.item1', 'value' => 'above'],
+                    ['label' => $dbModel.'.jumbotronposition.item2', 'value' => 'below'],
                 ]
             ]
         ],
@@ -1527,20 +1521,20 @@ return [
         ],
         'jumbotron_containerposition' => [
             'exclude' => false,
-            'label' => 'Container position',
+            'label' => $dbModel.'.jumbotroncontainerposition',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'inside [Inside]', 'value' => 'Inside'],
-                    ['label' => 'outside [Outside]','value' => 'Outside'],
+                    ['label' => $dbModel.'.jumbotroncontainerposition.item1', 'value' => 'Inside'],
+                    ['label' => $dbModel.'.jumbotroncontainerposition.item2','value' => 'Outside'],
                 ]
             ]
         ],
         'jumbotron_class' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. "mb-0" for margin-bottom: 0',
+            'label' => $dbModel.'.jumbotronclass',
+            'description' => $dbModel.'.jumbotronclass.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1563,39 +1557,39 @@ return [
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'page_title' => [
             'exclude' => false,
-            'label' => 'Page title (h1)',
+            'label' => $dbModel.'.pagetitle',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'none (bad solution - you have to set the <H1> tag by yourself.)','value' => ''],
-                    ['label' => 'in the Jumbotron [jumbotron]','value' => 'jumbotron'],
-                    ['label' => 'in the Main Content [content]','value' => 'content'],
-                    ['label' => 'above the Breadcrumb [breadcrumb]','value' => 'breadcrumb'],
-                    ['label' => 'in the Expanded top content (if enabled) [expanded]','value' => 'expanded'],
+                    ['label' => $dbModel.'.pagetitle.item1','value' => ''],
+                    ['label' => $dbModel.'.pagetitle.item2','value' => 'jumbotron'],
+                    ['label' => $dbModel.'.pagetitle.item3','value' => 'content'],
+                    ['label' => $dbModel.'.pagetitle.item4','value' => 'breadcrumb'],
+                    ['label' => $dbModel.'.pagetitle.item5','value' => 'expanded'],
                 ],
                 'default' => '',
             ]
         ],
         'page_titlealign' => [
             'exclude' => false,
-            'label' => 'Alignment',
+            'label' => $dbModel.'.pagetitlealign',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'default','value' => ''],
-                    ['label' => 'center','value' => 'center'],
-                    ['label' => 'right','value' => 'right'],
-                    ['label' => 'left','value' => 'left'],
+                    ['label' => $dbModel.'.pagetitlealign.item1','value' => ''],
+                    ['label' => $dbModel.'.pagetitlealign.item2','value' => 'center'],
+                    ['label' => $dbModel.'.pagetitlealign.item3','value' => 'right'],
+                    ['label' => $dbModel.'.pagetitlealign.item4','value' => 'left'],
                 ],
                 'default' => '',
             ]
@@ -1621,7 +1615,7 @@ return [
         ],
         'page_titleclass' => [
             'exclude' => false,
-            'label' => 'Extra class',
+            'label' => $dbModel.'.pagetitleclass',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1631,93 +1625,93 @@ return [
 
         'breadcrumb_enable' => [
             'exclude' => false,
-            'label' => 'Enable',
+            'label' => $dbModel.'.breadcrumbenable',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'breadcrumb_notonrootpage' => [
             'exclude' => false,
-            'label' => 'Not on rootpage',
+            'label' => $dbModel.'.breadcrumbnotonrootpage',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'breadcrumb_faicon' => [
             'exclude' => false,
-            'label' => 'Fontawesome icon',
-            'description' => 'FA icon instead of text for level=0 only if enabled',
+            'label' => $dbModel.'.breadcrumbfaicon',
+            'description' => $dbModel.'.breadcrumbfaicon.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'breadcrumb_corner' => [
             'exclude' => false,
-            'label' => 'No rounded corner',
-            'description' => 'To make the breadcrumb without rounded corners',
+            'label' => $dbModel.'.breadcrumbcorner',
+            'description' => $dbModel.'.breadcrumbcorner.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'breadcrumb_bottom' => [
             'exclude' => false,
-            'label' => 'Below the content',
-            'description' => 'Show the breadcrumb menu below the content (only or also)',
+            'label' => $dbModel.'.breadcrumbbottom',
+            'description' => $dbModel.'.breadcrumbbottom.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'breadcrumb_position' => [
             'exclude' => false,
-            'label' => 'Breadcrumb position',
+            'label' => $dbModel.'.breadcrumbposition',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'Above the NavBar [aboveNav]', 'value' => 'aboveNav'],
-                    ['label' => 'Below the NavBar [belowNav]','value' => 'belowNav'],
-                    ['label' => 'Above the Jumbotron [aboveJum]', 'value' => 'aboveJum'],
-                    ['label' => 'Below the Jumbotron [belowJum]', 'value' => 'belowJum'],
+                    ['label' => $dbModel.'.breadcrumbposition.item1', 'value' => 'aboveNav'],
+                    ['label' => $dbModel.'.breadcrumbposition.item2','value' => 'belowNav'],
+                    ['label' => $dbModel.'.breadcrumbposition.item3', 'value' => 'aboveJum'],
+                    ['label' => $dbModel.'.breadcrumbposition.item4', 'value' => 'belowJum'],
                 ]
             ]
         ],
@@ -1741,20 +1735,20 @@ return [
         ],
         'breadcrumb_containerposition' => [
                 'exclude' => false,
-                'label' => 'Container position',
+                'label' => $dbModel.'.breadcrumbcontainerposition',
                 'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'inside', 'value' => 'inside'],
-                    ['label' => 'outside', 'value' => 'outside'],
+                    ['label' => $dbModel.'.breadcrumbcontainerposition.item1', 'value' => 'inside'],
+                    ['label' => $dbModel.'.breadcrumbcontainerposition.item2', 'value' => 'outside'],
                 ]
             ]
         ],
         'breadcrumb_class' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. "mb-0" for margin-bottom: 0',
+            'label' => $dbModel.'.breadcrumbclass',
+            'description' => $dbModel.'.breadcrumbclass.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1762,38 +1756,38 @@ return [
         ],
         'sidebar_enable' => [
             'exclude' => false,
-            'label' => 'Enable in left Sidebar',
-            'description' => 'if sidebar is available',
+            'label' => $dbModel.'.sidebarenable',
+            'description' => $dbModel.'.sidebarenable.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => 'submenu [Sub]','value' => 'Sub'],
-                    ['label' => 'sectionmenu [Section]', 'value' => 'Section'],
+                    ['label' => $dbModel.'.sidebar.item1','value' => 'Sub'],
+                    ['label' => $dbModel.'.sidebar.item2', 'value' => 'Section'],
                 ],
                 'default' => '',
             ]
         ],
         'sidebar_rightenable' => [
             'exclude' => false,
-            'label' => 'Enable in right Sidebar',
-            'description' => 'if sidebar is available',
+            'label' => $dbModel.'.sidebarrightenable',
+            'description' => $dbModel.'.sidebarrightenable.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => 'submenu [Sub]','value' => 'Sub'],
-                    ['label' => 'sectionmenu [Section]', 'value' => 'Section'],
+                    ['label' => $dbModel.'.sidebare.item1','value' => 'Sub'],
+                    ['label' => $dbModel.'.sidebare.item2', 'value' => 'Section'],
                 ],
                 'default' => '',
             ]
         ],
         'sidebar_entrylevel' => [
             'exclude' => false,
-            'label' => 'Entry Level (int)',
-            'description' => '99 = Submenu of current page',
+            'label' => $dbModel.'.sidebarentrylevel',
+            'description' => $dbModel.'.sidebarentrylevel.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1809,8 +1803,8 @@ return [
         ],
         'sidebar_excludeuiduist' => [
             'exclude' => false,
-            'label' => 'Exclude',
-            'description' => 'Comma-separated list of page ids.',
+            'label' => $dbModel.'.sidebarexcludeuiduist',
+            'description' => $dbModel.'.sidebarexcludeuiduist.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1818,56 +1812,56 @@ return [
         ],
         'sidebar_includespacer' => [
             'exclude' => false,
-            'label' => 'Spacer',
-            'description' => 'Enable spacer',
+            'label' => $dbModel.'.sidebarincludespacer',
+            'description' => $dbModel.'.sidebarincludespacer.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'slide_left_aside' => [
             'exclude' => false,
-            'label' => 'Slide left Sidebar',
-            'description' => 'content slide for colPos=1 if enabled',
+            'label' => $dbModel.'.slideleftaside',
+            'description' => $dbModel.'.slideleftaside.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'slide_right_aside' => [
             'exclude' => false,
-            'label' => 'Slide right Sidebar',
-            'description' => 'content slide for colPos=2 if enabled',
+            'label' => $dbModel.'.sliderightaside',
+            'description' => $dbModel.'.sliderightaside.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'aside_extra_class' => [
             'exclude' => false,
-            'label' => 'Extra Class',
-            'description' => 'e.g. bg-warning or any other classes',
+            'label' => $dbModel.'.asideextraclass',
+            'description' => $dbModel.'.asideextraclass.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1875,59 +1869,59 @@ return [
         ],
         'sidebar_menu_position' => [
             'exclude' => false,
-            'label' => 'Menu Position',
-            'description' => 'above or below the content',
+            'label' => $dbModel.'.sidebarmenuposition',
+            'description' => $dbModel.'.sidebarmenuposition.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'above', 'value' => 'above'],
-                    ['label' => 'below','value' => 'below'],
+                    ['label' => $dbModel.'.sidebarmenuposition.item1', 'value' => 'above'],
+                    ['label' => $dbModel.'.sidebarmenuposition.item2','value' => 'below'],
                 ],
             ]
         ],
         'submenu_sticky' => [
             'exclude' => false,
-            'label' => 'Sticky top',
-            'description' => 'If using sectionmenu check settings under "General Settings - position of the submenu at the top of the viewport"',
+            'label' => $dbModel.'.submenusticky',
+            'description' => $dbModel.'.submenusticky.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'expandedcontent_enabletop' => [
             'exclude' => false,
-            'label' => 'Enable to show Expanded Content Top & Bottom as Backend Layout',
+            'label' => $dbModel.'.expandedcontentenabletop',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'expandedcontent_slidetop' => [
             'exclude' => false,
-            'label' => 'Content slide',
+            'label' => $dbModel.'.expandedcontentslidetop',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
@@ -1952,20 +1946,20 @@ return [
         ],
         'expandedcontent_containerpositiontop' => [
             'exclude' => false,
-            'label' => 'Container position',
+            'label' => $dbModel.'.expandedcontentcontainerpositiontop',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'inside [Inside]', 'value' => 'Inside'],
-                    ['label' => 'outside [Outside]','value' => 'Outside'],
+                    ['label' => $dbModel.'.expandedcontentcontainerpositiontop.item1', 'value' => 'Inside'],
+                    ['label' => $dbModel.'.expandedcontentcontainerpositiontop.item2','value' => 'Outside'],
                 ]
             ]
         ],
         'expandedcontent_classtop' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. "mb-0" for margin-bottom: 0',
+            'label' => $dbModel.'.expandedcontentclasstop',
+            'description' => $dbModel.'.expandedcontentclasstop.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -1973,16 +1967,15 @@ return [
         ],
         'expandedcontent_slidebottom' => [
             'exclude' => false,
-            'label' => 'Content slide',
-            'description' => 'Content of Expanded Content Bottom "slide" through the rootline',
+            'label' => $dbModel.'.expandedcontentslidebottom',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
@@ -2007,20 +2000,20 @@ return [
         ],
         'expandedcontent_containerpositionbottom' => [
             'exclude' => false,
-            'label' => 'Container position',
+            'label' => $dbModel.'.expandedcontentcontainerpositionbottom',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => 'inside [Inside]', 'value' => 'Inside'],
-                    ['label' => 'outside [Outside]', 'value' => 'Outside'],
+                    ['label' => $dbModel.'.expandedcontentcontainerpositionbottom.item1', 'value' => 'Inside'],
+                    ['label' => $dbModel.'.expandedcontentcontainerpositionbottom.item2', 'value' => 'Outside'],
                 ]
             ]
         ],
         'expandedcontent_classbottom' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. "mb-0" for margin-bottom: 0',
+            'label' => $dbModel.'.expandedcontentclassbottom',
+            'description' => $dbModel.'.expandedcontentclassbottom.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -2028,48 +2021,48 @@ return [
         ],
         'footer_enable' => [
             'exclude' => false,
-            'label' => 'Enable',
-            'description' => 'Enable Footer in backend layout',
+            'label' => $dbModel.'.footerenable',
+            'description' => $dbModel.'.footerenable.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'footer_sticky' => [
             'exclude' => false,
-            'label' => 'Sticky Footer',
-            'description' => 'Pin a footer to the bottom of the viewport',
+            'label' => $dbModel.'.footersticky',
+            'description' => $dbModel.'.footersticky.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
         ],
         'footer_slide' => [
             'exclude' => false,
-            'label' => 'Slide',
-            'description' => 'Content of Footer "slide" through the rootline',
+            'label' => $dbModel.'.footerslide',
+            'description' => $dbModel.'.footerslide.description',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxLabeledToggle',
                 'items' => [
                      [
                         'label' => '',
-                        'labelChecked' => 'Enabled',
-                        'labelUnchecked' => 'Disabled',
+                        'labelChecked' => $dbModel.'.enabled',
+                        'labelUnchecked' => $dbModel.'.disabled',
                      ]
                 ],
             ]
@@ -2095,8 +2088,8 @@ return [
         ],
         'footer_containerposition' => [
             'exclude' => false,
-            'label' => 'Container position',
-            'description' => 'If "Container" is not "none"',
+            'label' => $dbModel.'.footercontainerposition',
+            'description' => $dbModel.'.footercontainerposition.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -2108,8 +2101,8 @@ return [
         ],
         'footer_class' => [
             'exclude' => false,
-            'label' => 'Extra class',
-            'description' => 'e.g. "mb-0" for margin-bottom: 0',
+            'label' => $dbModel.'.footerclass',
+            'description' => $dbModel.'.footerclass.description',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
@@ -2117,8 +2110,8 @@ return [
         ],
         'footer_pid' => [
             'exclude' => false,
-            'description' => 'Page uid (int) for the footer content (colPos= 0)',
-            'label' => 'Content (int)',
+            'label' => $dbModel.'.footerpid',
+            'description' => $dbModel.'.footerpid.description',
             'config' => [
                 'type' => 'number',
                 'format' => 'integer',
@@ -2127,9 +2120,8 @@ return [
         ],
         'sticky_footer_extra_padding' => [
             'exclude' => false,
-            'label' => 'Extra padding',
-            'description' => 'if "footer-sticky" is activated, the padding-bottom for the body is given by JS.,
-             If you like an extra space between the footer and the content, you can do it here (in px)',
+            'label' => $dbModel.'.stickyfooterextrapadding',
+            'description' => $dbModel.'.stickyfooterextrapadding.description',
             'config' => [
                 'type' => 'number',
                 'format' => 'integer',
@@ -2139,8 +2131,8 @@ return [
         'custom_scss' => [
             'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->checkScssVisibility',
             'exclude' => false,
-            'label' => 'Custom Scss',
-            'description' => 'You can set your own SCSS here:',
+            'label' => $dbModel.'.customscss',
+            'description' => $dbModel.'.customscss.description',
             'config' => [
                 'type' => 'text',
                 'renderType' => 'codeEditor',
@@ -2152,8 +2144,8 @@ return [
         'custom_variables_scss' => [
             'displayCond' => 'USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->checkScssVisibility',
             'exclude' => false,
-            'label' => 'Custom Variables Scss',
-            'description' => 'You can override default Bootstrap variables here:',
+            'label' => $dbModel.'.customvariablesscss',
+            'description' => $dbModel.'.customvariablesscss.description',
             'config' => [
                 'type' => 'text',
                 'renderType' => 'codeEditor',
@@ -2162,6 +2154,5 @@ return [
                 'searchable' => false,
             ]
         ],
-
     ],
 ];

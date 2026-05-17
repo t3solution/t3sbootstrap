@@ -6,7 +6,7 @@
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -57,7 +57,7 @@
 					</hidden>
 
 					<flexContainer>
-						<label>Enable flex behaviors</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flexContainer</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -80,9 +80,8 @@
 							<size>1</size>
 						</config>
 					</flexContainer>
-
 					<responsiveVariations>
-						<label>Responsive Variations</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexForm.responsiveVariations</label>
 							 <displayCond>
 								  <or>
 									<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
@@ -124,7 +123,7 @@
 					</responsiveVariations>
 
 					<direction>
-						<label>Direction</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.direction</label>
 							 <displayCond>
 								  <or>
 									<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
@@ -160,9 +159,8 @@
 							<size>1</size>
 						</config>
 					</direction>
-
 					<justify>
-						<label>Justify content</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.justify.element</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
@@ -203,7 +201,7 @@
 					</justify>
 
 					<alignItem>
-						<label>Align items</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alignItem</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
@@ -244,7 +242,7 @@
 					</alignItem>
 
 					<wrap>
-						<label>Wrap</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.wrap</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>
@@ -278,7 +276,7 @@
 					</wrap>
 
 					<alignContent>
-						<label>Align content</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.alignItem</label>
 						<displayCond>
 							<or>
 								<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>

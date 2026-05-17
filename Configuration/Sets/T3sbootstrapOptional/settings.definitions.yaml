@@ -77,7 +77,7 @@ settings:
     default: false
 
   bootstrap.shortcutsremove:
-    label: 'Remove any string (e.g. a class name) from shortcuts if in parent CE/wrapper'
+    label: 'Empties the fields "tx_t3sbootstrap_container", "tx_t3sbootstrap_extra_class", "frame_class" and "layout" from shortcuts if in parent CE/wrapper'
     category: Bootstrap.optional.miscellaneous
     description: ''
     type: bool

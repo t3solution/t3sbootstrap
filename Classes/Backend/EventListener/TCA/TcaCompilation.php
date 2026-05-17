@@ -14,10 +14,13 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 )]
 final readonly class TcaCompilation
 {
+	public function __construct(
+		private readonly ExtensionConfiguration $extensionConfiguration,
+	) {}
 
 	public function modifyValuePicker(AfterTcaCompilationEvent $event): void
 	{
-		$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+		$extconf = $this->extensionConfiguration->get('t3sbootstrap');
 		$tca = $event->getTca();
 
 		$map = [

@@ -9,7 +9,7 @@
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -58,9 +58,8 @@
 							<default>0</default>
 						</config>
 					</hidden>
-
 					<order>
-						<label>Change the order of content in media objects</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.order</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -77,23 +76,21 @@
 							<default>left</default>
 						</config>
 					</order>
-
 					<verticallyCenter>
-						<label>Vertically center (Text)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.verticallycenter</label>
 						<config>
 							<type>check</type>
 						</config>
 					</verticallyCenter>
-
 					<border>
-						<label>Border</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.border</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 						</config>
 					</border>
 					<borderstyle>
-						<label>Predefined border styles</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.borderstyle</label>
 						<displayCond>FIELD:sDEF.border:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -139,9 +136,8 @@
 							<default>secondary</default>
 						</config>
 					</borderstyle>
-
 					<borderradius>
-						<label>Predefined border radius</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.borderradius</label>
 						<displayCond>FIELD:sDEF.border:=:1</displayCond>
 						<config>
 							<type>select</type>
@@ -179,7 +175,13 @@
 							<default>none</default>
 						</config>
 					</borderradius>
-
+					<iconAsImg>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.iconAsImg</label>
+						<config>
+							<type>user</type>
+							<renderType>IconpackWizard</renderType>
+						</config>
+					</iconAsImg>
 				</el>
 			</ROOT>
 		</sDEF>

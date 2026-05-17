@@ -31,7 +31,7 @@ class DefaultHelper implements SingletonInterface
 				} else {
 					if ( $containerConfig['pageContainer'] === FALSE && $processedData['data']['colPos'] === 0 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
-					}
+					}					
 					if ( $containerConfig['jumbotronContainer'] === 'none' && $processedData['data']['colPos'] === 3 ) {
 						$container = $processedData['data']['tx_t3sbootstrap_container'];
 					}

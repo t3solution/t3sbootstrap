@@ -14,6 +14,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ConfigProcessor implements DataProcessorInterface
 {
+	
+	public function __construct(
+		private readonly ExtensionConfiguration $extensionConfiguration,
+		private readonly FileRepository $fileRepository,
+		private readonly ConnectionPoolUtility $connectionPoolUtility,
+		private readonly BackgroundImageUtility $backgroundImageUtility,
+	) {}
+	
 
 	public function process(
 		ContentObjectRenderer $cObj,
@@ -119,7 +127,7 @@ class ConfigProcessor implements DataProcessorInterface
 			}
 		}
 
-		$emConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+		$emConf = $this->extensionConfiguration->get('t3sbootstrap');
 		if (!empty($emConf['chapter'])) {
 			$processedData = $this->chapterSection($processedData, $pageInformation->getId());
 		}
@@ -353,7 +361,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$cfg['enable'] = false;
 		}
 
-		unset($cfg); // Referenz freigeben
+		unset($cfg);
 
 		return $processedData;
 	}
@@ -393,13 +401,11 @@ class ConfigProcessor implements DataProcessorInterface
 		$hasBgImages    = 0;
 		$bgSlides       = [];
 
-		$fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-	
 		if ($vars['jumbotronBgimage'] === 'root') {
 			$fileObjects = [];
 			$uid         = 0;
 			foreach ($pageInformation->getRootLine() as $page) {
-				$found = $fileRepository->findByRelation('pages', 'media', $page['uid']);
+				$found = $this->fileRepository->findByRelation('pages', 'media', $page['uid']);
 				if (!empty($found)) {
 					$fileObjects = $found;
 					$uid         = $page['uid'];
@@ -410,18 +416,18 @@ class ConfigProcessor implements DataProcessorInterface
 			$hasBgImages = count($fileObjects);
 			if ($hasBgImages > 1) {
 				$cfg['alignItem'] = '';
-				$bgSlides = $this->getBackgroundImageUtility()->getJumbotronBgSlider(
+				$bgSlides = $this->backgroundImageUtility->getJumbotronBgSlider(
 					$uid, $fileObjects, $bgMediaQueries, $pageInformation->getId()
 				);
 			} elseif ($hasBgImages === 1) {
-				$bgSlides[0] = $this->getBackgroundImageUtility()->getJumbotronBgImage(
+				$bgSlides[0] = $this->backgroundImageUtility->getJumbotronBgImage(
 					$uid, $fileObjects, $bgMediaQueries
 				);
 			}
 			$processedData['bgSlides'] = $bgSlides;
 
 		} elseif ($vars['jumbotronBgimage'] === 'page') {
-			$fileObjects         = $fileRepository->findByRelation('pages', 'media', $pageInformation->getId());
+			$fileObjects         = $this->fileRepository->findByRelation('pages', 'media', $pageInformation->getId());
 			$hasBgImages         = count($fileObjects);
 			$localFullHeightBgVideo = !empty($fileObjects[0])
 				&& $fileObjects[0]->getOriginalFile()->getMimeType() === 'video/mp4';
@@ -432,20 +438,20 @@ class ConfigProcessor implements DataProcessorInterface
 
 			if ($hasBgImages > 1 && !$localFullHeightBgVideo) {
 				$cfg['alignItem'] = '';
-				$bgSlides = $this->getBackgroundImageUtility()->getJumbotronBgSlider(
+				$bgSlides = $this->backgroundImageUtility->getJumbotronBgSlider(
 					$pageInformation->getId(), $fileObjects, $bgMediaQueries, $pageInformation->getId()
 				);
 				$processedData['bgSlides'] = $bgSlides;
 			} else {
 				if ($localFullHeightBgVideo) {
-					$bgSlides = $this->getBackgroundImageUtility()->getJumbotronBgImage(
+					$bgSlides = $this->backgroundImageUtility->getJumbotronBgImage(
 						$pageInformation->getId(), $fileObjects, $bgMediaQueries
 					);
 					$serverParams            = $request->getServerParams();
 					$processedData['baseUri'] = ($serverParams['REQUEST_SCHEME'] ?? 'https')
 						. '://' . ($serverParams['HTTP_HOST'] ?? '');
 				} else {
-					$bgSlides[0] = $this->getBackgroundImageUtility()->getJumbotronBgImage(
+					$bgSlides[0] = $this->backgroundImageUtility->getJumbotronBgImage(
 						$pageInformation->getId(), $fileObjects, $bgMediaQueries
 					);
 				}
@@ -484,13 +490,13 @@ class ConfigProcessor implements DataProcessorInterface
 		}
 
 		if ($vars['backgroundImageSlide'] && !empty($processedData['rootFiles'])) {
-			$this->getBackgroundImageUtility()->getBgImage(
+			$this->backgroundImageUtility->getBgImage(
 				$pageInformation->getId(),
 				$processedData['rootFiles'][0],
 				$settings['bgMediaQueries']
 			);
 		} elseif (!empty($processedData['pagesMedia'])) {
-			$this->getBackgroundImageUtility()->getBgImage(
+			$this->backgroundImageUtility->getBgImage(
 				$pageInformation->getId(),
 				$processedData['pagesMedia'][0],
 				$settings['bgMediaQueries']
@@ -674,8 +680,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 	protected function chapterSection(array $processedData, int $currentPageUid): array
 	{
-		$connectionPoolUtility = GeneralUtility::makeInstance(ConnectionPoolUtility::class);
-		$result = $connectionPoolUtility->selectChapterIndex($currentPageUid);
+		$result = $this->connectionPoolUtility->selectChapterIndex($currentPageUid);
 
 		if (empty($result['tx_t3sbootstrap_chapter'])) {
 			return $processedData;
@@ -697,10 +702,6 @@ class ConfigProcessor implements DataProcessorInterface
 
 		return $processedData;
 	}
-	
-	protected function getBackgroundImageUtility(): BackgroundImageUtility
-	{
-		return GeneralUtility::makeInstance(BackgroundImageUtility::class);
-	}
-	
+
+
 }

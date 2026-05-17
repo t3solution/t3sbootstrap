@@ -33,6 +33,8 @@ supraheader = 0
 fontawesomepagetitle = 1
 # cat=page/enable/30; type=boolean; label=Modal in Navbar: Enable a new doktype "Modal" (197) (clear cache)
 navbarmodal = 0
+# cat=page/enable/40; type=boolean; label=Title color: Enable "Title- & Subtitle color" options under "Edit Page" (clear cache)
+titlecolor = 0
 
 # cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: (clear cache)
 flexformExtend = 0

@@ -6,25 +6,36 @@
 			<ul class="nav menusectionpages{menudirection}{menupills}{menuHorizontalAlignment}">
 				<f:for each="{menu}" as="page">
 					<li class="nav-item">
-						<a href="{page.link}"{f:if(condition:'{page.target}',
-							then:' target="{page.target}"')} title="{page.title}" class="nav-link{f:if(condition:'{data.pid} == {page.data.uid}',then:' active')}">
-							<f:if condition="{page.nav_title}">
-								<f:then>
-									<span>
-{f:if(condition: '{page.data.page_icon}', then:'<t3sb:icon iconfig="{page.page_icon}" additionalAttributes="{class:'pagetile-iconPack me-1'}" />')}{page.nav_title}
-									</span>
-								</f:then>
-								<f:else>
-									<span>{f:if(condition: '{page.page_icon}', then:'<t3sb:icon iconfig="{page.page_icon}" additionalAttributes="{class:'pagetile-iconPack me-1'}" />')}{page.title}</span>
-								</f:else>
-							</f:if>
+						<a href="{page.link}"
+						   title="{page.title}"
+						   class="nav-link{f:if(condition: '{data.pid} == {page.data.uid}', then: ' active')}"
+						   <f:if condition="{page.target}">target="{page.target}"</f:if>>
+							<span>
+								<f:if condition="{page.data.page_icon}">
+									<t3sb:icon iconfig="{page.data.page_icon}"
+											   additionalAttributes="{class: 'pagetile-iconPack me-1'}" />
+								</f:if>
+								<f:if condition="{page.nav_title}">
+									<f:then>{page.nav_title}</f:then>
+									<f:else>{page.title}</f:else>
+								</f:if>
+							</span>
 						</a>
+
 						<f:if condition="{page.content}">
 							<ul class="nav flex-column ms-5">
 								<f:for each="{page.content}" as="element">
 									<li>
-										<a href="{page.link}#c{element.data.uid}" target="{page.target}" title="{element.data.header}">
-											<span>{f:if(condition: '{element.data.page_icon}', then:'<t3sb:icon iconfig="{element.data.page_icon}" additionalAttributes="{class:'pagetile-iconPack me-1'}" />')}{element.data.header}</span>
+										<a href="{page.link}#c{element.data.uid}"
+										   title="{element.data.header}"
+										   <f:if condition="{page.target}">target="{page.target}"</f:if>>
+											<span>
+												<f:if condition="{element.data.page_icon}">
+													<t3sb:icon iconfig="{element.data.page_icon}"
+															   additionalAttributes="{class: 'pagetile-iconPack me-1'}" />
+												</f:if>
+												{element.data.header}
+											</span>
 										</a>
 									</li>
 								</f:for>
@@ -36,4 +47,5 @@
 		</div>
 	</f:if>
 </f:section>
+
 </html>

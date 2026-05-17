@@ -9,6 +9,13 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 
 class TwoColumns implements SingletonInterface
 {
+    
+    public function __construct(
+        private readonly Gutters $gutters,
+        private readonly Grid $grid,
+        private readonly BackgroundImageUtility $backgroundImageUtility,
+    ) {}
+    
 
     public function getProcessedData(
         array $processedData, 
@@ -16,8 +23,8 @@ class TwoColumns implements SingletonInterface
         string $bgMediaQueries='2560,1920,1200,992,768,576'
     ): array
     {
-        $processedData = GeneralUtility::makeInstance(Gutters::class)->getGutters($processedData, $flexconf);
-        $processedData = GeneralUtility::makeInstance(Grid::class)->getGrid($processedData, $flexconf);
+        $processedData = $this->gutters->getGutters($processedData, $flexconf);
+        $processedData = $this->grid->getGrid($processedData, $flexconf);
 
         $processedData['style'] .= !empty($flexconf['colHeight']) ? ' min-height: '.$flexconf['colHeight'].'px;' : '';
         $processedData['verticalAlign'] = !empty($flexconf['colHeight'])
@@ -29,7 +36,7 @@ class TwoColumns implements SingletonInterface
 		$processedData['files'] = !empty($processedData['files']) ? $processedData['files'] : '';
 
         if (!empty($flexconf['bgimages'])) {
-            GeneralUtility::makeInstance(BackgroundImageUtility::class)
+            $this->backgroundImageUtility
                 ->getTwoColumnBgImages(
                     $processedData['data']['uid'],
                     $flexconf,

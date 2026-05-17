@@ -11,12 +11,15 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
 
 class AssetHelper implements SingletonInterface
 {
-	/**
-	 * addStyleSheet
-	 */
+	
+	public function __construct(
+		private readonly AssetCollector $assetCollector,
+		
+	) {}
+	
+	
 	public function addCSS(array $cssfiles): void
 	{
-		$assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
 		$end = '';
 		foreach ($cssfiles as $cssfile) {
 			$basePath = $cssfile->getStorage()->getConfiguration()['basePath'];
@@ -26,7 +29,7 @@ class AssetHelper implements SingletonInterface
 			}
 			$identifier = $cssfile->getIdentifier();
 			// @extensionScannerIgnoreLine
-			$assetCollector->addStyleSheet($cssfile->getName(), $basePath.$identifier);
+			$this->assetCollector->addStyleSheet($cssfile->getName(), $basePath.$identifier);
 		}
 	}
 
@@ -36,7 +39,6 @@ class AssetHelper implements SingletonInterface
 	 */
 	public function addJS(array $jsfiles, int $priority=0): void
 	{
-		$assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
 		$end = '';
 		foreach ($jsfiles as $jsfile) {
 			$basePath = $jsfile->getStorage()->getConfiguration()['basePath'];
@@ -46,9 +48,9 @@ class AssetHelper implements SingletonInterface
 			}
 			$identifier = $jsfile->getIdentifier();
 			if ( !empty($priority) ) {
-				$assetCollector->addJavaScript($jsfile->getName(), $basePath.$identifier, [], $options = ['priority' => true]);
+				$this->assetCollector->addJavaScript($jsfile->getName(), $basePath.$identifier, [], $options = ['priority' => true]);
 			} else {
-				$assetCollector->addJavaScript($jsfile->getName(), $basePath.$identifier);
+				$this->assetCollector->addJavaScript($jsfile->getName(), $basePath.$identifier);
 			}
 		}
 	}

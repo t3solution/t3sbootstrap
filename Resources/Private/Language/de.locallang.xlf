@@ -1,266 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="2.0"
 	   xmlns="urn:oasis:names:tc:xliff:document:2.0"
-	   srcLang="en">
+	   srcLang="en" trgLang="de">
 	<file id="t3sbootstrap">
-
+	
 		<unit id="editconfig">
 			<segment>
 				<source>Edit Configuration</source>
+				<target>Konfiguration bearbeiten</target>
 			</segment>
 		</unit>
 		
 		<unit id="editpage">
 			<segment>
 				<source>Edit page properties</source>
+				<target>Seiteneigenschaften bearbeiten</target>
 			</segment>
 		</unit>
 		
 		<unit id="seedocu">
 			<segment>
 				<source>See documentation</source>
+				<target>Siehe Dokumentation</target>
 			</segment>
 		</unit>
 		
 		<unit id="t3sbonpage">
 			<segment>
 				<source>T3S Bootstrap Configuration on page</source>
+				<target>T3S-Bootstrap-Konfiguration auf Seite</target>
 			</segment>
 		</unit>
 		
 		<unit id="newmainconfig">
 			<segment>
 				<source>New main configuration</source>
+				<target>Neue Hauptkonfiguration</target>
 			</segment>
 		</unit>
 		
 		<unit id="outsourcedconstants">
 			<segment>
 				<source>Outsourced constants</source>
+				<target>Ausgelagerte Konstanten</target>
 			</segment>
 		</unit>
 		
 		<unit id="overrideconstants">
 			<segment>
 				<source>You can override the settings in your constants!</source>
+				<target>Du kannst die Einstellungen in deinen Konstanten überschreiben!</target>
 			</segment>
 		</unit>
 		
 		<unit id="activated">
 			<segment>
 				<source>activated</source>
+				<target>aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="deactivated">
 			<segment>
 				<source>deactivated</source>
+				<target>deaktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="globalpagesoverride">
 			<segment>
-				<source>Global pages override is set in Site Settings:</source>
+				<source>Global pages override is set in Site Settings</source>
+				<target>Globale Seiten-Überschreibung ist in den Site-Einstellungen gesetzt</target>
 			</segment>
 		</unit>
 		
 		<unit id="customscss">
 			<segment>
 				<source>Custom SCSS</source>
+				<target>Benutzerdefiniertes SCSS</target>
 			</segment>
 		</unit>
 		
 		<unit id="container">
 			<segment>
 				<source>Container</source>
+				<target>Container</target>
 			</segment>
 		</unit>
 		
 		<unit id="linkToTop">
 			<segment>
 				<source>Link to top</source>
+				<target>Link zum Seitenanfang</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="asideColumnsWidth">
 			<segment>
 				<source>Aside columns width</source>
+				<target>Breite der Seitenspalten</target>
 			</segment>
 		</unit>
 		
 		<unit id="asideOrderOnMobile">
 			<segment>
 				<source>Aside order on mobile</source>
+				<target>Reihenfolge in Seitenspalten auf Mobile</target>
 			</segment>
 		</unit>
 		
 		<unit id="breakpoint">
 			<segment>
 				<source>Breakpoint</source>
+				<target>Breakpoint</target>
 			</segment>
 		</unit>
 		
 		<unit id="fullHeightSection">
 			<segment>
 				<source>Full height section</source>
+				<target>Full-Height-Bereich</target>
 			</segment>
 		</unit>
 		
 		<unit id="smallColumns">
 			<segment>
 				<source>Small Columns</source>
+				<target>Schmale Spalten (aside)</target>
 			</segment>
 		</unit>
 		
 		<unit id="mobileOrder">
 			<segment>
 				<source>Mobile order</source>
+				<target>Reihenfolge auf Mobile</target>
 			</segment>
 		</unit>
 
 		<unit id="notificationtitle_1">
 			<segment>
 				<source>Doktype</source>
+				<target>Dokumenttyp</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationmessage_1">
 			<segment>
 				<source>T3S Bootstrap Configurations are only provided for a page (doktype=1) checked "Use as Root Page"!</source>
+				<target>T3S-Bootstrap-Konfigurationen werden nur für eine Seite (doktype=1) bereitgestellt, bei der das Kontrollkästchen "Als Startseite verwenden" aktiviert ist!</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationtitle_2">
 			<segment>
 				<source>Page without a site configuration</source>
+				<target>Seite ohne Site-Konfiguration</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationmessage_2">
 			<segment>
 				<source>You need to create a site configuration in order to edit your configuration.</source>
+				<target>Du musst eine Site-Konfiguration erstellen, um deine Konfiguration bearbeiten zu können.</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationtitle_3">
 			<segment>
 				<source>Page is no "Root Page"</source>
+				<target>Diese Seite ist keine „Startseite“</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationmessage_3">
 			<segment>
 				<source>Page must have the "is_siteroot" flag set!</source>
+				<target>Für die Seite muss das Flag "is_siteroot" gesetzt sein!</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationtitle_4">
 			<segment>
 				<source>Page is hidden</source>
+				<target>Die Seite ist ausgeblendet</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationmessage_4">
 			<segment>
 				<source>You cannot apply any configuration to a hidden page!</source>
+				<target>Auf eine ausgeblendete Seite können keine Einstellungen angewendet werden!</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationtitle_5">
 			<segment>
 				<source>"CDN" &amp; "Custom SCSS" are activated.</source>
+				<target>"CDN" und "Benutzerdefiniertes SCSS" sind aktiviert.</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationmessage_5">
 			<segment>
 				<source>In this case, there is a fallback and the required files are loaded by CDN.</source>
+				<target>In diesem Fall gibt es eine Ausweichlösung, und die erforderlichen Dateien werden über das CDN geladen.</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationtitle_6">
 			<segment>
 				<source>Page has id=0</source>
+				<target>Die Seite hat die ID 0</target>
 			</segment>
 		</unit>
 		
 		<unit id="notificationmessage_6">
 			<segment>
 				<source>You cannot apply any configuration to a page with id=0</source>
+				<target>Du kannst keine Einstellungen auf einer Seite mit der ID 0 anwenden.</target>
 			</segment>
 		</unit>
 		
 		<unit id="pagesettings">
 			<segment>
 				<source>T3SB Page settings</source>
+				<target>T3SB Seiteneinstellungen</target>
 			</segment>
 		</unit>
 		
 		<unit id="iconOnly">
 			<segment>
 				<source>Only the icon</source>
+				<target>Nur das Icon</target>
 			</segment>
 		</unit>
 		
 		<unit id="pageIcon">
 			<segment>
 				<source>Page icon</source>
+				<target>Seiten-Symbol</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="jumbotronDisabled">
 			<segment>
 				<source>Jumbotron disabled</source>
+				<target>Jumbotron deaktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="footerDisabled">
 			<segment>
 				<source>Footer disabled</source>
+				<target>Footer deaktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="expandedContentEnabled">
 			<segment>
 				<source>Expanded Content Enabled</source>
+				<target>Erweiterter Inhalt aktiviert</target>
 			</segment>
 		</unit>
 		
 		<unit id="countPagesOverrides">
 			<segment>
 				<source>Global pages override</source>
+				<target>Seiten global überschreiben</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="titlecolor">
 			<segment>
 				<source>Title color</source>
+				<target>xxx</target>
 			</segment>
 		</unit>
 		
 		<unit id="subtitlecolor">
 			<segment>
 				<source>Subtitle color</source>
+				<target>Untertitel-Farbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="dropdownRight">
 			<segment>
 				<source>Dropdown right</source>
+				<target>Dropdown rechts</target>
 			</segment>
 		</unit>
 		
 		<unit id="backToTopForAllPages">
 			<segment>
 				<source>Back to top</source>
+				<target>Zurück zum Seitenanfang</target>
 			</segment>
 		</unit>
-		
-		
-		
 
 	</file>
 </xliff>
-
-

@@ -5,7 +5,7 @@
 	<sheets>
 		<general>
 			<ROOT>
-				<sheetTitle>General</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.general</sheetTitle>
 				<el>
 					<shift>
 						<label>Vertical shift in % ( 0 = center, range: -60 to 60 )</label>
@@ -53,7 +53,7 @@
 						</config>
 					</playsinline>
 					<bgOverlay>
-						<label>Background color for caption</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_carousel.bgOverlay</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -75,7 +75,7 @@
 						</config>
 					</bgOverlay>
 					<captionVAlign>
-						<label>Caption vertical align</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_carousel.captionVAlign</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>

@@ -24,23 +24,22 @@
 
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
-			<strong>Appearance:</strong> {flexForm.appearance}
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.appearance')}:</strong> {flexForm.appearance}
 		
 			<f:if condition="{flexForm.alwaysOpen}">
 				<f:then>
-					| <strong>Always open:</strong> true
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alwaysOpen')}:</strong> true
 				</f:then>
 				<f:else>
-					| <strong>Always open:</strong> false
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alwaysOpen')}:</strong> false
 				</f:else>
 			</f:if>
 			<f:if condition="{flexForm.flush}">
 				<f:then>
-					| <strong>Flush:</strong> true
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flush')}:</strong> true
 				</f:then>
 				<f:else>
-					| <strong>Flush:</strong> false
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flush')}:</strong> false
 				</f:else>
 			</f:if>
 		

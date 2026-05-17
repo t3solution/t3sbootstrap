@@ -10,13 +10,15 @@ use TYPO3\CMS\Core\Database\Connection;
 
 final class ConnectionPoolUtility
 {
+	
+	public function __construct(
+		private readonly ConnectionPool $connectionPool,
+	) {}
+	
 
 	public function selectChapterIndex(int $currentPageUid, int $sysLanguageUid=0)
 	{
-
-		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-			
-		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
 		$result = $queryBuilder
 			->select('uid', 'header', 'tx_t3sbootstrap_chapter')
 			->from('tt_content')

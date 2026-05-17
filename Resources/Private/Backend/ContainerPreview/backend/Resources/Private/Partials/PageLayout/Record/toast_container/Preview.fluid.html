@@ -39,26 +39,21 @@
 		</span>
 	</f:if>
 	<div class="flex-grow-1 ms-{margin} flex-info-content">
-
 		<f:if condition="{flexForm.multipleToast}">
 			<f:then>
-				<strong>"Several Toasts"</strong>
-				| <strong>Placement:</strong> {flexForm.placement}	
+				<strong>"{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.severalToasts')}"</strong>
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_t3sbootstrap_domain_model_config.navbarplacement')}:</strong> {flexForm.placement}	
 			</f:then>
 			<f:else>
-				<strong>Placement:</strong> {flexForm.placement}
-				| <strong>Width:</strong> {flexForm.toastwidth}px			
-				| <strong>Autohide:</strong> {flexForm.autohide}			
-				| <strong>Cookie:</strong> {flexForm.cookie}
+				<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_t3sbootstrap_domain_model_config.navbarplacement')}:</strong> {flexForm.placement}
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.width')}:</strong> {flexForm.toastwidth}px			
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.autohide')}:</strong> {flexForm.autohide}			
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.cookie')}:</strong> {flexForm.cookie}
 			</f:else>
 		</f:if>
 
 	</div>
 </div>
-
-
-
-
 
 </f:if>
 <f:render partial="PageLayout/Record/ContainerPreview" arguments="{_all}" />

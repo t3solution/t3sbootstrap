@@ -2,11 +2,11 @@
 	<sheets>
 		<general>
 			<ROOT>
-				<sheetTitle>General</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.general</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -56,7 +56,7 @@
 						</config>
 					</hidden>
 					<sliderStyle>
-						<label>Slider Style</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.sliderStyle</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -79,7 +79,7 @@
 						</config>
 					</sliderStyle>
 					<width>
-						<label>max. Image width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.maxwidth</label>
 						<config>
 							<type>number</type>
 							<size>4</size>
@@ -89,13 +89,13 @@
 						</config>
 					</width>
 					<origImage>
-						<label>Use Original Image</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.carousel_container.origimage</label>
 						<config>
 							<type>check</type>
 						</config>
 					</origImage>
 					<ratio>
-						<label>Image ratio - e.g.: 37:9</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.ratio</label>
 						<config>
 							<type>input</type>
 							<size>4</size>
@@ -105,7 +105,7 @@
 						</config>
 					</ratio>
 					<slidesPerView>
-						<label>Slides per view</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerView</label>
 						<description>slides visible at the same time on slider's container (can be empty if you use breakpoints)</description>
 						<displayCond>
 							<and>
@@ -121,8 +121,8 @@
 						</config>
 					</slidesPerView>
 					<breakpoints10>
-						<label>Slides per view - breakpoint > 10px</label>
-						<description>breakpoints allows to set different parameter for different responsive breakpoints (screen sizes)</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints10</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints10.description</description>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -137,7 +137,7 @@
 						</config>
 					</breakpoints10>
 					<breakpoints576>
-						<label>Slides per view - breakpoint > 576px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints576</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -152,7 +152,7 @@
 						</config>
 					</breakpoints576>
 					<breakpoints768>
-						<label>Slides per view - breakpoint > 768px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints768</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -167,7 +167,7 @@
 						</config>
 					</breakpoints768>
 					<breakpoints992>
-						<label>Slides per view - breakpoint > 992px</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.breakpoints992</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -182,8 +182,8 @@
 						</config>
 					</breakpoints992>
 					<slidesPerGroup>
-						<label>Slides per group</label>
-						<description>set numbers of slides to define and enable group sliding</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerGroup</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.slidesPerGroup.description</description>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -201,7 +201,7 @@
 						</config>
 					</slidesPerGroup>
 					<spaceBetween>
-						<label>Space between</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.spaceBetween</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -216,7 +216,7 @@
 						</config>
 					</spaceBetween>
 					<loop>
-						<label>Loop</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.loop</label>
 						<description>amount of slides in loop mode should be at least 2x of slidesPerView value.</description>
 						<displayCond>
 							<and>
@@ -229,7 +229,7 @@
 						</config>
 					</loop>
 					<navigation>
-						<label>Navigation</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.navigation</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -241,7 +241,7 @@
 						</config>
 					</navigation>
 					<pagination>
-						<label>Pagination</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.pagination</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -253,7 +253,7 @@
 						</config>
 					</pagination>
 					<autoplay>
-						<label>Autoplay</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.autoplay</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -266,7 +266,7 @@
 						</config>
 					</autoplay>
 					<delay>
-						<label>Delay between transitions (in ms)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cw.delay</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>
@@ -282,7 +282,7 @@
 						</config>
 					</delay>
 					<swiperCss>
-						<label>Swiper Css</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.swiperCss</label>
 						<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
 						<config>
 							<type>text</type>
@@ -292,7 +292,7 @@
 						</config>
 					</swiperCss>
 					<swiperJs>
-						<label>Swiper JS</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.swiperJs</label>
 						<displayCond>FIELD:general.sliderStyle:!=:Default</displayCond>
 						<config>
 							<type>text</type>
@@ -302,14 +302,14 @@
 						</config>
 					</swiperJs>
 					<zoom>
-						<label>Enable open in lightbox</label>
-						<description>not working with a link inside the carousel content.</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.carousel_container.zoom</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.carousel_container.zoom.description</description>
 						<config>
 							<type>check</type>
 						</config>
 					</zoom>
 					<useCustomSwiperJs>
-						<label>Custom Swiper JS</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.useCustomSwiperJs</label>
 						<description>use your own Swiper JS</description>
 						<displayCond>FIELD:general.sliderStyle:=:Default</displayCond>
 						<onChange>reload</onChange>
@@ -317,9 +317,10 @@
 							<type>check</type>
 						</config>
 					</useCustomSwiperJs>
+					
 					<customSwiperJs>
-						<label>your JS</label>
-						<description>overwrites all the above settings</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.customSwiperJs</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.customSwiperJs.description</description>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.sliderStyle:=:Default</value1>

@@ -36,15 +36,10 @@
 				<be:thumbnail image="{imgObject.0}"  width="64" height="40" class="img-thumbnail" />	
 			</div>
 		</f:if>
-
 		<div class="flex-grow-1 ms-{margin}">
-		
-		<strong>Max. BG-Image width:</strong> {flexForm.width}px | <strong>Parallax effect speed:</strong> {flexForm.speedFactor}
-		| <strong>Surcharge height:</strong> {flexForm.addHeight}px
-		
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.maxBgImageWidth')}:</strong> {flexForm.width}px | <strong>Parallax effect speed:</strong> {flexForm.speedFactor}
+		| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.addHeight')}:</strong> {flexForm.addHeight}px
 		</div>
-		
-
 	</div>
 
 </f:if>

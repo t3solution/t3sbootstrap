@@ -5,9 +5,10 @@ defined('TYPO3') || die();
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use B13\Container\Tca\Registry;
 use B13\Container\Tca\ContainerConfiguration;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 # Extension configuration
-$extconf = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('t3sbootstrap');
+$extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 /***************
  * Add new EXT:container CTypes
@@ -22,8 +23,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.twoColumns.description',
 			[
 				[
-					['name' => 'Column 1', 'colPos' => 221],
-					['name' => 'Column 2', 'colPos' => 222]
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 221],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 222]
 				]
 			]
 		)
@@ -37,12 +38,12 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 		new ContainerConfiguration(
 			'three_columns',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.title',
-			'Container with 3 columns',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.threeColumns.description',
 			[
 				[
-					['name' => 'Column 1', 'colPos' => 231],
-					['name' => 'Column 2', 'colPos' => 232],
-					['name' => 'Column 3', 'colPos' => 233]
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 231],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 232],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 233]
 				  ]
 			]
 		)
@@ -59,10 +60,10 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.fourColumns.description',
 			[
 				[
-					['name' => 'Column 1', 'colPos' => 241],
-					['name' => 'Column 2', 'colPos' => 242],
-					['name' => 'Column 3', 'colPos' => 243],
-					['name' => 'Column 4', 'colPos' => 244]
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 241],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 242],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 243],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 244]
 				  ]
 			]
 		)
@@ -79,12 +80,12 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.sixColumns.description',
 			[
 				[
-					['name' => 'Column 1', 'colPos' => 261],
-					['name' => 'Column 2', 'colPos' => 262],
-					['name' => 'Column 3', 'colPos' => 263],
-					['name' => 'Column 4', 'colPos' => 264],
-					['name' => 'Column 5', 'colPos' => 265],
-					['name' => 'Column 6', 'colPos' => 266]
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.0', 'colPos' => 261],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.1', 'colPos' => 262],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.2', 'colPos' => 263],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.3', 'colPos' => 264],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.4', 'colPos' => 265],
+					['name' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.anyColumns.colPos.5', 'colPos' => 266]
 				  ]
 			]
 		)
@@ -98,8 +99,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'row_columns',
-			'Row Columns',
-			'Use these row columns classes to quickly create basic grid layouts.',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns.description',
 			[
 				[
 					['name' => 'Row Column', 'colPos' => 290]
@@ -116,8 +117,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'card_wrapper',
-			'Card Wrapper',
-			'In addition to styling the content within cards, Bootstrap includes a few options for laying out series of cards.',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cardWrapper',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cardWrapper.description',
 			[
 				[
 					['name' => 'Card Wrapper', 'colPos' => 270, 'allowed' => ['CType' => 't3sbs_card']]
@@ -134,8 +135,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'button_group',
-			'Button Group',
-			'Group a series of buttons together on a single line with the button group.',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.buttonGroup',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.buttonGroup.description',
 			[
 				[
 					['name' => 'Button Group', 'colPos' => 271, 'allowed' => ['CType' => 't3sbs_button']]
@@ -152,8 +153,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'autoLayout_row',
-			'Auto-layout',
-			'Options: "Equal-width", "Setting one column width" or "Variable width content".',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.autoLayoutRow',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.autoLayoutRow.description',
 			[
 				[
 					['name' => 'Auto-layout', 'colPos' => 272]
@@ -170,8 +171,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'background_wrapper',
-			'Background Wrapper',
-			'Options: "Full width container with background color -image or -Youtube vido.',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.backgroundWrapper.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.backgroundWrapper.description',
 			[
 				[
 					['name' => 'Background Wrapper', 'colPos' => 273]
@@ -186,9 +187,13 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 # PARALLAX WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
+		
+		
+		
+		
 		new ContainerConfiguration(
 			'parallax_wrapper',
-			'Parallax Wrapper',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.parallaxWrapper.title',
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.parallaxWrapper.description',
 			[
 				[
@@ -224,15 +229,12 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'carousel_container',
-			'Carousel Container',
-			'A container for several Carousel slides (CE:t3sbs_carousel)',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.carouselContainer.title',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.carouselContainer.description',
 			[
 				[
 					['name' => 'Carousel Container', 'colPos' => 276, 'disallowed' => ['CType' => 'two_columns,three_columns,four_columns,six_columns,row_columns'], 'allowed' => ['CType' => 't3sbs_carousel']]
 				]
-				
-				
-				
 			]
 		)
 	)
@@ -333,10 +335,12 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 # LIST GROUP WRAPPER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
+		
+		
 		new ContainerConfiguration(
 			'listGroup_wrapper',
-			'List Group Wrapper',
-			'Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.listGroupWrapper',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.listGroupWrapper.description',
 			[
 				[
 					['name' => 'List Group Wrapper', 'colPos' => 282]
@@ -353,8 +357,8 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
 		new ContainerConfiguration(
 			'masonry_wrapper',
-			'Masonry Wrapper',
-			'Masonry with the Bootstrap grid system',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonryWrapper',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonryWrapper.description',
 			[
 				[
 					['name' => 'Masonry', 'colPos' => 283]
@@ -369,10 +373,13 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 # SWIPE CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
+		
+		
+		
 		new ContainerConfiguration(
 			'swiper_container',
-			'Swiper Container',
-			'A container for several Swipe slides (CE:t3sbs_carousel)',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.swiperContainer',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.swiperContainer.description',
 			[
 				[
 					['name' => 'Swipe Container', 'colPos' => 300, 'allowed' => ['CType' => 't3sbs_carousel']]
@@ -387,10 +394,13 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 # TOAST CONTAINER
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	(
+		
+		
+		
 		new ContainerConfiguration(
 			'toast_container',
-			'Toast Container',
-			'A container for several Toast content',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.toastContainer',
+			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.toastContainer.description',
 			[
 				[
 					['name' => 'Toast Container', 'colPos' => 310]

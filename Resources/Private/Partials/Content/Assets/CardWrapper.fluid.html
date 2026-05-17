@@ -74,13 +74,16 @@ function insertAfter(referenceNode, newNode) {
 }
 
 	</f:asset.css>
+	<f:variable name="delay">
+		{f:if(condition: '{t3sbFlexform.delay} && {t3sbFlexform.autoplay}', then: '{t3sbFlexform.delay}', else: 99999999)}
+	</f:variable>
 
 	<f:asset.script identifier="vanilla_swiperjs-{data.uid}">
 	// Card Slider (swiper) - Container/CardWrapper.html
 	var spv = {t3sbFlexform.slidesPerView},
 		spb = {t3sbFlexform.spaceBetween},
 		spg = {t3sbFlexform.slidesPerGroup},
-		del = {t3sbFlexform.delay},
+		del = {delay -> f:format.trim()},
 		b10 = {t3sbFlexform.breakpoints10},
 		b576 = {t3sbFlexform.breakpoints576},
 		b768 = {t3sbFlexform.breakpoints768},

@@ -14,15 +14,15 @@ use TYPO3\CMS\Core\Database\Connection;
 #[AsCommand('t3sbootstrap:textToTextmedia', 'Migrate CType text to textmedia')]
 class TextToTextmedia extends CommandBase
 {
-    /**
-     * Update all records
-     *
-     * @inheritdoc
-     */
+    
+    public function __construct(
+        private readonly ConnectionPool $connectionPool,
+    ) {}
+    
+    
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-		$contentQueryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$contentQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $texts = $contentQueryBuilder
              ->select('uid')
              ->from('tt_content')

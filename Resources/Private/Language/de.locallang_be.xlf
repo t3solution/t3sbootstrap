@@ -1,2029 +1,2463 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="2.0"
 	   xmlns="urn:oasis:names:tc:xliff:document:2.0"
-	   srcLang="en">
+	   srcLang="en" trgLang="de">
 	<file id="t3sbootstrap">
 
 		<unit id="flexform.general">
 			<segment>
 				<source>General</source>
+				<target>Allgemeines</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.settings">
 			<segment>
 				<source>Settings</source>
+				<target>Einstellungen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bootstrap.settings">
 			<segment>
 				<source>Bootstrap Settings</source>
-			</segment>
-		</unit>
-		
-		<unit id="flexform.hidden">
-			<segment>
-				<source>Hiding / Display Elements</source>
+				<target>Bootstrap Einstellungen</target>
 			</segment>
 		</unit>
 
+		<unit id="flexform.hidden">
+			<segment>
+				<source>Hiding / Display Elements</source>
+				<target>Elemente ausblenden / anzeigen</target>
+			</segment>
+		</unit>
+		
 		<unit id="flexform.border">
 			<segment>
 				<source>Border</source>
+				<target>Rand</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.utilitysettings">
 			<segment>
 				<source>Utility Settings</source>
+				<target>Utility Einstellungen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.newline">
 			<segment>
 				<source>New line (break to a new line for multiple rows after this col)</source>
+				<target>Neue Zeile (nach dieser Spalte für mehrere Zeilen eine neue Zeile einfügen)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.alignself">
 			<segment>
 				<source>Align self</source>
+				<target>Selbst ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.responsiveVariations">
 			<segment>
 				<source>Responsive Variations</source>
+				<target>Responsive Variationen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.automargins">
 			<segment>
 				<source>Auto margins</source>
+				<target>Automatische Abstände</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.order">
 			<segment>
 				<source>Order</source>
+				<target>Reihenfolge</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.borderstyle">
 			<segment>
 				<source>Predefined border styles</source>
+				<target>Vordefinierte Randstile</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.borderradius">
 			<segment>
 				<source>Predefined border radius</source>
+				<target>Vordefinierter Eckenradius</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.menudirection">
 			<segment>
 				<source>Menu in a column or row</source>
+				<target>Menü in einer Spalte oder Zeile</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.menuhorizontalalignment">
 			<segment>
 				<source>Menu Horizontal Alignment (for flex-row only)</source>
+				<target>Horizontale Ausrichtung des Menüs (nur für flex-row)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.columns">
 			<segment>
 				<source>Columns</source>
+				<target>Spalten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.menupills">
 			<segment>
 				<source>Enable Pills (nav-pills)</source>
+				<target>"Pills" aktivieren (nav-pills)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.jssettings">
 			<segment>
 				<source>Inline JavaScript Settings</source>
+				<target>Einstellungen für Inline-JavaScript</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.priority.description">
 			<segment>
 				<source>Define whether the JavaScript should be put in the &lt;head&gt; tag above-the-fold or somewhere in the body part.</source>
+				<target>Lege fest, ob das JavaScript im &lt;head&gt;-Tag oder irgendwo im Body-Bereich platziert werden soll.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.priority">
 			<segment>
 				<source>Priority</source>
+				<target>Priorität</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.jquery">
 			<segment>
 				<source>jQuery Framework</source>
+				<target>jQuery-Framework</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.jquery.description">
 			<segment>
 				<source>Enable if you use jquery.</source>
+				<target>Aktiviere diese Option, wenn du jQuery verwendest.</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="predefined.styles">
 			<segment>
 				<source>Predefined styles</source>
+				<target>Vordefinierte Stile</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.size">
 			<segment>
 				<source>Button size</source>
+				<target>Buttongröße</target>
+			</segment>
+		</unit>
+		
+		<unit id="flexform.button.vertical">
+			<segment>
+				<source>Vertical variation</source>
+				<target>Vertikale Variation</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.align">
 			<segment>
 				<source>Button Group Alignment</source>
+				<target>Ausrichtung der Button-Gruppe</target>
 			</segment>
 		</unit>
-		
-		
-		
+
 		<unit id="flexform.button.slideIn">
 			<segment>
 				<source>Slide In / Slide Out</source>
+				<target>Ein- und Ausfahren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.slideIn.description">
 			<segment>
 				<source>With "Fixed position = Right browser edge", Vertical variation &amp; an icon (iconpack) in t3sbs_button</source>
-			</segment>
-		</unit>
-		
-		
-		<unit id="flexform.button.vertical">
-			<segment>
-				<source>Vertical variation</source>
+				<target>Mit "Feste Position = rechter Browserrand", vertikaler Variation und einem Symbol (Iconpack) in t3sbs_button</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.block">
 			<segment>
 				<source>Block level button (span the full width)</source>
+				<target>Button über die gesamte Breite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.outline">
 			<segment>
 				<source>Outline button</source>
+				<target>Button hat nur einen Rand</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="flexform.button.fixedposition">
 			<segment>
 				<source>Fixed position</source>
+				<target>Feste Position</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.rotate">
 			<segment>
 				<source>Rotate the Button or Vertical Text</source>
+				<target>Den Button oder den vertikalen Text drehen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.linktitle">
 			<segment>
 				<source>Link title</source>
+				<target>Link Titel</target>
 			</segment>
 		</unit>
-		
 		
 		
 		<unit id="flexform.button.direction">
 			<segment>
 				<source>Dropdown direction</source>
+				<target>Richtung des Dropdown-Menüs</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.dropdownitems">
 			<segment>
 				<source>Dropdown Item</source>
+				<target>Menüpunkt</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.inputlink">
 			<segment>
 				<source>Input Link</source>
+				<target>Link</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.button.inputlinktitle">
 			<segment>
 				<source>Link title</source>
-			</segment>
-		</unit>
-		
-		
-		<unit id="flexform.t3sbs_card.cardsettings">
-			<segment>
-				<source>Card Settings</source>
+				<target>Link-Titel</target>
 			</segment>
 		</unit>
 
+		<unit id="flexform.t3sbs_card.cardsettings">
+			<segment>
+				<source>Card Settings</source>
+				<target>Card Einstellungen</target>
+			</segment>
+		</unit>
+		
 		<unit id="flexform.t3sbs_card.effect">
 			<segment>
 				<source>Card Hover Effect</source>
+				<target>Hover-Effekt für Cards</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.effectcolor">
 			<segment>
 				<source>Card Hover Effect Color</source>
+				<target>Farbe für Card Hover-Effekt</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.maxwidth">
 			<segment>
 				<source>Card max-width == image width</source>
+				<target>Maximale Breite der Karte == Bildbreite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.maxwidth.description">
 			<segment>
 				<source>Helpful for single cards outside the card wrapper</source>
+				<target>Hilfreich für einzelne Cards außerhalb des Card-Wrappers</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.imageoverlay">
 			<segment>
 				<source>Image overlay</source>
+				<target>Bildüberlagerung</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.imageoverlay.description">
 			<segment>
 				<source>The card body overlays the image</source>
+				<target>Der Inhalt der Card überlagert das Bild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.imageoverlaymobile">
 			<segment>
 				<source>Image overlay - mobile view only</source>
+				<target>Bildüberlagerung - nur für Mobilgeräte</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.titleOnTop">
 			<segment>
 				<source>Card Title on top</source>
+				<target>Card-Titel oben anzeigen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.flipcard">
 			<segment>
 				<source>Flip Card with Text or Image</source>
+				<target>Flip-Card mit Text oder Bild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.flipcard.description">
 			<segment>
 				<source>Frontside with image - Backside with text (if "Text Top" available) or image (second image)</source>
+				<target>Vorderseite mit Bild – Rückseite mit Text (sofern "Text oben" verfügbar ist) oder Bild (zweites Bild)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.rotateY">
 			<segment>
 				<source>Number of rotations in degree</source>
+				<target>Drehwinkel in Grad</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.buttonenable">
 			<segment>
 				<source>Enable button with "header_link"</source>
+				<target>Button in Card mit "header_link"</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.buttonstretchedLink">
 			<segment>
 				<source>Stretched link (link the entire Card)</source>
+				<target>Stretched Link (die gesamte Karte verlinken)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.buttonstyle">
 			<segment>
 				<source>Predefined button styles</source>
+				<target>Vordefinierte Button-Stile</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.buttontext">
 			<segment>
 				<source>Button text</source>
+				<target>Button Text</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.button.footer">
 			<segment>
 				<source>Button in Card Footer</source>
+				<target>Button in Card Footer</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.cardborder">
 			<segment>
 				<source>Custom Border</source>
+				<target>Benutzerdefinierter Rahmen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.cardborderstyle">
 			<segment>
 				<source>Predefined border styles</source>
+				<target>Vordefinierte Rahmenstile</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.horizontal">
 			<segment>
 				<source>Horizontal</source>
+				<target>Horizontal</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.alignSelfCenter">
 			<segment>
 				<source>Align Self Center</source>
+				<target>Zentrieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.alignSelfCenter.description">
 			<segment>
 				<source>The content is aligned vertically.</source>
+				<target>Der Inhalt ist vertikal ausgerichtet.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.imagecolumnswidth">
 			<segment>
 				<source>Image width</source>
+				<target>Bildbreite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.imagecolumnswidth.description">
 			<segment>
 				<source>e.g. 1,2,3 or4 (Bootstrap columns)</source>
+				<target>z.B. 1,2,3 oder 4 (Bootstrap columns).</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimageenable">
 			<segment>
 				<source>Enable Profile Card</source>
+				<target>"Profilkarte" aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimageenable.description">
 			<segment>
 				<source>You need at least two images for the profile card. The second is the circular, smaller image</source>
+				<target>Für die "Profilkarte" benötigst du mindestens zwei Bilder. Das zweite ist das runde, kleinere Bild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimagepercent">
 			<segment>
 				<source>Width of the circular image (in %)</source>
+				<target>Breite des kreisförmigen Bildes (in %)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimageborderwidth">
 			<segment>
 				<source>Border width</source>
+				<target>Rahmenbreite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimagebordercolor">
 			<segment>
 				<source>Border color</source>
+				<target>Rahmenfarbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimagebshadow">
 			<segment>
 				<source>Shadow</source>
+				<target>Schatten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_card.multiimagesocialmedia.enable">
 			<segment>
 				<source>Add some Social Media Links</source>
+				<target>Füge einige Social-Media-Links hinzu</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_carousel.bgOverlay">
 			<segment>
 				<source>Background color for caption</source>
+				<target>Hintergrundfarbe für die Bildunterschrift</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_carousel.captionVAlign">
 			<segment>
 				<source>Caption vertical align</source>
+				<target>Bildunterschrift vertikal ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.width">
 			<segment>
 				<source>max. Image width (required)</source>
+				<target>Max. Bildbreite (erforderlich)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.ratio">
 			<segment>
 				<source>Image aspect ratio - e.g.: 37:9</source>
+				<target>Bildseitenverhältnis – z. B.: 37:9</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.ratio.description">
 			<segment>
 				<source>Aspect ratio for "Mobile" is 16:9 by default or use next option (image manipulation for mobile view)</source>
+				<target>Das Seitenverhältnis für "Mobil" ist standardmäßig 16:9; alternativ kannst du die nächste Option verwenden (Bildbearbeitung für die mobile Ansicht)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.mobilenoratio">
 			<segment>
 				<source>Use image manipulation for mobile view (overrides aspect ratio for mobile only)</source>
+				<target>Bildbearbeitung für die mobile Ansicht verwenden (überschreibt das Seitenverhältnis nur auf Mobilgeräten)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.mobilenoratio.description">
 			<segment>
 				<source>In order to prevent slides that are too narrow (did not work with videos).</source>
+				<target>Um zu schmale Slides zu vermeiden (funktioniert nicht mit Videos).</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.origimage">
 			<segment>
 				<source>Use Original Image</source>
+				<target>Originalbild verwenden</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.thumbnails">
 			<segment>
 				<source>Use Thumbnails as carousel-indicators</source>
+				<target>Miniaturansichten als Carousel-Anzeigen verwenden</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.carouselfade">
 			<segment>
 				<source>Switch carousel from horizontal sliding to crossfade</source>
+				<target>Carousel von horizontalem Bildwechsel auf Überblendung (fade) umstellen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.darkvariant">
 			<segment>
 				<source>Dark variant</source>
+				<target>Dunkle Variante</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.interval">
 			<segment>
 				<source>Interval</source>
+				<target>Intervall</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.link">
 			<segment>
 				<source>Header link</source>
+				<target>Überschrift-Link</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.buttontext">
 			<segment>
 				<source>Button Text</source>
+				<target>Button Text</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.animate">
 			<segment>
 				<source>Animated Caption</source>
+				<target>Animierte Bildunterschrift</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.animate.description">
 			<segment>
 				<source>You can overwrite this setting in the carousel items.</source>
+				<target>Du kannst diese Einstellung in den Carousel-Elementen überschreiben.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.zoom">
 			<segment>
 				<source>Enable open in lightbox</source>
+				<target>In Lightbox öffnen aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.zoom.description">
 			<segment>
 				<source>Not working with a link inside the carousel content.</source>
+				<target>Ein Link im Carousel Inhalt funktioniert nicht.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.carousel_container.mobileindicators">
 			<segment>
 				<source>Indicators also on mobile view</source>
+				<target>Indikatoren auch in der mobilen Ansicht</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_mediaobject.order">
 			<segment>
 				<source>Change the order of content in media objects</source>
+				<target>Die Reihenfolge der Inhalte in Medienobjekten ändern</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_mediaobject.verticallycenter">
 			<segment>
 				<source>Vertically center (Text)</source>
+				<target>Vertikal zentrieren (Text)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_mediaobject.border">
 			<segment>
 				<source>Border</source>
+				<target>Rand</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_mediaobject.borderstyle">
 			<segment>
 				<source>Predefined border styles</source>
+				<target>Vordefinierte Rahmenstile</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_mediaobject.borderradius">
 			<segment>
 				<source>Predefined border radius</source>
+				<target>Vordefinierter Eckenradius</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="flexform.t3sbs_mediaobject.iconAsImg">
 			<segment>
 				<source>Icon instead of image</source>
+				<target>Icon anstatt Bild</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="flexform.table.tableClass">
 			<segment>
 				<source>Table class</source>
+				<target>Tabellen-Class</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.striped">
 			<segment>
 				<source>Striped rows</source>
+				<target>Gestreifte Reihen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.bordered">
 			<segment>
 				<source>Bordered table</source>
+				<target>Tabelle mit Rahmen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.hover">
 			<segment>
 				<source>Hover rows</source>
+				<target>Zeilen beim Darüberfahren mit der Maus</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.small">
 			<segment>
 				<source>Condensed table</source>
+				<target>Komprimierte Tabelle</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.dark">
 			<segment>
 				<source>Table dark</source>
+				<target>Dunkle Tabelle</target>
 			</segment>
 		</unit>
 		
-		
-		
+
 		<unit id="flexform.table.borderless">
 			<segment>
 				<source>Table borderless</source>
+				<target>Tabelle ohne Rahmen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.primary">
 			<segment>
 				<source>Border primary</source>
+				<target>Rahmen primary</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.secondary">
 			<segment>
 				<source>Border secondary</source>
+				<target>Rahmen secondary</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.success">
 			<segment>
 				<source>Border success</source>
+				<target>Rahmen success</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.info">
 			<segment>
 				<source>Border info</source>
+				<target>Rahmen info</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.warning">
 			<segment>
 				<source>Border warning</source>
+				<target>Rahmen warning</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.danger">
 			<segment>
 				<source>Border danger</source>
+				<target>Rahmen danger</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.light">
 			<segment>
 				<source>Border light</source>
+				<target>Rahmen light</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.border.dark">
 			<segment>
 				<source>Border dark</source>
+				<target>Rahmen dark</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.verticalaligntop">
 			<segment>
 				<source>Vertical align top</source>
+				<target>Vertikal ausrichten – oben</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.verticalalignmiddle">
 			<segment>
 				<source>Vertical align middle</source>
+				<target>Vertikal ausrichten – Mitte</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.verticalalignbottom">
 			<segment>
 				<source>Vertical align bottom</source>
+				<target>Vertikal ausrichten – unten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.theadclass">
 			<segment>
 				<source>Table head</source>
+				<target>Tabellenüberschrift</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.tableinverse">
 			<segment>
 				<source>Table inverse/dark</source>
+				<target>Tabelle invers/dunkel</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.tableresponsive">
 			<segment>
 				<source>Responsive table</source>
+				<target>Responsive Tabelle</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.table.tableresponsivevariant">
 			<segment>
 				<source>Responsive table variant</source>
+				<target>Responsive Tabellenvariante</target>
 			</segment>
 		</unit>
 
 		<unit id="flexform.t3sbs_toast.animation">
 			<segment>
 				<source>Animation (apply a CSS fade transition to the toast)</source>
+				<target>Animation (CSS-Überblend-Übergang anwenden)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.autohide">
 			<segment>
 				<source>Autohide (auto hide the toast)</source>
+				<target>Toast automatisch ausblenden</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.delay">
 			<segment>
 				<source>Delay in ms (delay hiding the toast)</source>
+				<target>Verzögerung in ms (Verzögerung beim Ausblenden des Toast-Fensters)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.placement">
 			<segment>
 				<source>Placement</source>
+				<target>Platzierung</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.placement.item1">
 			<segment>
 				<source>default</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item2">
-			<segment>
-				<source>Top left</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item3">
-			<segment>
-				<source>Top center</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item4">
-			<segment>
-				<source>Top right</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item5">
-			<segment>
-				<source>Middle left</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item6">
-			<segment>
-				<source>Middle center</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item7">
-			<segment>
-				<source>Middle right</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item8">
-			<segment>
-				<source>Bottom left</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item9">
-			<segment>
-				<source>Bottom center</source>
-			</segment>
-		</unit>
-		<unit id="flexform.t3sbs_toast.placement.item10">
-			<segment>
-				<source>Bottom right</source>
+				<target>Standard</target>
 			</segment>
 		</unit>
 
+		<unit id="flexform.t3sbs_toast.placement.item2">
+			<segment>
+				<source>Top left</source>
+				<target>Oben links</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item3">
+			<segment>
+				<source>Top center</source>
+				<target>Oben in der Mitte</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item4">
+			<segment>
+				<source>Top right</source>
+				<target>Oben rechts</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item5">
+			<segment>
+				<source>Middle left</source>
+				<target>Mitte links</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item6">
+			<segment>
+				<source>Middle center</source>
+				<target>Mittig zentriert</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item7">
+			<segment>
+				<source>Middle right</source>
+				<target>Mitte rechts</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item8">
+			<segment>
+				<source>Bottom left</source>
+				<target>Unten links</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item9">
+			<segment>
+				<source>Bottom center</source>
+				<target>Unten in der Mitte</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.t3sbs_toast.placement.item10">
+			<segment>
+				<source>Bottom right</source>
+				<target>Unten rechts</target>
+			</segment>
+		</unit>
+		
 		<unit id="flexform.t3sbs_toast.toastwidth">
 			<segment>
 				<source>Width of the toast in (px)</source>
+				<target>Breite des Toasts in (px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.cookie">
 			<segment>
 				<source>Set cookie</source>
+				<target>Cookie setzen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.cookie.description">
 			<segment>
 				<source>Option to do not display the toast again until the expiration date or the "toast-body" content is changed.</source>
+				<target>Option, den Toast erst wieder anzuzeigen, wenn das Ablaufdatum erreicht ist oder der Inhalt des "toast-body" geändert wird.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.t3sbs_toast.cookie.expires">
 			<segment>
 				<source>Cookie expiration in days</source>
+				<target>Gültigkeitsdauer des Cookies in Tagen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.origImage">
 			<segment>
 				<source>Image inside (no background-image but a real image)</source>
+				<target>Bild im Inneren (kein Hintergrundbild, sondern ein echtes Bild)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.imgsheet">
 			<segment>
 				<source>Image</source>
+				<target>Bild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.generalsheet">
 			<segment>
 				<source>General</source>
+				<target>Allgemeines</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.width">
 			<segment>
 				<source>max. Image width</source>
+				<target>Max. Bildbreite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.bgAttachmentFixed">
 			<segment>
 				<source>Fixed background attachment</source>
+				<target>Hintergrund fixiert</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.enableAutoheight">
 			<segment>
 				<source>Enable content overlay and autoheight for background-image (JS)</source>
+				<target>Inhaltsüberlagerung und automatische Höhenanpassung für Hintergrundbilder aktivieren (JS)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.addHeight">
 			<segment>
 				<source>Surcharge height to background-image (in px)</source>
+				<target>Überlagerungshöhe für Hintergrundbild (in px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.alignItem">
 			<segment>
 				<source>Align content items</source>
+				<target>Inhaltselemente ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.paddingTopBottom">
 			<segment>
 				<source>Padding (top and bottom in rem)</source>
+				<target>Abstand (oben und unten in rem)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.imgGrayscale">
 			<segment>
 				<source>Grayscale</source>
+				<target>Graustufen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.imgSepia">
 			<segment>
 				<source>Sepia</source>
+				<target>Sepia</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.imgOpacity">
 			<segment>
 				<source>Opacity</source>
+				<target>Deckkraft</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.imageRaster">
 			<segment>
 				<source>Raster over the image/color</source>
+				<target>Raster über dem Bild/Farbe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.sheetNomedia">
 			<segment>
 				<source>No Media</source>
+				<target>Keine Medien</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.noMediaPaddingTopBottom">
 			<segment>
 				<source>Padding (top and bottom in rem)</source>
+				<target>Abstand (oben und unten in rem)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.sheetLocalVideo">
 			<segment>
 				<source>Local Video</source>
+				<target>Lokales Video</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.localControls">
 			<segment>
 				<source>Controls</source>
+				<target>Bedienelemente</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.loop">
 			<segment>
 				<source>Loop</source>
+				<target>Schleife (loop)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mute">
 			<segment>
 				<source>Mute</source>
+				<target>Stummschalten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.aspectRatio">
 			<segment>
 				<source>Aspect ratio</source>
+				<target>Seitenverhältnis</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.aspectRatio.description">
 			<segment>
 				<source>e.g.: 37by9 == 9/37 || 37:9</source>
+				<target>z.B.: 37by9 == 9/37 || 37:9</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.alignVideoItem">
 			<segment>
 				<source>Align content items</source>
+				<target>Inhaltselemente ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.shift">
 			<segment>
 				<source>Extra vertical shift for the video</source>
+				<target>Zusätzliche vertikale Verschiebung für das Video</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.shift.description">
 			<segment>
 				<source>e.g.: 100 or -100</source>
+				<target>z.B.: 100 oder -100</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.horizontalShift">
 			<segment>
 				<source>Extra horizontal shift for the video on mobile (max-width:767px)</source>
+				<target>Zusätzlicher horizontaler Versatz für das Video auf Mobilgeräten (max-width:767px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mobileHeight">
 			<segment>
 				<source>Max. height on mobile (max-width:767px)</source>
+				<target>Max. Höhe auf Mobilgeräten (max-width:767px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mobileHeight.description">
 			<segment>
 				<source>figure.video max-height in px</source>
+				<target>figure.video max-height in px</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mobileWidth">
 			<segment>
 				<source>Mobile width for higher videos on mobile (max-width:767px)</source>
+				<target>Breite für Videos auf Mobilgeräten (max-width:767px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mobileWidth.description">
 			<segment>
 				<source>figure.video width in %</source>
+				<target>Breite des Videos in %</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.sheetVideo">
 			<segment>
 				<source>Youtube/Vimeo Video</source>
+				<target>Youtube/Vimeo Video</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.contentPosition">
 			<segment>
 				<source>Content Position</source>
+				<target>Position des Inhalts</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.bgHeight">
 			<segment>
 				<source>Height in px</source>
+				<target>Höhe in px</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.ytshift">
 			<segment>
 				<source>Extra shift for the video</source>
+				<target>Verschiebung für das Video</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.videoMute.description">
 			<segment>
 				<source>automatically activated if autoplay</source>
+				<target>wird automatisch aktiviert, wenn die automatische Wiedergabe aktiviert ist</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.cardwrapper">
 			<segment>
 				<source>Groups, Decks (Grid cards), Columns or Slider</source>
+				<target>Groups, Decks (Grid cards), Columns oder Slider</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.cw.colclass">
 			<segment>
 				<source>Column class</source>
+				<target>Spalten class</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.visibleCards">
 			<segment>
 				<source>Visible Cards</source>
+				<target>Sichtbare Cards</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="flexform.cw.gutter">
 			<segment>
 				<source>Gutters (padding between your columns)</source>
+				<target>Gutters (Abstandhalter zwischen den Spalten)</target>
 			</segment>
 		</unit>
-	
+		
 		<unit id="flexform.cw.maxwidth">
 			<segment>
 				<source>max. Image width</source>
+				<target>Max. Bildbreite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.maxwidth.description">
 			<segment>
 				<source>if "0" the cards width is used - or auto-width if the cards width is also empty (best practices)</source>
+				<target>Wenn "0" angegeben wird, wird die Breite der Card verwendet – oder die automatische Breite, falls die Breite der Karte ebenfalls nicht angegeben ist (empfohlene Vorgehensweise)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.ratio">
 			<segment>
 				<source>Image ratio - e.g.: 37:9</source>
+				<target>Bildformat – z. B.: 37:9</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.slidesPerView">
 			<segment>
 				<source>Slides per view</source>
+				<target>Slides pro Ansicht</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.slidesPerView.description">
 			<segment>
 				<source>slides visible at the same time on slider's container (can be empty if you use breakpoints)</source>
+				<target>Auf dem Slider-Container gleichzeitig sichtbare Slides (kann leer sein, wenn Du Breakpoints verwendest)</target>
 			</segment>
 		</unit>
-
+		
 		
 		<unit id="flexform.cw.breakpoints10">
 			<segment>
-				<source>Slides per view - breakpoint &amp; 10px</source>
+				<source>Slides per view - breakpoint: 10px</source>
+				<target>Slides pro Ansicht – Brechpunkt: 10px</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.breakpoints10.description">
 			<segment>
 				<source>breakpoints allows to set different parameter for different responsive breakpoints (screen sizes)</source>
+				<target>Mit Breakpoints lassen sich unterschiedliche Parameter für verschiedene responsive Breakpoints (Bildschirmgrößen) festlegen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.breakpoints576">
 			<segment>
-				<source>Slides per view - breakpoint &amp; 576px</source>
+				<source>Slides per view - breakpoint: 576px</source>
+				<target>Slides pro Ansicht – Brechpunkt: 576px</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.cw.breakpoints768">
 			<segment>
-				<source>Slides per view - breakpoint &amp; 768px</source>
+				<source>Slides per view - breakpoint: 768px</source>
+				<target>Slides pro Ansicht – Brechpunkt: 768px</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.breakpoints992">
 			<segment>
-				<source>Slides per view - breakpoint &amp; 992px</source>
+				<source>Slides per view - breakpoint: 992px</source>
+				<target>Slides pro Ansicht – Brechpunkt: 992px</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.slidesPerGroup">
 			<segment>
 				<source>Slides per group</source>
+				<target>Slides pro Gruppe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.slidesPerGroup.description">
 			<segment>
 				<source>Set numbers of slides to define and enable group sliding</source>
+				<target>Lege die Anzahl der Slides fest, um das "Gruppen-Sliding" zu aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.spaceBetween">
 			<segment>
 				<source>Space between</source>
+				<target>Zwischenraum</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.loop">
 			<segment>
 				<source>Loop</source>
+				<target>Schleife (loop)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.navigation">
 			<segment>
 				<source>Navigation</source>
+				<target>Navigation</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.pagination">
 			<segment>
 				<source>Pagination</source>
+				<target>Paginierung</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.autoplay">
 			<segment>
 				<source>Autoplay</source>
+				<target>Automatische Wiedergabe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.delay">
 			<segment>
 				<source>Delay between transitions (in ms)</source>
+				<target>Verzögerung zwischen den Übergängen (in ms)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.cropMaxCharacters">
 			<segment>
 				<source>Length of card-bodytext (in chars)</source>
+				<target>Länge des Card-Textes (in Zeichen)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.equalHeight">
 			<segment>
 				<source>Equal Height</source>
+				<target>Gleiche Höhe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.contentByUid">
 			<segment>
 				<source>Single card references</source>
+				<target>Verweise auf einzelne Karten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cw.contentByPid">
 			<segment>
 				<source>Card Wrapper cards references</source>
+				<target>Verweise auf Card Wrapper</target>
 			</segment>
 		</unit>
 		
 		<unit id="expandedContentEnabled">
 			<segment>
 				<source>Expanded Content Top</source>
+				<target>Erweiterte Inhalte oben</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.active">
 			<segment>
 				<source>Active</source>
+				<target>Aktiv</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.buttonstyle">
-			<segment><source>Button style</source></segment>
+			<segment>
+				<source>Button style</source>
+				<target>Button-Stil</target>
+			</segment>
 		</unit>
-
+		
 		<unit id="flexform.appearance">
-			<segment><source>Appearance</source></segment>
+			<segment>
+				<source>Appearance</source>
+				<target>Erscheinungsbild</target>
+			</segment>
 		</unit>
 		
 		<unit id="flexform.effect">
-			<segment><source>Fade effect</source></segment>
+			<segment>
+				<source>Fade effect</source>
+				<target>Fade-Effekt</target>
+			</segment>
 		</unit>
 		
 		<unit id="flexform.alwaysOpen">
 			<segment>
 				<source>Always open</source>
+				<target>Immer geöffnet</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.alwaysOpen.description">
 			<segment>
 				<source>stay open when another item is opened</source>
+				<target>offen bleiben, wenn ein anderes Element geöffnet wird</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.flush">
 			<segment>
 				<source>Flush</source>
+				<target>"Flush"</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.flush.description">
 			<segment>
 				<source>to remove default background-color, borders etc.</source>
+				<target>um die Standard-Hintergrundfarbe, Rahmen usw. zu entfernen</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.collapsibleByPid">
-			<segment><source>Page for the Collapsible Element content (colPos=0)</source></segment>
+			<segment>
+				<source>Page for the Collapsible Element content (colPos=0)</source>
+				<target>Seite für den Inhalt des ein- und ausklappbaren Elements (colPos=0)</target>
+			</segment>
 		</unit>
-	
+		
 		<unit id="flexform.flexContainer">
 			<segment>
 				<source>Enable flex behaviors</source>
+				<target>Flex-Verhalten aktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.equalWidth">
 			<segment>
 				<source>Equal width</source>
+				<target>Gleiche Breite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.equalHeight">
 			<segment>
 				<source>Equal height</source>
+				<target>Gleiche Höhe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.horizontalGutters">
 			<segment>
 				<source>Horizontal gutters</source>
+				<target>Horizontale "gutters" (Abstand)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.horizontalGutters.description">
 			<segment>
 				<source>Info: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters</source>
+				<target>Info: https://getbootstrap.com/docs/5.3/layout/gutters/#horizontal-gutters</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.verticalGutters">
 			<segment>
 				<source>Vertical gutters</source>
+				<target>Vertikal "gutters" (Abstand)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.extraClass">
 			<segment>
 				<source>Extra Class</source>
+				<target>Zusätzliche "class"</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.colclass">
 			<segment>
 				<source>Column class</source>
+				<target>Spalten "class"</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.onPageLoad">
 			<segment>
 				<source>Launch Modal on Page Load</source>
+				<target>Modal beim Laden der Seite öffnen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.cookie">
 			<segment>
 				<source>Set cookie if approved (expire in 1 hour)</source>
+				<target>Cookie setzen, wenn akzeptiert (läuft in 1 Stunde ab)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.modalsize">
 			<segment>
 				<source>Modal size</source>
+				<target>Modalgröße</target>
 			</segment>
 		</unit>
+
+		
 		
 		<unit id="default">
 			<segment>
 				<source>Default</source>
+				<target>Standard</target>
 			</segment>
 		</unit>
+
 		<unit id="secondary">
 			<segment>
 				<source>Secondary</source>
+				<target>Sekundär (secondary)</target>
 			</segment>
 		</unit>
+
 		<unit id="primary">
 			<segment>
 				<source>Primary</source>
+				<target>Primär (primary)</target>
 			</segment>
 		</unit>
+
 		<unit id="success">
 			<segment>
 				<source>Success</source>
+				<target>Erfolg (success)</target>
 			</segment>
 		</unit>
+
 		<unit id="info">
 			<segment>
 				<source>Info</source>
+				<target>Info (info)</target>
 			</segment>
 		</unit>
+
 		<unit id="warning">
 			<segment>
 				<source>Warning</source>
+				<target>Warnung (warning)</target>
 			</segment>
 		</unit>
+
 		<unit id="danger">
 			<segment>
 				<source>Danger</source>
+				<target>Gefahr (danger)</target>
 			</segment>
 		</unit>
 		
 		<unit id="light">
 			<segment>
 				<source>Light</source>
+				<target>Leicht (light)</target>
 			</segment>
 		</unit>
+
 		<unit id="dark">
 			<segment>
 				<source>Dark</source>
+				<target>Dunkel (dark)</target>
 			</segment>
 		</unit>
+
 		<unit id="white">
 			<segment>
 				<source>White</source>
+				<target>Weiß (white)</target>
 			</segment>
 		</unit>
 		
 		<unit id="above">
 			<segment>
 				<source>Above</source>
+				<target>Oben</target>
 			</segment>
 		</unit>
+
 		<unit id="below">
 			<segment>
 				<source>Below</source>
+				<target>Unten</target>
 			</segment>
 		</unit>
 		
 		<unit id="link">
 			<segment>
 				<source>Link</source>
+				<target>Link</target>
 			</segment>
 		</unit>
+
 		<unit id="large">
 			<segment>
 				<source>Large</source>
+				<target>Groß</target>
 			</segment>
 		</unit>
+
 		<unit id="small">
 			<segment>
 				<source>Small</source>
+				<target>Klein</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.buttonText">
 			<segment>
 				<source>Link or Button Text (header if empty)</source>
+				<target>Link- oder Button-Text (Überschrift, falls leer)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.whiteclosebutton">
 			<segment>
 				<source>White close button</source>
+				<target>Weiße Schaltfläche "Schließen"</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.usebutton">
 			<segment>
 				<source>Button</source>
+				<target>Button</target>
 			</segment>
 		</unit>
 
 		<unit id="tx_container.anyColumns.colPos.0">
 			<segment>
 				<source>Column 1</source>
+				<target>Spalte 1</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.anyColumns.colPos.1">
 			<segment>
 				<source>Column 2</source>
+				<target>Spalte 2</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.anyColumns.colPos.2">
 			<segment>
 				<source>Column 3</source>
+				<target>Spalte 3</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.anyColumns.colPos.3">
 			<segment>
 				<source>Column 4</source>
+				<target>Spalte 4</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.anyColumns.colPos.4">
 			<segment>
 				<source>Column 5</source>
+				<target>Spalte 5</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.anyColumns.colPos.5">
 			<segment>
 				<source>Column 6</source>
+				<target>Spalte 6</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.twoColumns.title">
 			<segment>
 				<source>2 Columns</source>
+				<target>2 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.twoColumns.description">
 			<segment>
 				<source>Container with 2 columns</source>
+				<target>Container mit 2 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.threeColumns.title">
 			<segment>
 				<source>3 Columns</source>
+				<target>3 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.threeColumns.description">
 			<segment>
 				<source>Container with 3 columns</source>
+				<target>Container mit 3 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.fourColumns.title">
 			<segment>
 				<source>4 Columns</source>
+				<target>4 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.fourColumns.description">
 			<segment>
 				<source>Container with 4 columns</source>
+				<target>Container mit 4 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.sixColumns.title">
 			<segment>
 				<source>6 Columns</source>
+				<target>6 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.sixColumns.description">
 			<segment>
 				<source>Container with 6 columns</source>
+				<target>Container mit 6 Spalten</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.tabContainer.title">
 			<segment>
 				<source>Tab Container</source>
+				<target>Tab-Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.tabContainer.description">
 			<segment>
 				<source>A container for several tabs</source>
+				<target>Ein Container für mehrere Tabs</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.tabElement.title">
 			<segment>
 				<source>Tab Element</source>
+				<target>Tab-Element</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.tabElement.description">
 			<segment>
 				<source>A Tab for a TabContainer</source>
+				<target>Ein Tab für einen Tab-Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.collapsibleContainer.title">
 			<segment>
 				<source>Collapsible Container</source>
+				<target>Zusammenklappbarer Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.collapsibleContainer.description">
 			<segment>
 				<source>A container for several collapsible elements</source>
+				<target>Ein Behälter für mehrere zusammenklappbare Elemente</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.collapsibleElement.title">
 			<segment>
 				<source>Collapsible Element</source>
+				<target>Zusammenklappbares-Element</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.collapsibleElement.description">
 			<segment>
 				<source>A collapsible element for a Collapsible Container</source>
+				<target>Ein zusammenklappbares Element für einen zusammenklappbaren Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.thumbnailsContainer.title">
 			<segment>
 				<source>Thumbnail Container</source>
+				<target>Miniaturansicht-Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.thumbnailsContainer.description">
 			<segment>
 				<source>A container for several Thumbnails (CE:t3sbootstrap_thumbnail)</source>
+				<target>Ein Container für mehrere Miniaturansichten (CE:t3sbootstrap_thumbnail)</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.modal.title">
 			<segment>
 				<source>Modal Container</source>
+				<target>Modal-Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.modal.description">
 			<segment>
 				<source>A container for several content elements</source>
+				<target>Ein Container für mehrere Inhaltselemente</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.carouselContainer.title">
 			<segment>
 				<source>Carousel Container</source>
+				<target>Carousel-Container</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.carouselContainer.description">
 			<segment>
 				<source>A container for several Carousel slides (CE:t3sbootstrap_carousel)</source>
+				<target>Ein Container für mehrere Carousel-Slides (CE:t3sbootstrap_carousel)</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.grayscaleSection.title">
 			<segment>
 				<source>Grayscale Section Container</source>
+				<target>Container für den Graustufenbereich</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.grayscaleSection.description">
 			<segment>
 				<source>A container for several sections, use only with the grayscale theme backend layout</source>
+				<target>Ein Container für mehrere Abschnitte, nur in Verbindung mit dem Backend-Layout des Graustufen-Themes zu verwenden</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.backgroundWrapper.title">
 			<segment>
 				<source>Background wrapper</source>
+				<target>Hintergrund-Wrapper</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.backgroundWrapper.description">
 			<segment>
 				<source>Full width container with background color or - image</source>
+				<target>Behälter in voller Breite mit Hintergrundfarbe oder -bild</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.parallaxWrapper.title">
 			<segment>
 				<source>Parallax wrapper</source>
+				<target>Parallax-Wrapper</target>
 			</segment>
 		</unit>
+
 		<unit id="tx_container.parallaxWrapper.description">
 			<segment>
-				<source>Full width container with parallax image scroll (Handys/Tablets: no scrolling)</source>
+				<source>Full width container with parallax image scroll(Handys/Tablets: no scrolling)</source>
+				<target>Container in voller Breite mit Parallax-Bildlauf (Handys/Tablets: kein Bildlauf)</target>
 			</segment>
 		</unit>
 
 		<unit id="flexform.rotate">
 			<segment>
 				<source>Rotate the Button</source>
+				<target>Den Button drehen</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.prevModal">
 			<segment>
 				<source>Previous Modal UID</source>
+				<target>Vorherige Modal-UID</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.prevModal.description">
 			<segment>
 				<source>Creates a button in the modal footer to open the previous modal</source>
+				<target>Erstellt im Fußbereich des Modals eine Schaltfläche zum Öffnen des vorherigen Modals</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="flexform.speedFactor">
 			<segment>
 				<source>Parallax effect speed. Provide numbers from -1.0 to 2.0</source>
+				<target>Geschwindigkeit des Parallax-Effekts. Trage einen Wert zwischen -1,0 und 2,0 ein.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.addHeight">
 			<segment>
 				<source>Surcharge height to parallax view (in px)</source>
+				<target>Zuschlagshöhe zur Parallax-Ansicht (in px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.mobile">
 			<segment>
 				<source>Disable on mobile devices</source>
+				<target>Auf Mobilgeräten deaktivieren</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.colsExtraClass">
 			<segment>
 				<source>Extra Class for "cols"</source>
+				<target>Zusatz Class für "cols"</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.colsExtraClass.description">
 			<segment>
 				<source>Comma separated list for each column - e.g.: bg-success p-5, bg-secondary text-white p-5</source>
+				<target>Durch Kommas getrennte Liste für jede Spalte – z. B.: bg-success p-5, bg-secondary text-white p-5</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.rowColumns">
 			<segment>
 				<source>Row Columns</source>
+				<target>Spalten pro Reihe (Row Columns)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.rowColumns.description">
 			<segment>
 				<source>Use these row columns classes to quickly create basic grid layouts</source>
+				<target>Verwende diese Classes für Zeilen und Spalten, um schnell einfache Rasterlayouts zu erstellen</target>
 			</segment>
 		</unit>
 
 		<unit id="flexform.sliderStyle">
 			<segment>
 				<source>Slider Style</source>
+				<target>Slider-Stil</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.swiperCss">
 			<segment>
 				<source>Swiper Css</source>
+				<target>Swiper-Css</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.swiperJs">
 			<segment>
 				<source>Swiper JS</source>
+				<target>Swiper-JS</target>
 			</segment>
 		</unit>
+		
 		
 		<unit id="flexform.useCustomSwiperJs">
 			<segment>
 				<source>Custom Swiper JS</source>
+				<target>Benutzerdefiniertes Swiper-JS</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.useCustomSwiperJs.description">
 			<segment>
 				<source>use your own Swiper JS</source>
+				<target>eigenes Swiper JS verwenden</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="flexform.customSwiperJs">
 			<segment>
 				<source>your JS</source>
+				<target>dein JS</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.customSwiperJs.description">
 			<segment>
 				<source>overwrites all the above settings</source>
+				<target>überschreibt alle oben genannten Einstellungen</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="flexform.preview.containsCustomCssJS">
 			<segment>
 				<source>Contains custom CSS &amp; JS</source>
+				<target>Enthält benutzerdefiniertes CSS &amp; JS</target>
 			</segment>
 		</unit>
+
 		<unit id="flexform.preview.containsCustomCss">
 			<segment>
 				<source>Contains custom CSS</source>
+				<target>Enthält benutzerdefiniertes CSS</target>
 			</segment>
 		</unit>
+
 		<unit id="flexform.preview.containsCustomJS">
 			<segment>
 				<source>Contains custom JS</source>
-			</segment>
-		</unit>
-		
-		<unit id="flexform.preview.customJS">
-			<segment>
-				<source>Custom JS</source>
+				<target>Enthält benutzerdefiniertes JS</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.fill">
 			<segment>
 				<source>Fill and justify</source>
+				<target>Ausfüllen und ausrichten</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.contentByPid">
 			<segment>
 				<source>Page for the Tab Element content (colPos=0)</source>
+				<target>Seite(n) für den Inhalt des Tab-Elements (colPos=0)</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="flexform.multipleToast">
 			<segment>
 				<source>Several "Toasts" instead of other Content Elements.</source>
+				<target>Mehrere "Toasts" anstelle anderer Inhaltselemente.</target>
 			</segment>
 		</unit>
-		
+
 		<unit id="flexform.multipleToast.description">
 			<segment>
 				<source>Stack toasts by wrapping them in a toast container. Info: https://getbootstrap.com/docs/5.3/components/toasts/#stacking</source>
+				<target>Toasts in einen Toastbehälter stapeln. Info: https://getbootstrap.com/docs/5.3/components/toasts/#stacking</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.colHeight">
 			<segment>
 				<source>Min.-Height of the Element</source>
+				<target>Mindesthöhe des Elements</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.verticalAlign">
 			<segment>
 				<source>Vertical Align for Content</source>
+				<target>Vertikale Ausrichtung für Inhalte</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgimageSheet">
 			<segment>
 				<source>Background Images</source>
+				<target>Hintergrundbilder</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgimage">
 			<segment>
 				<source>Background Image</source>
+				<target>Hintergrundbild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgimagePosition">
 			<segment>
 				<source>Background Image Position (left or right column)</source>
+				<target>Position des Hintergrundbildes (linke oder rechte Spalte)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgimageSize">
 			<segment>
 				<source>Background image size</source>
+				<target>Größe des Hintergrundbildes</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.justify">
 			<segment>
 				<source>Justify content</source>
+				<target>Inhalt ausrichten (justify)</target>
 			</segment>
 		</unit>
+		
 		<unit id="flexform.justify.element">
 			<segment>
 				<source>Justify element</source>
+				<target>Element ausrichten (justify)</target>
 			</segment>
 		</unit>
 
 		<unit id="flexform.alignItem">
 			<segment>
 				<source>Align items</source>
+				<target>Elemente ausrichten (align item)</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.maxBgImageWidth">
 			<segment>
 				<source>Max. BG-Image width</source>
+				<target>Max. Breite des Hintergrundbildes</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.rasterOverImage">
 			<segment>
 				<source>Raster over image</source>
+				<target>Raster über Bild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.noBackgroundImage">
 			<segment>
 				<source>NO background-image</source>
+				<target>KEIN Hintergrundbild</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.paddingTopBottom">
 			<segment>
 				<source>Padding (top &amp; bottom)</source>
+				<target>Abstand (oben &amp; unten)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.cardLayout">
 			<segment>
 				<source>Card layout</source>
+				<target>Card-Layout</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.gutter">
 			<segment>
 				<source>Gutter</source>
+				<target>Gutter (Abstand)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.direction">
 			<segment>
 				<source>Direction</source>
+				<target>Richtung (direction)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.align">
 			<segment>
 				<source>Align</source>
+				<target>Ausrichtung (align)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.wrap">
 			<segment>
 				<source>Wrap</source>
+				<target>Wrap</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.gutters">
 			<segment>
 				<source>Gutter</source>
+				<target>Gutter</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.extraClassOne">
 			<segment>
 				<source>Extra Class Column 1</source>
+				<target>Extra-Class Spalte 1</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.displayType">
 			<segment>
 				<source>Display type</source>
+				<target>Anzeigetyp</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.severalToasts">
 			<segment>
 				<source>Several Toasts</source>
+				<target>Mehrere Toasts</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.width">
 			<segment>
-				<source>width</source>
+				<source>Width</source>
+				<target>Breite</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.autohide">
 			<segment>
 				<source>Autohide</source>
+				<target>Automatisch ausblenden</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.cookie">
 			<segment>
 				<source>Cookie</source>
+				<target>Cookie</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.minHeight">
 			<segment>
 				<source>Min.-Height</source>
+				<target>Mindesthöhe</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.preview.verticalAlign">
 			<segment>
 				<source>Vertical Align</source>
+				<target>Vertikal ausrichten</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.animation">
+			<segment>
+				<source>Animation</source>
+				<target>Animation</target>
 			</segment>
 		</unit>
 		
-		<unit id="flexform.animation">
-			<segment><source>Animation</source></segment>
-		</unit>
-		
 		<unit id="flexform.cardWrapper">
-			<segment><source>Card Wrapper</source></segment>
+			<segment>
+				<source>Card Wrapper</source>
+				<target>Card Wrapper</target>
+			</segment>
 		</unit>
 		
 		<unit id="flexform.cardWrapper.description">
 			<segment>
 				<source>In addition to styling the content within cards, Bootstrap includes a few options for laying out series of cards.</source>
+				<target>Neben der Gestaltung der Inhalte innerhalb der Cards bietet Bootstrap einige Optionen für die Anordnung von Card-Reihen.</target>
 			</segment>
 		</unit>
 
 		<unit id="flexform.buttonGroup">
-			<segment><source>Button Group</source></segment>
+			<segment>
+				<source>Button Group</source>
+				<target>Button Gruppe</target>
+			</segment>
 		</unit>
 		
 		<unit id="flexform.buttonGroup.description">
 			<segment>
 				<source>Group a series of buttons together on a single line with the button group.</source>
+				<target>Gruppiere eine Reihe von Buttons mit der Button-Gruppe.</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.autoLayoutRow">
 			<segment>
 				<source>Auto-layout</source>
+				<target>Auto-Layout</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.autoLayoutRow.description">
 			<segment>
 				<source>Options: "Equal-width", "Setting one column width" or "Variable width content".</source>
-			</segment>
-		</unit>
-		
-		<unit id="flexform.listGroupWrapper">
-			<segment>
-				<source>List Group Wrapper</source>
+				<target>Optionen: "Gleiche Breite", "Einstellung einer Spaltenbreite" oder "Inhalt mit variabler Breite".</target>
 			</segment>
 		</unit>
 
+		<unit id="flexform.listGroupWrapper">
+			<segment>
+				<source>List Group Wrapper</source>
+				<target>List-Group Wrapper</target>
+			</segment>
+		</unit>
+		
 		<unit id="flexform.listGroupWrapper.description">
 			<segment>
 				<source>Shows other CEs in a bootstrap list group. Nice with "Link the entire Content Element"</source>
+				<target>Zeigt andere Inhaltselemente in einer Bootstrap-Listengruppe an. Passt gut zu "Gesamtes Inhaltselement verlinken"</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.masonryWrapper">
 			<segment>
 				<source>Masonry Wrapper</source>
+				<target>Masonry Wrapper</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.masonryWrapper.description">
 			<segment>
 				<source>Masonry with the Bootstrap grid system</source>
+				<target>Masonry mit dem Bootstrap-Gridsystem</target>
 			</segment>
 		</unit>
-		
 		
 		<unit id="flexform.swiperContainer">
 			<segment>
 				<source>Swiper Container</source>
+				<target>Swiper Container</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.swiperContainer.description">
 			<segment>
 				<source>A container for several Swipe slides (CE:t3sbs_carousel)</source>
+				<target>Ein Container für mehrere Swipe-Slides (CE:t3sbs_carousel)</target>
 			</segment>
 		</unit>
-
+		
 		<unit id="flexform.toastContainer">
 			<segment>
 				<source>Toast Container</source>
+				<target>Toast Container</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.toastContainer.description">
 			<segment>
 				<source>A container for several Toast content</source>
+				<target>Ein Container für mehrere Toast-Inhalte</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.preview.customJS">
+			<segment>
+				<source>Custom JS</source>
+				<target>Benutzerdefiniertes JS</target>
 			</segment>
 		</unit>
 
 		<unit id="t3sbs_contentelements">
-			<segment><source>T3S Bootstrap</source></segment>
+			<segment>
+				<source>T3S Bootstrap</source>
+				<target>T3S Bootstrap</target>
+			</segment>
 		</unit>
+
 		<unit id="t3sbs_fluidtemplate.title">
-			<segment><source>Fluidtemplate</source></segment>
+			<segment>
+				<source>Fluidtemplate</source>
+				<target>Fluidtemplate</target>
+			</segment>
 		</unit>
 
 		<unit id="t3sbs_fluidtemplate.description">
-			<segment><source>You can include your own Fluidtemplate here (path to the template e.g. fileadmin/template.html).</source></segment>
+			<segment>
+				<source>You can include your own Fluidtemplate here (path to the template e.g. fileadmin/template.html).</source>
+				<target>Hier kannst du dein eigenes Fluidtemplate einbinden (Pfad zur Vorlage, z. B. fileadmin/template.html).</target>
+			</segment>
 		</unit>
+
 		<unit id="t3sbsgallery.title">
-			<segment><source>Image Gallery</source></segment>
+			<segment>
+				<source>Image Gallery</source>
+				<target>Bildergalerie</target>
+			</segment>
 		</unit>
+
 		<unit id="t3sbsgallery.description">
-			<segment><source>Image Gallery with a lightbox.</source></segment>
+			<segment>
+				<source>Image Gallery with a lightbox.</source>
+				<target>Bildergalerie mit Lightbox.</target>
+			</segment>
 		</unit>
 
 		<unit id="tt_content.imageorient.66">
 			<segment>
-				<source>Beside Text, Right (align-items-center)</source>
+				<source>Beside Text, Right</source>
+				<target>Neben dem Text, rechts</target>
 			</segment>
 		</unit>
 		<unit id="tt_content.imageorient.77">
 			<segment>
-				<source>Beside Text, Left (align-items-center)</source>
+				<source>Beside Text, Left</source>
+				<target>Neben dem Text, links</target>
 			</segment>
 		</unit>
 
 		<unit id="backend_layout.jumbotron">
 			<segment>
 				<source>Jumbotron</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.content">
-			<segment>
-				<source>Content</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.sidebar">
-			<segment>
-				<source>Sidebar</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.sidebar-left">
-			<segment>
-				<source>Left Sidebar</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.sidebar-right">
-			<segment>
-				<source>Right Sidebar</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.footer">
-			<segment>
-				<source>Footer</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.oneCol">
-			<segment>
-				<source>1 Column</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.twoCol_9-3">
-			<segment>
-				<source>2 Columns (aside right)</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.threeCol">
-			<segment>
-				<source>3 Columns</source>
-			</segment>
-		</unit>
-		<unit id="backend_layout.twoCol_3-9">
-			<segment>
-				<source>2 Columns (aside left)</source>
+				<target>Jumbotron</target>
 			</segment>
 		</unit>
 
+		<unit id="backend_layout.content">
+			<segment>
+				<source>Content</source>
+				<target>Inhalt</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.sidebar">
+			<segment>
+				<source>Sidebar</source>
+				<target>Seitenleiste</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.sidebar-left">
+			<segment>
+				<source>Left Sidebar</source>
+				<target>Linke Seitenleiste</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.sidebar-right">
+			<segment>
+				<source>Right Sidebar</source>
+				<target>Rechte Seitenleiste</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.footer">
+			<segment>
+				<source>Footer</source>
+				<target>Fußzeile</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.oneCol">
+			<segment>
+				<source>1 Column</source>
+				<target>1 Spalte</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.twoCol_9-3">
+			<segment>
+				<source>2 Columns (aside right)</source>
+				<target>2 Spalten (rechts)</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.threeCol">
+			<segment>
+				<source>3 Columns</source>
+				<target>3 Spalten</target>
+			</segment>
+		</unit>
+
+		<unit id="backend_layout.twoCol_3-9">
+			<segment>
+				<source>2 Columns (aside left)</source>
+				<target>2 Spalten (links)</target>
+			</segment>
+		</unit>
+		
 	</file>
 </xliff>

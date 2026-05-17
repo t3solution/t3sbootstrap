@@ -21,23 +21,20 @@
 			</div>
 		</f:if>
 	</div>
-
 	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
 
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
-	<strong>Modal size:</strong> {flexForm.size}
-		<f:if condition="{flexForm.animation}">
-			| <strong>Animation:</strong> true
-		</f:if>
-		<f:if condition="{flexForm.button}">
-			| <strong>Button:</strong> true | <strong>Button style:</strong> {flexForm.style}
-			<f:if condition="{flexForm.fixedPosition}">
-				| <strong>Fixed position:</strong> true
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.modalsize')}:</strong> {flexForm.size}
+			<f:if condition="{flexForm.animation}">
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.animation')}:</strong> true
+			</f:if>
+			<f:if condition="{flexForm.button}">
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.usebutton')}:</strong> true | <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.buttonstyle')}:</strong> {flexForm.style}
+				<f:if condition="{flexForm.fixedPosition}">
+					| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.fixedposition')}:</strong> true
+				</f:if>	
 			</f:if>	
-		</f:if>	
-		
 		</div>
 	</div>
 

@@ -17,13 +17,13 @@ final class CdnToLocal extends CommandBase
 
     public function __construct(
         private readonly SiteFinder $siteFinder,
+        private readonly RequestFactory $requestFactory,
     ) {
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        
         $getAllSites = $this->siteFinder->getAllSites();
         $noZip = false;
         if (!extension_loaded('zip')) {
@@ -238,7 +238,7 @@ final class CdnToLocal extends CommandBase
                 $style = trim($style);
                 $zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
                 $zipFilePath = 'https://gwfh.mranftl.com/api/fonts/';
-                $zipContent = GeneralUtility::makeInstance(RequestFactory::class)->request($zipFilePath . $zipFilename)->getBody()->getContents();
+                $zipContent = $this->requestFactor->request($zipFilePath . $zipFilename)->getBody()->getContents();
                 $fontArr[$fontFamily] = $this->getGoogleFiles($zipContent, $baseDir);
             }
         }

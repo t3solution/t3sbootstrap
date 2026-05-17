@@ -6,7 +6,7 @@
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -57,7 +57,7 @@
 					</hidden>
 
 					<appearance>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.appearance</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.appearance</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -77,23 +77,21 @@
 					</appearance>
 
 					<alwaysOpen>
-						<label>Always open</label>
-						<description>stay open when another item is opened</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alwaysOpen</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.alwaysOpen.description</description>
 						<config>
 							<type>check</type>
 						</config>
 					</alwaysOpen>
 
 					<flush>
-						<label>Flush</label>
-						<description>to remove default background-color, borders etc.</description>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flush</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.flush.description</description>
 						<displayCond>FIELD:sDEF.appearance:=:accordion</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</flush>
-
-
 					<style>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:predefined.styles</label>
 						<displayCond>FIELD:sDEF.appearance:=:button</displayCond>
@@ -142,7 +140,7 @@
 						</config>
 					</style>
 					<btnsize>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.size</label>
 						<displayCond>FIELD:sDEF.appearance:=:button</displayCond>
 						<config>
 							<type>select</type>

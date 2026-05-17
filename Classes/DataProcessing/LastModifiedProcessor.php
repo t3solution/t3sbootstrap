@@ -17,6 +17,10 @@ class LastModifiedProcessor implements DataProcessorInterface
     
     protected ServerRequestInterface $request;
 
+    public function __construct(
+        private readonly Context $context,
+        private readonly ConnectionPool $connectionPool,
+    ) {}
 
     public function process(
         ContentObjectRenderer $cObj, 
@@ -46,7 +50,6 @@ class LastModifiedProcessor implements DataProcessorInterface
             $processedData['lastModifiedContentElement'] = $lmc[0];
         }
 
-
         if (!empty($processorConfiguration['recentlyUpdatedContentElements'])) {
             $setMaxResults = $processorConfiguration['setMaxResults'] ?? 10;
             if ($this->isMenuRecentlyUpdatedOnPage()) {
@@ -65,9 +68,9 @@ class LastModifiedProcessor implements DataProcessorInterface
      */
     protected function isMenuRecentlyUpdatedOnPage(): bool
     {
-        $languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+        $languageAspect = $this->context->getAspect('language');
         $sysLanguageUid = $languageAspect->getContentId() ?: 0;
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $result = $queryBuilder
              ->select('uid')
              ->from('tt_content')
@@ -91,9 +94,9 @@ class LastModifiedProcessor implements DataProcessorInterface
      */
     protected function getRecentlyUpdated(int $setMaxResults): array
     {
-        $languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+        $languageAspect = $this->context->getAspect('language');
         $sysLanguageUid = $languageAspect->getContentId() ?: 0;
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $result = $queryBuilder
              ->select('uid', 'pid', 'header', 'tstamp')
              ->from('tt_content')

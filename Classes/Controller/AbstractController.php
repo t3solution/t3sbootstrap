@@ -11,6 +11,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  
 #[AsController]
 abstract class AbstractController extends ActionController
@@ -30,9 +31,6 @@ abstract class AbstractController extends ActionController
     protected mixed $sysTemplate = null;
 
 
-    /**
-     * init all actions
-     */
     public function initializeAction(): void
     { 
         if (!empty($this->request->getArgument('id') ?? 0)) {
@@ -60,39 +58,38 @@ abstract class AbstractController extends ActionController
         $notification = [];
 
         if ($this->doktype > 1) {
-            $notification['doktype']['title'] = 'Doktype ' . $this->doktype;
-            $notification['doktype']['message'] = 'T3S Bootstrap Configurations are only provided for a page (doktype=1) checked "Use as Root Page"!';
+            $notification['doktype']['title'] = LocalizationUtility::translate('notificationtitle_1','t3sbootstrap').' '. $this->doktype;
+            $notification['doktype']['message'] = LocalizationUtility::translate('notificationmessage_1','t3sbootstrap');
         }
 
         if (empty($this->hasSet)) {
-            $notification['siteset']['title'] = 'Page without a site configuration';
-            $notification['siteset']['message'] = 'You need to create a site configuration in order to edit your configuration.';
+            $notification['siteset']['title'] = LocalizationUtility::translate('notificationtitle_2','t3sbootstrap');
+            $notification['siteset']['message'] = LocalizationUtility::translate('notificationmessage_2','t3sbootstrap');
         }
 
         if (empty($this->isSiteroot)) {
-            $notification['siteroot']['title'] = 'Page is no "Root Page"';
-            $notification['siteroot']['message'] = 'Page must have the “is_siteroot” flag set!';
+            $notification['siteroot']['title'] = LocalizationUtility::translate('notificationtitle_3','t3sbootstrap');
+            $notification['siteroot']['message'] = LocalizationUtility::translate('notificationmessage_3','t3sbootstrap');
         }
 
         if ($this->currentUid) {
             $hiddenPage = BackendUtility::getRecord('pages', $this->currentUid, 'hidden, deleted');
             if (in_array(1, $hiddenPage, true)) {
-                $notification['hidden']['title'] = 'Page is hidden';
-                $notification['hidden']['message'] = 'You cannot apply any configuration to a hidden page!';
+                $notification['hidden']['title'] = LocalizationUtility::translate('notificationtitle_4','t3sbootstrap');
+                $notification['hidden']['message'] = LocalizationUtility::translate('notificationmessage_4','t3sbootstrap');
             }
         }
 
         if (!empty($this->site)) {
             if (!empty($this->settings['cdn']) && $this->settings['cdn']['enable'] && $this->settings['customScss']) {
-                $notification['hidden']['title'] = '"CDN" & "Custom SCSS" are activated.';
-                $notification['hidden']['message'] = 'In this case, there is a fallback and the required files are loaded by CDN. 
-                The Configuration is disabled!';
+                $notification['hidden']['title'] = LocalizationUtility::translate('notificationtitle_5','t3sbootstrap');
+                $notification['hidden']['message'] = LocalizationUtility::translate('notificationmessage_5','t3sbootstrap');
             }
         }
 
         if (empty($this->request->getArgument('id') ?? 0)) {
-            $notification['idNull']['title'] = 'Page has id=0';
-            $notification['idNull']['message'] = 'You cannot apply any configuration to a page with id=0';
+            $notification['idNull']['title'] = LocalizationUtility::translate('notificationtitle_6','t3sbootstrap');
+            $notification['idNull']['message'] = LocalizationUtility::translate('notificationmessage_6','t3sbootstrap');
         }
 
         return $notification;

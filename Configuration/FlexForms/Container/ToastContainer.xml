@@ -2,20 +2,20 @@
 	<sheets>
 		<general>
 			<ROOT>
-				<sheetTitle>General</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.general</sheetTitle>
 				<type>array</type>
 				<el>
 					<multipleToast>
-						<label>Several "Toasts" instead of other Content Elements.</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.multipleToast</label>
 						<onChange>reload</onChange>
-						<description>Stack toasts by wrapping them in a toast container. INFO: https://getbootstrap.com/docs/5.1/components/toasts/#stacking</description>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.multipleToast.description</description>
 						<config>
 							<type>check</type>
 							<default>0</default>
 						</config>
 					</multipleToast>
 					<animation>
-						<label>Animation (apply a CSS fade transition to the toast)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.animation</label>
 						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
 						<config>
 							<type>check</type>
@@ -23,7 +23,7 @@
 						</config>
 					</animation>
 					<autohide>
-						<label>Autohide (auto hide the toast)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.autohide</label>
 						<onChange>reload</onChange>
 						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
 						<config>
@@ -32,7 +32,7 @@
 						</config>
 					</autohide>
 					<delay>
-						<label>Delay in ms (delay hiding the toast)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.delay</label>
 						<displayCond>
 							<and>
 								<value1>FIELD:general.multipleToast:=:0</value1>
@@ -48,7 +48,7 @@
 						</config>
 					</delay>
 					<placement>
-						<label>Placement</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.placement</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -101,7 +101,7 @@
 						</config>
 					</placement>
 					<toastwidth>
-						<label>Width of the toast in (px)</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.toastwidth</label>
 						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
 						<config>
 							<type>number</type>
@@ -110,17 +110,18 @@
 						</config>
 					</toastwidth>
 					<cookie>
-						<label>Set cookie</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.cookie</label>
 						<displayCond>FIELD:general.multipleToast:=:0</displayCond>
-						<description>Option to do not display the toast again until the expiration date or the "toast-body" content is changed.</description>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.cookie.description</description>
 						<onChange>reload</onChange>
 						<config>
 							<type>check</type>
 							<default>0</default>
 						</config>
 					</cookie>
+					
 					<expires>
-						<label>Cookie expiration in days</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_toast.cookie.expires</label>
 						<displayCond>FIELD:general.cookie:=:1</displayCond>
 						<config>
 							<type>number</type>

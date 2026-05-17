@@ -1,14 +1,14 @@
 
 <f:if condition="{bodytext} && {tx_t3sbootstrap_bodytext}">
 	<f:then>
-		Contains custom CSS & JS
+		{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.containsCustomCssJS')}
 	</f:then>
 	<f:else>
 		<f:if condition="{bodytext}">
-			Contains custom JS
+			{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.containsCustomJS')}
 		</f:if>
 		<f:if condition="{tx_t3sbootstrap_bodytext}">
-			Contains custom CSS
+			{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.preview.containsCustomCss')}
 		</f:if>
 	</f:else>
 </f:if>

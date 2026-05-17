@@ -22,18 +22,17 @@
 		</f:if>
 	</div>
 	<f:if condition="{item.record.tx_t3sbootstrap_flexform.width} || {item.record.tx_t3sbootstrap_flexform.ratio} || {item.record.tx_t3sbootstrap_flexform.interval}">
-
 		<div class="d-flex">
 			<div class="flex-grow-1 ms-0 flex-info-content">
 		
 				<f:if condition="{item.record.tx_t3sbootstrap_flexform.width}">
-					<strong>Image width:</strong> {item.record.tx_t3sbootstrap_flexform.width}px
+					<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_card.imagecolumnswidth')}:</strong> {item.record.tx_t3sbootstrap_flexform.width}px
 				</f:if>
 				<f:if condition="{item.record.tx_t3sbootstrap_flexform.ratio}">
-				| <strong>Aspect ratio:</strong> {item.record.tx_t3sbootstrap_flexform.ratio}
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.bgw.aspectRatio')}:</strong> {item.record.tx_t3sbootstrap_flexform.ratio}
 				</f:if>
 				<f:if condition="{item.record.tx_t3sbootstrap_flexform.interval}">
-				| <strong>Interval:</strong> {item.record.tx_t3sbootstrap_flexform.interval}
+				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.carousel_container.interval')}:</strong> {item.record.tx_t3sbootstrap_flexform.interval}
 				</f:if>
 			</div>
 		</div>

@@ -5,7 +5,7 @@
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -101,7 +101,7 @@
 						</config>
 					</style>
 					<btnsize>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.size</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 						<config>
 							<type>select</type>
@@ -124,20 +124,20 @@
 						</config>
 					</btnsize>
 					<block>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.block</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.block</label>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 						<config>
 							<type>check</type>
 						</config>
 					</block>
 					<outline>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.outline</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.outline</label>
 						<config>
 							<type>check</type>
 						</config>
 					</outline>
 					<fixedPosition>
-						<label>Fixed position</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.fixedposition</label>
 						<onChange>reload</onChange>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonParent</displayCond>
 						<config>
@@ -161,7 +161,7 @@
 						</config>
 					</fixedPosition>
 					<rotate>
-						<label>Rotate the Button or Vertical Text</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.rotate</label>
 						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
 						<config>
 							<type>select</type>
@@ -188,7 +188,7 @@
 						</config>
 					</rotate>
 					<linkTitle>
-						<label>Link title</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.linktitle</label>
 						<config>
 							<type>input</type>
 							<eval>trim</eval>
@@ -200,18 +200,18 @@
 						<type>array</type>
 						<el>
 							<list>
-								<title>Dropdown Item</title>
+								<title>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.dropdownitems</title>
 								<type>array</type>
 								<el>
 									<group>
-										<label>Input Link</label>
+										<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.inputlink</label>
 										<config>
 											<type>link</type>
 											<size>48</size>
 										</config>
 									</group>
 									<title>
-										<label>Input Link Title</label>
+										<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.inputlinktitle</label>
 										<config>
 											<type>input</type>
 											<size>48</size>
@@ -222,7 +222,7 @@
 						</el>
 					</dropdownItems>
 					<direction>
-						<label>Dropdown direction</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.direction</label>
 						<description>Trigger dropdown menus direction (if dropdown items)</description>
 						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->buttonGroup</displayCond>
 						<config>

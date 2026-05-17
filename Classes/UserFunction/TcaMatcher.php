@@ -14,15 +14,21 @@ use TYPO3\CMS\Core\Site\SiteFinder;
 class TcaMatcher
 {
 
-    /**
-     * autoLayoutParent
-     */
+    public function __construct(
+        private readonly ConnectionPool $connectionPool,
+        private readonly FlexFormTools $flexFormTools,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly FileRepository $fileRepository,
+        private readonly SiteFinder $siteFinder,
+    ) {}
+    
+    
     public function autoLayoutParent(array $arguments): bool
     {
         $parent = false;
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -49,7 +55,7 @@ class TcaMatcher
         $parent = true;
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -91,7 +97,7 @@ class TcaMatcher
 
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('CType')
                   ->from('tt_content')
@@ -118,7 +124,7 @@ class TcaMatcher
         $parent = false;
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -219,11 +225,9 @@ class TcaMatcher
     {
         $parent = false;
 
-        $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
-
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -235,7 +239,7 @@ class TcaMatcher
 
             if (!empty($parent_rec['tx_t3sbootstrap_flexform'])) {
 
-                $parent_flexconf = $flexFormTools->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
+                $parent_flexconf = $this->flexFormTools->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
                 if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'container' && $parent_flexconf['flexContainer']) {
                     $parent = true;
@@ -253,11 +257,10 @@ class TcaMatcher
     public function isButton(array $arguments): bool
     {
         $button = false;
-        $flexFormTools = GeneralUtility::makeInstance(FlexFormTools::class);
 
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('tx_t3sbootstrap_flexform')
                   ->from('tt_content')
@@ -267,7 +270,7 @@ class TcaMatcher
                   ->executeQuery();
             $parent_rec = $result->fetchAllAssociative();
             if (!empty($parent_rec)) {
-                $flexconf = $flexFormTools->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
+                $flexconf = $this->flexFormTools->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
                 if ($flexconf['appearance'] === 'button') {
                     $button = true;
                 }
@@ -300,7 +303,7 @@ class TcaMatcher
     public function animateCss(array $arguments): bool
     {
         $animateCss = false;
-        $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+        $extconf = $this->extensionConfiguration->get('t3sbootstrap');
         if ($extconf['animateCss']) {
             $animateCss = true;
         }
@@ -317,8 +320,7 @@ class TcaMatcher
         $youtube = false;
 
         if (is_int($arguments['record']['uid'])) {
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-            $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
+            $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
             $file = !empty($fileObjects[0]) ? $fileObjects[0] : false;
 
             if (!empty($file)) {
@@ -340,8 +342,7 @@ class TcaMatcher
         $vimeo = false;
 
         if (is_int($arguments['record']['uid'])) {
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-            $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
+            $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
             $file = !empty($fileObjects[0]) ? $fileObjects[0] : false;
 
             if (!empty($file)) {
@@ -363,8 +364,7 @@ class TcaMatcher
         $video = false;
 
         if (is_int($arguments['record']['uid'])) {
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-            $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
+            $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
             $file = !empty($fileObjects[0]) ? $fileObjects[0] : false;
 
             if (!empty($file)) {
@@ -391,8 +391,7 @@ class TcaMatcher
         $media = false;
 
         if (is_int($arguments['record']['uid'])) {
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-            $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
+            $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
             $file = !empty($fileObjects[0]) ? $fileObjects[0] : false;
 
             if (!$file) {
@@ -416,8 +415,7 @@ class TcaMatcher
         $image = false;
 
         if (is_int($arguments['record']['uid'])) {
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-            $fileObjects = $fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
+            $fileObjects = $this->fileRepository->findByRelation('tt_content', 'assets', $arguments['record']['uid']);
             $file = !empty($fileObjects[0]) ? $fileObjects[0] : false;
             if ($file) {
                 if ($file->getType() === 2 && !$file->getProperties()['hidden']) {
@@ -436,7 +434,7 @@ class TcaMatcher
     public function allowReferences(array $arguments): bool
     {
         $cardWrapperReference = false;
-        $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+        $extconf = $this->extensionConfiguration->get('t3sbootstrap');
  
         if ($extconf['allowReferences']) {
             $cardWrapperReference = true;
@@ -454,7 +452,7 @@ class TcaMatcher
         $parent = true;
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -480,7 +478,7 @@ class TcaMatcher
         $parent = false;
         if (!empty($arguments['record']['uid_foreign'])) {
             $uid = (int)$arguments['record']['uid_foreign'];
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -505,8 +503,7 @@ class TcaMatcher
     {
         $show = FALSE;
 
-        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-        $site = $siteFinder->getSiteByPageId($arguments['record']['pid']);
+        $site = $this->siteFinder->getSiteByPageId($arguments['record']['pid']);
         $configuration = $site->getConfiguration();
         $settings = $configuration['settings'];
 

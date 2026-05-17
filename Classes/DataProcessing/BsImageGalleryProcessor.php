@@ -11,6 +11,10 @@ use TYPO3\CMS\Frontend\Resource\FileCollector;
 class BsImageGalleryProcessor implements DataProcessorInterface
 {
 
+	public function __construct(
+		private readonly FileCollector $fileCollector,
+	) {}
+
 	public function process(
 		ContentObjectRenderer $cObj, 
 		array $contentObjectConfiguration, 
@@ -21,10 +25,6 @@ class BsImageGalleryProcessor implements DataProcessorInterface
 		if (!empty($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
 			return $processedData;
 		}
-
-		// gather data
-		/** @var FileCollector $fileCollector */
-		$fileCollector = GeneralUtility::makeInstance(FileCollector::class);
 
 		// references / relations
 		if (!empty($processorConfiguration['references.'])) {
@@ -37,7 +37,7 @@ class BsImageGalleryProcessor implements DataProcessorInterface
 				$relationTable = $cObj->stdWrapValue('table', $referenceConfiguration, $cObj->getCurrentTable());
 				if (!empty($relationTable)) {
 					// @extensionScannerIgnoreLine
-					$fileCollector->addFilesFromRelation($relationTable, $relationField, $cObj->data);
+					$this->fileCollector->addFilesFromRelation($relationTable, $relationField, $cObj->data);
 				}
 			}
 		}
@@ -46,21 +46,21 @@ class BsImageGalleryProcessor implements DataProcessorInterface
 		$files = $cObj->stdWrapValue('files', $processorConfiguration);
 		if ($files) {
 			$files = GeneralUtility::intExplode(',', $files, true);
-			$fileCollector->addFiles($files);
+			$this->fileCollector->addFiles($files);
 		}
 
 		// collections
 		$collections = $cObj->stdWrapValue('collections', $processorConfiguration);
 		if (!empty($collections)) {
 			$collections = GeneralUtility::trimExplode(',', $collections, true);
-			$fileCollector->addFilesFromFileCollections($collections);
+			$this->fileCollector->addFilesFromFileCollections($collections);
 		}
 
 		// folders
 		$folders = $cObj->stdWrapValue('folders', $processorConfiguration);
 		if (!empty($folders)) {
 			$folders = GeneralUtility::trimExplode(',', $folders, true);
-			$fileCollector->addFilesFromFolders($folders, !empty($processorConfiguration['folders.']['recursive']));
+			$this->fileCollector->addFilesFromFolders($folders, !empty($processorConfiguration['folders.']['recursive']));
 		}
 
 		// make sure to sort the files
@@ -72,12 +72,12 @@ class BsImageGalleryProcessor implements DataProcessorInterface
 				'ascending'
 			);
 
-			$fileCollector->sort($sortingProperty, $sortingDirection);
+			$this->fileCollector->sort($sortingProperty, $sortingDirection);
 		}
 
 		$numberOfColumns = (int)($processedData['data']['imagecols'] ?: 3);
 
-		$files = $fileCollector->getFiles();
+		$files = $this->fileCollector->getFiles();
 		$galleryChunk = $files ? array_chunk($files, $numberOfColumns) : [];
 
 		// set the files into a variable, default "files"

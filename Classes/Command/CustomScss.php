@@ -35,6 +35,7 @@ final class CustomScss extends CommandBase
        private readonly ConfigRepository $configRepository,
        private readonly PersistenceManager $persistenceManager,
        private readonly RequestFactory $requestFactory,
+       private readonly FlashMessageService $flashMessageService,
    ) {
        parent::__construct();
    }
@@ -286,8 +287,8 @@ final class CustomScss extends CommandBase
          $header,
          ContextualFeedbackSeverity::ERROR
       );
-      $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-      $defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+      
+      $defaultFlashMessageQueue = $this->flashMessageService->getMessageQueueByIdentifier();
       $defaultFlashMessageQueue->enqueue($message);
    }
     

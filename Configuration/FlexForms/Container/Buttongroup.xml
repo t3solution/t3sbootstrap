@@ -6,7 +6,7 @@
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -56,13 +56,13 @@
 						</config>
 					</hidden>
 					<vertical>
-						<label>Vertical variation</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.vertical</label>
 						<config>
 							<type>check</type>
 						</config>
 					</vertical>
 					<btnsize>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.button.size</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.size</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -84,7 +84,7 @@
 						</config>
 					</btnsize>
 					<align>
-						<label>Button Group Alignment</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.align</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -110,7 +110,7 @@
 						</config>
 					</align>
 					<fixedPosition>
-						<label>Fixed position</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.fixedposition</label>
 						<onChange>reload</onChange>
 						<config>
 							<type>select</type>
@@ -133,7 +133,7 @@
 						</config>
 					</fixedPosition>
 					<rotate>
-						<label>Rotate the Button</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.rotate</label>
 						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
 						<config>
 							<type>select</type>
@@ -156,9 +156,9 @@
 						</config>
 					</rotate>
 					<slideIn>
-						<label>Slide In / Slide Out</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.slideIn</label>
 						<onChange>reload</onChange>
-						<description>With "Fixed position = Right browser edge", Vertical variation &amp; an icon (iconpack) in t3sbs_button</description>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.slideIn.description</description>
 						<displayCond>FIELD:sDEF.fixedPosition:!=:0</displayCond>
 						<config>
 							<type>check</type>

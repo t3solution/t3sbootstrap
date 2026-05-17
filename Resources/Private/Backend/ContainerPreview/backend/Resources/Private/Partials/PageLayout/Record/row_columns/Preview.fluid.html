@@ -22,16 +22,13 @@
 		</f:if>
 	</div>
 	<f:variable name="flexForm" value="<t3sb:flexform uid='{item.record.uid}' />" />
-
 	<div class="d-flex">
 		<div class="flex-grow-1 ms-0 flex-info-content">
-	
-			<strong>Gutters:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
-			| <strong>Row Columns (md):</strong> {flexForm.md_rowclass} | <strong>Row Columns (xs):</strong> {flexForm.xs_rowclass}
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.gutters')}:</strong> {f:if(condition: '{flexForm.horizontalGutters}', then: '{flexForm.horizontalGutters}', else: 'gx-4')}, {f:if(condition: '{flexForm.verticalGutters}', then: '{flexForm.verticalGutters}', else: 'gy-4')}
+			| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns')} (md):</strong> {flexForm.md_rowclass} | <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.rowColumns')} (xs):</strong> {flexForm.xs_rowclass}
 			<f:if condition="{flexForm.cols_extraClass}">
-			<strong>Extra Class for "cols":</strong> {flexForm.cols_extraClass}
+			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.colsExtraClass')}:</strong> {flexForm.cols_extraClass}
 			</f:if>
-	
 		</div>
 	</div>
 

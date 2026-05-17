@@ -15,14 +15,17 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 )]
 final readonly class FlexformEvent
 {
+    
+    public function __construct(
+        private ExtensionConfiguration $extensionConfiguration,
+    ) {}
 
     public function modifyDataStructure(AfterFlexFormDataStructureParsedEvent $event): void
     {
         $dataStructure = $event->getDataStructure();
         $identifier = $event->getIdentifier();
         if ($identifier['fieldName'] === 'tx_t3sbootstrap_flexform') {
-    
-            $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+            $extconf = $this->extensionConfiguration->get('t3sbootstrap');
             if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
     
                 if (!empty($dataStructure['sheets']['sDEF']['ROOT']['sheetTitle'])

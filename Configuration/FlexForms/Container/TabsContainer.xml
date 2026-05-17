@@ -2,11 +2,11 @@
 	<sheets>
 		<general>
 			<ROOT>
-				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.settings</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.settings</sheetTitle>
 				<type>array</type>
 				<el>
 					<hidden>
-						<label>Hiding / Display Elements</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.hidden</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -58,7 +58,7 @@
 
 					<display_type>
 						<onChange>reload</onChange>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.appearance</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.appearance</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -80,7 +80,7 @@
 						</config>
 					</display_type>
 					<aside_width>
-						<label>Aside columns width</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tx_t3sbootstrap_domain_model_config.smallColumnsWidth</label>
 						<displayCond>FIELD:display_type:=:verticalpills</displayCond>
 						<config>
 							<type>select</type>
@@ -111,7 +111,7 @@
 						</config>
 					</aside_width>
 					<switch_effect>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexforms.effect</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.effect</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -129,7 +129,7 @@
 						</config>
 					</switch_effect>
 					<fill>
-						<label>Fill and justify</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.fill</label>
 						<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>

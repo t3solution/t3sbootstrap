@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -11,7 +10,6 @@ use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
 use T3SBS\T3sbootstrap\Controller\ConsentController;
 use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
-use T3SBS\T3sbootstrap\ViewHelpers;
 use T3SBS\T3sbootstrap\Xclass\NewRecordController as NewRecordControllerXclass;
 use TYPO3\CMS\Backend\Controller\NewRecordController;
 
@@ -41,11 +39,6 @@ defined('TYPO3') or die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.chapter = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.navbarmodal = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.supraheader = 0');
-
-	// Global namespace import
-#	$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['t3sb'] = [
-#		ViewHelpers::class,
-#	];
 
     /***************
      * Extension configuration

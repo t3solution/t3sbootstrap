@@ -29,6 +29,7 @@ class InfoViewHelper extends AbstractViewHelper
 			$config = $ts['page.']['10.']['settings.']['config.'];
 			$backendLayout = !empty($this->arguments['backendLayout']) ? $this->arguments['backendLayout'] : '';
 			$recordUid	  = !empty($this->arguments['recordUid']) ? $this->arguments['recordUid'] : '';
+
 			$record = BackendUtility::getRecord('tt_content', $recordUid, '*');
 
 			if ( $record['hidden'] === 0 ) {
@@ -46,7 +47,7 @@ class InfoViewHelper extends AbstractViewHelper
 				$layout 		= $record['layout'] === 0 ? '' : $record['layout'];
 				$colPos 		= $record['colPos'];
 				$oneColLayout 	= $backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra' ? TRUE : FALSE;
-		
+
 				if (!empty($container)) {
 
 					$pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'];

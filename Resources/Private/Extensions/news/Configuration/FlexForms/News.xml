@@ -4,7 +4,6 @@
 		<sheetTitle>T3SB</sheetTitle>
 		<sheetShortDescr>Added by EXT:t3sbootstrap</sheetShortDescr>
 		<sheetDescription>Be sure to save, after changing the template layout!</sheetDescription>
-		<type>array</type>
 		<el>
 			<settings.list.cardDeck.rowColClass>
 				<label>Use the Bootstrap grid system and its .row-cols classes for "Grid Cards"</label>
@@ -19,7 +18,7 @@
 			</settings.list.cardDeck.rowColClass>
 			<settings.list.masonry.class>
 				<label>Use the Bootstrap responsive grid for "Masonry"</label>
-				<description>INFO: https://getbootstrap.com/docs/5.1/examples/masonry/ &#xA; Default: col-xs-12 col-sm-6 col-lg-3 mb-3</description>
+				<description>INFO: https://getbootstrap.com/docs/5.3/examples/masonry/ &#xA; Default: col-xs-12 col-sm-6 col-lg-3 mb-3</description>
 					<displayCond>FIELD:template.settings.templateLayout:=:74</displayCond>
 				<config>
 					<type>input</type>

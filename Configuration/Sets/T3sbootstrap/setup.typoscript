@@ -23,8 +23,7 @@ module.tx_t3sbootstrap {
 		breakpoint.xxl = {$bootstrap.navbar.breakpoint.xxl}
 		disableJquery = {$bootstrap.disable.jquery}
 		gooleFontsWeights = {$bootstrap.gooleFontsWeights}
-
-rasterPath = fileadmin/T3SB/Resources/Public/Images/raster.png
+		rasterPath = fileadmin/T3SB/Resources/Public/Images/raster.png
 
 		cdn {
 			enable = {$bootstrap.cdn.enable}
