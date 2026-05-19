@@ -1,17 +1,17 @@
 name: ✨ Feature Request
-description: Suggestion for a new feature
+description: Vorschlag für eine neue Funktion
 title: "[Feature]: "
 labels: ["✨ feature"]
 body:
   - type: textarea
-	id: problem
-	attributes:
-	  label: What problem does this feature solve?
-	validations:
-	  required: true
+    id: problem
+    attributes:
+      label: Welches Problem löst das Feature?
+    validations:
+      required: true
   - type: textarea
-	id: solution
-	attributes:
-	  label: Suggested solution
-	validations:
-	  required: true
+    id: solution
+    attributes:
+      label: Lösungsvorschlag
+    validations:
+      required: true
