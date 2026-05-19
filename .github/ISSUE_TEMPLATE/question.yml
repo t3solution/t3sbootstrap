@@ -1,11 +1,11 @@
-name: ❓ Frage
+name: ❓ Question
 description: Question about using t3sbootstrap
 title: "[Question]: "
 labels: ["❓ question"]
 body:
   - type: textarea
-	id: question
-	attributes:
-	  label: Your question
-	validations:
-	  required: true
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
