@@ -1,5 +1,5 @@
 name: 🐛 Bug Report
-description: Etwas funktioniert nicht wie erwartet
+description: Something isn't working as expected
 title: "[Bug]: "
 labels: ["🐛 bug"]
 body:
@@ -7,26 +7,26 @@ body:
     id: typo3-version
     attributes:
       label: TYPO3-Version
-      placeholder: z.B. 13.4.2
+      placeholder: z.B. 14.3
     validations:
       required: true
   - type: input
     id: extension-version
     attributes:
       label: t3sbootstrap-Version
-      placeholder: z.B. 5.2.0
+      placeholder: z.B. 5.3.42
     validations:
       required: true
   - type: textarea
     id: description
     attributes:
-      label: Was ist passiert?
-      description: Beschreibe das Problem und wie man es reproduziert.
+      label: What happened?
+      description: Describe the problem and how to reproduce it.
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Erwartetes Verhalten
+      label: Expected behavior
     validations:
       required: true
