@@ -12,8 +12,8 @@ mod {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
-										colspan = 3
 										colPos = 3
+										colspan = 3
 										identifier = Jumbotron
 									}
 								}

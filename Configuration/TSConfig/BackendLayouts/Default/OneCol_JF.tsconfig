@@ -1,23 +1,24 @@
 mod {
 	web_layout {
 		BackendLayouts {
-			OneCol_Extra {
-				title = 1 Column with extra rows (top and bottom)
+			OneCol {
+				title = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.oneCol
 				config {
 					backend_layout {
 						colCount = 1
 						rowCount = 3
 						rows {
-							2 {
+							{
+							1 {
 								columns {
 									1 {
-										name = Expanded Content Top
-										colPos = 20
-										identifier = ExpandedContentTop
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
+										colPos = 3
+										identifier = Jumbotron
 									}
 								}
 							}
-							3 {
+							2 {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
@@ -26,16 +27,7 @@ mod {
 									}
 								}
 							}
-							4 {
-								columns {
-									1 {
-										name =  Expanded Content Bottom
-										colPos = 21
-										identifier = ExpandedContentBottom
-									}
-								}
-							}
-							5 {
+							3 {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
@@ -47,7 +39,7 @@ mod {
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col_extra.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col.svg
 			}
 		}
 	}

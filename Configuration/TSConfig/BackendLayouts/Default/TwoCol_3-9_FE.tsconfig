@@ -11,7 +11,7 @@ mod {
 							1 {
 								columns {
 									1 {
-										name = Expanded Content Top
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_top
 										colspan = 3
 										colPos = 20
 										identifier = ExpandedContentTop
@@ -38,6 +38,16 @@ mod {
 							3 {
 								columns {
 									1 {
+										name =  LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_bottom
+										colPos = 21
+										colspan = 3
+										identifier = ExpandedContentBottom
+									}
+								}
+							}
+							4 {
+								columns {
+									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
 										colspan = 3
 										colPos = 4
@@ -45,20 +55,11 @@ mod {
 									}
 								}
 							}
-							4 {
-								columns {
-									1 {
-										name = Expanded Content Top
-										colspan = 3
-										colPos = 20
-										identifier = ExpandedContentBottom
-									}
-								}
-							}
+
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-2_col-3-9.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-2_col-3-9_extra.svg
 			}
 		}
 	}

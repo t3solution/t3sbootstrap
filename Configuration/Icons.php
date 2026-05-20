@@ -14,12 +14,6 @@ return [
 		'provider' => SvgIconProvider::class,
 		'source' => 'EXT:t3sbootstrap/Resources/Public/Icons/Extension.svg',
 	],
-	
-	'tx-myextension-svgicon' => [
-		// Icon provider class
-		'provider' => SvgIconProvider::class,
-		// The source SVG for the SvgIconProvider
-		'source' => 'EXT:my_extension/Resources/Public/Icons/mysvg.svg',
-	],
+
 
 ];

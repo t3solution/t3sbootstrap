@@ -1,20 +1,19 @@
 mod {
 	web_layout {
 		BackendLayouts {
-			TwoCol_9-3 {
-				title = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.twoCol_9-3
+			OneCol {
+				title = 1 Column with extra rows (top and bottom)
 				config {
-
 					backend_layout {
-						colCount = 2
-						rowCount = 3
+						colCount = 1
+						rowCount = 5
 						rows {
 							1 {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.jumbotron
-										colspan = 3
 										colPos = 3
+										colspan = 3
 										identifier = Jumbotron
 									}
 								}
@@ -22,25 +21,37 @@ mod {
 							2 {
 								columns {
 									1 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
-										colspan = 2
-										colPos = 0
-										identifier = Main
-									}
-									2 {
-										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar
-										colspan = 1
-										colPos = 2
-										identifier = Right
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_top
+										colPos = 20
+										colspan = 3
+										identifier = ExpandedContentTop
 									}
 								}
 							}
 							3 {
 								columns {
 									1 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.content
+										colPos = 0
+										identifier = Main
+									}
+								}
+							}
+							4 {
+								columns {
+									1 {
+										name =  LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_bottom
+										colPos = 21
+										identifier = ExpandedContentBottom
+									}
+								}
+							}
+							5 {
+								columns {
+									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.footer
-										colspan = 3
 										colPos = 4
+										colspan = 3
 										identifier = Footer
 									}
 								}
@@ -48,7 +59,7 @@ mod {
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-2_col-9-3.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col_extra.svg
 			}
 		}
 	}

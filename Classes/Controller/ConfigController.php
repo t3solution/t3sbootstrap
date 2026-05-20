@@ -32,6 +32,7 @@ final class ConfigController extends AbstractController
 
 
     public const T3SBCONSTANTSPATH = 'TypoScript/t3sbconstants.typoscript';
+    public const RASTERPATH = 'fileadmin/T3SB/Resources/Public/Images/raster.png';
 
 
     public function initializeAction(): void
@@ -106,7 +107,9 @@ final class ConfigController extends AbstractController
             }
         }
 
-        $new_raster = GeneralUtility::getFileAbsFileName($this->settings['rasterPath']);
+        $rasterPath = !empty($this->settings['rasterPath']) ? $this->settings['rasterPath'] : $this->baseDir.self::RASTERPATH;
+
+        $new_raster = GeneralUtility::getFileAbsFileName($rasterPath);
         if ( !file_exists($new_raster) ) {
             $folder = dirname($new_raster);
             if (!is_dir($folder)) {

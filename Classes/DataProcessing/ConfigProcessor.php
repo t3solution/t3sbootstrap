@@ -3,22 +3,18 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
-use T3SBS\T3sbootstrap\Utility\ConnectionPoolUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ConfigProcessor implements DataProcessorInterface
 {
 	
 	public function __construct(
-		private readonly ExtensionConfiguration $extensionConfiguration,
 		private readonly FileRepository $fileRepository,
-		private readonly ConnectionPoolUtility $connectionPoolUtility,
 		private readonly BackgroundImageUtility $backgroundImageUtility,
 	) {}
 	
@@ -125,11 +121,6 @@ class ConfigProcessor implements DataProcessorInterface
 					$processedData['data'][$field] = $override;
 				}
 			}
-		}
-
-		$emConf = $this->extensionConfiguration->get('t3sbootstrap');
-		if (!empty($emConf['chapter'])) {
-			$processedData = $this->chapterSection($processedData, $pageInformation->getId());
 		}
 
 		$oneCol   = in_array($backendLayout, ['OneCol', 'OneCol_Extra'], true);
@@ -677,31 +668,5 @@ class ConfigProcessor implements DataProcessorInterface
 
 		return $children;
 	}
-
-	protected function chapterSection(array $processedData, int $currentPageUid): array
-	{
-		$result = $this->connectionPoolUtility->selectChapterIndex($currentPageUid);
-
-		if (empty($result['tx_t3sbootstrap_chapter'])) {
-			return $processedData;
-		}
-
-		$erg = [];
-		$i   = -1;
-		foreach ($result as $row) {
-			if (empty($row['tx_t3sbootstrap_chapter'])) {
-				continue;
-			}
-			if ($row['tx_t3sbootstrap_chapter'] === 1) {
-				$i++;
-			}
-			$erg[$i][$row['uid']] = $row;
-		}
-
-		$processedData['chapter'] = $erg;
-
-		return $processedData;
-	}
-
 
 }

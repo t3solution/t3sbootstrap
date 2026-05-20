@@ -24,3 +24,7 @@ services:
 
   T3SBS\T3sbootstrap\Backend\ItemsProcFunc:
     public: true
+
+  T3SBS\T3sbootstrap\Backend\Hooks\OutsourcedFiles:
+    public: true
+
