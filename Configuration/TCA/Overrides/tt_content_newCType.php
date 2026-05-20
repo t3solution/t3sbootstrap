@@ -757,27 +757,6 @@ $tempContentColumns = [
             'foreign_table_field' => 'parenttable',
         ],
     ],
-    'tx_t3sbootstrap_chapter' => [
-        'exclude' => 1,
-        'label' => 'Chapter type',
-        'displayCond' => [
-            'OR' => [
-                'FIELD:CType:=:textpic',
-                'FIELD:CType:=:textmedia',
-                'FIELD:CType:=:text',
-            ]
-        ],
-        'config' => [
-            'type' => 'select',
-            'renderType' => 'selectSingle',
-            'items' => [
-                ['label' => 'none', 'value' => '',],
-                ['label' => 'Main Chapter', 'value' => '1',],
-                ['label' => 'Chapter', 'value' => '2',],
-            ],
-            'default' => '',
-        ]
-    ],
     'tx_t3sbootstrap_css' => [
         'exclude' => 1,
         'label' => 'Custom CSS for this content element',
@@ -1168,21 +1147,12 @@ if (ExtensionManagementUtility::isLoaded('iconpack')) {
     );
 }
 
-if (array_key_exists('chapter', $extconf) && $extconf['chapter'] === '1') {
-	ExtensionManagementUtility::addFieldsToPalette(
-		'tt_content',
-		'headers',
-		'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position,tx_t3sbootstrap_chapter',
-		'after:subheader'
-	);
-} else {
-	ExtensionManagementUtility::addFieldsToPalette(
-		'tt_content',
-		'headers',
-		'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position',
-		'after:subheader'
-	);
-}
+ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'headers',
+	'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position',
+	'after:subheader'
+);
 
 if (array_key_exists('extraStyle', $extconf) && $extconf['extraStyle'] === '1') {
 	ExtensionManagementUtility::addFieldsToPalette(

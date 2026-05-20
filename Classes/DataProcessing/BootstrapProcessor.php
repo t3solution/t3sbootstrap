@@ -13,7 +13,6 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\Page\PageInformation;
-use Psr\Http\Message\ServerRequestInterface;
 use T3SBS\T3sbootstrap\Helper\AssetHelper;
 use T3SBS\T3sbootstrap\Helper\ClassHelper;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
@@ -42,7 +41,6 @@ use T3SBS\T3sbootstrap\ContentElements\Menu;
 use T3SBS\T3sbootstrap\ContentElements\Table;
 use T3SBS\T3sbootstrap\Wrapper\MasonryWrapper;
 use T3SBS\T3sbootstrap\Wrapper\SwiperContainer;
-use T3SBS\T3sbootstrap\Utility\ConnectionPoolUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
@@ -93,7 +91,6 @@ class BootstrapProcessor implements DataProcessorInterface
         private readonly Table $table,
         private readonly MediaElementHelper $mediaElementHelper,
         private readonly DefaultHelper $defaultHelper,
-        private readonly ConnectionPoolUtility $connectionPoolUtility,
     ) {}
 
 
@@ -471,21 +468,8 @@ class BootstrapProcessor implements DataProcessorInterface
 
         $trimClass = !empty($processedData['trimClass']) ? trim($processedData['class']) : '';
 
-        // chapter
-        if ( !empty($extConf['chapter']) && !empty($processedData['data']['tx_t3sbootstrap_chapter']) ) {
-            $processedData = $this->getChapterIndex($processedData, $request);
-            if ( $processedData['data']['tx_t3sbootstrap_chapter'] === '1' ) {
-                $chapter = $trimClass.' main-chapter';
-            } else {
-                $chapter = $trimClass.' sub-chapter';
-            }
-            $chapterClass = $chapter.' chapter-indent';
-            $processedData['classAttr'] = !empty($chapterClass) ? ' class="'.$chapterClass.'"' : '';
-            $processedData['trimClass'] = !empty($chapterClass) ? $chapterClass : '';
-        } else {
-            $processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
-            $processedData['trimClass'] = $trimClass;
-        }
+        $processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
+        $processedData['trimClass'] = $trimClass;
         
         return $processedData;
     }
@@ -517,39 +501,6 @@ class BootstrapProcessor implements DataProcessorInterface
             $s = self::removeChar($s, $c);
         }
         return $s;
-    }
-
-
-    public function getChapterIndex(array $processedData, ServerRequestInterface $request): array
-    {
-        $pageArguments = $request->getAttribute('routing');
-        $currentPageUid = $pageArguments->getPageId();
-        $result = $this->connectionPoolUtility->selectChapterIndex($currentPageUid);
-
-        if (!empty($result['tx_t3sbootstrap_chapter'])) {
-            $i = 0;
-            $e = 0;
-            $erg = [];
-
-            foreach ($result as $row) {
-                if (!empty($row['tx_t3sbootstrap_chapter'])) {
-                    if ( $row['tx_t3sbootstrap_chapter'] === '1') {
-                        $i++;
-                        $e = 0;
-                    }
-                    $ld = $e === 0 ? '' : '.'.$e;
-                    $erg[$row['uid']] = $row;
-                    $erg[$row['uid']]['index'] = '0.' . $i . $ld;
-                    $e++;
-                }
-            }
-    
-            $uid = $processedData['data']['uid'];
-    
-            $processedData['chapter-index'] = $erg[$uid]['index'];
-        }
-
-        return $processedData;
     }
 
 }

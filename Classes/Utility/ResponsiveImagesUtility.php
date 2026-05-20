@@ -113,12 +113,13 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 		// Generate source tags for image breakpoints
 		$sourceTags = [];
+
 		foreach ($breakpoints as $breakpoint) {
 			$cropArea = $cropVariantCollection->getCropArea($breakpoint['cropVariant']);
 			foreach ( $types as $type ) {
 				$sourceTag = $this->createPictureSourceTag(
 					$originalImage,
-					$referenceWidth,
+					(int)$referenceWidth,
 					$breakpoint['srcset'],
 					$breakpoint['media'],
 					$breakpoint['sizes'],

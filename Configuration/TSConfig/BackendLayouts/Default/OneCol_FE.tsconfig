@@ -11,11 +11,12 @@ mod {
 							1 {
 								columns {
 									1 {
-										name = Expanded Content Top
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_top
 										colPos = 20
 										identifier = ExpandedContentTop
 									}
 								}
+							}
 							2 {
 								columns {
 									1 {
@@ -28,7 +29,7 @@ mod {
 							3 {
 								columns {
 									1 {
-										name =  Expanded Content Bottom
+										name =  LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_bottom
 										colPos = 21
 										identifier = ExpandedContentBottom
 									}
@@ -46,7 +47,7 @@ mod {
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-1_col_extra.svg
 			}
 		}
 	}

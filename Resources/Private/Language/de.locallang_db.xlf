@@ -349,14 +349,14 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenu">
 			<segment>
 				<source>Section Menu</source>
-				<target>Abschnittsmenü</target>
+				<target>Sektionsindex</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sectionmenusettings">
 			<segment>
 				<source>Section Menu Settings</source>
-				<target>Einstellungen Abschnittsmenü</target>
+				<target>Einstellungen Sektionsindex</target>
 			</segment>
 		</unit>
 		
@@ -384,7 +384,7 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.anchorextraoffset.description">
 			<segment>
 				<source>for Section-Menu-Items and "OnePageLayout": in px - (default 29)</source>
-				<target>für Abschnittsmenüs und "OnePageLayout": in px – (Standardwert 29)</target>
+				<target>für Sektionsindexs und "OnePageLayout": in px – (Standardwert 29)</target>
 			</segment>
 		</unit>
 		
@@ -440,7 +440,7 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.icons.description">
 			<segment>
 				<source>Shows Icons in section menu</source>
-				<target>Zeigt Symbole im Abschnittsmenü an</target>
+				<target>Zeigt Symbole im Sektionsindex an</target>
 			</segment>
 		</unit>
 		
@@ -461,14 +461,14 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarsectionmobile">
 			<segment>
 				<source>Section mobile</source>
-				<target>Abschnittsmenü Mobile</target>
+				<target>Sektionsindex Mobile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebarsectionmobile.description">
 			<segment>
 				<source>Shows the section menu also in the mobile if enabled</source>
-				<target>Zeigt das Abschnittsmenü auch auf Mobilgeräten an, sofern diese Option aktiviert ist</target>
+				<target>Zeigt das Sektionsindex auch auf Mobilgeräten an, sofern diese Option aktiviert ist</target>
 			</segment>
 		</unit>
 		
@@ -1681,7 +1681,7 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebar.item2">
 			<segment>
 				<source>sectionmenu</source>
-				<target>Abschnittsmenü (sectionmenu)</target>
+				<target>Sektionsindex (sectionmenu)</target>
 			</segment>
 		</unit>
 		
@@ -2123,7 +2123,7 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapimageratio">
 			<segment>
 				<source>Image Ratio</source>
-				<target>Bildformat</target>
+				<target>Seitenverhältnis</target>
 			</segment>
 		</unit>
 		
@@ -2396,7 +2396,7 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadersectionMenu">
 			<segment>
 				<source>Section Menu Text</source>
-				<target>Text für das Abschnittsmenü</target>
+				<target>Text für das Sektionsindex</target>
 			</segment>
 		</unit>
 		

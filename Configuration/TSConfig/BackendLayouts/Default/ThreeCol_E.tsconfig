@@ -6,9 +6,19 @@ mod {
 				config {
 					backend_layout {
 						colCount = 3
-						rowCount = 1
+						rowCount = 3
 						rows {
 							1 {
+								columns {
+									1 {
+										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_top
+										colPos = 20
+										colspan = 3
+										identifier = ExpandedContentTop
+									}
+								}
+							}
+							2 {
 								columns {
 									1 {
 										name = LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.sidebar-left
@@ -30,10 +40,20 @@ mod {
 									}
 								}
 							}
+							3 {
+								columns {
+									1 {
+										name =  LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:backend_layout.expanded_bottom
+										colPos = 21
+										colspan = 3
+										identifier = ExpandedContentBottom
+									}
+								}
+							}
 						}
 					}
 				}
-				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-3_col-3-6-3.svg
+				icon = EXT:t3sbootstrap/Resources/Public/Icons/Layouts/layout-3_col-3-6-3_extra.svg
 			}
 		}
 	}

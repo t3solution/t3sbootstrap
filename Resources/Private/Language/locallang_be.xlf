@@ -2024,6 +2024,21 @@
 				<source>2 Columns (aside left)</source>
 			</segment>
 		</unit>
+		
+		
+		
+		
+		<unit id="backend_layout.expanded_bottom">
+			<segment>
+				<source>Expanded Content bottom</source>
+			</segment>
+		</unit>
+		
+		<unit id="backend_layout.expanded_top">
+			<segment>
+				<source>Expanded Content top</source>
+			</segment>
+		</unit>
 
 	</file>
 </xliff>

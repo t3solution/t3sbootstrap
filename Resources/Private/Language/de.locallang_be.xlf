@@ -1220,7 +1220,7 @@
 		<unit id="flexform.cw.ratio">
 			<segment>
 				<source>Image ratio - e.g.: 37:9</source>
-				<target>Bildformat – z. B.: 37:9</target>
+				<target>Seitenverhältnis – z. B.: 37:9</target>
 			</segment>
 		</unit>
 		
@@ -2458,6 +2458,22 @@
 				<target>2 Spalten (links)</target>
 			</segment>
 		</unit>
+		
+		<unit id="backend_layout.expanded_bottom">
+			<segment>
+				<source>Expanded Content bottom</source>
+				<target>Erweiterte Inhalte (unten)</target>
+			</segment>
+		</unit>
+		
+		<unit id="backend_layout.expanded_top">
+			<segment>
+				<source>Expanded Content top</source>
+				<target>Erweiterte Inhalte (oben)</target>
+			</segment>
+		</unit>
+		
+		
 		
 	</file>
 </xliff>

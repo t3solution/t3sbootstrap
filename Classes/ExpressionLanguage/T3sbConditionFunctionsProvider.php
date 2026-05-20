@@ -123,7 +123,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
                 $expandedcontent = !empty($config['expandedcontent_enabletop']) ? $config['expandedcontent_enabletop'] : 0;
 
                 if (empty($expandedcontent)) {
-            
+
                     if ( !empty($jumbotron) && !empty($footer) )  {
                         if ($str === 'JF') {
                             $result = true;
@@ -146,7 +146,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
                     }
             
                 } else {
-            
+
                     if ( !empty($jumbotron) && !empty($footer) )  {
                         if ($str === 'ALL') {
                             $result = true;

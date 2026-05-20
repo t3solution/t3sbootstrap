@@ -47,8 +47,6 @@ flexformMinCol = 0
 cTypeClass = 0
 # cat=t3SB/enable/15; type=options[none=0, default=1, on click=2]; label=Copyright (Image/FAL): Displays a copyright notice in the lower right corner or on click - settings in FAL (clear cache)
 imgCopyright = 0
-# cat=t3SB/enable/25; type=boolean; label=Chapter: Shows select field "Chapter type" in the header palette if enabled. (EXPERIMENTAL)
-chapter = 0
 # cat=t3SB/enable/30; type=boolean; label=Custom CSS code editor in the language tab - ADMIN ONLY: if editors receive a prepared content element for copy & past and this element requires its own CSS, you should activate and use this option.
 cssCodeEditor = 0
 

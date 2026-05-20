@@ -181,7 +181,6 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
 	tx_t3sbootstrap_verticalgutters varchar(5) DEFAULT 'mb-4' NOT NULL,
 	tx_t3sbootstrap_zoom_orig varchar(4) DEFAULT '' NOT NULL,
-	tx_t3sbootstrap_chapter varchar(1) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_fontawesome varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_css text,
 	tx_t3sbootstrap_js text,

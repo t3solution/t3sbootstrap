@@ -1,36 +1,40 @@
 {
-  "name": "t3sbs/t3sbootstrap",
-  "description": "Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: www.t3sbootstrap.de",
-  "keywords": [
-    "typo3",
-    "typo3 cms",
-    "bootstrap"
-  ],
-  "homepage": "https://t3sbootstrap.de",
-  "authors": [
-    {
-      "name": "Helmut Hackbarth",
-      "email": "info@t3solution.de"
+    "name": "t3sbs/t3sbootstrap",
+    "description": "Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: [www.t3sbootstrap.de](https://www.t3sbootstrap.de)",
+    "keywords": [
+        "typo3",
+        "typo3 cms",
+        "bootstrap"
+    ],
+    "homepage": "https://t3sbootstrap.de",
+    "authors": [
+        {
+            "name": "Helmut Hackbarth",
+            "email": "info@t3solution.de"
+        }
+    ],
+    "license": ["GPL-2.0-or-later"],
+    "type": "typo3-cms-extension",
+    "require": {
+        "php": "^8.2 || ^8.3 || ^8.4 || ^8.5",
+        "typo3/cms-core": "^14.3",
+        "typo3/cms-rte-ckeditor": "^14.3",
+        "typo3/cms-fluid-styled-content": "^14.3",
+        "b13/container": "^3.2",
+        "t3sbs/t3sb-package": "^14.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "T3SBS\\T3sbootstrap\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "t3sbootstrap",
+            "version": "5.3.43",
+            "Package": {
+                "providesPackages": {}
+            }
+        }
     }
-  ],
-  "license": ["GPL-2.0-or-later"],
-  "type": "typo3-cms-extension",
-  "require": {
-    "php": "^8.2 || ^8.3 || ^8.4 || ^8.5",
-    "typo3/cms-core": "^14.3",
-    "typo3/cms-rte-ckeditor": "^14.3",
-    "typo3/cms-fluid-styled-content": "^14.3",
-    "b13/container": "^3.2",
-    "t3sbs/t3sb-package": "^14.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "T3SBS\\T3sbootstrap\\": "Classes/"
-    }
-  },
-  "extra": {
-    "typo3/cms": {
-      "extension-key": "t3sbootstrap"
-    }
-  }
 }

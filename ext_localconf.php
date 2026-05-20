@@ -12,7 +12,7 @@ use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Xclass\NewRecordController as NewRecordControllerXclass;
 use TYPO3\CMS\Backend\Controller\NewRecordController;
-
+use T3SBS\T3sbootstrap\Backend\Hooks\OutsourcedFiles;
 
 defined('TYPO3') or die();
 
@@ -36,7 +36,6 @@ defined('TYPO3') or die();
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.customSectionOrder = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomepagetitle = 0');
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 0');
-	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.chapter = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.navbarmodal = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.supraheader = 0');
 
@@ -120,10 +119,6 @@ defined('TYPO3') or die();
 	if (array_key_exists('fontawesomeCss', $extconf) && $extconf['fontawesomeCss'] === '1') {
 	    ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 1');
 	}
-    // Optional "chapter"
-    if (array_key_exists('chapter', $extconf) && !empty($extconf['chapter'])) {
-        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.chapter = 1');
-    }
     // Optional lazyLoad
     if (array_key_exists('lazyLoad', $extconf)) {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.lazyLoad = '.$extconf['lazyLoad']);
@@ -168,7 +163,10 @@ defined('TYPO3') or die();
     } else {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.preview = 0');
     }
-
+    
+    // HOOK: Outsourced files
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = OutsourcedFiles::class;
+   
     /***************
      * Parser
      */
