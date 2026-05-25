@@ -63,7 +63,7 @@
 		 aria-labelledby="heading-{data.uid}"{f:if(condition:'{alwaysOpen}',else:' data-bs-parent="#accordion-{data.tx_container_parent}"')}{styleAttr -> f:format.raw()}>
 		<div class="accordion-body">
 			<f:if condition="{collapsibleByPid}">
-				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
+				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: 0}"/>
 			</f:if>
 			<f:for each="{col_278}" as="row">
 				{row.renderedContent -> f:format.raw()}
@@ -77,7 +77,7 @@
 <div id="collapse-{data.uid}" class="collapse{show}">
 	<div class="card card-body{class}"{styleAttr -> f:format.raw()}>
 		<f:if condition="{collapsibleByPid}">
-			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: '0'}"/>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{collapsibleByPid}', colPos: 0}"/>
 		</f:if>
 		<f:for each="{col_278}" as="row">
 			{row.renderedContent -> f:format.raw()}

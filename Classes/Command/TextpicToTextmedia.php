@@ -17,7 +17,9 @@ class TextpicToTextmedia extends CommandBase
 	
 	public function __construct(
 		private readonly ConnectionPool $connectionPool,
-	) {}
+	) {
+		parent::__construct();
+	}
 
 
     protected function execute(InputInterface $input, OutputInterface $output): int

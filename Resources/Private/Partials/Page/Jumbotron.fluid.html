@@ -143,10 +143,10 @@
 					</f:if>
 					<f:if condition="{config.jumbotron.slide}">
 						<f:then>
-							<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+							<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: 3}"/>
 						</f:then>
 						<f:else>
-							<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+							<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: 3}"/>
 						</f:else>
 					</f:if>
 				</div>
@@ -159,10 +159,10 @@
 				</f:if>
 				<f:if condition="{config.jumbotron.slide}">
 					<f:then>
-						<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+						<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: 3}"/>
 					</f:then>
 					<f:else>
-						<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+						<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: 3}"/>
 					</f:else>
 				</f:if>
 			</div>

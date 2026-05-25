@@ -1,12 +1,15 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{config.expandedcontentTop.container} && {config.expandedcontentTop.container} != 'none'">
-	<f:then>
-		<f:render section="{config.expandedcontentTop.containerposition}" arguments="{_all}" />
-	</f:then>
-	<f:else>
-		<f:render section="Default" arguments="{_all}" />
-	</f:else>
+<f:if condition="{config.expandedcontentTop.hasContent}">
+	<f:if condition="{config.expandedcontentTop.container} && {config.expandedcontentTop.container} != 'none'">
+		<f:then>
+			<f:render section="{config.expandedcontentTop.containerposition}" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="Default" arguments="{_all}" />
+		</f:else>
+	</f:if>
 </f:if>
+
 </html>
 
 <f:section name="Inside">
@@ -37,10 +40,10 @@
 	</f:if>
 	<f:if condition="{config.expandedcontentTop.slide}">
 		<f:then>
-			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: '20'}"/>
+			<f:cObject typoscriptObjectPath="lib.dynamicContentSlide" data="{pageUid: '{data.uid}', colPos: 20}"/>
 		</f:then>
 		<f:else>
-			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '20'}"/>
+			<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: 20}"/>
 		</f:else>
 	</f:if>
 </f:section>
