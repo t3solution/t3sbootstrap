@@ -12,7 +12,7 @@
 templates.t3sbs/t3sbootstrap.1739329199 = t3sbs/t3sbootstrap:Resources/Private/Backend
 
 
-[t3sbootstrap('extNews') === '1']
+[loaded('extNews') === '1']
 @import 'EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/TSconfig/templateLayouts.tsconfig'
 [END]
 

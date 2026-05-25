@@ -15,7 +15,7 @@
 <f:section name="Default">
 <div id="tab-content-{data.uid}" class="tab-pane{f:if(condition: '{tab.switchEffect}',then: ' {tab.switchEffect}')}{class}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}" role="tabpanel" aria-labelledby="tab-{f:if(condition: '{data._LOCALIZED_UID}', then: '{data._LOCALIZED_UID}', else: '{data.uid}')}">
 	<f:if condition="{tab.contentByPid}">
-		<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{tab.contentByPid}', colPos: '0'}"/>
+		<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{tab.contentByPid}', colPos: 0}"/>
 	</f:if>
 	<f:for each="{col_281}" as="row">
 		{row.renderedContent -> f:format.raw()}

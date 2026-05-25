@@ -352,7 +352,7 @@
 			<f:asset.css identifier="megaNavbar" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />
 			<f:comment> removed by JS if narrower than navbarBreakpoint :: don't remove remove-{navbarBreakpoint}</f:comment>
 			<div class="dropdown-menu mega-dropdown-menu remove-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
-				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{navbarItem.data.uid}', colPos: '0'}"/>
+				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{navbarItem.data.uid}', colPos: 0}"/>
 			</div>
 
 			<f:comment> removed by JS if wider than navbarBreakpoint :: don't remove show-{navbarBreakpoint} </f:comment>

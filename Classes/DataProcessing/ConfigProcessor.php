@@ -9,6 +9,10 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 
 class ConfigProcessor implements DataProcessorInterface
 {
@@ -50,6 +54,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$currentPage          = $pageInformation->getPageRecord();
 		$backendLayout        = $processedData['data']['currentValue_kidjls9dksoje'];
 
+		$processedData = $this->processExpandedContent($processedData, $processedRecordVars, $currentPage);
 		$processedData = $this->processGeneral($processedData, $processedRecordVars, $pageInformation, $siteSettings, $backendLayout, $settings);
 		$processedData = $this->processNavbar($processedData, $processedRecordVars, $pageInformation, $settings, $request);
 		$processedData = $this->processJumbotron($processedData, $processedRecordVars, $pageInformation, $currentPage, $settings, $request);
@@ -57,7 +62,6 @@ class ConfigProcessor implements DataProcessorInterface
 		$processedData = $this->processBreadcrumb($processedData, $processedRecordVars, $pageInformation);
 		$processedData = $this->processSidebar($processedData, $processedRecordVars);
 		$processedData = $this->processFooter($processedData, $processedRecordVars);
-		$processedData = $this->processExpandedContent($processedData, $processedRecordVars);
 
 		return $processedData;
 	}
@@ -594,7 +598,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 	// ─── Expanded Content ────────────────────────────────────────────────────
 
-	private function processExpandedContent(array $processedData, array $vars): array
+	private function processExpandedContent(array $processedData, array $vars, array $currentPage): array
 	{
 		foreach (['Top' => 'top', 'Bottom' => 'bottom'] as $key => $suffix) {
 			$processedData['config']['expandedcontent' . $key] = [
@@ -604,6 +608,13 @@ class ConfigProcessor implements DataProcessorInterface
 				'containerposition'  => $vars['expandedcontentContainerposition' . $suffix],
 				'class'              => trim($vars['expandedcontentClass' . $suffix] ?? ''),
 			];
+		}
+		// is no longer needed
+		unset($processedData['config']['expandedcontentBottom']['enable']);
+
+		if (!empty($processedData['config']['expandedcontentTop']['enable'])) {
+			$processedData['config']['expandedcontentTop']['hasContent'] = $this->hasContent($currentPage['uid'], 20);
+			$processedData['config']['expandedcontentBottom']['hasContent'] = $this->hasContent($currentPage['uid'], 21);
 		}
 
 		return $processedData;
@@ -668,5 +679,30 @@ class ConfigProcessor implements DataProcessorInterface
 
 		return $children;
 	}
+	
+	
+	private function hasContent(int $pageUid, int $colPos): bool
+	{		
+		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+			->getQueryBuilderForTable('tt_content');
+		
+		$queryBuilder->getRestrictions()
+			->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class))
+			->add(GeneralUtility::makeInstance(HiddenRestriction::class));
+		
+		$hasContent = (bool)$queryBuilder
+			->count('uid')
+			->from('tt_content')
+			->where(
+				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pageUid, Connection::PARAM_INT)),
+				$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter($colPos, Connection::PARAM_INT))
+			)
+			->executeQuery()
+			->fetchOne();
+
+		return $hasContent;
+	}
+
 
 }
