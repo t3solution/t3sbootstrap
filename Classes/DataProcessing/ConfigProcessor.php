@@ -30,7 +30,7 @@ class ConfigProcessor implements DataProcessorInterface
 		array $processedData
 	): array {
 		$processedData['customScss-cdn-dupe-set'] = false;
-
+		
 		if (!empty($contentObjectConfiguration['settings.']['customScss'])
 			&& !empty($contentObjectConfiguration['settings.']['cdn'])
 		) {
