@@ -238,7 +238,7 @@ final class CdnToLocal extends CommandBase
                 $style = trim($style);
                 $zipFilename = strtolower($font).'?download=zip&subsets=latin&variants='.$style;
                 $zipFilePath = 'https://gwfh.mranftl.com/api/fonts/';
-                $zipContent = $this->requestFactor->request($zipFilePath . $zipFilename)->getBody()->getContents();
+                $zipContent = $this->requestFactory->request($zipFilePath . $zipFilename)->getBody()->getContents();
                 $fontArr[$fontFamily] = $this->getGoogleFiles($zipContent, $baseDir);
             }
         }

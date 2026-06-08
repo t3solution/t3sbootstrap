@@ -915,6 +915,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
     ],
     'tx_t3sbootstrap_flexform' => [
         'config' => [
+            'type' => 'flex',
             'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
         ],
     ],
@@ -962,6 +963,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
         ],
         'tx_t3sbootstrap_flexform' => [
             'config' => [
+                'type' => 'flex',
                 'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Carousel.xml',
             ],
         ],
@@ -986,6 +988,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject']['columnsOverrides'] 
     ],
     'tx_t3sbootstrap_flexform' => [
         'config' => [
+            'type' => 'flex',
             'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
         ],
     ],
@@ -1041,6 +1044,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
         ],
         'tx_t3sbootstrap_flexform' => [
             'config' => [
+                'type' => 'flex',
                 'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/CardSetting.xml',
             ],
         ],
@@ -1058,6 +1062,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast'] = $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject'];
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_toast']['columnsOverrides']['tx_t3sbootstrap_flexform'] = [
     'config' => [
+        'type' => 'flex',
         'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/ToastSetting.xml',
     ],
 ];

@@ -432,26 +432,6 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 			rowDescription,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
 ';
-/*
-$GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides']['bgimages']['config']['maxitems'] => 2;
-$GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides'] = [
-	'bodytext' => [
-		'config' => [
-			'enableRichtext' => true
-		]
-	],
-	'bgimages' => [
-		'config' => [
-			'maxitems' => 1
-		]
-	],
-	'tx_t3sbootstrap_flexform' => [
-		'config' => [
-			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Mediaobject.xml',
-		],
-	],
-];
-*/
 
 
 $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
@@ -504,6 +484,7 @@ $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['columnsOverrides']
 	],
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/BackgroundWrapper.xml',
 		],
 	]
@@ -516,6 +497,7 @@ $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['columnsOverrides'] =
 	],
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ParallaxWrapper.xml',
 		],
 	]
@@ -523,6 +505,7 @@ $GLOBALS['TCA']['tt_content']['types']['parallax_wrapper']['columnsOverrides'] =
 $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CardWrapper.xml',
 		],
 	]
@@ -530,13 +513,15 @@ $GLOBALS['TCA']['tt_content']['types']['card_wrapper']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['button_group']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
-			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ButtonGroup.xml',
+			'type' => 'flex',
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Buttongroup.xml',
 		],
 	]
 ];
 $GLOBALS['TCA']['tt_content']['types']['carousel_container']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CarouselContainer.xml',
 		],
 	]
@@ -544,13 +529,15 @@ $GLOBALS['TCA']['tt_content']['types']['carousel_container']['columnsOverrides']
 $GLOBALS['TCA']['tt_content']['types']['autoLayout_row']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
-			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/AutolayoutRow.xml',
+			'type' => 'flex',
+			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/AutoLayoutRow.xml',
 		],
 	]
 ];
 $GLOBALS['TCA']['tt_content']['types']['container']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Container.xml',
 		],
 	]
@@ -558,6 +545,7 @@ $GLOBALS['TCA']['tt_content']['types']['container']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CollapsibleContainer.xml',
 		],
 	]
@@ -565,6 +553,7 @@ $GLOBALS['TCA']['tt_content']['types']['collapsible_container']['columnsOverride
 $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/CollapsibleAccordion.xml',
 		],
 	]
@@ -572,6 +561,7 @@ $GLOBALS['TCA']['tt_content']['types']['collapsible_accordion']['columnsOverride
 $GLOBALS['TCA']['tt_content']['types']['modal']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/Modal.xml',
 		],
 	]
@@ -579,6 +569,7 @@ $GLOBALS['TCA']['tt_content']['types']['modal']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['tabs_container']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsContainer.xml',
 		],
 	]
@@ -586,6 +577,7 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_container']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/TabsTab.xml',
 		],
 	]
@@ -593,6 +585,7 @@ $GLOBALS['TCA']['tt_content']['types']['tabs_tab']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/MasonryWrapper.xml',
 		],
 	]
@@ -600,6 +593,7 @@ $GLOBALS['TCA']['tt_content']['types']['masonry_wrapper']['columnsOverrides'] = 
 $GLOBALS['TCA']['tt_content']['types']['swiper_container']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/SwiperContainer.xml',
 		],
 	]
@@ -607,6 +601,7 @@ $GLOBALS['TCA']['tt_content']['types']['swiper_container']['columnsOverrides'] =
 $GLOBALS['TCA']['tt_content']['types']['toast_container']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/ToastContainer.xml',
 		],
 	]
@@ -614,6 +609,7 @@ $GLOBALS['TCA']['tt_content']['types']['toast_container']['columnsOverrides'] = 
 $GLOBALS['TCA']['tt_content']['types']['row_columns']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Container/RowColumns.xml',
 		],
 	]
@@ -645,6 +641,7 @@ if (!empty($extconf['flexformNoDefault'])) {
 $GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => $flexformTwoColumns,
 		],
 	],
@@ -652,6 +649,7 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['three_columns']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => $flexformThreeColumns,
 		],
 	],
@@ -659,6 +657,7 @@ $GLOBALS['TCA']['tt_content']['types']['three_columns']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['four_columns']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => $flexformFourColumns,
 		],
 	],
@@ -666,6 +665,7 @@ $GLOBALS['TCA']['tt_content']['types']['four_columns']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['six_columns']['columnsOverrides'] = [
 	'tx_t3sbootstrap_flexform' => [
 		'config' => [
+			'type' => 'flex',
 			'ds' => $flexformSixColumns,
 		],
 	],
