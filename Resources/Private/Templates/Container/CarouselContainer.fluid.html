@@ -44,7 +44,7 @@ function t3sbLocalCarouselVideo(videoCarousel) {
 </f:if>
 
 <f:render partial="Page/Assets" arguments="{carousel:'true'}" />
-<div class="carousel-container{class}"{styleAttr -> f:format.raw()}>
+<div class="carousel-container{class}{f:if(condition:'{thumbnails}',then:' thumbnails')}"{styleAttr -> f:format.raw()}>
 	<f:render partial="Content/Header/All" arguments="{_all}" />
 	<div id="carousel-{data.uid}" class="carousel slide mx-auto{carouselFade}" data-bs-ride="carousel"
 		 data-bs-interval="{f:if(condition: interval,then: '{interval}', else:'5000')}"{f:if(condition:'{maxWidth}',then:' style="max-width: {maxWidth};"')}>

@@ -17,34 +17,43 @@ class Button implements SingletonInterface
         if (!empty($flexconf['dropdownItems']) && is_array($flexconf['dropdownItems'])) {
             $processedData['dropdowndirection'] = !empty($flexconf['direction']) ? ' '.$flexconf['direction'] : '';
             foreach ($flexconf['dropdownItems'] as $key=>$dropdownItem) {
+                $group = (string)($dropdownItem['list']['group'] ?? '');
+                if ($group === '') {
+                    continue;
+                }
                 // pages
-                if (str_starts_with($dropdownItem['list']['group'], 't3:')) {
-                    $btnDropdownItem[$key]['link'] = $dropdownItem['list']['group'];
+                if (str_starts_with($group, 't3:')) {
+                    $btnDropdownItem[$key]['link'] = $group;
                     if (ExtensionManagementUtility::isLoaded('iconpack')) {
-                        $pid = (int) explode('=', $dropdownItem['list']['group'])[1];
-                        $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', $pid, 'page_icon')['page_icon'];
+                        $linkParts = explode('=', $group);
+                        $pid = isset($linkParts[1]) ? (int)$linkParts[1] : 0;
+                        if ($pid > 0) {
+                            $btnDropdownItem[$key]['page_icon'] = BackendUtility::getRecord('pages', $pid, 'page_icon')['page_icon'] ?? '';
+                        }
                     }
                     $tile = '';
                     if (!empty($dropdownItem['list']['title'])) {
                         $tile = $dropdownItem['list']['title'];
                     } else {
-                        if (str_contains($dropdownItem['list']['group'], '"')) {
-                            $tile = explode('"', $dropdownItem['list']['group'])[1];
+                        if (str_contains($group, '"')) {
+                            $titleParts = explode('"', $group);
+                            $tile = $titleParts[1] ?? '';
                         } else {
-                            $array = explode(' ', $dropdownItem['list']['group']);
+                            $array = explode(' ', $group);
                             $tile = end($array);
                         }
                     }
                     $btnDropdownItem[$key]['title'] = !empty($tile) ? $tile : '* no title assigned *';
                 }
                 // mail
-                if (str_starts_with($dropdownItem['list']['group'], 'mailto:')) {
-                    $groupArr = explode('?', $dropdownItem['list']['group']);
+                if (str_starts_with($group, 'mailto:')) {
+                    $groupArr = explode('?', $group);
                     $emailAddress = $groupArr[0];
-                    if (str_starts_with($groupArr[1], 'subject=')) {
-                        $subjectArr = explode('&', $groupArr[1])[0];
+                    $query = $groupArr[1] ?? '';
+                    if (str_starts_with($query, 'subject=')) {
+                        $subjectArr = explode('&', $query)[0];
                         $subject = explode('=', $subjectArr);
-                        $subject = str_replace('%20', ' ', $subject[1]);
+                        $subject = isset($subject[1]) ? str_replace('%20', ' ', $subject[1]) : '';
                         $btnDropdownItem[$key]['subject'] = !empty($subject) ? $subject : '';
                     }
                     $btnDropdownItem[$key]['emailAddress'] = $emailAddress;
@@ -87,9 +96,9 @@ class Button implements SingletonInterface
 
         if (!empty($parentflexconf['fixedPosition'])
          && $parentflexconf['fixedPosition'] === 'right'
-         && $parentflexconf['slideIn']
-         && $parentflexconf['visiblePart']
-         && $parentflexconf['vertical']
+         && !empty($parentflexconf['slideIn'])
+         && !empty($parentflexconf['visiblePart'])
+         && !empty($parentflexconf['vertical'])
         ) {
             // slide in button
             $processedData['slideInButton'] = true;
@@ -99,7 +108,7 @@ class Button implements SingletonInterface
             }
         }
 
-        $processedData['class'] .= $typolinkButtonClass;
+        $processedData['class'] = ($processedData['class'] ?? '').$typolinkButtonClass;
 
         return $processedData;
     }

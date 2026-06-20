@@ -502,15 +502,19 @@ class TcaMatcher
     public function checkScssVisibility(array $arguments): bool
     {
         $show = FALSE;
-
+    
+        if (ExtensionManagementUtility::isLoaded('t3sbootstrap_builder')) {
+            return $show;
+        }
+    
         $site = $this->siteFinder->getSiteByPageId($arguments['record']['pid']);
         $configuration = $site->getConfiguration();
         $settings = $configuration['settings'];
-
+    
         if ($settings['bootstrap']['cdn']['customScss'] === TRUE) {
            $show = TRUE;
        }
-
+    
         return $show;
     }
 
