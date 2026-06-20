@@ -23,6 +23,11 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	protected $tagName = 'img';
 
 	/**
+	 * Default crop configuration used as a fallback when a FileReference has no crop set.
+	 */
+	protected const DEFAULT_CROP = '{"default":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"tablet":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"mobile":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null}}';
+
+	/**
 	 * Initialize arguments.
 	 */
 	public function initializeArguments(): void
@@ -130,21 +135,27 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	protected function renderPicture(FileInterface $image, string $width, string $height): string
 	{
 		// Get crop variants
-		$cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
-		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
-			$mobileImgManipulation = json_decode($cropString)->mobile;
+		$cropString = $image instanceof FileReference ? (string)$image->getProperty('crop') : '';
+
+		// Apply the default crop BEFORE it is read, otherwise json_decode('') is null
+		if (empty($cropString)) {
+			$cropString = self::DEFAULT_CROP;
 		}
 
-		if (empty($cropString)) {
-			$cropString = '{"default":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"tablet":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null},"mobile":{"cropArea":{"x":0,"y":0,"width":1,"height":1},"selectedRatio":"NaN","focusArea":null}}';
+		$mobileImgManipulation = null;
+		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
+			$decodedCrop = json_decode($cropString);
+			$mobileImgManipulation = $decodedCrop->mobile ?? null;
 		}
 
 		if ( $this->arguments['ratio'] && $image->getExtension() !== 'pdf') {
 			$cropString = $this->getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
-				$cropObject->mobile = $mobileImgManipulation;
-				$cropString = json_encode($cropObject);
+				if (is_object($cropObject)) {
+					$cropObject->mobile = $mobileImgManipulation;
+					$cropString = json_encode($cropObject);
+				}
 			}
 		}
 
@@ -245,26 +256,38 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	protected function renderImageTag(FileInterface $image, string $width, string $height): string
 	{
 		 $cropVariant = 'default';
-		 $cropString = $image instanceof FileReference ? $image->getProperty('crop') : '';
+		 $cropString = $image instanceof FileReference ? (string)$image->getProperty('crop') : '';
 
+		// Apply the default crop BEFORE it is read, otherwise json_decode('') is null
+		if (empty($cropString)) {
+			$cropString = self::DEFAULT_CROP;
+		}
+
+		$mobileImgManipulation = null;
 		if ( $this->arguments['mobileNoRatio'] && $this->arguments['ratio'] ) {
-			$mobileImgManipulation = json_decode($cropString)->mobile;
+			$decodedCrop = json_decode($cropString);
+			$mobileImgManipulation = $decodedCrop->mobile ?? null;
 		}
 
 		if ( $this->arguments['ratio'] ) {
 			$cropString = $this->getCropString($image, $cropString);
 			if ( $this->arguments['mobileNoRatio'] ) {
 				$cropObject = json_decode($cropString);
-				$cropObject->mobile = $mobileImgManipulation;
-				$cropString = json_encode($cropObject);
+				if (is_object($cropObject)) {
+					$cropObject->mobile = $mobileImgManipulation;
+					$cropString = json_encode($cropObject);
+				}
 			}
 		}
 
 		$cropVariantCollection = CropVariantCollection::create((string)$cropString);
 		$cropArea = $cropVariantCollection->getCropArea($cropVariant);
 		if ( $this->arguments['ratio'] ) {
-			$m = $cropArea->getHeight() / $cropArea->getWidth();
-			$height = ceil((float)$height * (float)$m);
+			$cropAreaWidth = (float)$cropArea->getWidth();
+			if ($cropAreaWidth > 0) {
+				$m = $cropArea->getHeight() / $cropAreaWidth;
+				$height = ceil((float)$height * (float)$m);
+			}
 		}
 
 		$processingInstructions = [
@@ -312,48 +335,77 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 	protected function getCropString(FileInterface $image, string $cropString): string
 	{
 		$cropObject = json_decode($cropString);
+		// Invalid / empty crop JSON -> nothing to recalculate
+		if (!is_object($cropObject)) {
+			return $cropString;
+		}
+
 		if (!empty($this->arguments['breakpoints'])) {
+
+			$imgWidth = (int)($image->getProperties()['width'] ?? 0);
+			$imgHeight = (int)($image->getProperties()['height'] ?? 0);
+
+			// No reliable dimensions (e.g. SVG without width/height) -> avoid division by zero
+			if ($imgWidth < 1 || $imgHeight < 1) {
+				return json_encode($cropObject);
+			}
+
+			$rArr = explode(':', (string)$this->arguments['ratio']);
+			$rW = (float)($rArr[0] ?? 0);
+			$rH = (float)($rArr[1] ?? 0);
+
+			// Malformed ratio (missing part or zero) -> avoid division by zero
+			if ($rW <= 0 || $rH <= 0) {
+				return json_encode($cropObject);
+			}
+
 			foreach($this->arguments['breakpoints'] as $cv) {
 				$cropVariant = $cv['cropVariant'];
-				$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
-				$cropedWidth = $image->getProperties()['width'] * $cropObject->$cropVariant->cropArea->width;
-				$cropedHeight = $image->getProperties()['height'] * $cropObject->$cropVariant->cropArea->height;
-				$rArr = explode(':',$this->arguments['ratio']);
 
-				if ( $rArr[0] > $rArr[1] ) {
+				// Crop variant not present in the stored crop data
+				if (!isset($cropObject->$cropVariant->cropArea)) {
+					continue;
+				}
+
+				$cropObject->$cropVariant->selectedRatio = $this->arguments['ratio'];
+				$cropedWidth = $imgWidth * $cropObject->$cropVariant->cropArea->width;
+				$cropedHeight = $imgHeight * $cropObject->$cropVariant->cropArea->height;
+
+				if ( $rW > $rH ) {
 					// landscape
-					$pxHeight = ($cropedWidth / $rArr[0]) * $rArr[1];
+					$pxHeight = ($cropedWidth / $rW) * $rH;
 					$pxHeight = !empty($pxHeight) ? $pxHeight : 1;
-					if ( $image->getProperties()['height'] > $pxHeight ) {
-						$cHeight = $pxHeight / $image->getProperties()['height'];
+					if ( $imgHeight > $pxHeight ) {
+						$cHeight = $pxHeight / $imgHeight;
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					} else {
-						$cHeight = $image->getProperties()['height'] / $pxHeight;
-						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-						$cWidth = $pxWidth / $image->getProperties()['width'];
+						$cHeight = $imgHeight / $pxHeight;
+						$pxWidth = $cropedHeight / $rH * $rW;
+						$cWidth = $pxWidth / $imgWidth;
 						$cropObject->$cropVariant->cropArea->width = $cWidth;
 					}
-				} elseif ($rArr[0] === $rArr[1]) {
+				} elseif ($rW === $rH) {
 					// square
-					if ( $image->getProperties()['width'] > $image->getProperties()['height'] ) {
-						$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-						$cWidth = $pxWidth / $image->getProperties()['width'];
+					if ( $imgWidth > $imgHeight ) {
+						$pxWidth = $cropedHeight / $rH * $rW;
+						$cWidth = $pxWidth / $imgWidth;
 						$cropObject->$cropVariant->cropArea->width = $cWidth;
 					} else {
-						$pxHeight = $cropedWidth / $rArr[0] * $rArr[1];
-						$cHeight = $pxHeight / $image->getProperties()['height'];
+						$pxHeight = $cropedWidth / $rW * $rH;
+						$cHeight = $pxHeight / $imgHeight;
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					}
 				} else {
 					// portrait
-					$pxWidth = $cropedHeight / $rArr[1] * $rArr[0];
-					if ( $image->getProperties()['width'] > $pxWidth ) {
-						$cWidth = $pxWidth / $image->getProperties()['width'];
+					$pxWidth = $cropedHeight / $rH * $rW;
+					if ( $imgWidth > $pxWidth ) {
+						$cWidth = $pxWidth / $imgWidth;
 						$cropObject->$cropVariant->cropArea->width = $cWidth;
 					} else {
-						$cWidth = $image->getProperties()['width'] / $pxWidth;
-						$pxHeight = $cropedWidth / $rArr[1] * $rArr[0];
-						$cHeight = $pxHeight / $image->getProperties()['height'];
+						$pxWidth = !empty($pxWidth) ? $pxWidth : 1;
+						$cWidth = $imgWidth / $pxWidth;
+						$pxHeight = $cropedWidth / $rH * $rW;
+						$cHeight = $pxHeight / $imgHeight;
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					}
 				}
