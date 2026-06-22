@@ -15,7 +15,7 @@ class TabsContainer implements SingletonInterface
 				$processedData['pill']['mainWidth'] = $processedData['pill']['asideWidth'] ? 12 - (int)$processedData['pill']['asideWidth'] : 9;
 			}
 			$processedData['tab']['displayType'] = !empty($flexconf['display_type']) ? $flexconf['display_type'] : '';
-			$processedData['tab']['switchEffect'] =	!empty($parentflexconf['switch_effect']) ? $parentflexconf['switch_effect'] : '';
+			$processedData['tab']['switchEffect'] =	!empty($flexconf['switch_effect']) ? $flexconf['switch_effect'] : '';
 			$processedData['tab']['fill'] =	 !empty($flexconf['fill']) ? ' '.$flexconf['fill']: '';
 		} else {
 			$processedData['tab']['contentByPid'] =	!empty($flexconf['contentByPid']) ? $flexconf['contentByPid'] : 0;

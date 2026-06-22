@@ -269,13 +269,12 @@ final class CdnToLocal extends CommandBase
 }".LF.LF;
             }
         }
-        if (!empty($css)) {
-            $cssFile = $baseDir.'Public/T3SB-CSS/googlefonts.css';
-            if (file_exists($cssFile)) {
-                unlink($cssFile);
-            }
-            GeneralUtility::writeFile($cssFile, $css);
+
+        $cssFile = $baseDir.'Public/T3SB-CSS/googlefonts.css';
+        if (file_exists($cssFile)) {
+            unlink($cssFile);
         }
+        GeneralUtility::writeFile($cssFile, $css);
     }
 
 

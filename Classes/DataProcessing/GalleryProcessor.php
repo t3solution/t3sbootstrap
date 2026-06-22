@@ -25,6 +25,11 @@ class GalleryProcessor implements DataProcessorInterface
     public const gridColumns = 12;
     public const gridGutterWidth = 24; // default 1.5rem => 24px
 
+    protected $galleryWidth = 0;
+    protected $bsGridWidth  = 0;
+    protected $countChildren = 0;
+    protected $mediaWidth  = 0;
+    protected $gridWidth   = 0;
     protected $contentObjectRenderer;
     protected $contentObjectConfiguration;
     protected $processorConfiguration;
@@ -439,6 +444,7 @@ class GalleryProcessor implements DataProcessorInterface
             if ($this->cType === 't3sbs_card' && $this->processedData['data']['tx_container_parent']
                          && $this->processedParentData['CType'] === 'card_wrapper') {
                 $galleryWidth = $galleryWidth - self::gridGutterWidth;
+                $countChildren = 1;
                 if ($this->parentflexconf['card_wrapper'] === 'group' || $this->parentflexconf['card_wrapper'] === 'columns') {
                     $this->processedData['data']['tx_t3sbootstrap_gutters'] = '';
                     $this->galleryData['count']['columns'] = -1;
@@ -477,7 +483,7 @@ class GalleryProcessor implements DataProcessorInterface
         // User entered a predefined width
         if ($this->equalMediaWidth) {
 
-$mediaWidth = $this->checkMediaWidth($this->equalMediaWidth);
+            $mediaWidth = $this->checkMediaWidth($this->equalMediaWidth);
 
             // User entered a predefined width & height
             if ($this->equalMediaHeight) {
@@ -799,6 +805,8 @@ $mediaWidth = $this->checkMediaWidth($mediaWidth);
      */
     protected function getCalculatedGridWidth(int|float $bsGridWidth): int|float
     {
+        $gridWidth = $bsGridWidth;
+        
         switch ($this->processedParentData['CType']) {
             case 'two_columns':
                 if ($this->processedData['data']['colPos'] === 221) {
@@ -936,6 +944,8 @@ $mediaWidth = $this->checkMediaWidth($mediaWidth);
      */
     protected function getMansoryColumns(string $classPrefix): int
     {
+        $mediaWidth = 0;
+        
         # 2 columns
         $pos = strpos($this->parentflexconf['colclass'], $classPrefix.'6');
         if ($pos !== false) {

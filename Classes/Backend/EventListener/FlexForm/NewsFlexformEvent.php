@@ -28,7 +28,7 @@ final readonly class NewsFlexformEvent
 				$file = GeneralUtility::getFileAbsFileName('EXT:t3sbootstrap/Resources/Private/Extensions/news/Configuration/FlexForms/News.xml');
 				if (file_exists($file)) {
 					$content = file_get_contents($file);
-					if ($content && !empty($dataStructure)) {
+					if ($content) {
 						ArrayUtility::mergeRecursiveWithOverrule($dataStructure['sheets'], GeneralUtility::xml2array($content));
 					}
 				}
