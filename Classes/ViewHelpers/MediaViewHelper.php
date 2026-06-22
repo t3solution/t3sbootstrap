@@ -195,6 +195,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			$placeholderInline = !empty($this->arguments['placeholderInline']) ? $this->arguments['placeholderInline'] : TRUE;
 		}
 
+		$breakpointArr = [];
 		foreach( $this->arguments['breakpoints'] as $bpKey=>$breakpoint ) {
 			$breakpointArr[$bpKey]['cropVariant'] = $breakpoint['cropVariant'];
 			$breakpointArr[$bpKey]['media'] = $breakpoint['media'];
