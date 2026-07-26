@@ -449,7 +449,8 @@ class GalleryProcessor implements DataProcessorInterface
                     $this->processedData['data']['tx_t3sbootstrap_gutters'] = '';
                     $this->galleryData['count']['columns'] = -1;
                     // Masonry (columns)
-                    if ($this->parentflexconf['card_wrapper'] === 'columns' && str_contains($this->parentflexconf['colclass'], 'col-lg-')) {
+                    $colclass = (string)($this->parentflexconf['colclass'] ?? '');
+                    if ($this->parentflexconf['card_wrapper'] === 'columns' && str_contains($colclass, 'col-lg-')) {
                         foreach (explode(' ', $this->parentflexconf['colclass']) as $class) {
                             if (str_contains($class, 'col-lg-')) {
                                 $ccArray = explode('-', $class);
