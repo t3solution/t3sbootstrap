@@ -69,37 +69,24 @@
 <f:section name="Assets">
 	<f:asset.script identifier="collapsible_function">
 // Collapsible - Templates/Container/CollapsibleContainer.html
-function t3sbCollapsible(fixedNavbar, navbarHeight) {
-	if ( window.location.hash ) {
-		var idArr = window.location.hash.split('#c'),
-			accordionButton = document.getElementById('c'+idArr[1]);
-		if (accordionButton !== null && accordionButton !== '') {
-			var targetElement = document.getElementById('collapse-'+idArr[1]),
-				collapseTrigger = new bootstrap.Collapse(targetElement),
-				offsetSize = accordionButton.clientHeight;
-			collapseTrigger.show();
-			if ( fixedNavbar ) {
-				offsetSize += navbarHeight;
-			}
-			var scrollTo = Math.round(t3sbOffsetTop(accordionButton)-offsetSize);
-			window.scroll({ top: scrollTo, behavior: 'smooth' });
-		}
-	} else {
-		document.querySelectorAll('.accordion').forEach( acc => {
-			var collapse = document.getElementById(acc.id);
-			collapse.addEventListener('shown.bs.collapse', function (e) {
-				if ( e.target) {
-					var offsetSize = e.target.parentNode.querySelector('.accordion-button').clientHeight;
-					if ( fixedNavbar ) {
-						offsetSize += navbarHeight;
-					}
-					var scrollTo = Math.round(t3sbOffsetTop(e.target.parentNode)-offsetSize);
-					window.scroll({ top: scrollTo, behavior: 'smooth' });
-				}
-			});
-		});
+function t3sbCollapsible() {
+  document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (toggler) {
+	const sel = toggler.dataset.bsTarget || toggler.getAttribute('href');
+	if (!sel) return;
+
+	let target;
+	try { target = document.querySelector(sel); } catch (e) { return; } // ungültiger Selektor
+	if (!target) return;
+
+	// data-bs-parent nur behalten, wenn der Parent wirklich existiert
+	if (target.dataset.bsParent && !document.querySelector(target.dataset.bsParent)) {
+	  delete target.dataset.bsParent;
 	}
+
+	bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
+  });
 }
+
 	</f:asset.script>
 	<f:asset.script identifier="vanilla_collapsible">
 	// Collapsible - CollapsibleContainer.html

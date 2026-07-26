@@ -28,6 +28,8 @@ extraStyle = 0
 allowReferences = 0
 # cat=content/enable/80; type=boolean; label=Supraheader: A short text element placed directly above the heading (Latin supra = “above”)
 supraheader = 0
+# cat=content/enable/90; type=boolean; label=Speaking ID: Human-readable ID for deep links / onepage navigation
+speakingID = 0
 
 # cat=page/enable/20; type=boolean; label=Icon in Page Title: Enable the page_icon (from EXT:iconpicker) in the page title (clear cache)
 fontawesomepagetitle = 1

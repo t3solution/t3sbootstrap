@@ -2477,6 +2477,20 @@
 			</segment>
 		</unit>
 		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapanchor">
+			<segment>
+				<source>Anchor (link)</source>
+				<target>Anker (Sprungmarke)</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapanchor.description">
+			<segment>
+				<source>Speaking ID for deep links / onepage navigation. </source>
+				<target>Sprechende ID für Deep-Links / One-Page Navigation.</target>
+			</segment>
+		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapanimateCssDuration">
 			<segment>
 				<source>Duration in seconds</source>

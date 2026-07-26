@@ -829,6 +829,26 @@ $tempContentColumns = [
             'eval' => 'trim',
         ],
     ],
+    
+    'tx_t3sbootstrap_anchor' => [
+        'exclude' => true,
+        'label' => $dbModel.'.t3sbootstrapanchor',
+        'description' => $dbModel.'.t3sbootstrapanchor.description',
+        'config' => [
+            'type' => 'slug',
+            'size' => 50,
+            'generatorOptions' => [
+                'fields' => [
+                    'input_1',
+                ],
+                'fieldSeparator' => '/',
+                'prefixParentPageSlug' => true,
+            ],
+            'fallbackCharacter' => '-',
+            'eval' => 'uniqueInPid',
+            'default' => '',
+        ],
+    ],
 
 ];
 
@@ -1258,6 +1278,14 @@ ExtensionManagementUtility::addToAllTCAtypes(
     'after:imageborder'
 );
 
+if (array_key_exists('speakingID', $extconf) && $extconf['speakingID'] === '1') {
+    ExtensionManagementUtility::addToAllTCAtypes(
+        'tt_content',
+        'tx_t3sbootstrap_anchor',
+        '',
+        'after:header_link'
+    );
+}
 
 # add palette animate if EXT:content_animations is not loaded
 if (!ExtensionManagementUtility::isLoaded('content_animations')) {

@@ -280,8 +280,16 @@
 	</f:asset.script>
 	<f:for each="{sectionMenu.0.content}" as="element">
 		<f:if condition="{element.data.header} && {element.data.colPos} != 4">
+			<f:if condition="{element.data.tx_t3sbootstrap_anchor}">
+				<f:then>
+					<f:variable name="anchor" value="{element.data.tx_t3sbootstrap_anchor}" />
+				</f:then>
+				<f:else>
+					<f:variable name="anchor" value="c{element.data.uid}" />
+				</f:else>
+			</f:if>
 			<div id="section-item-{element.data.uid}" class="nav-item">
-				<a class="nav-link js-scroll-trigger" href="{page.link}#c{element.data.uid}" target="{element.data.target}"{config.navbar.sectionMenuDataAttr}>
+				<a class="nav-link js-scroll-trigger" href="{page.link}#{anchor}" target="{element.data.target}"{config.navbar.sectionMenuDataAttr}>
 					<f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}">
 						<f:then>
 							<span>{element.data.tx_t3sbootstrap_header_sectionMenu}</span>
@@ -313,7 +321,6 @@
 			<f:variable name="dropdownRight" value="{navbarItem.data.tx_t3sbootstrap_dropdownRight}" />
 		</f:else>
 	</f:if>
-
 	<f:if condition="{config.navbar.navbarPlusicon}">
 		<f:then>
 			<f:render partial="Page/Navbar/Plusicon" arguments="{_all}" />
@@ -345,8 +352,6 @@
 		</a>
 		</f:else>
 	</f:if>
-
-
 	<f:if condition="{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}">
 		<f:then>
 			<f:asset.css identifier="megaNavbar" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />

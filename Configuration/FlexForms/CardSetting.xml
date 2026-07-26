@@ -564,6 +564,14 @@
 							<type>link</type>
 						</config>
 					</multiImage.socialmedia.skype>
+					<iconAsImg>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.t3sbs_mediaobject.iconAsImg</label>
+						<displayCond>USER:T3SBS\T3sbootstrap\UserFunction\TcaMatcher->iconpackLoaded</displayCond>
+						<config>
+							<type>user</type>
+							<renderType>IconpackWizard</renderType>
+						</config>
+					</iconAsImg>
 				</el>
 			</ROOT>
 		</sDEF>

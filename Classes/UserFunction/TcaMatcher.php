@@ -518,6 +518,19 @@ class TcaMatcher
     
         return $show;
     }
+    
+    
+    public function iconpackLoaded(array $arguments): bool
+    {
+        $show = FALSE;
+    
+        if (ExtensionManagementUtility::isLoaded('iconpack')) {
+            $show = TRUE;
+        }
+
+        return $show;
+    }
+    
 
 
 }

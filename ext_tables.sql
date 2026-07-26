@@ -187,7 +187,8 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_iconPositionBehind tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_cssfile int unsigned DEFAULT 0 NOT NULL,
 	tx_t3sbootstrap_jsfile int unsigned DEFAULT 0 NOT NULL,
-	tx_t3sbootstrap_supraheader varchar(255) DEFAULT '' NOT NULL
+	tx_t3sbootstrap_supraheader varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_anchor varchar(255) DEFAULT '' NOT NULL
 );
 
 

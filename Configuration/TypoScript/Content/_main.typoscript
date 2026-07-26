@@ -1,1 +1,10 @@
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Content/Content.typoscript'
+
+tt_content.stdWrap.prepend = TEXT
+tt_content.stdWrap.prepend {
+	field = tx_t3sbootstrap_anchor
+	required = 1
+	htmlSpecialChars = 1
+	wrap = <span id="|" class="t3sbs-anchor"></span>
+	if.isTrue.field = sectionIndex
+}

@@ -55,7 +55,7 @@ class BootstrapProcessor implements DataProcessorInterface
     public const TX_CONTAINER_GRID = 'two_columns,three_columns,four_columns,six_columns,row_columns';
     public const T3SBS_ELEMENTS = 't3sbs_mediaobject,t3sbs_card,t3sbs_carousel,t3sbs_button,t3sbs_fluidtemplate,t3sbs_gallery,t3sbs_toast,t3sbs_assets';
     public const TX_CONTAINER = 'button_group,background_wrapper,parallax_wrapper,autoLayout_row,container,carousel_container,collapsible_container,collapsible_accordion,modal,tabs_container,tabs_tab,listGroup_wrapper,masonry_wrapper,swiper_container,toast_container,card_wrapper';
-
+    public const ANIMATION_PREFIX = 'tx_content_animations_';
 
     public function __construct(
         private readonly FileRepository $fileRepository,
@@ -171,7 +171,7 @@ class BootstrapProcessor implements DataProcessorInterface
                 ->select('*')
                 ->from('tt_content')
                 ->where(
-                    $queryBuilder->expr()->gt('uid', $queryBuilder->createNamedParameter((int)$uid, Connection::PARAM_INT))
+                    $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter((int)$uid, Connection::PARAM_INT))
                 )
                 ->executeQuery()
                 ->fetchAssociative();
@@ -474,23 +474,40 @@ class BootstrapProcessor implements DataProcessorInterface
         return $processedData;
     }
 
-
+    
     private function generateAnimationAttributeSettingsFromAnimationsArray(array $animationSettingsArray): string
     {
-        $animationSettings = '';
-
-        foreach ($animationSettingsArray as $key => $value) {
-            if (str_starts_with($key, 'tx_content_animations_')) {
-                if ($key === 'tx_content_animations_animation') {
-                    $newphrase = str_replace('tx_content_animations_animation', 'data-aos', $key);
-                    $animationSettings .= $newphrase . '="' . htmlspecialchars($value) . '" ';
-                } else {
-                    $newphrase = str_replace('tx_content_animations_', 'data-aos-', $key);
-                    $animationSettings .= $newphrase . '="' . htmlspecialchars($value) . '" ';
-                }
-            }
+        $animation = trim((string)($animationSettingsArray[self::ANIMATION_PREFIX . 'animation'] ?? ''));
+        if ($animation === '') {
+            return '';
         }
-        return ' '.$animationSettings;
+    
+        $boolKeys = ['once', 'mirror'];
+        $attributes = ['data-aos' => $animation];
+    
+        foreach ($animationSettingsArray as $key => $value) {
+            if (!str_starts_with($key, self::ANIMATION_PREFIX)) {
+                continue;
+            }
+            $name = substr($key, strlen(self::ANIMATION_PREFIX));
+            if ($name === 'animation' || $value === null || $value === '') {
+                continue;
+            }
+            if (in_array($name, $boolKeys, true)) {
+                if ((int)$value !== 1) {
+                    continue; // AOS-Default ist false
+                }
+                $value = 'true';
+            }
+            $attributes['data-aos-' . str_replace('_', '-', $name)] = (string)$value;
+        }
+    
+        $out = '';
+        foreach ($attributes as $attr => $val) {
+            $out .= $attr . '="' . htmlspecialchars($val, ENT_QUOTES) . '" ';
+        }
+    
+        return rtrim($out);
     }
 
 

@@ -46,12 +46,14 @@
 <f:if condition="{card.horizontal}">
 	<f:variable name="textColumnsWidth">{f:if(condition: t3sbFlexform.imageColumnsWidth, then: '{12 - t3sbFlexform.imageColumnsWidth}', else: '8')}</f:variable>
 	<f:variable name="imageColumnsWidth">{f:if(condition: t3sbFlexform.imageColumnsWidth, then: '{t3sbFlexform.imageColumnsWidth}', else: '4')}</f:variable>
-	<div class="row g-0">
-		<div class="col-md-{imageColumnsWidth}">
-			<f:render partial="Media/RawGallery" arguments="{_all}" />
+	<div class="row g-0 h-100">
+		<div class="col-md-{imageColumnsWidth} d-flex">
+			<f:render section="Media" arguments="{_all}" />
 		</div>
 		<div class="col-md-{textColumnsWidth}{f:if(condition: t3sbFlexform.alignSelfCenter, then: ' align-self-center')}">
 </f:if>
+
+
 <f:comment>Card Header</f:comment>
 <f:if condition="{data.tx_t3sbootstrap_cardheader}">
 	<div class="card-header">{record -> f:render.text(field: 'tx_t3sbootstrap_cardheader')}</div>
@@ -64,10 +66,10 @@
 </f:if>
 <f:comment>Card Image (top)</f:comment>
 <f:if condition="{data.imageorient} == 'top' && !{card.horizontal}">
-	<f:render partial="Media/RawGallery" arguments="{_all}" />
+	<f:render section="Media" arguments="{_all}" />
 </f:if>
 <f:comment>Card Text (top)</f:comment>
-<f:if condition="{data.bodytext} || ({card.title.position} == 'default') && ({data.header} || {data.subheader})">
+<f:if condition="{data.bodytext} || (({card.title.position} == 'default') && ({data.header} || {data.subheader}))">
 	<f:render section="TextTop" arguments="{_all}" />
 </f:if>
 <f:comment>Card List</f:comment>
@@ -80,7 +82,7 @@
 </f:if>
 <f:comment>Card Image (bottom)</f:comment>
 <f:if condition="{data.imageorient} == 'bottom' && !{card.horizontal}">
-	<f:render partial="Media/RawGallery" arguments="{_all}" />
+	<f:render section="Media" arguments="{_all}" />
 </f:if>
 <f:if condition="({data.tx_t3sbootstrap_cardfooter} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
 	<div class="card-footer">
@@ -137,7 +139,7 @@
 				{bodytextTop -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1')}
 			</f:then>
 			<f:else>
-				{bodytextTop}
+				{bodytextTop -> f:format.raw()}
 			</f:else>
 		</f:if>
 		<f:if condition="{data.tx_t3sbootstrap_bodytext} && ({card.image.overlay} || {card.mobile.overlay})">
@@ -146,7 +148,7 @@
 					{bodytextBottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1')}
 				</f:then>
 				<f:else>
-					{bodytextBottom}
+					{bodytextBottom -> f:format.raw()}
 				</f:else>
 			</f:if>
 		</f:if>
@@ -165,7 +167,7 @@
 				{bodytextBottom -> f:format.crop(maxCharacters: '{card.cropMaxCharacters}', respectWordBoundaries:'1')}
 			</f:then>
 			<f:else>
-				{bodytextBottom}
+				{bodytextBottom -> f:format.raw()}
 			</f:else>
 		</f:if>
 	</div>
@@ -185,12 +187,35 @@
 		<f:link.typolink parameter="{card.button.link}" class="btn btn{card.button.linkClass} mt-2" additionalAttributes="{role: 'button'}">
 			<f:if condition="{card.button.text}">
 				<f:then>
-				x	{card.button.text -> f:format.raw()}
+					{card.button.text -> f:format.raw()}
 				</f:then>
 				<f:else>
 					{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:more')}
 				</f:else>
 			</f:if>
 		</f:link.typolink>
+	</f:if>
+</f:section>
+
+<f:section name="Media">
+	<f:if condition="{settings.iconpack.cssClass} && {t3sbFlexform.iconAsImg}">
+		<f:then>
+			<f:if condition="{record.tx_t3sbootstrap_bgopacity} < 1">
+				<f:then>
+					<f:variable name="iconColor"> text-{record.tx_t3sbootstrap_contextcolor}</f:variable>
+				</f:then>
+				<f:else>
+					<f:variable name="iconColor"></f:variable>
+				</f:else>
+			</f:if>
+			<f:variable name="selfCenter">{f:if(condition: t3sbFlexform.alignSelfCenter, then: ' align-self-center', else: '')}</f:variable>
+			<f:variable name="media">
+				<t3sb:icon iconfig="{t3sbFlexform.iconAsImg}" additionalAttributes="{class:'text-center w-100 mt-3{selfCenter}{iconColor}'}" />
+			</f:variable>
+			{media -> f:format.raw()}
+		</f:then>
+		<f:else>
+				<f:render partial="Media/RawGallery" arguments="{_all}" />
+		</f:else>
 	</f:if>
 </f:section>
