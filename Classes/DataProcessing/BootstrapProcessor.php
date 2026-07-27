@@ -176,15 +176,17 @@ class BootstrapProcessor implements DataProcessorInterface
                 ->executeQuery()
                 ->fetchAssociative();
 
-            $shortcutContainer = $shortcutRecord['tx_t3sbootstrap_container'];
-            $shortcutExtraClass = $shortcutRecord['tx_t3sbootstrap_extra_class'];
-            $shortcutFrame = $shortcutRecord['frame_class'];
-            $shortcutLayout = (string)$shortcutRecord['layout'];
-
-            $processedData['shortcuts'] = str_replace($shortcutContainer, $dataContainer, $processedData['shortcuts']);
-            $processedData['shortcuts'] = str_replace($shortcutExtraClass, $dataExtraClass, $processedData['shortcuts']);
-            $processedData['shortcuts'] = str_replace($shortcutFrame, $dataFrame, $processedData['shortcuts']);
-            $processedData['shortcuts'] = str_replace($shortcutLayout, $dataLayout, $processedData['shortcuts']);
+            if (!empty($shortcutRecord['uid'])) {
+                $shortcutContainer = $shortcutRecord['tx_t3sbootstrap_container'];
+                $shortcutExtraClass = $shortcutRecord['tx_t3sbootstrap_extra_class'];
+                $shortcutFrame = $shortcutRecord['frame_class'];
+                $shortcutLayout = (string)$shortcutRecord['layout'];
+    
+                $processedData['shortcuts'] = str_replace($shortcutContainer, $dataContainer, $processedData['shortcuts']);
+                $processedData['shortcuts'] = str_replace($shortcutExtraClass, $dataExtraClass, $processedData['shortcuts']);
+                $processedData['shortcuts'] = str_replace($shortcutFrame, $dataFrame, $processedData['shortcuts']);
+                $processedData['shortcuts'] = str_replace($shortcutLayout, $dataLayout, $processedData['shortcuts']);
+            }
         }
 
 
