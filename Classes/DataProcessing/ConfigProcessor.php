@@ -51,6 +51,10 @@ class ConfigProcessor implements DataProcessorInterface
 		$site                 = $processedData['site'];
 		$siteSettings         = $site->getConfiguration()['settings']['bootstrap'];
 		$processedRecordVars  = $contentObjectConfiguration['settings.']['config.'];
+
+		// Type Normalization (TypoScript/DB returns strings)
+		$processedRecordVars['homepageUid'] = (int)($processedRecordVars['homepageUid'] ?? 0) ?: 1;
+			
 		$currentPage          = $pageInformation->getPageRecord();
 		$backendLayout        = $processedData['data']['currentValue_kidjls9dksoje'];
 
@@ -78,7 +82,7 @@ class ConfigProcessor implements DataProcessorInterface
 	): array {
 		$company    = $vars['company'] ?? '';
 		$companyArr = GeneralUtility::trimExplode('|', $company);
-		$langUid    = $processedData['data']['sys_language_uid'];
+		$langUid = (int)($processedData['data']['sys_language_uid'] ?? 0);
 
 		if ($langUid && !empty($company)) {
 			$company = !empty($companyArr[$langUid]) ? $companyArr[$langUid] : $company;
@@ -243,6 +247,9 @@ class ConfigProcessor implements DataProcessorInterface
 		$cfg['clickableparent'] = (!empty($rootLine[1]) && $rootLine[1]['doktype'] === 4 && empty($vars['navbarPlusicon']))
 			? 1 : (int)$vars['navbarClickableparent'];
 
+		$cfg['clickableparent'] = (!empty($rootLine[1]) && (int)($rootLine[1]['doktype'] ?? 0) === 4 && empty($vars['navbarPlusicon']))
+			? 1 : (int)$vars['navbarClickableparent'];
+			
 		$cfg['image']          = $vars['navbarImage'] ?: ($settings['navbar.']['image.']['defaultPath'] ?? '');
 		$cfg['container']      = $vars['navbarContainer']     ?? '';
 		$cfg['innercontainer'] = $vars['navbarInnercontainer'] ?: 'container';
@@ -352,7 +359,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$cfg['colorschemes'] = $colorParts[0];
 		$cfg['gradient']     = $cfg['gradient'] ?? ($colorParts[1] ?? '');
 
-		if ($vars['homepageUid'] === $pageInformation->getId() && $vars['contentOnlyOnRootpage']) {
+		if ((int)$vars['homepageUid'] === (int)$pageInformation->getId() && $vars['contentOnlyOnRootpage']) {
 			$cfg['enable'] = false;
 		}
 
@@ -514,7 +521,7 @@ class ConfigProcessor implements DataProcessorInterface
 			return $processedData;
 		}
 
-		if ($vars['homepageUid'] === $pageInformation->getId() && $vars['breadcrumbNotonrootpage']) {
+		if ((int)$vars['homepageUid'] === (int)$pageInformation->getId() && $vars['breadcrumbNotonrootpage']) {
 			$processedData['config']['breadcrumb']['enable'] = false;
 			$processedData['config']['breadcrumb']['bottom'] = false;
 			return $processedData;
