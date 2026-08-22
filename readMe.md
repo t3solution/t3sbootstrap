@@ -16,6 +16,7 @@ Editors get rich, ready-to-use Bootstrap content elements. Integrators get a cle
 
 ## Table of Contents
 
+- [What's new in 5.3.50](#whats-new-in-5350)
 - [Highlights](#highlights)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -30,6 +31,46 @@ Editors get rich, ready-to-use Bootstrap content elements. Integrators get a cle
 
 ---
 
+## What's new in 5.3.50
+
+**`EXT:t3sb_package` is no longer required.** Everything the extension generates now lives below
+`typo3temp/assets/t3sbootstrap/` instead of being written into a site package:
+
+```
+typo3temp/assets/t3sbootstrap/
+    TypoScript/       t3sbconstants.typoscript, t3sbsetup.typoscript
+    T3SB-SCSS/        custom-variables-<uid>.scss, custom-<uid>.scss
+    T3SB-CSS/         downloaded CSS
+    T3SB-JS/          downloaded JS
+    T3SB-Bootstrap/   Bootstrap sources from the release zip
+    css/              compiled CSS
+```
+
+None of it is a source: the TypoScript and the SCSS are derived from the configuration record in
+the database, the compiled CSS is derived from those, and the downloads are reproducible with
+`t3sbootstrap:cdnToLocal`. A middleware rewrites missing TypoScript and SCSS from the database on
+the next frontend request — after a deployment, after *Remove Temporary Assets*, or on a fresh
+install.
+
+Further changes:
+
+- **Upgrade wizard** *Move generated assets out of EXT:t3sb_package* copies existing files to the
+  new location once. Nothing is deleted.
+- **Configuration transfer** — export and import a site's configuration as JSON directly in the
+  T3SB backend module, with three import modes (update in place / replace / add).
+- **RTE** — the alert box is now a dropdown offering all eight Bootstrap 5 contextual variants,
+  and a dedicated stylesheet shows the alert colors inside the editor.
+- **New setting `flexformDir`** — the directory holding your own FlexForm overrides is now
+  configurable instead of being fixed to `EXT:t3sb_package/Configuration/FlexForms/`.
+- **`b13/container` moves to `^4.1`.** If your root `composer.json` pins an older major, raise it:
+  `composer require "b13/container:^4.1" -W`
+- Numerous bug fixes across frontend rendering, the migration commands and the TCA.
+
+After updating, flush all caches (several constructor signatures changed, the compiled DI
+container has to be rebuilt) and run the database schema update.
+
+---
+
 ## Highlights
 
 - **Bootstrap 5 out of the box** — all components, utilities and grid classes ready to use
@@ -38,16 +79,17 @@ Editors get rich, ready-to-use Bootstrap content elements. Integrators get a cle
 - **Container-based layouts** — built on `EXT:container` for clean, structured content
 - **Site Sets support** — uses the modern TYPO3 v13+ Site Settings approach (recommended over legacy "static templates")
 - **Dark mode, breakpoints, utility colors** — configurable from the backend module
-- **CDN by default, local assets optional** — load CSS/JS from CDN or move them into your own site package
-- **Extendable via companion extensions** — sitepackage, swiper slider, iconpack and more (see [ecosystem](#the-t3sbootstrap-ecosystem))
+- **CDN by default, local assets optional** — load CSS/JS from CDN or serve them locally from `typo3temp/assets/`
+- **Self-contained** — no companion site package required; generated files are restored from the database when missing
+- **Extendable via companion extensions** — theme builder, swiper slider, iconpack and more (see [ecosystem](#the-t3sbootstrap-ecosystem))
 
 ## Requirements
 
-| Component         | Version            |
-|-------------------|--------------------|
-| TYPO3             | `>= 14.3` |
-| `container`       | required |
-| PHP               | as required by your TYPO3 version |
+| Component        | Version   |
+|------------------|-----------|
+| TYPO3            | `^14.3`   |
+| PHP              | `>= 8.2`  |
+| `b13/container`  | `^4.1`    |
 
 > **Always check the latest requirements** in `composer.json` of the [current release](https://github.com/t3solution/t3sbootstrap/releases) — supported TYPO3 versions evolve with each major release.
 
@@ -70,7 +112,7 @@ vendor/bin/typo3 cache:flush
 
 ### Via TYPO3 Extension Repository (TER)
 
-1. Install the required dependencies first: [`container`](https://extensions.typo3.org/extension/container) and [`content_defender`](https://extensions.typo3.org/extension/content_defender).
+1. Install the required dependency first: [`container`](https://extensions.typo3.org/extension/container).
 2. Download and install `t3sbootstrap` via the **Extension Manager** in the TYPO3 backend.
 3. Flush all caches.
 
@@ -86,10 +128,19 @@ After installation, complete these steps to get a working frontend:
    Open the **"T3sb"** backend module and configure global defaults (navbar, footer, breakpoints, colors, etc.) for your site.
 
 3. **Assets: CDN vs. local**
-   By default, Bootstrap CSS & JS are loaded via CDN. For production it's recommended to serve them locally — either from `fileadmin/` or, ideally, from the companion site package `EXT:t3sb_package`.
+   By default, Bootstrap CSS & JS are loaded via CDN. For production, serve them locally: run the
+   Scheduler task **"T3SB CDN to local"** (`vendor/bin/typo3 t3sbootstrap:cdnToLocal`), then switch
+   off *Enable CDN* in the site settings. The files end up in `typo3temp/assets/t3sbootstrap/`.
 
-4. **Scheduler task (optional but recommended)**
-   When using a local site package, enable the corresponding Scheduler task (Console command) to keep generated assets in sync.
+4. **Custom SCSS (optional)**
+   With *Enable CDN* switched off you can activate *Enable Custom SCSS* and run
+   `vendor/bin/typo3 t3sbootstrap:customScss` with the root page ID. Bootstrap variables and your
+   own SCSS are then editable in the T3SB backend module.
+
+> **Deployments:** the CDN downloads are the only files that cannot be rebuilt from the database.
+> If `typo3temp/` is not carried over between releases, run `t3sbootstrap:cdnToLocal` again after
+> each deployment. The backend module points this out when local delivery is configured and the
+> files are missing.
 
 ## Configuration
 
@@ -103,9 +154,12 @@ For the full list, see the [official documentation](https://www.t3sbootstrap.de/
 
 | Extension          | Purpose                                                                 |
 |--------------------|-------------------------------------------------------------------------|
-| `t3sb_package`     | Recommended **site package** to host local assets, custom CSS/SCSS, FontAwesome Pro, etc. |
+| `t3sbootstrap_builder` | [Visual Bootstrap 5.3 theme builder](https://github.com/t3solution/t3sbootstrap_builder) as a backend module — around 200 variables with live preview. Version 1.0.2 requires t3sbootstrap `>= 5.3.50`. |
 | `t3s_swiper`       | [Swiper slider](https://github.com/t3solution/t3s_swiper) content element, based on Content Blocks |
 | `iconpack` / `iconpack_fontawesome` | Icon picker integration (replacement for `rte_ckeditor_fontawesome`) |
+
+> `t3sb_package` is **no longer needed** as of 5.3.50. Existing installations can keep it
+> installed; it is simply not written to any more.
 
 ## Documentation & Demos
 
