@@ -5,6 +5,7 @@ namespace T3SBS\T3sbootstrap\Controller;
 
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use T3SBS\T3sbootstrap\Service\AssetPathService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -33,17 +34,20 @@ abstract class AbstractController extends ActionController
 
     public function initializeAction(): void
     { 
-        if (!empty($this->request->getArgument('id') ?? 0)) {
+        if ($this->request->hasArgument('id') && !empty($this->request->getArgument('id'))) {
             $this->site = $this->request->getAttribute('site');
             $this->rootPageId = $this->site->getRootPageId();
             $this->currentUid = !empty($this->request->getQueryParams()['id']) ? (int) $this->request->getQueryParams()['id'] : 0;
-            $this->currentPage = BackendUtility::getRecord('pages', $this->currentUid, 'uid, is_siteroot, doktype, title');
+            $this->currentPage = BackendUtility::getRecord('pages', $this->currentUid, 'uid, is_siteroot, doktype, title') ?? [];
+            if (empty($this->currentPage)) {
+                return;
+            }
             $this->doktype = $this->currentPage['doktype'];
             $this->isSiteroot = (bool) $this->currentPage['is_siteroot'];
             $this->isAdmin = $GLOBALS['BE_USER']->isAdmin();
             $this->configRepository = GeneralUtility::makeInstance(ConfigRepository::class);
             $this->rootConfig = $this->configRepository->findOneBy(['pid' => $this->rootPageId]);
-            $this->baseDir = GeneralUtility::getFileAbsFileName("EXT:t3sb_package/Configuration/");
+            $this->baseDir = GeneralUtility::makeInstance(AssetPathService::class)->getPath();
             if ($this->currentPage['uid'] === $this->rootPageId) {
                 $this->hasSet = true;
             } else {
@@ -73,7 +77,7 @@ abstract class AbstractController extends ActionController
         }
 
         if ($this->currentUid) {
-            $hiddenPage = BackendUtility::getRecord('pages', $this->currentUid, 'hidden, deleted');
+            $hiddenPage = BackendUtility::getRecord('pages', $this->currentUid, 'hidden, deleted') ?? [];
             if (in_array(1, $hiddenPage, true)) {
                 $notification['hidden']['title'] = LocalizationUtility::translate('notificationtitle_4','t3sbootstrap');
                 $notification['hidden']['message'] = LocalizationUtility::translate('notificationmessage_4','t3sbootstrap');
@@ -87,7 +91,16 @@ abstract class AbstractController extends ActionController
             }
         }
 
-        if (empty($this->request->getArgument('id') ?? 0)) {
+        // local delivery configured but the files are not there - TYPO3 would
+        // silently drop them from includeCSS/includeJS, so say it out loud
+        if (empty($this->settings['cdn']['enable'])
+            && GeneralUtility::makeInstance(AssetPathService::class)->resolveFile('T3SB-CSS/bootstrap.min.css') === null
+        ) {
+            $notification['assets']['title'] = LocalizationUtility::translate('notificationtitle_7','t3sbootstrap');
+            $notification['assets']['message'] = LocalizationUtility::translate('notificationmessage_7','t3sbootstrap');
+        }
+
+        if (!$this->request->hasArgument('id') || empty($this->request->getArgument('id'))) {
             $notification['idNull']['title'] = LocalizationUtility::translate('notificationtitle_6','t3sbootstrap');
             $notification['idNull']['message'] = LocalizationUtility::translate('notificationmessage_6','t3sbootstrap');
         }

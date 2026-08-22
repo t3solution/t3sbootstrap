@@ -6,6 +6,7 @@ namespace T3SBS\T3sbootstrap\Updates;
 use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 #[UpgradeWizard('t3sbootstrap_backendlayoutUpgradeWizard')]
@@ -94,6 +95,8 @@ final class BackendlayoutUpgradeWizard implements UpgradeWizardInterface
 	{
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('pages');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
 		return $queryBuilder
 			->select('uid', 'backend_layout', 'backend_layout_next_level')

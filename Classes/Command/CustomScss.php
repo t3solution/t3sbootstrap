@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
+use T3SBS\T3sbootstrap\Service\AssetPathService;
 
 #[AsCommand('t3sbootstrap:customScss', 'T3SB Custom Scss - write a custom scss file')]
 final class CustomScss extends CommandBase
@@ -24,20 +25,47 @@ final class CustomScss extends CommandBase
 
     public const BOOTSTRAPLATEST = '5.3.8';
     public const BOOTSWATCHURL   = 'https://bootswatch.com/5/';
-    public const BASEDIR         = 'EXT:t3sb_package/Resources/';
-    public const SCSSPATH        = self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss/';
-    public const VARIABLESPATH   = self::BASEDIR.'Public/T3SB-SCSS/';
-    public const BOOTSTRAPPATH   = self::BASEDIR.'Public/T3SB-SCSS/Bootstrap/';
 
-    
+
    public function __construct(
        private readonly SiteFinder $siteFinder,
        private readonly ConfigRepository $configRepository,
        private readonly PersistenceManager $persistenceManager,
        private readonly RequestFactory $requestFactory,
        private readonly FlashMessageService $flashMessageService,
+       private readonly AssetPathService $assetPathService,
    ) {
        parent::__construct();
+   }
+
+
+   /**
+    * Generated: the bootstrap sources extracted from the GitHub archive
+    *
+    */
+   private function getScssPath(): string
+   {
+      return $this->assetPathService->getPath('T3SB-Bootstrap/Bootstrap/scss');
+   }
+
+
+   /**
+    * Editable sources: custom-variables-<uid>.scss and custom-<uid>.scss
+    *
+    */
+   private function getVariablesPath(): string
+   {
+      return $this->assetPathService->getScssPath();
+   }
+
+
+   /**
+    * Generated: the include file bootstrap-<uid>.scss
+    *
+    */
+   private function getBootstrapPath(): string
+   {
+      return $this->assetPathService->getPath('T3SB-SCSS/Bootstrap');
    }
     
     
@@ -86,8 +114,8 @@ final class CustomScss extends CommandBase
 
          if ($settings['bootstrap']['cdn']['customScss'] === true && $settings['bootstrap']['cdn']['enable'] === false) {
 
-            $bootstrapScssAbsPath = GeneralUtility::getFileAbsFileName(self::SCSSPATH);
-            $uploadScssAbsPath = GeneralUtility::getFileAbsFileName(self::BOOTSTRAPPATH);
+            $bootstrapScssAbsPath = $this->getScssPath();
+            $uploadScssAbsPath = $this->getBootstrapPath();
 
             if (!is_dir($bootstrapScssAbsPath)) {
                 if (!mkdir($bootstrapScssAbsPath, 0755, true) && !is_dir($bootstrapScssAbsPath)) {
@@ -113,18 +141,19 @@ final class CustomScss extends CommandBase
             $includeFileName = 'bootstrap-'.$rootPageId.'.scss';
             $includeFile = $uploadScssAbsPath.$includeFileName;
 
-            if (!file_exists($includeFile)) {
-
-               $customDir = self::VARIABLESPATH;
-
-               $includeContent = '
-@import "'.$customDir.'custom-variables-'.$rootPageId.'";
-@import "'.self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss/bootstrap";
-@import "'.$customDir.'custom-'.$rootPageId.'";
+            // Always rewritten, never only when missing: a file left over from an
+            // older version still carries the import paths of that version, and a
+            // stale import kills the compile step.
+            // Paths are relative to $includeFile in T3SB-SCSS/Bootstrap/ - an
+            // absolute server path would be baked in and, if it ever fails to
+            // resolve, scssphp writes it verbatim into the public css.
+            $includeContent = '
+@import "../custom-variables-'.$rootPageId.'";
+@import "../../T3SB-Bootstrap/Bootstrap/scss/bootstrap";
+@import "../custom-'.$rootPageId.'";
             ';
 
-                GeneralUtility::writeFile($includeFile, $includeContent);
-            }
+            GeneralUtility::writeFile($includeFile, $includeContent);
 
             $tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
             $this->deleteFilesFromDirectory($tempPath);
@@ -146,7 +175,7 @@ final class CustomScss extends CommandBase
    
             GeneralUtility::writeFile($customFile, $customContent);
 
-            if (is_dir(GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss/'))) {
+            if (is_dir($bootstrapScssAbsPath)) {
                 return Command::SUCCESS;
             }
 
@@ -163,7 +192,7 @@ final class CustomScss extends CommandBase
 
    private function writeCustomFile(bool $keepVariables, int $rootPageId, string $customFileName, array $settings, string $name): void
    {
-         $bootstrapVariablesAbsPath = GeneralUtility::getFileAbsFileName(self::VARIABLESPATH);         
+         $bootstrapVariablesAbsPath = $this->getVariablesPath();
          // delete all files with timestamp except the last 30 (true)
          $this->deleteFilesFromDirectory($bootstrapVariablesAbsPath, true);
 
@@ -237,9 +266,10 @@ final class CustomScss extends CommandBase
 
    private function getBootstrapFiles(string $bootstrapVersion): void
    {
-      $localZipPath = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/');
-      $localZipFile = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/t3sb.zip');
-      $extractTo = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/');
+      $t3sbBootstrapPath = $this->assetPathService->getPath('T3SB-Bootstrap');
+      $localZipPath = $t3sbBootstrapPath.'Bootstrap/';
+      $localZipFile = $t3sbBootstrapPath.'t3sb.zip';
+      $extractTo = $t3sbBootstrapPath.'Bootstrap/';
 
       if (is_dir($localZipPath)) {
          $this->rmDir($localZipPath);
@@ -261,14 +291,14 @@ final class CustomScss extends CommandBase
              $this->addCustomMessage('Sorry ZIP creation failed at this time! Try again later.', 'ERROR');
          }
 
-         $renameFrom = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/bootstrap-'.$bootstrapVersion.'/scss');
-         $renameTo = GeneralUtility::getFileAbsFileName(self::BASEDIR.'Public/T3SB-Bootstrap/Bootstrap/scss');
+         $renameFrom = $t3sbBootstrapPath.'Bootstrap/bootstrap-'.$bootstrapVersion.'/scss';
+         $renameTo = $t3sbBootstrapPath.'Bootstrap/scss';
 
          if (is_dir($renameFrom)) {
              rename($renameFrom, $renameTo);
          }
 
-         $this->rmDir(GeneralUtility::getFileAbsFileName(self::BASEDIR . 'Public/T3SB-Bootstrap/Bootstrap/bootstrap-' . $bootstrapVersion));
+         $this->rmDir($t3sbBootstrapPath . 'Bootstrap/bootstrap-' . $bootstrapVersion);
 
          if (file_exists($localZipFile)) {
             unlink($localZipFile);

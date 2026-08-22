@@ -8,7 +8,7 @@ categories:
 
   Bootstrap.config.cdn:
     label: 'T3SB CDN, SCSS and Google Fonts'
-    description: 'After a change, a scheduler task must be executed to write the required files to EXT:t3sb_package/!'
+    description: 'After a change, a scheduler task must be executed to write the required files to typo3temp/assets/t3sbootstrap/!'
     parent: Bootstrap
 
   Bootstrap.optional.jquery:

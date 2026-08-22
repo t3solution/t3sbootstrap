@@ -20,7 +20,7 @@
 				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.compat.css" />
 		</f:then>
 		<f:else>
-			<f:asset.css identifier="animateCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/animate.compat.css" />
+			<f:asset.css identifier="animateCss" href="{settings.assetPath}T3SB-CSS/animate.compat.css" />
 		</f:else>
 	</f:if>
 	<f:if condition="{animateCssRepeat}">
@@ -112,8 +112,8 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/baguetteBox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/Resources/Public/T3SB-JS/baguetteBox.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/baguetteBox.min.js" />
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">
@@ -134,8 +134,8 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/halkaBox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/Resources/Public/T3SB-JS/halkaBox.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/halkaBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/halkaBox.min.js" />
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox-{data.uid}">
@@ -154,8 +154,8 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/glightbox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/Resources/Public/T3SB-JS/glightbox.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/glightbox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/glightbox.min.js" />
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">

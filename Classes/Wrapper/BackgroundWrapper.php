@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Wrapper;
 
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use T3SBS\T3sbootstrap\Helper\StyleHelper;
@@ -149,7 +151,7 @@ class BackgroundWrapper implements SingletonInterface
         if (str_contains($raw, ':')) {
             [$w, $h] = explode(':', $raw, 2);
         } elseif (str_contains($raw, '/')) {
-            [$h, $w] = explode('/', $raw, 2);
+            [$w, $h] = explode('/', $raw, 2);
         } elseif (str_contains($raw, 'x')) {
             [$w, $h] = explode('x', $raw, 2);
         } else {
@@ -163,13 +165,13 @@ class BackgroundWrapper implements SingletonInterface
     private function countOverlayChildren(int $parentUid, int $languageUid): int
     {
         $qb = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $qb->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
         return (int) $qb
             ->count('uid')
             ->from('tt_content')
             ->where(
                 $qb->expr()->eq('sys_language_uid', $qb->createNamedParameter($languageUid, Connection::PARAM_INT)),
-                $qb->expr()->eq('tx_container_parent', $qb->createNamedParameter($parentUid, Connection::PARAM_INT)),
-                $qb->expr()->eq('deleted', 0)
+                $qb->expr()->eq('tx_container_parent', $qb->createNamedParameter($parentUid, Connection::PARAM_INT))
             )
             ->executeQuery()
             ->fetchOne();

@@ -32,6 +32,7 @@ class InfoImageViewHelper extends AbstractViewHelper
 				->from('sys_file_reference')
 				->where(
 					$contentQueryBuilder->expr()->eq('uid_foreign', $contentQueryBuilder->createNamedParameter($this->arguments['uid'], Connection::PARAM_INT)),
+					$contentQueryBuilder->expr()->eq('tablenames', $contentQueryBuilder->createNamedParameter('tt_content')),
 				)
 				->executeQuery()
 				->fetchAllAssociative();

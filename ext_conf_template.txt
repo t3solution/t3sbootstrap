@@ -71,3 +71,6 @@ customSubtitleColor =
 figureClass =
 # cat=value picker presets/b-config/70; type=string; label=Custom "Extra Class - image-tag value picker" for table sys_file_reference field tx_t3sbootstrap_extra_imgclass: comma separated list is expected
 imageClass =
+
+# cat=basic/enable/6; type=string; label=FlexForm extension directory: Directory holding your own FlexForm overrides, e.g. EXT:my_sitepackage/Configuration/FlexForms/. If empty, EXT:t3sb_package/Configuration/FlexForms/ is used as long as that extension is installed - without it the FlexForms are not extended. Only evaluated if "flexformExtend" is enabled.
+flexformDir =

@@ -10,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 
 #[AsCommand('t3sbootstrap:textpicToTextmedia', 'Migrate CType textpic to textmedia')]
 class TextpicToTextmedia extends CommandBase
@@ -25,6 +26,8 @@ class TextpicToTextmedia extends CommandBase
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 		$contentQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+		$contentQueryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $textpics = $contentQueryBuilder
              ->select('uid', 'image')
              ->from('tt_content')
@@ -34,27 +37,30 @@ class TextpicToTextmedia extends CommandBase
              ->executeQuery()
              ->fetchAllAssociative();
 
-		$sysfileQueryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_reference');
+		$contentConnection = $this->connectionPool->getConnectionForTable('tt_content');
+		$sysfileConnection = $this->connectionPool->getConnectionForTable('sys_file_reference');
 
 		foreach ($textpics as $textpic) {
-		
-			$contentQueryBuilder
-			    ->update('tt_content')
-			    ->where(
-			        $contentQueryBuilder->expr()->eq('uid', $contentQueryBuilder->createNamedParameter($textpic['uid'], Connection::PARAM_INT)),
-			    )
-			    ->set('assets', $textpic['image'])
-			    ->set('image', 0)
-			    ->set('CType', 'textmedia')
-			    ->executeStatement();
-			    
-			$sysfileQueryBuilder
-			    ->update('sys_file_reference')
-			    ->where(
-			        $sysfileQueryBuilder->expr()->eq('uid_foreign', $sysfileQueryBuilder->createNamedParameter($textpic['uid'], Connection::PARAM_INT)),
-			    )
-			    ->set('fieldname', 'assets')
-			    ->executeStatement();
+
+			$contentConnection->update(
+			    'tt_content',
+			    [
+			        'assets' => $textpic['image'],
+			        'image' => 0,
+			        'CType' => 'textmedia',
+			    ],
+			    ['uid' => (int)$textpic['uid']]
+			);
+
+			$sysfileConnection->update(
+			    'sys_file_reference',
+			    ['fieldname' => 'assets'],
+			    [
+			        'uid_foreign' => (int)$textpic['uid'],
+			        'tablenames' => 'tt_content',
+			        'fieldname' => 'image',
+			    ]
+			);
 		}
 
         return Command::SUCCESS;

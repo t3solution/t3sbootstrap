@@ -10,14 +10,16 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use T3SBS\T3sbootstrap\Service\AssetPathService;
 
-#[AsCommand('t3sbootstrap:cdnToLocal', 'Write required CSS and JS to EXT:t3sb_package/')]
+#[AsCommand('t3sbootstrap:cdnToLocal', 'Write required CSS and JS into the configured site package')]
 final class CdnToLocal extends CommandBase
 {
 
     public function __construct(
         private readonly SiteFinder $siteFinder,
         private readonly RequestFactory $requestFactory,
+        private readonly AssetPathService $assetPathService,
     ) {
         parent::__construct();
     }
@@ -45,8 +47,8 @@ final class CdnToLocal extends CommandBase
             throw new \RuntimeException('The optional site set “T3S Bootstrap – VERSION” should be integrated.', 1654474884);
         }
 
-        // $baseDir for t3sb_package
-        $baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Resources/');
+        // $baseDir for the generated assets
+        $baseDir = $this->assetPathService->getPath();
 
         // google fonts
         $googleFontsArr = [];
@@ -70,12 +72,12 @@ final class CdnToLocal extends CommandBase
 
         } else {
             // remove all googlefonts
-            $localZipPath = $baseDir.'Public/T3SB-CSS/googlefonts/';
+            $localZipPath = $baseDir.'T3SB-CSS/googlefonts/';
 
             if (is_dir($localZipPath)) {
                 $this->rmDir($localZipPath);
             }
-            $cssFile = $baseDir.'Public/T3SB-CSS/googlefonts.css';
+            $cssFile = $baseDir.'T3SB-CSS/googlefonts.css';
             if (file_exists($cssFile)) {
                 unlink($cssFile);
             }
@@ -84,20 +86,20 @@ final class CdnToLocal extends CommandBase
         // version
         foreach ($settings['cdn'] as $key=>$version) {
             if ($key === 'jquery') {
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'jquery.min.js';
                 $cdnPath = 'https://code.jquery.com/jquery-'.$version.'.min.js';
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'bootstrap') {
-                $customPath = $baseDir.'Public/T3SB-CSS/';
+                $customPath = $baseDir.'T3SB-CSS/';
                 $customFileName = 'bootstrap.min.css';
 
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/css/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
 
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'bootstrap.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -107,69 +109,69 @@ final class CdnToLocal extends CommandBase
             }
 
             if ($key === 'popperjs') {
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'popper.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
             if ($key === 'lazyload') {
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'lazyload.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'animate') {
-                $customPath = $baseDir.'Public/T3SB-CSS/';
+                $customPath = $baseDir.'T3SB-CSS/';
                 $customFileName = 'animate.compat.css';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'baguetteBox') {
-                $customPath = $baseDir.'Public/T3SB-CSS/';
+                $customPath = $baseDir.'T3SB-CSS/';
                 $customFileName = 'baguetteBox.min.css';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
 
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'baguetteBox.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
             if ($key === 'halkabox') {
-                $customPath = $baseDir.'Public/T3SB-CSS/';
+                $customPath = $baseDir.'T3SB-CSS/';
                 $customFileName = 'halkaBox.min.css';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
 
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'halkaBox.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'glightbox') {
-                $customPath = $baseDir.'Public/T3SB-CSS/';
+                $customPath = $baseDir.'T3SB-CSS/';
                 $customFileName = 'glightbox.min.css';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/css/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
 
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'glightbox.min.js';
                 $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/js/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'masonry') {
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'masonry.pkgd.min.js';
                 $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/masonry/'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
             }
 
             if ($key === 'jarallax') {
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'jarallax.min.js';
                 $cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -179,11 +181,11 @@ final class CdnToLocal extends CommandBase
             }
 
             if ($key === 'swiper') {
-                $customPath = $baseDir.'Public/T3SB-CSS/';
+                $customPath = $baseDir.'T3SB-CSS/';
                 $customFileName = 'swiper-bundle.min.css';
                 $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-                $customPath = $baseDir.'Public/T3SB-JS/';
+                $customPath = $baseDir.'T3SB-JS/';
                 $customFileName = 'swiper-bundle.min.js';
                 $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
                 $this->writeCustomFile($customPath, $customFileName, $cdnPath);
@@ -220,7 +222,7 @@ final class CdnToLocal extends CommandBase
 
     private function getGoogleFonts(string $googleFonts, string $gooleFontsWeights, string $baseDir): void
     {
-        $localZipPath = $baseDir.'Public/T3SB-CSS/googlefonts/';
+        $localZipPath = $baseDir.'T3SB-CSS/googlefonts/';
         if (is_dir($localZipPath)) {
             $this->rmDir($localZipPath);
         }
@@ -270,7 +272,7 @@ final class CdnToLocal extends CommandBase
             }
         }
 
-        $cssFile = $baseDir.'Public/T3SB-CSS/googlefonts.css';
+        $cssFile = $baseDir.'T3SB-CSS/googlefonts.css';
         if (file_exists($cssFile)) {
             unlink($cssFile);
         }
@@ -282,7 +284,7 @@ final class CdnToLocal extends CommandBase
     {
         $googleFileArr = [];
         if ($zipContent) {
-            $localZipPath = $baseDir.'Public/T3SB-CSS/googlefonts/';
+            $localZipPath = $baseDir.'T3SB-CSS/googlefonts/';
             $localZipFile = $localZipPath.'googlefont.zip';
             GeneralUtility::writeFile($localZipFile, $zipContent);
             $zip = new \ZipArchive();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Backend\EventListener\FlexForm;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -24,14 +25,15 @@ final readonly class FlexformEvent
     {
         $dataStructure = $event->getDataStructure();
         $identifier = $event->getIdentifier();
-        if ($identifier['fieldName'] === 'tx_t3sbootstrap_flexform') {
+        if (($identifier['tableName'] ?? '') === 'tt_content'
+            && in_array($identifier['fieldName'], ['tx_t3sbootstrap_flexform', 'pi_flexform'], true)) {
             $extconf = $this->extensionConfiguration->get('t3sbootstrap');
             if (array_key_exists('flexformExtend', $extconf) && $extconf['flexformExtend'] === '1') {
     
                 if (!empty($dataStructure['sheets']['sDEF']['ROOT']['sheetTitle'])
-                && $dataStructure['sheets']['sDEF']['ROOT']['sheetTitle'] === 'Utility Settings') {
+                && str_ends_with($dataStructure['sheets']['sDEF']['ROOT']['sheetTitle'], ':flexform.utilitysettings')) {
                     $this->mergeFlexFormXml(
-                        GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/FlexForms/Bootstrap.xml'),
+                        GeneralUtility::getFileAbsFileName($this->getFlexFormDir().'Bootstrap.xml'),
                         $dataStructure
                     );
                 }
@@ -71,13 +73,13 @@ final readonly class FlexformEvent
                 $key = $identifier['dataStructureKey'];
                 if (isset($noContainerDirArr[$key])) {
                     $this->mergeFlexFormXml(
-                        GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/FlexForms/'.$noContainerDirArr[$key]),
+                        GeneralUtility::getFileAbsFileName($this->getFlexFormDir().$noContainerDirArr[$key]),
                         $dataStructure
                     );
                 }
                 if (isset($inContainerDirArr[$key])) {
                     $this->mergeFlexFormXml(
-                        GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/FlexForms/Container/'.$inContainerDirArr[$key]),
+                        GeneralUtility::getFileAbsFileName($this->getFlexFormDir().'Container/'.$inContainerDirArr[$key]),
                         $dataStructure
                     );
                 }
@@ -99,4 +101,30 @@ final readonly class FlexformEvent
         }
     }
 
+
+    /**
+     * Directory the extended FlexForm definitions are read from.
+     *
+     * Configurable, because extending the FlexForms is a project customization
+     * and belongs into the project's own site package. Empty by default, which
+     * disables the feature - previously this pointed at EXT:t3sb_package, which
+     * every installation had to carry just for this.
+     */
+    private function getFlexFormDir(): string
+    {
+        try {
+            $dir = (string)($this->extensionConfiguration->get('t3sbootstrap')['flexformDir'] ?? '');
+        } catch (\Throwable) {
+            $dir = '';
+        }
+
+        if ($dir === '') {
+            // keep working for installations that used the shipped package
+            $dir = ExtensionManagementUtility::isLoaded('t3sb_package')
+                ? 'EXT:t3sb_package/Configuration/FlexForms/'
+                : '';
+        }
+
+        return $dir === '' ? '' : rtrim($dir, '/') . '/';
+    }
 }

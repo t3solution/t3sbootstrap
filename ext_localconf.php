@@ -5,13 +5,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
-use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
-use T3SBS\T3sbootstrap\Controller\ConsentController;
 use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
-use T3SBS\T3sbootstrap\Xclass\NewRecordController as NewRecordControllerXclass;
-use TYPO3\CMS\Backend\Controller\NewRecordController;
+use T3SBS\T3sbootstrap\Service\AssetPathService;
 use T3SBS\T3sbootstrap\Backend\Hooks\OutsourcedFiles;
 
 defined('TYPO3') or die();
@@ -47,10 +43,24 @@ defined('TYPO3') or die();
     /***************
      * Custom Extensions
      */
-    // t3sb_package  
-    # load default constants & setup
-    ExtensionManagementUtility::addTypoScriptConstants('@import \'EXT:t3sb_package/Configuration/TypoScript/t3sbconstants.typoscript\'');
-    ExtensionManagementUtility::addTypoScriptSetup('@import \'EXT:t3sb_package/Configuration/TypoScript/t3sbsetup.typoscript\'');
+    # Asset root for the generated files. Published as a TypoScript constant so
+    # TypoScript and Fluid use the same value as the PHP side
+    # (Service\AssetPathService::BASE_REL).
+    ExtensionManagementUtility::addTypoScriptConstants(
+        'bootstrap.assetPath = ' . AssetPathService::BASE_REL
+    );
+
+    # Generated constants & setup. Written from the configuration record by
+    # Backend\Hooks\OutsourcedFiles and restored by the frontend middleware
+    # when missing. TypoScript ignores a missing import, which is what we want
+    # before the first configuration record has been saved.
+    ExtensionManagementUtility::addTypoScriptConstants(
+        '@import \'' . AssetPathService::BASE_REL . 'TypoScript/t3sbconstants.typoscript\''
+    );
+    ExtensionManagementUtility::addTypoScriptSetup(
+        '@import \'' . AssetPathService::BASE_REL . 'TypoScript/t3sbsetup.typoscript\''
+    );
+
     // if ke_search is loaded
     if (ExtensionManagementUtility::isLoaded('ke_search')) {
         # Setup

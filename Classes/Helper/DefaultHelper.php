@@ -134,7 +134,7 @@ class DefaultHelper implements SingletonInterface
 		}
 
 		# default margin-top for each content-element if no margin-top
-		$hasMarginTop = strpos($processedData['class'], 'mt-') || strpos($processedData['class'], 'my-') || strpos($processedData['class'], 'm-');
+		$hasMarginTop = (bool)preg_match('/(^|\s)m[ty]?-/', (string)$processedData['class']);
 		if ($contentMarginTop && $processedData['data']['colPos'] === 0 && $hasMarginTop === FALSE ) {
 			$processedData['class'] .= ' '.$contentMarginTop;
 		}

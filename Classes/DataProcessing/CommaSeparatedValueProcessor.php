@@ -59,22 +59,29 @@ class CommaSeparatedValueProcessor implements DataProcessorInterface
 			// Prüfen ob Row-Klassen vorhanden
 			foreach ($processedData['table'] as $table) {
 				$lastIndex = count($table) - 1;
-				if (str_starts_with($table[$lastIndex], 'ç')) {
+				if ($lastIndex >= 0 && str_starts_with((string)$table[$lastIndex], 'ç')) {
 					$hasRowClass = true;
 					break;
 				}
 			}
 		
 			if ($hasRowClass) {
+				// the last column is the row class column for the whole table,
+				// so it is removed from every row - but only a row whose last cell
+				// carries the marker actually sets a class
 				foreach ($processedData['table'] as $tKey=>$table) {
 					$lastIndex = count($table) - 1;
-					foreach ($table as $key=>$row) {
-						if ($key < $lastIndex) {
-							$rowClass = trim(str_replace('ç', '', $table[$lastIndex]));
+					if ($lastIndex < 0) {
+						$croppedTable[$tKey] = $table;
+						continue;
+					}
+					if (str_starts_with((string)$table[$lastIndex], 'ç')) {
+						$rowClass = trim(str_replace('ç', '', (string)$table[$lastIndex]));
+						if ($rowClass !== '') {
 							$processedData['table-row-class'][$tKey] = $rowClass;
-							$croppedTable[$tKey][$key] = $row;
 						}
 					}
+					$croppedTable[$tKey] = array_slice($table, 0, $lastIndex, true);
 				}
 			}
 		

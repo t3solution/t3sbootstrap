@@ -12,9 +12,42 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class PreProcessHook
 {
     /**
+     * Assets written by t3sbootstrap:cdnToLocal and referenced from TypoScript
+     * or from the Fluid templates. Before v5.3.50 they lived in
+     * into the asset directory on the first frontend request after an update.
+     */
+    private const MANAGED_ASSETS = [
+        'T3SB-CSS/bootstrap.min.css',
+        'T3SB-CSS/googlefonts.css',
+        'T3SB-CSS/animate.compat.css',
+        'T3SB-CSS/baguetteBox.min.css',
+        'T3SB-CSS/halkaBox.min.css',
+        'T3SB-CSS/glightbox.min.css',
+        'T3SB-CSS/swiper-bundle.min.css',
+        'T3SB-JS/jquery.min.js',
+        'T3SB-JS/popper.js',
+        'T3SB-JS/bootstrap.min.js',
+        'T3SB-JS/bootstrap.bundle.min.js',
+        'T3SB-JS/lazyload.min.js',
+        'T3SB-JS/baguetteBox.min.js',
+        'T3SB-JS/halkaBox.min.js',
+        'T3SB-JS/glightbox.min.js',
+        'T3SB-JS/swiper-bundle.min.js',
+        'T3SB-JS/masonry.pkgd.min.js',
+        'T3SB-JS/jarallax.min.js',
+        'T3SB-JS/jarallax-video.min.js',
+    ];
+
+    /**
      * @var \T3SBS\T3sbootstrap\Service\CompileService
      */
     protected $compileService;
+
+    /**
+     * @var \T3SBS\T3sbootstrap\Service\AssetPathService
+     */
+    protected $assetPathService;
+
 
     /**
      * @param array $params
@@ -43,6 +76,8 @@ class PreProcessHook
             }
         }
     }
+
+
 
     /**
      * Get the compile service

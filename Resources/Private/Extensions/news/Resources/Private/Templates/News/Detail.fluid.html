@@ -23,8 +23,8 @@
 					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/baguetteBox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/Resources/Public/T3SB-JS/baguetteBox.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/baguetteBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/baguetteBox.min.js" />
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">
@@ -45,8 +45,8 @@
 					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/halkaBox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/Resources/Public/T3SB-JS/halkaBox.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/halkaBox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/halkaBox.min.js" />
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox-{contentObjectData.uid}">
@@ -65,8 +65,8 @@
 					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/glightbox.min.css" />
-				<f:asset.script identifier="t3sblightboxJS" src="EXT:t3sb_package/Resources/Public/T3SB-JS/glightbox.min.js" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/glightbox.min.css" />
+				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/glightbox.min.js" />
 			</f:else>
 		</f:if>
 		<f:asset.script identifier="vanilla_lightbox">

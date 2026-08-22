@@ -69,7 +69,7 @@
 <f:section name="Assets">
 	<f:asset.script identifier="collapsible_function">
 // Collapsible - Templates/Container/CollapsibleContainer.html
-function t3sbCollapsible() {
+function t3sbCollapsible(fixedNavbar, navbarHeight) {
   document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (toggler) {
 	const sel = toggler.dataset.bsTarget || toggler.getAttribute('href');
 	if (!sel) return;
@@ -84,6 +84,20 @@ function t3sbCollapsible() {
 	}
 
 	bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
+
+	// Scroll to top: nur im Accordion, ein einzelnes Collapsible bleibt stehen.
+	// Abschaltbar ueber bootstrap.disable.accordion.scrollToTop - dann wird diese
+	// ganze Assets-Section gar nicht erst gerendert (s. Section "Main").
+	const item = target.closest('.accordion-item') || toggler.closest('.accordion-item');
+	if (!item || target.dataset.t3sbScrollBound) return;
+	target.dataset.t3sbScrollBound = '1';
+
+	target.addEventListener('shown.bs.collapse', function () {
+	  let offsetSize = 0;
+	  if (fixedNavbar) { offsetSize += navbarHeight; }
+	  const scrollTo = Math.round(t3sbOffsetTop(item) - offsetSize);
+	  window.scroll({ top: scrollTo, behavior: 'smooth' });
+	});
   });
 }
 
@@ -92,7 +106,11 @@ function t3sbCollapsible() {
 	// Collapsible - CollapsibleContainer.html
 	var collapse = document.querySelectorAll('.accordion .collapse');
 	if ( collapse.length ) {
-		t3sbCollapsible(fixedNavbar, navbarHeight);
+		// beide Variablen stammen aus MainAssets und existieren nur bei aktiver Navbar
+		t3sbCollapsible(
+			typeof fixedNavbar !== 'undefined' ? fixedNavbar : false,
+			typeof navbarHeight !== 'undefined' ? navbarHeight : 0
+		);
 	}
 	</f:asset.script>
 </f:section>

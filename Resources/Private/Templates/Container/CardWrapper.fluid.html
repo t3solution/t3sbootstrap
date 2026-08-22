@@ -40,7 +40,7 @@
 				integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 			</f:then>
 			<f:else>
-				<f:asset.script identifier="masonry" src="EXT:t3sb_package/Resources/Public/T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+				<f:asset.script identifier="masonry" src="{settings.assetPath}T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
 			</f:else>
 		</f:if>
 		<div class="row{class}"{styleAttr -> f:format.raw()}{dataAnimate} data-masonry='{"percentPosition": true }'>
@@ -55,8 +55,8 @@
 				<f:asset.script identifier="swiperjs" src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="swipercss" href="EXT:t3sb_package/Resources/Public/T3SB-CSS/swiper-bundle.min.css" />
-				<f:asset.script identifier="swiperjs" src="EXT:t3sb_package/Resources/Public/T3SB-JS/swiper-bundle.min.js" />
+				<f:asset.css identifier="swipercss" href="{settings.assetPath}T3SB-CSS/swiper-bundle.min.css" />
+				<f:asset.script identifier="swiperjs" src="{settings.assetPath}T3SB-JS/swiper-bundle.min.js" />
 			</f:else>
 		</f:if>
 		<div id="swiper-{data.uid}" class="swiper">

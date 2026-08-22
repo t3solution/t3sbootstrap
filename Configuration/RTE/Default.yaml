@@ -10,10 +10,18 @@ editor:
 
   config:
 
+    # Imported YAML is merged with ArrayUtility::replaceAndAppendScalarValuesRecursive(),
+    # which APPENDS plain lists instead of replacing them by index. contents.css from
+    # EXT:rte_ckeditor/Base.yaml is therefore already in the list - naming it again
+    # would just load it twice.
+    contentsCss:
+      - 'EXT:t3sbootstrap/Resources/Public/Styles/rte-alert.css'
+
     importModules:
       - { module: '@ckeditor/ckeditor5-indent', exports: ['IndentBlock'] }
       - { module: '@ckeditor/ckeditor5-show-blocks', exports: ['ShowBlocks'] }
       - { module: '@ckeditor/ckeditor5-word-count', exports: ['WordCount'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/alert-plugin.js', exports: ['AlertBox'] }
 
     extraPlugins:
       - Indent
@@ -47,6 +55,7 @@ editor:
         - style
         - '|'
         - heading
+        - alert
         - '|'
         - alignment
         - insertTable

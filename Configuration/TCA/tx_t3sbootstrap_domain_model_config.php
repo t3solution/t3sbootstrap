@@ -42,7 +42,7 @@ return [
                 --palette--;;otherSettings,
         '],
         'meta' => [
-            'title' => $dbModel.'.meta',
+            'title' => $dbModel.'.metanavigation',
             'showitem' => '
                 record_type,--linebreak--,
                 --palette--;;metaNavigation',
@@ -1778,8 +1778,8 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['label' => 'none', 'value' => ''],
-                    ['label' => $dbModel.'.sidebare.item1','value' => 'Sub'],
-                    ['label' => $dbModel.'.sidebare.item2', 'value' => 'Section'],
+                    ['label' => $dbModel.'.sidebar.item1','value' => 'Sub'],
+                    ['label' => $dbModel.'.sidebar.item2', 'value' => 'Section'],
                 ],
                 'default' => '',
             ]

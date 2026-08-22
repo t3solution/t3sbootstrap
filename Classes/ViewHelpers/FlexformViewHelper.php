@@ -38,7 +38,7 @@ class FlexformViewHelper extends AbstractViewHelper
 
 		} elseif (!empty($this->arguments['data'])) {
 			// FE
-			return GeneralUtility::makeInstance(FlexFormTools::class)->convertFlexFormContentToArray($this->arguments['data']);
+			return GeneralUtility::makeInstance(FlexFormTools::class)->convertFlexFormContentToArray((string)$this->arguments['data']);
 
 		} else {
 

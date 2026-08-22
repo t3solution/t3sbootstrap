@@ -105,9 +105,17 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             && isset($arguments['tree'])
             && is_array($arguments['tree']->rootLineIds ?? null)
         ) {
-            $rootLineIdsArray = array_reverse($arguments['tree']->rootLineIds);
-            array_pop($rootLineIdsArray);
-            array_shift($rootLineIdsArray);
+            // rootLineIds is handed over sorted root page first, current page last.
+            // Normalize to "closest parent first" independently of that sorting.
+            $rootLineIdsArray = array_values($arguments['tree']->rootLineIds);
+            if ($rootLineIdsArray !== [] && (int)end($rootLineIdsArray) === $pid) {
+                $rootLineIdsArray = array_reverse($rootLineIdsArray);
+            }
+            // Only the current page is skipped (already checked above), the root page is kept.
+            $rootLineIdsArray = array_filter(
+                $rootLineIdsArray,
+                static fn($id): bool => (int)$id !== $pid
+            );
 
             foreach ($rootLineIdsArray as $id) {
                 $config = $this->fetchConfig((int)$id);

@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -28,13 +29,15 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 	{
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
 		// replace fa-icons in bodytext to use iconpack
 		$fieldName = 'bodytext';
 		$bodytextStatements = $queryBuilder
 				->select('uid', $fieldName)
 				->from('tt_content')
-				->where($queryBuilder->expr()->neq($fieldName,'""'))
+				->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
 				->executeQuery()
 				->fetchAllAssociative();
 
@@ -42,13 +45,11 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 			foreach($bodytextStatements as $statement) {
 			
 				if (str_contains($statement[$fieldName], '<i class="fa')) {
-					$queryBuilder
-					    ->update('tt_content')
-					    ->where(
-					        $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($statement['uid'], Connection::PARAM_INT))
-					    )
-					    ->set($fieldName, $this->replaceFaIcons($statement[$fieldName]))
-					    ->executeStatement();
+					$connectionPool->getConnectionForTable('tt_content')->update(
+					    'tt_content',
+					    [$fieldName => $this->replaceFaIcons($statement[$fieldName])],
+					    ['uid' => (int)$statement['uid']]
+					);
 				}
 			}
 		}
@@ -84,12 +85,14 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
 		$fieldName = 'bodytext';
 		$statements = $queryBuilder
 				->select('uid', $fieldName)
 				->from('tt_content')
-				->where($queryBuilder->expr()->neq($fieldName,'""'))
+				->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
 				->executeQuery()
 				->fetchAllAssociative();
 		

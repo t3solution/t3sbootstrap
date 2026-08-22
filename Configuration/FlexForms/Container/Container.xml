@@ -81,7 +81,7 @@
 						</config>
 					</flexContainer>
 					<responsiveVariations>
-						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexForm.responsiveVariations</label>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.responsiveVariations</label>
 							 <displayCond>
 								  <or>
 									<numIndex index="0">FIELD:sDEF.flexContainer:=:flex</numIndex>

@@ -43,6 +43,7 @@ use T3SBS\T3sbootstrap\Wrapper\MasonryWrapper;
 use T3SBS\T3sbootstrap\Wrapper\SwiperContainer;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 
 /*
  * This file is part of the TYPO3 extension t3sbootstrap.
@@ -164,9 +165,12 @@ class BootstrapProcessor implements DataProcessorInterface
             $dataFrame = $processedData['data']['frame_class'];
             $dataLayout = (string)$processedData['data']['layout'];
 
-            $uid = GeneralUtility::trimExplode('_', $processedData['data']['records'])[2];
+            // `records` can be empty or point to another table (e.g. `pages_5`, only two parts)
+            $recordParts = GeneralUtility::trimExplode('_', (string)($processedData['data']['records'] ?? ''));
+            $uid = (int)($recordParts[2] ?? 0);
 
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
             $shortcutRecord = $queryBuilder
                 ->select('*')
                 ->from('tt_content')
@@ -177,15 +181,45 @@ class BootstrapProcessor implements DataProcessorInterface
                 ->fetchAssociative();
 
             if (!empty($shortcutRecord['uid'])) {
-                $shortcutContainer = $shortcutRecord['tx_t3sbootstrap_container'];
-                $shortcutExtraClass = $shortcutRecord['tx_t3sbootstrap_extra_class'];
-                $shortcutFrame = $shortcutRecord['frame_class'];
+                $shortcutContainer = (string)$shortcutRecord['tx_t3sbootstrap_container'];
+                $shortcutExtraClass = (string)$shortcutRecord['tx_t3sbootstrap_extra_class'];
+                $shortcutFrame = (string)$shortcutRecord['frame_class'];
                 $shortcutLayout = (string)$shortcutRecord['layout'];
-    
-                $processedData['shortcuts'] = str_replace($shortcutContainer, $dataContainer, $processedData['shortcuts']);
-                $processedData['shortcuts'] = str_replace($shortcutExtraClass, $dataExtraClass, $processedData['shortcuts']);
-                $processedData['shortcuts'] = str_replace($shortcutFrame, $dataFrame, $processedData['shortcuts']);
-                $processedData['shortcuts'] = str_replace($shortcutLayout, $dataLayout, $processedData['shortcuts']);
+
+                // `shortcuts` is already rendered HTML: replace whole CSS class tokens only,
+                // never raw substrings (a bare `0` or `default` would hit ids, colors, etc.)
+                $replaceClassToken = static function (string $html, string $search, string $replace): string {
+                    if ($search === '') {
+                        return $html;
+                    }
+                    return (string)preg_replace_callback(
+                        '/(?<![-\w])'.preg_quote($search, '/').'(?![-\w])/',
+                        static function () use ($replace): string { return $replace; },
+                        $html
+                    );
+                };
+
+                // container and extra class are rendered verbatim as class names
+                $processedData['shortcuts'] =
+                 $replaceClassToken($processedData['shortcuts'], $shortcutContainer, (string)$dataContainer);
+                $processedData['shortcuts'] =
+                 $replaceClassToken($processedData['shortcuts'], $shortcutExtraClass, (string)$dataExtraClass);
+                // frame_class is rendered as `frame-<value>`, 'default' is not rendered at all
+                if ($shortcutFrame !== '' && $shortcutFrame !== 'default') {
+                    $processedData['shortcuts'] = $replaceClassToken(
+                        $processedData['shortcuts'],
+                        'frame-'.$shortcutFrame,
+                        ((string)$dataFrame === '' || (string)$dataFrame === 'default') ? '' : 'frame-'.$dataFrame
+                    );
+                }
+                // layout is rendered as `layout-<value>`, 0 is not rendered at all
+                if ($shortcutLayout !== '' && $shortcutLayout !== '0') {
+                    $processedData['shortcuts'] = $replaceClassToken(
+                        $processedData['shortcuts'],
+                        'layout-'.$shortcutLayout,
+                        ($dataLayout === '' || $dataLayout === '0') ? '' : 'layout-'.$dataLayout
+                    );
+                }
             }
         }
 
@@ -258,7 +292,7 @@ class BootstrapProcessor implements DataProcessorInterface
                     $this->assetHelper->addCSS($processedData['cssfiles']);
                 }
                 if (!empty($processedData['jsfiles']) && is_array($processedData['jsfiles'])) {
-                    $this->assetHelper->addJS($processedData['jsfiles'], (int) $processedData['assets']['priority']);
+                    $this->assetHelper->addJS($processedData['jsfiles'], (int) ($processedData['assets']['priority'] ?? 0));
                 }
             }
             //if ( $cType == 't3sbs_fluidtemplate' ) {}
@@ -378,7 +412,8 @@ class BootstrapProcessor implements DataProcessorInterface
  
                     $processedData['containsVideo'] = true;
                     $fileConfig = $fileObject->getStorage()->getConfiguration();
-                    $filePath = substr($fileConfig['basePath'], 0, -1).explode('.', $fileObject->getIdentifier())[0];
+                    $filePath = substr($fileConfig['basePath'], 0, -1)
+                     .preg_replace('/\.[^.]+$/', '', $fileObject->getIdentifier());
                     $processedData['addmedia']['filePath'] = $filePath;
                     $processedData['addmedia']['extension'] = $fileObject->getExtension();
 
@@ -405,8 +440,9 @@ class BootstrapProcessor implements DataProcessorInterface
                             $x = $ratioArr[0].'x'.$ratioArr[1];
                             $y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';
                         } else {
-                            $x = '4';
-                            $y = '3';
+                            // no valid separator given: fall back to 4x3, same format as above
+                            $x = '4x3';
+                            $y = '3 / 4 * 100%';
                         }
                         $processedData['addmedia']['ratioCalcCss'] = '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
                         $processedData['addmedia']['ratioClass'] = 'ratio-'.$x;

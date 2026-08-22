@@ -22,9 +22,9 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<f:asset.script identifier="jarallaxJs" src="EXT:t3sb_package/Resources/Public/T3SB-JS/jarallax.min.js" />
+		<f:asset.script identifier="jarallaxJs" src="{settings.assetPath}T3SB-JS/jarallax.min.js" />
 		<f:if condition="{video}">
-		  	<f:asset.script identifier="jarallaxVideoJs" src="EXT:t3sb_package/Resources/Public/T3SB-JS/jarallax-video.min.js" />
+		  	<f:asset.script identifier="jarallaxVideoJs" src="{settings.assetPath}T3SB-JS/jarallax-video.min.js" />
 		</f:if>
 	</f:else>
 </f:if>

@@ -23,11 +23,6 @@
 				<a class="btn btn-block edit-btn mb-3" style="background-color: #6a10f3; color: #fff;" href="{be:uri.editRecord(uid:config.uid, table:'tx_t3sbootstrap_domain_model_config', returnUrl:'{f:be.uri(route: \'web_t3sbootstrap\', parameters=\'{id:currentUid}\')}')}">
 					<f:translate key="editconfig" />
 				</a>
-				<f:if condition="{isSiteroot}">
-					<div class="panel-group" id="accordionList">
-						<f:render section="Constants" arguments="{_all}" />
-					</div>
-				</f:if>
 			</f:then>
 			<f:else>
 				<f:comment>
@@ -42,6 +37,17 @@
 					</a>
 				</f:if>
 			</f:else>
+		</f:if>
+
+		<f:if condition="{isSiteroot}">
+			<div class="panel-group" id="accordionList">
+				<f:if condition="{config}">
+					<f:render section="Constants" arguments="{_all}" />
+				</f:if>
+				<f:if condition="{admin}">
+					<f:render section="Transfer" arguments="{_all}" />
+				</f:if>
+			</div>
 		</f:if>
 	</div>
 </div>
@@ -97,6 +103,65 @@
 			<div class="panel-body p-4">
 				<p><f:translate key="overrideconstants" /></p>
 				<div id="constants" class="p-3 callout callout-notice"><pre>{filecontent}</pre></div>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+
+<f:section name="Transfer">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="transfer-heading-panel">
+				<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#transfer-panel" aria-expanded="false" aria-controls="transfer-panel">
+					<span class="caret"></span>
+					<f:translate key="transfer.title" />
+				</a>
+			</h3>
+		</div>
+		<div id="transfer-panel" class="collapse" aria-labelledby="transfer-heading-panel" data-bs-parent="#accordionList">
+			<div class="panel-body p-4">
+				<p class="text-muted"><f:translate key="transfer.description" /></p>
+
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<h4><f:translate key="transfer.export" /></h4>
+						<f:form action="export" method="post" additionalParams="{id: currentUid}">
+							<div class="mb-2">
+								<label class="form-label" for="t3sb-export-pid"><f:translate key="transfer.sourcepage" /></label>
+								<f:form.select id="t3sb-export-pid" class="form-select" name="exportPid"
+									options="{transfer.pageOptions}" value="{transfer.currentPid}" />
+							</div>
+							<f:form.button type="submit" class="btn btn-default">
+								<core:icon identifier="actions-download" size="small" /> <f:translate key="transfer.export.submit" />
+							</f:form.button>
+						</f:form>
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<h4><f:translate key="transfer.import" /></h4>
+						<f:form action="import" method="post" enctype="multipart/form-data" additionalParams="{id: currentUid}">
+							<div class="mb-2">
+								<label class="form-label" for="t3sb-import-file"><f:translate key="transfer.file" /></label>
+								<f:form.upload id="t3sb-import-file" class="form-control" name="configFile" additionalAttributes="{accept: 'application/json,.json', required: 'required'}" />
+							</div>
+							<div class="mb-2">
+								<label class="form-label" for="t3sb-target-pid"><f:translate key="transfer.targetpage" /></label>
+								<f:form.select id="t3sb-target-pid" class="form-select" name="targetPid"
+									options="{transfer.pageOptions}" value="{transfer.currentPid}" />
+							</div>
+							<div class="mb-2">
+								<label class="form-label" for="t3sb-mode"><f:translate key="transfer.mode" /></label>
+								<f:form.select id="t3sb-mode" class="form-select" name="importMode"
+									options="{transfer.modeOptions}" value="update" />
+								<div class="form-text"><f:translate key="transfer.mode.hint" /></div>
+							</div>
+							<f:form.button type="submit" class="btn btn-warning">
+								<core:icon identifier="actions-upload" size="small" /> <f:translate key="transfer.import.submit" />
+							</f:form.button>
+						</f:form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

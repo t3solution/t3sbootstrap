@@ -195,7 +195,8 @@ CREATE TABLE tt_content (
 CREATE TABLE tx_t3sbootstrap_list_item_inline (
 	parentid int(11) DEFAULT '0' NOT NULL,
 	parenttable text,
-	listitem varchar(255) DEFAULT '' NOT NULL
+	listitem varchar(255) DEFAULT '' NOT NULL,
+	hidden smallint(5) unsigned DEFAULT '0' NOT NULL
 );
 
 #
@@ -211,8 +212,6 @@ CREATE TABLE sys_file_reference (
 	tx_t3sbootstrap_copyright_color varchar(40) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_copyright_source varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_imgtag tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	tx_t3sbootstrap_picture_variants int(11) default '0' not null,
-	tx_t3sbootstrap_media_width varchar(255) default '' not null,
 	tx_t3sbootstrap_shift_vertical int(2) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_shift_horizontal int(2) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_video_ratio varchar(40) DEFAULT '' NOT NULL

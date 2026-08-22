@@ -10,13 +10,11 @@ use TYPO3\CMS\Core\Imaging\ImageManipulation\Area;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class ResponsiveImagesUtility implements SingletonInterface
 {
 
 	protected $imageService;
-	protected $configurationManager;
 	protected $breakpointPrototype = [
 		'cropVariant' => 'default',
 		'media' => '',
@@ -26,12 +24,10 @@ class ResponsiveImagesUtility implements SingletonInterface
 
 
 	 public function __construct(
-		 ImageService $imageService,
-		 ConfigurationManager $configurationManager
+		 ImageService $imageService
 	 )
 	{
 		$this->imageService = $imageService;
-		$this->configurationManager = $configurationManager;
 	}
 
 
@@ -85,6 +81,18 @@ class ResponsiveImagesUtility implements SingletonInterface
 		// Breakpoint can't be used as fallback
 		if ($lastBreakpoint) {
 			$breakpoints[] = $lastBreakpoint;
+		} else {
+			// No breakpoints available -> nothing to build sources from
+			return $this->createSimpleImageTag(
+				$originalImage,
+				$fallbackImage,
+				$fallbackTag,
+				$focusArea,
+				$absoluteUri,
+				$lazyload,
+				$placeholderSize,
+				$placeholderInline
+			);
 		}
 
 		$fallbackImageUri =	$this->imageService->getImageUri($fallbackImage, $absoluteUri);

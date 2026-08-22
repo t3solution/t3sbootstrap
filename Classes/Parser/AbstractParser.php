@@ -62,7 +62,21 @@ abstract class AbstractParser implements ParserInterface
         $fileModificationTime = filemtime($cacheFile);
         $metadata = unserialize((string) @file_get_contents($cacheFileMeta), ['allowed_classes' => false]);
 
+        if (!is_array($metadata) || !is_array($metadata['files'] ?? null)) {
+            // unreadable or outdated metadata - compile again
+            return true;
+        }
+
         foreach ($metadata['files'] as $file) {
+            // A recorded import can be gone: the file was renamed, the asset
+            // directory was wiped or an update moved it elsewhere. filemtime()
+            // would raise a warning that TYPO3's error handler turns into an
+            // exception and takes the whole frontend down. A missing dependency
+            // simply means the cached css is stale.
+            if (!is_file($file)) {
+                return true;
+            }
+
             if (filemtime($file) > $fileModificationTime) {
                 $needCompilation = true;
                 break;

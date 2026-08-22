@@ -57,6 +57,7 @@
 				<source>Responsive Variations</source>
 			</segment>
 		</unit>
+
 		
 		<unit id="flexform.automargins">
 			<segment>
@@ -1713,6 +1714,12 @@
 		</unit>
 		
 		<unit id="flexform.bgimageSheet">
+			<segment>
+				<source>Background Images</source>
+			</segment>
+		</unit>
+
+		<unit id="flexform.bgimages">
 			<segment>
 				<source>Background Images</source>
 			</segment>

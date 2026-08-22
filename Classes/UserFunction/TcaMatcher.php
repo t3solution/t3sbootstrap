@@ -6,9 +6,11 @@ namespace T3SBS\T3sbootstrap\UserFunction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -30,6 +32,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -57,6 +61,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -99,6 +105,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('CType')
                   ->from('tt_content')
@@ -126,6 +134,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -229,6 +239,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -242,7 +254,7 @@ class TcaMatcher
 
                 $parent_flexconf = $this->flexFormTools->convertFlexFormContentToArray($parent_rec['tx_t3sbootstrap_flexform']);
 
-                if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'container' && $parent_flexconf['flexContainer']) {
+                if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'container' && !empty($parent_flexconf['flexContainer'])) {
                     $parent = true;
                 }
             }
@@ -262,6 +274,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('tx_t3sbootstrap_flexform')
                   ->from('tt_content')
@@ -270,9 +284,11 @@ class TcaMatcher
                   )
                   ->executeQuery();
             $parent_rec = $result->fetchAllAssociative();
-            if (!empty($parent_rec)) {
-                $flexconf = $this->flexFormTools->convertFlexFormContentToArray($parent_rec[0]['tx_t3sbootstrap_flexform']);
-                if ($flexconf['appearance'] === 'button') {
+            // the row may exist while the flexform column is NULL or empty -
+            // convertFlexFormContentToArray() is typed string and would fatal
+            if (!empty($parent_rec[0]['tx_t3sbootstrap_flexform'])) {
+                $flexconf = $this->flexFormTools->convertFlexFormContentToArray((string)$parent_rec[0]['tx_t3sbootstrap_flexform']);
+                if (!empty($flexconf['appearance']) && $flexconf['appearance'] === 'button') {
                     $button = true;
                 }
             }
@@ -454,6 +470,8 @@ class TcaMatcher
         if (!empty($arguments['record']['tx_container_parent'][0])) {
             $uid = (int)$arguments['record']['tx_container_parent'][0];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -462,7 +480,7 @@ class TcaMatcher
                   )
                   ->executeQuery();
             $parent_rec = $result->fetchAssociative();
-            if ($parent_rec['CType'] === 'toast_container') {
+            if (!empty($parent_rec['CType']) && $parent_rec['CType'] === 'toast_container') {
                 $parent = false;
             }
         }
@@ -480,6 +498,8 @@ class TcaMatcher
         if (!empty($arguments['record']['uid_foreign'])) {
             $uid = (int)$arguments['record']['uid_foreign'];
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+            $queryBuilder->getRestrictions()->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
             $result = $queryBuilder
                   ->select('*')
                   ->from('tt_content')
@@ -508,7 +528,11 @@ class TcaMatcher
             return $show;
         }
     
-        $site = $this->siteFinder->getSiteByPageId($arguments['record']['pid']);
+        try {
+            $site = $this->siteFinder->getSiteByPageId($arguments['record']['pid']);
+        } catch (SiteNotFoundException) {
+            return $show;
+        }
         $configuration = $site->getConfiguration();
         $settings = $configuration['settings'];
     

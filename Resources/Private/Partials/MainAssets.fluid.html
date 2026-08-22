@@ -5,7 +5,12 @@
 	// Default - Main.fluid.html
 	const navbar = document.getElementById('main-navbar'),
 		  navbarHeight = navbar.clientHeight,
-		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth'),
+		  // "no" as navbar breakpoint means the navbar never expands. The body tag then
+		  // carries no data-navbar-breakpointwidth at all (BodyTag.typoscript writes it
+		  // only if.isTrue), so getAttribute() returns null and every "vw < bp" test below
+		  // would compare against 0 and take the desktop branch. Fall back to a width no
+		  // viewport reaches, which is what t3sbOffcanvas() already does for this case.
+		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth') || 99999,
 		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
 		  onePageLayout = navbar.classList.contains('sectionMenu');
 

@@ -69,8 +69,8 @@ class Grid implements SingletonInterface
 
 				if ( substr($key, 0, 2) !== 'ex' ) {
 
-					if ( $key !== 'extraClass_one' || $key !== 'extraClass_two' || $key !== 'extraClass_three'
-					 || $key !== 'extraClass_four' || $key !== 'extraClass_five' || $key !== 'extraClass_six' ) {
+					if ( $key !== 'extraClass_one' && $key !== 'extraClass_two' && $key !== 'extraClass_three'
+					 && $key !== 'extraClass_four' && $key !== 'extraClass_five' && $key !== 'extraClass_six' ) {
 
 						if ($grid) {
 
