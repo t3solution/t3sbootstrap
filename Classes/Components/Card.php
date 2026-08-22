@@ -5,6 +5,7 @@ namespace T3SBS\T3sbootstrap\Components;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Context\Context;
@@ -129,12 +130,14 @@ class Card implements SingletonInterface
                 $parentid = $processedData['data']['_LOCALIZED_UID'];
             } 
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_t3sbootstrap_list_item_inline');
+            $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
             $listGroup = $queryBuilder
                     ->select('listitem')
                     ->from('tx_t3sbootstrap_list_item_inline')
                     ->where(
                         $queryBuilder->expr()->eq('parentid', $queryBuilder->createNamedParameter($parentid, Connection::PARAM_INT))
                     )
+                    ->orderBy('uid')
                     ->executeQuery()
                     ->fetchAllAssociative();
 

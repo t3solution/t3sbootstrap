@@ -8,13 +8,13 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CarouselContainer implements SingletonInterface
 {
     public function __construct(
         private readonly ConnectionPool               $connectionPool,
         private readonly FileRepository               $fileRepository,
-        private readonly FrontendRestrictionContainer $frontendRestrictions,
     ) {}
 
     public function getProcessedData(array $processedData, array $flexconf): array
@@ -30,7 +30,10 @@ class CarouselContainer implements SingletonInterface
         $carouselFade .= !empty($flexconf['darkVariant'])   ? ' carousel-dark' : '';
         $processedData['carouselFade'] = $carouselFade;
 
-        $carouselUids = $this->fetchCarouselUids((int)$processedData['data']['uid']);
+        $carouselUids = $this->fetchCarouselUids(
+            (int)$processedData['data']['uid'],
+            (int)($processedData['data']['sys_language_uid'] ?? 0)
+        );
 
         $carouselSlides = [];
         foreach ($carouselUids as $row) {
@@ -43,10 +46,10 @@ class CarouselContainer implements SingletonInterface
         return $processedData;
     }
 
-    private function fetchCarouselUids(int $parentUid): array
+    private function fetchCarouselUids(int $parentUid, int $sysLanguageUid): array
     {
         $qb = $this->connectionPool->getQueryBuilderForTable('tt_content');
-        $qb->setRestrictions($this->frontendRestrictions);
+        $qb->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
 
         return $qb
             ->select('uid')
@@ -55,6 +58,10 @@ class CarouselContainer implements SingletonInterface
                 $qb->expr()->eq(
                     'tx_container_parent',
                     $qb->createNamedParameter($parentUid, Connection::PARAM_INT)
+                ),
+                $qb->expr()->eq(
+                    'sys_language_uid',
+                    $qb->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)
                 )
             )
             ->orderBy('sorting')

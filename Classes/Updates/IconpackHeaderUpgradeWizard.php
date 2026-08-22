@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -28,13 +29,15 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 	{
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
 		// replace header_icon to use iconpack
 		$fieldName = 'tx_t3sbootstrap_header_fontawesome';
 		$statements = $queryBuilder
 			 ->select('uid', $fieldName)
 			 ->from('tt_content')
-			 ->where($queryBuilder->expr()->neq($fieldName,'""'))
+			 ->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
 			 ->executeQuery()
 			 ->fetchAllAssociative();
 
@@ -135,14 +138,14 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 					$erg .= ',fixed:true';
 				}
 
-				$queryBuilder
-					->update('tt_content')
-					->where(
-						$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($statement['uid'], Connection::PARAM_INT))
-					)
-					->set('header_icon', $erg)
-					->set($fieldName, '')
-					->executeStatement();
+				$connectionPool->getConnectionForTable('tt_content')->update(
+					'tt_content',
+					[
+						'header_icon' => $erg,
+						$fieldName => '',
+					],
+					['uid' => (int)$statement['uid']]
+				);
 			}
 		}
 
@@ -177,12 +180,14 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 		
 		$fieldName = 'tx_t3sbootstrap_header_fontawesome';
 		$numberOfHeadericons = $queryBuilder
 				 ->count('uid')
 				 ->from('tt_content')
-				 ->where($queryBuilder->expr()->neq($fieldName,'""'))
+				 ->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
 				 ->executeQuery()
 				 ->fetchOne();
  

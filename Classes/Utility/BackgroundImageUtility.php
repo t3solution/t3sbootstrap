@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Page\AssetCollector;
@@ -98,6 +99,9 @@ class BackgroundImageUtility implements SingletonInterface
         $css = '';
         if ((int) $flexconf['bgimages'] === 1 && (int) $flexconf['bgimagePosition'] < 3) {
             // left or right
+            if (empty($fileObjects)) {
+                return;
+            }
             $file = $fileObjects[0];
             $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
             $css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $flexconf, $bgMediaQueries);
@@ -120,7 +124,8 @@ class BackgroundImageUtility implements SingletonInterface
         int|string $uid,
         FileReference $file,
         array $flexconf,
-        string $bgMediaQueries='2560,1920,1200,992,768,576'
+        string $bgMediaQueries='2560,1920,1200,992,768,576',
+        string $fileExtension=''
     ): void {
 
         $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
@@ -132,9 +137,9 @@ class BackgroundImageUtility implements SingletonInterface
                     $this->assetCollector->addInlineJavaScript('addheight-'.$uid, $inline);
                 }
             }
-            $css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, $bgMediaQueries);
+            $css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, $bgMediaQueries, $fileExtension);
         } else {
-            $css = $this->generateCss('s-'.$uid, $file, $image, $flexconf, $bgMediaQueries);
+            $css = $this->generateCss('s-'.$uid, $file, $image, $flexconf, $bgMediaQueries, $fileExtension);
         }
 
         if (!empty($css)) {
@@ -149,10 +154,13 @@ class BackgroundImageUtility implements SingletonInterface
         FileReference $file,
         File $image,
         array $flexconf=[],
-        string $bgMediaQueries='2560,1920,1200,992,768,576'
+        string $bgMediaQueries='2560,1920,1200,992,768,576',
+        string $fileExtension=''
     ): string {
 
-         $imageRaster = !empty($flexconf['imageRaster']) ? 'url("/fileadmin/T3SB/Resources/Public/Images/raster.png"), ' : '';
+         $imageRaster = !empty($flexconf['imageRaster'])
+            ? 'url("'.PathUtility::getPublicResourceWebPath('EXT:t3sbootstrap/Resources/Public/Images/raster.png').'"), '
+            : '';
          
          $processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];
          $cropVariantCollection = CropVariantCollection::create((string) $processingInstructions['crop']);
@@ -176,6 +184,9 @@ class BackgroundImageUtility implements SingletonInterface
                 'width' => (int)$querie,
                 'crop' => $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image),
             ];
+            if ($fileExtension !== '') {
+                $processingInstructions['fileExtension'] = $fileExtension;
+            }
 
             $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
 

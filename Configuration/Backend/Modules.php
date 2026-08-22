@@ -18,8 +18,13 @@ return [
         'extensionName' => 'T3sbootstrap',
         'iconIdentifier' => 'bootstraplogo',
         'controllerActions' => [
+            // Since TYPO3 v12 a backend module only dispatches the actions
+            // listed here - anything missing silently falls back to the first
+            // entry. 'list' must stay first, it is the default action.
             ConfigController::class => [
                 'list',
+                'export',
+                'import',
             ],
         ],
     ],

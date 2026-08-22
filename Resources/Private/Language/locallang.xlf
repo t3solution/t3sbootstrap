@@ -4,6 +4,12 @@
 	   srcLang="en">
 	<file id="t3sbootstrap">
 
+		<unit id="more">
+			<segment>
+				<source>more</source>
+			</segment>
+		</unit>
+		
 		<unit id="editconfig">
 			<segment>
 				<source>Edit Configuration</source>
@@ -187,6 +193,114 @@
 		<unit id="notificationmessage_6">
 			<segment>
 				<source>You cannot apply any configuration to a page with id=0</source>
+			</segment>
+		</unit>
+		
+		<unit id="notificationtitle_7">
+			<segment>
+				<source>Local assets are missing</source>
+			</segment>
+		</unit>
+		
+		<unit id="notificationmessage_7">
+			<segment>
+				<source>CDN delivery is disabled, but the local CSS/JS files are not present in typo3temp/assets/t3sbootstrap/. TYPO3 drops missing files from includeCSS/includeJS without an error, so the frontend may render unstyled. Run the console command "t3sbootstrap:cdnToLocal" (or the scheduler task) to fetch them.</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.title">
+			<segment>
+				<source>Configuration transfer</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.description">
+			<segment>
+				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration.</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.export">
+			<segment>
+				<source>Export</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.import">
+			<segment>
+				<source>Import</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.sourcepage">
+			<segment>
+				<source>Source page</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.targetpage">
+			<segment>
+				<source>Target page</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.file">
+			<segment>
+				<source>JSON file</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.export.submit">
+			<segment>
+				<source>Download export</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.import.submit">
+			<segment>
+				<source>Start import</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.error.nofile">
+			<segment>
+				<source>No file was uploaded.</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.imported">
+			<segment>
+				<source>%d record(s) imported on page %d.</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode">
+			<segment>
+				<source>Import mode</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.update">
+			<segment>
+				<source>Update - keep the existing record and its uid</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.replace">
+			<segment>
+				<source>Replace - delete the existing record and create a new one</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.add">
+			<segment>
+				<source>Add - only when the target page has no configuration yet</source>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.hint">
+			<segment>
+				<source>Update is the normal case: fields missing from the import are reset to their default, so the result matches the export exactly. Replace changes the uid and leaves a deleted row behind.</source>
 			</segment>
 		</unit>
 		

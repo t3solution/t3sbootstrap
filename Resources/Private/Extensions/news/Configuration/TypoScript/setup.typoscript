@@ -30,6 +30,7 @@ plugin.tx_news {
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		magnifying = {$bootstrap.config.magnifying}
 		cdn = {$bootstrap.cdn.enable}
+		assetPath = {$bootstrap.assetPath}
 		animateVersion = {$bootstrap.cdn.animate}
 		baguetteBoxVersion = {$bootstrap.cdn.baguetteBox}
 		glightboxVersion = {$bootstrap.cdn.glightbox}

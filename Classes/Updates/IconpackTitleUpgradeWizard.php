@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -28,13 +29,15 @@ final class IconpackTitleUpgradeWizard implements UpgradeWizardInterface
 	{
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('pages');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
 		// replace page_icon to use iconpack
 		$fieldName = 'tx_t3sbootstrap_fontawesome_icon';
 		$statements = $queryBuilder
 				 ->select('uid', $fieldName)
 				 ->from('pages')
-				 ->where($queryBuilder->expr()->neq($fieldName,'""'))
+				 ->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
 				 ->executeQuery()
 				 ->fetchAllAssociative();
 
@@ -133,14 +136,14 @@ final class IconpackTitleUpgradeWizard implements UpgradeWizardInterface
 					$erg .= ',fixed:true';
 				}
 					
-				$queryBuilder
-					->update('pages')
-					->where(
-						$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($statement['uid'], Connection::PARAM_INT))
-					)
-					->set('page_icon', $erg)
-					->set($fieldName, '')
-					->executeStatement();
+				$connectionPool->getConnectionForTable('pages')->update(
+					'pages',
+					[
+						'page_icon' => $erg,
+						$fieldName => '',
+					],
+					['uid' => (int)$statement['uid']]
+				);
 				}
 			}
 		}
@@ -176,12 +179,14 @@ final class IconpackTitleUpgradeWizard implements UpgradeWizardInterface
 	
 		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
 		$queryBuilder = $connectionPool->getQueryBuilderForTable('pages');
+		$queryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
 		$fieldName = 'tx_t3sbootstrap_fontawesome_icon';
 		$numberOfPageicons = $queryBuilder
 			 ->count('uid')
 			 ->from('pages')
-			 ->where($queryBuilder->expr()->neq($fieldName,'""'))
+			 ->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
 			 ->executeQuery()
 			 ->fetchOne();
 

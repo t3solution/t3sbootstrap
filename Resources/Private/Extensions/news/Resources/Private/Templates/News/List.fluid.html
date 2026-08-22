@@ -148,7 +148,7 @@
 									<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js" integrity="{settings.masonryIntegrity}" crossorigin="anonymous" async="async" />
 								</f:then>
 								<f:else>
-									<f:asset.script identifier="masonry" src="EXT:t3sb_package/Resources/Public/T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
+									<f:asset.script identifier="masonry" src="{settings.assetPath}T3SB-JS/masonry.pkgd.min.js" crossorigin="anonymous" async="async" />
 								</f:else>
 							</f:if>
 							<div id="masonry-{contentObjectData.uid}" class="row masonry{contentObjectData.class}"{contentObjectData.styleAttr -> f:format.raw()}

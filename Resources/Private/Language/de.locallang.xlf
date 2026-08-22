@@ -4,6 +4,13 @@
 	   srcLang="en" trgLang="de">
 	<file id="t3sbootstrap">
 	
+		<unit id="more">
+			<segment>
+				<source>more</source>
+				<target>mehr</target>
+			</segment>
+		</unit>
+		
 		<unit id="editconfig">
 			<segment>
 				<source>Edit Configuration</source>
@@ -221,6 +228,132 @@
 			</segment>
 		</unit>
 		
+		<unit id="notificationtitle_7">
+			<segment>
+				<source>Local assets are missing</source>
+				<target>Lokale Assets fehlen</target>
+			</segment>
+		</unit>
+		
+		<unit id="notificationmessage_7">
+			<segment>
+				<source>CDN delivery is disabled, but the local CSS/JS files are not present.</source>
+				<target>Die CDN-Auslieferung ist deaktiviert, aber die lokalen CSS/JS-Dateien liegen nicht in typo3temp/assets/t3sbootstrap/. TYPO3 verwirft fehlende Dateien aus includeCSS/includeJS ohne Fehlermeldung, das Frontend kann also unformatiert ausgeliefert werden. Bitte das Konsolenkommando „t3sbootstrap:cdnToLocal" oder den Scheduler-Task ausführen.</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.title">
+			<segment>
+				<source>Configuration transfer</source>
+				<target>Konfiguration übertragen</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.description">
+			<segment>
+				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration.</source>
+				<target>Exportiert die t3sbootstrap-Konfiguration einer Root-Seite als portable JSON-Datei und importiert sie in eine andere Installation. Der Export enthält weder uid noch pid, der Seitenbaum des Ziels darf also völlig anders aussehen. Nicht enthalten sind die Site Settings (Bootstrap-Version, Bootswatch, Google Fonts) - die stehen in der Site-Konfiguration.</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.export">
+			<segment>
+				<source>Export</source>
+				<target>Export</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.import">
+			<segment>
+				<source>Import</source>
+				<target>Import</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.sourcepage">
+			<segment>
+				<source>Source page</source>
+				<target>Quellseite</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.targetpage">
+			<segment>
+				<source>Target page</source>
+				<target>Zielseite</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.file">
+			<segment>
+				<source>JSON file</source>
+				<target>JSON-Datei</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.export.submit">
+			<segment>
+				<source>Download export</source>
+				<target>Export herunterladen</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.import.submit">
+			<segment>
+				<source>Start import</source>
+				<target>Import starten</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.error.nofile">
+			<segment>
+				<source>No file was uploaded.</source>
+				<target>Es wurde keine Datei hochgeladen.</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.imported">
+			<segment>
+				<source>%d record(s) imported on page %d.</source>
+				<target>%d Datensatz/Datensätze auf Seite %d importiert.</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode">
+			<segment>
+				<source>Import mode</source>
+				<target>Import-Modus</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.update">
+			<segment>
+				<source>Update - keep the existing record and its uid</source>
+				<target>Aktualisieren - vorhandenen Datensatz behalten, uid bleibt</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.replace">
+			<segment>
+				<source>Replace - delete the existing record and create a new one</source>
+				<target>Ersetzen - vorhandenen Datensatz löschen und neu anlegen</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.add">
+			<segment>
+				<source>Add - only when the target page has no configuration yet</source>
+				<target>Hinzufügen - nur wenn die Zielseite noch keine Konfiguration hat</target>
+			</segment>
+		</unit>
+		
+		<unit id="transfer.mode.hint">
+			<segment>
+				<source>Update is the normal case: fields missing from the import are reset to their default, so the result matches the export exactly. Replace changes the uid and leaves a deleted row behind.</source>
+				<target>Aktualisieren ist der Normalfall: Felder, die der Import nicht enthält, werden auf den Standardwert zurückgesetzt, das Ergebnis entspricht also exakt dem Export. Ersetzen ändert die uid und hinterlässt einen gelöschten Datensatz.</target>
+			</segment>
+		</unit>
+		
 		<unit id="pagesettings">
 			<segment>
 				<source>T3SB Page settings</source>
@@ -273,7 +406,7 @@
 		<unit id="titlecolor">
 			<segment>
 				<source>Title color</source>
-				<target>xxx</target>
+				<target>Titelfarbe</target>
 			</segment>
 		</unit>
 		

@@ -5,6 +5,7 @@ namespace T3SBS\T3sbootstrap\Backend\Hooks;
 
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
+use T3SBS\T3sbootstrap\Service\AssetPathService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -18,8 +19,15 @@ use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 
 
 /**
- * Writes outsourced TypoScript constants/setup and SCSS files when a t3sbootstrap
- * configuration record is created or updated in the backend.
+ * Writes the files that are derived from a t3sbootstrap configuration record:
+ * the TypoScript constants/setup and the scss.
+ *
+ * The record in the database is the source, the files are a cache below
+ * typo3temp/assets/t3sbootstrap/. Two entry points exist: the DataHandler hook
+ * below (record was saved) and ensureFilesExist(), which the frontend
+ * middleware calls when the files went missing - after a deployment, after
+ * "Remove Temporary Assets" or on a fresh checkout. Nothing here needs network
+ * access, so regenerating inside a request is cheap and safe.
  *
  * Registered via:
  *   $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][]
@@ -35,6 +43,7 @@ final readonly class OutsourcedFiles
 		private FlashMessageService $flashMessageService,
 		private SiteFinder $siteFinder,
 		private ReflectionService $reflectionService,
+		private AssetPathService $assetPathService,
 	) {
 	}
 
@@ -75,6 +84,60 @@ final readonly class OutsourcedFiles
 		$this->writeOutsourcedFiles($rootConfig, $pid);
 	}
 
+	/**
+	 * Rewrites the derived files for a root page when they are missing.
+	 *
+	 * Called from the frontend middleware. Returns silently when the files are
+	 * present or when no configuration record exists for this root page - both
+	 * are normal states, not errors.
+	 */
+	public function ensureFilesExist(int $rootPageId): void
+	{
+		$rootConfig = $this->configRepository->findOneBy(['pid' => $rootPageId]);
+
+		if (!$rootConfig instanceof Config) {
+			return;
+		}
+
+		if (!$this->filesAreMissing($rootConfig, $rootPageId)) {
+			return;
+		}
+
+		$this->writeOutsourcedFiles($rootConfig, $rootPageId);
+	}
+
+	/**
+	 * The TypoScript pair is global, the scss is per root page - so both have to
+	 * be checked. Looking at the TypoScript alone would let the first site that
+	 * is requested satisfy the guard and leave every other site without its scss.
+	 */
+	private function filesAreMissing(Config $rootConfig, int $rootPageId): bool
+	{
+		$typoScriptPath = $this->assetPathService->getTypoScriptPath();
+
+		if (!is_file($typoScriptPath . 't3sbconstants.typoscript')
+			|| !is_file($typoScriptPath . 't3sbsetup.typoscript')
+		) {
+			return true;
+		}
+
+		$scssPath = $this->assetPathService->getScssPath();
+
+		if (!empty($rootConfig->getCustomVariablesScss())
+			&& !is_file($scssPath . 'custom-variables-' . $rootPageId . '.scss')
+		) {
+			return true;
+		}
+
+		if (!empty($rootConfig->getCustomScss())
+			&& !is_file($scssPath . 'custom-' . $rootPageId . '.scss')
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private function writeOutsourcedFiles(Config $rootConfig, int $currentUid): void
 	{
 		$breakpointWidth = $this->resolveBreakpointWidth($rootConfig, $currentUid);
@@ -83,16 +146,17 @@ final readonly class OutsourcedFiles
 		$setup = $this->buildSetup($rootConfig, $breakpointWidth);
 		$constants = $this->buildConstants($configurations, $siterootCount, $breakpointWidth);
 
-		$baseDir = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Configuration/');
-		$customPath = $baseDir . 'TypoScript/';
+		// derived from the configuration record, restorable at any time
+		$customPath = $this->assetPathService->getTypoScriptPath();
 
 		$this->writeFile($customPath, 't3sbconstants.typoscript', $constants);
 		$this->writeFile($customPath, 't3sbsetup.typoscript', $setup);
 
 		// Update outsourced custom SCSS (if present)
 		if (!empty($rootConfig->getCustomVariablesScss()) || !empty($rootConfig->getCustomScss())) {
-			$scssPath = GeneralUtility::getFileAbsFileName('EXT:t3sb_package/Resources/Public/T3SB-SCSS/');
-			$this->ensureDirectoryExists($scssPath);
+			// Editable SCSS sources belong into the default file storage (fileadmin/),
+			// the service creates the directory itself.
+			$scssPath = $this->assetPathService->getScssPath();
 
 			$this->writeCustomScssFile(
 				$scssPath,

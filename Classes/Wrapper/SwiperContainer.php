@@ -8,13 +8,13 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class SwiperContainer implements SingletonInterface
 {
     public function __construct(
         private readonly ConnectionPool               $connectionPool,
         private readonly FileRepository               $fileRepository,
-        private readonly FrontendRestrictionContainer $frontendRestrictions,
     ) {}
 
     public function getProcessedData(array $processedData, array $flexconf): array
@@ -46,16 +46,17 @@ class SwiperContainer implements SingletonInterface
             : 0;
 
         $processedData['swiperSlides'] = $this->fetchSlideFiles(
-            (int)$processedData['data']['uid']
+            (int)$processedData['data']['uid'],
+            (int)($processedData['data']['sys_language_uid'] ?? 0)
         );
 
         return $processedData;
     }
 
-    private function fetchSlideFiles(int $parentUid): array
+    private function fetchSlideFiles(int $parentUid, int $sysLanguageUid): array
     {
         $qb = $this->connectionPool->getQueryBuilderForTable('tt_content');
-        $qb->setRestrictions($this->frontendRestrictions);
+        $qb->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
 
         $rows = $qb
             ->select('uid')
@@ -64,6 +65,10 @@ class SwiperContainer implements SingletonInterface
                 $qb->expr()->eq(
                     'tx_container_parent',
                     $qb->createNamedParameter($parentUid, Connection::PARAM_INT)
+                ),
+                $qb->expr()->eq(
+                    'sys_language_uid',
+                    $qb->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)
                 )
             )
             ->orderBy('sorting')

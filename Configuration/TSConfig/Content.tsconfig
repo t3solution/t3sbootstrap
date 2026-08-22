@@ -284,12 +284,6 @@ TCEFORM.tt_content {
 			}
 		}
 	}
-	tx_t3sbootstrap_header_fontawesome {
-		types {
-			t3sbs_toast.disabled = 1
-			t3sbs_assets.disabled = 1
-		}
-	}
 	tx_t3sbootstrap_bgopacity {
 		types {
 			t3sbs_button.disabled = 1

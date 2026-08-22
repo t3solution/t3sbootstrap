@@ -24,6 +24,7 @@ module.tx_t3sbootstrap {
 		disableJquery = {$bootstrap.disable.jquery}
 		gooleFontsWeights = {$bootstrap.gooleFontsWeights}
 		rasterPath = fileadmin/T3SB/Resources/Public/Images/raster.png
+		assetPath = {$bootstrap.assetPath}
 
 		cdn {
 			enable = {$bootstrap.cdn.enable}
@@ -88,6 +89,7 @@ module.tx_t3sbootstrap {
 
 plugin.tx_t3sbootstrap {
 	settings {
+		assetPath = {$bootstrap.assetPath}
 		lazyLoad = {$bootstrap.extconf.lazyLoad}
 		t3sbminify = {$bootstrap.extconf.t3sbminify}
 		cdn = {$bootstrap.cdn.enable}
@@ -111,6 +113,13 @@ temp.pagelayout {
 
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Lib/_main.typoscript'
+
+# Site package holding the generated assets - published as a constant by
+# ext_localconf.php. Must be set before ContentElement/_main.typoscript, which
+# copies lib.contentElement and page.10.settings into the content elements.
+page.10.settings.assetPath = {$bootstrap.assetPath}
+lib.contentElement.settings.assetPath = {$bootstrap.assetPath}
+
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/Content/_main.typoscript'
 @import 'EXT:t3sbootstrap/Configuration/TypoScript/ContentElement/_main.typoscript'
 

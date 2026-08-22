@@ -26,7 +26,7 @@
 		<div class="flex-grow-1 ms-0 flex-info-content">
 			<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.size')}:</strong> {f:if(condition: flexForm.btnsize, then:'{flexForm.btnsize}', else: 'Default')} | 
 				<strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.align')}:</strong> {f:if(condition: flexForm.align, then:'{flexForm.align}', else: 'Default')}
-				<f:if condition="{flexForm.variationvertical}">
+				<f:if condition="{flexForm.vertical}">
 				| <strong>{f:translate(key: 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.button.vertical')}:</strong> true
 				</f:if>
 				<f:if condition="{flexForm.fixedPosition}">

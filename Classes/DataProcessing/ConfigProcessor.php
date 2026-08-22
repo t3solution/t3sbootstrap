@@ -11,8 +11,7 @@ use T3SBS\T3sbootstrap\Utility\BackgroundImageUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 
 class ConfigProcessor implements DataProcessorInterface
 {
@@ -49,14 +48,14 @@ class ConfigProcessor implements DataProcessorInterface
 		$request              = $cObj->getRequest();
 		$pageInformation      = $request->getAttribute('frontend.page.information');
 		$site                 = $processedData['site'];
-		$siteSettings         = $site->getConfiguration()['settings']['bootstrap'];
+		$siteSettings         = $site->getConfiguration()['settings']['bootstrap'] ?? [];
 		$processedRecordVars  = $contentObjectConfiguration['settings.']['config.'];
 
 		// Type Normalization (TypoScript/DB returns strings)
 		$processedRecordVars['homepageUid'] = (int)($processedRecordVars['homepageUid'] ?? 0) ?: 1;
 			
 		$currentPage          = $pageInformation->getPageRecord();
-		$backendLayout        = $processedData['data']['currentValue_kidjls9dksoje'];
+		$backendLayout        = $processedData['data']['currentValue_kidjls9dksoje'] ?? '';
 
 		$processedData = $this->processExpandedContent($processedData, $processedRecordVars, $currentPage);
 		$processedData = $this->processGeneral($processedData, $processedRecordVars, $pageInformation, $siteSettings, $backendLayout, $settings);
@@ -238,15 +237,19 @@ class ConfigProcessor implements DataProcessorInterface
 		$cfg['dataToggle']    = 'collapse';
 		$cfg['bstoggle']      = 'dropdown';
 
-		if (!empty($vars['navbarDropdownAnimate'])) {
+		// Breakpoint "no" means the navbar never expands - "navbar-expand-no" matches no
+		// Bootstrap rule - so the dropdown-menu keeps Bootstrap's position:static. The
+		// animation class sets display:block on the CLOSED menu (it only hides it via
+		// visibility/opacity, see .dd-animate-1 in t3sbootstrap.css), and a static,
+		// display:block menu reserves its full height in the flow. In an offcanvas that
+		// shows up as a huge gap between the menu items. The animation cannot work in a
+		// permanently collapsed navbar anyway, so the class is not emitted at all.
+		if (!empty($vars['navbarDropdownAnimate']) && $vars['navbarBreakpoint'] !== 'no') {
 			$cfg['dropdownAnimate']      = ' dd-animate-' . (int)$vars['navbarDropdownAnimate'];
 			$cfg['dropdownAnimateValue'] = (int)$vars['navbarDropdownAnimate'];
 		}
 
 		$rootLine = $pageInformation->getRootLine();
-		$cfg['clickableparent'] = (!empty($rootLine[1]) && $rootLine[1]['doktype'] === 4 && empty($vars['navbarPlusicon']))
-			? 1 : (int)$vars['navbarClickableparent'];
-
 		$cfg['clickableparent'] = (!empty($rootLine[1]) && (int)($rootLine[1]['doktype'] ?? 0) === 4 && empty($vars['navbarPlusicon']))
 			? 1 : (int)$vars['navbarClickableparent'];
 			
@@ -294,7 +297,7 @@ class ConfigProcessor implements DataProcessorInterface
 			$navColorParts      = explode(' ', $vars['navbarColor']);
 			$navBarAttr        .= ' data-shrinkcolorschemes="bg-' . $vars['navbarShrinkcolorschemes'] . '"';
 			$navBarAttr        .= ' data-shrinkcolor="' . $vars['navbarShrinkcolor'] . '"';
-			$navBarAttr        .= ' data-colorschemes="' . ($navColorParts[1] ? 'bg-' . $navColorParts[0] : $vars['navbarColor']) . '"';
+			$navBarAttr        .= ' data-colorschemes="' . (!empty($navColorParts[1]) ? 'bg-' . $navColorParts[0] : $vars['navbarColor']) . '"';
 			$navBarAttr        .= ' data-color="navbar-' . $vars['navbarEnable'] . '"';
 			if (!empty($navColorParts[1])) {
 				$cfg['gradient'] = 'bg-gradient';
@@ -616,11 +619,15 @@ class ConfigProcessor implements DataProcessorInterface
 				'class'              => trim($vars['expandedcontentClass' . $suffix] ?? ''),
 			];
 		}
+		// the bottom switch is only available before the `unset` below
+		$enableBottom = !empty($processedData['config']['expandedcontentBottom']['enable']);
 		// is no longer needed
 		unset($processedData['config']['expandedcontentBottom']['enable']);
 
 		if (!empty($processedData['config']['expandedcontentTop']['enable'])) {
 			$processedData['config']['expandedcontentTop']['hasContent'] = $this->hasContent($currentPage['uid'], 20);
+		}
+		if ($enableBottom) {
 			$processedData['config']['expandedcontentBottom']['hasContent'] = $this->hasContent($currentPage['uid'], 21);
 		}
 
@@ -693,10 +700,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
 			->getQueryBuilderForTable('tt_content');
 		
-		$queryBuilder->getRestrictions()
-			->removeAll()
-			->add(GeneralUtility::makeInstance(DeletedRestriction::class))
-			->add(GeneralUtility::makeInstance(HiddenRestriction::class));
+		$queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
 		
 		$hasContent = (bool)$queryBuilder
 			->count('uid')

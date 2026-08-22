@@ -10,30 +10,29 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array (
-  'title' => 'Bootstrap Components',
-  'description' => 'Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: www.t3sbootstrap.de',
-  'category' => 'templates',
-  'version' => '5.3.48',
-  'state' => 'stable',
-  'author' => 'Helmut Hackbarth',
-  'author_email' => 'typo3@t3solution.de',
-  'author_company' => 't3solution',
-  'constraints' => 
-  array (
-    'depends' => 
-    array (
-      'php' => '8.2.0-8.5.99',
-      'typo3' => '14.3.0-14.9.99',
-      'container' => '3.2.2-3.99.99',
-      't3sb_package' => '14.3.0-99.99.99',
-    ),
-    'conflicts' => 
-    array (
-    ),
-    'suggests' => 
-    array (
-    ),
-  ),
-);
-
+$EM_CONF[$_EXTKEY] = [
+   'title' => 'Bootstrap Components',
+   'description' => 'Startup extension to use bootstrap 5 classes, components and more out of the box. Example and info: [www.t3sbootstrap.de](https://www.t3sbootstrap.de)',
+   'category' => 'templates',
+   'version' => '5.3.50',
+   'state' => 'stable',
+   'author' => 'Helmut Hackbarth',
+   'author_email' => 'typo3@t3solution.de',
+   'author_company' => 't3solution',
+   'constraints' => [
+     'depends' => [
+       'php' => '8.2.0-8.5.99',
+       'typo3' => '14.3.0-14.99.99',
+       'fluid_styled_content' => '14.3.0-14.99.99',
+       'rte_ckeditor' => '14.3.0-14.99.99',
+       'container' => '4.1.0-4.99.99',
+     ],
+     'conflicts' => [],
+     'suggests' => [],
+   ],
+   'autoload' => [
+        'psr-4' => [
+            'T3sbs\\T3sbootstrap\\' => 'Classes/',
+        ],
+    ],
+];

@@ -2,7 +2,7 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_t3sbootstrap_domain_model_config.navbarbrandalignment</sheetTitle>
+				<sheetTitle>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.autoLayoutRow</sheetTitle>
 				<type>array</type>
 				<el>
 					<justify>

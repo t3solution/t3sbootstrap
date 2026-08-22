@@ -9,7 +9,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
+use TYPO3\CMS\Core\Site\Entity\SiteInterface;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use Psr\Http\Message\ServerRequestInterface;
 
 class LastModifiedProcessor implements DataProcessorInterface
@@ -20,6 +24,7 @@ class LastModifiedProcessor implements DataProcessorInterface
     public function __construct(
         private readonly Context $context,
         private readonly ConnectionPool $connectionPool,
+        private readonly SiteFinder $siteFinder,
     ) {}
 
     public function process(
@@ -33,9 +38,9 @@ class LastModifiedProcessor implements DataProcessorInterface
         $this->request = $cObj->getRequest();
 
         if (!empty($processorConfiguration['lastModifiedContentElement'])) {
-            $processorConfiguration = [];
-            $processorConfiguration['pidInList'] = $this->getCurrentUid();
-            $records = $cObj->getRecords('tt_content', $processorConfiguration);
+            // must not overwrite $processorConfiguration: it also holds the config of the second block
+            $recordsConfiguration = ['pidInList' => $this->getCurrentUid()];
+            $records = $cObj->getRecords('tt_content', $recordsConfiguration);
 
             foreach ($records as $record) {
                 $lmc[] = $record['tstamp'];
@@ -97,6 +102,7 @@ class LastModifiedProcessor implements DataProcessorInterface
         $languageAspect = $this->context->getAspect('language');
         $sysLanguageUid = $languageAspect->getContentId() ?: 0;
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
         $result = $queryBuilder
              ->select('uid', 'pid', 'header', 'tstamp')
              ->from('tt_content')
@@ -105,17 +111,45 @@ class LastModifiedProcessor implements DataProcessorInterface
                  $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sysLanguageUid, Connection::PARAM_INT)),
                  $queryBuilder->expr()->neq('pid', $queryBuilder->createNamedParameter($this->getCurrentUid(), Connection::PARAM_INT))
              )
-             ->setMaxResults($setMaxResults)
+             // fetch a larger candidate set, because rows are filtered below
+             ->setMaxResults(max($setMaxResults, 1) * 10)
              ->executeQuery()
              ->fetchAllAssociative();
 
         $mdtm = [];
 
         if (!empty($result)) {
+            $site = $this->request->getAttribute('site');
+            $rootPageId = $site instanceof SiteInterface ? $site->getRootPageId() : 0;
+            $pageRepository = GeneralUtility::makeInstance(PageRepository::class, $this->context);
+
             foreach ($result as $ce) {
-                $pageTitle = BackendUtility::getRecord('pages', $ce['pid'], 'title')['title'];
-                if (!empty($pageTitle)) {
-                    $mdtm[$ce['uid']][$pageTitle] = $ce;
+                // resolves hidden, starttime/endtime, fe_group, workspace and the language overlay
+                $page = $pageRepository->getPage((int)$ce['pid']);
+                if (empty($page['title'])) {
+                    continue;
+                }
+                // pages that cannot be linked
+                if (in_array((int)($page['doktype'] ?? 0), [
+                    PageRepository::DOKTYPE_BE_USER_SECTION,
+                    PageRepository::DOKTYPE_SPACER,
+                    PageRepository::DOKTYPE_SYSFOLDER,
+                ], true)) {
+                    continue;
+                }
+                // no content of foreign sites
+                if ($rootPageId > 0) {
+                    try {
+                        if ($this->siteFinder->getSiteByPageId((int)$ce['pid'])->getRootPageId() !== $rootPageId) {
+                            continue;
+                        }
+                    } catch (SiteNotFoundException) {
+                        continue;
+                    }
+                }
+                $mdtm[$ce['uid']][$page['title']] = $ce;
+                if (count($mdtm) >= $setMaxResults) {
+                    break;
                 }
             }
         }

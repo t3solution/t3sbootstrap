@@ -88,7 +88,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'value' => 't3sbs_fluidtemplate',
         'icon' => 'actions-template-new',
         'group' => 'T3S Bootstrap',
-        'description' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbs_fluidtemplate',
+        'description' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:t3sbs_fluidtemplate.description',
     ]
 );
 ExtensionManagementUtility::addTcaSelectItem(
@@ -839,10 +839,9 @@ $tempContentColumns = [
             'size' => 50,
             'generatorOptions' => [
                 'fields' => [
-                    'input_1',
+                    'header',
                 ],
-                'fieldSeparator' => '/',
-                'prefixParentPageSlug' => true,
+                'prefixParentPageSlug' => false,
             ],
             'fallbackCharacter' => '-',
             'eval' => 'uniqueInPid',
@@ -928,6 +927,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
         ]
     ],
     'header' => [
+        'label' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_button.title',
         'config' => [
             'required' => true,
             'eval' => 'trim'
@@ -938,9 +938,6 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
             'type' => 'flex',
             'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Button.xml',
         ],
-    ],
-    'header' => [
-        'label' => 'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_button.title',
     ],
 ];
 
@@ -957,7 +954,7 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
                 assets,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,T3SFlex;tx_t3sbootstrap_flexform,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                 --palette--;;language,
@@ -1123,9 +1120,9 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,assets,
-            LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
-            --linebreak--, file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
-            --linebreak--, filelink_sorting,
+            media;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
+            file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
+            filelink_sorting,
             --palette--;;mediaAdjustments,imagecols,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
@@ -1224,6 +1221,12 @@ ExtensionManagementUtility::addFieldsToPalette(
     'imageSettings',
     'tx_t3sbootstrap_inTextImgRowWidth'
 );
+ExtensionManagementUtility::addFieldsToPalette(
+    'tt_content',
+    'imageSettings',
+    'tx_t3sbootstrap_inTextImgColumns',
+    'after:tx_t3sbootstrap_inTextImgRowWidth'
+);
 if ($extconf['ratio']) {
     ExtensionManagementUtility::addFieldsToPalette(
         'tt_content',
@@ -1288,7 +1291,14 @@ if (array_key_exists('speakingID', $extconf) && $extconf['speakingID'] === '1') 
 }
 
 # add palette animate if EXT:content_animations is not loaded
-if (!ExtensionManagementUtility::isLoaded('content_animations')) {
+if (!ExtensionManagementUtility::isLoaded('content_animations')
+    && array_key_exists('animateCss', $extconf) && $extconf['animateCss'] === '1') {
+    $GLOBALS['TCA']['tt_content']['palettes']['animate'] = [
+        'showitem' => 'tx_t3sbootstrap_animateCss,
+            tx_t3sbootstrap_animateCssDuration, --linebreak--,
+            tx_t3sbootstrap_animateCssDelay,
+            tx_t3sbootstrap_animateCssRepeat'
+    ];
     ExtensionManagementUtility::addToAllTCAtypes(
         'tt_content',
         '--palette--;Animation;animate',
@@ -1309,15 +1319,6 @@ $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapColor'] = [
     'showitem' => 'tx_t3sbootstrap_contextcolor, tx_t3sbootstrap_bgcolor, --linebreak--, tx_t3sbootstrap_bgopacity, tx_t3sbootstrap_textcolor'
 ];
-
-if (array_key_exists('animateCss', $extconf) && $extconf['animateCss'] === '1') {
-    $GLOBALS['TCA']['tt_content']['palettes']['animate'] = [
-        'showitem' => 'tx_t3sbootstrap_animateCss,
-            tx_t3sbootstrap_animateCssDuration, --linebreak--,
-            tx_t3sbootstrap_animateCssDelay,
-            tx_t3sbootstrap_animateCssRepeat'
-    ];
-}
 
 
 if (array_key_exists('sectionOrder', $extconf) && $extconf['sectionOrder'] === '1') {

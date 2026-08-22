@@ -6,7 +6,9 @@ return [
 		'label' => 'listitem',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
-		'enablecolumns' => [],
+		'enablecolumns' => [
+			'disabled' => 'hidden',
+		],
 		'hideTable' => 1,
 		'iconfile' => 'EXT:t3sbootstrap/Resources/Public/Icons/tx_t3sbootstrap_domain_model_config.gif',
 		'security' => [
@@ -21,6 +23,7 @@ return [
 
 	'columns' => [
 		'hidden' => [
+			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
 			'config' => [
 				'type' => 'check',
 				'items' => [
@@ -54,7 +57,7 @@ return [
 
 	'types' => [
 		'0' => [
-			'showitem' => 'listitem',
+			'showitem' => 'listitem, hidden',
 		],
 	],
 

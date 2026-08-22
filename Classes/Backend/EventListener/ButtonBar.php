@@ -5,7 +5,6 @@ namespace T3SBS\T3sbootstrap\Backend\EventListener;
 
 use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
-use Psr\Http\Message\ServerRequestInterface;
 
 #[AsEventListener(
 	identifier: 't3sbootstrap/backend/modify-button-bar',
@@ -16,7 +15,7 @@ final readonly class ButtonBar
 
 	public function removeButtons(ModifyButtonBarEvent $event): void
 	{
-		$request = $this->getRequest();
+		$request = $event->getRequest();
 
 		if (!empty($request->getQueryParams()['returnUrl'])) {
 
@@ -24,7 +23,7 @@ final readonly class ButtonBar
 			$returnUrl = $request->getQueryParams()['returnUrl'];
 			$t3sbModule = false;
 	
-			if (($path === '/typo3/record/edit' && str_contains($returnUrl, 'web/T3sbootstrap')) || $path === '/typo3/module/web/T3sbootstrap') {
+			if (($path === '/typo3/record/edit' && str_contains($returnUrl, 'web/t3sbootstrap')) || $path === '/typo3/module/web/t3sbootstrap') {
 				$rootPageId = $request->getAttribute('site')->getRootPageId();
 				if (!empty($request->getQueryParams()['id']) && (int)$request->getQueryParams()['id'] === $rootPageId) {
 					$t3sbModule = true;
@@ -49,11 +48,6 @@ final readonly class ButtonBar
 				}
 			}
 		}
-	}
-	
-	private function getRequest(): ServerRequestInterface
-	{
-		return $GLOBALS['TYPO3_REQUEST'];
 	}
 	
 }

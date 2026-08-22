@@ -39,8 +39,7 @@ class GalleryHelper implements SingletonInterface
 
 			} else {
 				// image only
-				$processedData['gallery']['position']['vertical'] = [];
-				if ( $processedData['gallery']['position']['vertical'] === 'intext' ) {
+				if ( ($processedData['gallery']['position']['vertical'] ?? '') === 'intext' ) {
 					$processedData['rowwidth'] = ' w-100';
 					$processedData['restrowwidth'] = '';
 				}

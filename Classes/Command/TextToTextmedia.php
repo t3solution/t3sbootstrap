@@ -10,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 
 #[AsCommand('t3sbootstrap:textToTextmedia', 'Migrate CType text to textmedia')]
 class TextToTextmedia extends CommandBase
@@ -25,6 +26,8 @@ class TextToTextmedia extends CommandBase
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 		$contentQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+		$contentQueryBuilder->getRestrictions()->removeAll()
+			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $texts = $contentQueryBuilder
              ->select('uid')
              ->from('tt_content')
@@ -35,15 +38,15 @@ class TextToTextmedia extends CommandBase
              ->fetchAllAssociative();
 
 
+		$contentConnection = $this->connectionPool->getConnectionForTable('tt_content');
+
 		foreach ($texts as $text) {
-		
-			$contentQueryBuilder
-			    ->update('tt_content')
-			    ->where(
-			        $contentQueryBuilder->expr()->eq('uid', $contentQueryBuilder->createNamedParameter($text['uid'], Connection::PARAM_INT)),
-			    )
-			    ->set('CType', 'textmedia')
-			    ->executeStatement();
+
+			$contentConnection->update(
+			    'tt_content',
+			    ['CType' => 'textmedia'],
+			    ['uid' => (int)$text['uid']]
+			);
 		}
 
         return Command::SUCCESS;

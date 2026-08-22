@@ -4,7 +4,7 @@
 <f:layout name="Default" />
 <f:section name="Main">
 	<f:if condition="{files}">
-		<div class="wrapper-parent image-gallery gallery">
+		<div  id="image-gallery-{data.uid}" class="wrapper-parent image-gallery gallery">
 			<f:for each="{files}" as="row" iteration="fileIterator">
 				<div class="row {data.tx_t3sbootstrap_gutters} {data.tx_t3sbootstrap_verticalgutters}">
 					<f:for each="{row}" as="file">

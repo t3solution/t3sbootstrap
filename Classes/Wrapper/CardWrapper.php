@@ -44,7 +44,6 @@ class CardWrapper implements SingletonInterface
             ->fetchAllAssociative();
 
         $processedData['colclass'] = !empty($flexconf['colclass']) ? $flexconf['colclass'] : '';
-        $processedData['cropMaxCharacters'] = $flexconf['cropMaxCharacters'];
         $processedData['cropMaxCharacters'] = !empty($flexconf['cropMaxCharacters']) ? $flexconf['cropMaxCharacters'] : '';
 
         $extconf = $this->extensionConfiguration->get('t3sbootstrap');
@@ -113,27 +112,19 @@ class CardWrapper implements SingletonInterface
                 $children[$key]['tx_t3sbootstrap_header_class'] = $child['tx_t3sbootstrap_header_class'];
                 $children[$key]['header_icon'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                 $children[$key]['celink'] = $child['tx_t3sbootstrap_header_celink'];
-                $children[$key]['settings'] = $this->flexFormTools->convertFlexFormContentToArray($child['tx_t3sbootstrap_flexform']);
+                // a card without its own flexform stores NULL here
+                $children[$key]['settings'] = !empty($child['tx_t3sbootstrap_flexform'])
+                    ? $this->flexFormTools->convertFlexFormContentToArray((string)$child['tx_t3sbootstrap_flexform'])
+                    : [];
             }
             $processedData['cards'] = $children;
 
-            // swiperjs
-            if ($flexconf['card_wrapper'] === 'slider' && !empty($processedData['visibleCards'])) {
-                $processedData['cols'] = floor(12 / $processedData['visibleCards']);
-                $processedData['width'] = !empty($flexconf['width']) ? $flexconf['width'] : '';
-                $processedData['ratio'] = !empty($flexconf['ratio']) ? $flexconf['ratio'] : '';
-                $processedData['slidesPerView'] = (int)$flexconf['slidesPerView'] ?: 0;
-                $processedData['breakpoints10'] = !empty($flexconf['breakpoints10']) ? (int)$flexconf['breakpoints10'] : 1;
-                $processedData['breakpoints576'] = (int)$flexconf['breakpoints576'] ?: 2;
-                $processedData['breakpoints768'] = (int)$flexconf['breakpoints768'] ?: 3;
-                $processedData['breakpoints992'] = (int)$flexconf['breakpoints992'] ?: 4;
-                $processedData['slidesPerGroup'] = (int)$flexconf['slidesPerGroup'] ?: 1;
-                $processedData['spaceBetween'] = (int)$flexconf['spaceBetween'];
-                $processedData['loop'] = (int)$flexconf['loop'];
-                $processedData['navigation'] = (int)$flexconf['navigation'];
-                $processedData['pagination'] = (int)$flexconf['pagination'];
-                $processedData['autoplay'] = (int)$flexconf['autoplay'];
-                $processedData['delay'] = $flexconf['autoplay'] ? (int)$flexconf['delay'] : 99999999;
+            // swiperjs: all swiper options are read directly as {t3sbFlexform.*} in
+            // Partials/Content/Assets/CardWrapper.fluid.html, only {navigation}/{pagination}
+            // are evaluated as top level variables there
+            if ($flexconf['card_wrapper'] === 'slider') {
+                $processedData['navigation'] = (int)!empty($flexconf['navigation']);
+                $processedData['pagination'] = (int)!empty($flexconf['pagination']);
             }
 
             $processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;

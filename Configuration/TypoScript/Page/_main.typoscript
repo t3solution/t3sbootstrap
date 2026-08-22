@@ -23,7 +23,7 @@ page {
 
 	page {
 		includeCSSLibs {
-			bootstrapCSS = EXT:t3sb_package/Resources/Public/T3SB-CSS/bootstrap.min.css	
+			bootstrapCSS = {$bootstrap.assetPath}T3SB-CSS/bootstrap.min.css	
 		}
 	}
 
@@ -43,7 +43,7 @@ page {
 
 	page {
 		includeCSSLibs {
-			bootstrapCustom = EXT:t3sb_package/Resources/Public/T3SB-SCSS/Bootstrap/bootstrap-{$bootstrap.config.homepageUid}.scss
+			bootstrapCustom = {$bootstrap.assetPath}T3SB-SCSS/Bootstrap/bootstrap-{$bootstrap.config.homepageUid}.scss
 			bootstrapCustom.forceOnTop = 1
 		}
 	}
@@ -63,7 +63,7 @@ page {
 [traverse(site("configuration"), "settings/bootstrap/cdn/googlefonts")]
 	page {
 		includeCSS {
-			googleFontCSS = EXT:t3sb_package/Resources/Public/T3SB-CSS/googlefonts.css
+			googleFontCSS = {$bootstrap.assetPath}T3SB-CSS/googlefonts.css
 		}
 	}
 [END]

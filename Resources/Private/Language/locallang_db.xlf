@@ -1547,6 +1547,12 @@
 			</segment>
 		</unit>
 		
+		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontenttop">
+			<segment>
+				<source>Expanded Content Top</source>
+			</segment>
+		</unit>
+
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentbottom">
 			<segment>
 				<source>Expanded Content Bottom</source>

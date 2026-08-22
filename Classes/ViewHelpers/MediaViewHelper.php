@@ -126,7 +126,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 			return $this->renderPicture($image, $width, $height);
 		}
 
-		return self::renderImage($image, $width, $height);
+		return $this->renderImageTag($image, $width, $height);
 	}
 
 	/**
@@ -167,7 +167,12 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 		// Generate fallback image
 		$fallbackImage = $this->generateFallbackImage($image, $width, $cropArea);
 
-		if ( !empty($GLOBALS['_GET']['type']) && $GLOBALS['_GET']['type'] === '98') {
+		$request = $this->renderingContext->hasAttribute(\Psr\Http\Message\ServerRequestInterface::class)
+			? $this->renderingContext->getAttribute(\Psr\Http\Message\ServerRequestInterface::class)
+			: null;
+		$routing = $request?->getAttribute('routing');
+		$pageType = $routing instanceof \TYPO3\CMS\Core\Routing\PageArguments ? (int)$routing->getPageType() : 0;
+		if ($pageType === 98) {
 			$lazyload = 0;
 		} else {
 			if ($this->arguments['lazyload']) {
@@ -403,9 +408,7 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 						$cWidth = $pxWidth / $imgWidth;
 						$cropObject->$cropVariant->cropArea->width = $cWidth;
 					} else {
-						$pxWidth = !empty($pxWidth) ? $pxWidth : 1;
-						$cWidth = $imgWidth / $pxWidth;
-						$pxHeight = $cropedWidth / $rH * $rW;
+						$pxHeight = $cropedWidth / $rW * $rH;
 						$cHeight = $pxHeight / $imgHeight;
 						$cropObject->$cropVariant->cropArea->height = $cHeight;
 					}
@@ -414,21 +417,22 @@ class MediaViewHelper extends AbstractTagBasedViewHelper
 				if ( $this->arguments['shift'] || $this->arguments['hshift'] ) {
 					if ( $cropedWidth > $cropedHeight ) {
 						// landscape
-						$shift = $cropObject->$cropVariant->cropArea->x + $this->arguments['hshift']/100;
+						$shift = $cropObject->$cropVariant->cropArea->x + (float)($this->arguments['hshift'] ?: 0)/100;
 						if ( 1-$cropObject->$cropVariant->cropArea->width <= $shift ) {
 							$shift = 1-$cropObject->$cropVariant->cropArea->width;
 						}
 						$cropObject->$cropVariant->cropArea->x = $shift;
 					} elseif ( $cropedWidth < $cropedHeight ) {
 						// portrait
-						$shift = $cropObject->$cropVariant->cropArea->y + $this->arguments['shift']/100;
+						$shift = $cropObject->$cropVariant->cropArea->y + (float)($this->arguments['shift'] ?: 0)/100;
 						if ( 1-$cropObject->$cropVariant->cropArea->height <= $shift ) {
 							$shift = 1-$cropObject->$cropVariant->cropArea->height;
 						}
 						$cropObject->$cropVariant->cropArea->y = $shift;
 					} else {
 						// square
-						$shift = $this->arguments['hshift'] ? $this->arguments['hshift'] : $this->arguments['shift'];
+						$shift = $cropObject->$cropVariant->cropArea->x
+							+ (float)(($this->arguments['hshift'] ?: $this->arguments['shift']) ?: 0)/100;
 						if ( 1-$cropObject->$cropVariant->cropArea->width <= $shift ) {
 							$shift = 1-$cropObject->$cropVariant->cropArea->width;
 						}

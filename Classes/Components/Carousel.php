@@ -20,7 +20,7 @@ class Carousel implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf, array $parentflexconf, string $animateCss): array
 	{
 		// @extensionScannerIgnoreLine
-		$processedData['defaultStorage'] = $this->storageRepository->getDefaultStorage()->getStorageRecord()['name'];
+		$processedData['defaultStorage'] = $this->storageRepository->getDefaultStorage()?->getStorageRecord()['name'] ?? '';
 		$innerCaptionStyle = '';
 		$processedData['dimensions']['width'] = $parentflexconf['width'] ?? '';
 		$processedData['carouselLink'] = $parentflexconf['link'] ?? '';
@@ -118,8 +118,8 @@ class Carousel implements SingletonInterface
 				$processedData['videoStyle'] .= 'object-fit: cover;';
 			}
 		} else {
-			$processedData['ratioCalc'] = 1;
-			$processedData['videRatio'] = '';
+			$processedData['ratioCalc'] = '';
+			$processedData['videoRatio'] = '16x9';
 			$processedData['videoStyle'] = '';
 		}
 
