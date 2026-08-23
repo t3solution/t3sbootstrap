@@ -177,6 +177,11 @@ For the full list, see the [official documentation](https://www.t3sbootstrap.de/
 
 Bug reports, pull requests and constructive feedback are very welcome.
 
+## Author & Commercial Support
+
+t3sbootstrap is developed and maintained by **Helmut Hackbarth** — freelance
+TYPO3 developer at [t3solution](https://www.t3solution.de/).
+
 ## License
 
 This extension is released under the **GNU General Public License v2.0 or later** (GPL-2.0-or-later), in line with the TYPO3 Core. See [LICENSE.txt](LICENSE.txt) for details.
