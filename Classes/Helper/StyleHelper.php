@@ -18,8 +18,12 @@ class StyleHelper implements SingletonInterface
          && !$data['tx_t3sbootstrap_contextcolor']) {
             if ($data['tx_t3sbootstrap_bgopacity'] && $data['tx_t3sbootstrap_bgopacity'] != 1) {
                 // if opacity
-                $rgba = $this->hex2RGB($data['tx_t3sbootstrap_bgcolor']).','.$data['tx_t3sbootstrap_bgopacity'];
-                $color = 'background-color: rgba('.$rgba.');';
+                $rgb = $this->hex2RGB($data['tx_t3sbootstrap_bgcolor']);
+                // An unparsable value used to produce "rgba(,0.5)" - keep the plain
+                // colour in that case instead of emitting a broken declaration.
+                $color = $rgb !== ''
+                    ? 'background-color: rgba('.$rgb.','.$data['tx_t3sbootstrap_bgopacity'].');'
+                    : 'background-color: '.$data['tx_t3sbootstrap_bgcolor'].';';
             } elseif ($hexdec) {
                 $color = 'background-color: '.$data['tx_t3sbootstrap_bgcolor'].';';
             }
@@ -40,6 +44,14 @@ class StyleHelper implements SingletonInterface
     {
         $hexStr = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
         $rgbArray = array();
+        // The colour picker of tx_t3sbootstrap_bgcolor has "opacity => true", so an
+        // editor using its alpha slider stores #RRGGBBAA (or #RGBA). The alpha is
+        // dropped here - the opacity comes from tx_t3sbootstrap_bgopacity.
+        if (strlen($hexStr) == 8) {
+            $hexStr = substr($hexStr, 0, 6);
+        } elseif (strlen($hexStr) == 4) {
+            $hexStr = substr($hexStr, 0, 3);
+        }
         if (strlen($hexStr) == 6) { //If a proper hex code, convert using bitwise operation. No overhead... faster
             $colorVal = hexdec($hexStr);
             $rgbArray['red'] = 0xFF & ($colorVal >> 0x10);

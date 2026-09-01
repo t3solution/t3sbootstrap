@@ -136,7 +136,22 @@
 	<f:if condition="({config.jumbotron.alignItem} && {jumbotronContainer} == 'FALSE')
 	 || ({config.jumbotron.alignItem} && {jumbotronContainer} && {config.jumbotron.containerposition} == 'Outside')">
 		<f:then>
-			<div class="{config.jumbotron.alignItem}">
+			<f:comment>
+				w-100 ist hier Pflicht, nicht Kosmetik. .jumbotron ist ein
+				Flex-Container, dieses div also ein Flex-Item ohne eigene Breite -
+				es schrumpft auf seinen Inhalt. Darunter haengt
+				jumbotron-content.w-100, dessen 100 % sich auf eine Breite
+				beziehen, die es dann noch gar nicht gibt. Steht darin ein
+				Background-Wrapper mit lokalem Video, ist dessen figure per
+				Bootstrap-.ratio absolut positioniert und traegt ebenfalls nichts
+				zur Breite bei - die ganze Kette rechnet sich auf 0 herunter und
+				das Video verschwindet.
+
+				Sichtbar wird das nur im Jumbotron ohne Container: dort ist dieses
+				div das einzige, das eine Breite setzen koennte. Die zweite
+				Variante weiter oben in diesem Partial macht es bereits so.
+			</f:comment>
+			<div class="w-100 {config.jumbotron.alignItem}">
 				<div class="jumbotron-content w-100">
 					<f:if condition="{config.general.pageTitle} == 'jumbotron'">
 						<f:render partial="Page/Title" arguments="{_all}" />

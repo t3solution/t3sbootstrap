@@ -1,3 +1,25 @@
+<f:comment>
+	Die Breite fuer die Medienabfrage.
+
+	Hier stand settings.navbar. plus dem Wert von settings.config.navbarBreakpointWidth.
+	navbarBreakpointWidth ist aber bereits der Pixelwert (bei "lg" also 992),
+	gesucht wurde damit settings.navbar.992 - ein Schluessel, den es nicht gibt.
+	settings.navbar haelt sm/md/lg/xl/xxl. Herausgekommen ist
+	"@media (min-width: px)" - eine ungueltige At-Regel, die der Browser samt
+	ihrem gesamten Inhalt verwirft. Damit fiel die komplette Desktop-Darstellung
+	des Plusicons weg: die Dropdowns waren nicht mehr flex, der Plus-Button
+	rutschte unter den Menuepunkt, und der Bootstrap-Caret blieb neben dem Plus
+	stehen (Zeile darunter blendet ihn absichtlich generell ein).
+
+	Der passende Schluessel ist navbarBreakpoint - den setzt der ConfigProcessor
+	und faellt dort bereits auf "md" zurueck. Die zweite Absicherung hier greift,
+	falls der Breakpoint auf "no" steht: dann gaebe es settings.navbar.no nicht
+	und wir waeren wieder bei einer kaputten At-Regel.
+</f:comment>
+<f:variable name="plusiconBreakpointWidth" value="{settings.navbar.{navbarBreakpoint}}" />
+<f:if condition="{plusiconBreakpointWidth} == ''">
+	<f:variable name="plusiconBreakpointWidth" value="768" />
+</f:if>
 
 	<f:asset.css identifier="t3sb_navbarPlusicon">
 #main-navbar.navplusicon .dropdown-toggle::after {
@@ -7,7 +29,7 @@
 	white-space: nowrap;
 }
 
-@media (min-width: {settings.navbar.{settings.config.navbarBreakpointWidth}}px) {
+@media (min-width: {plusiconBreakpointWidth}px) {
 	#main-navbar.navplusicon .btn {
 		border-radius: 0;
 		background-image: none;

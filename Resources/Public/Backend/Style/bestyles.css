@@ -24,13 +24,6 @@
   --bg-palettefield: #eeeeee;
 }
 
-/*
-.module-layout-normal .module-body-container .t3js-formengine-palette-field {
-  background-color: var(--bg-palettefield) !important;
-  padding: 1rem;
-}
-*/
-
 
 .t3-page-ce-footer {
     border-top: 1px solid #5a5a5a !important;
@@ -169,24 +162,4 @@
 [data-colpos="310"] > .t3-page-column-header .t3-page-column-title {color: var(--t3sb-color) !important;}
 
 
-/* RTE / CKEditor Style */
-.ck-content .list-unstyled {
-  padding-left:0;
-  list-style:none
-}
-.ck-content .list-inline {
-  padding-left:0;
-  list-style:none
-}
-.ck-content .list-inline li {
-  display:inline-block
-}
-.ck-content .list-inline li:not(:last-child) {
-  margin-right:0.5rem
-}
-
-.text-justify {
-    text-align: justify;
-    text-justify: inter-word;
-}
 

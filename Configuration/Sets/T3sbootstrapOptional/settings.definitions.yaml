@@ -112,31 +112,39 @@ settings:
     type: bool
     default: false
 
+  # Das Brand-Logo wird seit 5.4 im Konfigurations-Datensatz gepflegt, Tab
+  # "Brand (Logo)". Die vier Einstellungen hier bleiben als Rueckfall bestehen -
+  # eine bestehende Installation, die sie gesetzt hat, sieht nach dem Update
+  # unveraendert aus. Sie zu entfernen wuerde jede solche Site auf das
+  # Bootstrap-Logo zuruecksetzen.
+  # Der Settings-Editor rendert Label und Description als reinen Text - Markup
+  # oder Farbe kommen dort nicht durch. Der Hinweis muss also im Label selbst
+  # stehen, und zwar so, dass er in einer langen Liste nicht untergeht.
   bootstrap.navbar.image.defaultPath:
-    label: 'Navbar brand image path'
+    label: 'DEPRECATED (now in T3SB Config) — Navbar brand image path'
     category: Bootstrap.optional.navbar
-    description: ''
+    description: 'Moved to the configuration record, tab "Brand (Logo)", field "Image". This setting is only the fallback and applies as long as that field is empty. The upgrade wizard "Move the navbar brand image settings into the configuration record" moves an existing value across.'
     type: string
     default: 'EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg'
 
   bootstrap.navbar.image.width:
-    label: 'Navbar brand image width'
+    label: 'DEPRECATED (now in T3SB Config) — Navbar brand image width'
     category: Bootstrap.optional.navbar
-    description: 'In px'
+    description: 'In px. Moved to the configuration record, tab "Brand (Logo)", field "Image width". This setting is only the fallback and applies as long as that field is 0.'
     type: int
     default: 30
 
   bootstrap.navbar.image.height:
-    label: 'Navbar brand image height'
+    label: 'DEPRECATED (now in T3SB Config) — Navbar brand image height'
     category: Bootstrap.optional.navbar
-    description: 'In px'
+    description: 'In px. Moved to the configuration record, tab "Brand (Logo)", field "Image height". This setting is only the fallback and applies as long as that field is 0.'
     type: int
     default: 24
 
   bootstrap.navbar.image.altText:
-    label: 'Navbar brand image alt text'
+    label: 'DEPRECATED (now in T3SB Config) — Navbar brand image alt text'
     category: Bootstrap.optional.navbar
-    description: ''
+    description: 'Moved to the configuration record, tab "Brand (Logo)", field "Image alt text". This setting is only the fallback and applies as long as that field is empty.'
     type: string
     default: 'Company Logo'
 

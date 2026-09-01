@@ -2,6 +2,7 @@ import * as Core from '@ckeditor/ckeditor5-core';
 import * as UI from '@ckeditor/ckeditor5-ui';
 import * as Utils from '@ckeditor/ckeditor5-utils';
 import * as Widget from '@ckeditor/ckeditor5-widget';
+import { enableBlockEscape } from '@t3sbs/t3sbootstrap/rte_ckeditor/block-escape.js';
 
 /**
  * All contextual alert variants of Bootstrap 5.
@@ -71,6 +72,28 @@ function injectDropdownStyles() {
 	document.head.appendChild(style);
 }
 
+/**
+ * Joins a base class list with the preserved extra classes.
+ */
+function joinClasses(base, extra) {
+	return extra ? base + ' ' + extra : base;
+}
+
+/**
+ * All classes of an upcast view element except the ones the model rebuilds
+ * itself - so "alert-dismissible fade show" survives the round trip instead of
+ * being thrown away by the downcast.
+ */
+function readExtraClasses(viewElement, ...known) {
+	const extra = [];
+	for (const name of viewElement.getClassNames()) {
+		if (!known.includes(name)) {
+			extra.push(name);
+		}
+	}
+	return extra.join(' ');
+}
+
 export class AlertBox extends Core.Plugin {
 	static get pluginName() {
 		return 'AlertBox';
@@ -82,7 +105,7 @@ export class AlertBox extends Core.Plugin {
 		editor.model.schema.register('alert', {
 			allowWhere: '$block',
 			allowContentOf: '$root',
-			allowAttributes: ['variant']
+			allowAttributes: ['variant', 'extraClasses']
 		});
 
 		// <div class="alert alert-*"> -> alert[variant]
@@ -94,7 +117,11 @@ export class AlertBox extends Core.Plugin {
 			},
 			model: (viewElement, { writer }) => {
 				const variant = VALID_VARIANTS.find(candidate => viewElement.hasClass(`alert-${candidate}`));
-				return writer.createElement('alert', { variant: variant || DEFAULT_VARIANT });
+
+				return writer.createElement('alert', {
+					variant: variant || DEFAULT_VARIANT,
+					extraClasses: readExtraClasses(viewElement, 'alert', `alert-${variant || DEFAULT_VARIANT}`)
+				});
 			},
 			converterPriority: 'high'
 		});
@@ -104,21 +131,27 @@ export class AlertBox extends Core.Plugin {
 		editor.conversion.for('dataDowncast').elementToElement({
 			model: {
 				name: 'alert',
-				attributes: ['variant']
+				attributes: ['variant', 'extraClasses']
 			},
 			view: (modelElement, { writer }) => writer.createContainerElement('div', {
-				class: `alert alert-${normalizeVariant(modelElement.getAttribute('variant'))}`
+				class: joinClasses(
+					`alert alert-${normalizeVariant(modelElement.getAttribute('variant'))}`,
+					modelElement.getAttribute('extraClasses')
+				)
 			})
 		});
 
 		editor.conversion.for('editingDowncast').elementToElement({
 			model: {
 				name: 'alert',
-				attributes: ['variant']
+				attributes: ['variant', 'extraClasses']
 			},
 			view: (modelElement, { writer }) => {
 				const div = writer.createContainerElement('div', {
-					class: `alert alert-${normalizeVariant(modelElement.getAttribute('variant'))}`
+					class: joinClasses(
+						`alert alert-${normalizeVariant(modelElement.getAttribute('variant'))}`,
+						modelElement.getAttribute('extraClasses')
+					)
 				});
 				return Widget.toWidgetEditable(div, writer, { label: 'alert widget' });
 			}
@@ -128,6 +161,16 @@ export class AlertBox extends Core.Plugin {
 		editor.commands.add('removeAlert', new RemoveAlertCommand(editor));
 
 		editor.ui.componentFactory.add('alert', locale => this._createDropdown(locale));
+
+		// An alert at the very end of the field would otherwise be a dead end:
+		// Enter on an empty last line steps out of it, Backspace on an empty
+		// first line steps out upwards.
+		enableBlockEscape(this, block => {
+			const alertElement = findAlert(block);
+			return alertElement
+				? { parent: alertElement, boundary: alertElement, removeWhenEmpty: true }
+				: null;
+		});
 	}
 
 	_createDropdown(locale) {

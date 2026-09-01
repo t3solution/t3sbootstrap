@@ -30,7 +30,10 @@ final class LegacyAssetMigrationService implements SingletonInterface
         'T3SB-Bootstrap',
     ];
 
-    private const MARKER = '.legacy-migrated';
+    // -2, weil die erste Fassung die Include-Dateien zwar kopiert, ihre
+    // @import-Zeilen aber nicht umgeschrieben hat. Installationen, die schon
+    // migriert wurden, muessen deshalb noch einmal durchlaufen.
+    private const MARKER = '.legacy-migrated-2';
 
     public function __construct(
         private readonly AssetPathService $assetPathService,
@@ -45,7 +48,10 @@ final class LegacyAssetMigrationService implements SingletonInterface
             return true;
         }
 
-        return $this->countLegacyFiles() === 0;
+        // Die Include-Datei muss auch dann repariert werden, wenn in
+        // EXT:t3sb_package nichts mehr liegt - genau das ist der Normalfall,
+        // nachdem ein composer update das Sitepackage ersetzt hat.
+        return $this->countLegacyFiles() === 0 && $this->findStaleIncludeFiles() === [];
     }
 
     /**
@@ -69,6 +75,8 @@ final class LegacyAssetMigrationService implements SingletonInterface
             $copied += $this->copyTree($source, $this->assetPathService->getPath($directory));
         }
 
+        $copied += $this->repairIncludeFiles();
+
         GeneralUtility::writeFile(
             $this->assetPathService->getPath() . self::MARKER,
             "Assets migrated from EXT:t3sb_package. Safe to delete - it only prevents a repeated scan.\n",
@@ -76,6 +84,70 @@ final class LegacyAssetMigrationService implements SingletonInterface
         );
 
         return $copied;
+    }
+
+    /**
+     * bootstrap-<uid>.scss enthaelt nur drei @import-Zeilen, und bis 5.3.49
+     * zeigten sie auf EXT:t3sb_package/Resources/Public/. Kopiert wurde die
+     * Datei unveraendert - sie liegt also am neuen Ort und importiert vom
+     * alten. Ersetzt ein composer update das Sitepackage, oder ist es gar nicht
+     * geladen, bricht scssphp mit einer CompilerException ab und nimmt das
+     * ganze Frontend mit (der Compile laeuft im PageRenderer-Hook, ausserhalb
+     * jedes try/catch).
+     *
+     * Die Zeilen werden deshalb auf dieselbe relative Form gebracht, die
+     * Command\CustomScss heute schreibt - relativ, damit kein absoluter
+     * Serverpfad in der Datei einbetoniert wird.
+     *
+     * @return string[] absolute Pfade der Dateien mit veralteten Importen
+     */
+    private function findStaleIncludeFiles(): array
+    {
+        $path = $this->assetPathService->getPath('T3SB-SCSS/Bootstrap');
+        $stale = [];
+
+        foreach ((array)glob($path . 'bootstrap-*.scss') as $file) {
+            if (!is_string($file) || !is_file($file)) {
+                continue;
+            }
+
+            $content = (string)file_get_contents($file);
+
+            if (str_contains($content, self::LEGACY_BASE)) {
+                $stale[] = $file;
+            }
+        }
+
+        return $stale;
+    }
+
+    /**
+     * @return int Anzahl der reparierten Dateien
+     */
+    private function repairIncludeFiles(): int
+    {
+        $repaired = 0;
+
+        foreach ($this->findStaleIncludeFiles() as $file) {
+            // bootstrap-17.scss -> 17
+            $rootPageId = (int)substr(pathinfo($file, PATHINFO_FILENAME), strlen('bootstrap-'));
+
+            if ($rootPageId <= 0) {
+                continue;
+            }
+
+            $content = '
+@import "../custom-variables-' . $rootPageId . '";
+@import "../../T3SB-Bootstrap/Bootstrap/scss/bootstrap";
+@import "../custom-' . $rootPageId . '";
+            ';
+
+            if (GeneralUtility::writeFile($file, $content)) {
+                $repaired++;
+            }
+        }
+
+        return $repaired;
     }
 
     public function countLegacyFiles(): int

@@ -1114,15 +1114,15 @@
 		
 		<unit id="flexform.bgw.mobileHeight">
 			<segment>
-				<source>Max. height on mobile (max-width:767px)</source>
-				<target>Max. Höhe auf Mobilgeräten (max-width:767px)</target>
+				<source>Height on mobile (max-width:767px)</source>
+				<target>Höhe auf Mobilgeräten (max-width:767px)</target>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mobileHeight.description">
 			<segment>
-				<source>figure.video max-height in px</source>
-				<target>figure.video max-height in px</target>
+				<source>figure.video height in px</source>
+				<target>figure.video height in px</target>
 			</segment>
 		</unit>
 		

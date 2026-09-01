@@ -14,14 +14,25 @@ editor:
     # which APPENDS plain lists instead of replacing them by index. contents.css from
     # EXT:rte_ckeditor/Base.yaml is therefore already in the list - naming it again
     # would just load it twice.
+    # contents.css steht bereits in Editor/Base.yaml (Zeile 7), das oben
+    # importiert wird - ein zweiter Eintrag laedt sie nur ein zweites Mal.
     contentsCss:
-      - 'EXT:t3sbootstrap/Resources/Public/Styles/rte-alert.css'
+      - 'EXT:t3sbootstrap/Resources/Public/Backend/Style/rte.css'
 
     importModules:
+      # TYPO3 loads @ckeditor/ckeditor5-basic-styles by default, but only exports
+      # Bold, Italic, Subscript, Superscript, Strikethrough and Underline from it.
+      # Without this line the toolbar item "code" has no plugin behind it and
+      # CKEditor silently drops the button.
+      - { module: '@ckeditor/ckeditor5-basic-styles', exports: ['Code'] }
+      - { module: '@ckeditor/ckeditor5-code-block', exports: ['CodeBlock'] }
       - { module: '@ckeditor/ckeditor5-indent', exports: ['IndentBlock'] }
       - { module: '@ckeditor/ckeditor5-show-blocks', exports: ['ShowBlocks'] }
       - { module: '@ckeditor/ckeditor5-word-count', exports: ['WordCount'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/alert-plugin.js', exports: ['AlertBox'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/columns-plugin.js', exports: ['ColumnsGrid'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/margins-plugin.js', exports: ['MarginPicker'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/badge-plugin.js', exports: ['BadgePicker'] }
 
     extraPlugins:
       - Indent
@@ -56,15 +67,34 @@ editor:
         - '|'
         - heading
         - alert
+        - columns
+        - badge
         - '|'
         - alignment
+        - margins
         - insertTable
         - findAndReplace
         - specialCharacters
         - '|'
         - code
+        - codeBlock
         - outdent
         - indent
+
+    codeBlock:
+      languages:
+        - { language: 'plaintext', label: 'Plain text' }
+        - { language: 'typoscript', label: 'TypoScript' }
+        - { language: 'php', label: 'PHP' }
+        - { language: 'yaml', label: 'YAML' }
+        - { language: 'json', label: 'JSON' }
+        - { language: 'xml', label: 'XML' }
+        - { language: 'html', label: 'HTML' }
+        - { language: 'css', label: 'CSS' }
+        - { language: 'scss', label: 'SCSS' }
+        - { language: 'javascript', label: 'JavaScript' }
+        - { language: 'bash', label: 'Bash / Shell' }
+        - { language: 'sql', label: 'SQL' }
 
     indentBlock:
       classes:
@@ -126,25 +156,12 @@ editor:
         - { name: 'Button Light', element: 'a', classes: ['btn', 'btn-light'] }
         - { name: 'Button Dark', element: 'a', classes: ['btn', 'btn-dark'] }
 
-        # Badges
-        - { name: 'Badge Primary', element: 'span', classes: ['badge', 'text-bg-primary'] }
-        - { name: 'Badge Secondary', element: 'span', classes: ['badge', 'text-bg-secondary'] }
-        - { name: 'Badge Success', element: 'span', classes: ['badge', 'text-bg-success'] }
-        - { name: 'Badge Danger', element: 'span', classes: ['badge', 'text-bg-danger'] }
-        - { name: 'Badge Warning', element: 'span', classes: ['badge', 'text-bg-warning'] }
-        - { name: 'Badge Info', element: 'span', classes: ['badge', 'text-bg-info'] }
-        - { name: 'Badge Light', element: 'span', classes: ['badge', 'text-bg-light'] }
-        - { name: 'Badge Dark', element: 'span', classes: ['badge', 'text-bg-dark'] }
-
-        # Pill badges
-        - { name: 'Pill Badge Primary', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-primary'] }
-        - { name: 'Pill Badge Secondary', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-secondary'] }
-        - { name: 'Pill Badge Success', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-success'] }
-        - { name: 'Pill Badge Danger', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-danger'] }
-        - { name: 'Pill Badge Warning', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-warning'] }
-        - { name: 'Pill Badge Info', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-info'] }
-        - { name: 'Pill Badge Light', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-light'] }
-        - { name: 'Pill Badge Dark', element: 'span', classes: ['badge', 'rounded-pill', 'text-bg-dark'] }
+        # Badges und Pill Badges sind seit 5.3.51 kein Styles-Eintrag mehr, sondern
+        # ein eigenes Toolbar-Dropdown (badge-plugin.js, Toolbar-Eintrag "badge").
+        # Das Markup ist unveraendert - <span class="badge text-bg-*"> bzw. mit
+        # zusaetzlichem "rounded-pill" - bestehende Inhalte brauchen deshalb keine
+        # Migration. Sie hier wieder einzutragen wuerde zu zwei Bedienwegen fuer
+        # dieselbe Klasse fuehren, die sich gegenseitig ueberschreiben.
 
         # Lists
         - { name: 'List Unstyled', element: 'ul', classes: ['list-unstyled'] }
@@ -174,8 +191,11 @@ editor:
     htmlSupport:
       allowEmpty:
         - 'div'
+        - 'span'
       allow:
         - name: 'div'
           attributes: true
           classes: true
           styles: true
+        - name: 'span'
+          classes: true

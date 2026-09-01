@@ -253,7 +253,22 @@ class ConfigProcessor implements DataProcessorInterface
 		$cfg['clickableparent'] = (!empty($rootLine[1]) && (int)($rootLine[1]['doktype'] ?? 0) === 4 && empty($vars['navbarPlusicon']))
 			? 1 : (int)$vars['navbarClickableparent'];
 			
-		$cfg['image']          = $vars['navbarImage'] ?: ($settings['navbar.']['image.']['defaultPath'] ?? '');
+		// Brand-Logo: Der Konfigurations-Datensatz gewinnt, die Site-Settings sind
+		// nur noch der Rueckfall. Bis 5.4 kamen Breite, Hoehe und Alt-Text
+		// ausschliesslich aus der Site - ein abweichendes Logo im Datensatz bekam
+		// dadurch die Masse eines fremden Logos verpasst.
+		//
+		// Der Rueckfall bleibt bestehen, damit bestehende Installationen nach dem
+		// Update unveraendert aussehen, auch ohne den UpgradeWizard.
+		//
+		// Achtung beim leeren Wert: OutsourcedFiles::getConstants() schreibt fuer
+		// jedes leere Feld eine 0 in die Konstanten, hier kommt also '0' an - in
+		// PHP falsy, das ?: greift also wie gewuenscht.
+		$imageSettings         = $settings['navbar.']['image.'] ?? [];
+		$cfg['image']          = $vars['navbarImage']       ?: ($imageSettings['defaultPath'] ?? '');
+		$cfg['imageWidth']     = (int)($vars['navbarImageWidth']  ?? 0) ?: (int)($imageSettings['width'] ?? 0);
+		$cfg['imageHeight']    = (int)($vars['navbarImageHeight'] ?? 0) ?: (int)($imageSettings['height'] ?? 0);
+		$cfg['imageAlt']       = ($vars['navbarImageAlt'] ?? '') ?: ($imageSettings['altText'] ?? '');
 		$cfg['container']      = $vars['navbarContainer']     ?? '';
 		$cfg['innercontainer'] = $vars['navbarInnercontainer'] ?: 'container';
 		$cfg['brand']          = $vars['navbarBrand'];

@@ -31,21 +31,21 @@
 				</f:else>
 				</f:if>
 		
-				<f:if condition="{record.tx_t3sbootstrap_flexform.toastwidth}">
-					| <strong>Toast width:</strong> {record.tx_t3sbootstrap_flexform.toastwidth}px
+				<f:if condition="{record.tx_t3sbootstrap_flexform.general.toastwidth}">
+					| <strong>Toast width:</strong> {record.tx_t3sbootstrap_flexform.general.toastwidth}px
 				</f:if>
 			</f:then>
 			<f:else>
-				<f:if condition="{record.tx_t3sbootstrap_flexform.toastwidth}">
-					<strong>Toast width:</strong> {record.tx_t3sbootstrap_flexform.toastwidth}px
+				<f:if condition="{record.tx_t3sbootstrap_flexform.general.toastwidth}">
+					<strong>Toast width:</strong> {record.tx_t3sbootstrap_flexform.general.toastwidth}px
 				</f:if>
 			</f:else>
 		</f:if>
 
-		<f:if condition="{record.tx_t3sbootstrap_flexform.autohide}">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.autohide}">
 			| <strong>Auto hide:</strong> true
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.cookie}">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.cookie}">
 			| <strong>Cookie:</strong> true
 		</f:if>
 		
@@ -63,31 +63,31 @@
 		</f:if>
 		
 		
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-0 start-50 translate-middle-x'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'top-0 start-50 translate-middle-x'">
 			| <strong>Placement:</strong> Top center
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-0 start-0'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'top-0 start-0'">
 			| <strong>Placement:</strong> Top left
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-0 end-0'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'top-0 end-0'">
 			| <strong>Placement:</strong> Top right
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-50 start-0 translate-middle-y'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'top-50 start-0 translate-middle-y'">
 			| <strong>Placement:</strong> Middle left
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-50 start-50 translate-middle'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'top-50 start-50 translate-middle'">
 			| <strong>Placement:</strong> Middle center
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'top-50 end-0 translate-middle-y'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'top-50 end-0 translate-middle-y'">
 			| <strong>Placement:</strong> Middle right
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'bottom-0 start-0'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'bottom-0 start-0'">
 			| <strong>Placement:</strong> Bottom left
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'bottom-0 start-50 translate-middle-x'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'bottom-0 start-50 translate-middle-x'">
 			| <strong>Placement:</strong> Bottom center
 		</f:if>
-		<f:if condition="{record.tx_t3sbootstrap_flexform.placement} == 'bottom-0 end-0'">
+		<f:if condition="{record.tx_t3sbootstrap_flexform.general.placement} == 'bottom-0 end-0'">
 			| <strong>Placement:</strong> Bottom right
 		</f:if>
 

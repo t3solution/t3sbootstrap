@@ -28,8 +28,15 @@ class CardWrapper implements SingletonInterface
      */
     public function getProcessedData(array $processedData, array $flexconf): array
     {
+        // Ein Card-Wrapper, dessen FlexForm nie geoeffnet wurde, hat gar keine
+        // Werte: tx_t3sbootstrap_flexform ist NULL, $flexconf entsprechend leer.
+        // Der Schluessel wird deshalb einmal normalisiert, statt ihn an vier
+        // Stellen direkt zu lesen - sonst warnt PHP 8 mit "Undefined array key",
+        // und TYPO3s Error-Handler macht daraus eine Exception.
+        $layout = (string)($flexconf['card_wrapper'] ?? '');
+
         $processedData['gutter'] = !empty($flexconf['gutter']) ? (int)$flexconf['gutter'] : 0;
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');        
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
             
         $children = $queryBuilder
@@ -54,7 +61,7 @@ class CardWrapper implements SingletonInterface
 
         if (count($children) || count($processedData['contentBy'])) {
             // Flipper defaults
-            if ($flexconf['card_wrapper'] === 'flipper') {
+            if ($layout === 'flipper') {
                 switch (count($children)) {
                      case 1:
                         $processedData['flipper']['class'] = 'col-xs-12 col-sm-12 col-md-12';
@@ -91,7 +98,7 @@ class CardWrapper implements SingletonInterface
                 }
                 $children[$key]['imgwidth'] = !empty($child['imagewidth']) ? $child['imagewidth'] : $flipperWidth;
                 if (!empty($fileObjects)) {
-                    if ($flexconf['card_wrapper'] === 'flipper') {
+                    if ($layout === 'flipper') {
 
                         $children[$key]['hFa'] = !empty($child['header_icon']) ? $child['header_icon'] : '';
                         
@@ -122,7 +129,7 @@ class CardWrapper implements SingletonInterface
             // swiperjs: all swiper options are read directly as {t3sbFlexform.*} in
             // Partials/Content/Assets/CardWrapper.fluid.html, only {navigation}/{pagination}
             // are evaluated as top level variables there
-            if ($flexconf['card_wrapper'] === 'slider') {
+            if ($layout === 'slider') {
                 $processedData['navigation'] = (int)!empty($flexconf['navigation']);
                 $processedData['pagination'] = (int)!empty($flexconf['pagination']);
             }
@@ -130,7 +137,7 @@ class CardWrapper implements SingletonInterface
             $processedData['visibleCards'] = !empty($flexconf['visibleCards']) ? (int)$flexconf['visibleCards'] : 3;
         }
 
-        $processedData['card_wrapper_layout'] = $flexconf['card_wrapper'] ?: '';
+        $processedData['card_wrapper_layout'] = $layout;
 
         return $processedData;
     }

@@ -239,7 +239,9 @@ return [
                 navbar_brand,--linebreak--,
                 navbarbrand_alignment,--linebreak--,
                 company,--linebreak--,
-                navbar_image,
+                navbar_image,--linebreak--,
+                navbar_image_width, navbar_image_height,--linebreak--,
+                navbar_image_alt,
             ',
         ],
         'backgroundColor' => [
@@ -1084,6 +1086,50 @@ return [
             'exclude' => false,
             'label' => $dbModel.'.navbarimage',
             'description' => $dbModel.'.navbarimage.description',
+            'config' => [
+                'type' => 'input',
+                'searchable' => false
+            ]
+        ],
+        // Bis 5.4 kamen Breite, Hoehe und Alt-Text ausschliesslich aus den
+        // Site-Settings (bootstrap.navbar.image.*). Damit trug jede Site nur
+        // ein Mass fuer alle Siteroots - ein abweichendes Logo im Datensatz
+        // bekam trotzdem die fremden Proportionen verpasst. Die Felder hier
+        // uebersteuern die Site-Settings; leer bzw. 0 bedeutet weiterhin
+        // "nimm den Wert aus der Site" (siehe ConfigProcessor::processNavbar).
+        'navbar_image_width' => [
+            'exclude' => false,
+            'label' => $dbModel.'.navbarimagewidth',
+            'description' => $dbModel.'.navbarimagewidth.description',
+            'displayCond' => 'FIELD:navbar_brand:IN:image,imgText',
+            'config' => [
+                'type' => 'number',
+                'format' => 'integer',
+                'size' => 10,
+                'range' => ['lower' => 0, 'upper' => 2000],
+                'default' => 0,
+                'searchable' => false
+            ]
+        ],
+        'navbar_image_height' => [
+            'exclude' => false,
+            'label' => $dbModel.'.navbarimageheight',
+            'description' => $dbModel.'.navbarimageheight.description',
+            'displayCond' => 'FIELD:navbar_brand:IN:image,imgText',
+            'config' => [
+                'type' => 'number',
+                'format' => 'integer',
+                'size' => 10,
+                'range' => ['lower' => 0, 'upper' => 2000],
+                'default' => 0,
+                'searchable' => false
+            ]
+        ],
+        'navbar_image_alt' => [
+            'exclude' => false,
+            'label' => $dbModel.'.navbarimagealt',
+            'description' => $dbModel.'.navbarimagealt.description',
+            'displayCond' => 'FIELD:navbar_brand:IN:image,imgText',
             'config' => [
                 'type' => 'input',
                 'searchable' => false

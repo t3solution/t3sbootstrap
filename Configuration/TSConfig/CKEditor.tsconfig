@@ -34,8 +34,43 @@ RTE {
 
 		}
 		buttons.link {
-			properties.class.allowedClasses = phone-link, fax-link, external-link, internal-link, email-link, download-link, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark, js-scroll-trigger, text-primary, text-secondary, text-success, text-danger, text-warning, text-info,text-light, text-light bg-dark, text-dark, text-muted, text-white, text-white bg-dark, stretched-link, link-primary, link-secondary, link-success, link-primary, link-secondary, link-success, link-danger, link-warning, link-info, link-light, link-darklink, link-danger, link-warning, link-info, link-light, link-dark
+			properties.class.allowedClasses = phone-link, fax-link, external-link, internal-link, email-link, download-link, icon-link, icon-link icon-link-hover, btn, btn btn-primary, btn btn-secondary, btn btn-success, btn btn-danger, btn btn-warning, btn btn-info, btn btn-light, btn btn-dark, js-scroll-trigger, text-primary, text-secondary, text-success, text-danger, text-warning, text-info,text-light, text-light bg-dark, text-dark, text-muted, text-white, text-white bg-dark, stretched-link, link-primary, link-secondary, link-success, link-primary, link-secondary, link-success, link-danger, link-warning, link-info, link-light, link-darklink, link-danger, link-warning, link-info, link-light, link-dark
 
 		}
 	}
 }
+
+####################################################################
+#### Feature-Schalter für den t3sbootstrap-RTE                  ####
+####                                                            ####
+#### Der Standard kommt aus der Extension Configuration,        ####
+#### Kategorie "RTE" (rteAlert, rteColumns, rteCodeBlock, ...).  ####
+#### Hier lässt er sich pro Seitenbaum übersteuern - der Wert    ####
+#### aus dem PageTS gewinnt immer.                              ####
+####                                                            ####
+#### Ein abgeschalteter Schalter blendet nur den Toolbar-Eintrag ####
+#### bzw. den Eintrag in der Styles-Auswahl aus. Bereits         ####
+#### vorhandene Inhalte bleiben editierbar und werden beim       ####
+#### Speichern nicht verändert.                                 ####
+####                                                            ####
+#### RTE.t3sbootstrap.features {                                ####
+####     alert = 1                                              ####
+####     columns = 1                                            ####
+####     codeBlock = 1                                          ####
+####     code = 1                                               ####
+####     margins = 1                                            ####
+####     table = 1                                              ####
+####     alignment = 1                                          ####
+####     indent = 1                                             ####
+####     blockQuote = 1                                         ####
+####     horizontalLine = 1                                     ####
+####     specialCharacters = 1                                  ####
+####     findAndReplace = 1                                     ####
+####     showBlocks = 1                                         ####
+####     sourceEditing = 1                                      ####
+####     styleColors = 1                                        ####
+####     styleButtons = 1                                       ####
+####     styleBadges = 1                                        ####
+####     styleTables = 1                                        ####
+#### }                                                          ####
+####################################################################

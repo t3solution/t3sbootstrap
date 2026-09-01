@@ -213,8 +213,14 @@
 </f:section>
 
 <f:section name="BrandImage">
-	<f:image src="{config.navbar.image}" width="{settings.navbar.image.width}" height="{settings.navbar.image.height}"
-	  class="img-fluid{config.navbar.brandClass}" alt="{settings.navbar.image.altText}" />
+	<f:comment>
+		Masse und Alt-Text kommen aus dem Konfigurations-Datensatz; der
+		ConfigProcessor faellt dort bereits auf die Site-Settings zurueck.
+		Frueher stand hier settings.navbar.image.* - damit trug jede Site nur ein
+		Mass fuer alle Siteroots.
+	</f:comment>
+	<f:image src="{config.navbar.image}" width="{config.navbar.imageWidth}" height="{config.navbar.imageHeight}"
+	  class="img-fluid{config.navbar.brandClass}" alt="{config.navbar.imageAlt}" />
 </f:section>
 
 <f:section name="Toggler">

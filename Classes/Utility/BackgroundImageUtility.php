@@ -96,17 +96,23 @@ class BackgroundImageUtility implements SingletonInterface
 
         $fileObjects = $this->fileRepository->findByRelation('tt_content', 'bgimages', $uid);
 
+        // $flexconf ist per Signatur optional und bei einem Element ohne
+        // ausgefuelltes FlexForm auch tatsaechlich leer - beide Schluessel
+        // deshalb einmal normalisieren statt sie direkt zu lesen.
+        $bgImages        = (int)($flexconf['bgimages'] ?? 0);
+        $bgImagePosition = (int)($flexconf['bgimagePosition'] ?? 0);
+
         $css = '';
-        if ((int) $flexconf['bgimages'] === 1 && (int) $flexconf['bgimagePosition'] < 3) {
+        if ($bgImages === 1 && $bgImagePosition < 3) {
             // left or right
             if (empty($fileObjects)) {
                 return;
             }
             $file = $fileObjects[0];
             $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
-            $css .= $this->generateCss('s'.$uid.'-'.$flexconf['bgimagePosition'], $file, $image, $flexconf, $bgMediaQueries);
-        } 
-        if ((int) $flexconf['bgimages'] === 2 && (int) $flexconf['bgimagePosition'] === 3) {
+            $css .= $this->generateCss('s'.$uid.'-'.$bgImagePosition, $file, $image, $flexconf, $bgMediaQueries);
+        }
+        if ($bgImages === 2 && $bgImagePosition === 3) {
             // both
             foreach ($fileObjects as $fileKey=>$file) {
                 $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
@@ -131,7 +137,8 @@ class BackgroundImageUtility implements SingletonInterface
         $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 
         if (!empty($flexconf['enableAutoheight'])) {
-            if ($flexconf['addHeight']) {
+            // enableAutoheight gesetzt heisst nicht, dass addHeight existiert
+            if (!empty($flexconf['addHeight'])) {
                 $inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
                 if ($inline) {
                     $this->assetCollector->addInlineJavaScript('addheight-'.$uid, $inline);

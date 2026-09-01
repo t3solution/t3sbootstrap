@@ -15,6 +15,32 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 {
    
+	/**
+	 * The icon name is the first "fa-*" token that is not a style or a modifier.
+	 *
+	 * Returns '' when there is nothing recognisable in the value - such a record
+	 * must neither be migrated (that produced a bare "fa7:") nor be reported as
+	 * pending by updateNecessary() forever.
+	 */
+	private static function resolveIconName(string $value): string
+	{
+		foreach (preg_split('/\s+/', trim($value)) ?: [] as $token) {
+			if (!str_starts_with($token, 'fa-')) {
+				continue;
+			}
+			if (in_array($token, ['fa-solid', 'fa-brands', 'fa-regular', 'fa-light', 'fa-thin', 'fa-duotone', 'fa-sharp', 'fa-fw', 'fa-border', 'fa-spin', 'fa-pulse', 'fa-inverse'], true)) {
+				continue;
+			}
+			if (preg_match('/^fa-(xs|sm|lg|\d+x)$/', $token)) {
+				continue;
+			}
+			return substr($token, 3);
+		}
+
+		return '';
+	}
+
+
 	public function getTitle(): string
 	{
 		return 'EXT:t3sbootstrap: Migrate FA7 free icons in tt_content:tx_t3sbootstrap_header_fontawesome to use with EXT:iconpack & EXT:iconpack_fontawesome';
@@ -37,7 +63,11 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 		$statements = $queryBuilder
 			 ->select('uid', $fieldName)
 			 ->from('tt_content')
-			 ->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
+			 ->where(
+			 	$queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')),
+			 	// an icon that is already set in the target field wins
+			 	$queryBuilder->expr()->eq('header_icon', $queryBuilder->createNamedParameter(''))
+			 )
 			 ->executeQuery()
 			 ->fetchAllAssociative();
 
@@ -47,6 +77,9 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 
 			if (!empty($string)) {
 
+				// pad, so the " fa-xx " probes below also match a modifier that
+				// sits at the very start or the very end of the value
+				$string = ' '.trim((string)$string).' ';
 				$erg = 	'fa7:';
 				if ( str_contains($string, 'fa-solid') ) {
 					$erg .= 'solid,';
@@ -118,9 +151,15 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 				}
 
 
-				if ( str_contains($string, ' fa-') ) {
-					$erg .= substr(explode(' ',$string)[1], 3);
+				$iconName = self::resolveIconName($string);
+
+				if ($iconName === '') {
+					// nothing recognisable in there - leave the record alone rather
+					// than writing a bare "fa7:" and clearing the source field
+					continue;
 				}
+
+				$erg .= $iconName;
 
 				if ($size) {
 					$erg .= ',size:'.$size;
@@ -184,15 +223,24 @@ final class IconpackHeaderUpgradeWizard implements UpgradeWizardInterface
 			->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 		
 		$fieldName = 'tx_t3sbootstrap_header_fontawesome';
-		$numberOfHeadericons = $queryBuilder
-				 ->count('uid')
+		$rows = $queryBuilder
+				 ->select('tx_t3sbootstrap_header_fontawesome')
 				 ->from('tt_content')
-				 ->where($queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')))
+				 ->where(
+				 	$queryBuilder->expr()->neq($fieldName, $queryBuilder->createNamedParameter('')),
+				 	// an icon that is already set in the target field wins
+				 	$queryBuilder->expr()->eq('header_icon', $queryBuilder->createNamedParameter(''))
+				 )
 				 ->executeQuery()
-				 ->fetchOne();
- 
-		if (!empty($numberOfHeadericons)) {
-			$required = true;
+				 ->fetchFirstColumn();
+
+		// Values without a recognisable icon name are skipped by executeUpdate(),
+		// so they must not keep the wizard pending either.
+		foreach ($rows as $row) {
+			if (self::resolveIconName((string)$row) !== '') {
+				$required = true;
+				break;
+			}
 		}
 
 		return $required;

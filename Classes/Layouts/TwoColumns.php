@@ -42,7 +42,7 @@ class TwoColumns implements SingletonInterface
                     $flexconf,
                     $bgMediaQueries
             );
-            $processedData['bgimagePosition'] = $flexconf['bgimagePosition'];
+            $processedData['bgimagePosition'] = $flexconf['bgimagePosition'] ?? '';
             $processedData['bgimageSize'] = !empty($flexconf['bgimageSize']) ? $flexconf['bgimageSize'] : 'cover';
             $processedData['class'] .= ' col-image';
         }

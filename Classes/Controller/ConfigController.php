@@ -22,6 +22,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
 
 #[AsController]
 final class ConfigController extends AbstractController
@@ -103,7 +104,11 @@ final class ConfigController extends AbstractController
         }
 
         // Config Transfer: Export/Import der Konfiguration dieser Root-Seite
-        $siteRootPages = $this->configTransferService->getSiteRootPages();
+        // only offer the pages this user is actually allowed to see
+        $siteRootPages = array_values(array_filter(
+            $this->configTransferService->getSiteRootPages(),
+            fn(array $page): bool => $this->hasPageAccess((int)$page['uid'], Permission::PAGE_SHOW)
+        ));
         $assignedOptions['transfer'] = [
             'pageOptions' => $this->buildPageOptions($siteRootPages),
             'currentPid' => $this->rootPageId,
@@ -215,6 +220,41 @@ final class ConfigController extends AbstractController
 
 
     /**
+     * True when the current backend user may act on that page.
+     *
+     * Admins always may. For everybody else the page has to exist and be covered
+     * by their permissions - doesUserHaveAccess() also honours the DB mounts.
+     */
+    private function hasPageAccess(int $pid, int $permission): bool
+    {
+        // not $this->isAdmin: initializeAction() leaves that false when the request
+        // carries no usable "id", and an admin would then be locked out
+        if ($GLOBALS['BE_USER']->isAdmin()) {
+            return true;
+        }
+
+        $page = BackendUtility::getRecord('pages', $pid);
+
+        if (!is_array($page)) {
+            return false;
+        }
+
+        return (bool)$GLOBALS['BE_USER']->doesUserHaveAccess($page, $permission);
+    }
+
+    private function denyTransfer(): ResponseInterface
+    {
+        $this->addFlashMessage(
+            (string)(LocalizationUtility::translate('transfer.error.access', 't3sbootstrap')
+                ?? 'You are not allowed to access the configuration of that page.'),
+            '',
+            ContextualFeedbackSeverity::ERROR
+        );
+
+        return $this->redirect('list', null, null, ['id' => $this->currentUid]);
+    }
+
+    /**
      * Exports the configuration records of a root page as a portable json file.
      *
      * The payload carries neither uid nor pid, only field values and FAL
@@ -224,6 +264,14 @@ final class ConfigController extends AbstractController
     public function exportAction(int $exportPid = 0): ResponseInterface
     {
         $pid = $exportPid;
+
+        // The module is registered with 'access' => 'user', so an editor reaches
+        // this action too. Without the check any pid could be passed in the URL
+        // and the configuration of a foreign site (custom_scss included) would be
+        // handed out. A missing pid means "every record of the installation".
+        if ($pid <= 0 ? !$GLOBALS['BE_USER']->isAdmin() : !$this->hasPageAccess($pid, Permission::PAGE_SHOW)) {
+            return $this->denyTransfer();
+        }
 
         try {
             $payload = $this->configTransferService->export($pid > 0 ? $pid : null);
@@ -249,6 +297,12 @@ final class ConfigController extends AbstractController
      */
     public function importAction(int $targetPid = 0, string $importMode = ConfigTransferService::MODE_UPDATE): ResponseInterface
     {
+        // Writing action - the target page has to be editable for this user.
+        // A missing pid is rejected by the service itself with its own message.
+        if ($targetPid > 0 && !$this->hasPageAccess($targetPid, Permission::PAGE_EDIT)) {
+            return $this->denyTransfer();
+        }
+
         $mode = $importMode;
 
         if (!in_array($mode, [
