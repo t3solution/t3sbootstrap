@@ -42,7 +42,8 @@ class ButtonGroup implements SingletonInterface
                 && $flexconf['fixedPosition'] === 'right'
             ) {
                 $processedData['class']       .= ' slideInButton';
-                $processedData['visiblePart']  = $flexconf['visiblePart']
+                // slideIn gesetzt heisst nicht, dass visiblePart existiert
+                $processedData['visiblePart']  = !empty($flexconf['visiblePart'])
                     ? (int)$flexconf['visiblePart']
                     : 37;
                 $processedData['slideIn']      = $flexconf['slideIn'];

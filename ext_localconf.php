@@ -34,6 +34,7 @@ defined('TYPO3') or die();
 	ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.fontawesomeCss = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.navbarmodal = 0');
     ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.supraheader = 0');
+    ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.speakingID = 0');
 
     /***************
      * Extension configuration
@@ -106,6 +107,11 @@ defined('TYPO3') or die();
         $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/TipTap.yaml';
     } else {
         $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap'] = 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml';
+        // Same editor, but the General HTML Support whitelist keeps CSS classes on the
+        // usual text elements. Opt-in, because the whitelist doubles as a paste filter -
+        // see the doc block in Extended.yaml. Activate per installation with
+        //     RTE.default.preset = t3sbootstrap_extended
+        $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['t3sbootstrap_extended'] = 'EXT:t3sbootstrap/Configuration/RTE/Extended.yaml';
     }
     // Optional Hover Link Effect (FAL)
     if (array_key_exists('linkHoverEffect', $extconf) && $extconf['linkHoverEffect'] === '1') {
@@ -162,6 +168,12 @@ defined('TYPO3') or die();
     // Optional "Supraheader"
     if (array_key_exists('supraheader', $extconf) && $extconf['supraheader'] === '1') {
         ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.supraheader = 1');
+    }
+    // Optional "Speaking ID" - controls only whether the field
+    // tx_t3sbootstrap_anchor is offered in the backend. The rendering of the
+    // anchor span must not depend on it, see Configuration/TypoScript/Content/_main.typoscript.
+    if (array_key_exists('speakingID', $extconf) && $extconf['speakingID'] === '1') {
+        ExtensionManagementUtility::addTypoScriptConstants('bootstrap.extconf.speakingID = 1');
     }
 
     /***************

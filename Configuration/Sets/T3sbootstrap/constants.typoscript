@@ -109,6 +109,8 @@ bootstrap.disable.jquery = 1
 bootstrap.config.jqueryHeader = 0
 bootstrap.disable.accordion.scrollToTop = 0
 bootstrap.navbar.noLinkTitle = 
+# Brand-Logo: gepflegt wird es im Konfigurations-Datensatz, Tab "Brand (Logo)".
+# Diese vier Konstanten sind nur noch der Rueckfall fuer leere Datensatzfelder.
 bootstrap.navbar.image.defaultPath = EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
 bootstrap.navbar.image.width = 30
 bootstrap.navbar.image.height = 24

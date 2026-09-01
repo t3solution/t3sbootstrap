@@ -161,7 +161,9 @@
 
 
 <f:section name="RealImage">
-	<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}">
+	<f:comment> {class} und {styleAttr} fehlten hier - die eigenen Klassen und der
+	eigene Style des Wrappers kamen damit nie im DOM an. </f:comment>
+	<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}{class}"{styleAttr -> f:format.raw()}>
 		<figure style="margin: 0 auto;">
 			<f:if condition="{settings.lazyLoadBgWrapperImage}">
 				<f:then>
@@ -209,7 +211,10 @@
 
 
 <f:section name="VideoLocal">
-	<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}">
+	<f:comment> {class} und {styleAttr} fehlten hier - die eigenen Klassen und der
+	eigene Style des Wrappers (Abstaende, Rahmen, Extra-Klasse, Extra-Style)
+	kamen damit nie im DOM an, sichtbar war nur das Video. </f:comment>
+	<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}{class}"{styleAttr -> f:format.raw()}>
 		<f:render section="LocalVideoAssets" arguments="{_all}" />
 			<f:render partial="Media/Type/Video" arguments="{file: file, dimensions: dimensions,
 			class: class, border: border, addmedia: addmedia, position: position}" />
@@ -222,48 +227,83 @@
 		<f:asset.script identifier="localVideo_function">
 // Local video - BackgroundWrapper.fluid.html
 function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoElement) {
-	videoElement.muted = mute;
-	videoElement.loop = loop;
+	// playsinline MUSS vor play() stehen: iOS entscheidet beim Start ueber den
+	// Vollbildmodus. Stand es danach - wie bisher - uebernahm das Video auf dem
+	// iPhone den ganzen Bildschirm. Das Attribut steht jetzt zusaetzlich schon
+	// im Markup; hier bleibt es fuer bereits ausgelieferte Seiten stehen.
+	videoElement.setAttribute('playsinline', '');
+	videoElement.setAttribute('webkit-playsinline', '');
+	videoElement.playsInline = true;
+
+	videoElement.muted = !!mute;
+	videoElement.loop  = !!loop;
+
 	if (autoplay) {
-		videoElement.pause();
-		videoElement.currentTime = 0;
-		videoElement.play();
-		videoElement.setAttribute('playsinline', '');
 		if (controls) {
 			videoElement.setAttribute('controls', '');
 		} else {
 			videoElement.removeAttribute('controls');
+		}
+		videoElement.pause();
+		videoElement.currentTime = 0;
+		// play() liefert ein Promise. Blockiert der Browser das Autoplay, war
+		// die Ablehnung bisher unbehandelt.
+		var playing = videoElement.play();
+		if (playing && typeof playing.catch === 'function') {
+			playing.catch(function () {});
 		}
 	}
 }
 		</f:asset.script>
 		<f:asset.script identifier="vanilla_localVideo-{data.uid}">
 // Local video-{data.uid} - BackgroundWrapper.fluid.html
-var videoWrapper = document.querySelector('#video-{file.uid}'),
-	videoElement = document.querySelector('#video-{file.uid} video'),
-	marginTop = (videoElement.clientHeight - videoWrapper.clientHeight)/2,
-	shift = {shift},
-	id = {data.uid},
-	el = document.getElementById('s-'+id),
-	winWidth = window.innerWidth;
+// IIFE: alle Inline-Skripte der Seite landen in einer einzigen Datei. Mit
+// var im gemeinsamen Scope ueberschrieben sich mehrere Background-Wrapper
+// gegenseitig, und ein fehlendes Element riss den ganzen Block mit.
+(function () {
+	var wrapper = document.querySelector('#video-{file.uid}'),
+		video   = wrapper ? wrapper.querySelector('video') : null,
+		el      = document.getElementById('s-{data.uid}'),
+		shift   = {shift};
 
-if ( winWidth < 768 ) {
-	el.classList.remove('ratio');
-} else {
-	el.classList.add('ratio');
-}
+	if (!el) { return; }
 
-window.addEventListener('resize', function(event) {
-	resizedViewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", ""));
-		if ( resizedViewportWidth < 768 ) {
+	function applyRatio() {
+		if (window.innerWidth < 768) {
 			el.classList.remove('ratio');
 		} else {
 			el.classList.add('ratio');
 		}
-}, true);
+	}
+	applyRatio();
+	window.addEventListener('resize', applyRatio);
 
-videoElement.style.marginTop = '-'+marginTop-shift+'px';
-t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, {localVideo.controls}, videoElement );
+	if (!video) { return; }
+
+	function centerVideo() {
+		// '-'+marginTop-shift+'px' ergab "NaNpx", sobald marginTop negativ war
+		// ('-' + -30 === '--30'), also in genau dem haeufigsten Fall.
+		var overflow = video.clientHeight - wrapper.clientHeight;
+
+		// Nur verschieben, wenn das Video ueberhaupt ueber den Rahmen
+		// hinausragt. Fuellt es ihn genau aus - auf Mobilgeraeten durch
+		// object-fit:cover der Normalfall - schoebe ein margin-top es
+		// lediglich aus dem Rahmen heraus und hinterliesse oben einen
+		// leeren Streifen in der Hintergrundfarbe.
+		if (overflow <= 0) {
+			video.style.marginTop = '';
+			return;
+		}
+
+		video.style.marginTop = (-(overflow / 2) - shift) + 'px';
+	}
+	centerVideo();
+	// Vor dem Laden der Metadaten ist clientHeight 0 - dann stimmt die Rechnung nicht
+	video.addEventListener('loadedmetadata', centerVideo);
+	window.addEventListener('resize', centerVideo);
+
+	t3sbLocalVideo({data.uid}, {localVideo.overlayChild}, {localVideo.autoplay}, {localVideo.loop}, {localVideo.mute}, {localVideo.controls}, video);
+}());
 		</f:asset.script>
 		<f:asset.css identifier="lovalvideocss-{data.uid}">
 {localVideo.inlineCSS -> f:format.raw()}{ratioCalcCss -> f:format.raw()}

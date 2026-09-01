@@ -957,13 +957,13 @@
 		
 		<unit id="flexform.bgw.mobileHeight">
 			<segment>
-				<source>Max. height on mobile (max-width:767px)</source>
+				<source>Height on mobile (max-width:767px)</source>
 			</segment>
 		</unit>
 		
 		<unit id="flexform.bgw.mobileHeight.description">
 			<segment>
-				<source>figure.video max-height in px</source>
+				<source>figure.video height in px</source>
 			</segment>
 		</unit>
 		

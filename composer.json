@@ -35,7 +35,7 @@
     "extra": {
         "typo3/cms": {
             "extension-key": "t3sbootstrap",
-            "version": "5.3.50",
+            "version": "5.3.51",
             "Package": {
                 "providesPackages": {}
             }

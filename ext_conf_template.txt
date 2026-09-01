@@ -1,3 +1,13 @@
+# Tab labels for the Extension Configuration. Without these the install tool
+# lowercases every category name it does not know, so the tabs would read
+# "preview", "flexform", "rte" next to the built-in "Basic", "Content", "Page".
+# Must stay at the top as one comment block followed by a blank line - only then
+# does the TypoScript parser attach them to the root node.
+# customcategory=preview=Preview
+# customcategory=flexform=FlexForm
+# customcategory=t3sb=T3SB
+# customcategory=value picker presets=Value Picker Presets
+# customcategory=rte=RTE
 
 # cat=preview/enable/10; type=boolean; label=Backend Preview: Use custom preview with collapsible container preview always open (clear cache)
 preview = 1
@@ -40,6 +50,8 @@ titlecolor = 0
 
 # cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: (clear cache)
 flexformExtend = 0
+# cat=flexform/enable/20; type=string; label=FlexForm extension directory: Directory holding your own FlexForm overrides, e.g. EXT:my_sitepackage/Configuration/FlexForms/. If empty, EXT:t3sb_package/Configuration/FlexForms/ is used as long as that extension is installed - without it the FlexForms are not extended. Only evaluated if "flexformExtend" is enabled.
+flexformDir =
 # cat=flexform/enable/40; type=boolean; label=No default settings in columns "Col-md-*" and "Col-*":in two_columns, three_columns, four_columns or six_columns
 flexformNoDefault = 0
 # cat=flexform/enable/45; type=boolean; label=Minimum breakpoint setting - only "Col-md-*":in two_columns, three_columns, four_columns or six_columns (did not work with "No default settings ...")
@@ -72,5 +84,49 @@ figureClass =
 # cat=value picker presets/b-config/70; type=string; label=Custom "Extra Class - image-tag value picker" for table sys_file_reference field tx_t3sbootstrap_extra_imgclass: comma separated list is expected
 imageClass =
 
-# cat=basic/enable/6; type=string; label=FlexForm extension directory: Directory holding your own FlexForm overrides, e.g. EXT:my_sitepackage/Configuration/FlexForms/. If empty, EXT:t3sb_package/Configuration/FlexForms/ is used as long as that extension is installed - without it the FlexForms are not extended. Only evaluated if "flexformExtend" is enabled.
-flexformDir =
+
+# cat=RTE/enable/1; type=user[T3SBS\T3sbootstrap\UserFunction\ExtensionConfigurationInfo->renderRteInfo]; label=Good to know
+rteInfo =
+# cat=RTE/enable/10; type=boolean; label=RTE Alert box: Toolbar item "Alert" (Bootstrap alert as a block widget). Switching this off only hides the button - existing alerts stay editable and are saved unchanged.
+rteAlert = 1
+# cat=RTE/enable/20; type=boolean; label=RTE Columns: Toolbar item "Columns" (2, 3 or 4 Bootstrap columns). Switching this off only hides the button - existing rows stay editable and are saved unchanged.
+rteColumns = 1
+# cat=RTE/enable/30; type=options[No code block=0, Code block without highlighting=1, Prism theme: Default=Default, Prism theme: Dark=Dark, Prism theme: Coy=Coy, Prism theme: Funky=Funky, Prism theme: Okaidia=Okaidia, Prism theme: Solarized Light=SolarizedLight, Prism theme: Tomorrow Night=TomorrowNight, Prism theme: Twilight=Twilight]; label=RTE Code block: Toolbar item "Code block" (<pre><code> with language selection). Existing code blocks stay editable. The editor writes the language as a class only - pick a Prism theme and Resources/Public/Prism/<theme>.css plus the shared prism.js are loaded in the frontend, which is what colorizes the code (clear cache)
+rteCodeBlock = 0
+# cat=RTE/enable/40; type=boolean; label=RTE Inline code: Toolbar item "Code" - marks a word inside a sentence as inline <code>. Not the same as "Code block" above, which inserts a whole <pre><code> block.
+rteCode = 1
+# cat=RTE/enable/45; type=boolean; label=RTE Margins: Toolbar item "Margin" - a dropdown for the Bootstrap spacing utilities mt-1..mt-5 and mb-1..mb-5 on the current block. Top and bottom are independent.
+rteMargins = 1
+# cat=RTE/enable/47; type=boolean; label=RTE Badge: Toolbar item "Badge" - one dropdown holding the eight Bootstrap badge colours, each as a normal badge and as a pill. It replaces the 16 entries "Badge *" and "Pill Badge *" in the Styles dropdown; the markup is identical, so existing badges stay editable. Switching this off only hides the button.
+rteBadge = 1
+# cat=RTE/enable/50; type=boolean; label=RTE Table: Toolbar item "Insert table". Existing tables stay editable.
+rteTable = 1
+# cat=RTE/enable/60; type=boolean; label=RTE Alignment: Toolbar item "Text alignment" (text-start/-center/-end/-justify).
+rteAlignment = 1
+# cat=RTE/enable/70; type=boolean; label=RTE Indent: Toolbar items "Increase/Decrease indent".
+rteIndent = 1
+# cat=RTE/enable/80; type=boolean; label=RTE Block quote: Toolbar item "Block quote".
+rteBlockQuote = 1
+# cat=RTE/enable/90; type=boolean; label=RTE Horizontal line: Toolbar item "Horizontal line".
+rteHorizontalLine = 1
+# cat=RTE/enable/100; type=boolean; label=RTE Special characters: Toolbar item "Special characters".
+rteSpecialCharacters = 1
+# cat=RTE/enable/110; type=boolean; label=RTE Find and replace: Toolbar item "Find and replace".
+rteFindAndReplace = 1
+# cat=RTE/enable/120; type=boolean; label=RTE Show blocks: Toolbar item "Show block outlines".
+rteShowBlocks = 1
+# cat=RTE/enable/130; type=boolean; label=RTE Source editing: Toolbar item "Source" - editors can edit the HTML directly.
+rteSourceEditing = 1
+# cat=RTE/enable/200; type=boolean; label=RTE Styles - Colors: Entries "Block Color *" and "Text Color *" in the Styles dropdown. Classes already set in existing content are kept.
+rteStyleColors = 1
+# cat=RTE/enable/210; type=boolean; label=RTE Styles - Buttons: Entries "Button *" in the Styles dropdown. Classes already set in existing content are kept.
+rteStyleButtons = 1
+# Badges sind kein Styles-Eintrag mehr, sondern ein eigenes Toolbar-Dropdown -
+# die Einstellung heisst jetzt "rteBadge" und steht weiter oben.
+# "rteStyleBadges" ist hier deshalb entfernt. Ein in einer aelteren Version
+# gespeicherter Wert entscheidet aber weiterhin, solange er in der
+# gespeicherten Konfiguration steht (siehe FeatureToggles) - er verschwindet
+# durch den RteBadgeSettingUpgradeWizard oder sobald dieses Formular einmal
+# gespeichert wird.
+# cat=RTE/enable/230; type=boolean; label=RTE Styles - Tables: Entries "Table *" in the Styles dropdown. Classes already set in existing content are kept.
+rteStyleTables = 1

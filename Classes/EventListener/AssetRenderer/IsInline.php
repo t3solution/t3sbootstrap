@@ -137,17 +137,22 @@ final readonly class IsInline
                 . 'TYPO3.settings = {\'ADDHEIGHT\':{' . rtrim(trim($addheight), ',') . '}};' . LF;
         }
 
-        // DOMContentLoaded-Wrapper
-        $source .= <<<JS
-            function ready(fn) {
-                if (document.readyState !== 'loading') {
-                    fn();
-                } else {
-                    document.addEventListener('DOMContentLoaded', fn);
+        // DOMContentLoaded-Wrapper - nur wenn es auch etwas zu wrappen gibt.
+        // Ohne diese Bedingung ist $source nie leer, der Early-Return beim Aufrufer
+        // greift nie, und jede Seite ohne Inline-JS bekommt trotzdem eine
+        // typo3temp-Datei samt zusaetzlichem Request.
+        if ($addheightJs !== '' || $js !== '') {
+            $source .= <<<JS
+                function ready(fn) {
+                    if (document.readyState !== 'loading') {
+                        fn();
+                    } else {
+                        document.addEventListener('DOMContentLoaded', fn);
+                    }
                 }
-            }
-            ready(() => {{$addheightJs}{$js}});
-            JS . LF;
+                ready(() => {{$addheightJs}{$js}});
+                JS . LF;
+        }
 
         if ($jquery) {
             $source .= LF . "(function($){'use strict';" . LF . $jquery . LF . '})(jQuery);' . LF;

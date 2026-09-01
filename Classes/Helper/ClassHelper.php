@@ -224,8 +224,7 @@ class ClassHelper implements SingletonInterface
             if (str_contains($data['tx_t3sbootstrap_header_class'], 'h-line-3')) {
                 $header['hLine'] = 'h-line-3';
             }
-            $textColors = explode(',', 'text-primary,text-secondary,text-danger,text-success,text-warning,
-			text-info,text-light,text-dark,text-body,text-muted,text-white');
+            $textColors = explode(',', 'text-primary,text-secondary,text-danger,text-success,text-warning,text-info,text-light,text-dark,text-body,text-muted,text-white');
             foreach ($textColors as $textColor) {
                 if (str_contains($data['tx_t3sbootstrap_header_class'], $textColor)) {
                     $header['hClass'] .= ' '.$textColor;
@@ -273,11 +272,14 @@ class ClassHelper implements SingletonInterface
                 break;
                  case 'variable':
 
-                 if ($flexconf['xsColumns'] === 'equal'
-                    || $flexconf['smColumns'] === 'equal'
-                    || $flexconf['mdColumns'] === 'equal'
-                    || $flexconf['lgColumns'] === 'equal'
-                    || $flexconf['xlColumns'] === 'equal') {
+                 // gridSystem "variable" heisst nicht, dass auch alle Breakpoints
+                 // gesetzt sind - jeder fehlende loeste sonst eine Exception aus
+                 if (($flexconf['xsColumns'] ?? '') === 'equal'
+                    || ($flexconf['smColumns'] ?? '') === 'equal'
+                    || ($flexconf['mdColumns'] ?? '') === 'equal'
+                    || ($flexconf['lgColumns'] ?? '') === 'equal'
+                    || ($flexconf['xlColumns'] ?? '') === 'equal'
+                    || ($flexconf['xxlColumns'] ?? '') === 'equal') {
                      $class .= !empty($flexconf['xsColumns']) ? ' col-xs' : '';
                      $class .= !empty($flexconf['smColumns']) ? ' col-sm' : '';
                      $class .= !empty($flexconf['mdColumns']) ? ' col-md' : '';
@@ -308,7 +310,11 @@ class ClassHelper implements SingletonInterface
 
         if (!empty($parentflexconf['flexContainer']) && !empty($parentflexconf['responsiveVariations'])) {
             if (!empty($flexconf['responsiveVariations'])) {
-                $class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['flexContainer'] : '';
+                // War $flexconf['flexContainer'] - der Schluessel existiert hier
+                // gar nicht (geprueft wurde $parentflexconf['flexContainer']),
+                // und "align-self-md-flex" waere auch keine Bootstrap-Klasse.
+                // Gemeint ist der Wert von alignSelf, wie im else-Zweig.
+                $class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignSelf'] : '';
             } else {
                 $class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['alignSelf'] : '';
             }

@@ -200,6 +200,27 @@ class Config extends AbstractEntity
     protected $navbarImage = '';
 
     /**
+     * navbarImageWidth
+     *
+     * @var int
+     */
+    protected $navbarImageWidth = 0;
+
+    /**
+     * navbarImageHeight
+     *
+     * @var int
+     */
+    protected $navbarImageHeight = 0;
+
+    /**
+     * navbarImageAlt
+     *
+     * @var string
+     */
+    protected $navbarImageAlt = '';
+
+    /**
      * navbarColor
      *
      * @var string
@@ -1578,6 +1599,69 @@ class Config extends AbstractEntity
     public function setNavbarImage($navbarImage): void
     {
         $this->navbarImage = $navbarImage;
+    }
+
+    /**
+     * Returns the navbarImageWidth
+     *
+     * @return int $navbarImageWidth
+     */
+    public function getNavbarImageWidth()
+    {
+        return $this->navbarImageWidth;
+    }
+
+    /**
+     * Sets the navbarImageWidth
+     *
+     * @param int $navbarImageWidth
+     * @return void
+     */
+    public function setNavbarImageWidth($navbarImageWidth): void
+    {
+        $this->navbarImageWidth = $navbarImageWidth;
+    }
+
+    /**
+     * Returns the navbarImageHeight
+     *
+     * @return int $navbarImageHeight
+     */
+    public function getNavbarImageHeight()
+    {
+        return $this->navbarImageHeight;
+    }
+
+    /**
+     * Sets the navbarImageHeight
+     *
+     * @param int $navbarImageHeight
+     * @return void
+     */
+    public function setNavbarImageHeight($navbarImageHeight): void
+    {
+        $this->navbarImageHeight = $navbarImageHeight;
+    }
+
+    /**
+     * Returns the navbarImageAlt
+     *
+     * @return string $navbarImageAlt
+     */
+    public function getNavbarImageAlt()
+    {
+        return $this->navbarImageAlt;
+    }
+
+    /**
+     * Sets the navbarImageAlt
+     *
+     * @param string $navbarImageAlt
+     * @return void
+     */
+    public function setNavbarImageAlt($navbarImageAlt): void
+    {
+        $this->navbarImageAlt = $navbarImageAlt;
     }
 
     /**

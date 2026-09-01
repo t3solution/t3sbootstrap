@@ -19,7 +19,10 @@ class CarouselContainer implements SingletonInterface
 
     public function getProcessedData(array $processedData, array $flexconf): array
     {
-        $processedData['maxWidth']         = $flexconf['width'] ? $flexconf['width'] . 'px' : '1440px';
+        // Bei einem Container ohne FlexForm existiert der Schluessel nicht.
+        // Ein blosses ? loest dann "Undefined array key" aus, und TYPO3s
+        // Error-Handler macht daraus eine Exception - Frontend steht.
+        $processedData['maxWidth']         = !empty($flexconf['width']) ? $flexconf['width'] . 'px' : '1440px';
         $processedData['interval']         = $flexconf['interval'] ?? 5000;
         $processedData['darkVariant']      = !empty($flexconf['darkVariant']) ? $flexconf['darkVariant'] : 'light';
         $processedData['thumbnails']       = !empty($flexconf['thumbnails']);

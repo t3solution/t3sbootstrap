@@ -312,6 +312,13 @@
 			</segment>
 		</unit>
 		
+		<unit id="transfer.error.access">
+			<segment>
+				<source>You are not allowed to access the configuration of that page.</source>
+				<target>Sie haben keine Berechtigung für die Konfiguration dieser Seite.</target>
+			</segment>
+		</unit>
+		
 		<unit id="transfer.imported">
 			<segment>
 				<source>%d record(s) imported on page %d.</source>

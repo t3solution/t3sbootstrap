@@ -427,7 +427,8 @@ class GalleryProcessor implements DataProcessorInterface
 
             // Modal - INFO: https://getbootstrap.com/docs/5.3/components/modal/#optional-sizes
             if (isset($this->processedParentData['CType']) && $this->processedParentData['CType'] === 'modal') {
-                $size = $this->parentflexconf['size'];
+                // Ein Modal, dessen FlexForm nie geoeffnet wurde, hat keine Groesse
+                $size = (string)($this->parentflexconf['size'] ?? '');
 
                 if ($size === 'modal-fullscreen') {
                     $bsGridWidth = $bsMaxGridWidth;
@@ -468,13 +469,18 @@ class GalleryProcessor implements DataProcessorInterface
                          && ($this->processedParentData['CType'] ?? '') === 'card_wrapper') {
                 $galleryWidth = $galleryWidth - self::gridGutterWidth;
                 $countChildren = 1;
-                if ($this->parentflexconf['card_wrapper'] === 'group' || $this->parentflexconf['card_wrapper'] === 'columns') {
+                // Ein Card Wrapper, dessen FlexForm nie geoeffnet wurde, hat den
+                // Schluessel nicht. Einmal normalisieren, statt ihn an fuenf
+                // Stellen direkt zu lesen - der Default des FlexForms ist "group".
+                $cardWrapperLayout = (string)($this->parentflexconf['card_wrapper'] ?? 'group');
+
+                if ($cardWrapperLayout === 'group' || $cardWrapperLayout === 'columns') {
                     $this->processedData['data']['tx_t3sbootstrap_gutters'] = '';
                     $this->galleryData['count']['columns'] = -1;
                     // Masonry (columns)
                     $colclass = (string)($this->parentflexconf['colclass'] ?? '');
-                    if ($this->parentflexconf['card_wrapper'] === 'columns' && str_contains($colclass, 'col-lg-')) {
-                        foreach (explode(' ', $this->parentflexconf['colclass']) as $class) {
+                    if ($cardWrapperLayout === 'columns' && str_contains($colclass, 'col-lg-')) {
+                        foreach (explode(' ', $colclass) as $class) {
                             if (str_contains($class, 'col-lg-')) {
                                 $ccArray = explode('-', $class);
                                 // e.g. 'col-lg-auto' is valid bootstrap but not divisible
@@ -490,11 +496,11 @@ class GalleryProcessor implements DataProcessorInterface
                         $countChildren = $this->countContentRecord($this->processedData['data']['tx_container_parent'], 'tt_content', 'tx_container_parent');
                     }
                     $galleryWidth = $galleryWidth / max((int)$countChildren, 1);
-                } elseif ($this->parentflexconf['card_wrapper'] === 'slider') {
+                } elseif ($cardWrapperLayout === 'slider') {
                     // Slider
                     $this->galleryData['count']['columns'] = -1;
                     $this->processedData['data']['tx_t3sbootstrap_gutters'] = '';
-                } elseif ($this->parentflexconf['card_wrapper'] === 'flipper') {
+                } elseif ($cardWrapperLayout === 'flipper') {
                     // Flipper
                     $this->galleryData['count']['columns'] = -1;
                     $this->processedData['data']['tx_t3sbootstrap_gutters'] = '';
@@ -523,7 +529,7 @@ class GalleryProcessor implements DataProcessorInterface
                         $mediaHeight = '';
                     } else {
                         $ratio = '';
-                        if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+                        if ($fileObject instanceof FileInterface) {
                             $mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
                              * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
                         }
@@ -562,10 +568,14 @@ class GalleryProcessor implements DataProcessorInterface
             // Set the corrected dimensions for each media element
             foreach ($this->fileObjects as $key => $fileObject) {
                 $mediaHeight = $this->equalMediaHeight;
+                // File collections and folders deliver File objects, not
+                // FileReference ones. Without the initialisation and the wider
+                // check $mediaWidth stayed undefined and floor() got null.
+                $mediaWidth = 0;
                 if (is_array($fileObject)) {
                     $fileObject = $fileObject[0];
                 }
-                if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+                if ($fileObject instanceof FileInterface) {
                     $mediaWidth = $this->getCroppedDimensionalProperty($fileObject, 'width')
                      * ($mediaHeight / max($this->getCroppedDimensionalProperty($fileObject, 'height'), 1));
                 }
@@ -658,7 +668,7 @@ $mediaWidth = $this->checkMediaWidth($mediaWidth);
                 if (is_array($fileObject)) {
                     $fileObject = $fileObject[0];
                 }
-                if ($fileObject instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+                if ($fileObject instanceof FileInterface) {
                     $mediaHeight = $this->getCroppedDimensionalProperty($fileObject, 'height')
                      * ($mediaWidth / max($this->getCroppedDimensionalProperty($fileObject, 'width'), 1));
                 }
@@ -904,24 +914,28 @@ $mediaWidth = $this->checkMediaWidth($mediaWidth);
     protected function getMansoryColumns(string $classPrefix): int
     {
         $mediaWidth = 0;
-        
+
+        // The field has a default, but a record imported or copied without its
+        // FlexForm has no colclass at all - strpos() would get null.
+        $colclass = (string)($this->parentflexconf['colclass'] ?? '');
+
         # 2 columns
-        $pos = strpos($this->parentflexconf['colclass'], $classPrefix.'6');
+        $pos = strpos($colclass, $classPrefix.'6');
         if ($pos !== false) {
             $mediaWidth = self::bsMaxGridWidth / 2 - self::gridGutterWidth;
         }
         # 3 columns
-        $pos = strpos($this->parentflexconf['colclass'], $classPrefix.'4');
+        $pos = strpos($colclass, $classPrefix.'4');
         if ($pos !== false) {
             $mediaWidth = self::bsMaxGridWidth / 3 - self::gridGutterWidth;
         }
         # 4 columns
-        $pos = strpos($this->parentflexconf['colclass'], $classPrefix.'3');
+        $pos = strpos($colclass, $classPrefix.'3');
         if ($pos !== false) {
             $mediaWidth = self::bsMaxGridWidth / 4 - self::gridGutterWidth;
         }
         # 6 columns
-        $pos = strpos($this->parentflexconf['colclass'], $classPrefix.'2');
+        $pos = strpos($colclass, $classPrefix.'2');
         if ($pos !== false) {
             $mediaWidth = self::bsMaxGridWidth / 6 - self::gridGutterWidth;
         }

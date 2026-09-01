@@ -92,10 +92,12 @@ class Carousel implements SingletonInterface
 			 || $file->getMimeType() === 'video/ogg' || $file->getMimeType() === 'video/flac' || $file->getMimeType() === 'video/opus') {
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
 			}
-			$processedData['autoplay'] = $file->getProperties()['autoplay'];
+			// Nicht jede Referenz hat das Feld autoplay (nur Medien-Referenzen)
+			$autoplay = $file->getProperties()['autoplay'] ?? '';
+			$processedData['autoplay'] = $autoplay;
 			$processedData['loop'] = !empty($flexconf['loop']) ? $flexconf['loop'] : false;
 			$muted = !empty($flexconf['muted']) ? $flexconf['muted'] : false;
-			$processedData['muted'] = !empty($file->getProperties()['autoplay']) ? true : $muted;
+			$processedData['muted'] = !empty($autoplay) ? true : $muted;
 			$processedData['playsinline'] = !empty($flexconf['playsinline']); 
 			$blink = !empty($parentflexconf['link']) && $parentflexconf['link'] === 'button'; 
 			if ($processedData['data']['header'] || $processedData['data']['bodytext']
@@ -108,13 +110,17 @@ class Carousel implements SingletonInterface
 
 		$processedData['ratioCalc'] = '';
 		if (!empty($parentflexconf['ratio'])) {
-			$ratioArr = explode(':', $parentflexconf['ratio']);
-			$x = str_replace(':', 'x', $parentflexconf['ratio']);
-			$y = $ratioArr[1].' / '.$ratioArr[0].' * 100%';	
+			$ratioValue = (string)$parentflexconf['ratio'];
+			$ratioArr = explode(':', $ratioValue);
+			// Ein Verhaeltnis ohne Doppelpunkt hat keinen zweiten Teil
+			$ratioX = (float)($ratioArr[0] ?? 0);
+			$ratioY = (float)($ratioArr[1] ?? 0);
+			$x = str_replace(':', 'x', $ratioValue);
+			$y = $ratioY.' / '.$ratioX.' * 100%';
 			$processedData['ratioCalc'] .= '.ratio-'.$x.'{--bs-aspect-ratio:calc('.$y.');}';
-			$processedData['videoRatio'] = $parentflexconf['ratio'] ? str_replace(':', 'x', $parentflexconf['ratio']) : '16:9';
+			$processedData['videoRatio'] = str_replace(':', 'x', $ratioValue);
 			$processedData['videoStyle'] = '';
-			if ( $parentflexconf['ratio'] !== '16:9') {
+			if ( $ratioValue !== '16:9') {
 				$processedData['videoStyle'] .= 'object-fit: cover;';
 			}
 		} else {
@@ -124,9 +130,16 @@ class Carousel implements SingletonInterface
 		}
 
 		if ( empty($processedData['files']) && !$processedData['localVideoPath'] ) {
-			$ratio = $parentflexconf['ratio'] ?: '16:9';
-			$noImgHeight = explode(':', (string) $ratio);
-			$noImgHeight = (int) round($parentflexconf['width'] / $noImgHeight[0] * $noImgHeight[1]);
+			// Ein Carousel-Container ohne ausgefuelltes FlexForm liefert weder
+			// ratio noch width. ?: warnt bei fehlendem Schluessel, ?? nicht -
+			// und eine Division durch 0 gaebe es obendrein.
+			$ratio = !empty($parentflexconf['ratio']) ? (string)$parentflexconf['ratio'] : '16:9';
+			$ratioParts = explode(':', $ratio);
+			$ratioX = (float)($ratioParts[0] ?? 0);
+			$ratioY = (float)($ratioParts[1] ?? 0);
+			$width  = (float)($parentflexconf['width'] ?? 0);
+
+			$noImgHeight = $ratioX > 0.0 ? (int) round($width / $ratioX * $ratioY) : 0;
 			$processedData['animate'] .= ' position-static';
 			$processedData['style'] .= ' min-height:'.$noImgHeight.'px;';
 			$processedData['style'] .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
@@ -170,18 +183,21 @@ class Carousel implements SingletonInterface
 	public function getCarouselCaptionStyle( array $flexconf, bool $animate ): string
 	{
 		$style = '';
+		// public Methode - der Aufrufer muss captionVAlign nicht gesetzt haben
+		$vAlign = (string)($flexconf['captionVAlign'] ?? 'end');
+
 		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'caption') {
 			$captionStyle = ' top:0; left:15%; right:15%; bottom:0;';
-			$captionStyle .= $flexconf['captionVAlign'] === 'top' ? ' bottom:inherit;' : '';
-			$captionStyle .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
+			$captionStyle .= $vAlign === 'top' ? ' bottom:inherit;' : '';
+			$captionStyle .= $vAlign === 'end' ? ' padding-bottom:50px;' : '';
 
 		} elseif (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'image') {
 			$captionStyle = ' top:0; left:0; right:0; bottom:0;';
-			$captionStyle .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
+			$captionStyle .= $vAlign === 'end' ? ' padding-bottom:50px;' : '';
 		} else {
-			$style .= $flexconf['captionVAlign'] === 'top' ? ' top:0;' : '';
-			$style .= $flexconf['captionVAlign'] === 'center' ? ' bottom:0;' : '';
-			$style .= $flexconf['captionVAlign'] === 'end' ? ' padding-bottom:50px;' : '';
+			$style .= $vAlign === 'top' ? ' top:0;' : '';
+			$style .= $vAlign === 'center' ? ' bottom:0;' : '';
+			$style .= $vAlign === 'end' ? ' padding-bottom:50px;' : '';
 			$captionStyle = '';
 		}
 		if ($animate){

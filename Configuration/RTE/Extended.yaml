@@ -1,0 +1,60 @@
+# ---------------------------------------------------------------------------
+# t3sbootstrap - RTE preset "t3sbootstrap_extended"
+#
+# Same editor as the "t3sbootstrap" preset, plus one addition: the General HTML
+# Support whitelist keeps CSS classes on the usual text elements instead of
+# reducing them to what style.definitions declares.
+#
+# The margin picker is NOT here any more - mt-1..mt-5 / mb-1..mb-5 moved into a
+# toolbar dropdown of their own and are available in both presets.
+#
+# Why this is a separate preset and not the default: the whitelist doubles as a
+# paste filter. Without it, classes coming from Word or from a copied web page
+# survive - mostly harmless, but names like "small", "text-center" or "btn" are
+# common enough to collide with Bootstrap. And CKEditor's Style feature assumes
+# it owns an element's class list; foreign classes can leave the dropdown
+# showing no active style although classes are present. Both are acceptable for
+# documentation-style content, and a bad deal for installations that
+# deliberately keep their editors on a short leash.
+#
+# Enable per installation via page TSconfig:
+#     RTE.default.preset = t3sbootstrap_extended
+#
+# Only "classes" is opened up. "attributes" would allow arbitrary attributes and
+# "styles" would let editors override any theme rule inline - both stay closed.
+#
+# On merging: imported YAML is combined with
+# ArrayUtility::replaceAndAppendScalarValuesRecursive(), which APPENDS plain
+# lists instead of overwriting them by index. Everything below is therefore
+# added to what Default.yaml already defines - the div entry of htmlSupport and
+# the 57 style definitions stay untouched and must not be repeated here.
+# ---------------------------------------------------------------------------
+
+imports:
+  - { resource: 'EXT:t3sbootstrap/Configuration/RTE/Default.yaml' }
+
+editor:
+  config:
+    htmlSupport:
+      allow:
+        - { name: 'p', classes: true }
+        - { name: 'span', classes: true }
+        - { name: 'a', classes: true }
+        - { name: 'ul', classes: true }
+        - { name: 'ol', classes: true }
+        - { name: 'li', classes: true }
+        - { name: 'h2', classes: true }
+        - { name: 'h3', classes: true }
+        - { name: 'h4', classes: true }
+        - { name: 'h5', classes: true }
+        - { name: 'h6', classes: true }
+        - { name: 'code', classes: true }
+        - { name: 'pre', classes: true }
+        - { name: 'blockquote', classes: true }
+        - { name: 'figure', classes: true }
+        - { name: 'table', classes: true }
+        - { name: 'thead', classes: true }
+        - { name: 'tbody', classes: true }
+        - { name: 'tr', classes: true }
+        - { name: 'th', classes: true }
+        - { name: 'td', classes: true }

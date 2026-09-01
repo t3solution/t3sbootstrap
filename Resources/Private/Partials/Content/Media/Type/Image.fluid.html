@@ -18,13 +18,22 @@
 					<f:if condition="{addmedia.imagezoom}">
 						<f:then>
 						<f:comment> Lightbox (zoom) </f:comment>
-							<f:if condition="{addmedia.origImageZoom}">
-								<f:then>
-									<f:variable name="zoomfile" value="{file.originalFile}" />
-								</f:then>
-								<f:else>
-									<f:variable name="zoomfile" value="{file}" />
-								</f:else>
+							<f:comment>
+								Welche Datei die Lightbox oeffnet, entscheidet zugleich ueber den
+								Zuschnitt: der ClickEnlarge-ViewHelper setzt sie per
+								setCurrentFile(), und die Popup-Konfiguration liest den Zuschnitt
+								mit "crop.data = file:current:crop" daraus. Die Dateireferenz
+								bringt ihren Zuschnitt mit, das Originalbild hat keinen.
+
+								originalFile gibt es nur auf einer Dateireferenz. Kommen die
+								Bilder aus einer Dateisammlung oder einem Ordner, liefert der
+								GalleryProcessor blanke File-Objekte - dann bleibt der Ausdruck
+								leer, und ohne diesen Rueckfall bekaeme der ViewHelper null fuer
+								ein Pflichtargument.
+							</f:comment>
+							<f:variable name="zoomfile" value="{file}" />
+							<f:if condition="{addmedia.origImageZoom} && {file.originalFile}">
+								<f:variable name="zoomfile" value="{file.originalFile}" />
 							</f:if>
 							<ce:link.clickEnlarge image="{zoomfile}" configuration="{settings.media.popup}">
 								<f:render partial="Media/Rendering/Image" arguments="{file: file, dimensions: dimensions, addmedia: addmedia}" />
@@ -89,9 +98,6 @@ function t3sbCopyright() {
 			var iw = Math.round(myToast._element.parentNode.querySelector('img').getBoundingClientRect().width);
 			myToast.show();
 			var th = Math.round(myToast._element.parentNode.querySelector('.toast').getBoundingClientRect().height);
-
-console.log(th);
-
 			myToast._element.parentNode.querySelector('.toast').style.width = iw+'px';
 //			myToast._element.parentNode.querySelector('.toast').style.marginTop = -th+'px';
 myToast._element.parentNode.querySelector('.toast').style.top = 0;

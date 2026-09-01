@@ -103,7 +103,8 @@ class Card implements SingletonInterface
             $backclass = '';
             $cardClass .= ' flip-card border-0 bg-transparent';
             $cardData['flipcard'] = true;
-            $cardData['rotateY'] = $flexconf['rotateY'];
+            // rotateY kann fehlen, wenn das FlexForm nur teilweise gefuellt ist
+            $cardData['rotateY'] = $flexconf['rotateY'] ?? '';
             if ($processedData['data']['tx_t3sbootstrap_textcolor']) {
                 $backclass .= 'text-'.$processedData['data']['tx_t3sbootstrap_textcolor'];
             }
@@ -147,17 +148,23 @@ class Card implements SingletonInterface
         // profile card
         $cardData['multiImage']['enable'] = false;
         if (!empty($flexconf['multiImage']['enable'])) {
+            // "enable" gesetzt heisst nicht, dass auch alle uebrigen Felder der
+            // Sektion vorhanden sind - jedes einzeln absichern
+            $multiImage  = (array)($flexconf['multiImage'] ?? []);
+            $percent     = (int)($multiImage['percent'] ?? 0);
+            $borderWidth = (string)($multiImage['borderWidth'] ?? '');
+
             $cardData['multiImage']['enable'] = true;
-            $cardData['multiImage']['percent'] = '0.'.$flexconf['multiImage']['percent'];
-            $cardData['multiImage']['style'] = 'top: -' . $flexconf['multiImage']['percent']/2 .'px';
-            $borderColor = $flexconf['multiImage']['borderColor'] ? ' border-'.$flexconf['multiImage']['borderColor'] : '';
-            $shadow = !empty($flexconf['multiImage']['shadow']) ? ' circularshadow' : '';
-            $cardData['multiImage']['shadow'] = !empty($flexconf['multiImage']['shadow']);
-            $cardData['multiImage']['border'] = $flexconf['multiImage']['borderWidth'].$borderColor.$shadow;
-            $cardData['multiImage']['socialmedia']['enable'] = $flexconf['multiImage']['socialmedia']['enable'];
-            $cardData['multiImage']['socialmedia']['footer'] = !empty($flexconf['multiImage']['socialmedia']['footer']) ? $flexconf['multiImage']['socialmedia']['footer'] : '';
-            if (!empty($flexconf['multiImage']['socialmedia']['enable'])) {
-                foreach ($flexconf['multiImage']['socialmedia'] as $key=>$socialmedia) {
+            $cardData['multiImage']['percent'] = '0.'.$percent;
+            $cardData['multiImage']['style'] = 'top: -' . $percent/2 .'px';
+            $borderColor = !empty($multiImage['borderColor']) ? ' border-'.$multiImage['borderColor'] : '';
+            $shadow = !empty($multiImage['shadow']) ? ' circularshadow' : '';
+            $cardData['multiImage']['shadow'] = !empty($multiImage['shadow']);
+            $cardData['multiImage']['border'] = $borderWidth.$borderColor.$shadow;
+            $cardData['multiImage']['socialmedia']['enable'] = $multiImage['socialmedia']['enable'] ?? '';
+            $cardData['multiImage']['socialmedia']['footer'] = !empty($multiImage['socialmedia']['footer']) ? $multiImage['socialmedia']['footer'] : '';
+            if (!empty($multiImage['socialmedia']['enable'])) {
+                foreach ((array)$multiImage['socialmedia'] as $key=>$socialmedia) {
                     if ($key !== 'enable' && $key !== 'footer' &&  !empty($socialmedia)) {
                         $cardData['multiImage']['socialmediaLinks'][$key] = $socialmedia;
                     }

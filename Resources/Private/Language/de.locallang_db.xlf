@@ -859,11 +859,53 @@
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarimage.description">
 			<segment>
-				<source>Path to your image - Only if "Brand Options" is "Just an image" or "Image and text"</source>
-				<target>Pfad zu deinem Bild – Nur wenn unter "Brand Options" "Bild" oder "Bild und Text" ausgewählt ist</target>
+				<source>Path to your image - Only if "Brand Options" is "Just an image" or "Image and text". Empty falls back to the site setting "bootstrap.navbar.image.defaultPath".</source>
+				<target>Pfad zu deinem Bild – Nur wenn unter "Brand Options" "Bild" oder "Bild und Text" ausgewählt ist. Leer heißt: es gilt der Site-Setting "bootstrap.navbar.image.defaultPath".</target>
 			</segment>
 		</unit>
-		
+
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarimagewidth">
+			<segment>
+				<source>Image width</source>
+				<target>Bildbreite</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarimagewidth.description">
+			<segment>
+				<source>In px - 0 falls back to the site setting "bootstrap.navbar.image.width"</source>
+				<target>In px – 0 heißt: es gilt der Site-Setting "bootstrap.navbar.image.width"</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarimageheight">
+			<segment>
+				<source>Image height</source>
+				<target>Bildhöhe</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarimageheight.description">
+			<segment>
+				<source>In px - 0 falls back to the site setting "bootstrap.navbar.image.height"</source>
+				<target>In px – 0 heißt: es gilt der Site-Setting "bootstrap.navbar.image.height"</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarimagealt">
+			<segment>
+				<source>Image alt text</source>
+				<target>Alternativtext</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarimagealt.description">
+			<segment>
+				<source>Empty falls back to the site setting "bootstrap.navbar.image.altText"</source>
+				<target>Leer heißt: es gilt der Site-Setting "bootstrap.navbar.image.altText"</target>
+			</segment>
+		</unit>
+
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbackground">
 			<segment>
 				<source>Background Color</source>

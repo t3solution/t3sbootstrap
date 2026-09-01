@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use T3SBS\T3sbootstrap\Domain\Model\Config;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Service\AssetPathService;
 
@@ -130,7 +131,15 @@ final class CustomScss extends CommandBase
             }
 
             $bootstrapVersion = str_starts_with($settings['bootstrap']['cdn']['bootstrap'], '5.') ? $settings['bootstrap']['cdn']['bootstrap'] : self::BOOTSTRAPLATEST;
-            $this->getBootstrapFiles($bootstrapVersion);
+
+            // The sources are no longer deleted before the download, so their mere
+            // presence says nothing about this run - ask getBootstrapFiles() itself.
+            if (!$this->getBootstrapFiles($bootstrapVersion)) {
+                $this->addCustomMessage('Check the bootstrap version in the site set editor for validity!', 'ERROR');
+                $output->writeln('<error>Check the bootstrap version in the site set editor for validity!</error>');
+
+                return Command::FAILURE;
+            }
 
             $customFileName = 'custom-variables-'.$rootPageId.'.scss';
             $customFileNameOverride = 'custom-'.$rootPageId.'.scss';
@@ -160,7 +169,16 @@ final class CustomScss extends CommandBase
 
             $customFileName = 'bootstrap.scss';
             $customFile = $bootstrapScssAbsPath.$customFileName;
+            // getURL() returns false when the file is not there - writeFile() would
+            // get that false under strict_types
             $customContent = GeneralUtility::getURL($customFile);
+
+            if (!is_string($customContent) || $customContent === '') {
+                $this->addCustomMessage(sprintf('"%s" could not be read.', $customFile), 'ERROR');
+                $output->writeln(sprintf('<error>"%s" could not be read.</error>', $customFile));
+
+                return Command::FAILURE;
+            }
 
             if ( !empty($settings['optimize']) ) {
                 // if site set bootstrap-optimize is set
@@ -175,13 +193,7 @@ final class CustomScss extends CommandBase
    
             GeneralUtility::writeFile($customFile, $customContent);
 
-            if (is_dir($bootstrapScssAbsPath)) {
-                return Command::SUCCESS;
-            }
-
-            $this->addCustomMessage('Check the bootstrap version in the site set editor for validity!', 'ERROR');
-            
-            return Command::FAILURE;
+            return Command::SUCCESS;
         }
 
         $this->addCustomMessage('You have to activate SCSS in the Site Set!', 'ERROR');
@@ -192,6 +204,21 @@ final class CustomScss extends CommandBase
 
    private function writeCustomFile(bool $keepVariables, int $rootPageId, string $customFileName, array $settings, string $name): void
    {
+         // Checked up front, not further down: below the existing file is copied
+         // away and deleted, and bailing out after that would leave the include
+         // file pointing at a scss file that is no longer there.
+         $config = $this->configRepository->findOneBy(['pid' => $rootPageId]);
+
+         if ($keepVariables === false && !$config instanceof Config) {
+            throw new \RuntimeException(
+               sprintf(
+                  'No t3sbootstrap configuration record found on page %d - open the t3sbootstrap module on that page once and save it.',
+                  $rootPageId
+               ),
+               1756400001
+            );
+         }
+
          $bootstrapVariablesAbsPath = $this->getVariablesPath();
          // delete all files with timestamp except the last 30 (true)
          $this->deleteFilesFromDirectory($bootstrapVariablesAbsPath, true);
@@ -210,19 +237,28 @@ final class CustomScss extends CommandBase
 
          if (!file_exists($customFile) && $keepVariables === false) {
 
-            $config = $this->configRepository->findOneBy(['pid' => $rootPageId]);
             if (!is_dir($bootstrapVariablesAbsPath)) {
                if (!mkdir($bootstrapVariablesAbsPath, 0755, true) && !is_dir($bootstrapVariablesAbsPath)) {
                      throw new \RuntimeException(sprintf('Directory "%s" was not created', $bootstrapVariablesAbsPath));
                }
             }
             $customContent = $name === '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' : '// Your own SCSS';
-            
-            $bootswatch = $settings['bootstrap']['cdn']['bootswatch'];
+
+            $bootswatch = $settings['bootstrap']['cdn']['bootswatch'] ?? '';
             if (!empty($bootswatch)) {
-               $customContent = @file_get_contents(self::BOOTSWATCHURL.strtolower($bootswatch).'/'.$name.'.scss');
-               if ($name === '_variables') {
-                  $customContent = str_replace(' !default', '', $customContent);
+               // A dead Bootswatch server used to put "false" into the database and
+               // into str_replace() - keep the default content instead.
+               $bootswatchContent = @file_get_contents(self::BOOTSWATCHURL.strtolower($bootswatch).'/'.$name.'.scss');
+
+               if (is_string($bootswatchContent) && $bootswatchContent !== '') {
+                  $customContent = $name === '_variables'
+                     ? str_replace(' !default', '', $bootswatchContent)
+                     : $bootswatchContent;
+               } else {
+                  $this->addCustomMessage(
+                     sprintf('Could not load the Bootswatch theme "%s" - the default content was used instead.', $bootswatch),
+                     'ERROR'
+                  );
                }
             }
             if ($name === '_variables') {
@@ -233,7 +269,7 @@ final class CustomScss extends CommandBase
 
             $this->configRepository->update($config);
             $this->persistenceManager->persistAll();
-             
+
              GeneralUtility::writeFile($customFile, $customContent);
          }
      }
@@ -264,48 +300,119 @@ final class CustomScss extends CommandBase
     }
 
 
-   private function getBootstrapFiles(string $bootstrapVersion): void
+   private function getBootstrapFiles(string $bootstrapVersion): bool
    {
       $t3sbBootstrapPath = $this->assetPathService->getPath('T3SB-Bootstrap');
       $localZipPath = $t3sbBootstrapPath.'Bootstrap/';
       $localZipFile = $t3sbBootstrapPath.'t3sb.zip';
-      $extractTo = $t3sbBootstrapPath.'Bootstrap/';
 
-      if (is_dir($localZipPath)) {
-         $this->rmDir($localZipPath);
+      // Extract into a staging directory and only swap it in when everything went
+      // through. Removing the sources up front left the installation without them
+      // whenever the version was wrong or GitHub was unreachable - and the SCSS
+      // compiler then took the whole frontend down with a missing @import.
+      $stagingPath = $t3sbBootstrapPath.'Bootstrap.tmp/';
+
+      if (is_dir($stagingPath)) {
+         $this->rmDir($stagingPath);
       }
-      if (!mkdir($localZipPath, 0755, true) && !is_dir($localZipPath)) {
-         $this->addCustomMessage(sprintf('Directory "%s" was not created', $localZipPath), 'ERROR');
+      if (!mkdir($stagingPath, 0755, true) && !is_dir($stagingPath)) {
+         $this->addCustomMessage(sprintf('Directory "%s" was not created', $stagingPath), 'ERROR');
+
+         return false;
       }
+
       $zipFilename = 'v'.$bootstrapVersion.'.zip';
       $zipFilePath = 'https://github.com/twbs/bootstrap/archive/';
-      $zipContent = $this->requestFactory->request($zipFilePath . $zipFilename)->getBody()->getContents();
 
-      if (!empty($zipContent)) {
-         GeneralUtility::writeFile($localZipFile, $zipContent);
-         $zip = new \ZipArchive();
-         if ($zip->open($localZipFile) === true) {
-             $zip->extractTo($extractTo);
-             $zip->close();
-         } else {
-             $this->addCustomMessage('Sorry ZIP creation failed at this time! Try again later.', 'ERROR');
-         }
+      try {
+         $zipContent = $this->requestFactory->request($zipFilePath . $zipFilename)->getBody()->getContents();
+      } catch (\Throwable $e) {
+         $this->rmDir($stagingPath);
+         $this->addCustomMessage(
+            sprintf('Could not download Bootstrap %s - the existing sources were kept: %s', $bootstrapVersion, $e->getMessage()),
+            'ERROR'
+         );
 
-         $renameFrom = $t3sbBootstrapPath.'Bootstrap/bootstrap-'.$bootstrapVersion.'/scss';
-         $renameTo = $t3sbBootstrapPath.'Bootstrap/scss';
-
-         if (is_dir($renameFrom)) {
-             rename($renameFrom, $renameTo);
-         }
-
-         $this->rmDir($t3sbBootstrapPath . 'Bootstrap/bootstrap-' . $bootstrapVersion);
-
-         if (file_exists($localZipFile)) {
-            unlink($localZipFile);
-         }
-      } else {
-         $this->addCustomMessage('No content from GitHub archive!', 'ERROR');
+         return false;
       }
+
+      if (empty($zipContent)) {
+         $this->rmDir($stagingPath);
+         $this->addCustomMessage('No content from GitHub archive! The existing sources were kept.', 'ERROR');
+
+         return false;
+      }
+
+      GeneralUtility::writeFile($localZipFile, $zipContent);
+      $zip = new \ZipArchive();
+
+      if ($zip->open($localZipFile) === true) {
+          $zip->extractTo($stagingPath);
+          $zip->close();
+      } else {
+          $this->rmDir($stagingPath);
+          if (file_exists($localZipFile)) {
+             unlink($localZipFile);
+          }
+          $this->addCustomMessage('Sorry ZIP creation failed at this time! The existing sources were kept.', 'ERROR');
+
+          return false;
+      }
+
+      if (file_exists($localZipFile)) {
+         unlink($localZipFile);
+      }
+
+      $renameFrom = $stagingPath.'bootstrap-'.$bootstrapVersion.'/scss';
+      $renameTo = $stagingPath.'scss';
+
+      if (!is_dir($renameFrom)) {
+         $this->rmDir($stagingPath);
+         $this->addCustomMessage(
+            sprintf('The archive did not contain "bootstrap-%s/scss" - check the Bootstrap version in the Site Set. The existing sources were kept.', $bootstrapVersion),
+            'ERROR'
+         );
+
+         return false;
+      }
+
+      if (!@rename($renameFrom, $renameTo)) {
+         $this->rmDir($stagingPath);
+         $this->addCustomMessage(sprintf('Directory "%s" was not created', $renameTo), 'ERROR');
+
+         return false;
+      }
+
+      $this->rmDir($stagingPath . 'bootstrap-' . $bootstrapVersion);
+
+      // The new sources are complete. Park the old ones instead of deleting them
+      // right away - if the rename below fails, both directories would be gone.
+      $backupPath = rtrim($localZipPath, '/').'.old/';
+
+      if (is_dir($backupPath)) {
+         $this->rmDir($backupPath);
+      }
+      if (is_dir($localZipPath) && !@rename($localZipPath, $backupPath)) {
+         $this->rmDir($stagingPath);
+         $this->addCustomMessage(sprintf('Directory "%s" could not be replaced', $localZipPath), 'ERROR');
+
+         return false;
+      }
+
+      if (!@rename($stagingPath, $localZipPath)) {
+         // put the old sources back, then report the failure
+         if (is_dir($backupPath)) {
+            @rename($backupPath, $localZipPath);
+         }
+         $this->rmDir($stagingPath);
+         $this->addCustomMessage(sprintf('Directory "%s" was not created', $localZipPath), 'ERROR');
+
+         return false;
+      }
+
+      $this->rmDir($backupPath);
+
+      return true;
    }
 
 

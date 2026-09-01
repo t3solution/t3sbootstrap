@@ -117,9 +117,6 @@
 							<default></default>
 						</config>
 					</buttonText>
-					
-					
-					
 					<whiteclosebutton>
 						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.whiteclosebutton</label>
 						<displayCond>FIELD:general.onPageLoad:=:0</displayCond>

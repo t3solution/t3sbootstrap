@@ -20,9 +20,36 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
     {
         return [
             $this->getExtconf(),
+            $this->getExtconfValue(),
             $this->getColPosList(),
             $this->getExtensionLoaded(),
         ];
+    }
+
+    /**
+     * Liefert den rohen Wert einer Einstellung, nicht nur '1'/'0'.
+     *
+     * t3sbootstrap() normalisiert auf wahr/falsch und reicht damit fuer
+     * Schalter. Sobald eine Einstellung eine Auswahl ist - rteCodeBlock haelt
+     * den Namen des Prism-Themes - braucht die Bedingung den Wert selbst.
+     *
+     * Bewusst eine zweite Funktion: t3sbootstrap() auf den Rohwert
+     * umzustellen wuerde bestehende Abfragen still veraendern, etwa bei
+     * lazyLoad oder imgCopyright, die auch '2' oder '3' annehmen koennen.
+     */
+    protected function getExtconfValue(): ExpressionFunction
+    {
+        return new ExpressionFunction('t3sbootstrapValue', function ($str) {
+            // Not implemented, we only use the evaluator
+        }, function ($arguments, $str) {
+            try {
+                $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
+            } catch (\Throwable) {
+                return '';
+            }
+
+            return (string)($extConf[$str] ?? '');
+        });
     }
 
     protected function getExtconf(): ExpressionFunction

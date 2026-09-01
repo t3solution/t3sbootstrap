@@ -85,6 +85,27 @@ final readonly class OutsourcedFiles
 	}
 
 	/**
+	 * Rewrites the derived files for a root page unconditionally.
+	 *
+	 * ensureFilesExist() steps in only when a file is missing, and the DataHandler
+	 * hook fires only when a record is saved through the backend. Anything that
+	 * writes into the table directly - an UpgradeWizard, a CLI import - would
+	 * otherwise leave the generated constants behind the database, and without a
+	 * visible symptom: the frontend keeps rendering the old values. Those callers
+	 * use this method.
+	 */
+	public function rewriteFiles(int $rootPageId): void
+	{
+		$rootConfig = $this->configRepository->findOneBy(['pid' => $rootPageId]);
+
+		if (!$rootConfig instanceof Config) {
+			return;
+		}
+
+		$this->writeOutsourcedFiles($rootConfig, $rootPageId);
+	}
+
+	/**
 	 * Rewrites the derived files for a root page when they are missing.
 	 *
 	 * Called from the frontend middleware. Returns silently when the files are
@@ -93,6 +114,16 @@ final readonly class OutsourcedFiles
 	 */
 	public function ensureFilesExist(int $rootPageId): void
 	{
+		// This runs on every frontend request - the middleware sits before the page
+		// cache lookup in PrepareTypoScriptFrontendRendering. A marker keeps the
+		// steady state at a single is_file() instead of an Extbase query per hit.
+		// It lives in typo3temp next to the files it vouches for, so clearing the
+		// temporary assets invalidates it along with everything else, and
+		// writeOutsourcedFiles() drops it whenever the record is saved.
+		if (is_file($this->getVerifiedMarkerPath($rootPageId))) {
+			return;
+		}
+
 		$rootConfig = $this->configRepository->findOneBy(['pid' => $rootPageId]);
 
 		if (!$rootConfig instanceof Config) {
@@ -100,10 +131,40 @@ final readonly class OutsourcedFiles
 		}
 
 		if (!$this->filesAreMissing($rootConfig, $rootPageId)) {
+			$this->writeVerifiedMarker($rootPageId);
+
 			return;
 		}
 
 		$this->writeOutsourcedFiles($rootConfig, $rootPageId);
+		$this->writeVerifiedMarker($rootPageId);
+	}
+
+
+	private function getVerifiedMarkerPath(int $rootPageId): string
+	{
+		return $this->assetPathService->getTypoScriptPath() . '.verified-' . $rootPageId;
+	}
+
+
+	private function writeVerifiedMarker(int $rootPageId): void
+	{
+		GeneralUtility::writeFile(
+			$this->getVerifiedMarkerPath($rootPageId),
+			"Generated files for root page {$rootPageId} were found complete.\n"
+			. "Safe to delete - it only saves a database query per frontend request.\n",
+			true
+		);
+	}
+
+
+	private function removeVerifiedMarkers(): void
+	{
+		foreach ((array)glob($this->assetPathService->getTypoScriptPath() . '.verified-*') as $marker) {
+			if (is_string($marker) && is_file($marker)) {
+				unlink($marker);
+			}
+		}
 	}
 
 	/**
@@ -140,6 +201,9 @@ final readonly class OutsourcedFiles
 
 	private function writeOutsourcedFiles(Config $rootConfig, int $currentUid): void
 	{
+		// the files are about to change - every "verified" verdict is stale now
+		$this->removeVerifiedMarkers();
+
 		$breakpointWidth = $this->resolveBreakpointWidth($rootConfig, $currentUid);
 		[$configurations, $siterootCount] = $this->collectConfigurations();
 

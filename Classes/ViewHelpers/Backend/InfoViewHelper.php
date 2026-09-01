@@ -32,19 +32,26 @@ class InfoViewHelper extends AbstractViewHelper
 
 			$record = BackendUtility::getRecord('tt_content', $recordUid, '*');
 
+			if ( !is_array($record) ) {
+				return '';
+			}
+
 			if ( $record['hidden'] === 0 ) {
-		
-				$pageContainer 					= !empty($this->arguments['pageContainer']) ? $this->arguments['pageContainer'] : '';
-				$container 						= !empty($record['tx_t3sbootstrap_container']) ? $record['tx_t3sbootstrap_container'] : '';
+
+				// $escapeOutput is false and the result is printed with f:format.raw()
+				// in the page module, so every value coming from a record has to be
+				// escaped here - these are free input fields an editor controls.
+				$pageContainer 					= !empty($this->arguments['pageContainer']) ? htmlspecialchars((string)$this->arguments['pageContainer']) : '';
+				$container 						= !empty($record['tx_t3sbootstrap_container']) ? htmlspecialchars((string)$record['tx_t3sbootstrap_container']) : '';
 				$jumbotronContainer 			= !empty($config['jumbotronContainer']) ? $config['jumbotronContainer'] : '';
 				$footerContainer				= !empty($config['footerContainer']) ? $config['footerContainer'] : '';
 				$expandedContentTopContainer	= !empty($config['expandedcontentContainertop']) ? $config['expandedcontentContainertop'] : '';
 				$expandedContentBottomContainer	= !empty($config['expandedcontentContainerbottom']) ? $config['expandedcontentContainerbottom'] : '';
 		
-				$extraClass 	= $record['tx_t3sbootstrap_extra_class'];
-				$headerExtraClass 	= $record['tx_t3sbootstrap_header_class'];
-				$frame 			= $record['frame_class'] === 'default' ? '': $record['frame_class'];
-				$layout 		= $record['layout'] === 0 ? '' : $record['layout'];
+				$extraClass 	= htmlspecialchars((string)($record['tx_t3sbootstrap_extra_class'] ?? ''));
+				$headerExtraClass 	= htmlspecialchars((string)($record['tx_t3sbootstrap_header_class'] ?? ''));
+				$frame 			= $record['frame_class'] === 'default' ? '': htmlspecialchars((string)($record['frame_class'] ?? ''));
+				$layout 		= $record['layout'] === 0 ? '' : htmlspecialchars((string)($record['layout'] ?? ''));
 				$colPos 		= $record['colPos'];
 				$oneColLayout 	= $backendLayout === 'OneCol' || $backendLayout === 'OneCol_Extra' ? TRUE : FALSE;
 

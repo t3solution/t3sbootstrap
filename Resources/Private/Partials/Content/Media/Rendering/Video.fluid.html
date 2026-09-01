@@ -1,6 +1,13 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment> Poster for the video - only if PNG- or JPG-image with the name of the video is availabe in fileadmin/user_upload/ </f:comment>
+<f:comment>
+	playsinline: TYPO3s VideoTagRenderer kennt das Attribut nicht - es schreibt
+	nur controls, autoplay, muted und loop. Ein <video autoplay> ohne
+	playsinline geht auf dem iPhone beim Laden der Seite sofort in den
+	Vollbildmodus: sichtbar ist dann nur noch das Video auf schwarzem Grund.
+	Carousel und Jumbotron setzen das Attribut laengst selbst, hier fehlte es.
+</f:comment>
 <f:if condition="{poster}">
 	<f:then>
 		<t3sb:media
@@ -10,7 +17,7 @@
 			height="{dimensions.height}"
 			alt="{file.alternative}"
 			title="{file.title}"
-			additionalAttributes="{poster: poster}" />
+			additionalAttributes="{poster: poster, playsinline: 'playsinline'}" />
 	</f:then>
 	<f:else>
 		<t3sb:media
@@ -19,7 +26,8 @@
 			width="{dimensions.width}"
 			height="{dimensions.height}"
 			alt="{file.alternative}"
-			title="{file.title}" />
+			title="{file.title}"
+			additionalAttributes="{playsinline: 'playsinline'}" />
 	</f:else>
 </f:if>
 </html>
