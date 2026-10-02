@@ -4,6 +4,79 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.53 — TypoScript-Conditions, Abstände, FlexForm
+
+Betrifft die folgenden Dateien:
+
+```
+ext_emconf.php
+composer.json
+Classes/Helper/DefaultHelper.php
+Classes/DataProcessing/BootstrapProcessor.php
+Configuration/TypoScript/Page/_main.typoscript
+Configuration/TypoScript/Page/Register.typoscript
+Configuration/TypoScript/Lib/ContentElement.typoscript
+Configuration/FlexForms/Container/MasonryWrapper.xml
+```
+
+> **Nach dem Update: Cache leeren.** Die Bewertung der Conditions und die
+> FlexForm-Struktur liegen im Cache. Eine Datenbankanalyse ist nicht nötig.
+
+### Behoben — TypoScript-Conditions warfen Syntaxfehler
+
+Im Log stand bei jedem Aufruf:
+
+```
+TypoScript condition [traverse(site("configuration"), "settings/bootstrap/disable/jquery")
+== false ||  == 0] could not be parsed: Unexpected token "operator" of value "=="
+```
+
+Die Konstante war nicht unauflösbar, sie löste sich zu einem **Leerstring** auf.
+`bootstrap.disable.jquery` ist in `settings.definitions.yaml` als `type: bool`
+deklariert, und Site-Settings behalten beim Flatten ihren PHP-Typ. Der
+Condition-Substitutor setzt den Wert per String-Cast ein: `true` wird zu `1`,
+`false` zu `` — und ungequotet bleibt dann `|| == 0` stehen.
+
+Der Fehler trat also genau dann auf, wenn jemand jQuery **einschaltete**.
+
+Schwerer als das Log-Rauschen wog die Folge: der Core fängt den `SyntaxError`
+und setzt das Verdikt auf `false`. Damit fiel der gesamte Block weg — auch der
+`traverse()`-Teil, der korrekt `true` geliefert hätte. **jQuery ließ sich nicht
+aktivieren.**
+
+Die Konstante steht jetzt in Anführungszeichen; `"" == "0"` ist eine gültige,
+falsche Aussage statt eines Parse-Fehlers, und `traverse()` entscheidet wieder.
+
+Vier weitere Conditions derselben Bauart sind mitgezogen —
+`backgroundImageEnable`, `lightboxSelection` (zweimal) und `ext.news` (zweimal).
+Deren Konstanten kommen aus `t3sbconstants.typoscript` beziehungsweise aus
+`addTypoScriptConstants()` in `ext_localconf.php`, sind also immer Strings und im
+Normalbetrieb unkritisch. Fehlt eine dieser Quellen — frische Installation vor dem
+ersten Speichern des Konfigurations-Datensatzes, Install Tool im Failsafe-Modus —,
+bleibt `{$…}` als Literal stehen und es knallt genauso.
+
+### Behoben — `content_margin_top` im Footer und im Jumbotron
+
+Jumbotron (`colPos 3`), Footer-Spalte (`4`) und erweiterter Inhalt (`20`/`21`)
+fielen schon in 5.3.52 durch die Prüfung `colPos = 0 OR colPos > 199` heraus. Der
+Footer als **eigene Seite** nicht — dessen Elemente liegen in `colPos 0` wie auf
+jeder anderen Seite.
+
+`getDefaults()` bekommt dafür jetzt `$containerConfig` übergeben und vergleicht
+`footerPid` mit der `pid` des Elements; `getContainerClass()` hatte dieses Merkmal
+längst, nur kam es nie an. Der Parameter hat eine Vorgabe (`array $containerConfig = []`),
+damit ein eigener Aufruf aus einem Sitepackage nicht bricht.
+
+### Behoben — veraltete TCA-Einstellung im Masonry-FlexForm
+
+`shuffleCategories` trug noch `enableMultiSelectFilterTextfield`. Der Core wirft die
+Einstellung seit v13 in `TcaMigration` per `unset()` weg und schreibt dabei eine
+Deprecation-Meldung ins Log — bei jedem Aufbau der TCA. Das Suchfeld über der
+Mehrfachauswahl ist seitdem ohnehin immer da, die Zeile war also schon wirkungslos,
+als sie geschrieben wurde. Entfernt; am Formular ändert sich nichts.
+
+---
+
 ## 5.3.52 — Überzeile, Hintergrundvideo, Seitentitel, Sprungmarken, Masonry-Filter
 
 Betrifft die folgenden Dateien:
@@ -55,10 +128,6 @@ Configuration/FlexForms/Container/MasonryWrapper.xml
 Resources/Private/Templates/Container/MasonryWrapper.fluid.html
 Resources/Public/JavaScript/MasonryFilter.js
 Resources/Public/JavaScript/shuffle.mjs
-Classes/DataProcessing/BootstrapProcessor.php
-Configuration/TypoScript/Page/_main.typoscript
-Configuration/TypoScript/Page/Register.typoscript
-Configuration/TypoScript/Lib/ContentElement.typoscript
 ```
 
 > **Nach dem Update: Datenbankanalyse erforderlich.** Es kommen fünf Spalten
@@ -178,13 +247,6 @@ Der Wrapper selbst bekommt den Abstand weiter — er steht in der Hauptspalte. T
 eine Überschrift, geht er auf den **Header** statt auf die Section
 (`marginTopOnHeader` aus `BackgroundWrapper`).
 
-**Im Footer und im Jumbotron greift er ebenfalls nicht.** Jumbotron (`colPos 3`),
-Footer-Spalte (`4`) und erweiterter Inhalt (`20`/`21`) fielen schon durch die Prüfung
-`colPos = 0 OR colPos > 199` heraus. Der Footer als **eigene Seite** nicht — dessen
-Elemente liegen in `colPos 0` wie auf jeder anderen Seite. `getDefaults()` bekommt
-dafür jetzt `$containerConfig` übergeben und vergleicht `footerPid` mit der `pid` des
-Elements; `getContainerClass()` hatte dieses Merkmal längst, nur kam es nie an.
-
 ### Background-Wrapper, Vorschau, Speaking ID
 
 Neue Checkbox **Header inside** (`headerInside` im sDEF-Sheet von
@@ -261,38 +323,6 @@ sich daran halten.
 Fehlt die Konfiguration, sagt der Wrapper es im Frontend — keine Kategorie gewählt,
 Wrapper leer oder kein Element mit einer der gewählten Kategorien. Lautlos verschwinden
 ist genau die Art Verhalten, die man später lange sucht.
-
-### Behoben — TypoScript-Conditions warfen Syntaxfehler
-
-Im Log stand bei jedem Aufruf:
-
-```
-TypoScript condition [traverse(site("configuration"), "settings/bootstrap/disable/jquery")
-== false ||  == 0] could not be parsed: Unexpected token "operator" of value "=="
-```
-
-Die Konstante war nicht unauflösbar, sie löste sich zu einem **Leerstring** auf.
-`bootstrap.disable.jquery` ist in `settings.definitions.yaml` als `type: bool`
-deklariert, und Site-Settings behalten beim Flatten ihren PHP-Typ. Der
-Condition-Substitutor setzt den Wert per String-Cast ein: `true` wird zu `1`,
-`false` zu `` — und ungequotet bleibt dann `|| == 0` stehen.
-
-Der Fehler trat also genau dann auf, wenn jemand jQuery **einschaltete**.
-
-Schwerer als das Log-Rauschen wog die Folge: der Core fängt den `SyntaxError`
-und setzt das Verdikt auf `false`. Damit fiel der gesamte Block weg — auch der
-`traverse()`-Teil, der korrekt `true` geliefert hätte. **jQuery ließ sich nicht
-aktivieren.**
-
-Die Konstante steht jetzt in Anführungszeichen; `"" == "0"` ist eine gültige,
-falsche Aussage statt eines Parse-Fehlers, und `traverse()` entscheidet wieder.
-
-Vier weitere Conditions derselben Bauart sind mitgezogen —
-`backgroundImageEnable`, `lightboxSelection` (zweimal) und `ext.news` (zweimal).
-Das sind generierte TypoScript-Konstanten aus `t3sbconstants.typoscript`, also
-immer Strings und im Normalbetrieb unkritisch. Fehlt diese Datei aber — frische
-Installation, kein Konfigurations-Datensatz, CLI —, bleibt `{$…}` als Literal
-stehen und es knallt genauso.
 
 ---
 
