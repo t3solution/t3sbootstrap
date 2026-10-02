@@ -103,12 +103,9 @@ final readonly class FlexformEvent
 
 
     /**
-     * Directory the extended FlexForm definitions are read from.
-     *
-     * Configurable, because extending the FlexForms is a project customization
-     * and belongs into the project's own site package. Empty by default, which
-     * disables the feature - previously this pointed at EXT:t3sb_package, which
-     * every installation had to carry just for this.
+     * Directory the extended FlexForm definitions are read from. Configurable,
+     * because extending FlexForms belongs into the project's own site package;
+     * empty by default, where it used to force EXT:t3sb_package on every install.
      */
     private function getFlexFormDir(): string
     {

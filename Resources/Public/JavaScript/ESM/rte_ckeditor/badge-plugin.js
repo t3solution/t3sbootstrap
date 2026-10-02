@@ -3,13 +3,12 @@ import * as UI from '@ckeditor/ckeditor5-ui';
 import * as Utils from '@ckeditor/ckeditor5-utils';
 
 /**
- * Die acht Kontextfarben von Bootstrap 5, einmal als Badge und einmal als Pill.
+ * The eight Bootstrap 5 context colours, once as badge and once as pill.
  * https://getbootstrap.com/docs/5.3/components/badge/
  *
- * Das Markup ist Zeichen fuer Zeichen dasselbe, das die Eintraege "Badge *" und
- * "Pill Badge *" im Styles-Dropdown erzeugt haben. Bestehende Inhalte wandern
- * dadurch ohne Migration in dieses Feature - sie werden beim Oeffnen erkannt,
- * sind ueber das Dropdown aenderbar und werden unveraendert zurueckgeschrieben.
+ * The markup is character for character what the former "Badge *" / "Pill Badge *"
+ * Styles entries produced, so existing content needs no migration: it is recognised
+ * on open, editable through the dropdown and written back unchanged.
  */
 const VARIANTS = [
 	{ variant: 'primary', label: 'Primary' },
@@ -89,11 +88,10 @@ function injectDropdownStyles() {
 }
 
 /**
- * Setzt, wechselt oder entfernt das Badge-Attribut.
+ * Sets, switches or removes the badge attribute.
  *
- * Bei einer Auswahl gilt es fuer die markierten Bereiche, bei blinkendem Cursor
- * fuer das, was als naechstes getippt wird - dasselbe Verhalten wie bei Fett
- * oder Kursiv.
+ * On a selection it applies to the marked ranges, on a collapsed caret to what is
+ * typed next - the same behaviour as bold or italic.
  */
 class BadgeCommand extends Core.Command {
 	refresh() {
@@ -132,19 +130,13 @@ class BadgeCommand extends Core.Command {
 }
 
 /**
- * Ein Toolbar-Dropdown fuer Bootstrap-Badges, normal und als Pill.
+ * A toolbar dropdown for Bootstrap badges, plain and pill.
  *
- * Bewusst ein echtes Editor-Feature statt zweier Gruppen im Styles-Dropdown:
- *
- * - Die Klassen stehen im Schema und werden in beide Richtungen konvertiert. Sie
- *   ueberleben damit auch in Presets, deren General-HTML-Support-Whitelist nur
- *   <div> abdeckt - beim Styles-Feature haengt das Ueberleben der Klassen daran,
- *   dass der Eintrag im Dropdown steht.
- * - Das Styles-Dropdown war mit 16 Badge-Eintraegen unter insgesamt 57 kaum noch
- *   zu ueberblicken.
- * - Ein abgeschalteter Toolbar-Eintrag blendet nur den Button aus. Das Plugin
- *   bleibt geladen, bestehende Badges bleiben lesbar und werden beim Speichern
- *   nicht angetastet.
+ * A real editor feature rather than Styles entries: the classes are in the schema
+ * and converted both ways, so they survive presets whose General HTML Support
+ * whitelist only covers <div>, and 16 entries stay out of the 57-entry Styles
+ * dropdown. Disabling the toolbar item only hides the button; existing badges stay
+ * readable and are written back untouched.
  */
 export class BadgePicker extends Core.Plugin {
 	static get pluginName() {
@@ -173,11 +165,9 @@ export class BadgePicker extends Core.Plugin {
 			}
 		});
 
-		// Die Pill-Varianten zuerst und mit hoeherer Prioritaet: ein
-		// <span class="badge rounded-pill text-bg-primary"> traegt auch die beiden
-		// Klassen, auf die der einfache Matcher passt. Wer zuerst konsumiert,
-		// gewinnt - ohne die Reihenfolge wuerde aus jeder Pill ein normales Badge
-		// und "rounded-pill" bliebe als Rest fuer den General HTML Support uebrig.
+		// Pill variants first and with higher priority: a pill also carries the two
+		// classes the plain matcher accepts, and whoever consumes first wins - otherwise
+		// every pill becomes a plain badge and "rounded-pill" is left to General HTML Support.
 		for (const definition of DEFINITIONS) {
 			editor.conversion.for('upcast').elementToAttribute({
 				view: {

@@ -1,5 +1,5 @@
 
-[{$bootstrap.ext.news} == 1]
+["{$bootstrap.ext.news}" == "1"]
 page.1 = LOAD_REGISTER
 page.1.newsTitle.cObject = RECORDS
 page.1.newsTitle.cObject {

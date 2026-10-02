@@ -852,6 +852,30 @@ $tempContentColumns = [
 ];
 
 
+// The supraheader row gets the same drop-down list as the heading
+$tempContentColumns['tx_t3sbootstrap_supraheader_class'] = $tempContentColumns['tx_t3sbootstrap_header_class'];
+$tempContentColumns['tx_t3sbootstrap_supraheader_class']['label']
+    = $dbModel . '.t3sbootstrapsupraheaderclass';
+$tempContentColumns['tx_t3sbootstrap_supraheader_class']['description']
+    = $dbModel . '.t3sbootstrapsupraheaderclass.description';
+
+// The line variations are reserved for the heading
+$tempContentColumns['tx_t3sbootstrap_supraheader_class']['config']['valuePicker']['items'] = array_values(
+    array_filter(
+        $tempContentColumns['tx_t3sbootstrap_header_class']['config']['valuePicker']['items'],
+        static fn(array $item): bool => !str_starts_with((string)($item['value'] ?? ''), 'h-line-')
+    )
+);
+
+// "Speaking ID" off means the column must not exist at all. It is a slug field, and
+// TYPO3 fills slug fields from the DataHandler on every save - whether or not the field
+// is part of showitem. Leaving it registered writes anchors behind the editor's back,
+// and the frontend then renders a span for them. Values already stored stay untouched:
+// use "typo3 t3sbootstrap:anchor --mode clear" to get rid of them.
+if (empty($extconf['speakingID'])) {
+    unset($tempContentColumns['tx_t3sbootstrap_anchor']);
+}
+
 ExtensionManagementUtility::addTCAcolumns('tt_content', $tempContentColumns);
 unset($tempContentColumns);
 
@@ -904,16 +928,16 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_assets']['columnsOverrides']['pi_f
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_button'] = [
     'showitem' => '
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+                --palette--;;general,
+                --palette--;;headers,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+                --palette--;;frames,
+                --palette--;;appearanceLinks,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                 --palette--;;language,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                 --palette--;;hidden,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+                --palette--;;access,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
@@ -948,19 +972,19 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_button']['columnsOverrides'] = [
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_carousel'] = [
     'showitem' => '
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
-                bodytext;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext_formlabel,
+                --palette--;;general,
+                --palette--;;headers,
+                bodytext,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
                 assets,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+                --palette--;;frames,
+                --palette--;;appearanceLinks,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                 --palette--;;language,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                 --palette--;;hidden,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+                --palette--;;access,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
                 categories,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
@@ -1018,8 +1042,8 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_mediaobject']['columnsOverrides'] 
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
     'showitem' => '
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+                --palette--;;general,
+                --palette--;;headers,
         --div--;Content,pi_flexform;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.content,
                 tx_t3sbootstrap_cardheader;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.header,
                 bodytext;LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_db.xlf:tt_content.t3sbs_card.texttop,
@@ -1030,15 +1054,15 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
                 assets,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.mediaAdjustments;mediaAdjustments,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/Database.xlf:tt_content.palette.gallerySettings;gallerySettings,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.imagelinks;imagelinks,
+                --palette--;;imagelinks,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+                --palette--;;frames,
+                --palette--;;appearanceLinks,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                 --palette--;;language,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                 --palette--;;hidden,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+                --palette--;;access,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,categories,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
@@ -1102,13 +1126,13 @@ $GLOBALS['TCA']['tt_content']['columns']['bullets_type']['config']['items'] = [
  * FluidTemplate
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_fluidtemplate']['showitem'] = '
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
+            --palette--;;general,
         header;Data Variable (optional),
         subheader;Path to your Fluid-Template,
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+            --palette--;;appearanceLinks,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
             hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access
+            --palette--;;access
 ';
 
 
@@ -1117,19 +1141,19 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_fluidtemplate']['showitem'] = '
  */
 $GLOBALS['TCA']['tt_content']['types']['t3sbs_gallery'] = [
     'showitem' => '
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,rowDescription,
+            --palette--;;general,
+            --palette--;;header,rowDescription,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,assets,
             media;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.ALT.uploads_formlabel,
             file_collections;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:file_collections.ALT.uploads_formlabel,
             filelink_sorting,
             --palette--;;mediaAdjustments,imagecols,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+            --palette--;;frames,
+             --palette--;;appearanceLinks,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
             hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden,
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+            --palette--;;access,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
     '
 ];
@@ -1308,8 +1332,18 @@ if (!ExtensionManagementUtility::isLoaded('content_animations')
 }
 
 if (array_key_exists('supraheader', $extconf) && $extconf['supraheader'] === '1') {
-    ExtensionManagementUtility::addToAllTCAtypes('tt_content', 'tx_t3sbootstrap_supraheader', '', 'before:header');
+    // A palette keeps text and class side by side - stacked they took two full rows.
+    ExtensionManagementUtility::addToAllTCAtypes(
+        'tt_content',
+        '--palette--;;bootstrapSupraheader',
+        '',
+        'before:header'
+    );
 }
+
+$GLOBALS['TCA']['tt_content']['palettes']['bootstrapSupraheader'] = [
+    'showitem' => 'tx_t3sbootstrap_supraheader, tx_t3sbootstrap_supraheader_class'
+];
 
 $GLOBALS['TCA']['tt_content']['palettes']['bootstrapSpacing'] = [
     'showitem' => 'tx_t3sbootstrap_padding_sides, tx_t3sbootstrap_padding_size, --linebreak--,

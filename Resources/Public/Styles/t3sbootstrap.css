@@ -3,10 +3,9 @@ a{outline:0}.subheader{margin:0}.alert{display:grid}.code{padding:.2rem .4rem;fo
  * Bootstrap ties the helper to its own icon font:
  *   .icon-link > .bi              { flex-shrink:0; transition:.2s ease-in-out transform }
  *   .icon-link-hover:hover > .bi  { transform: var(--bs-icon-link-transform, …) }
- * Iconpack renders <i>, <svg>, <span> or <img> instead - never .bi - so the
- * hover shift never fires. Same declarations, widened to those elements.
- * [aria-hidden="true"] catches the span/svg variants: Iconpack marks a purely
- * decorative icon that way, a text node or a text span never carries it. */
+ * Iconpack renders <i>, <svg>, <span> or <img> instead - never .bi - so the hover
+ * shift never fires. Same declarations widened to those elements; [aria-hidden="true"]
+ * marks Iconpack's decorative span/svg variants, which plain text never carries. */
 .icon-link > i,
 .icon-link > svg,
 .icon-link > img,
@@ -31,15 +30,11 @@ a{outline:0}.subheader{margin:0}.alert{display:grid}.code{padding:.2rem .4rem;fo
 /*
  * Speaking ID / onepage anchor
  *
- * tt_content.stdWrap.prepend puts <span id="..." class="t3sbs-anchor"></span>
- * in front of the element it belongs to. Inside a .row that span is a sibling
- * of the columns, so row-cols-* and the CSS grid counted it as a column and
- * the layout shifted by one.
- *
- * position:absolute takes it out of flow: per spec an absolutely positioned
- * child is neither a flex item nor a grid item, so it no longer occupies a
- * slot. Without offsets it stays at its static position, which is exactly
- * where the anchor has to scroll to.
+ * tt_content.stdWrap.prepend puts <span class="t3sbs-anchor"> before its element.
+ * Inside a .row that span is a sibling of the columns, so row-cols-* and the CSS
+ * grid counted it as a column and the layout shifted by one. position:absolute takes
+ * it out of flow - neither flex nor grid item, so no slot - and without offsets it
+ * stays at its static position, exactly where the anchor has to scroll to.
  */
 .t3sbs-anchor {
 	position: absolute;

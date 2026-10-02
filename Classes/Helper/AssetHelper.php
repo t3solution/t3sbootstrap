@@ -29,7 +29,7 @@ class AssetHelper implements SingletonInterface
 			}
 			$identifier = $cssfile->getIdentifier();
 			// @extensionScannerIgnoreLine
-			$this->assetCollector->addStyleSheet($cssfile->getName(), $basePath.$identifier);
+			$this->assetCollector->addStyleSheet($cssfile->getName(), $basePath.$identifier, ['media' => 'all']);
 		}
 	}
 

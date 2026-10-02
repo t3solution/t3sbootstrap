@@ -3,17 +3,23 @@
 tt_content.stdWrap.prepend = TEXT
 tt_content.stdWrap.prepend {
 	field = tx_t3sbootstrap_anchor
+	# SlugHelper falls back to "default-<md5>" when the element has no header
+	# (SlugHelper::generate()). Nothing can link to that, so it is dropped here -
+	# the nested stdWrap runs before "required".
+	stdWrap.replacement.10 {
+		search = /^default-[0-9a-f]{32}$/
+		replace =
+		useRegExp = 1
+	}
 	required = 1
 	htmlSpecialChars = 1
 	wrap = <span id="|" class="t3sbs-anchor"></span>
-	# Nur eine Bedingung: das Element muss im Section-Index stehen.
+	# Only one condition: the element must be in the section index.
 	#
-	# Die Extension-Option "Speaking ID" darf hier NICHT abgefragt werden. Sie
-	# entscheidet ausschliesslich darueber, ob das Feld tx_t3sbootstrap_anchor
-	# im Backend angeboten wird (siehe TCA/Overrides/tt_content_newCType.php).
-	# Das Feld gibt es aber schon lange, und die Option ist neu und steht auf
-	# aus - haenge das Rendern daran, verschwinden auf bestehenden Seiten alle
-	# Anker-Spans, waehrend die Section-Menue-Links in der Navbar weiter darauf
-	# zeigen. Genau das war in 5.3.51 kaputt (One-Page-Layout).
+	# Do NOT test the extension option "Speaking ID" here: it only decides whether the
+	# field tx_t3sbootstrap_anchor is offered in the backend (see
+	# TCA/Overrides/tt_content_newCType.php). The field is old, the option new and off
+	# by default - tying rendering to it strips the anchor spans from existing pages
+	# while the section menu still links to them (broken in 5.3.51, onepage layout).
 	if.isTrue.field = sectionIndex
 }

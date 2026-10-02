@@ -92,6 +92,13 @@ settings:
     type: string
     default: '2560, 1920, 1200, 992, 768, 576'
   
+  bootstrap.image.jumbotronBgimageIgnoreDoktypes:
+    label: 'Jumbotron background: ignored page types'
+    category: Bootstrap.config.image.additional
+    description: 'Comma-separated list of doktypes whose "media" field is skipped when the jumbotron background image is taken from the rootline ("on this and all child pages"). For page types whose media is a teaser image and not a background.'
+    type: string
+    default: ''
+  
   bootstrap.image.lazyLoadThreshold:
     label: 'Threshold for Lazy load'
     category: Bootstrap.config.image.lazyload

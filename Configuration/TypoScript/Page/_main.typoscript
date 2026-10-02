@@ -17,23 +17,12 @@ page {
 }
 
 
-# PRISM - Syntax Highlighting fuer die Code-Bloecke aus dem RTE
+# PRISM - syntax highlighting for the code blocks coming from the RTE
 # --------------------------------------------------------------------------------------------------------------------------
-# Der RTE schreibt nur <pre><code class="language-*"> - darin steht ein einziger
-# Textknoten, den kein CSS einfaerben kann. Prism erzeugt die Token-Ebene erst
-# im Frontend.
-#
-# Gesteuert wird das ueber eine einzige Einstellung:
-# Extension Configuration > RTE > Code block. Sie haelt entweder 0 (kein
-# Code-Block), 1 (Code-Block ohne Faerbung) oder den Namen eines Themes - und
-# genau dann werden prism.js und die passende <Theme>.css geladen.
-#
-# t3sbootstrapValue() statt t3sbootstrap(): letzteres normalisiert auf '1'/'0'
-# und koennte die Themes nicht auseinanderhalten.
-#
-# Die Engine einmal - sie haengt nur an der Sprachauswahl, nicht am Theme.
-# Die Bedingung heisst "irgendein Theme ist gewaehlt": 0 = kein Code-Block,
-# 1 = Code-Block ohne Faerbung, alles andere ist ein Theme-Name.
+# The RTE only writes <pre><code class="language-*">, a single text node no CSS can
+# colour - Prism builds the token layer in the frontend. Setting: Extension
+# Configuration > RTE > Code block (0 = none, 1 = no colouring, else a theme name);
+# t3sbootstrapValue(), not t3sbootstrap(), which would normalise the themes to '1'.
 [t3sbootstrapValue('rteCodeBlock') not in ['0', '1', '']]
 	page.includeJSFooter.t3sbPrism = EXT:t3sbootstrap/Resources/Public/Prism/prism.js
 [END]
@@ -127,15 +116,18 @@ page {
 
 
 # jQuery
+# A constant in a condition MUST be quoted. Site settings keep their PHP type, so a
+# "type: bool" setting set to false substitutes as an empty string - unquoted that
+# leaves "|| == 0", the condition fails to parse and the whole block is skipped.
 # --------------------------------------------------------------------------------------------------------------------------
-[traverse(site("configuration"), "settings/bootstrap/disable/jquery") == false || {$bootstrap.disable.jquery} == 0]
+[traverse(site("configuration"), "settings/bootstrap/disable/jquery") == false || "{$bootstrap.disable.jquery}" == "0"]
 	@import 'EXT:t3sbootstrap/Configuration/TypoScript/Page/jQuery.typoscript'
 [END]
 
 
 # Background Image
 # --------------------------------------------------------------------------------------------------------------------------
-[{$bootstrap.config.backgroundImageEnable} == 1]
+["{$bootstrap.config.backgroundImageEnable}" == "1"]
 page.cssInline {
 	5 = TEXT
 	5.value = body {background-repeat:no-repeat;background-position: center center;background-size: cover;background-attachment: fixed}

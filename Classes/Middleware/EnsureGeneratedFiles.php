@@ -12,22 +12,10 @@ use T3SBS\T3sbootstrap\Service\LegacyAssetMigrationService;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 
 /**
- * Rewrites the files derived from the configuration record when they are gone.
- *
- * The generated TypoScript and scss live below typo3temp/assets/, which TYPO3
- * treats as disposable: "Remove Temporary Assets" in the install tool empties
- * it, and most deployments do not carry it over. Since everything in there is
- * derived from tx_t3sbootstrap_domain_model_config, it can simply be written
- * again - no network, one database read.
- *
- * This has to happen before TypoScript is resolved: RequestHandler drops
- * includeCSS/includeJS entries whose file is missing without any error and
- * stores that result in the page cache, so healing later in the PageRenderer
- * would be too late and would bake a broken page into the cache. Hence a
- * middleware placed before typo3/cms-frontend/prepare-tsfe-rendering.
- *
- * What this deliberately does NOT do is fetch the downloaded assets: that needs
- * network access and belongs into t3sbootstrap:cdnToLocal, not into a request.
+ * Rewrites the generated TypoScript and scss when they are gone; one database read is enough,
+ * as everything below typo3temp/assets/ derives from the configuration record. Runs before
+ * TypoScript is resolved, because RequestHandler silently drops includeCSS/includeJS entries
+ * whose file is missing and caches that. Downloads are left out - they need network.
  */
 final readonly class EnsureGeneratedFiles implements MiddlewareInterface
 {

@@ -17,10 +17,10 @@
 	<f:if condition="{settings.cdn}">
 		<f:then>
 			<f:asset.css identifier="animateCss"
-				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.compat.css" />
+				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/{settings.animateVersion}/animate.compat.css" media="all" />
 		</f:then>
 		<f:else>
-			<f:asset.css identifier="animateCss" href="{settings.assetPath}T3SB-CSS/animate.compat.css" />
+			<f:asset.css identifier="animateCss" href="{settings.assetPath}T3SB-CSS/animate.compat.css" media="all" />
 		</f:else>
 	</f:if>
 	<f:if condition="{animateCssRepeat}">
@@ -107,12 +107,12 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" />
+					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/baguetteBox.min.css" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/baguetteBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/baguetteBox.min.js" />
 			</f:else>
 		</f:if>
@@ -129,12 +129,12 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.css" />
+					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaboxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/halkaBox.min.css" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/halkaBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/halkaBox.min.js" />
 			</f:else>
 		</f:if>
@@ -149,12 +149,12 @@ function t3sbCssAnimate(ael, dataAnimate, animateRepeat) {
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/glightbox.min.css" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/glightbox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/glightbox.min.js" />
 			</f:else>
 		</f:if>

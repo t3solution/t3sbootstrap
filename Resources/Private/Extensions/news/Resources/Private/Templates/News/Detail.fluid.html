@@ -18,12 +18,12 @@
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" />
+					href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/{settings.baguetteBoxVersion}/baguetteBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/baguetteBox.min.css" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/baguetteBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/baguetteBox.min.js" />
 			</f:else>
 		</f:if>
@@ -40,12 +40,12 @@
 		<f:if condition="{settings.cdn}">
 			<f:then>		
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.css" />
+					href="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdn.jsdelivr.net/npm/halkabox@{settings.halkaBoxVersion}/dist/halkaBox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/halkaBox.min.css" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/halkaBox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/halkaBox.min.js" />
 			</f:else>
 		</f:if>
@@ -60,12 +60,12 @@
 		<f:if condition="{settings.cdn}">
 			<f:then>
 				<f:asset.css identifier="t3sblightboxCss"
-					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />	
+					href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" media="all" />	
 				<f:asset.script identifier="t3sblightboxJS"
 					src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/glightbox.min.css" />
+				<f:asset.css identifier="t3sblightboxCss" href="{settings.assetPath}T3SB-CSS/glightbox.min.css" media="all" />
 				<f:asset.script identifier="t3sblightboxJS" src="{settings.assetPath}T3SB-JS/glightbox.min.js" />
 			</f:else>
 		</f:if>

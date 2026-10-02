@@ -3,27 +3,27 @@
 	<f:switch expression="{layout}">
 		<f:case value="1">
 			<p class="subheader h2{f:if(condition: '{subheaderColor}',then: ' text-{subheaderColor}')}">
-				{subheader -> f:format.raw()}
+				{subheader -> f:sanitize.html()}
 			</p>
 		</f:case>
 		<f:case value="2">
 			<p class="subheader h3{f:if(condition: '{subheaderColor}',then: ' text-{subheaderColor}')}">
-				{subheader -> f:format.raw()}
+				{subheader -> f:sanitize.html()}
 			</p>
 		</f:case>
 		<f:case value="3">
 			<p class="subheader h4{f:if(condition: '{subheaderColor}',then: ' text-{subheaderColor}')}">
-				{subheader -> f:format.raw()}
+				{subheader -> f:sanitize.html()}
 			</p>
 		</f:case>
 		<f:case value="4">
 			<p class="subheader h5{f:if(condition: '{subheaderColor}',then: ' text-{subheaderColor}')}">
-				{subheader -> f:format.raw()}
+				{subheader -> f:sanitize.html()}
 			</p>
 		</f:case>
 		<f:case value="5">
 			<p class="subheader h6{f:if(condition: '{subheaderColor}',then: ' text-{subheaderColor}')}">
-				{subheader -> f:format.raw()}
+				{subheader -> f:sanitize.html()}
 			</p>
 		</f:case>
 		<f:defaultCase>

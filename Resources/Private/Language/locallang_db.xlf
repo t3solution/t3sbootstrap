@@ -238,7 +238,7 @@
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.contentmargintop.description">
 			<segment>
-				<source>here you can set the default space (margin-top) for each content-element (colPos=0). You can overwrite this value in the "Extra Class" field in each content-element.</source>
+				<source>here you can set the default space (margin-top) for each content-element. It applies in the main column and in the columns of a column container (two, three, four, six columns, row columns) - not inside a wrapper, which brings its own padding. You can overwrite this value in the "Extra Class" field in each content-element.</source>
 			</segment>
 		</unit>
 		
@@ -333,7 +333,7 @@
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.anchorextraoffset.description">
 			<segment>
-				<source>for Section-Menu-Items and "OnePageLayout": in px - (default 29)</source>
+				<source>Extra gap above the scroll target, in px - for section index, "OnePageLayout" and every in-page anchor. The height of the navbar and of a sticky breadcrumb is added automatically. (default 29)</source>
 			</segment>
 		</unit>
 		
@@ -673,6 +673,12 @@
 			</segment>
 		</unit>
 		
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand.description">
+			<segment>
+				<source>Decides what the navbar shows on the left. The image fields below only appear with "Just an image" or "Image and text".</source>
+			</segment>
+		</unit>
+
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand">
 			<segment>
 				<source>make your selection</source>
@@ -1212,31 +1218,31 @@
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item1">
 			<segment>
-				<source>left (start)</source>
+				<source>top (start)</source>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item2">
 			<segment>
-				<source>right (end)</source>
+				<source>bottom (end)</source>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item3">
 			<segment>
-				<source>center</source>
+				<source>middle (center)</source>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item4">
 			<segment>
-				<source>baseline</source>
+				<source>baseline (first line)</source>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item5">
 			<segment>
-				<source>stretch</source>
+				<source>stretch (full height)</source>
 			</segment>
 		</unit>
 		
@@ -2159,6 +2165,18 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapbodysupraheader.description">
 			<segment>
 				<source>A short text element placed directly above the heading</source>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapsupraheaderclass">
+			<segment>
+				<source>Supraheader Extra Class</source>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapsupraheaderclass.description">
+			<segment>
+				<source>Additional CSS class for the supraheader - same list as for the heading</source>
 			</segment>
 		</unit>
 		

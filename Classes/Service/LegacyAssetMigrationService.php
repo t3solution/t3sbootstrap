@@ -7,17 +7,9 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Moves the asset directories that older versions wrote into
- * EXT:t3sb_package/Resources/Public/ over to typo3temp/assets/t3sbootstrap/.
- *
- * Only the downloaded files really need this. The TypoScript and the scss are
- * derived from the configuration record and are rewritten by
- * Backend\Hooks\OutsourcedFiles anyway - but copying them along costs nothing
- * and keeps the first request after an update free of surprises.
- *
- * Runs at most once, guarded by a marker file. Both the upgrade wizard and the
- * frontend middleware call it, so an installation is migrated whether the
- * integrator opens the install tool or not.
+ * Moves asset directories older versions wrote into EXT:t3sb_package/Resources/Public/ over
+ * to typo3temp/assets/t3sbootstrap/. Runs once, guarded by a marker file; upgrade wizard and
+ * frontend middleware both call it, so an installation is migrated with or without the install tool.
  */
 final class LegacyAssetMigrationService implements SingletonInterface
 {
@@ -87,19 +79,12 @@ final class LegacyAssetMigrationService implements SingletonInterface
     }
 
     /**
-     * bootstrap-<uid>.scss enthaelt nur drei @import-Zeilen, und bis 5.3.49
-     * zeigten sie auf EXT:t3sb_package/Resources/Public/. Kopiert wurde die
-     * Datei unveraendert - sie liegt also am neuen Ort und importiert vom
-     * alten. Ersetzt ein composer update das Sitepackage, oder ist es gar nicht
-     * geladen, bricht scssphp mit einer CompilerException ab und nimmt das
-     * ganze Frontend mit (der Compile laeuft im PageRenderer-Hook, ausserhalb
-     * jedes try/catch).
+     * Until 5.3.49 the three @import lines in bootstrap-<uid>.scss pointed at
+     * EXT:t3sb_package/Resources/Public/ and were copied unchanged, so a replaced or missing
+     * sitepackage makes scssphp throw a CompilerException in the PageRenderer hook, outside any
+     * try/catch, and takes the frontend down. They are rewritten relative, as Command\CustomScss does.
      *
-     * Die Zeilen werden deshalb auf dieselbe relative Form gebracht, die
-     * Command\CustomScss heute schreibt - relativ, damit kein absoluter
-     * Serverpfad in der Datei einbetoniert wird.
-     *
-     * @return string[] absolute Pfade der Dateien mit veralteten Importen
+     * @return string[] absolute paths of the files with stale imports
      */
     private function findStaleIncludeFiles(): array
     {

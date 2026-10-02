@@ -52,10 +52,18 @@ function t3sbFixedButtons(fixedButtons, visiblePart, btnSlideOutCorrection, isBt
 							boxHalfHeight = fixedButton.clientHeight / 2;
 						if (isBtnGroup) {
 							Array.from(slideInButtons.children).forEach( slideInButton => {
-								if ( typeof slideInButton.firstChild !== 'undefined' ) {
+								// The direct children are not only the buttons: tt_content.stdWrap.prepend
+								// puts a <span class="t3sbs-anchor"> before every element with a section
+								// index. Without this check the code ran on that empty span, found no
+								// icon and called classList on null.
+								var btn = slideInButton.querySelector('.btn');
+								if ( btn !== null ) {
 									slideIn = boxWidth - visiblePart;
-									var	icon = slideInButton.querySelector('.fixedPosition svg.iconpack')
-									icon.classList.add('me-2');
+									// The iconpack icon is optional.
+									var icon = btn.querySelector('svg.iconpack');
+									if ( icon !== null ) {
+										icon.classList.add('me-2');
+									}
 									slideInButton.style.width = 'auto';
 									slideInButton.style.right = '-'+slideIn+'px';
 									fixedButton.style.top = 'calc(50% - '+boxHalfHeight+'px)';

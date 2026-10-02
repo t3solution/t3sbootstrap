@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -106,6 +107,11 @@ class BootstrapProcessor implements DataProcessorInterface
         if ( empty($processedData['data']['CType']) ) {
             return $processedData;
         }
+
+        // Der visuelle Editor braucht die Feldausgabe ueber das Record-Objekt,
+        // sonst findet er seine Marker nicht. Ohne ihn darf einfaches Markup in
+        // den input-Feldern stehen bleiben - siehe Partials/Content/Field.
+        $processedData['visualEditor'] = ExtensionManagementUtility::isLoaded('visual_editor');
 
         $request = $cObj->getRequest();
         /** @var PageInformation $pageInformation */
@@ -491,7 +497,8 @@ class BootstrapProcessor implements DataProcessorInterface
             (int)$processorConfiguration['defaultHeaderType'],
             $processorConfiguration['contentMarginTop'],
             $extConf['animateCss'],
-            $parentCType
+            $parentCType,
+            $containerConfig
         );
 
         // trim header
@@ -499,14 +506,22 @@ class BootstrapProcessor implements DataProcessorInterface
 
         $processedData['style'] .= ' '.$processedData['data']['tx_t3sbootstrap_extra_style'];
         $processedData['style'] = trim($processedData['style']);
-        $processedData['styleAttr'] = !empty($processedData['style']) ? ' style="'.$processedData['style'].'"' : '';
-        $processedData['styleInline'] = !empty($processedData['style']) ? '#c'.$processedData['data']['uid'].' {'.$processedData['style'].'}' : '';
+        // The value of tx_t3sbootstrap_extra_style is free text, so it is escaped here:
+        // without it a quote closes the attribute and the rest becomes markup.
+        $processedData['styleAttr'] = !empty($processedData['style'])
+            ? ' style="'.htmlspecialchars($processedData['style'], ENT_QUOTES).'"' : '';
+        // Inside <style> entities are not decoded, so angle brackets are dropped
+        // instead - they would end the block and start a tag of their own.
+        $processedData['styleInline'] = !empty($processedData['style'])
+            ? '#c'.$processedData['data']['uid'].' {'.str_replace(['<', '>'], '', $processedData['style']).'}' : '';
         $processedData['trimClass'] = !empty(trim($processedData['class'])) ? trim($processedData['class']) : '';
         $processedData['class'] = !empty($processedData['trimClass']) ? ' '.$processedData['trimClass'] : '';
 
         $trimClass = !empty($processedData['trimClass']) ? trim($processedData['class']) : '';
 
-        $processedData['classAttr'] = !empty($trimClass) ? ' class="'.$trimClass.'"' : '';
+        // Same reason as styleAttr: tx_t3sbootstrap_extra_class is free text.
+        $processedData['classAttr'] = !empty($trimClass)
+            ? ' class="'.htmlspecialchars($trimClass, ENT_QUOTES).'"' : '';
         $processedData['trimClass'] = $trimClass;
         
         return $processedData;

@@ -13,8 +13,13 @@ function t3sbScrollToAnchor(sectionmenuAnchorOffset, fixedNavbar, navbarHeight, 
 			targetElement = document.getElementById('tab-'+idArr[1]);
 		}
 		if ( targetElement != null ) {
+			// window.t3sbStickyTop comes from MainAssets and covers everything
+			// pinned to the top: navbar plus a sticky breadcrumb. The fallback
+			// to the bare navbar height keeps a call without MainAssets working.
 			var	offsetSize = sectionmenuAnchorOffset;
-			if ( fixedNavbar ) {
+			if ( typeof window.t3sbStickyTop !== 'undefined' ) {
+				offsetSize += window.t3sbStickyTop;
+			} else if ( fixedNavbar ) {
 				offsetSize += navbarHeight;
 			}
 			var scrollTo = Math.round(t3sbOffsetTop(targetElement)-offsetSize);

@@ -74,6 +74,7 @@ return [
                 --palette--;;jumbotron,
             --div--; Background,
                 --palette--;;background,
+                --palette--;;backgroundvideo,
                 --palette--;;backgroundcarousel,',
         ],
 
@@ -303,6 +304,15 @@ return [
             'label' => $dbModel.'.backgroundimage',
             'showitem' => '
                 jumbotron_bgimage,jumbotron_bgimageratio,
+            ',
+        ],
+        'backgroundvideo' => [
+            'label' => 'Background Video',
+            'description' => 'A local video from the pages media is used as background instead of an image. Online media (YouTube, Vimeo) is not covered by this.',
+            'showitem' => '
+                jumbotron_bgvideo,--linebreak--,
+                jumbotron_bgvideo_autoplay,jumbotron_bgvideo_loop,--linebreak--,
+                jumbotron_bgvideo_overlay,
             ',
         ],
         'backgroundcarousel' => [
@@ -1048,6 +1058,7 @@ return [
         'navbar_brand' => [
             'exclude' => false,
             'label' => $dbModel.'.navbarbrand',
+            'description' => $dbModel.'.navbarbrand.description',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1086,17 +1097,12 @@ return [
             'exclude' => false,
             'label' => $dbModel.'.navbarimage',
             'description' => $dbModel.'.navbarimage.description',
+            'displayCond' => 'FIELD:navbar_brand:IN:image,imgText',
             'config' => [
                 'type' => 'input',
                 'searchable' => false
             ]
         ],
-        // Bis 5.4 kamen Breite, Hoehe und Alt-Text ausschliesslich aus den
-        // Site-Settings (bootstrap.navbar.image.*). Damit trug jede Site nur
-        // ein Mass fuer alle Siteroots - ein abweichendes Logo im Datensatz
-        // bekam trotzdem die fremden Proportionen verpasst. Die Felder hier
-        // uebersteuern die Site-Settings; leer bzw. 0 bedeutet weiterhin
-        // "nimm den Wert aus der Site" (siehe ConfigProcessor::processNavbar).
         'navbar_image_width' => [
             'exclude' => false,
             'label' => $dbModel.'.navbarimagewidth',
@@ -1480,7 +1486,7 @@ return [
         'jumbotron_bgimage' => [
             'exclude' => false,
             'label' => $dbModel.'.backgroundimage',
-            'description' => 'Enable background image from pages media OR slider if more than 1 image.',
+            'description' => 'Source of the background from the pages media: this page only, or inherited by all child pages. More than one image becomes a slider. This setting also decides where a background video is taken from - without it, the video switch below has no effect.',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -1492,10 +1498,52 @@ return [
                 'default' => '',
             ]
         ],
+        'jumbotron_bgvideo' => [
+            'exclude' => false,
+            'label' => 'Video as background',
+            'description' => 'Use a local video from the pages media as jumbotron background. Without this, a video in the media is skipped and the first image is used.',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ]
+        ],
+        'jumbotron_bgvideo_autoplay' => [
+            'exclude' => false,
+            'label' => 'Autoplay',
+            'description' => 'Off: the browser shows the still frame and starts on click. That also settles the accessibility question - moving content needs a way to stop it.',
+            'displayCond' => 'FIELD:jumbotron_bgvideo:REQ:true',
+            'config' => [
+                'type' => 'check',
+                'default' => 1,
+            ]
+        ],
+        'jumbotron_bgvideo_loop' => [
+            'exclude' => false,
+            'label' => 'Loop',
+            'description' => 'Restart the video when it ends.',
+            'displayCond' => 'FIELD:jumbotron_bgvideo:REQ:true',
+            'config' => [
+                'type' => 'check',
+                'default' => 1,
+            ]
+        ],
+        'jumbotron_bgvideo_overlay' => [
+            'exclude' => false,
+            'label' => 'Dimming in percent',
+            'description' => 'A dark layer between video and text, 0 to 100. Over a moving image text is rarely readable without it.',
+            'displayCond' => 'FIELD:jumbotron_bgvideo:REQ:true',
+            'config' => [
+                'type' => 'number',
+                'size' => 5,
+                'default' => 40,
+                'range' => ['lower' => 0, 'upper' => 100],
+                'searchable' => false,
+            ]
+        ],
         'jumbotron_bgimageratio' => [
             'exclude' => false,
             'label' => 'Background image ratio',
-            'description' => 'Only to be used with a background image - not with videos and/or "Full height section".',
+            'description' => 'Applies to a background image and to a background video alike. Not used with "Full height section" - there the jumbotron fills the screen height instead.',
             'config' => [
                 'type' => 'input',
                 'searchable' => false

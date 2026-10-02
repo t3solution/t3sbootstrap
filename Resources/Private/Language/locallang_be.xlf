@@ -985,6 +985,18 @@
 			</segment>
 		</unit>
 		
+		<unit id="flexform.bgw.headerInside">
+			<segment>
+				<source>Header inside the section</source>
+			</segment>
+		</unit>
+
+		<unit id="flexform.bgw.headerInside.description">
+			<segment>
+				<source>Renders the header of this wrapper on top of the background instead of above it - together with the content.</source>
+			</segment>
+		</unit>
+
 		<unit id="flexform.bgw.contentPosition">
 			<segment>
 				<source>Content Position</source>
@@ -1263,6 +1275,36 @@
 		<unit id="flexform.colclass">
 			<segment>
 				<source>Column class</source>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffle">
+			<segment>
+				<source>Filter by category (shuffle.js)</source>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffle.description">
+			<segment>
+				<source>Shows a button bar above the grid and lays the elements out with shuffle.js instead of masonry.js. Only elements that carry one of the selected categories can be filtered.</source>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleCategories">
+			<segment>
+				<source>Categories for the filter</source>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleCategories.description">
+			<segment>
+				<source>One button per category, in the order chosen here. A category without a single element in this wrapper is left out.</source>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleLabel">
+			<segment>
+				<source>Label above the buttons</source>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleAllLabel">
+			<segment>
+				<source>Label of the "all" button</source>
 			</segment>
 		</unit>
 

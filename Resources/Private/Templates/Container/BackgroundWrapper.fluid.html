@@ -1,6 +1,19 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:if condition="{data.header}">
+<f:comment>
+	As in the column containers: the supraheader keeps the header block alive
+	even when no heading was entered. Subheader and date deliberately do not
+	count here - the wrapper does not show them.
+
+	hasWrapperHeader is used twice: above the section, and - with headerInside -
+	inside it. One variable, so both places cannot drift apart.
+</f:comment>
+<f:variable name="hasWrapperHeader">0</f:variable>
+<f:if condition="{data.header} || ({settings.supraheader} && {data.tx_t3sbootstrap_supraheader})">
+	<f:variable name="hasWrapperHeader">1</f:variable>
+</f:if>
+
+<f:if condition="{hasWrapperHeader} && !{headerInside}">
 	{containerPre -> f:format.raw()}
 		<f:render partial="Content/Header/All" arguments="{_all}" />
 	{containerPost -> f:format.raw()}
@@ -45,16 +58,7 @@
 			</f:then>
 			<f:else>
 				<f:comment> No media </f:comment>
-				<section id="s-{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
-					<f:if condition="{col_273.0}">
-						{containerPre -> f:format.raw()}
-							<f:for each="{col_273}" as="row">
-								{row.renderedContent -> f:format.raw()}
-							</f:for>
-						{containerPost -> f:format.raw()}
-					</f:if>
-				</section>
-				
+				<f:render section="NoMedia" arguments="{_all}" />
 			</f:else>
 		</f:if>
 		</f:link.typolink>
@@ -104,15 +108,7 @@
 				</f:then>
 				<f:else>
 					<f:comment> No media </f:comment>
-					<section id="s-{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
-						<f:if condition="{col_273.0}">
-							{containerPre -> f:format.raw()}
-									<f:for each="{col_273}" as="row">
-										{row.renderedContent -> f:format.raw()}
-									</f:for>
-							{containerPost -> f:format.raw()}
-						</f:if>
-					</section>
+					<f:render section="NoMedia" arguments="{_all}" />
 				</f:else>
 			</f:if>
 		</f:else>
@@ -120,11 +116,35 @@
 </f:section>
 
 
+<f:comment>
+	Without media there is no card and no overlay, so SectionInner is never reached.
+	This section is the one both no-media branches use, otherwise "header inside" loses
+	the header exactly here - and a wrapper that carries only a header renders nothing.
+</f:comment>
+<f:section name="NoMedia">
+	<section id="s-{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
+		<f:if condition="{col_273.0} || ({headerInside} && {hasWrapperHeader})">
+			{containerPre -> f:format.raw()}
+				<f:if condition="{headerInside} && {hasWrapperHeader}">
+					<f:render partial="Content/Header/All" arguments="{_all}" />
+				</f:if>
+				<f:for each="{col_273}" as="row">
+					{row.renderedContent -> f:format.raw()}
+				</f:for>
+			{containerPost -> f:format.raw()}
+		</f:if>
+	</section>
+</f:section>
+
+
 <f:section name="SectionInner">
-	<f:if condition="{col_273 -> f:count()}">
+	<f:if condition="{col_273 -> f:count()} || ({headerInside} && {hasWrapperHeader})">
 		<div class="d-flex h-100" style="z-index: 1;">
 			<div class="col{f:if(condition: '{contentPosition}',then: ' {contentPosition}')}">
 				{containerPre -> f:format.raw()}
+						<f:if condition="{headerInside} && {hasWrapperHeader}">
+							<f:render partial="Content/Header/All" arguments="{_all}" />
+						</f:if>
 						<f:for each="{col_273}" as="row">
 							{row.renderedContent -> f:format.raw()}
 						</f:for>
@@ -135,12 +155,15 @@
 </f:section>
 
 <f:section name="SectionOverlayInner">
-<f:if condition="{col_273 -> f:count()}">
+<f:if condition="{col_273 -> f:count()} || ({headerInside} && {hasWrapperHeader})">
 	<div class="card-img-overlay d-flex px-0{overlayClass}"{f:if(condition: '{bgColorOverlay}',then: ' style="{bgColorOverlay}"')}>
 		<f:if condition="{container}">
 			<f:then>
 				<div class="{container} d-flex">
 					<div class="card-text w-100{alignItem}">
+							<f:if condition="{headerInside} && {hasWrapperHeader}">
+								<f:render partial="Content/Header/All" arguments="{_all}" />
+							</f:if>
 							<f:for each="{col_273}" as="row">
 								{row.renderedContent -> f:format.raw()}
 							</f:for>
@@ -149,6 +172,9 @@
 			</f:then>
 			<f:else>
 				<div class="card-text w-100{alignItem}">
+						<f:if condition="{headerInside} && {hasWrapperHeader}">
+							<f:render partial="Content/Header/All" arguments="{_all}" />
+						</f:if>
 						<f:for each="{col_273}" as="row">
 							{row.renderedContent -> f:format.raw()}
 						</f:for>
@@ -227,10 +253,9 @@
 		<f:asset.script identifier="localVideo_function">
 // Local video - BackgroundWrapper.fluid.html
 function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoElement) {
-	// playsinline MUSS vor play() stehen: iOS entscheidet beim Start ueber den
-	// Vollbildmodus. Stand es danach - wie bisher - uebernahm das Video auf dem
-	// iPhone den ganzen Bildschirm. Das Attribut steht jetzt zusaetzlich schon
-	// im Markup; hier bleibt es fuer bereits ausgelieferte Seiten stehen.
+	// playsinline MUST be set before play(): iOS decides on fullscreen at start, and
+	// set afterwards the video took over the whole iPhone screen. The attribute is
+	// now also in the markup; kept here for pages already delivered.
 	videoElement.setAttribute('playsinline', '');
 	videoElement.setAttribute('webkit-playsinline', '');
 	videoElement.playsInline = true;
@@ -246,8 +271,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 		}
 		videoElement.pause();
 		videoElement.currentTime = 0;
-		// play() liefert ein Promise. Blockiert der Browser das Autoplay, war
-		// die Ablehnung bisher unbehandelt.
+		// play() returns a promise - a blocked autoplay rejection was unhandled.
 		var playing = videoElement.play();
 		if (playing && typeof playing.catch === 'function') {
 			playing.catch(function () {});
@@ -257,9 +281,9 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 		</f:asset.script>
 		<f:asset.script identifier="vanilla_localVideo-{data.uid}">
 // Local video-{data.uid} - BackgroundWrapper.fluid.html
-// IIFE: alle Inline-Skripte der Seite landen in einer einzigen Datei. Mit
-// var im gemeinsamen Scope ueberschrieben sich mehrere Background-Wrapper
-// gegenseitig, und ein fehlendes Element riss den ganzen Block mit.
+// IIFE: all inline scripts of the page end up in one file, where several
+// background wrappers overwrote each other's vars and one missing element
+// took down the whole block.
 (function () {
 	var wrapper = document.querySelector('#video-{file.uid}'),
 		video   = wrapper ? wrapper.querySelector('video') : null,
@@ -285,11 +309,9 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 		// ('-' + -30 === '--30'), also in genau dem haeufigsten Fall.
 		var overflow = video.clientHeight - wrapper.clientHeight;
 
-		// Nur verschieben, wenn das Video ueberhaupt ueber den Rahmen
-		// hinausragt. Fuellt es ihn genau aus - auf Mobilgeraeten durch
-		// object-fit:cover der Normalfall - schoebe ein margin-top es
-		// lediglich aus dem Rahmen heraus und hinterliesse oben einen
-		// leeren Streifen in der Hintergrundfarbe.
+		// Only shift when the video actually overflows the frame. If it fits exactly
+		// - the normal case on mobile via object-fit:cover - a margin-top would only
+		// push it out and leave an empty strip of background colour on top.
 		if (overflow <= 0) {
 			video.style.marginTop = '';
 			return;
@@ -298,7 +320,7 @@ function t3sbLocalVideo(uid, overlay, autoplay, loop, mute, controls, videoEleme
 		video.style.marginTop = (-(overflow / 2) - shift) + 'px';
 	}
 	centerVideo();
-	// Vor dem Laden der Metadaten ist clientHeight 0 - dann stimmt die Rechnung nicht
+	// clientHeight is 0 before the metadata is loaded - the maths would be wrong.
 	video.addEventListener('loadedmetadata', centerVideo);
 	window.addEventListener('resize', centerVideo);
 

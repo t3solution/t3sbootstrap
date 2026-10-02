@@ -10,6 +10,19 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 # Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
+// Preview partials for the page module.
+//
+// The overrides in Configuration/page.tsconfig only reach the view TYPO3 itself
+// builds - they apply to the templates of EXT:backend. A container is drawn by
+// B13\Container\Backend\Preview\GridRenderer, which creates its own view from
+// the gridPartialPaths of the registration, so a nested element fell back to the
+// default preview of EXT:container and lost the info line.
+//
+// addGridPartialPath() appends: Fluid searches partial paths from the last entry
+// backwards, so ours wins while the paths of EXT:container and EXT:backend stay
+// in place as the fallback.
+$t3sbPreviewPartials = 'EXT:t3sbootstrap/Resources/Private/Backend/ContainerPreview/backend/Resources/Private/Partials/';
+
 /***************
  * Add new EXT:container CTypes
  */
@@ -31,6 +44,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-2_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Grid Layout')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -50,6 +64,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-3_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Grid Layout')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -70,6 +85,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Grid Layout')
 );
 GeneralUtility::makeInstance(Registry::class)->configureContainer(
@@ -92,6 +108,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-4_col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Grid Layout')
 );
 # ROW CONTAINER
@@ -110,6 +127,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:container/Resources/Public/Icons/container-4col.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Grid Layout')
 );
 # CARD WRAPPER
@@ -121,13 +139,14 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.cardWrapper.description',
 			[
 				[
-					['name' => 'Card Wrapper', 'colPos' => 270, 'allowed' => ['CType' => 't3sbs_card']]
+					['name' => 'Card Wrapper', 'colPos' => 270, 'allowedContentTypes' => 't3sbs_card']
 				]
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Wrapper')
 );
 # BUTTON GROUP
@@ -139,13 +158,14 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.buttonGroup.description',
 			[
 				[
-					['name' => 'Button Group', 'colPos' => 271, 'allowed' => ['CType' => 't3sbs_button']]
+					['name' => 'Button Group', 'colPos' => 271, 'allowedContentTypes' => 't3sbs_button']
 				]
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/bars.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # AUTO LAYOUT
@@ -164,6 +184,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Grid Layout')
 );
 # BACKGROUND WRAPPER
@@ -182,6 +203,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-background_wrapper.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Wrapper')
 );
 # PARALLAX WRAPPER
@@ -204,6 +226,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-parallax_wrapper.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Wrapper')
 );
 # CONTAINER
@@ -222,6 +245,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # CAROUSEL CONTAINER
@@ -233,13 +257,14 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.carouselContainer.description',
 			[
 				[
-					['name' => 'Carousel Container', 'colPos' => 276, 'disallowed' => ['CType' => 'two_columns,three_columns,four_columns,six_columns,row_columns'], 'allowed' => ['CType' => 't3sbs_carousel']]
+					['name' => 'Carousel Container', 'colPos' => 276, 'disallowedContentTypes' => 'two_columns,three_columns,four_columns,six_columns,row_columns', 'allowedContentTypes' => 't3sbs_carousel']
 				]
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Slider')
 );
 # COLLAPSIBLE CONTAINER
@@ -251,13 +276,14 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.collapsibleContainer.description',
 			[
 				[
-					['name' => 'Collapsible Container', 'colPos' => 277, 'allowed' => ['CType' => 'collapsible_accordion']]
+					['name' => 'Collapsible Container', 'colPos' => 277, 'allowedContentTypes' => 'collapsible_accordion']
 				]
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # COLLAPSIBLE ELEMENT
@@ -276,6 +302,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-element.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # MODAL CONTAINER
@@ -294,6 +321,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # TAB CONTAINER
@@ -305,13 +333,14 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:tx_container.tabContainer.description',
 			[
 				[
-					['name' => 'Tabs Container', 'colPos' => 280, 'allowed' => ['CType' => 'tabs_tab']]
+					['name' => 'Tabs Container', 'colPos' => 280, 'allowedContentTypes' => 'tabs_tab']
 				]
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # TAB
@@ -330,6 +359,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-tab-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 # LIST GROUP WRAPPER
@@ -350,6 +380,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-accordion-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Wrapper')
 );
 # MASONRY
@@ -368,6 +399,7 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-card-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Wrapper')
 );
 # SWIPE CONTAINER
@@ -382,13 +414,14 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 			'LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.swiperContainer.description',
 			[
 				[
-					['name' => 'Swipe Container', 'colPos' => 300, 'allowed' => ['CType' => 't3sbs_carousel']]
+					['name' => 'Swipe Container', 'colPos' => 300, 'allowedContentTypes' => 't3sbs_carousel']
 				]
 			]
 		)
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-carousel-container.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Slider')
 );
 # TOAST CONTAINER
@@ -410,22 +443,23 @@ GeneralUtility::makeInstance(Registry::class)->configureContainer(
 	)
 	->setIcon('EXT:t3sbootstrap/Resources/Public/Icons/Register/ge-modal.svg')
 	->setSaveAndCloseInNewContentElementWizard(false)
+	->addGridPartialPath($t3sbPreviewPartials)
 	->setGroup('T3S Container')
 );
 
 
 $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+			--palette--;;general,
+			--palette--;;headers,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+			--palette--;;frames,
+			--palette--;;appearanceLinks,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
 			--palette--;;language,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
 			--palette--;;hidden,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+			--palette--;;access,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
 			categories,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
@@ -436,18 +470,18 @@ $GLOBALS['TCA']['tt_content']['types']['two_columns']['showitem'] = '
 
 $GLOBALS['TCA']['tt_content']['types']['background_wrapper']['showitem'] = '
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
+			--palette--;;general,
+			--palette--;;headers,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.images,
 			assets,
 		--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
+			--palette--;;frames,
+			--palette--;;appearanceLinks,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
 			--palette--;;language,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
 			--palette--;;hidden,
-			--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+			--palette--;;access,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
 			categories,
 		--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,

@@ -51,11 +51,11 @@
 	<f:if condition="{card_wrapper_layout} == 'slider'">
 		<f:if condition="{settings.cdn}">
 			<f:then>
-				<f:asset.css identifier="swipercss" href="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.css" />
+				<f:asset.css identifier="swipercss" href="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.css" media="all" />
 				<f:asset.script identifier="swiperjs" src="https://unpkg.com/swiper@{settings.swiperVersion}/swiper-bundle.min.js" />
 			</f:then>
 			<f:else>
-				<f:asset.css identifier="swipercss" href="{settings.assetPath}T3SB-CSS/swiper-bundle.min.css" />
+				<f:asset.css identifier="swipercss" href="{settings.assetPath}T3SB-CSS/swiper-bundle.min.css" media="all" />
 				<f:asset.script identifier="swiperjs" src="{settings.assetPath}T3SB-JS/swiper-bundle.min.js" />
 			</f:else>
 		</f:if>

@@ -58,12 +58,31 @@ class ScssParser extends AbstractParser
 
         if ($compile) {
             $result = $this->parseFile($file, $settings);
-            GeneralUtility::writeFile(GeneralUtility::getFileAbsFileName($cacheFile), $result['css']);
-            GeneralUtility::writeFile(GeneralUtility::getFileAbsFileName($cacheFileMeta), serialize($result['cache']));
+            // The path is handed to the PageRenderer in the same request, so a browser
+            // could otherwise fetch a half written file. The meta file goes first:
+            // it is what needsCompile() looks at.
+            $this->writeAtomically(GeneralUtility::getFileAbsFileName($cacheFileMeta), serialize($result['cache']));
+            $this->writeAtomically(GeneralUtility::getFileAbsFileName($cacheFile), $result['css']);
             $this->clearPageCaches();
         }
 
         return $cacheFile;
+    }
+
+    /**
+     * Temporary file plus rename, so no request sees a partially written file.
+     */
+    protected function writeAtomically(string $fullPath, string $content): void
+    {
+        $temporaryPath = $fullPath . '.' . getmypid() . '.tmp';
+
+        if (GeneralUtility::writeFile($temporaryPath, $content, true) === false) {
+            return;
+        }
+
+        if (!@rename($temporaryPath, $fullPath)) {
+            @unlink($temporaryPath);
+        }
     }
 
     /**
@@ -84,11 +103,9 @@ class ScssParser extends AbstractParser
             ]);
         }
         $absoluteFilename = $settings['file']['absolute'];
-        // Adds visual directory path of the initial file as import path
-        // This scenarios happens, when e.g. developing packages using the `path`
-        // repository feature of Composer - having one package in `public/typo3conf/ext/`
-        // and the other one symlinked in e.g. `packages/`.
-        // Since the PHP SCSS parser works on resolved real paths, the symlinked context is lost.
+        // Adds the visual directory path of the initial file as import path. Needed when
+        // packages are symlinked through Composer's `path` repository, because the PHP SCSS
+        // parser works on resolved real paths and would lose the symlinked context.
         $visualImportPath = dirname($absoluteFilename);
         $scss->addImportPath(function ($url) use ($visualImportPath): ?string {
             // Resolve potential back paths manually using PathUtility::getCanonicalPath,

@@ -41,17 +41,21 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 				->executeQuery()
 				->fetchAllAssociative();
 
-		if (count($bodytextStatements)) {		
-			foreach($bodytextStatements as $statement) {
-			
-				if (str_contains($statement[$fieldName], '<i class="fa')) {
-					$connectionPool->getConnectionForTable('tt_content')->update(
-					    'tt_content',
-					    [$fieldName => $this->replaceFaIcons($statement[$fieldName])],
-					    ['uid' => (int)$statement['uid']]
-					);
-				}
+		foreach ($bodytextStatements as $statement) {
+			$bodytext = (string)$statement[$fieldName];
+			$migrated = $this->replaceFaIcons($bodytext);
+
+			// Writing an unchanged value would mark the wizard as done although
+			// nothing was migrated, so untouched records are skipped.
+			if ($migrated === $bodytext) {
+				continue;
 			}
+
+			$connectionPool->getConnectionForTable('tt_content')->update(
+				'tt_content',
+				[$fieldName => $migrated],
+				['uid' => (int)$statement['uid']]
+			);
 		}
 
 		return true;
@@ -96,8 +100,9 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 				->executeQuery()
 				->fetchAllAssociative();
 		
-		foreach($statements as $statement) {	
-			if (str_contains($statement[$fieldName], '<i class="fa')) {
+		foreach ($statements as $statement) {
+			$bodytext = (string)$statement[$fieldName];
+			if ($this->replaceFaIcons($bodytext) !== $bodytext) {
 				$required = true;
 				break;
 			}
@@ -107,77 +112,25 @@ final class IconpackBodytextUpgradeWizard implements UpgradeWizardInterface
 	}
 
 
-	function replaceFaIcons(string $string): string
+	/**
+	 * Turns every Font Awesome <i> tag into the iconpack <span>. Reads the class
+	 * list itself: the previous version only matched tags carrying aria-hidden
+	 * and took every second class for the size, whatever it was.
+	 */
+	public function replaceFaIcons(string $string): string
 	{
-		$stringreplace = str_replace(' aria-hidden="true"', '', $string);
-		
-		$contentRegularArr = explode('<i class="fa-regular ', $stringreplace);
-		$contentSolidArr = explode('<i class="fa-solid ', $stringreplace);
-		$contentBrandArr = explode('<i class="fa-brands ', $stringreplace);
+		$replaced = preg_replace_callback(
+			'#<i\s+class="([^"]*)"[^>]*>\s*</i>#i',
+			static function (array $matches): string {
+				$iconfig = IconpackClassParser::toIconfig($matches[1]);
 
-		$contentRArr = explode('<i class="far ', $stringreplace);
-		$contentSArr = explode('<i class="fas ', $stringreplace);
-		$contentBArr = explode('<i class="fab ', $stringreplace);
+				// no icon name in there (or not Font Awesome at all): keep the markup
+				return $iconfig === '' ? $matches[0] : '<span data-iconfig="' . $iconfig . '"></span>';
+			},
+			$string
+		);
 
-		$faArr['regular'] = $this->replaceArr($contentRegularArr, 'regular', 'fa-regular');
-		$faArr['solid'] = $this->replaceArr($contentSolidArr, 'solid', 'fa-solid');
-		$faArr['brands'] = $this->replaceArr($contentBrandArr, 'brands', 'fa-brands');
-
-		$faArr['far'] = $this->replaceArr($contentRArr, 'regular', 'far');
-		$faArr['fas'] = $this->replaceArr($contentSArr, 'solid', 'fas');
-		$faArr['fab'] = $this->replaceArr($contentBArr, 'brands', 'fab');
-
-		foreach ( $faArr as $type=>$replaceArr ) {
-			foreach ( $replaceArr as $replace ) {
-				// replace
-				$string = str_replace($replace[1], $replace[0], $string);	
-			}
-		}
-			
-	    return $string;
-	}
-
-
-	function replaceArr(array $iArr, string $type, string $toReplace): array
-	{
-		$icons = [];
-		foreach ($iArr as $key=>$content) {
-			if (str_starts_with($content, 'fa')) {
-				$icons[$key][0] = '<span data-iconfig="fa7:'.$type.',';
-				$icons[$key][1] = '<i class="'.$toReplace.' fa-';
-				$brand = substr(explode('"', $content)[0], 3);
-				if (str_contains($brand, ' ')) {
-					foreach ( explode(' ', $brand) as $k=>$s ) {
-						if ($k === 0) {
-							$icons[$key][0] .= $s;			
-							$icons[$key][1] .= $s;
-						}
-						if ($k === 1) {
-							$icons[$key][0] .= ',size:'.substr($s, 3);			
-							$icons[$key][1] .= ' fa-'.substr($s, 3);
-						}
-						if ($k === 2) {
-							$icons[$key][0] .= ',fixed:true';			
-							$icons[$key][1] .= ' '.$s;
-						}
-						if ($k === 3) {
-							$icons[$key][0] .= ',decoration:border';			
-							$icons[$key][1] .= ' fa-border';
-						}
-						if ($k === 4) {
-							$icons[$key][0] .= ',transform:spin';			
-							$icons[$key][1] .= ' fa-spin';
-						}
-					}
-				} else {
-					$icons[$key][0] .= $brand;
-					$icons[$key][1] .= $brand;
-				}
-				$icons[$key][0] .= '"></span>';
-				$icons[$key][1] .= '" aria-hidden="true"></i>';
-			}
-		}
-		return $icons;
+		return $replaced ?? $string;
 	}
 
 

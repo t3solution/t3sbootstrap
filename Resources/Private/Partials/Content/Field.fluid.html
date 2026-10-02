@@ -1,0 +1,22 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"><f:comment>
+	Outputs a single field.
+
+	With EXT:visual_editor, it remains at f:render.text—the editor needs the
+	output via the Record object to set its markers.
+	Without the editor, the raw value passes through f:sanitize.html so that simple
+	markup in the header is preserved instead of being escaped.
+
+	Intended ONLY for fields of the “input” TCA type. For an RTE field,
+	f:sanitize.html would skip the parseFunc run, and t3:// links would
+	remain unresolved.
+
+	Expected: record, data, field
+	{visualEditor} comes from the BootstrapProcessor.
+
+	NOTE ON WHITESPACE: everything between <html> and </html> is deliberately
+	on a single line. Fluid outputs the text around a ViewHelper verbatim, so a
+	line break before <f:if> would end up in the result. Callers store that
+	result in a variable and check it with f:if—and a string of blanks is TRUE.
+	That is how an empty supraheader ended up rendering <p class="supraheader">
+	with nothing in it. Keep this line unbroken.
+</f:comment><f:if condition="{visualEditor}"><f:then>{record -> f:render.text(field: '{field}', optional: true)}</f:then><f:else>{data.{field} -> f:sanitize.html()}</f:else></f:if></html>

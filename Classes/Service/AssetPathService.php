@@ -8,31 +8,9 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * One place for everything this extension writes.
- *
- *   typo3temp/assets/t3sbootstrap/
- *       TypoScript/   t3sbconstants.typoscript, t3sbsetup.typoscript
- *       T3SB-SCSS/    custom-variables-<uid>.scss, custom-<uid>.scss
- *       T3SB-CSS/     downloaded css
- *       T3SB-JS/      downloaded js
- *       T3SB-Bootstrap/ bootstrap sources from the release zip
- *       css/          compiled css (CompileService)
- *
- * Everything below this directory is a cache, not a source:
- *
- * - the TypoScript and the scss are derived from the configuration record in
- *   tx_t3sbootstrap_domain_model_config (fields custom_scss,
- *   custom_variables_scss and the rest of the model). The database is the single
- *   source of truth, the files exist only because the scss compiler and the
- *   TypoScript parser read files. GeneratedFilesService rewrites them from the
- *   record whenever they are missing - no network needed.
- * - the compiled css is derived from those files by CompileService.
- * - the downloaded assets are reproducible with t3sbootstrap:cdnToLocal.
- *
- * That is why typo3temp/assets/ is the correct location and why the extension
- * needs neither a site package it can write into, nor a directory in the
- * editorial file storage. Anything TYPO3 wipes here comes back on its own,
- * except the downloads, which need one command run.
+ * One place for everything this extension writes below typo3temp/assets/t3sbootstrap/
+ * (TypoScript, T3SB-SCSS, T3SB-CSS, T3SB-JS, T3SB-Bootstrap, css). All of it is cache and
+ * comes back on its own when TYPO3 wipes it - only the downloads need t3sbootstrap:cdnToLocal.
  */
 final class AssetPathService implements SingletonInterface
 {

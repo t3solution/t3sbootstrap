@@ -5,11 +5,16 @@ namespace T3SBS\T3sbootstrap\Service;
 
 use T3SBS\T3sbootstrap\Parser\ParserInterface;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CompileService
 {
+    public function __construct(
+        private readonly PackageManager $packageManager,
+    ) {}
+
     /**
      * @var string
      */
@@ -25,7 +30,7 @@ class CompileService
      */
     public function getCompiledFile(ServerRequestInterface $request, string $file): ?string
     {
-        $absoluteFile = GeneralUtility::getFileAbsFileName($file);
+        $absoluteFile = $this->resolveAbsolutePath($file);
 
         // Ensure cache directory exists
         if (!file_exists(Environment::getPublicPath() . '/' . $this->tempDirectory)) {
@@ -62,16 +67,47 @@ class CompileService
                     && !empty($settings['file']['info']['extension'])
                     && $parser->supports($settings['file']['info']['extension'])
                 ) {
-                    try {
-                        return $parser->compile($file, $settings);
-                    } catch (\Exception $e) {
-                        throw $e;
-                    }
+                    // A compile error is passed on to the caller, which keeps the page
+                    // alive - see Hooks\PageRenderer\PreProcessHook::execute().
+                    return $parser->compile($file, $settings);
                 }
             }
         }
 
         return null;
+    }
+
+
+    /**
+     * Resolves a PageRenderer file reference to an absolute file system path. Since TYPO3 v14 the
+     * cssFiles/cssLibs arrays are keyed by system resource identifiers ("PKG:vendor/package:path"),
+     * which getFileAbsFileName() no longer accepts, so those go through the PackageManager instead.
+     */
+    protected function resolveAbsolutePath(string $file): string
+    {
+        if (!str_starts_with($file, 'PKG:')) {
+            return GeneralUtility::getFileAbsFileName($file);
+        }
+
+        $parts = explode(':', $file, 3);
+        if (count($parts) !== 3 || $parts[1] === '' || $parts[2] === '') {
+            return '';
+        }
+        [, $composerName, $relativePath] = $parts;
+
+        // The root package ("typo3/app" by convention) is not necessarily
+        // registered under its composer name, so resolve it directly.
+        if ($composerName === 'typo3/app') {
+            return rtrim(Environment::getProjectPath(), '/') . '/' . ltrim($relativePath, '/');
+        }
+
+        try {
+            return $this->packageManager->getPackage($composerName)->getPackagePath() . $relativePath;
+        } catch (\Throwable) {
+            // Last resort: let the core resolve it. This still emits the v14
+            // deprecation notice, but keeps the file reference working.
+            return GeneralUtility::getFileAbsFileName($file);
+        }
     }
 
 }

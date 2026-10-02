@@ -1,33 +1,15 @@
 # ---------------------------------------------------------------------------
 # t3sbootstrap - RTE preset "t3sbootstrap_extended"
 #
-# Same editor as the "t3sbootstrap" preset, plus one addition: the General HTML
-# Support whitelist keeps CSS classes on the usual text elements instead of
-# reducing them to what style.definitions declares.
-#
-# The margin picker is NOT here any more - mt-1..mt-5 / mb-1..mb-5 moved into a
-# toolbar dropdown of their own and are available in both presets.
-#
-# Why this is a separate preset and not the default: the whitelist doubles as a
-# paste filter. Without it, classes coming from Word or from a copied web page
-# survive - mostly harmless, but names like "small", "text-center" or "btn" are
-# common enough to collide with Bootstrap. And CKEditor's Style feature assumes
-# it owns an element's class list; foreign classes can leave the dropdown
-# showing no active style although classes are present. Both are acceptable for
-# documentation-style content, and a bad deal for installations that
-# deliberately keep their editors on a short leash.
+# Like the "t3sbootstrap" preset plus a General HTML Support whitelist keeping CSS
+# classes on the usual text elements. Separate preset, because the whitelist also
+# lets pasted foreign classes through, where names like "small" or "btn" collide
+# with Bootstrap and can leave the Style dropdown showing no active style. Only
+# "classes" is opened up. Imports are merged with APPEND semantics, so this file
+# adds to Default.yaml and must not repeat its entries.
 #
 # Enable per installation via page TSconfig:
 #     RTE.default.preset = t3sbootstrap_extended
-#
-# Only "classes" is opened up. "attributes" would allow arbitrary attributes and
-# "styles" would let editors override any theme rule inline - both stay closed.
-#
-# On merging: imported YAML is combined with
-# ArrayUtility::replaceAndAppendScalarValuesRecursive(), which APPENDS plain
-# lists instead of overwriting them by index. Everything below is therefore
-# added to what Default.yaml already defines - the div entry of htmlSupport and
-# the 57 style definitions stay untouched and must not be repeated here.
 # ---------------------------------------------------------------------------
 
 imports:

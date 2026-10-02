@@ -193,7 +193,11 @@
 			</f:case>
 			<f:case value="image">
 				<f:link.typolink class="navbar-brand me-0 me-{settings.config.navbarBreakpoint}-2" parameter="{config.general.homepageUid}" title="{data.title}">
-					<f:render section="BrandImage" arguments="{_all}" />
+					<f:if condition="{config.navbar.image}">
+						<f:then><f:render section="BrandImage" arguments="{_all}" /></f:then>
+						<f:comment>No logo uploaded: the company name makes the brand clickable</f:comment>
+						<f:else>{config.general.company}</f:else>
+					</f:if>
 				</f:link.typolink>
 			</f:case>
 			<f:case value="heading">
@@ -214,13 +218,17 @@
 
 <f:section name="BrandImage">
 	<f:comment>
-		Masse und Alt-Text kommen aus dem Konfigurations-Datensatz; der
-		ConfigProcessor faellt dort bereits auf die Site-Settings zurueck.
-		Frueher stand hier settings.navbar.image.* - damit trug jede Site nur ein
-		Mass fuer alle Siteroots.
+		No image path means no f:image. The ViewHelper throws an
+		InvalidArgumentValueException, and because the navbar appears on every page,
+		a missing logo brings down the entire website. If the
+		“Brand” configuration record is set to “Image” but no logo
+		is specified and bootstrap.navbar.image.defaultPath is also empty,
+		the brand will now be displayed as blank.
 	</f:comment>
-	<f:image src="{config.navbar.image}" width="{config.navbar.imageWidth}" height="{config.navbar.imageHeight}"
-	  class="img-fluid{config.navbar.brandClass}" alt="{config.navbar.imageAlt}" />
+	<f:if condition="{config.navbar.image}">
+		<f:image src="{config.navbar.image}" width="{config.navbar.imageWidth}" height="{config.navbar.imageHeight}"
+		  class="img-fluid{config.navbar.brandClass}" alt="{config.navbar.imageAlt}" />
+	</f:if>
 </f:section>
 
 <f:section name="Toggler">
@@ -360,7 +368,7 @@
 	</f:if>
 	<f:if condition="{config.navbar.megamenu} && {navbarItem.data.tx_t3sbootstrap_megamenu} && {navbarItem.data.doktype}==4 && {navbarItem.children}">
 		<f:then>
-			<f:asset.css identifier="megaNavbar" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" />
+			<f:asset.css identifier="megaNavbar" href="EXT:t3sbootstrap/Resources/Public/Styles/megaMenu.css" media="all" />
 			<f:comment> removed by JS if narrower than navbarBreakpoint :: don't remove remove-{navbarBreakpoint}</f:comment>
 			<div class="dropdown-menu mega-dropdown-menu remove-{navbarBreakpoint}" aria-labelledby="dropdown-menu-{navbarItem.data.uid}">
 				<f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{navbarItem.data.uid}', colPos: 0}"/>

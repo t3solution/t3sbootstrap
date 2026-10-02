@@ -35,7 +35,7 @@
 			<f:if condition="{data.header}">
 				<span class="me-auto">
 				<strong>
-					{data.header -> f:format.raw()}
+					{data.header -> f:sanitize.html()}
 				</strong>
 				<f:if condition="{data.subheader}">
 					<br><small>{data.subheader -> f:format.raw()}</small>

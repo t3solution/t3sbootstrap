@@ -310,10 +310,9 @@ class ClassHelper implements SingletonInterface
 
         if (!empty($parentflexconf['flexContainer']) && !empty($parentflexconf['responsiveVariations'])) {
             if (!empty($flexconf['responsiveVariations'])) {
-                // War $flexconf['flexContainer'] - der Schluessel existiert hier
-                // gar nicht (geprueft wurde $parentflexconf['flexContainer']),
-                // und "align-self-md-flex" waere auch keine Bootstrap-Klasse.
-                // Gemeint ist der Wert von alignSelf, wie im else-Zweig.
+                // Was $flexconf['flexContainer'] - that key does not exist here
+                // ($parentflexconf['flexContainer'] is what was checked), and
+                // "align-self-md-flex" is no Bootstrap class either. alignSelf is meant.
                 $class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['responsiveVariations'].'-'.$flexconf['alignSelf'] : '';
             } else {
                 $class .= !empty($flexconf['alignSelf']) ? ' align-self-'.$flexconf['alignSelf'] : '';
