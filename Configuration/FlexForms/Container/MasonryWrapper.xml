@@ -86,7 +86,6 @@
 							<size>8</size>
 							<autoSizeMax>12</autoSizeMax>
 							<maxitems>30</maxitems>
-							<enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
 						</config>
 					</shuffleCategories>
 					<shuffleLabel>
