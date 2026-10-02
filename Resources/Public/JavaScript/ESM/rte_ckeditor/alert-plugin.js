@@ -212,10 +212,9 @@ export class AlertBox extends Core.Plugin {
 			icon: ALERT_ICON
 		});
 
-		// Do NOT bind buttonView.isOn or buttonView.isEnabled here:
-		// createDropdown() already binds both to the dropdown itself, and
-		// Observable#bind throws on a property that is bound a second time.
-		// Binding the dropdown's own isEnabled is the documented way.
+		// Do NOT bind buttonView.isOn or buttonView.isEnabled here: createDropdown()
+		// already binds both to the dropdown itself and Observable#bind throws on a
+		// second binding. Binding the dropdown's own isEnabled is the documented way.
 		dropdown.bind('isEnabled').to(insertCommand, 'isEnabled');
 		dropdown.buttonView.bind('tooltip').to(
 			insertCommand,

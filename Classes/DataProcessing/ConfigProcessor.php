@@ -57,7 +57,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$currentPage          = $pageInformation->getPageRecord();
 		$backendLayout        = $processedData['data']['currentValue_kidjls9dksoje'] ?? '';
 
-		$processedData = $this->processExpandedContent($processedData, $processedRecordVars, $currentPage);
+		$processedData = $this->processExpandedContent($processedData, $processedRecordVars, $currentPage, $pageInformation);
 		$processedData = $this->processGeneral($processedData, $processedRecordVars, $pageInformation, $siteSettings, $backendLayout, $settings);
 		$processedData = $this->processNavbar($processedData, $processedRecordVars, $pageInformation, $settings, $request);
 		$processedData = $this->processJumbotron($processedData, $processedRecordVars, $pageInformation, $currentPage, $settings, $request);
@@ -92,8 +92,21 @@ class ConfigProcessor implements DataProcessorInterface
 		$processedData['config']['general']['company']        = !empty($company) ? trim($company) : 'Company Name';
 		$processedData['config']['general']['homepageUid']    = $vars['homepageUid']     ?: 1;
 		$processedData['config']['general']['pageTitle']      = $vars['pageTitle']        ?: '';
-		$processedData['config']['general']['pageTitlealign'] = $vars['pageTitlealign']   ?: '';
+		$pageTitleAlign = (string)($vars['pageTitlealign'] ?? '');
+		$pageTitleAlign = match ($pageTitleAlign) {
+			'right' => 'end',
+			'left' => 'start',
+			default => $pageTitleAlign,
+		};
+		$processedData['config']['general']['pageTitlealign'] = $pageTitleAlign;
 		$processedData['config']['general']['pageTitleclass'] = $vars['pageTitleclass']   ?: '';
+
+		// "none" in the select list is the explicit decision AGAINST a container -
+		// it has no place in the markup, otherwise class="none" would end up in the
+		// source.
+		$pageTitleContainer = (string)($vars['pageTitlecontainer'] ?? '');
+		$processedData['config']['general']['pageTitlecontainer'] =
+			$pageTitleContainer === 'none' ? '' : $pageTitleContainer;
 
 		$currentPage          = $pageInformation->getPageRecord();
 		$smallColumnsCurrent  = (int)$currentPage['tx_t3sbootstrap_smallColumns'];
@@ -169,11 +182,8 @@ class ConfigProcessor implements DataProcessorInterface
 				// @extensionScannerIgnoreLine
 				$id = $lang->getLanguageId();
 				$langUid[$id]   = $id;
-				// @extensionScannerIgnoreLine
 				$langTitle[$id] = $lang->getNavigationTitle();
-				// @extensionScannerIgnoreLine
 				$langHref[$id]  = $lang->getHreflang();
-				// @extensionScannerIgnoreLine
 				$langFlag[$id]  = $lang->getFlagIdentifier();
 			}
 			$processedData['config']['lang'] = [
@@ -237,13 +247,9 @@ class ConfigProcessor implements DataProcessorInterface
 		$cfg['dataToggle']    = 'collapse';
 		$cfg['bstoggle']      = 'dropdown';
 
-		// Breakpoint "no" means the navbar never expands - "navbar-expand-no" matches no
-		// Bootstrap rule - so the dropdown-menu keeps Bootstrap's position:static. The
-		// animation class sets display:block on the CLOSED menu (it only hides it via
-		// visibility/opacity, see .dd-animate-1 in t3sbootstrap.css), and a static,
-		// display:block menu reserves its full height in the flow. In an offcanvas that
-		// shows up as a huge gap between the menu items. The animation cannot work in a
-		// permanently collapsed navbar anyway, so the class is not emitted at all.
+		// Breakpoint "no" never expands the navbar, so the dropdown-menu keeps
+		// position:static; the animation class sets display:block on the CLOSED menu,
+		// which then reserves its full height and tears a gap into the offcanvas.
 		if (!empty($vars['navbarDropdownAnimate']) && $vars['navbarBreakpoint'] !== 'no') {
 			$cfg['dropdownAnimate']      = ' dd-animate-' . (int)$vars['navbarDropdownAnimate'];
 			$cfg['dropdownAnimateValue'] = (int)$vars['navbarDropdownAnimate'];
@@ -253,17 +259,11 @@ class ConfigProcessor implements DataProcessorInterface
 		$cfg['clickableparent'] = (!empty($rootLine[1]) && (int)($rootLine[1]['doktype'] ?? 0) === 4 && empty($vars['navbarPlusicon']))
 			? 1 : (int)$vars['navbarClickableparent'];
 			
-		// Brand-Logo: Der Konfigurations-Datensatz gewinnt, die Site-Settings sind
-		// nur noch der Rueckfall. Bis 5.4 kamen Breite, Hoehe und Alt-Text
-		// ausschliesslich aus der Site - ein abweichendes Logo im Datensatz bekam
-		// dadurch die Masse eines fremden Logos verpasst.
-		//
-		// Der Rueckfall bleibt bestehen, damit bestehende Installationen nach dem
-		// Update unveraendert aussehen, auch ohne den UpgradeWizard.
-		//
-		// Achtung beim leeren Wert: OutsourcedFiles::getConstants() schreibt fuer
-		// jedes leere Feld eine 0 in die Konstanten, hier kommt also '0' an - in
-		// PHP falsy, das ?: greift also wie gewuenscht.
+		// Brand logo: the configuration record wins, the site settings are only the
+		// fallback. Until 5.3.50 width, height and alt text came from the site alone,
+		// so a differing logo in the record got the dimensions of a foreign one. The
+		// fallback stays so installations look unchanged without the UpgradeWizard.
+		// Empty fields arrive as '0' from getConstants() - falsy, so the ?: still works.
 		$imageSettings         = $settings['navbar.']['image.'] ?? [];
 		$cfg['image']          = $vars['navbarImage']       ?: ($imageSettings['defaultPath'] ?? '');
 		$cfg['imageWidth']     = (int)($vars['navbarImageWidth']  ?? 0) ?: (int)($imageSettings['width'] ?? 0);
@@ -421,11 +421,52 @@ class ConfigProcessor implements DataProcessorInterface
 		$hasBgImages    = 0;
 		$bgSlides       = [];
 
+		// Video as background. It wins against an image from the same media list:
+		// whoever stores a video wants to see it. An image next to it is not wasted -
+		// it becomes the poster.
+		$videoEnabled = !empty($vars['jumbotronBgvideo']);
+		$bgVideo      = [];
+
 		if ($vars['jumbotronBgimage'] === 'root') {
 			$fileObjects = [];
 			$uid         = 0;
+			// Page types whose "media" is a teaser image instead of a background must not
+			// override the root image stack, or the slider falls back to that single
+			// image. Two sources, so the order of the site sets does not matter:
+			//   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3sbootstrap']
+			//       ['jumbotronBgimageIgnoreDoktypes'][] = 137;
+			$ignoreDoktypes = array_unique(array_merge(
+				GeneralUtility::intExplode(
+					',',
+					(string)($settings['jumbotronBgimageIgnoreDoktypes'] ?? ''),
+					true
+				),
+				array_map(
+					'intval',
+					(array)($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3sbootstrap']['jumbotronBgimageIgnoreDoktypes'] ?? [])
+				)
+			));
+			// getRootLine() is the absolute rootline: current page first, then upwards.
+			// The first image found wins, so unusable files have to go here - otherwise
+			// the loop stops on a video and the page stays without a background.
 			foreach ($pageInformation->getRootLine() as $page) {
-				$found = $this->fileRepository->findByRelation('pages', 'media', $page['uid']);
+				if ($ignoreDoktypes !== [] && in_array((int)($page['doktype'] ?? 0), $ignoreDoktypes, true)) {
+					continue;
+				}
+				$media = $this->fileRepository->findByRelation('pages', 'media', $page['uid']);
+
+				// On the same level the video takes precedence. Only a level with
+				// neither video nor image continues upwards - otherwise a page with
+				// a video would inherit its ancestor's image.
+				if ($videoEnabled) {
+					$bgVideo = $this->findBgVideo($media);
+					if ($bgVideo !== []) {
+						$uid = $page['uid'];
+						break;
+					}
+				}
+
+				$found = $this->onlyImages($media);
 				if (!empty($found)) {
 					$fileObjects = $found;
 					$uid         = $page['uid'];
@@ -440,49 +481,53 @@ class ConfigProcessor implements DataProcessorInterface
 					$uid, $fileObjects, $bgMediaQueries, $pageInformation->getId()
 				);
 			} elseif ($hasBgImages === 1) {
+				// Fourth parameter: the image may come from an ancestor, the CSS
+				// selector must still match this page's div.
 				$bgSlides[0] = $this->backgroundImageUtility->getJumbotronBgImage(
-					$uid, $fileObjects, $bgMediaQueries
+					$uid, $fileObjects, $bgMediaQueries, $pageInformation->getId()
 				);
 			}
 			$processedData['bgSlides'] = $bgSlides;
 
 		} elseif ($vars['jumbotronBgimage'] === 'page') {
-			$fileObjects         = $this->fileRepository->findByRelation('pages', 'media', $pageInformation->getId());
-			$hasBgImages         = count($fileObjects);
-			$localFullHeightBgVideo = !empty($fileObjects[0])
-				&& $fileObjects[0]->getOriginalFile()->getMimeType() === 'video/mp4';
+			$media       = $this->fileRepository->findByRelation('pages', 'media', $pageInformation->getId());
+			$bgVideo     = $videoEnabled ? $this->findBgVideo($media) : [];
+			$fileObjects = $this->onlyImages($media);
+			$hasBgImages = count($fileObjects);
 
-			if ($localFullHeightBgVideo) {
-				$processedData['localFullHeightBgVideo'] = true;
-			}
-
-			if ($hasBgImages > 1 && !$localFullHeightBgVideo) {
+			if ($hasBgImages > 1 && $bgVideo === []) {
 				$cfg['alignItem'] = '';
 				$bgSlides = $this->backgroundImageUtility->getJumbotronBgSlider(
 					$pageInformation->getId(), $fileObjects, $bgMediaQueries, $pageInformation->getId()
 				);
 				$processedData['bgSlides'] = $bgSlides;
-			} else {
-				if ($localFullHeightBgVideo) {
-					$bgSlides = $this->backgroundImageUtility->getJumbotronBgImage(
-						$pageInformation->getId(), $fileObjects, $bgMediaQueries
-					);
-					$serverParams            = $request->getServerParams();
-					$processedData['baseUri'] = ($serverParams['REQUEST_SCHEME'] ?? 'https')
-						. '://' . ($serverParams['HTTP_HOST'] ?? '');
-				} else {
-					$bgSlides[0] = $this->backgroundImageUtility->getJumbotronBgImage(
-						$pageInformation->getId(), $fileObjects, $bgMediaQueries
-					);
-				}
+			} elseif ($hasBgImages && $bgVideo === []) {
+				$bgSlides[0] = $this->backgroundImageUtility->getJumbotronBgImage(
+					$pageInformation->getId(), $fileObjects, $bgMediaQueries
+				);
 				$cfg['bgImage']            = $bgSlides;
 				$processedData['bgSlides'] = $bgSlides;
 			}
 		}
 
+		// The video replaces the image stack - together they produce no visible
+		// image, and the slider needs several images.
+		if ($bgVideo !== []) {
+			$cfg['video'] = [
+				'url'      => $bgVideo['url'],
+				'mime'     => $bgVideo['mime'],
+				'autoplay' => !empty($vars['jumbotronBgvideoAutoplay']),
+				'loop'     => !empty($vars['jumbotronBgvideoLoop']),
+				// Opacity as a decimal value for the CSS opacity property.
+				'overlay'  => max(0, min(100, (int)($vars['jumbotronBgvideoOverlay'] ?? 0))) / 100,
+			];
+			$bgSlides                  = [];
+			$processedData['bgSlides'] = [];
+		}
+
 		$ratio = $this->normalizeRatio($vars['jumbotronBgimageratio'] ?? '', '37x9');
 
-		if ($hasBgImages && empty($currentPage['tx_t3sbootstrap_fullheightsection'])) {
+		if (($hasBgImages || $bgVideo !== []) && empty($currentPage['tx_t3sbootstrap_fullheightsection'])) {
 			$cfg['noBgRatio'] = false;
 			$cfg['class']    .= ' ratio ratio-' . $ratio;
 			$ratioArr         = explode('x', $ratio);
@@ -496,6 +541,65 @@ class ConfigProcessor implements DataProcessorInterface
 
 		return $processedData;
 	}
+
+	/**
+	 * First file that is a local video - otherwise an empty array. Checked by MIME
+	 * type, so online media (YouTube, Vimeo) drops out on its own: it carries no
+	 * video/ type, and an embedded video cannot sit muted behind a text.
+	 *
+	 * @return array{url: string, mime: string} empty when nothing matches
+	 */
+	private function findBgVideo(array $fileObjects): array
+	{
+		foreach ($fileObjects as $fileObject) {
+			if (!is_object($fileObject)) {
+				continue;
+			}
+			$file = method_exists($fileObject, 'getOriginalFile')
+				? $fileObject->getOriginalFile() : $fileObject;
+
+			if (!is_object($file) || !method_exists($file, 'getMimeType')) {
+				continue;
+			}
+
+			$mime = (string)$file->getMimeType();
+			if (!str_starts_with($mime, 'video/')) {
+				continue;
+			}
+
+			$url = method_exists($file, 'getPublicUrl') ? (string)$file->getPublicUrl() : '';
+			if ($url === '') {
+				continue;
+			}
+
+			return ['url' => $url, 'mime' => $mime];
+		}
+
+		return [];
+	}
+
+	/**
+	 * Keeps only files a CSS background image can be built from. "Media" may hold
+	 * anything - an MP4, a PDF, an SVG logo - and a non-image would produce a rule
+	 * the browser discards. Renumbered, because BackgroundImageUtility uses [0].
+	 */
+	private function onlyImages(array $fileObjects): array
+	{
+		$images = array_filter($fileObjects, static function ($fileObject): bool {
+			if (!is_object($fileObject)) {
+				return false;
+			}
+			$file = method_exists($fileObject, 'getOriginalFile')
+				? $fileObject->getOriginalFile() : $fileObject;
+
+			return is_object($file)
+				&& method_exists($file, 'getMimeType')
+				&& str_starts_with((string)$file->getMimeType(), 'image/');
+		});
+
+		return array_values($images);
+	}
+
 
 	// ─── Background Image ─────────────────────────────────────────────────────
 
@@ -623,7 +727,7 @@ class ConfigProcessor implements DataProcessorInterface
 
 	// ─── Expanded Content ────────────────────────────────────────────────────
 
-	private function processExpandedContent(array $processedData, array $vars, array $currentPage): array
+	private function processExpandedContent(array $processedData, array $vars, array $currentPage, object $pageInformation): array
 	{
 		foreach (['Top' => 'top', 'Bottom' => 'bottom'] as $key => $suffix) {
 			$processedData['config']['expandedcontent' . $key] = [
@@ -639,20 +743,35 @@ class ConfigProcessor implements DataProcessorInterface
 		// is no longer needed
 		unset($processedData['config']['expandedcontentBottom']['enable']);
 
+		// with active content slide the content may live on a page further up the rootline
+		$rootLineUids = [];
+		foreach ($pageInformation->getRootLine() as $rootLinePage) {
+			if (!empty($rootLinePage['uid'])) {
+				$rootLineUids[] = (int)$rootLinePage['uid'];
+			}
+		}
+		if (empty($rootLineUids)) {
+			$rootLineUids = [(int)$currentPage['uid']];
+		}
+
 		if (!empty($processedData['config']['expandedcontentTop']['enable'])) {
-			$processedData['config']['expandedcontentTop']['hasContent'] = $this->hasContent($currentPage['uid'], 20);
+			$pageUids = !empty($processedData['config']['expandedcontentTop']['slide'])
+				? $rootLineUids : [(int)$currentPage['uid']];
+			$processedData['config']['expandedcontentTop']['hasContent'] = $this->hasContent($pageUids, 20);
 		}
 		if ($enableBottom) {
-			$processedData['config']['expandedcontentBottom']['hasContent'] = $this->hasContent($currentPage['uid'], 21);
+			$pageUids = !empty($processedData['config']['expandedcontentBottom']['slide'])
+				? $rootLineUids : [(int)$currentPage['uid']];
+			$processedData['config']['expandedcontentBottom']['hasContent'] = $this->hasContent($pageUids, 21);
 		}
 
 		return $processedData;
 	}
 
-	// ─── Hilfsmethoden ───────────────────────────────────────────────────────
+	// ─── Helpers ─────────────────────────────────────────────────────────────
 
 	/**
-	 * Normalisiert Seitenverhältnisse auf "WxH"-Format.
+	 * Normalizes aspect ratios to the "WxH" format.
 	 */
 	private function normalizeRatio(string $raw, string $fallback = '16x9'): string
 	{
@@ -710,18 +829,24 @@ class ConfigProcessor implements DataProcessorInterface
 	}
 	
 	
-	private function hasContent(int $pageUid, int $colPos): bool
-	{		
+	private function hasContent(array $pageUids, int $colPos): bool
+	{
+		$pageUids = array_values(array_unique(array_filter(array_map('intval', $pageUids))));
+
+		if ($pageUids === []) {
+			return false;
+		}
+
 		$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
 			->getQueryBuilderForTable('tt_content');
-		
+
 		$queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
-		
+
 		$hasContent = (bool)$queryBuilder
 			->count('uid')
 			->from('tt_content')
 			->where(
-				$queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pageUid, Connection::PARAM_INT)),
+				$queryBuilder->expr()->in('pid', $queryBuilder->createNamedParameter($pageUids, Connection::PARAM_INT_ARRAY)),
 				$queryBuilder->expr()->eq('colPos', $queryBuilder->createNamedParameter($colPos, Connection::PARAM_INT))
 			)
 			->executeQuery()

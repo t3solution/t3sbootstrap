@@ -255,20 +255,17 @@ final class ConfigController extends AbstractController
     }
 
     /**
-     * Exports the configuration records of a root page as a portable json file.
-     *
-     * The payload carries neither uid nor pid, only field values and FAL
-     * references as combined identifiers, so it can be imported into an
-     * installation with a completely different page tree.
+     * Exports the configuration records of a root page as a portable json file. The payload
+     * carries neither uid nor pid, only field values and FAL references as combined
+     * identifiers, so it can be imported into an installation with a different page tree.
      */
     public function exportAction(int $exportPid = 0): ResponseInterface
     {
         $pid = $exportPid;
 
-        // The module is registered with 'access' => 'user', so an editor reaches
-        // this action too. Without the check any pid could be passed in the URL
-        // and the configuration of a foreign site (custom_scss included) would be
-        // handed out. A missing pid means "every record of the installation".
+        // The module is registered with 'access' => 'user', so editors reach this action
+        // too. Without the check any pid in the URL would hand out a foreign site's
+        // configuration, custom_scss included. A missing pid means "every record".
         if ($pid <= 0 ? !$GLOBALS['BE_USER']->isAdmin() : !$this->hasPageAccess($pid, Permission::PAGE_SHOW)) {
             return $this->denyTransfer();
         }
@@ -352,12 +349,9 @@ final class ConfigController extends AbstractController
     }
 
     /**
-     * Finds an uploaded file by its form field name.
-     *
-     * Extbase prefixes form fields with the plugin namespace, so the file does
-     * not sit at the top level of getUploadedFiles() but one level below
-     * tx_t3sbootstrap_web_t3sbootstrap. Searching recursively keeps this working
-     * no matter how the form is namespaced.
+     * Finds an uploaded file by its form field name. Extbase prefixes form fields with the
+     * plugin namespace, so the file sits one level below tx_t3sbootstrap_web_t3sbootstrap
+     * instead of at the top of getUploadedFiles(); searching recursively survives renaming.
      *
      * @param array<mixed> $files
      */

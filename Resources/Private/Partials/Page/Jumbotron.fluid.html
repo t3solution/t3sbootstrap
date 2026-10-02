@@ -14,7 +14,7 @@
 		</f:asset.css>
 	</f:if>
 
-	<f:if condition="{bgSlides -> f:count()} > 1 && !{localFullHeightBgVideo}">
+	<f:if condition="{bgSlides -> f:count()} > 1 && !{config.jumbotron.video.url}">
 		<f:then>
 			<f:comment> SLIDER </f:comment>
 			<f:render partial="Page/Assets" arguments="{carousel:'true'}" />
@@ -61,7 +61,7 @@
 			</f:if>
 		</f:then>
 		<f:else>
-			<f:if condition="{localFullHeightBgVideo} && {data.tx_t3sbootstrap_fullheightsection}">
+			<f:if condition="{config.jumbotron.video.url} && {data.tx_t3sbootstrap_fullheightsection}">
 				<f:then>
 					<f:render section="FullHeightBgVideo" arguments="{_all}" />
 				</f:then>
@@ -154,6 +154,11 @@
 			<div class="w-100 {config.jumbotron.alignItem}">
 				<div class="jumbotron-content w-100">
 					<f:if condition="{config.general.pageTitle} == 'jumbotron'">
+						<f:comment>
+							Der Jumbotron bringt seinen eigenen Container mit - der
+							Container des Seitentitels bleibt hier deshalb aussen vor.
+						</f:comment>
+						<f:variable name="pageTitleSkipContainer" value="1" />
 						<f:render partial="Page/Title" arguments="{_all}" />
 					</f:if>
 					<f:if condition="{config.jumbotron.slide}">
@@ -170,6 +175,7 @@
 		<f:else>
 			<div class="jumbotron-content w-100">
 				<f:if condition="{config.general.pageTitle} == 'jumbotron'">
+					<f:variable name="pageTitleSkipContainer" value="1" />
 					<f:render partial="Page/Title" arguments="{_all}" />
 				</f:if>
 				<f:if condition="{config.jumbotron.slide}">
@@ -207,6 +213,19 @@
 </f:section>
 
 <f:section name="Div">
+	<f:comment>
+		Der Videofall steht vor dem Bildfall: bgSlides ist dann leer, weil das
+		Video den Bildstapel ersetzt - die Bedingung darunter griffe also gar
+		nicht mehr. Die Ratio-Klasse steckt in config.jumbotron.class und gilt
+		fuer beide; Bootstraps .ratio macht jedes direkte Kind formatfuellend,
+		also auch das Video.
+	</f:comment>
+	<f:if condition="{config.jumbotron.video.url}">
+		<f:then>
+			<div id="s{data.uid}" class="jumbotron background-video{f:if(condition: config.jumbotron.video.autoplay, then: '', else: ' has-controls')}{config.jumbotron.class}">
+				<f:render section="BgVideo" arguments="{_all}" />
+		</f:then>
+		<f:else>
 	<f:if condition="{bgSlides}">
 		<f:then>
 			<f:if condition="{ratioCalcCss}">
@@ -219,6 +238,43 @@
 		<f:else>
 			<div class="jumbotron{config.jumbotron.class}">
 		</f:else>
+	</f:if>
+		</f:else>
+	</f:if>
+</f:section>
+
+
+<f:comment>
+	Das Video selbst - einmal beschrieben, von beiden Faellen benutzt
+	(gewoehnliches Jumbotron und Vollbild).
+
+	Stumm ist Pflicht: ohne muted verweigern die Browser das automatische
+	Abspielen. playsinline haelt iOS vom Vollbildspieler ab. Ohne Autoplay
+	zeigt der Browser das Standbild und startet erst auf Klick - dann sind
+	auch Bedienelemente noetig, sonst laesst sich nichts starten.
+</f:comment>
+<f:section name="BgVideo">
+	<f:asset.css identifier="jumbotronBgVideo">
+.jumbotron.background-video { position: relative; overflow: hidden; }
+.jumbotron .jumbotron-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.jumbotron .jumbotron-bg-video-overlay { position: absolute; inset: 0; background-color: #000; pointer-events: none; }
+.jumbotron.background-video > *:not(video):not(.jumbotron-bg-video-overlay) { z-index: 2; }
+/* Ohne Autoplay traegt das Video Bedienelemente - dann muss der Zeiger sie
+   erreichen. Anklickbares im Kopf selbst bleibt anklickbar. */
+.jumbotron.background-video.has-controls > *:not(video):not(.jumbotron-bg-video-overlay) { pointer-events: none; }
+.jumbotron.background-video.has-controls a,
+.jumbotron.background-video.has-controls button { pointer-events: auto; }
+	</f:asset.css>
+	<video class="jumbotron-bg-video"
+		autoplay="{f:if(condition: config.jumbotron.video.autoplay, then: 'autoplay', else: '')}"
+		muted="muted" playsinline="playsinline"
+		loop="{f:if(condition: config.jumbotron.video.loop, then: 'loop', else: '')}"
+		controls="{f:if(condition: config.jumbotron.video.autoplay, then: '', else: 'controls')}"
+		preload="metadata" aria-hidden="true" tabindex="-1">
+		<source src="{config.jumbotron.video.url}" type="{config.jumbotron.video.mime}" />
+	</video>
+	<f:if condition="{config.jumbotron.video.overlay} > 0">
+		<div class="jumbotron-bg-video-overlay" style="opacity:{config.jumbotron.video.overlay}"></div>
 	</f:if>
 </f:section>
 
@@ -278,12 +334,8 @@
 
 
 <f:section name="FullHeightBgVideo">
-<div id="s{data.uid}" class="jumbotron background-video position-relative" style="position: relative; min-height:100%; overflow:hidden;">
-	<figure id="video-{data.uid}" class="video m-0 mx-auto">
-		<video  autoplay muted loop playsinline id="localFullHeightBgVideo" style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translateX(-50%) translateY(-50%);">
-			<source src="{bgSlides.0}" type="video/mp4">
-		</video>
-	</figure>
+<div id="s{data.uid}" class="jumbotron background-video position-relative{f:if(condition: config.jumbotron.video.autoplay, then: '', else: ' has-controls')}" style="position: relative; min-height:100%; overflow:hidden;">
+	<f:render section="BgVideo" arguments="{_all}" />
 	<div id="jumbotron-content-wrapper" class="d-flex card-img-overlay" style="z-index: 1">
 		<div class="container align-self-center w-100">
 			<f:render section="Content" arguments="{_all}" />

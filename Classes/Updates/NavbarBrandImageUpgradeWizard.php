@@ -13,26 +13,9 @@ use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Holt Pfad, Breite, Hoehe und Alt-Text des Brand-Logos aus den Site-Settings in
- * den Konfigurations-Datensatz.
- *
- * Bisher lagen bootstrap.navbar.image.width/height/altText ausschliesslich in
- * der Site-Konfiguration. Damit galt pro Site genau ein Mass - auch dann, wenn
- * ein Siteroot ueber navbar_image ein ganz anderes Logo gesetzt hatte. Seit
- * dieser Version stehen die drei Werte im Datensatz neben dem Pfad, die
- * Site-Settings sind nur noch der Rueckfall.
- *
- * Der Pfad wandert mit, obwohl es navbar_image schon vorher gab: solange er nur
- * in der Site steht, bleibt das Logo ueber zwei Orte verteilt und die
- * Site-Settings lassen sich nicht abraeumen.
- *
- * Der Wizard ist deshalb reine Bequemlichkeit, keine Voraussetzung: ohne ihn
- * bleiben die Datensatzfelder leer und der ConfigProcessor greift weiterhin auf
- * die Site-Settings zurueck - die Ausgabe aendert sich nicht.
- *
- * Uebernommen wird nur, was der Editor noch nicht selbst gesetzt hat, und nur
- * dort, wo die Site tatsaechlich einen Wert traegt. Ein Datensatz, dessen Site
- * nicht aufloesbar ist, wird uebersprungen statt zu scheitern.
+ * Moves path, width, height and alt text of the brand logo from the site settings into the
+ * configuration record; the site settings are only the fallback. Convenience, not a
+ * prerequisite - only unset record values are taken over, unresolvable sites are skipped.
  */
 #[UpgradeWizard('t3sbootstrap_navbarBrandImageUpgradeWizard')]
 final class NavbarBrandImageUpgradeWizard implements UpgradeWizardInterface
@@ -75,11 +58,9 @@ final class NavbarBrandImageUpgradeWizard implements UpgradeWizardInterface
             $rootPageIds[$update['pid']] = $update['pid'];
         }
 
-        // Der Schreibvorgang laeuft an DataHandler und Middleware vorbei, also
-        // muessen die abgeleiteten TypoScript-Dateien hier von Hand neu
-        // geschrieben werden. Sonst stuenden die neuen Werte zwar in der
-        // Datenbank, im Frontend passierte aber nichts - der Wizard waere still
-        // wirkungslos.
+        // The write bypasses DataHandler and middleware, so the derived TypoScript files
+        // have to be rewritten by hand here. Otherwise the new values sit in the database
+        // while the frontend stays unchanged and the wizard is silently ineffective.
         foreach ($rootPageIds as $rootPageId) {
             $outsourcedFiles->rewriteFiles($rootPageId);
         }
@@ -120,15 +101,9 @@ final class NavbarBrandImageUpgradeWizard implements UpgradeWizardInterface
             $image = $site->getConfiguration()['settings']['bootstrap']['navbar']['image'] ?? [];
             $values = [];
 
-            // Nur uebernehmen, was die Site wirklich traegt und was im Datensatz
-            // noch nicht gesetzt ist - eine bereits getroffene Entscheidung des
-            // Editors darf ein Wizard nicht ueberschreiben.
-            //
-            // Der Pfad ist mitgenommen, obwohl navbar_image das Feld schon vorher
-            // gab: solange der Wert nur in der Site steht, bleibt die Einstellung
-            // ueber zwei Orte verteilt und die Site-Settings lassen sich nie
-            // abraeumen. Die Rangfolge ist ohnehin dieselbe, die Ausgabe aendert
-            // sich durch das Umziehen also nicht.
+            // Only take over what the site really carries and what is still unset in the record
+            // - a wizard must not overwrite a decision the editor already made. The path comes
+            // along too, so the setting stops being spread over record and site settings.
             if ((string)$record['navbar_image'] === '' && (string)($image['defaultPath'] ?? '') !== '') {
                 $values['navbar_image'] = (string)$image['defaultPath'];
             }

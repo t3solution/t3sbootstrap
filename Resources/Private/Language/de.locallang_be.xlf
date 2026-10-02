@@ -1147,6 +1147,20 @@
 			</segment>
 		</unit>
 		
+		<unit id="flexform.bgw.headerInside">
+			<segment>
+				<source>Header inside the section</source>
+				<target>Überschrift in den Bereich legen</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.bgw.headerInside.description">
+			<segment>
+				<source>Renders the header of this wrapper on top of the background instead of above it - together with the content.</source>
+				<target>Zeigt die Überschrift dieses Wrappers auf dem Hintergrund statt darüber – zusammen mit dem Inhalt.</target>
+			</segment>
+		</unit>
+
 		<unit id="flexform.bgw.contentPosition">
 			<segment>
 				<source>Content Position</source>
@@ -1481,6 +1495,42 @@
 			<segment>
 				<source>Column class</source>
 				<target>Spalten "class"</target>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffle">
+			<segment>
+				<source>Filter by category (shuffle.js)</source>
+				<target>Filter nach Kategorie (shuffle.js)</target>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffle.description">
+			<segment>
+				<source>Shows a button bar above the grid and lays the elements out with shuffle.js instead of masonry.js. Only elements that carry one of the selected categories can be filtered.</source>
+				<target>Blendet über dem Raster eine Schaltflächenleiste ein und lässt shuffle.js statt masonry.js anordnen. Filtern lassen sich nur Elemente, die eine der gewählten Kategorien tragen.</target>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleCategories">
+			<segment>
+				<source>Categories for the filter</source>
+				<target>Kategorien für den Filter</target>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleCategories.description">
+			<segment>
+				<source>One button per category, in the order chosen here. A category without a single element in this wrapper is left out.</source>
+				<target>Eine Schaltfläche je Kategorie, in der hier gewählten Reihenfolge. Eine Kategorie ohne ein einziges Element in diesem Wrapper entfällt.</target>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleLabel">
+			<segment>
+				<source>Label above the buttons</source>
+				<target>Beschriftung über den Schaltflächen</target>
+			</segment>
+		</unit>
+		<unit id="flexform.masonry.shuffleAllLabel">
+			<segment>
+				<source>Label of the "all" button</source>
+				<target>Beschriftung der Schaltfläche "alle"</target>
 			</segment>
 		</unit>
 		

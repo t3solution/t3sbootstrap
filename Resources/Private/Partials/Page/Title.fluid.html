@@ -11,7 +11,35 @@
 </f:if>
 </html>
 
+<f:comment>
+	Container um den Seitentitel, Auswahl "Container" in der Konfiguration.
+
+	Er greift nur dort, wo der Titel sonst randlos ueber die ganze Seite
+	laufen wuerde - also bei "Seitentitel im Inhaltsbereich". Steht der Titel
+	im Jumbotron, in der Brotkrumenleiste oder im erweiterten Inhalt, bringt
+	dieser Bereich seinen eigenen Container mit; ein zweiter darin waere eine
+	doppelte Polsterung und eine zweite Breitenbegrenzung. Diese Stellen
+	setzen deshalb pageTitleSkipContainer.
+</f:comment>
 <f:section name="TitleAlign">
+<f:variable name="pageTitleContainer">{config.general.pageTitlecontainer}</f:variable>
+<f:if condition="{pageTitleSkipContainer}">
+	<f:variable name="pageTitleContainer" value="" />
+</f:if>
+
+<f:if condition="{pageTitleContainer}">
+	<f:then>
+		<div class="{pageTitleContainer}">
+			<f:render section="TitleInner" arguments="{_all}" />
+		</div>
+	</f:then>
+	<f:else>
+		<f:render section="TitleInner" arguments="{_all}" />
+	</f:else>
+</f:if>
+</f:section>
+
+<f:section name="TitleInner">
 <f:if condition="{config.general.pageTitlealign}">
 	<f:then>
 		<div class="page-title text-{config.general.pageTitlealign}{f:if(condition:'{config.general.pageTitleclass}',then:' {config.general.pageTitleclass}')}">

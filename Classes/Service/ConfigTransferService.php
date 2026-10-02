@@ -12,12 +12,9 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Portabler Export/Import der t3sbootstrap-Konfiguration.
- *
- * Der Export enthaelt keine uids und keine pid, sondern nur Feldwerte und
- * FAL-Referenzen als kombinierte Identifier (z.B. "1:/user_upload/logo.svg").
- * Der Import laeuft ueber den DataHandler, damit RefIndex, Hooks und
- * Workspaces korrekt bedient werden.
+ * Portable export/import of the t3sbootstrap configuration. The export holds no uids and no
+ * pid, only field values and FAL references as combined identifiers ("1:/user_upload/logo.svg").
+ * The import goes through the DataHandler, so RefIndex, hooks and workspaces are served.
  */
 final class ConfigTransferService
 {
@@ -198,10 +195,9 @@ final class ConfigTransferService
 
             $importedFields = array_intersect_key((array)($record['fields'] ?? []), array_flip($availableColumns));
 
-            // On update every column is written: values missing from the export
-            // fall back to their TCA default. Without this the target would keep
-            // leftovers from its previous configuration and the result would be a
-            // mixture of both - including file references that are never removed.
+            // On update every column is written, values missing from the export falling
+            // back to their TCA default. Otherwise the target keeps leftovers of its previous
+            // configuration and the result is a mixture of both, file references included.
             $fields = $isUpdate
                 ? array_merge($this->getBlankFields($availableColumns), $importedFields)
                 : $importedFields;

@@ -63,6 +63,10 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	jumbotron_container varchar(15) DEFAULT 'container' NOT NULL,
 	jumbotron_containerposition varchar(7) DEFAULT 'Inside' NOT NULL,
 	jumbotron_class varchar(255) DEFAULT 'mb-4 bg-light rounded-0' NOT NULL,
+	jumbotron_bgvideo tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	jumbotron_bgvideo_overlay int(3) unsigned DEFAULT '40' NOT NULL,
+	jumbotron_bgvideo_autoplay tinyint(1) unsigned DEFAULT '1' NOT NULL,
+	jumbotron_bgvideo_loop tinyint(1) unsigned DEFAULT '1' NOT NULL,
 	jumbotron_carousel_interval int(5) DEFAULT '5000' NOT NULL,
 	jumbotron_carousel_pause tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	breadcrumb_enable tinyint(1) unsigned DEFAULT '1' NOT NULL,
@@ -191,6 +195,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_cssfile int unsigned DEFAULT 0 NOT NULL,
 	tx_t3sbootstrap_jsfile int unsigned DEFAULT 0 NOT NULL,
 	tx_t3sbootstrap_supraheader varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_supraheader_class varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_anchor varchar(255) DEFAULT '' NOT NULL
 );
 

@@ -11,6 +11,12 @@ page {
 	shortcutIcon = {$bootstrap.config.favicon}
 }
 
+# Without a favicon the browser requests /favicon.ico on every page and gets a 404.
+# An empty field arrives here as "0", so both cases fall back to the TYPO3 icon.
+["{$bootstrap.config.favicon}" == "0" || "{$bootstrap.config.favicon}" == ""]
+	page.shortcutIcon = EXT:backend/Resources/Public/Icons/favicon.ico
+[END]
+
 config {
 	disablePrefixComment = {$bootstrap.config.disablePrefixComment}
 	removeDefaultJS = external

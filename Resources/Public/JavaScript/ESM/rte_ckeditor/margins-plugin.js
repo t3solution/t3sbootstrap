@@ -83,14 +83,11 @@ class MarginCommand extends Core.Command {
 /**
  * A toolbar dropdown for the Bootstrap margin utilities mt-1..mt-5 and mb-1..mb-5.
  *
- * This is a real editor feature, not a Styles entry: the classes are declared in
- * the schema and converted in both directions, so they survive a save even in
- * presets whose General HTML Support whitelist only covers <div>.
- *
- * Top and bottom are independent - a block can carry both at the same time.
- * Margins sit on the block the cursor is in (paragraph, heading, code block).
- * A list item gets it on its own paragraph; the surrounding <ul> cannot be
- * addressed from inside the editor.
+ * A real editor feature, not a Styles entry: the classes are in the schema and
+ * converted both ways, so they survive a save even in presets whose General HTML
+ * Support whitelist only covers <div>. Top and bottom are independent. Margins sit
+ * on the block the cursor is in; a list item gets it on its own paragraph, the
+ * surrounding <ul> cannot be addressed from inside the editor.
  */
 export class MarginPicker extends Core.Plugin {
 	static get pluginName() {

@@ -54,6 +54,12 @@
 </html>
 
 
+<f:comment>
+	f:format.raw, not f:sanitize.html: the value comes from Content/Field,
+	which already sanitized it - and with the Visual Editor it carries the
+	editor's markers, which a second sanitizer would strip. Without raw,
+	Fluid printed a <br> in the header as text.
+</f:comment>
 <f:section name="Headertext">
 	<f:if condition="{link}">
 		<f:then>		
@@ -63,7 +69,7 @@
 						<f:if condition="{hFa} && !{iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>						
-						{header}
+						{header -> f:format.raw()}
 						<f:if condition="{hFa} && {iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>
@@ -74,7 +80,7 @@
 						<f:if condition="{hFa} && !{iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>						
-						{header}
+						{header -> f:format.raw()}
 						<f:if condition="{hFa} && {iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>	
@@ -86,7 +92,7 @@
 			<f:if condition="{hFa} && !{iconPositionBehind}">
 				<t3sb:icon iconfig="{hFa}" />
 			</f:if>	
-			{header}
+			{header -> f:format.raw()}
 			<f:if condition="{hFa} && {iconPositionBehind}">
 				<t3sb:icon iconfig="{hFa}" />
 			</f:if>

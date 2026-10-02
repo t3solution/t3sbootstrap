@@ -4,6 +4,298 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.52 — Überzeile, Hintergrundvideo, Seitentitel, Sprungmarken, Masonry-Filter
+
+Betrifft die folgenden Dateien:
+
+```
+ext_tables.sql
+Classes/Domain/Model/Config.php
+Classes/DataProcessing/ConfigProcessor.php
+Classes/Utility/BackgroundImageUtility.php
+Configuration/TCA/tx_t3sbootstrap_domain_model_config.php
+Configuration/TCA/Overrides/tt_content_newCType.php
+Configuration/TypoScript/Page/Template.typoscript
+Configuration/Sets/T3sbootstrap/constants.typoscript
+Configuration/Sets/T3sbootstrapImage/settings.definitions.yaml
+Resources/Private/Language/locallang_db.xlf
+Resources/Private/Language/de.locallang_db.xlf
+Resources/Private/Partials/Content/Field.fluid.html
+Resources/Private/Partials/Content/Header/All.fluid.html
+Resources/Private/Partials/FluidStyledContent/Header/All.fluid.html
+Resources/Private/Partials/Page/Jumbotron.fluid.html
+Resources/Private/Partials/Page/Title.fluid.html
+Resources/Private/Partials/Page/Breadcrumb.fluid.html
+Resources/Private/Partials/Page/ExpandedContent/Top.fluid.html
+Resources/Private/Partials/Page/ExpandedContent/Bottom.fluid.html
+Resources/Private/Templates/Container/BackgroundWrapper.fluid.html
+Resources/Private/Templates/Container/CollapsibleContainer.fluid.html
+Resources/Private/Templates/Container/FourColumns.fluid.html
+Resources/Private/Templates/Container/RowColumns.fluid.html
+Resources/Private/Templates/Container/SixColumns.fluid.html
+Resources/Private/Templates/Container/ThreeColumns.fluid.html
+Resources/Private/Templates/Container/TwoColumns.fluid.html
+ext_conf_template.txt
+Classes/Command/Anchor.php
+Classes/Service/AnchorService.php
+Classes/Updates/AnchorUpgradeWizard.php
+Classes/Helper/DefaultHelper.php
+Classes/Wrapper/BackgroundWrapper.php
+Classes/EventListener/AssetRenderer/IsInline.php
+Configuration/TCA/Overrides/tt_content_container.php
+Configuration/TypoScript/Content/_main.typoscript
+Configuration/FlexForms/Container/BackgroundWrapper.xml
+Resources/Private/Language/locallang_be.xlf
+Resources/Private/Language/de.locallang_be.xlf
+Resources/Private/Partials/MainAssets.fluid.html
+Resources/Private/Partials/FunctionAssets.fluid.html
+Resources/Private/Backend/ContainerPreview/**/two_columns/Preview.fluid.html
+Classes/Wrapper/MasonryWrapper.php
+Configuration/FlexForms/Container/MasonryWrapper.xml
+Resources/Private/Templates/Container/MasonryWrapper.fluid.html
+Resources/Public/JavaScript/MasonryFilter.js
+Resources/Public/JavaScript/shuffle.mjs
+Classes/DataProcessing/BootstrapProcessor.php
+Configuration/TypoScript/Page/_main.typoscript
+Configuration/TypoScript/Page/Register.typoscript
+Configuration/TypoScript/Lib/ContentElement.typoscript
+```
+
+> **Nach dem Update: Datenbankanalyse erforderlich.** Es kommen fünf Spalten
+> dazu — `tt_content.tx_t3sbootstrap_supraheader_class` sowie in
+> `tx_t3sbootstrap_domain_model_config` die vier Felder `jumbotron_bgvideo`,
+> `jumbotron_bgvideo_autoplay`, `jumbotron_bgvideo_loop` und
+> `jumbotron_bgvideo_overlay`.
+>
+> ```
+> vendor/bin/typo3 extension:setup
+> vendor/bin/typo3 cache:flush
+> ```
+>
+> Danach den Konfigurations-Datensatz einmal speichern: das schreibt die
+> erzeugten TypoScript-Dateien neu, sonst fehlen die neuen Konstanten.
+
+### Hintergrundvideo im Jumbotron
+
+Ein lokales Video aus „Medien" kann jetzt als Jumbotron-Hintergrund laufen — im
+gewöhnlichen Jumbotron mit Seitenverhältnis genauso wie in der Vollbild-Section.
+Neu in der Konfiguration unter *Jumbotron → Background* die Palette
+**Background Video** mit vier Feldern: Schalter, Autoplay, Endlosschleife und
+Abdunklung in Prozent.
+
+Ansätze dafür gab es schon, nur konnten sie nicht funktionieren.
+`localFullHeightBgVideo` verlangte drei Dinge gleichzeitig — Quelle `page`, die
+**erste** Datei in `pages.media` mit MIME `video/mp4` und zusätzlich
+„Full height section" — und schrieb dann `src="{bgSlides.0}"`. Dort steht aber
+das Ergebnis von `getJumbotronBgImage()`, also CSS und keine Datei-Adresse. Die
+neue Erkennung sucht die erste Datei mit einem `video/`-Typ an beliebiger Stelle
+der Liste und nimmt ihre öffentliche Adresse.
+
+Auf jeder Ebene der Rootline hat das Video Vorrang vor dem Bild. Ohne diese
+Reihenfolge erbte eine Seite mit Video das Bild ihres Vorfahren, weil die
+Bildsuche zuerst fündig wurde. Online-Medien (YouTube, Vimeo) fallen von selbst
+heraus: sie tragen in FAL keinen `video/`-Typ — und ein eingebettetes Video
+lässt sich ohnehin nicht stumm unter einen Text legen.
+
+Ohne Autoplay bekommt das Video Bedienelemente. Damit der Zeiger sie erreicht,
+trägt der Wrapper dann `has-controls`; Links und Schaltflächen im Kopf bleiben
+trotzdem anklickbar.
+
+### Überzeile: eigene Klasse, und sie erscheint wieder zuverlässig
+
+`tx_t3sbootstrap_supraheader_class` ist neu — dieselbe Auswahlliste wie bei der
+Überschrift, als Kopie ihrer TCA-Definition statt als zweite gepflegte Liste.
+Die Linien-Varianten (`h-line-*`) sind ausgenommen: sie sind auf die Größe einer
+Überschrift abgestimmt. Text und Klasse stehen in einer Palette nebeneinander.
+
+Zwei Fehler dazu:
+
+* `Content/Field.fluid.html` gab Leerraum aus, wenn ein Feld leer war. In Fluid
+  ist eine Zeichenkette aus Leerzeichen wahr — es entstand ein leeres
+  `<p class="supraheader">`. Die Datei ist jetzt einzeilig, und die Werte laufen
+  durch `f:format.trim`.
+* Die Überzeile verschwand, sobald die Überschrift leer blieb. Sie steht aber
+  oft allein über einem Element („Schritt 2 von 4" braucht nichts darunter).
+  Sie zählt jetzt mit, wenn es um die Frage geht, ob es überhaupt einen Kopf
+  gibt — in beiden Header-Partials und in den sieben Container-Templates, die
+  ihre eigene Bedingung mitbringen.
+
+### Seitentitel und Jumbotron-Hintergrund
+
+* `page_titlecontainer` wurde nie ausgewertet. Der Wert wird jetzt im
+  `ConfigProcessor` aufgelöst und in `Page/Title.fluid.html` angewendet; die
+  Stellen, die den Titel bereits in einem Container rendern (Jumbotron,
+  Breadcrumb, ExpandedContent), setzen `pageTitleSkipContainer` und vermeiden so
+  den zweiten Container.
+* `page_titlealign` kennt die Werte `right` und `left`; Bootstrap 5 schreibt
+  `text-end` und `text-start`. Das wird jetzt abgebildet.
+* Die Beschriftungen von `jumbotron_alignitem` waren irreführend: dort bedeutet
+  `right` unten und `left` oben, weil `align-items-*` auf die Querachse wirkt.
+* Der Jumbotron-Hintergrund nimmt nur noch Dateien, aus denen sich ein
+  CSS-Hintergrundbild bauen lässt (`onlyImages()`); ein Video oder PDF in
+  „Medien" ließ die Suche vorher auf der falschen Datei abbrechen. Der
+  Bild-Slider entsteht nicht mehr, wenn es gar keine Bilder gibt.
+* **Erweiterter Inhalt mit „content slide" blieb leer.** Ob oben oder unten
+  überhaupt etwas auszugeben ist, entscheidet `hasContent()`. Geprüft wurde nur
+  die aktuelle Seite — bei aktivem Slide liegt der Inhalt aber womöglich weiter
+  oben in der Rootline. Der Bereich entfiel dann vollständig, obwohl geerbter
+  Inhalt vorhanden war. Jetzt wird bei aktivem Slide die ganze Rootline geprüft.
+* Neu: `jumbotronBgimageIgnoreDoktypes`. Seitentypen, deren „Medien" ein
+  Teaserbild sind und kein Hintergrund, überschreiben den Bilderstapel des
+  Rootbereichs nicht mehr. Neben der Konstante für Integratoren gibt es eine Liste, in die sich
+  andere Extensions in ihrer `ext_localconf.php` eintragen können.
+
+### Sprungmarken und Abstände
+
+Der Sprung auf einen Anker landete zu hoch. Gerechnet wurde mit der Höhe der
+fixierten Navbar — ein zusätzlich am oberen Rand klebender Breadcrumb blieb
+unberücksichtigt. `t3sbMeasureStickyTop()` in `MainAssets.fluid.html` misst jetzt
+die **tiefste Unterkante** aller oben fixierten Elemente (`position: fixed` oder
+`sticky`), nicht die Summe ihrer Höhen: bei einer 70 px hohen Navbar und einem
+Breadcrumb, der bei `top: 0` bis 123 px reicht, sind 123 px verdeckt, nicht 193.
+
+Das Ergebnis liegt als `window.t3sbStickyTop` bereit und wird als
+`scroll-padding-top` an `<html>` geschrieben. Damit gilt derselbe Wert für den
+nativen Sprung, für `:target` und für `scrollIntoView()` — vorher rechnete jede
+Stelle für sich. `t3sbScrollToAnchor()` in `FunctionAssets.fluid.html` nutzt ihn
+ebenfalls und fällt auf die bloße Navbar-Höhe zurück, wenn `MainAssets` fehlt.
+Der eigene Zuschlag kommt aus `sectionmenu_anchor_offset` der T3SB-Konfiguration;
+die Beschreibung des Feldes ist entsprechend erweitert.
+
+`content_margin_top` wirkte nur in der Hauptspalte. `DefaultHelper` prüft jetzt
+`colPos = 0 OR colPos > 199` und lässt eine bereits vorhandene `m*-`-Klasse
+unangetastet.
+
+**Innerhalb eines Wrappers greift der Abstand nicht** — Hintergrund-Wrapper,
+Accordion, Modal, Card-Wrapper und die übrigen aus `BootstrapProcessor::TX_CONTAINER`.
+Ein Wrapper bringt seinen eigenen Innenabstand mit; das erste Element darin schöbe
+sonst eine Lücke zwischen Wrapperkante und Inhalt. Die **Spalten-Container**
+(`TX_CONTAINER_GRID`: 2, 3, 4, 6 Spalten, Row Columns) behalten ihn, dort stehen die
+Elemente untereinander und brauchen den Rhythmus. Entschieden wird am `parentCType`,
+den `getDefaults()` ohnehin übergeben bekommt.
+
+Der Wrapper selbst bekommt den Abstand weiter — er steht in der Hauptspalte. Trägt er
+eine Überschrift, geht er auf den **Header** statt auf die Section
+(`marginTopOnHeader` aus `BackgroundWrapper`).
+
+**Im Footer und im Jumbotron greift er ebenfalls nicht.** Jumbotron (`colPos 3`),
+Footer-Spalte (`4`) und erweiterter Inhalt (`20`/`21`) fielen schon durch die Prüfung
+`colPos = 0 OR colPos > 199` heraus. Der Footer als **eigene Seite** nicht — dessen
+Elemente liegen in `colPos 0` wie auf jeder anderen Seite. `getDefaults()` bekommt
+dafür jetzt `$containerConfig` übergeben und vergleicht `footerPid` mit der `pid` des
+Elements; `getContainerClass()` hatte dieses Merkmal längst, nur kam es nie an.
+
+### Background-Wrapper, Vorschau, Speaking ID
+
+Neue Checkbox **Header inside** (`headerInside` im sDEF-Sheet von
+`BackgroundWrapper.xml`): Überschrift und Überzeile liegen dann **in** der
+`section.background-image` statt darüber. Der Kopf wird in `SectionInner` und
+`SectionOverlayInner` ausgegeben, und die Zählbedingungen der Section
+berücksichtigen ihn, damit sie nicht an einem leeren Spaltenzähler scheitern.
+
+* **Container-Vorschau fehlte innerhalb eines Wrappers.** Die Vorschau-Templates
+  sind über `page.tsconfig` als `templates.typo3/cms-backend.…` registriert und
+  greifen nur im View, den TYPO3 selbst baut. `B13\Container\Backend\Preview\GridRenderer`
+  zeichnet verschachtelte Raster mit einem eigenen View aus
+  `getGridPartialPaths($CType)` — ohne Registrierung fällt der auf die Defaults
+  von `EXT:container` zurück. Alle 21 Container hängen ihren Pfad jetzt per
+  `addGridPartialPath()` an (anhängen statt setzen: Fluid sucht rückwärts, die
+  Pfade von `EXT:backend` und `EXT:container` bleiben als Rückfall).
+* **Inline-Assets: leere oder halbe Dateien.** `IsInline::inline2TempFile()`
+  schrieb direkt an den Zielnamen. Brach der Schreibvorgang ab, blieb eine
+  unvollständige Datei liegen und wurde nie erneuert, weil der Name aus dem
+  md5 des Inhalts entsteht — gleicher Name, gleicher Inhalt. Geschrieben wird
+  jetzt in eine temporäre Datei und atomar umbenannt; eine vorhandene Datei mit
+  falscher Größe wird ersetzt.
+* „EExtra-Class" im Backend — ein verirrtes `E` im Vorschau-Partial der
+  Zwei-Spalten-Container.
+
+**Speaking ID: der Schalter wirkte nur halb.** Die Extension-Option blendet das
+Feld `tx_t3sbootstrap_anchor` im Formular ein und aus. Der Upgrade Wizard
+*Generate the missing „Speaking ID"* füllte die Anker aber unabhängig davon, und
+die Spalte blieb als Slug-Feld registriert, so dass Kopien den Anker des
+Originals mitnahmen. Beides fragt die Option jetzt ab; bei ausgeschalteter Option
+wird die Spalte gar nicht erst ins TCA aufgenommen.
+
+Gespeicherte Anker bleiben erhalten und werden weiter ausgegeben — das ist
+Absicht: die Kopplung an den Schalter hat in 5.3.51 bestehenden Onepage-Seiten
+die Anker weggezogen, während das Sektionsmenü weiter darauf verlinkte. Zum
+Leeren gibt es den neuen Modus:
+
+```
+vendor/bin/typo3 t3sbootstrap:anchor --mode clear            # Trockenlauf
+vendor/bin/typo3 t3sbootstrap:anchor --mode clear --execute
+```
+
+Dazu: `SlugHelper` erzeugt für ein Element ohne Überschrift den Ersatzwert
+`default-<md5>`. Der steht nicht mehr im Quelltext — `tt_content.stdWrap.prepend`
+verwirft ihn in einem verschachtelten `stdWrap`, der vor `required` läuft.
+
+### Kategorie-Filter im Masonry-Wrapper
+
+Der Masonry-Wrapper kann seine Kacheln nach **Kategorie** filtern. Die Option
+*Filter nach Kategorie (shuffle.js)* im FlexForm blendet über dem Raster eine
+Schaltflächenreihe ein — eine je Kategorie, dazu „Alle".
+
+Die Kategorien werden **von Hand ausgewählt** (`shuffleCategories`, Mehrfachauswahl
+auf `sys_category`); ihre Reihenfolge ist die Reihenfolge der Schaltflächen. Beschriftet
+wird die Reihe über `shuffleLabel` und `shuffleAllLabel`. Gelesen wird die Zuordnung
+direkt aus `sys_category_record_mm` für die Kinder des Wrappers — eine gewählte
+Kategorie ohne ein einziges Element dort wird weggelassen, eine Schaltfläche zu null
+Treffern ist nur im Weg.
+
+**shuffle.js ersetzt masonry.js**, solange der Filter aktiv ist: beide ordnen die Kacheln
+an und würden um dieselben Positionen streiten. `masonry.pkgd` wird dann gar nicht
+geladen.
+
+Die Bibliothek liegt in der Extension (`Resources/Public/JavaScript/shuffle.mjs`) —
+kein CDN-Eintrag und kein Integrity-Hash, der mitgepflegt werden will. Eingebunden wird nur `MasonryFilter.js`; shuffle.mjs steht
+als Pfad in `data-t3sb-shuffle-src` und wird per `import()` nachgeladen, weil Shuffle 7
+ausschließlich als ES-Modul vorliegt. Schlägt das fehl, filtern die Schaltflächen über
+`hidden` weiter — ohne Animation, aber vollständig.
+
+Die Filterwerte stehen in `data-t3sb-categories` an der Zelle und in
+`data-t3sb-filter-value` an der Schaltfläche — eigenes CSS und eigene Skripte können
+sich daran halten.
+
+Fehlt die Konfiguration, sagt der Wrapper es im Frontend — keine Kategorie gewählt,
+Wrapper leer oder kein Element mit einer der gewählten Kategorien. Lautlos verschwinden
+ist genau die Art Verhalten, die man später lange sucht.
+
+### Behoben — TypoScript-Conditions warfen Syntaxfehler
+
+Im Log stand bei jedem Aufruf:
+
+```
+TypoScript condition [traverse(site("configuration"), "settings/bootstrap/disable/jquery")
+== false ||  == 0] could not be parsed: Unexpected token "operator" of value "=="
+```
+
+Die Konstante war nicht unauflösbar, sie löste sich zu einem **Leerstring** auf.
+`bootstrap.disable.jquery` ist in `settings.definitions.yaml` als `type: bool`
+deklariert, und Site-Settings behalten beim Flatten ihren PHP-Typ. Der
+Condition-Substitutor setzt den Wert per String-Cast ein: `true` wird zu `1`,
+`false` zu `` — und ungequotet bleibt dann `|| == 0` stehen.
+
+Der Fehler trat also genau dann auf, wenn jemand jQuery **einschaltete**.
+
+Schwerer als das Log-Rauschen wog die Folge: der Core fängt den `SyntaxError`
+und setzt das Verdikt auf `false`. Damit fiel der gesamte Block weg — auch der
+`traverse()`-Teil, der korrekt `true` geliefert hätte. **jQuery ließ sich nicht
+aktivieren.**
+
+Die Konstante steht jetzt in Anführungszeichen; `"" == "0"` ist eine gültige,
+falsche Aussage statt eines Parse-Fehlers, und `traverse()` entscheidet wieder.
+
+Vier weitere Conditions derselben Bauart sind mitgezogen —
+`backgroundImageEnable`, `lightboxSelection` (zweimal) und `ext.news` (zweimal).
+Das sind generierte TypoScript-Konstanten aus `t3sbconstants.typoscript`, also
+immer Strings und im Normalbetrieb unkritisch. Fehlt diese Datei aber — frische
+Installation, kein Konfigurations-Datensatz, CLI —, bleibt `{$…}` als Literal
+stehen und es knallt genauso.
+
+---
+
 ## 5.3.51 — nachträglich: Navbar, RTE-Badges und Lightbox
 
 Version unverändert, betrifft die folgenden Dateien:

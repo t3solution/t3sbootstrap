@@ -19,19 +19,10 @@ use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 
 
 /**
- * Writes the files that are derived from a t3sbootstrap configuration record:
- * the TypoScript constants/setup and the scss.
- *
- * The record in the database is the source, the files are a cache below
- * typo3temp/assets/t3sbootstrap/. Two entry points exist: the DataHandler hook
- * below (record was saved) and ensureFilesExist(), which the frontend
- * middleware calls when the files went missing - after a deployment, after
- * "Remove Temporary Assets" or on a fresh checkout. Nothing here needs network
- * access, so regenerating inside a request is cheap and safe.
- *
- * Registered via:
- *   $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][]
- *       = \T3SBS\T3sbootstrap\Backend\Hook\OutsourcedFiles::class;
+ * Writes the TypoScript constants/setup and the scss derived from a configuration
+ * record - the record is the source, the files below typo3temp/assets/ are the cache.
+ * Entry points: the DataHandler hook (SC_OPTIONS processDatamapClass) and
+ * ensureFilesExist() for the middleware; no network, so regenerating in a request is safe.
  */
 final readonly class OutsourcedFiles
 {
@@ -85,14 +76,9 @@ final readonly class OutsourcedFiles
 	}
 
 	/**
-	 * Rewrites the derived files for a root page unconditionally.
-	 *
-	 * ensureFilesExist() steps in only when a file is missing, and the DataHandler
-	 * hook fires only when a record is saved through the backend. Anything that
-	 * writes into the table directly - an UpgradeWizard, a CLI import - would
-	 * otherwise leave the generated constants behind the database, and without a
-	 * visible symptom: the frontend keeps rendering the old values. Those callers
-	 * use this method.
+	 * Rewrites the derived files for a root page unconditionally. For callers that
+	 * write into the table directly (UpgradeWizard, CLI import), which neither the
+	 * hook nor ensureFilesExist() covers - stale constants render without a symptom.
 	 */
 	public function rewriteFiles(int $rootPageId): void
 	{
@@ -109,17 +95,13 @@ final readonly class OutsourcedFiles
 	 * Rewrites the derived files for a root page when they are missing.
 	 *
 	 * Called from the frontend middleware. Returns silently when the files are
-	 * present or when no configuration record exists for this root page - both
-	 * are normal states, not errors.
+	 * present or when no configuration record exists - both are normal states.
 	 */
 	public function ensureFilesExist(int $rootPageId): void
 	{
-		// This runs on every frontend request - the middleware sits before the page
-		// cache lookup in PrepareTypoScriptFrontendRendering. A marker keeps the
-		// steady state at a single is_file() instead of an Extbase query per hit.
-		// It lives in typo3temp next to the files it vouches for, so clearing the
-		// temporary assets invalidates it along with everything else, and
-		// writeOutsourcedFiles() drops it whenever the record is saved.
+		// Runs on every frontend request, before the page cache lookup. The marker
+		// keeps the steady state at one is_file() instead of an Extbase query per hit;
+		// it lives in typo3temp, so clearing the assets or saving the record drops it.
 		if (is_file($this->getVerifiedMarkerPath($rootPageId))) {
 			return;
 		}
@@ -353,6 +335,9 @@ final readonly class OutsourcedFiles
 			}
 
 			if (is_scalar($value)) {
+				// A line break in a free text field would inject further constants into the
+				// generated file, up to overwriting an asset path - so the value stays on one line.
+				$value = str_replace(["\r", "\n"], ' ', (string)$value);
 				$constants .= 'bootstrap.config.' . $field . ' = ' . $value . PHP_EOL;
 			}
 
@@ -383,12 +368,7 @@ final readonly class OutsourcedFiles
 		$this->ensureDirectoryExists($path);
 		$fullPath = $path . $filename;
 
-		if (file_exists($fullPath)) {
-			@unlink($fullPath);
-		}
-
-		$success = GeneralUtility::writeFile($fullPath, $content);
-		if ($success === false) {
+		if (!$this->writeAtomically($fullPath, $content)) {
 			$this->addFlashMessage(sprintf('File "%s" could not be written.', $fullPath), 'ERROR');
 		}
 	}
@@ -397,14 +377,32 @@ final readonly class OutsourcedFiles
 	{
 		$fullPath = $path . $filename;
 
-		if (file_exists($fullPath)) {
-			@unlink($fullPath);
-		}
-
-		$success = GeneralUtility::writeFile($fullPath, $content);
-		if ($success === false) {
+		if (!$this->writeAtomically($fullPath, $content)) {
 			$this->addFlashMessage(sprintf('SCSS file "%s" could not be written.', $fullPath), 'ERROR');
 		}
+	}
+
+	/**
+	 * Writes to a temporary file next to the target and renames it into place. rename()
+	 * is atomic, so a parallel request reads either the old or the new file. Deleting
+	 * first left a window in which the @import resolved to nothing - silently, and that
+	 * result went into the TypoScript and page caches.
+	 */
+	private function writeAtomically(string $fullPath, string $content): bool
+	{
+		$temporaryPath = $fullPath . '.' . getmypid() . '.tmp';
+
+		if (GeneralUtility::writeFile($temporaryPath, $content, true) === false) {
+			return false;
+		}
+
+		if (!@rename($temporaryPath, $fullPath)) {
+			@unlink($temporaryPath);
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private function ensureDirectoryExists(string $path): void

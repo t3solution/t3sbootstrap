@@ -36,6 +36,12 @@
 
 <f:section name="Content">
 	<f:if condition="{config.general.pageTitle} == 'expanded'">
+		<f:comment>
+			Der erweiterte Inhalt bringt seinen eigenen Container mit, sofern
+			einer gewaehlt ist - der Container des Seitentitels bleibt hier
+			deshalb aussen vor.
+		</f:comment>
+		<f:variable name="pageTitleSkipContainer" value="1" />
 		<f:render partial="Page/Title" arguments="{_all}" />
 	</f:if>
 	<f:if condition="{config.expandedcontentTop.slide}">

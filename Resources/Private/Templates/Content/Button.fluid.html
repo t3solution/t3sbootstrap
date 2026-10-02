@@ -74,7 +74,7 @@
 			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
-			{record -> f:render.text(field: 'header')}
+			<f:render partial="Content/Field" arguments="{record: record, data: data, field: 'header'}" />
 			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
 			</f:if>
@@ -109,7 +109,7 @@
 			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
-			{record -> f:render.text(field: 'header')}
+			<f:render partial="Content/Field" arguments="{record: record, data: data, field: 'header'}" />
 			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
 			</f:if>
@@ -124,7 +124,7 @@
 			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 			</f:if>
-			{record -> f:render.text(field: 'header')}
+			<f:render partial="Content/Field" arguments="{record: record, data: data, field: 'header'}" />
 			<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
 				<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
 			</f:if>
@@ -142,7 +142,7 @@
 			<f:if condition="{data.header_icon} && !{data.tx_t3sbootstrap_iconPositionBehind}">
 			<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'me-1'}" />
 		</f:if>
-		{record -> f:render.text(field: 'header')}
+		<f:render partial="Content/Field" arguments="{record: record, data: data, field: 'header'}" />
 		<f:if condition="{data.header_icon} && {data.tx_t3sbootstrap_iconPositionBehind}">
 			<t3sb:icon iconfig="{data.header_icon}" additionalAttributes="{class:'ms-1'}" />
 		</f:if>

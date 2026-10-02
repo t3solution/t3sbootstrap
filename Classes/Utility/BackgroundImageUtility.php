@@ -8,6 +8,8 @@ use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Core\SystemResource\SystemResourceFactory;
+use TYPO3\CMS\Core\SystemResource\Publishing\SystemResourcePublisherInterface;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Core\Page\AssetCollector;
@@ -16,29 +18,66 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 class BackgroundImageUtility implements SingletonInterface
 {
 
+    /**
+     * The last two arguments are optional on purpose. They arrived with the switch to the
+     * system resource API; a container that was compiled before that update still builds
+     * this class with three arguments, and a required fourth turns a stale cache into a
+     * fatal error on every page. Optional, the page keeps working and only falls back to
+     * the old path helper until the container is rebuilt.
+     */
     public function __construct(
         private readonly ImageService $imageService,
         private readonly AssetCollector $assetCollector,
         private readonly FileRepository $fileRepository,
+        private readonly ?SystemResourceFactory $systemResourceFactory = null,
+        private readonly ?SystemResourcePublisherInterface $systemResourcePublisher = null,
     ) {}
 
+    /**
+     * Web path of the raster overlay. Uses the system resource API - it replaces
+     * PathUtility::getPublicResourceWebPath(), deprecated in v14 and gone in v15.
+     */
+    private function rasterImageUri(): string
+    {
+        $path = 'EXT:t3sbootstrap/Resources/Public/Images/raster.png';
 
+        // Only reachable with an outdated dependency injection container, see __construct().
+        if ($this->systemResourceFactory === null || $this->systemResourcePublisher === null) {
+            return PathUtility::getPublicResourceWebPath($path);
+        }
+
+        $resource = $this->systemResourceFactory->createPublicResource($path);
+
+        return (string)$this->systemResourcePublisher->generateUri(
+            $resource,
+            $GLOBALS['TYPO3_REQUEST'] ?? null
+        );
+    }
+
+
+    /**
+     * $uid is the page the image comes from - with "on this and all child pages" possibly an
+     * ancestor - while the rule must match the CURRENT page's div, where Page/Jumbotron.fluid.html
+     * writes id="s{data.uid}". Without $currentUid an inheriting page got a foreign uid selector.
+     */
     public function getJumbotronBgImage(
         int|string $uid,
         array $fileObjects=[],
-        string $bgMediaQueries='2560,1920,1200,992,768,576'
+        string $bgMediaQueries='2560,1920,1200,992,768,576',
+        int|string $currentUid=0
     ): array {
         $imageUri_mobile = [];
         $css = '';
+        $selectorUid = !empty($currentUid) ? $currentUid : $uid;
         if (!empty($fileObjects)) {
             $file = $fileObjects[0];
             $image = $this->imageService->getImage((string)$file->getOriginalFile()->getUid(), $file->getOriginalFile(), true);
-            $css = $this->generateCss('s'.$uid, $file, $image, [], $bgMediaQueries);
+            $css = $this->generateCss('s'.$selectorUid, $file, $image, [], $bgMediaQueries);
             $bgImages = $this->generateSrcsetImages($file, $image);
             $imageUri_mobile[] = $bgImages[576];
         }
         if ($css) {
-            $this->assetCollector->addInlineStyleSheet('jumbotronBgImage-'.$uid, $css, [], ['priority' => true]);
+            $this->assetCollector->addInlineStyleSheet('jumbotronBgImage-'.$selectorUid, $css, [], ['priority' => true]);
         }
 
         return $imageUri_mobile;
@@ -96,9 +135,9 @@ class BackgroundImageUtility implements SingletonInterface
 
         $fileObjects = $this->fileRepository->findByRelation('tt_content', 'bgimages', $uid);
 
-        // $flexconf ist per Signatur optional und bei einem Element ohne
-        // ausgefuelltes FlexForm auch tatsaechlich leer - beide Schluessel
-        // deshalb einmal normalisieren statt sie direkt zu lesen.
+        // $flexconf is optional by signature and really is empty for an element
+        // without a filled FlexForm - normalize both keys once instead of
+        // reading them directly.
         $bgImages        = (int)($flexconf['bgimages'] ?? 0);
         $bgImagePosition = (int)($flexconf['bgimagePosition'] ?? 0);
 
@@ -137,7 +176,7 @@ class BackgroundImageUtility implements SingletonInterface
         $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 
         if (!empty($flexconf['enableAutoheight'])) {
-            // enableAutoheight gesetzt heisst nicht, dass addHeight existiert
+            // enableAutoheight being set does not mean addHeight exists
             if (!empty($flexconf['addHeight'])) {
                 $inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
                 if ($inline) {
@@ -166,7 +205,7 @@ class BackgroundImageUtility implements SingletonInterface
     ): string {
 
          $imageRaster = !empty($flexconf['imageRaster'])
-            ? 'url("'.PathUtility::getPublicResourceWebPath('EXT:t3sbootstrap/Resources/Public/Images/raster.png').'"), '
+            ? 'url("'.$this->rasterImageUri().'"), '
             : '';
          
          $processingInstructions = ['crop' => $file instanceof FileReference ? $file->getReferenceProperty('crop') : null];

@@ -37,18 +37,18 @@ final readonly class IsInline
             return;
         }
 
-        // Nicht-inline, nicht-priority: Platzhalter für künftige JS-Bundles
+        // Not inline, not priority: placeholder for future JS bundles
         if (!$event->isInline() && !$event->isPriority()) {
             return;
         }
 
-        // Inline + priority → CSS in Temp-Datei auslagern
+        // Inline + priority -> move CSS to a temp file
         if ($event->isInline() && $event->isPriority()) {
             $this->processInlineCss($event);
             return;
         }
 
-        // Inline + nicht-priority → JS in Temp-Datei auslagern
+        // Inline + non-priority -> move JS to a temp file
         if ($event->isInline() && !$event->isPriority()) {
             $this->processInlineJs($event);
         }
@@ -71,7 +71,7 @@ final readonly class IsInline
         $cssFile = self::inline2TempFile($css, 'css');
         if ($cssFile) {
             // @extensionScannerIgnoreLine
-            $event->getAssetCollector()->addStyleSheet('t3sbootstrapcss', $cssFile);
+            $event->getAssetCollector()->addStyleSheet('t3sbootstrapcss', $cssFile, ['media' => 'all']);
         }
     }
 
@@ -84,7 +84,7 @@ final readonly class IsInline
         $rawJs     = '';
 
         foreach ($event->getAssetCollector()->getInlineJavaScripts() as $library => $source) {
-            // JSON-Daten (z.B. TypoScript-Settings) überspringen
+            // Skip JSON data (TypoScript settings and the like)
             if (str_starts_with($source['source'], '{"')) {
                 continue;
             }
@@ -137,10 +137,9 @@ final readonly class IsInline
                 . 'TYPO3.settings = {\'ADDHEIGHT\':{' . rtrim(trim($addheight), ',') . '}};' . LF;
         }
 
-        // DOMContentLoaded-Wrapper - nur wenn es auch etwas zu wrappen gibt.
-        // Ohne diese Bedingung ist $source nie leer, der Early-Return beim Aufrufer
-        // greift nie, und jede Seite ohne Inline-JS bekommt trotzdem eine
-        // typo3temp-Datei samt zusaetzlichem Request.
+        // DOMContentLoaded wrapper - only when there is something to wrap. Without the
+        // condition $source is never empty, the caller's early return never fires, and
+        // every page without inline JS still gets a typo3temp file plus an extra request.
         if ($addheightJs !== '' || $js !== '') {
             $source .= <<<JS
                 function ready(fn) {
@@ -174,11 +173,33 @@ final readonly class IsInline
         $script   = 'typo3temp/assets/t3sbootstrap_' . substr(md5($str), 0, 10) . '.' . $ext;
         $fullPath = Environment::getPublicPath() . '/' . $script;
 
-        if (!file_exists($fullPath)) {
-            $written = GeneralUtility::writeFile($fullPath, $str);
-            if (!$written) {
-                return '';
-            }
+        // The file name is the hash of the content, so the expected size is known.
+        // A mismatch means an aborted write: the file exists but is incomplete.
+        // file_exists() alone was happy with that and kept serving it forever,
+        // because the same check passed again on every following request. The
+        // size comparison repairs it on the next page hit.
+        clearstatcache(true, $fullPath);
+        if (file_exists($fullPath) && filesize($fullPath) === strlen($str)) {
+            return $script;
+        }
+
+        // Write in full, then rename. rename() is atomic within one filesystem:
+        // a concurrent request sees the file either not at all or complete, never
+        // half-written. Writing straight to the target name leaves that window
+        // open, and half a script kills the JavaScript of the whole page.
+        $tmpPath = $fullPath . '.' . uniqid('', true) . '.tmp';
+        if (!GeneralUtility::writeFile($tmpPath, $str)) {
+            return '';
+        }
+
+        if (!@rename($tmpPath, $fullPath)) {
+            @unlink($tmpPath);
+
+            // Another request may have finished in the same second - then the
+            // file is there and the reference stays valid.
+            clearstatcache(true, $fullPath);
+
+            return file_exists($fullPath) ? $script : '';
         }
 
         return $script;

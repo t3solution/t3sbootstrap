@@ -27,15 +27,11 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
     }
 
     /**
-     * Liefert den rohen Wert einer Einstellung, nicht nur '1'/'0'.
-     *
-     * t3sbootstrap() normalisiert auf wahr/falsch und reicht damit fuer
-     * Schalter. Sobald eine Einstellung eine Auswahl ist - rteCodeBlock haelt
-     * den Namen des Prism-Themes - braucht die Bedingung den Wert selbst.
-     *
-     * Bewusst eine zweite Funktion: t3sbootstrap() auf den Rohwert
-     * umzustellen wuerde bestehende Abfragen still veraendern, etwa bei
-     * lazyLoad oder imgCopyright, die auch '2' oder '3' annehmen koennen.
+     * Returns the raw value of a setting, not just '1'/'0'. t3sbootstrap() normalises to
+     * true/false, which is enough for switches, but a setting that is a choice - rteCodeBlock
+     * holds the name of the Prism theme - needs the value itself. Deliberately a second
+     * function: switching t3sbootstrap() to raw values would silently change existing queries
+     * such as lazyLoad or imgCopyright, which can also be '2' or '3'.
      */
     protected function getExtconfValue(): ExpressionFunction
     {

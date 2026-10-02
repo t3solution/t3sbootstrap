@@ -65,6 +65,50 @@
 							 <eval>trim</eval>
 						</config>
 					</colclass>
+					<shuffle>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonry.shuffle</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonry.shuffle.description</description>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+							<default>0</default>
+						</config>
+					</shuffle>
+					<shuffleCategories>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonry.shuffleCategories</label>
+						<description>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonry.shuffleCategories.description</description>
+						<displayCond>FIELD:shuffle:REQ:true</displayCond>
+						<config>
+							<type>select</type>
+							<renderType>selectMultipleSideBySide</renderType>
+							<foreign_table>sys_category</foreign_table>
+							<foreign_table_where>AND sys_category.sys_language_uid IN (0,-1) ORDER BY sys_category.title</foreign_table_where>
+							<size>8</size>
+							<autoSizeMax>12</autoSizeMax>
+							<maxitems>30</maxitems>
+							<enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
+						</config>
+					</shuffleCategories>
+					<shuffleLabel>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonry.shuffleLabel</label>
+						<displayCond>FIELD:shuffle:REQ:true</displayCond>
+						<config>
+							<type>input</type>
+							<size>20</size>
+							<default>Filtern</default>
+							<eval>trim</eval>
+						</config>
+					</shuffleLabel>
+					<shuffleAllLabel>
+						<label>LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang_be.xlf:flexform.masonry.shuffleAllLabel</label>
+						<displayCond>FIELD:shuffle:REQ:true</displayCond>
+						<config>
+							<type>input</type>
+							<size>20</size>
+							<default>Alle</default>
+							<eval>trim</eval>
+						</config>
+					</shuffleAllLabel>
 				</el>
 			</ROOT>
 		</sDEF>

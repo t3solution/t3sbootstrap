@@ -5,11 +5,10 @@
 	// Default - Main.fluid.html
 	const navbar = document.getElementById('main-navbar'),
 		  navbarHeight = navbar.clientHeight,
-		  // "no" as navbar breakpoint means the navbar never expands. The body tag then
-		  // carries no data-navbar-breakpointwidth at all (BodyTag.typoscript writes it
-		  // only if.isTrue), so getAttribute() returns null and every "vw < bp" test below
-		  // would compare against 0 and take the desktop branch. Fall back to a width no
-		  // viewport reaches, which is what t3sbOffcanvas() already does for this case.
+		  // Breakpoint "no" means the navbar never expands, and BodyTag.typoscript then
+		  // omits data-navbar-breakpointwidth (if.isTrue) - getAttribute() returns null,
+		  // every "vw < bp" test compares against 0 and takes the desktop branch. Fall
+		  // back to a width no viewport reaches, as t3sbOffcanvas() already does.
 		  navbarBreakpointWidth = document.body.getAttribute('data-navbar-breakpointwidth') || 99999,
 		  viewportWidth = parseFloat(getComputedStyle(document.querySelector('html'), null).width.replace("px", "")),
 		  onePageLayout = navbar.classList.contains('sectionMenu');
@@ -19,6 +18,57 @@
 	if ( navbar.classList.contains('fixed-top') || navbar.classList.contains('sticky-top') ) {
 		fixedNavbar = true;
 	}
+
+	// Anchor offset - Main.fluid.html
+	//
+	// t3sbScrollToAnchor() only corrects three cases: page load with a hash,
+	// the section menu and a.js-scroll-trigger. A plain link in the body text
+	// bypasses it, so the browser jumps itself and hides the target under the
+	// fixed navbar.
+	//
+	// Do NOT add the heights up: a sticky-top bar sits at top:0 and slides
+	// underneath a fixed-top navbar, so the page is covered down to the lowest
+	// bottom edge, not to the sum. Hence the maximum of "top + height". The
+	// breadcrumb is measured, not calculated - its sticky-top comes from a
+	// free-text class in the config record.
+	//
+	// On window, not a plain var: IsInline::buildSource() wraps all inline JS
+	// in ready(() => { ... }), so t3sbScrollToAnchor() - emitted outside that
+	// wrapper - would never see it.
+	function t3sbMeasureStickyTop() {
+		var hoehe = 0;
+		[ navbar, document.querySelector('nav[aria-label="breadcrumb"]') ].forEach(function (el) {
+			if ( !el ) {
+				return;
+			}
+			var stil = getComputedStyle(el);
+			if ( stil.position !== 'fixed' && stil.position !== 'sticky' ) {
+				return;
+			}
+			var oben = parseFloat(stil.top);
+			if ( isNaN(oben) ) {
+				return;
+			}
+			var unten = oben + el.getBoundingClientRect().height;
+			if ( unten > hoehe ) {
+				hoehe = unten;
+			}
+		});
+
+		window.t3sbStickyTop = hoehe;
+
+		// scroll-padding-top applies to the scroll container, so it covers
+		// every jump: the browser's own, :target, scrollIntoView(). It leaves
+		// the pre-computed window.scroll() in t3sbScrollToAnchor() alone.
+		document.documentElement.style.scrollPaddingTop = (hoehe + {settings.config.sectionmenuAnchorOffset as integer}) + 'px';
+	}
+
+	// Measured three times: at once for the jump on page load, after "load"
+	// when fonts and images have settled the heights, and on resize - the
+	// breadcrumb wraps on narrow viewports and grows taller.
+	t3sbMeasureStickyTop();
+	window.addEventListener('load', t3sbMeasureStickyTop);
+	window.addEventListener('resize', t3sbMeasureStickyTop);
 
 	// Scroll anchor - Main.fluid.html
 	if (window.location.hash) {
@@ -36,6 +86,57 @@
 		  onePageLayout = 0;
 
 	var fixedNavbar = false;
+
+	// Anchor offset - Main.fluid.html
+	//
+	// t3sbScrollToAnchor() only corrects three cases: page load with a hash,
+	// the section menu and a.js-scroll-trigger. A plain link in the body text
+	// bypasses it, so the browser jumps itself and hides the target under the
+	// fixed navbar.
+	//
+	// Do NOT add the heights up: a sticky-top bar sits at top:0 and slides
+	// underneath a fixed-top navbar, so the page is covered down to the lowest
+	// bottom edge, not to the sum. Hence the maximum of "top + height". The
+	// breadcrumb is measured, not calculated - its sticky-top comes from a
+	// free-text class in the config record.
+	//
+	// On window, not a plain var: IsInline::buildSource() wraps all inline JS
+	// in ready(() => { ... }), so t3sbScrollToAnchor() - emitted outside that
+	// wrapper - would never see it.
+	function t3sbMeasureStickyTop() {
+		var hoehe = 0;
+		[ navbar, document.querySelector('nav[aria-label="breadcrumb"]') ].forEach(function (el) {
+			if ( !el ) {
+				return;
+			}
+			var stil = getComputedStyle(el);
+			if ( stil.position !== 'fixed' && stil.position !== 'sticky' ) {
+				return;
+			}
+			var oben = parseFloat(stil.top);
+			if ( isNaN(oben) ) {
+				return;
+			}
+			var unten = oben + el.getBoundingClientRect().height;
+			if ( unten > hoehe ) {
+				hoehe = unten;
+			}
+		});
+
+		window.t3sbStickyTop = hoehe;
+
+		// scroll-padding-top applies to the scroll container, so it covers
+		// every jump: the browser's own, :target, scrollIntoView(). It leaves
+		// the pre-computed window.scroll() in t3sbScrollToAnchor() alone.
+		document.documentElement.style.scrollPaddingTop = (hoehe + {settings.config.sectionmenuAnchorOffset as integer}) + 'px';
+	}
+
+	// Measured three times: at once for the jump on page load, after "load"
+	// when fonts and images have settled the heights, and on resize - the
+	// breadcrumb wraps on narrow viewports and grows taller.
+	t3sbMeasureStickyTop();
+	window.addEventListener('load', t3sbMeasureStickyTop);
+	window.addEventListener('resize', t3sbMeasureStickyTop);
 
 	// Scroll anchor - Main.fluid.html
 	if (window.location.hash) {
@@ -112,6 +213,80 @@
 		</f:if>
 	</f:else>
 </f:if>
+<f:comment>
+	Vertical gutters without negative margins.
+
+	Bootstrap builds gy-* from margin-top:calc(-1 * var(--bs-gutter-y)) on .row plus
+	margin-top:var(--bs-gutter-y) on every column. At the end of the page that sticks out
+	below the row, and the Bootstrap docs answer it with an .overflow-hidden wrapper.
+
+	That wrapper turns the box into a scroll container, and position:sticky always attaches
+	to the nearest one. Inside a box that never scrolls, sticky stands still - .sticky-top
+	in a column was dead as soon as a vertical gutter was set.
+
+	row-gap gives the same spacing without negative margins: nothing sticks out, so there
+	is nothing to clip and no wrapper. The class is set by Classes/Layouts/Gutters.php.
+</f:comment>
+<f:asset.css identifier="t3sbs_rowGutters">
+.row.t3sbs-row-gap {
+	margin-top: 0;
+	row-gap: var(--bs-gutter-y, 0);
+}
+.row.t3sbs-row-gap > * {
+	margin-top: 0;
+}
+</f:asset.css>
+
+<f:comment>
+	sticky-top in a column of a multi-column container.
+
+	"Equal height" puts d-flex align-items-stretch on the column, "vertical align" puts
+	d-flex align-items-* there. The content element is then a flex item and is stretched
+	to the full height of the column - and an element as tall as its container has
+	nowhere to travel, so position: sticky never takes hold.
+
+	align-self gives it back its own height. The column keeps the full row height, so the
+	element can travel inside it. Only the sticky element is taken out of the alignment,
+	everything beside it keeps it.
+</f:comment>
+<f:asset.css identifier="t3sbs_stickyInColumn">
+.row > [class*="col"].d-flex > .sticky-top,
+.row > [class*="col"].d-flex > .sticky-lg-top,
+.row > [class*="col"].d-flex > .sticky-md-top,
+.row > [class*="col"].d-flex > .sticky-sm-top {
+	align-self: flex-start;
+}
+</f:asset.css>
+
+<f:comment>
+	The anchor span inside a button group.
+
+	tt_content.stdWrap.prepend puts a <span class="t3sbs-anchor"> before every element
+	with a section index. Inside a button group that span becomes a sibling of the
+	buttons, and Bootstrap shapes the corners by position:
+
+	  .btn-group > :not(.btn-check) + .btn               -> drops the left radius
+	  .btn-group > :not(.btn-check:first-child) + .btn   -> margin-left: -1px
+
+	Both are right for the middle buttons. With a span before the FIRST button they hit
+	it too, and the group starts square and shifted by a pixel. These rules restore that
+	one case - ":first-child" only matches the span at the very start of the group.
+
+	Same vertically, where the radius sits at the top.
+</f:comment>
+<f:asset.css identifier="t3sbs_anchorInBtnGroup">
+.btn-group > .t3sbs-anchor:first-child + .btn {
+	margin-left: 0;
+	border-top-left-radius: var(--bs-btn-border-radius, var(--bs-border-radius));
+	border-bottom-left-radius: var(--bs-btn-border-radius, var(--bs-border-radius));
+}
+.btn-group-vertical > .t3sbs-anchor:first-child + .btn {
+	margin-top: 0;
+	border-top-left-radius: var(--bs-btn-border-radius, var(--bs-border-radius));
+	border-top-right-radius: var(--bs-btn-border-radius, var(--bs-border-radius));
+}
+</f:asset.css>
+
 <f:if condition="{settings.config.footerSticky}">
 <f:comment> Sticky footer </f:comment>
 <f:asset.css identifier="t3sbs_footerSticky">

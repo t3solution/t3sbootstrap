@@ -68,11 +68,9 @@ abstract class AbstractParser implements ParserInterface
         }
 
         foreach ($metadata['files'] as $file) {
-            // A recorded import can be gone: the file was renamed, the asset
-            // directory was wiped or an update moved it elsewhere. filemtime()
-            // would raise a warning that TYPO3's error handler turns into an
-            // exception and takes the whole frontend down. A missing dependency
-            // simply means the cached css is stale.
+            // A recorded import can be gone (renamed, asset directory wiped, moved by an
+            // update). filemtime() would raise a warning that TYPO3's error handler turns
+            // into an exception, while a missing dependency just means the css is stale.
             if (!is_file($file)) {
                 return true;
             }

@@ -7,6 +7,11 @@ services:
   T3SBS\T3sbootstrap\:
     resource: '../Classes/*'
     
+  # Instantiated by the PageRenderer hook via makeInstance(), which only reaches
+  # public services - without this the constructor injection above fails.
+  T3SBS\T3sbootstrap\Service\CompileService:
+    public: true
+
   T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor:
     public: true
     

@@ -8,32 +8,10 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\RteCKEditor\Form\Element\Event\AfterPrepareConfigurationForEditorEvent;
 
 /**
- * Lets an installation decide which parts of the t3sbootstrap RTE are offered
- * to editors, without forking the YAML preset.
- *
- * Two levels, the lower one wins:
- *
- *   1. Extension Configuration, category "RTE" - the installation-wide default.
- *   2. Page TSconfig - per page tree:
- *
- *          RTE.t3sbootstrap.features {
- *              columns = 0
- *              codeBlock = 0
- *          }
- *
- * What this does NOT do: it never removes a CKEditor plugin from importModules.
- * A toolbar item that is gone only stops editors from creating NEW content of
- * that kind - the plugin stays loaded, so existing alerts, columns or code
- * blocks are still parsed, still editable and survive a save untouched.
- * Dropping the module instead would look tidier and would silently strip that
- * markup from every record an editor opens.
- *
- * Style definitions are a special case: in the "t3sbootstrap" preset the Styles
- * dropdown is also what keeps those classes through the round trip - the
- * General HTML Support whitelist there only covers <div>. Removing a style
- * group would therefore drop the classes from existing content, so every group
- * that gets switched off hands its element/class pairs over to htmlSupport
- * first. The dropdown loses the entry, the markup does not.
+ * Which parts of the t3sbootstrap RTE are offered to editors: Extension Configuration
+ * "RTE", overridable per page tree via RTE.t3sbootstrap.features. Only toolbar items
+ * go, plugins stay loaded, so existing markup stays editable; a disabled style group
+ * hands its element/class pairs to htmlSupport, or its classes are stripped on save.
  */
 #[AsEventListener(
 	identifier: 't3sbootstrap/rte-feature-toggles',
@@ -64,11 +42,9 @@ final readonly class FeatureToggles
 		'codeBlock' => [
 			'extconf' => 'rteCodeBlock',
 			'toolbar' => ['codeBlock'],
-			// No 'config' here on purpose. Dropping the codeBlock configuration
-			// would take the language list with it, and CKEditor would fall back
-			// to its own defaults - a stored language-typoscript would then find
-			// no match on upcast and be saved as language-plaintext. Removing the
-			// toolbar item is enough; existing blocks stay as they are.
+			// No 'config' here on purpose: dropping the codeBlock configuration
+			// would take the language list with it, CKEditor would fall back to its
+			// own defaults, and a stored language-typoscript would be saved as plaintext.
 		],
 		'code' => [
 			'extconf' => 'rteCode',
@@ -81,10 +57,9 @@ final readonly class FeatureToggles
 		'badge' => [
 			'extconf' => 'rteBadge',
 			'toolbar' => ['badge'],
-			// Badges waren zuvor 16 Eintraege im Styles-Dropdown und hingen an
-			// "rteStyleBadges". Wer sie abgeschaltet hatte, soll sie nach dem
-			// Update nicht ploetzlich wiederbekommen - siehe die Reihenfolge in
-			// getDisabledFeatures().
+			// Badges used to be 16 entries in the styles dropdown, tied to
+			// "rteStyleBadges". Anyone who had switched them off must not get them
+			// back after the update - see the order in getDisabledFeatures().
 			'legacyExtconf' => 'rteStyleBadges',
 			'legacyFeature' => 'styleBadges',
 		],

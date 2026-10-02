@@ -34,12 +34,24 @@ class BackgroundWrapper implements SingletonInterface
     ): array {
         $processedData['style']          = $processedData['style'] ?? '';
         $processedData['enableAutoheight'] = !empty($flexconf['enableAutoheight']);
+        // Header inside the section instead of above it: on top of the image,
+        // together with the content. Only the header of the wrapper itself -
+        // the headers of the elements inside it are untouched.
+        $processedData['headerInside']     = !empty($flexconf['headerInside']);
+
+        // The header is printed above the <section>, and the <section> is what
+        // carries the class - so a contentMarginTop would land between the two.
+        // Same condition as in the template; DefaultHelper moves the class over.
+        $processedData['marginTopOnHeader'] = !$processedData['headerInside']
+            && (
+                !empty($processedData['data']['header'])
+                || (!empty($settings['supraheader']) && !empty($processedData['data']['tx_t3sbootstrap_supraheader']))
+            );
         $processedData['addHeight']        = !empty($flexconf['addHeight']) ? (int)$flexconf['addHeight'] : 0;
 
-        // Textfarbe und (halbtransparente) Hintergrundfarbe gehoeren zum
-        // Wrapper, nicht zum Medium. Sie wurden bisher nur in processImage()
-        // gesetzt - bei einem lokalen Video blieb das Overlay deshalb ohne
-        // Farbe, und der Wrapper war visuell gar nicht vorhanden.
+        // Text and (semi-transparent) background colour belong to the wrapper, not to
+        // the medium. They used to be set only in processImage(), so with a local video
+        // the overlay stayed colourless and the wrapper was visually not there at all.
         $processedData['overlayClass']   = !empty($processedData['data']['tx_t3sbootstrap_textcolor'])
             ? ' text-' . $processedData['data']['tx_t3sbootstrap_textcolor'] : '';
         $processedData['bgColorOverlay'] = $this->styleHelper->getBgColor($processedData['data'], false);
@@ -113,12 +125,9 @@ class BackgroundWrapper implements SingletonInterface
         $uid       = (int)$processedData['data']['uid'];
         $autoplay  = $file->getProperties()['autoplay'];
 
-        // The whole "localvideo" sheet is behind displayCond isLocalVideo(), and
-        // that condition looks at the already stored assets relation. On the very
-        // first save of a background wrapper the fields were therefore never
-        // rendered and never written - every key below can be missing.
-        // cast, not just ??: an empty string reached the inline JS as a missing
-        // argument and broke the whole script block
+        // The "localvideo" sheet sits behind displayCond isLocalVideo(), which reads the already
+        // stored assets relation - on the very first save every key below can be missing. Cast,
+        // not just ??: an empty string reached the inline JS as a missing argument and broke it.
         $loop      = (int)($flexconf['loop'] ?? 0);
         $mute      = $autoplay ? true : (int)($flexconf['mute'] ?? 1);
 
@@ -126,8 +135,8 @@ class BackgroundWrapper implements SingletonInterface
         $rawMobileWidth  = (string)($flexconf['mobileWidth']  ?? '100');
         $alignVideoItem  = (string)($flexconf['alignVideoItem'] ?? 'align-self-center');
 
-        // 'none' ergab frueher einen leeren Wert und damit "max-height:px" -
-        // eine ungueltige Deklaration, die der Browser verwirft
+        // 'none' used to yield an empty value, so "max-height:px" - invalid, dropped
+        // by the browser.
         $mobileHeight = $rawMobileHeight !== 'none' ? (int)trim($rawMobileHeight) : 0;
         $mobileWidth  = $rawMobileWidth  !== 'none' ? (int)trim($rawMobileWidth)  : 0;
         $hShift       = (int)($flexconf['horizontalShift'] ?? 0);
@@ -167,22 +176,9 @@ class BackgroundWrapper implements SingletonInterface
     }
 
     /**
-     * CSS fuer die Darstellung des lokalen Videos auf Mobilgeraeten.
-     *
-     * Bisher wurde nur "max-height" gesetzt. Eine Maximalhoehe kann nichts
-     * hoeher machen: die tatsaechliche Hoehe kam vom inneren
-     * <div class="ratio ratio-16x9"> aus Media/Type/Video.fluid.html, also
-     * 56,25% der Breite. Auf einem iPhone mit 390px sind das 219px - der
-     * eingestellte Wert (z.B. 430) blieb wirkungslos.
-     *
-     * Deshalb: die Hoehe wird gesetzt, das innere ratio-Div auf diese Hoehe
-     * gebracht (sonst fuellt das Video nur die oberen 56,25%) und das Video
-     * mit object-fit:cover beschnitten statt verzerrt.
-     *
-     * Der Breakpoint ist 767.98px - so wie das Feldlabel es angibt und wie das
-     * Inline-JS rechnet (window.innerWidth < 768). Mit den bisherigen 768px
-     * galten bei exakt 768px beide Zweige gleichzeitig, und das Video wurde
-     * auf einen Streifen zusammengedrueckt.
+     * CSS for the local video on mobile. "max-height" alone cannot grow anything - the height
+     * comes from the inner ratio div (56.25% of the width) - so height is set and the video is
+     * cropped with object-fit:cover. Breakpoint 767.98px: at 768px both branches applied at once.
      */
     private function buildMobileCss(int $uid, int $mobileWidth, int $mobileHeight, int $hShift): string
     {
@@ -192,10 +188,9 @@ class BackgroundWrapper implements SingletonInterface
             $figure[] = 'width:' . $mobileWidth . '%';
         }
         if ($mobileHeight > 0) {
-            // min-height muss mit, sonst gewinnt die 200px-Untergrenze aus
-            // t3sbootstrap.css - min-height schlaegt height unabhaengig von
-            // der Spezifitaet, ein eingestellter Wert unter 200 blieb also
-            // wirkungslos.
+            // min-height must be set too, otherwise the 200px floor from t3sbootstrap.css
+            // wins - min-height beats height regardless of specificity, so a configured
+            // value below 200 had no effect.
             $figure[] = 'height:' . $mobileHeight . 'px';
             $figure[] = 'min-height:' . $mobileHeight . 'px';
             $figure[] = 'max-height:' . $mobileHeight . 'px';
@@ -217,17 +212,12 @@ class BackgroundWrapper implements SingletonInterface
     }
 
     /**
-     * Parst Seitenverhältnis in "WxH"-Format - Breite zuerst, wie im Rest der
-     * Extension (ConfigProcessor, BootstrapProcessor, TSConfig).
+     * Parses an aspect ratio into "WxH" format - width first, as everywhere else in the
+     * extension. The notations differ: this FlexForm's value picker stores height first
+     * ("37by9" has the value "9/37") while the field description offers "37:9" as an
+     * equivalent entry - unnormalised, the generated rule states the ratio upside down.
      *
-     * Achtung, die Notationen meinen nicht dasselbe. Der Value Picker dieses
-     * FlexForms speichert Höhe zuerst ("37by9" hat den Wert "9/37"), während die
-     * Feldbeschreibung daneben "37:9" als gleichwertige Eingabe nennt. Beides
-     * muss hier auf dieselbe Reihenfolge gebracht werden, sonst steht in der
-     * generierten Regel das Verhältnis auf dem Kopf.
-     *
-     * Unterstützt "9/37" (H/W) sowie "37:9", "37by9" und "37x9" (W/H).
-     * Fallback: "16x9".
+     * Accepts "9/37" (H/W) as well as "37:9", "37by9" and "37x9" (W/H). Fallback: "16x9".
      *
      * @return array{0: string, 1: string}  [ratio-key, css-class-suffix]
      */
@@ -296,8 +286,8 @@ class BackgroundWrapper implements SingletonInterface
         $processedData['alignItem']   = !empty($flexconf['alignItem']) ? ' ' . $flexconf['alignItem'] : '';
         $processedData['imageRaster'] = !empty($flexconf['imageRaster']) ? 'multiple-' : '';
 
-        // overlayClass und bgColorOverlay stehen jetzt in getProcessedData(),
-        // damit sie fuer jedes Medium gelten
+        // overlayClass and bgColorOverlay moved to getProcessedData() so they apply
+        // to every medium.
         $processedData['style']      .= $this->buildFilterStyle($flexconf);
 
         return $processedData;

@@ -28,7 +28,15 @@
 
 <f:section name="Default">
 <div class="row{class}{gutters}">
-	<f:if condition="{data.header} || {data.subheader} || {data.date}">
+	<f:comment>
+			Die Ueberzeile zaehlt mit: sie steht oft allein ueber einem
+			Container, ohne Ueberschrift darunter. Ohne sie in dieser
+			Bedingung wurde Content/Header/All gar nicht erst gerendert -
+			und die dortige Pruefung kam nie zum Zug. Gekoppelt an
+			settings.supraheader, sonst entstuende bei abgeschalteter
+			Ueberzeile eine leere Spalte.
+		</f:comment>
+		<f:if condition="{data.header} || {data.subheader} || {data.date} || ({settings.supraheader} && {data.tx_t3sbootstrap_supraheader})">
 		<div id="s{data.uid}-h" class="col-12 w-100">
 			<f:render partial="Content/Header/All" arguments="{_all}" />
 		</div>

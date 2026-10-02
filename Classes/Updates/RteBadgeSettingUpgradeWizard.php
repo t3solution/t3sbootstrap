@@ -9,22 +9,9 @@ use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Benennt die Extension-Konfiguration "rteStyleBadges" in "rteBadge" um.
- *
- * Badges waren 16 Eintraege im Styles-Dropdown und wurden ueber rteStyleBadges
- * ein- und ausgeschaltet. Seit dieser Version sind sie ein eigenes
- * Toolbar-Dropdown, die Einstellung heisst rteBadge.
- *
- * Warum das ein Wizard ist und nicht einfach ein Rueckfall im Code: TYPO3 traegt
- * beim Update jeden neuen Schluessel aus ext_conf_template mit seinem
- * Vorgabewert in die gespeicherte Konfiguration ein. "rteBadge = 1" steht danach
- * also da, ohne dass es jemand entschieden haette, und der alte Wert liegt
- * daneben. FeatureToggles loest das, indem der alte Schluessel gewinnt, solange
- * er existiert - und dieser Wizard raeumt genau das auf, sodass am Ende nur noch
- * ein Schluessel uebrig ist.
- *
- * Der Wizard ist nicht zwingend: ohne ihn gilt weiter der alte Wert, bis das
- * Formular der Extension-Konfiguration einmal gespeichert wird.
+ * Renames the extension configuration "rteStyleBadges" to "rteBadge". A wizard and not a code
+ * fallback, because an update writes every new ext_conf_template key with its default, so
+ * "rteBadge = 1" would sit next to the old value undecided. The old value wins until saved once.
  */
 #[UpgradeWizard('t3sbootstrap_rteBadgeSettingUpgradeWizard')]
 final class RteBadgeSettingUpgradeWizard implements UpgradeWizardInterface

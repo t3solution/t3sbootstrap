@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\Helper;
 
+use T3SBS\T3sbootstrap\DataProcessing\BootstrapProcessor;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -67,7 +68,8 @@ class DefaultHelper implements SingletonInterface
 		int $defaultHeaderType,
 		string $contentMarginTop,
 		string $animateCss,
-		string $parentCType
+		string $parentCType,
+		array $containerConfig = []
 	): array
 	{
 		$cType = $processedData['data']['CType'];
@@ -134,9 +136,44 @@ class DefaultHelper implements SingletonInterface
 		}
 
 		# default margin-top for each content-element if no margin-top
+		#
+		# colPos 0 is the main column, colPos > 199 are the columns of a container.
+		# Both are content areas - the same test tt_content.stdWrap.prepend and the
+		# section menu use. Limiting this to colPos 0 left every element inside a
+		# container without the margin, so the automatic spacing stopped exactly
+		# where layouts are built.
+		#
+		# Jumbotron (3), footer column (4) and the expanded content areas (20, 21)
+		# fall out through their colPos. The footer PAGE does not: its elements sit
+		# in colPos 0 like any other page, so it is tested separately.
+		#
+		# A wrapper is the exception: it brings its own padding, and the first element
+		# in it would push a gap between the wrapper's edge and its content. Only the
+		# column containers (two_columns and friends) keep the margin - there the
+		# elements stand one below the other and need the rhythm.
+		$colPos = (int)($processedData['data']['colPos'] ?? 0);
+		$footerPid = (int)($containerConfig['footerPid'] ?? 0);
+		$isFooterPage = $footerPid > 0 && (int)($processedData['data']['pid'] ?? 0) === $footerPid;
+		$isInWrapper = $parentCType !== '' && in_array(
+			$parentCType,
+			GeneralUtility::trimExplode(',', BootstrapProcessor::TX_CONTAINER, true),
+			true
+		);
 		$hasMarginTop = (bool)preg_match('/(^|\s)m[ty]?-/', (string)$processedData['class']);
-		if ($contentMarginTop && $processedData['data']['colPos'] === 0 && $hasMarginTop === FALSE ) {
-			$processedData['class'] .= ' '.$contentMarginTop;
+		if ($contentMarginTop && !$isInWrapper && !$isFooterPage
+			&& ($colPos === 0 || $colPos > 199) && $hasMarginTop === FALSE ) {
+			// A few containers print their header BEFORE the element that carries
+			// $processedData['class'] - the background wrapper is one. The margin
+			// would open a gap between header and section instead of in front of
+			// the whole block, so it goes on the <header> there. The flag is set by
+			// the wrapper, which alone knows whether a header is printed above.
+			if (!empty($processedData['marginTopOnHeader'])) {
+				$processedData['header']['class'] = trim(
+					($processedData['header']['class'] ?? '').' '.$contentMarginTop
+				);
+			} else {
+				$processedData['class'] .= ' '.$contentMarginTop;
+			}
 		}
 
 		return $processedData;

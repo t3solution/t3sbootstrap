@@ -63,7 +63,7 @@
 						<f:if condition="{hFa} && !{iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>						
-						{header -> f:format.raw()}
+						{header -> f:sanitize.html()}
 						<f:if condition="{hFa} && {iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>
@@ -74,7 +74,7 @@
 						<f:if condition="{hFa} && !{iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>						
-						{header -> f:format.raw()}
+						{header -> f:sanitize.html()}
 						<f:if condition="{hFa} && {iconPositionBehind}">
 							<t3sb:icon iconfig="{hFa}" />
 						</f:if>					
@@ -86,7 +86,7 @@
 			<f:if condition="{hFa} && !{iconPositionBehind}">
 				<t3sb:icon iconfig="{hFa}" />
 			</f:if>	
-			{header -> f:format.raw()}
+			{header -> f:sanitize.html()}
 			<f:if condition="{hFa} && {iconPositionBehind}">
 				<t3sb:icon iconfig="{hFa}" />
 			</f:if>

@@ -7,9 +7,9 @@ import { enableBlockEscape } from '@t3sbs/t3sbootstrap/rte_ckeditor/block-escape
 /**
  * Bootstrap grid rows for the RTE.
  *
- * A row is <div class="row"> holding two, three or four <div class="col-md-*">.
- * col-md-* and not col-* on purpose: the columns stack below the md breakpoint,
- * which is what every other multi-column element of this extension does.
+ * A row is <div class="row"> with two to four <div class="col-md-*">. col-md-*
+ * and not col-*, so the columns stack below the md breakpoint like every other
+ * multi-column element of this extension.
  */
 const LAYOUTS = [
 	{ columns: 2, colClass: 'col-md-6', label: '2 Spalten' },
@@ -82,18 +82,13 @@ function isColumnElement(viewElement) {
 }
 
 /**
- * True when this <div class="row"> is one the plugin can represent without
- * losing anything.
+ * True when this <div class="row"> is one the plugin can represent losslessly.
  *
- * bsRow allows bsCol children and nothing else. A row the plugin claims but
- * cannot rebuild upcasts to an empty bsRow, and everything inside it is gone
- * after the next save - which is exactly the bug this guard exists for. So the
- * row is only claimed when every element child is a column and there is at
- * least one. Whitespace between the columns is ignored, any other text is not.
- *
- * A row that fails the check is left to the normal conversion: it keeps its
- * classes through General HTML Support and stays editable, it just is not a
- * grid widget.
+ * bsRow allows bsCol children only; a claimed row the plugin cannot rebuild upcasts
+ * to an empty bsRow and loses its content on the next save - the bug this guard
+ * exists for. Claimed only when every element child is a column and there is at
+ * least one (whitespace between columns is ignored, any other text is not). A row
+ * that fails stays a plain editable div with its classes kept by General HTML Support.
  */
 function isConvertibleRow(viewElement) {
 	if (!viewElement || !viewElement.is('element', 'div') || !viewElement.hasClass('row')) {
@@ -131,10 +126,9 @@ function findRow(element) {
 /**
  * Styles for the dropdown entries AND the grey guide line around the columns.
  *
- * The guide line lives here and not in rte-columns.css on purpose: contentsCss
- * is loaded by the editor and it is not guaranteed to reach us, whereas a style
- * element in the backend document always applies to the editing area. Both the
- * toolbar and the editing root are part of that document.
+ * The guide line is here rather than in rte-columns.css because contentsCss is not
+ * guaranteed to reach us, while a style element in the backend document always
+ * covers both the toolbar and the editing root.
  */
 function injectDropdownStyles() {
 	const id = 't3sb-columns-plugin-styles';
@@ -144,10 +138,9 @@ function injectDropdownStyles() {
 	const style = document.createElement('style');
 	style.id = id;
 	style.textContent =
-		// grey guide line per column - backend only, the class is added by the
-		// editing downcast and never reaches the saved bodytext. !important
-		// because Bootstrap is loaded in the backend and CKEditor styles the
-		// nested editables itself.
+		// grey guide line per column - backend only, added by the editing downcast and
+		// never saved to bodytext. !important because Bootstrap is loaded in the backend
+		// and CKEditor styles the nested editables itself.
 		'.ck-content .t3sb-rte-col{box-shadow:inset 0 0 0 1px #d4d4d4 !important;min-height:2.5em;}' +
 		'.ck-content .t3sb-rte-col.ck-editor__nested-editable:focus{box-shadow:none !important;}' +
 		'.ck-content .t3sb-rte-row{margin-bottom:1rem;}' +
@@ -326,11 +319,9 @@ export class ColumnsGrid extends Core.Plugin {
 		});
 
 		// Do NOT bind buttonView.isOn or buttonView.isEnabled here: createDropdown()
-		// already binds both, and Observable#bind throws on a second binding.
-		//
-		// Both commands feed the state: binding to insertBsRow alone would disable
-		// the whole dropdown while the caret sits inside a row - and "Spalten
-		// aufheben" would be unreachable exactly where it is needed.
+		// already binds both and Observable#bind throws on a second binding. Both
+		// commands feed the state - binding to insertBsRow alone would disable the
+		// dropdown inside a row, where "unwrap columns" is exactly what is needed.
 		dropdown.bind('isEnabled').to(
 			insertCommand, 'isEnabled',
 			removeCommand, 'isEnabled',

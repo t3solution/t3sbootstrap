@@ -150,12 +150,9 @@ final class CustomScss extends CommandBase
             $includeFileName = 'bootstrap-'.$rootPageId.'.scss';
             $includeFile = $uploadScssAbsPath.$includeFileName;
 
-            // Always rewritten, never only when missing: a file left over from an
-            // older version still carries the import paths of that version, and a
-            // stale import kills the compile step.
-            // Paths are relative to $includeFile in T3SB-SCSS/Bootstrap/ - an
-            // absolute server path would be baked in and, if it ever fails to
-            // resolve, scssphp writes it verbatim into the public css.
+            // Always rewritten, never only when missing: a file left over from an older
+            // version still carries that version's import paths, and a stale import kills the
+            // compile step. Paths stay relative; an absolute one lands verbatim in the css.
             $includeContent = '
 @import "../custom-variables-'.$rootPageId.'";
 @import "../../T3SB-Bootstrap/Bootstrap/scss/bootstrap";
@@ -306,10 +303,9 @@ final class CustomScss extends CommandBase
       $localZipPath = $t3sbBootstrapPath.'Bootstrap/';
       $localZipFile = $t3sbBootstrapPath.'t3sb.zip';
 
-      // Extract into a staging directory and only swap it in when everything went
-      // through. Removing the sources up front left the installation without them
-      // whenever the version was wrong or GitHub was unreachable - and the SCSS
-      // compiler then took the whole frontend down with a missing @import.
+      // Extract into a staging directory and swap it in only on success. Removing the
+      // sources up front left the installation without them on a wrong version or an
+      // unreachable GitHub, and the SCSS compiler then killed the frontend on a missing @import.
       $stagingPath = $t3sbBootstrapPath.'Bootstrap.tmp/';
 
       if (is_dir($stagingPath)) {

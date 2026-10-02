@@ -16,6 +16,23 @@
 
 
 <f:section name="Default">
+<f:if condition="{shuffle}">
+	<f:then>
+		<f:render section="Shuffle" arguments="{_all}" />
+	</f:then>
+	<f:else>
+		<f:if condition="{shuffleNotice}">
+			<div class="alert alert-warning my-3" role="alert">
+				Masonry Wrapper (uid = {data.uid}) - shuffle.js: {shuffleNotice}
+			</div>
+		</f:if>
+		<f:render section="Masonry" arguments="{_all}" />
+	</f:else>
+</f:if>
+</f:section>
+
+
+<f:section name="Masonry">
 <f:if condition="{settings.cdn}">
 	<f:then>
 		<f:asset.script identifier="masonry" src="https://cdnjs.cloudflare.com/ajax/libs/masonry/{settings.masonryVersion}/masonry.pkgd.min.js"
@@ -33,4 +50,37 @@
 		</div>
 	</f:for>
 </div>
+</f:section>
+
+
+<f:section name="Shuffle">
+<f:comment>
+	shuffle.mjs ships with the extension - no CDN entry, no integrity hash to keep in
+	sync. The filter values sit in data-t3sb-categories on the cell and in
+	data-t3sb-filter-value on the button.
+</f:comment>
+<div class="t3sb-masonry-filter mb-4" data-t3sb-masonry-filter="masonry-{data.uid}"
+	data-t3sb-shuffle-src="{f:uri.resource(path: 'JavaScript/shuffle.mjs', extensionName: 'T3sbootstrap')}">
+	<span class="d-block small text-uppercase fw-semibold text-body-secondary mb-2">{shuffleLabel}</span>
+	<div class="d-flex flex-wrap gap-2" role="group">
+		<button type="button" class="btn btn-sm btn-primary" data-t3sb-filter-value="" aria-pressed="true">{shuffleAllLabel}</button>
+		<f:for each="{shuffleFilters}" as="filter">
+			<button type="button" class="btn btn-sm btn-outline-primary" data-t3sb-filter-value="{filter.key}" aria-pressed="false">{filter.title}</button>
+		</f:for>
+	</div>
+</div>
+<div id="masonry-{data.uid}" class="row t3sb-shuffle{class}"{styleAttr -> f:format.raw()}{dataAnimate}>
+	<f:for each="{col_283}" as="ce" iteration="ceIterator">
+		<f:variable name="itemGroups" value="{shuffleGroups.{ce.uid}}" />
+		<div class="{f:if(condition:'{masonryClass}',then:'{masonryClass}', else:'col-sm-6 col-lg-4 mb-4')}"
+			data-t3sb-categories="{itemGroups}">
+			{ce.renderedContent -> f:format.raw()}
+		</div>
+	</f:for>
+</div>
+<f:comment>
+	The file binds itself on DOMContentLoaded - an inline block would run before the
+	grid exists in the DOM.
+</f:comment>
+<f:asset.script identifier="t3sbMasonryFilter" src="EXT:t3sbootstrap/Resources/Public/JavaScript/MasonryFilter.js" />
 </f:section>

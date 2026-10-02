@@ -1,19 +1,8 @@
 /**
- * Getting back OUT of a container.
- *
- * An alert or a column that sits at the very end of the text is a trap: the
- * caret is inside it, there is no paragraph behind it, and nothing an editor
- * can click creates one. The only way out used to be the source view.
- *
- * This is the gesture CKEditor's own block quote uses, applied to our
- * containers:
- *
- *   Enter     on an empty LAST  block  -> the block moves behind the container
- *   Backspace on an empty FIRST block  -> the block moves in front of it
- *
- * So: Enter once to open a new line, Enter again to step out. The same works
- * upwards with Backspace, which matters when the container is the first thing
- * in the field.
+ * Getting back OUT of a container - an alert or column at the end of the text was a
+ * trap with no exit but the source view. Same gesture as CKEditor's block quote:
+ * Enter on an empty LAST block escapes behind it, Backspace on an empty FIRST block
+ * in front.
  */
 
 /**
@@ -49,12 +38,10 @@ export function enableBlockEscape(plugin, resolve) {
 			return false;
 		}
 
-		// A freshly inserted container holds exactly one empty paragraph, which is
-		// both empty and the last child - Enter would have escaped it right away,
-		// and with removeWhenEmpty the alert would have been gone with it. Forward
-		// only: Backspace has to keep working here, otherwise an empty container
-		// would be a trap. Once the editor has typed something and pressed Enter,
-		// there are two blocks and stepping out works as documented.
+		// A freshly inserted container holds one empty paragraph that is both empty and
+		// last child - Enter would escape it at once and removeWhenEmpty would delete the
+		// container with it. Enter is blocked here; Backspace must not be, or an empty
+		// container is itself a trap.
 		if (!backwards && block.previousSibling === null) {
 			return false;
 		}

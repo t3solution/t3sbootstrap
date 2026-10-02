@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use T3SBS\T3sbootstrap\Service\CompileService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PreProcessHook
@@ -64,7 +65,18 @@ class PreProcessHook
             $files = [];
             if (is_array($params[$key])) {
                 foreach ($params[$key] as $file => $settings) {
-                    $compiledFile = $this->getCompileService()->getCompiledFile($GLOBALS['TYPO3_REQUEST'], $file);
+                    try {
+                        $compiledFile = $this->getCompileService()->getCompiledFile($GLOBALS['TYPO3_REQUEST'], $file);
+                    } catch (\Throwable $exception) {
+                        // Invalid scss or a missing @import must not end the request. The
+                        // file is dropped rather than kept: the reference points at the
+                        // .scss source, which the browser cannot use anyway.
+                        GeneralUtility::makeInstance(LogManager::class)
+                            ->getLogger(__CLASS__)
+                            ->error('Could not compile "' . $file . '": ' . $exception->getMessage(), ['exception' => $exception]);
+                        continue;
+                    }
+
                     if ($compiledFile !== null) {
                         $settings['file'] = $compiledFile;
                         $files[$compiledFile] = $settings;

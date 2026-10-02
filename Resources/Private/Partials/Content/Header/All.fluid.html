@@ -8,11 +8,39 @@
 	<f:variable name="headerclass">{header.class}</f:variable>
 	<f:variable name="headerhclass">{header.hClass}</f:variable>
 	<f:variable name="headerhLinkClass">{header.hLinkClass}</f:variable>
-	<f:variable name="header">{record -> f:render.text(field: 'header', optional: true)}</f:variable>
-	<f:variable name="subheader">{record -> f:render.text(field: 'subheader', optional: true)}</f:variable>
-	<f:variable name="supraheader">{record -> f:render.text(field: 'tx_t3sbootstrap_supraheader', optional: true)}</f:variable>
+	<f:variable name="header"><f:render partial="Content/Field" arguments="{record: record, data: data, field: 'header'}" /></f:variable>
+	<f:variable name="subheader"><f:render partial="Content/Field" arguments="{record: record, data: data, field: 'subheader'}" /></f:variable>
+	<f:variable name="supraheader"><f:render partial="Content/Field" arguments="{record: record, data: data, field: 'tx_t3sbootstrap_supraheader'}" /></f:variable>
 
-	<f:if condition="{header} || {subheader} || {data.date}">
+	<f:comment>
+		Trimmed for the conditions ONLY, never for the output. f:if evaluates
+		booleans, and a string of spaces is TRUE - a field with a stray space
+		would otherwise have produced an empty <p class="supraheader">.
+
+		The trimmed values must not overwrite the originals: f:format.trim
+		escapes its output, so a <br> in the header would come out as text.
+		Content/Field already ran the fields through f:sanitize.html.
+	</f:comment>
+	<f:variable name="headerFilled">{header -> f:format.trim()}</f:variable>
+	<f:variable name="subheaderFilled">{subheader -> f:format.trim()}</f:variable>
+	<f:variable name="supraheaderFilled">{supraheader -> f:format.trim()}</f:variable>
+
+	<f:comment>
+		The supraheader counts towards "is there a header block at all". It
+		often stands alone above an element - a label like "step 2 of 4" needs
+		no heading below it. Without it in this condition the whole block was
+		dropped as soon as the header field was empty, taking the supraheader
+		with it.
+
+		Still tied to settings.supraheader: a disabled supraheader must not
+		force a header block.
+	</f:comment>
+	<f:variable name="hasSupraheader">0</f:variable>
+	<f:if condition="{settings.supraheader} && {supraheaderFilled}">
+		<f:variable name="hasSupraheader">1</f:variable>
+	</f:if>
+
+	<f:if condition="{headerFilled} || {subheaderFilled} || {data.date} || {hasSupraheader}">
 		<f:if condition="{data.header_layout} == '101'">
 			<f:then>
 				<div class="header-{data.uid} h-{data.header_layout}{f:if(condition: '{headerclass}',then: ' {headerclass}')}">
@@ -21,9 +49,9 @@
 			</f:then>
 			<f:else>
 				<header class="header-{data.uid} h-{data.header_layout}{f:if(condition: '{headerclass}',then: ' {headerclass}')}">
-					<f:if condition="{settings.supraheader} && {supraheader}">
-						<p class="supraheader{f:if(condition: data.header_position, then: ' text-{data.header_position}')}">
-							{supraheader}
+					<f:if condition="{settings.supraheader} && {supraheaderFilled}">
+						<p class="supraheader{f:if(condition: data.header_position, then: ' text-{data.header_position}')}{f:if(condition: data.tx_t3sbootstrap_supraheader_class, then: ' {data.tx_t3sbootstrap_supraheader_class}')}">
+							{supraheader -> f:sanitize.html()}
 						</p>
 					</f:if>
 					<f:render section="Header" arguments="{_all}" />

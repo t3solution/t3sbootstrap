@@ -84,6 +84,10 @@ bootstrap.image.srcsetDesktop = 576, 768, 992, 1200, 1440, 1920, 2650
 bootstrap.image.srcsetTablet = 125, 255, 385, 576, 768, 992, 1200
 bootstrap.image.srcsetMobile = 60, 100, 200, 385, 575
 bootstrap.image.bgMediaQueries = 2560, 1920, 1200, 992, 768, 576
+# Seitentypen, deren Feld "Medien" beim Jumbotron-Hintergrund "on this and all
+# child pages (slide)" uebersprungen wird. Gedacht fuer Seitentypen, deren
+# Medien ein Teaserbild sind und kein Hintergrund. Kommaliste, leer = keine.
+bootstrap.image.jumbotronBgimageIgnoreDoktypes =
 bootstrap.image.lazyLoadThreshold = 0
 bootstrap.image.lazyLoadBgWrapperImage = 0
 
@@ -101,6 +105,9 @@ bootstrap.pagebrowser.entryLevel = 1
 bootstrap.config.sectionMenuClass = 
 bootstrap.config.disableDefaultCss = 0
 bootstrap.config.disableFaCss = 0
+# Fallback for installations without a configuration record - the record
+# overwrites this constant, an empty field there arriving as "0".
+bootstrap.config.favicon = EXT:backend/Resources/Public/Icons/favicon.ico
 bootstrap.backToTopTitle = to tops
 bootstrap.backToTopClass = fa-solid fa-circle-chevron-up fa-4x
 bootstrap.backToTopIconpack = fa7:solid,circle-chevron-up,size:4x

@@ -37,26 +37,10 @@ lib.contentElement {
 				width = {$styles.content.textmedia.linkWrap.width}
 				height = {$styles.content.textmedia.linkWrap.height}
 				JSwindow = 0
-				# Hier stand "crop =" - eine gesetzte, aber leere Eigenschaft.
-				#
-				# ContentObjectRenderer::getCropAreaFromFileReference() prueft
-				# isset($fileArray['crop']) - nicht, ob etwas drinsteht. Ein leeres
-				# "crop =" reicht also aus, damit der Zuschnitt der Dateireferenz
-				# uebersprungen wird: die Lightbox zeigte immer das ungeschnittene
-				# Bild, ganz gleich, was im Bildeditor eingestellt war.
-				#
-				# Damit war zugleich die Option "Originalbild fuer Lightbox
-				# verwenden" (tx_t3sbootstrap_zoom_orig) wirkungslos - sie tut
-				# genau das, was hier schon fuer alle galt.
-				#
-				# crop.data liest den Zuschnitt der Datei, die der
-				# ClickEnlarge-ViewHelper per setCurrentFile() gesetzt hat. Damit
-				# entscheidet die Option wieder selbst:
-				#   aus -> die Dateireferenz, also mit ihrem Zuschnitt
-				#   an  -> das Originalbild; ein File traegt keine crop-Eigenschaft,
-				#          der Zuschnitt entfaellt
-				# Das ist auch die Schreibweise, die EXT:fluid_styled_content selbst
-				# verwendet.
+				# Was "crop =" - set but empty. getCropAreaFromFileReference() only checks
+				# isset(), so the file reference crop was skipped, the lightbox always showed the
+				# uncropped image and "use original image" had no effect. crop.data reads the crop
+				# the ClickEnlarge ViewHelper set, same spelling as EXT:fluid_styled_content.
 				crop.data = file:current:crop
 				directImageLink = 1
 				linkParams.ATagParams.dataWrap >
@@ -186,7 +170,7 @@ lib.contentElement.settings.srcsetMobile = 575
 [END]
 
 # 2 == halkabox - https://github.com/ahmednooor/halkaBox.js
-[{$bootstrap.config.lightboxSelection} == 2]
+["{$bootstrap.config.lightboxSelection}" == "2"]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
 	linkParams.ATagParams.dataWrap = class="gallery-{file:current:uid_foreign}"  data-title="{file:current:description}"
@@ -195,7 +179,7 @@ lib.contentElement.settings.media.popup {
 [END]
 
 # 3 == LightBox Plugin - glightbox.js - https://github.com/biati-digital/glightbox
-[{$bootstrap.config.lightboxSelection} == 3]
+["{$bootstrap.config.lightboxSelection}" == "3"]
 lib.contentElement.settings.media.popup {
 	linkParams.ATagParams.stdWrap >
 	linkParams.ATagParams.dataWrap = id="ex-{file:current:uid}" class="glightbox" data-glightbox="title:{file:current:description}" data-gallery="gallery-{file:current:uid_foreign}" data-effect="fade"
@@ -203,7 +187,7 @@ lib.contentElement.settings.media.popup {
 }
 [END]
 
-[{$bootstrap.ext.news} == 1]
+["{$bootstrap.ext.news}" == "1"]
 # settings for news lightbox
 plugin.tx_news.settings.media.popup < lib.contentElement.settings.media.popup
 [END]

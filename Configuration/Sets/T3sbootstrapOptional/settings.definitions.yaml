@@ -112,14 +112,10 @@ settings:
     type: bool
     default: false
 
-  # Das Brand-Logo wird seit 5.4 im Konfigurations-Datensatz gepflegt, Tab
-  # "Brand (Logo)". Die vier Einstellungen hier bleiben als Rueckfall bestehen -
-  # eine bestehende Installation, die sie gesetzt hat, sieht nach dem Update
-  # unveraendert aus. Sie zu entfernen wuerde jede solche Site auf das
-  # Bootstrap-Logo zuruecksetzen.
-  # Der Settings-Editor rendert Label und Description als reinen Text - Markup
-  # oder Farbe kommen dort nicht durch. Der Hinweis muss also im Label selbst
-  # stehen, und zwar so, dass er in einer langen Liste nicht untergeht.
+  # Since 5.3.51 the brand logo lives in the configuration record, tab "Brand (Logo)".
+  # These four settings stay as a fallback: removing them would reset every
+  # installation that had set them back to the Bootstrap logo. The settings editor
+  # renders label and description as plain text, so the hint must sit in the label.
   bootstrap.navbar.image.defaultPath:
     label: 'DEPRECATED (now in T3SB Config) — Navbar brand image path'
     category: Bootstrap.optional.navbar

@@ -272,8 +272,8 @@
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.contentmargintop.description">
 			<segment>
-				<source>here you can set the default space (margin-top) for each content-element (colPos=0). You can overwrite this value in the "Extra Class" field in each content-element.</source>
-				<target>Hier kannst du den Standardabstand (margin-top) für jedes Inhaltselement festlegen (colPos=0). Du kannst diesen Wert im Feld "Extra Class" überschreiben.</target>
+				<source>here you can set the default space (margin-top) for each content-element. It applies in the main column and in the columns of a column container (two, three, four, six columns, row columns) - not inside a wrapper, which brings its own padding. You can overwrite this value in the "Extra Class" field in each content-element.</source>
+				<target>Hier kannst du den Standardabstand (margin-top) für jedes Inhaltselement festlegen. Er gilt in der Hauptspalte und in den Spalten eines Spalten-Containers (2, 3, 4, 6 Spalten, Row Columns) – nicht innerhalb eines Wrappers, der seinen eigenen Innenabstand mitbringt. Du kannst diesen Wert im Feld "Extra Class" überschreiben.</target>
 			</segment>
 		</unit>
 		
@@ -384,7 +384,7 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.anchorextraoffset.description">
 			<segment>
 				<source>for Section-Menu-Items and "OnePageLayout": in px - (default 29)</source>
-				<target>für Sektionsindexs und "OnePageLayout": in px – (Standardwert 29)</target>
+				<target>Zusätzlicher Abstand über dem Sprungziel, in px – für Sektionsindex, "OnePageLayout" und jeden Anker im Text. Die Höhe der Navbar und einer klebenden Brotkrumenleiste wird automatisch dazugerechnet. (Standardwert 29)</target>
 			</segment>
 		</unit>
 		
@@ -780,6 +780,13 @@
 			</segment>
 		</unit>
 		
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand.description">
+			<segment>
+				<source>Decides what the navbar shows on the left. The image fields below only appear with "Just an image" or "Image and text".</source>
+				<target>Bestimmt, was die Navbar links anzeigt. Die Bildfelder darunter erscheinen nur bei "Bild" oder "Bild und Text".</target>
+			</segment>
+		</unit>
+
 		<unit id="tx_t3sbootstrap_domain_model_config.navbarbrand">
 			<segment>
 				<source>make your selection</source>
@@ -1412,36 +1419,36 @@
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item1">
 			<segment>
-				<source>left (start)</source>
-				<target>links (start)</target>
+				<source>top (start)</source>
+				<target>oben (start)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item2">
 			<segment>
-				<source>right (end)</source>
-				<target>rechts (end)</target>
+				<source>bottom (end)</source>
+				<target>unten (end)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item3">
 			<segment>
-				<source>center</source>
-				<target>zentriert</target>
+				<source>middle (center)</source>
+				<target>mittig (center)</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item4">
 			<segment>
-				<source>baseline</source>
-				<target>Basislinie</target>
+				<source>baseline (first line)</source>
+				<target>Basislinie der ersten Zeile</target>
 			</segment>
 		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronalignitem.item5">
 			<segment>
-				<source>stretch</source>
-				<target>strecken</target>
+				<source>stretch (full height)</source>
+				<target>volle Hoehe</target>
 			</segment>
 		</unit>
 		
@@ -2516,6 +2523,20 @@
 			<segment>
 				<source>A short text element placed directly above the heading</source>
 				<target>Ein kurzes Textelement, das direkt über der Überschrift platziert ist</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapsupraheaderclass">
+			<segment>
+				<source>Supraheader Extra Class</source>
+				<target>Zusätzliche Class für die Überkopfzeile (extra class)</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapsupraheaderclass.description">
+			<segment>
+				<source>Additional CSS class for the supraheader - same list as for the heading</source>
+				<target>Zusätzliche CSS-Klasse für die Überkopfzeile - dieselbe Liste wie für die Überschrift</target>
 			</segment>
 		</unit>
 		

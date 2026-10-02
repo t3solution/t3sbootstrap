@@ -42,6 +42,7 @@ page {
 			backToTopIconpack = {$bootstrap.backToTopIconpack}
 			backToTopForAllPages = {$bootstrap.backToTopForAllPages}
 			bgMediaQueries = {$bootstrap.image.bgMediaQueries}
+			jumbotronBgimageIgnoreDoktypes = {$bootstrap.image.jumbotronBgimageIgnoreDoktypes}
 			sectionmenuIcons = {$bootstrap.config.sectionmenuIcons}
 			submenu.styleOne = {$bootstrap.submenu.styleOne}
 			viewportWidthCookie = {$bootstrap.image.viewportWidthCookie}

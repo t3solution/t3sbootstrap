@@ -11,10 +11,9 @@ class Table implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
 
-		// Eine Tabelle, deren FlexForm nie geoeffnet wurde, hat gar keine Werte:
-		// tx_t3sbootstrap_flexform ist NULL, $flexconf entsprechend leer. Ein
-		// blosser Zugriff loest "Undefined array key" aus, und TYPO3s
-		// Error-Handler macht daraus eine Exception - Frontend steht.
+		// A table whose FlexForm was never opened has no values at all:
+		// tx_t3sbootstrap_flexform is NULL and $flexconf accordingly empty. A plain read
+		// raises "Undefined array key", which TYPO3's error handler turns into an exception.
 		$tableClass = (string)($flexconf['tableClass'] ?? '');
 
 		$tableClassArr = explode(',', $tableClass);

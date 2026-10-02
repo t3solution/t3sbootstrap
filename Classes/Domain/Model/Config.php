@@ -377,6 +377,34 @@ class Config extends AbstractEntity
     protected $jumbotronBgimage = '';
 
     /**
+     * jumbotronBgvideo
+     *
+     * @var bool
+     */
+    protected $jumbotronBgvideo = false;
+
+    /**
+     * jumbotronBgvideoAutoplay
+     *
+     * @var bool
+     */
+    protected $jumbotronBgvideoAutoplay = true;
+
+    /**
+     * jumbotronBgvideoLoop
+     *
+     * @var bool
+     */
+    protected $jumbotronBgvideoLoop = true;
+
+    /**
+     * jumbotronBgvideoOverlay
+     *
+     * @var int
+     */
+    protected $jumbotronBgvideoOverlay = 40;
+
+    /**
      * jumbotronAlignitem
      *
      * @var string
@@ -2195,6 +2223,90 @@ class Config extends AbstractEntity
     public function setJumbotronBgimage($jumbotronBgimage): void
     {
         $this->jumbotronBgimage = $jumbotronBgimage;
+    }
+
+    /**
+     * Returns the jumbotronBgvideo
+     *
+     * @return bool $jumbotronBgvideo
+     */
+    public function getJumbotronBgvideo()
+    {
+        return $this->jumbotronBgvideo;
+    }
+
+    /**
+     * Sets the jumbotronBgvideo
+     *
+     * @param bool $jumbotronBgvideo
+     * @return void
+     */
+    public function setJumbotronBgvideo($jumbotronBgvideo): void
+    {
+        $this->jumbotronBgvideo = $jumbotronBgvideo;
+    }
+
+    /**
+     * Returns the jumbotronBgvideoAutoplay
+     *
+     * @return bool $jumbotronBgvideoAutoplay
+     */
+    public function getJumbotronBgvideoAutoplay()
+    {
+        return $this->jumbotronBgvideoAutoplay;
+    }
+
+    /**
+     * Sets the jumbotronBgvideoAutoplay
+     *
+     * @param bool $jumbotronBgvideoAutoplay
+     * @return void
+     */
+    public function setJumbotronBgvideoAutoplay($jumbotronBgvideoAutoplay): void
+    {
+        $this->jumbotronBgvideoAutoplay = $jumbotronBgvideoAutoplay;
+    }
+
+    /**
+     * Returns the jumbotronBgvideoLoop
+     *
+     * @return bool $jumbotronBgvideoLoop
+     */
+    public function getJumbotronBgvideoLoop()
+    {
+        return $this->jumbotronBgvideoLoop;
+    }
+
+    /**
+     * Sets the jumbotronBgvideoLoop
+     *
+     * @param bool $jumbotronBgvideoLoop
+     * @return void
+     */
+    public function setJumbotronBgvideoLoop($jumbotronBgvideoLoop): void
+    {
+        $this->jumbotronBgvideoLoop = $jumbotronBgvideoLoop;
+    }
+
+    /**
+     * Returns the jumbotronBgvideoOverlay
+     *
+     * @return int $jumbotronBgvideoOverlay
+     */
+    public function getJumbotronBgvideoOverlay()
+    {
+        return $this->jumbotronBgvideoOverlay;
+    }
+
+    /**
+     * Sets the jumbotronBgvideoOverlay
+     *
+     * @param int $jumbotronBgvideoOverlay
+     * @return void
+     */
+    public function setJumbotronBgvideoOverlay($jumbotronBgvideoOverlay): void
+    {
+        $this->jumbotronBgvideoOverlay = $jumbotronBgvideoOverlay;
     }
 
     /**

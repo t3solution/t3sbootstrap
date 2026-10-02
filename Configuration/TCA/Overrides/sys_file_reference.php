@@ -363,3 +363,4 @@ if (array_key_exists('ratio', $extconf) && $extconf['ratio']) {
     ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette', '--linebreak--,tx_t3sbootstrap_shift_vertical', 'after:tx_t3sbootstrap_description_align');
     ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'imageoverlayPalette', '--linebreak--,tx_t3sbootstrap_shift_horizontal', 'after:tx_t3sbootstrap_shift_vertical');
 }
+

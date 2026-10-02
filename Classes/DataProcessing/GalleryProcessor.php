@@ -331,12 +331,9 @@ class GalleryProcessor implements DataProcessorInterface
 
 
     /**
-     * Calculate the width/height of the media elements
-     *
-     * Based on the width of the gallery, defined equal width or height by a user, the spacing between columns and
-     * the use of a border, defined by user, where the border width and padding are taken into account
-     *
-     * File objects MUST already be filtered. They need a height and width to be shown in the gallery
+     * Calculate the width/height of the media elements, based on the gallery width,
+     * a user defined equal width or height, the column spacing and an optional border
+     * (width and padding included). File objects MUST already have width and height.
      */
     protected function calculateMediaWidthsAndHeights(PageInformation $pageInformation): void
     {
@@ -427,7 +424,7 @@ class GalleryProcessor implements DataProcessorInterface
 
             // Modal - INFO: https://getbootstrap.com/docs/5.3/components/modal/#optional-sizes
             if (isset($this->processedParentData['CType']) && $this->processedParentData['CType'] === 'modal') {
-                // Ein Modal, dessen FlexForm nie geoeffnet wurde, hat keine Groesse
+                // A modal whose FlexForm was never opened has no size
                 $size = (string)($this->parentflexconf['size'] ?? '');
 
                 if ($size === 'modal-fullscreen') {
@@ -469,9 +466,9 @@ class GalleryProcessor implements DataProcessorInterface
                          && ($this->processedParentData['CType'] ?? '') === 'card_wrapper') {
                 $galleryWidth = $galleryWidth - self::gridGutterWidth;
                 $countChildren = 1;
-                // Ein Card Wrapper, dessen FlexForm nie geoeffnet wurde, hat den
-                // Schluessel nicht. Einmal normalisieren, statt ihn an fuenf
-                // Stellen direkt zu lesen - der Default des FlexForms ist "group".
+                // A card wrapper whose FlexForm was never opened has no such key.
+                // Normalise once instead of reading it directly in five places -
+                // the FlexForm default is "group".
                 $cardWrapperLayout = (string)($this->parentflexconf['card_wrapper'] ?? 'group');
 
                 if ($cardWrapperLayout === 'group' || $cardWrapperLayout === 'columns') {
@@ -660,7 +657,7 @@ class GalleryProcessor implements DataProcessorInterface
                 }
             }
 
-$mediaWidth = $this->checkMediaWidth($mediaWidth);
+            $mediaWidth = $this->checkMediaWidth($mediaWidth);
 
             // Set the corrected dimensions for each media element
             foreach ($this->fileObjects as $key => $fileObject) {

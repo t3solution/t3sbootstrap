@@ -11,11 +11,9 @@ class Mediaobject implements SingletonInterface
 	public function getProcessedData(array $processedData, array $flexconf): array
 	{
 
-		// Ein Element, dessen FlexForm nie geoeffnet wurde, hat gar keine Werte:
-		// tx_t3sbootstrap_flexform ist NULL, $flexconf entsprechend leer. Der
-		// Schluessel wird deshalb einmal normalisiert, statt ihn an drei Stellen
-		// direkt zu lesen - sonst warnt PHP 8 mit "Undefined array key", und
-		// TYPO3s Error-Handler macht daraus eine Exception.
+		// An element whose FlexForm was never opened has no values at all: tx_t3sbootstrap_flexform
+		// is NULL and $flexconf empty. The key is normalised once, because a direct read raises
+		// "Undefined array key" on PHP 8 and TYPO3's error handler turns that into an exception.
 		$order = (string)($flexconf['order'] ?? '');
 
 		$processedData['mediaobject']['order'] = $order === 'right' ? 'right' : 'left';

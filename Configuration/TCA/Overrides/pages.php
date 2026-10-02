@@ -7,7 +7,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-# Extension configuration
+// Extension configuration
 $extconf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('t3sbootstrap');
 
 $dbModel = 't3sbootstrap.db:tx_t3sbootstrap_domain_model_config';
@@ -204,7 +204,7 @@ if (!empty($extconf['titlecolor'])) {
     );
 }
 
-# if iconpack is loaded
+// if iconpack is loaded
 if (ExtensionManagementUtility::isLoaded('iconpack')) {
 	ExtensionManagementUtility::addFieldsToPalette(
 	    'pages',

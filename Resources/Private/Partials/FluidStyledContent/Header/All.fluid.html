@@ -4,7 +4,17 @@
 </f:if>
 
 <f:if condition="{data.header_layout} != 100">
-	<f:if condition="{data.header} || {data.subheader} || {data.date}">
+	<f:comment>
+		As in the Content variant: the supraheader keeps the header block
+		alive when the header field is empty - as long as it is enabled.
+	</f:comment>
+	<f:variable name="supraheaderFilled">{data.tx_t3sbootstrap_supraheader -> f:format.trim()}</f:variable>
+	<f:variable name="hasSupraheader">0</f:variable>
+	<f:if condition="{settings.supraheader} && {supraheaderFilled}">
+		<f:variable name="hasSupraheader">1</f:variable>
+	</f:if>
+
+	<f:if condition="{data.header} || {data.subheader} || {data.date} || {hasSupraheader}">
 		<f:if condition="{data.header_layout} == '101'">
 			<f:then>
 				<div class="header-{data.uid} h-{data.header_layout}{f:if(condition: '{header.class}',then: ' {header.class}')}">
@@ -13,9 +23,9 @@
 			</f:then>
 			<f:else>
 				<header class="header-{data.uid} h-{data.header_layout}{f:if(condition: '{header.class}',then: ' {header.class}')}">
-					<f:if condition="{settings.supraheader} && {data.tx_t3sbootstrap_supraheader}">
-						<p class="supraheader{f:if(condition: data.header_position, then: ' text-{data.header_position}')}">
-							{data.tx_t3sbootstrap_supraheader}
+					<f:if condition="{settings.supraheader} && {supraheaderFilled}">
+						<p class="supraheader{f:if(condition: data.header_position, then: ' text-{data.header_position}')}{f:if(condition: data.tx_t3sbootstrap_supraheader_class, then: ' {data.tx_t3sbootstrap_supraheader_class}')}">
+							{data.tx_t3sbootstrap_supraheader -> f:sanitize.html()}
 						</p>
 					</f:if>
 					<f:render section="Header" arguments="{_all}" />

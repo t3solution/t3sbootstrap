@@ -1,0 +1,39 @@
+#-------------------------------------------------------------------------------
+#	Content Blocks - t3sbootstrap's processed values inside frontend.html
+#-------------------------------------------------------------------------------
+#
+#	EXT:content_blocks renders every element through a FLUIDTEMPLATE inheriting
+#	from lib.contentBlock. t3sbootstrap's fields - padding, margin, "extra class",
+#	background - are attached to tt_content via addToAllTCAtypes, so they already
+#	show up in a content block's form. They were just never evaluated: that is the
+#	BootstrapProcessor's job, and it only ran under lib.contentElement.
+#
+#	This set adds it to lib.contentBlock as well, so frontend.html gets the same
+#	variables as t3sbootstrap's own templates:
+#
+#	  {classAttr}    ready-made class="..." from padding, margin and "extra class"
+#	  {styleAttr}    ready-made style="..." from background color and "extra style"
+#	  {styleInline}  the same style as a rule for a <style> block
+#	  {class}        the classes only, with a leading space
+#	  {trimClass}    the same classes without the leading space
+#	  {header}       classes and alignment of the heading
+#	  {parentCType}  CType of the container, if the element sits in one
+#
+#	Example in frontend.html:
+#	  <div id="c{data.uid}"{classAttr -> f:format.raw()}{styleAttr -> f:format.raw()}>
+#
+#	Copied, not rebuilt: the processor's settings live once under lib.contentElement
+#	and stay in sync automatically.
+#
+#	Order matters. EXT:content_blocks registers its own processor at 10 and replaces
+#	data with a ContentBlockData object there. FlexFormProcessor and BootstrapProcessor
+#	access data like an array, so they have to run BEFORE 10, while data is still the
+#	raw tt_content row.
+#
+lib.contentBlock {
+	dataProcessing {
+		# t3sbootstrap's FlexForm - the processor reads its configuration from it.
+		5 < lib.contentElement.dataProcessing.5
+		6 < lib.contentElement.dataProcessing.224
+	}
+}

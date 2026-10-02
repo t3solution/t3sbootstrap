@@ -41,7 +41,7 @@
 				<f:image class="rounded me-2" image="{files.0}" alt="" width="{gallery.width}" height="" />
 			</f:if>
 			<f:if condition="{data.header}">
-				<strong class="me-auto">{data.header -> f:format.raw()}</strong>
+				<strong class="me-auto">{data.header -> f:sanitize.html()}</strong>
 			</f:if>
 			<f:if condition="{data.subheader}">
 				<small>{data.subheader -> f:format.raw()}</small>
