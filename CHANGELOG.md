@@ -4,6 +4,30 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.55 — Inhalt von 5.3.54 unter neuer Nummer
+
+Betrifft die folgenden Dateien:
+
+```
+CHANGELOG.md
+composer.json
+ext_emconf.php
+releaseNote.pdf
+```
+
+### Behoben — 5.3.54 war über Composer nicht installierbar
+
+Der Tag `v5.3.54` wurde nach der Veröffentlichung auf den fertigen Stand
+umgehängt. Packagist hatte zu diesem Zeitpunkt den vorherigen Commit bereits
+registriert und weist Änderungen an veröffentlichten stabilen Versionen ab.
+Composer-Installationen von `5.3.54` erhielten deshalb den Code von 5.3.53.
+
+Der vollständige Inhalt von 5.3.54 erscheint daher unter dieser Nummer. Wer
+`5.3.54` per Composer geladen hat, aktualisiert auf `5.3.55`; am Code selbst
+ändert sich gegenüber 5.3.54 nichts.
+
+---
+
 ## 5.3.54 — Seitenweise abschalten, Einzug, senkrechte Überschrift
 
 Betrifft die folgenden Dateien:
