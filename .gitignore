@@ -1,0 +1,27 @@
+# macOS / Windows
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.sublime-workspace
+
+# Editor- und Patch-Reste
+*~
+*.bak
+*.orig
+*.rej
+*.swp
+
+# Abhaengigkeiten und Build-Artefakte
+/vendor/
+/node_modules/
+/composer.lock
+/.php-cs-fixer.cache
+/.phpunit.result.cache
+
+# Lokale Build-Ausgaben
+*.log
