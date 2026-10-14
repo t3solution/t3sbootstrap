@@ -12,8 +12,19 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 	identifier: 't3sbootstrap/TcaPostProcessing',
 	method: 'modifyValuePicker',
 )]
+#[AsEventListener(
+	identifier: 't3sbootstrap/TcaPageOptOutTab',
+	method: 'addPageOptOutTab',
+)]
 final readonly class TcaCompilation
 {
+	/**
+	 * Page types that never render a page of their own - a tab about hiding the
+	 * navbar or the jumbotron would be pointless there.
+	 *   199 spacer, 254 folder, 255 recycler, 3 link, 4 shortcut
+	 */
+	private const SKIP_DOKTYPES = [3, 4, 199, 254, 255];
+
 	public function __construct(
 		private readonly ExtensionConfiguration $extensionConfiguration,
 	) {}
@@ -43,6 +54,45 @@ final readonly class TcaCompilation
 	}
 	
 	
+	/**
+	 * Hangs the "T3SB" tab onto every page type, after all TCA overrides ran.
+	 *
+	 * addToAllTCAtypes() in Configuration/TCA/Overrides/pages.php only reaches the
+	 * types that exist at that moment, and an extension defining its own page type
+	 * writes a complete 'showitem' - which drops the tab again. After the
+	 * compilation every type is known and nothing overwrites it any more.
+	 */
+	public function addPageOptOutTab(AfterTcaCompilationEvent $event): void
+	{
+		$tca = $event->getTca();
+
+		// No palette, no tab. The palette is built in Configuration/TCA/Overrides/pages.php
+		// from whatever the Extension Configuration switched on - "pageOptOut", "contentIndent"
+		// or both - so asking for it covers every case without naming the switches here.
+		if (empty($tca['pages']['palettes']['t3sbPage'])) {
+			return;
+		}
+
+		foreach ($tca['pages']['types'] ?? [] as $doktype => $typeConfig) {
+			if (in_array((int)$doktype, self::SKIP_DOKTYPES, true)) {
+				continue;
+			}
+
+			$showitem = (string)($typeConfig['showitem'] ?? '');
+
+			// Already there - addToAllTCAtypes got to this type before us.
+			if ($showitem === '' || str_contains($showitem, '--palette--;;t3sbPage')) {
+				continue;
+			}
+
+			$tca['pages']['types'][$doktype]['showitem'] =
+				$showitem . ',--div--;T3SB,--palette--;;t3sbPage';
+		}
+
+		$event->setTca($tca);
+	}
+
+
 	private function buildValuePickerItems(string $extconfValue): array
 	{
 		$newItems = [];

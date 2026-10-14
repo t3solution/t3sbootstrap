@@ -10,8 +10,6 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
 
@@ -50,7 +48,7 @@ final readonly class PageInfo
 
 		$assignedOptions['isPageInfo'] = true;
 
-		// Config für aktuelle Seite holen, sonst Rootline durchgehen
+		// Fetch the config for the current page, otherwise walk the rootline
 		$config = $this->findConfig($currentUid);
 
 		$site = $request->getAttribute('site');
@@ -133,7 +131,8 @@ final readonly class PageInfo
 			return $config;
 		}
 
-		$rootline = GeneralUtility::makeInstance(RootlineUtility::class, $currentUid)->get();
+		// workspace-aware rootline (RootlineUtility fails for pages that exist only in a workspace)
+		$rootline = BackendUtility::BEgetRootLine($currentUid, '', true);
 
 		foreach ($rootline as $rlpage) {
 			$config = $this->fetchConfig((int)$rlpage['uid']);

@@ -32,12 +32,12 @@
 
 <f:section name="Default">
 	<f:comment>
-			Die Ueberzeile zaehlt mit: sie steht oft allein ueber einem
-			Container, ohne Ueberschrift darunter. Ohne sie in dieser
-			Bedingung wurde Content/Header/All gar nicht erst gerendert -
-			und die dortige Pruefung kam nie zum Zug. Gekoppelt an
-			settings.supraheader, sonst entstuende bei abgeschalteter
-			Ueberzeile eine leere Spalte.
+			The supraheader counts too: it often stands alone above a
+			container, with no heading below it. Without it in this
+			condition Content/Header/All was not rendered at all - and the
+			check in there never got its turn. Tied to settings.supraheader,
+			otherwise a switched-off supraheader would leave an empty column
+			behind.
 		</f:comment>
 		<f:if condition="{data.header} || {data.subheader} || {data.date} || ({settings.supraheader} && {data.tx_t3sbootstrap_supraheader})">
 		<f:render partial="Content/Header/All" arguments="{_all}" />
@@ -83,19 +83,19 @@ function t3sbCollapsible(fixedNavbar, navbarHeight) {
 	if (!sel) return;
 
 	let target;
-	try { target = document.querySelector(sel); } catch (e) { return; } // ungültiger Selektor
+	try { target = document.querySelector(sel); } catch (e) { return; } // invalid selector
 	if (!target) return;
 
-	// data-bs-parent nur behalten, wenn der Parent wirklich existiert
+	// keep data-bs-parent only when the parent really exists
 	if (target.dataset.bsParent && !document.querySelector(target.dataset.bsParent)) {
 	  delete target.dataset.bsParent;
 	}
 
 	bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
 
-	// Scroll to top: nur im Accordion, ein einzelnes Collapsible bleibt stehen.
-	// Abschaltbar ueber bootstrap.disable.accordion.scrollToTop - dann wird diese
-	// ganze Assets-Section gar nicht erst gerendert (s. Section "Main").
+	// Scroll to top: in the accordion only, a single collapsible stays put.
+	// Can be switched off with bootstrap.disable.accordion.scrollToTop - this
+	// whole assets section is then not rendered at all (see section "Main").
 	const item = target.closest('.accordion-item') || toggler.closest('.accordion-item');
 	if (!item || target.dataset.t3sbScrollBound) return;
 	target.dataset.t3sbScrollBound = '1';
@@ -114,7 +114,7 @@ function t3sbCollapsible(fixedNavbar, navbarHeight) {
 	// Collapsible - CollapsibleContainer.html
 	var collapse = document.querySelectorAll('.accordion .collapse');
 	if ( collapse.length ) {
-		// beide Variablen stammen aus MainAssets und existieren nur bei aktiver Navbar
+		// both variables come from MainAssets and exist only with an active navbar
 		t3sbCollapsible(
 			typeof fixedNavbar !== 'undefined' ? fixedNavbar : false,
 			typeof navbarHeight !== 'undefined' ? navbarHeight : 0

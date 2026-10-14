@@ -38,6 +38,8 @@ extraStyle = 0
 allowReferences = 0
 # cat=content/enable/80; type=boolean; label=Supraheader: A short text element placed directly above the heading (Latin supra = “above”)
 supraheader = 0
+# cat=content/enable/85; type=boolean; label=Vertical header: Shows a select-field "Vertical header" in the "Headers" tab of any content element. It turns the whole header block - heading, subheading and supraheader - by 90 degrees, from the "lg" breakpoint up. Switching this off only hides the field; a value already stored keeps rendering (clear cache)
+headerVertical = 0
 # cat=content/enable/90; type=boolean; label=Speaking ID: Human-readable ID for deep links / onepage navigation. Off also stops the automatic generation on save - anchors already stored stay and keep rendering, clear them with "typo3 t3sbootstrap:anchor --mode clear". (clear cache)
 speakingID = 0
 
@@ -47,6 +49,12 @@ fontawesomepagetitle = 1
 navbarmodal = 0
 # cat=page/enable/40; type=boolean; label=Title color: Enable "Title- & Subtitle color" options under "Edit Page" (clear cache)
 titlecolor = 0
+# cat=page/enable/50; type=boolean; label=Tab "T3SB" under "Edit Page": Per-page switches to hide navbar, meta row, breadcrumb, page title or jumbotron on a single page. Each switch only appears if that part is enabled in the T3SB configuration record. Switching this off only hides the tab - values already saved keep working (clear cache)
+pageOptOut = 0
+# cat=page/enable/60; type=boolean; label=Content indent: A per-page indent for the content elements, in Bootstrap grid columns (1-6). It applies from the "lg" breakpoint up and only under the one-column backend layout; sub-pages inherit the value until one of them sets its own. Each content element can opt out of it in the "Appearance" tab. Switching this off only hides the fields - stored values are kept (clear cache)
+contentIndent = 0
+# cat=page/enable/61; type=boolean; label=Content indent - inherit: Sub-pages take over the indent of the nearest page above them that has one set, until one of them sets its own. Switched off, an indent applies only to the page it is set on. Only has an effect while "Content indent" is on
+contentIndentInherit = 1
 
 # cat=flexform/enable/10; type=boolean; label=Extend flexforms with custom fields: (clear cache)
 flexformExtend = 0
@@ -97,8 +105,10 @@ rteCodeBlock = 0
 rteCode = 1
 # cat=RTE/enable/45; type=boolean; label=RTE Margins: Toolbar item "Margin" - a dropdown for the Bootstrap spacing utilities mt-1..mt-5 and mb-1..mb-5 on the current block. Top and bottom are independent.
 rteMargins = 1
-# cat=RTE/enable/47; type=boolean; label=RTE Badge: Toolbar item "Badge" - one dropdown holding the eight Bootstrap badge colours, each as a normal badge and as a pill. It replaces the 16 entries "Badge *" and "Pill Badge *" in the Styles dropdown; the markup is identical, so existing badges stay editable. Switching this off only hides the button.
+# cat=RTE/enable/47; type=boolean; label=RTE Badge: Toolbar item "Badge" - one dropdown holding the eight Bootstrap badge colors, each as a normal badge and as a pill. It replaces the 16 entries "Badge *" and "Pill Badge *" in the Styles dropdown; the markup is identical, so existing badges stay editable. Switching this off only hides the button.
 rteBadge = 1
+# cat=RTE/enable/48; type=boolean; label=RTE Color: Toolbar item "Color" - one dropdown holding the six Bootstrap text colors, once for the marked text and once for the whole paragraph. It replaces the twelve entries "Text Color *" and "Block Color *" in the Styles dropdown; the markup is identical, so existing colors stay editable. Switching this off only hides the button.
+rteColor = 1
 # cat=RTE/enable/50; type=boolean; label=RTE Table: Toolbar item "Insert table". Existing tables stay editable.
 rteTable = 1
 # cat=RTE/enable/60; type=boolean; label=RTE Alignment: Toolbar item "Text alignment" (text-start/-center/-end/-justify).
@@ -117,16 +127,17 @@ rteFindAndReplace = 1
 rteShowBlocks = 1
 # cat=RTE/enable/130; type=boolean; label=RTE Source editing: Toolbar item "Source" - editors can edit the HTML directly.
 rteSourceEditing = 1
-# cat=RTE/enable/200; type=boolean; label=RTE Styles - Colors: Entries "Block Color *" and "Text Color *" in the Styles dropdown. Classes already set in existing content are kept.
-rteStyleColors = 1
+# Text colours are no longer a Styles entry but a toolbar dropdown of their own -
+# the setting is called "rteColor" now and sits further up. "rteStyleColors" is
+# therefore gone from here. A value stored by an older version still decides as
+# long as it sits in the stored configuration (see FeatureToggles) - it goes away
+# with the RteColorSettingUpgradeWizard, or as soon as this form is saved once.
 # cat=RTE/enable/210; type=boolean; label=RTE Styles - Buttons: Entries "Button *" in the Styles dropdown. Classes already set in existing content are kept.
 rteStyleButtons = 1
-# Badges sind kein Styles-Eintrag mehr, sondern ein eigenes Toolbar-Dropdown -
-# die Einstellung heisst jetzt "rteBadge" und steht weiter oben.
-# "rteStyleBadges" ist hier deshalb entfernt. Ein in einer aelteren Version
-# gespeicherter Wert entscheidet aber weiterhin, solange er in der
-# gespeicherten Konfiguration steht (siehe FeatureToggles) - er verschwindet
-# durch den RteBadgeSettingUpgradeWizard oder sobald dieses Formular einmal
-# gespeichert wird.
+# Badges are no longer a Styles entry but a toolbar dropdown of their own - the
+# setting is called "rteBadge" now and sits further up. "rteStyleBadges" is
+# therefore gone from here. A value stored by an older version still decides as
+# long as it sits in the stored configuration (see FeatureToggles) - it goes away
+# with the RteBadgeSettingUpgradeWizard, or as soon as this form is saved once.
 # cat=RTE/enable/230; type=boolean; label=RTE Styles - Tables: Entries "Table *" in the Styles dropdown. Classes already set in existing content are kept.
 rteStyleTables = 1

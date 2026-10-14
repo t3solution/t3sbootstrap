@@ -84,8 +84,8 @@ class Modal implements SingletonInterface
 			if ($processedData['modal']['cookie']) {
 				$processedData['modal']['showOnPageLoad'] = false;
 			} else {
-				// Cookie ablaufen lassen — Hinweis: setcookie() hier nur als Notlösung,
-				// besser über PSR-7 Response in einem Middleware-Layer setzen
+				// Let the cookie expire - note: setcookie() here is a stopgap, better set through
+				// a PSR-7 response in a middleware layer
 				setcookie($uid, '', time() - 3600, '/');
 			}
 		} else {

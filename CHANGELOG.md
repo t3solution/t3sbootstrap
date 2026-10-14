@@ -4,6 +4,577 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.54 — Seitenweise abschalten, Einzug, senkrechte Überschrift
+
+Betrifft die folgenden Dateien:
+
+```
+.gitignore   (neu)
+composer.json
+ext_conf_template.txt
+ext_emconf.php
+ext_tables.sql
+Classes/Backend/EventListener/PageInfo.php
+Classes/Backend/EventListener/RTE/FeatureToggles.php
+Classes/Backend/EventListener/TCA/TcaCompilation.php
+Classes/Backend/Form/DisplayCondition/SectionCondition.php   (neu)
+Classes/Backend/Hooks/OutsourcedFiles.php
+Classes/DataProcessing/BootstrapProcessor.php
+Classes/DataProcessing/ConfigProcessor.php
+Classes/ExpressionLanguage/T3sbConditionFunctionsProvider.php
+Classes/Helper/ClassHelper.php
+Classes/Helper/DefaultHelper.php
+Classes/Updates/RteColorSettingUpgradeWizard.php   (neu)
+Classes/UserFunction/TcaMatcher.php
+Classes/Wrapper/BackgroundWrapper.php
+Configuration/FlexForms/Container/BackgroundWrapper.xml
+Configuration/RTE/Default.yaml
+Configuration/Sets/T3sbootstrap/constants.typoscript
+Configuration/Sets/T3sbootstrapVersion/settings.definitions.yaml
+Configuration/TCA/Overrides/pages.php
+Configuration/TCA/Overrides/tt_content_newCType.php
+readMe.md
+Resources/Private/Extensions/ke_search/Configuration/TypoScript/setup.typoscript
+Resources/Private/Language/de.locallang.xlf
+Resources/Private/Language/de.locallang_be.xlf
+Resources/Private/Language/de.locallang_db.xlf
+Resources/Private/Language/locallang.xlf
+Resources/Private/Language/locallang_db.xlf
+Resources/Private/Backend/ContainerPreview/.../four_columns/Preview.fluid.html
+Resources/Private/Backend/ContainerPreview/.../toast_container/Preview.fluid.html
+Resources/Private/Backend/ContainerPreview/.../two_columns/Preview.fluid.html
+Resources/Private/Layouts/Content/Default.fluid.html
+Resources/Private/Templates/Container/Default.fluid.html   (entfernt)
+Resources/Private/Partials/Content/Field.fluid.html
+Resources/Private/Partials/Content/Header/All.fluid.html
+Resources/Private/Partials/Content/Header/Header.fluid.html
+Resources/Private/Partials/Content/Header/SubHeader.fluid.html
+Resources/Private/Partials/Content/Media/Carousel.fluid.html
+Resources/Private/Partials/Content/Media/CopyrightNote.fluid.html   (neu)
+Resources/Private/Partials/Content/Swiper/CustomOne.fluid.html
+Resources/Private/Partials/Content/Swiper/CustomTwo.fluid.html
+Resources/Private/Partials/Content/Swiper/Default.fluid.html
+Resources/Private/Partials/Page/Jumbotron.fluid.html
+Resources/Private/Partials/Page/Meta.fluid.html
+Resources/Private/Partials/Page/Navbar/Assets.fluid.html
+Resources/Private/Partials/Page/Title.fluid.html
+Resources/Private/Templates/Content/Carousel.fluid.html
+Resources/Private/Templates/Main.fluid.html
+Resources/Public/Backend/Style/bestyles.css
+Resources/Public/Backend/Style/rte.css
+Resources/Public/JavaScript/ESM/rte_ckeditor/color-plugin.js   (neu)
+Resources/Public/JavaScript/ESM/rte_ckeditor/table-base-plugin.js   (neu)
+Resources/Public/Styles/t3sbootstrap.css
+```
+
+> Die `readMe.md` führt keine „What's new"-Abschnitte mehr: Was eine Version gebracht
+> hat, steht in dieser Datei und in den Release-Notes, und an drei Orten driftet es
+> auseinander.
+
+> **Nach dem Update: Datenbankanalyse ausführen und Cache leeren.**
+> `ext_tables.sql` bringt sieben neue Spalten in `pages` und zwei in `tt_content`
+> mit. Ohne die Analyse bleiben der neue Reiter und die neuen Felder leer. Die TCA,
+> die Sprachdateien und die kompilierten Fluid-Templates liegen im Cache.
+>
+> Einzug und senkrechte Überschrift sind beide **standardmäßig aus** — die Schalter
+> `contentIndent` und `headerVertical` stehen in der Extension-Konfiguration.
+
+### Neu — Reiter „T3SB" in den Seiteneigenschaften
+
+Navbar, Meta-Zeile, Brotkrumen, Seitentitel, Jumbotron und Footer lassen sich
+jetzt auf einer einzelnen Seite abschalten, ohne die Konfiguration der ganzen
+Site anzufassen. Sechs Häkchen in einem eigenen Reiter:
+
+```
+tx_t3sbootstrap_navbar_disable      tx_t3sbootstrap_jumbotron_disable
+tx_t3sbootstrap_meta_disable        tx_t3sbootstrap_pagetitle_disable
+tx_t3sbootstrap_breadcrumb_disable  tx_t3sbootstrap_footer_disable
+```
+
+Der Reiter ist **standardmäßig aus**. Er erscheint erst, wenn in der
+Extension-Konfiguration `pageOptOut` eingeschaltet wird — und ein einzelnes
+Häkchen zeigt sich nur, solange der zugehörige Bereich im
+T3SB-Konfigurations-Datensatz überhaupt aktiv ist. Wer die Navbar site-weit
+abgeschaltet hat, bekommt dafür kein Häkchen zu sehen.
+
+`ConfigProcessor::applyPageOptOut()` setzt die betroffenen Werte auf genau das,
+was der Konfigurations-Datensatz speichern würde — Leerstring bei Auswahlfeldern,
+`0` bei Häkchen —, und zwar bevor irgendein Bereich berechnet wird. Damit braucht
+kein Template eine zweite Prüfung. Einzige Ausnahme ist die Meta-Zeile: sie liest
+`settings.config.metaEnable` direkt aus dem TypoScript, deshalb bekommt sie einen
+eigenen Schlüssel `config.pageOptOut.meta`.
+
+Wird `pageOptOut` wieder ausgeschaltet, verschwindet nur der Reiter. Gespeicherte
+Häkchen bleiben wirkungslos liegen, bis er wieder eingeschaltet wird.
+
+Der Reiter hängt sich erst nach der TCA-Kompilierung an
+(`TcaCompilation::addPageOptOutTab()`). `addToAllTCAtypes()` in den
+TCA-Overrides erreicht nur die Seitentypen, die in diesem Moment schon
+existieren; eine Extension, die später einen eigenen Typ mit vollständigem
+`showitem` definiert, wirft den Reiter wieder hinaus. Nach der Kompilierung sind
+alle Typen bekannt, und nichts überschreibt ihn mehr.
+
+Seitentypen ohne eigene Ausgabe bleiben außen vor — Verweis (3), Shortcut (4),
+Trenner (199), Ordner (254) und Papierkorb (255). Ein Häkchen zum Verbergen der
+Navbar hätte dort keinen Sinn.
+
+### Neu — Textfarben als eigenes Dropdown im RTE
+
+Die sechs Bootstrap-Textfarben standen bisher zwölfmal in der Styles-Auswahl: einmal
+als `Text Color *` für die Markierung, einmal als `Block Color *` für den Absatz.
+Sie haben jetzt ein eigenes Werkzeug in der Toolbar, so wie die Badges seit 5.3.51.
+Die Styles-Auswahl schrumpft dadurch von 41 auf 29 Einträge.
+
+Das Dropdown führt beide Gruppen, getrennt durch einen Strich: oben `Text Primary`
+bis `Text Warning` für die Markierung, darunter `Block Primary` bis `Block Warning`
+für jeden berührten Absatz. `No color` räumt beides ab. Jede Zeile trägt einen
+Farbpunkt — rund für die Markierung, eckig für den Absatz —, gespeist aus
+`var(--bs-primary)` mit den Bootstrap-Werten als Rückfall.
+
+Das Markup ist Zeichen für Zeichen dasselbe wie vorher, `<span class="text-primary">`
+und `<p class="text-primary">`. Bestehende Inhalte brauchen deshalb keine Migration:
+Sie werden beim Öffnen erkannt, lassen sich über das Dropdown ändern und gehen
+unverändert zurück.
+
+Für die Absätze steht dort ein eigener Downcast-Konverter statt
+`attributeToAttribute`. Letzteres hätte beim Wechsel der Farbe die alte
+`text-*`-Klasse am Absatz stehen lassen, weil es Klassen anfügt statt sie zu tauschen.
+
+Die Einstellung heißt jetzt `rteColor` statt `rteStyleColors`, und der
+`RteColorSettingUpgradeWizard` zieht einen gespeicherten Altwert um. Wer die Farben
+abgeschaltet hatte, behält sie abgeschaltet — auch ohne den Wizard, solange der alte
+Schlüssel in der Konfiguration steht.
+
+### Neu — Textfarben sind im Editor jetzt auch zu sehen
+
+`rte.css` bekommt die sechs Farbregeln. Bootstrap wird nicht in den Editor geladen,
+deshalb blieb eine gesetzte Textfarbe dort bisher schwarz — man sah erst im Frontend,
+was man getan hatte. Das galt schon für die alten Styles-Einträge.
+
+### Neu — Einzug für die Inhaltselemente einer Seite
+
+Eine Seite kann ihre Inhaltselemente einrücken, gemessen in Rasterspalten von 1 bis 6.
+Das Feld steht im Reiter „T3SB" der Seiteneigenschaften, der Einzug greift ab dem
+Breakpoint `lg` und nur im einspaltigen Backend-Layout — darunter und in mehrspaltigen
+Layouts bleibt alles, wie es war.
+
+Unterseiten erben den Wert, bis eine von ihnen einen eigenen setzt. Dafür läuft
+`BootstrapProcessor::resolveContentIndent()` die Rootline von der aktuellen Seite nach
+oben und nimmt den ersten gefüllten Wert. Leer heißt erben, `0` heißt ausdrücklich
+keiner — damit lässt sich ein geerbter Einzug auf einem Zweig gezielt wieder abschalten.
+
+Wer das nicht will, schaltet `contentIndentInherit` aus: Dann zählt allein die Seite,
+auf der der Wert steht, und Unterseiten bekommen nichts. Die Auswahlliste verliert dabei
+den Eintrag „Von der übergeordneten Seite erben" — es gibt nichts mehr zu erben —, und
+der leere Wert heißt dort schlicht „Kein Einzug". Eine gespeicherte `0` bedeutet
+dasselbe, der Schalter lässt sich also hin und her stellen, ohne dass ein Wert umgesetzt
+werden muss.
+
+Ein einzelnes Inhaltselement kann sich im Reiter „Erscheinungsbild" über
+`tx_t3sbootstrap_no_indent` ausnehmen. Vier Element-Typen sind ohnehin ausgenommen,
+weil sie über die ganze Breite gehören: Hintergrund- und Parallax-Wrapper sowie
+Carousel- und Swiper-Container. Die übrigen Wrapper rücken mit ein.
+
+Die Klasse `t3sb-indent-1` bis `t3sb-indent-6` sitzt an dem Element, das die ID trägt,
+damit die Überschrift über dem Block mit umzieht. Bei einem Container druckt das Layout
+sie als eigenes Attribut neben die ID, bei einer Button-Gruppe am Gruppen-Element —
+sonst hängt sie an den übrigen Klassen des Elements.
+
+Der Schalter heißt `contentIndent` und ist aus; `contentIndentInherit` steuert die
+Vererbung und ist an. Den Einzug abzuschalten versteckt nur die Felder; gespeicherte
+Werte bleiben stehen.
+
+### Neu — Überschrift senkrecht ausgeben
+
+Der Überschriftenblock eines Inhaltselements — Überschrift, Unterzeile und Überzeile —
+lässt sich um 90 Grad drehen, nach oben oder nach unten gelesen. Das Feld „Vertical
+header" steht im Reiter „Kopfzeilen", die Drehung gilt ab `lg`; darunter steht der Text
+wieder normal.
+
+`writing-mode: vertical-rl` erledigt die Drehung, `transform: rotate(180deg)` die
+Leserichtung nach oben. Liegt die Überschrift über „Header inside" **im**
+Hintergrund-Wrapper, wird sie dort senkrecht mittig gesetzt: `position: absolute` mit
+`top: 50%` und einem Ausgleich über `translateY(-50%)`. Damit der Wrapper dafür der
+Bezugsrahmen ist, setzt `BackgroundWrapper` in genau diesem Fall `position-relative` —
+ohne einen positionierten Vorfahren landete die Überschrift im nächsten Element.
+
+Das Feld hängt am Hintergrund-Wrapper mit „Header inside", und zwar in beide
+Richtungen: Es erscheint im Formular nur dort — `TcaMatcher::headerInside()` als
+`displayCond` — und gerendert wird die Drehung auch nur dort. Ohne Wrapper gäbe es
+nichts, worin der herausgelöste Block zentriert werden könnte; ein Feld, das sichtbar
+ist und nichts bewirkt, wäre die schlechtere Hälfte.
+
+Die Bedingung liest den Wert aus dem Datensatz, den FormEngine übergibt, nicht aus der
+Datenbank: `headerInside` hat jetzt `onChange = reload`, und dieser Neuaufbau trägt die
+aktuellen Formularwerte, ohne zu speichern — das Häkchen wirkt damit sofort. Die
+Datenbank bleibt der Rückfall für die Fälle, in denen das Feld noch nicht aufbereitet
+vorliegt.
+
+Der Schalter heißt `headerVertical` und ist aus. Ihn abzuschalten versteckt nur das
+Feld; ein gespeicherter Wert wirkt wieder, sobald „Header inside" erneut an ist.
+
+### Behoben — kein Backend-Layout im Workspace
+
+Auf einer Seite mit Versionsdatensatz fehlte das Backend-Layout; auf einer
+Root-Seite war die Spaltenaufteilung damit komplett weg.
+
+FormEngine bearbeitet im Workspace den Versionsdatensatz und reicht genau dessen
+`uid` an die Conditions weiter: `DatabaseEditRow` liest ihn über seine eigene uid,
+ohne Workspace-Overlay, und `BackendLayoutView::determinePageId()` gibt diese uid
+durch. Der Konfigurations-Datensatz hängt aber an der **Live**-Seite und hat nie
+eine eigene Version — die Tabelle ist nicht workspace-fähig. Die Abfrage mit der
+Versions-uid fand deshalb nichts, jedes `colPosList()` lieferte `false`.
+
+Auf Unterseiten fiel es weniger auf, weil die Suche über die Rootline eine
+Elternseite findet. Auf einer Root-Seite sitzt über dem Versionsdatensatz nur
+uid 0, und es gibt nichts mehr aufzufangen.
+
+Dieselbe Stolperstelle im Info-Block des Seitenmoduls: `PageInfo` lief die Rootline
+über `RootlineUtility` ab, und die scheitert an einer Seite, die es nur im Workspace
+gibt. Dort steht jetzt `BackendUtility::BEgetRootLine()`, das den Workspace kennt.
+
+`resolveLivePageId()` nimmt jetzt `t3ver_oid`, sobald einer gesetzt ist. Die
+Rootline-Suche wurde bei der Gelegenheit vereinfacht und in
+`getParentPageIds()` ausgelagert.
+
+### Behoben — Seitentitel lief randlos, wenn der Jumbotron keinen Container hat
+
+`Jumbotron.fluid.html` setzte `pageTitleSkipContainer` unbesehen. Der Gedanke
+dahinter war richtig: Der Jumbotron bringt normalerweise seinen eigenen Container
+mit, ein zweiter darin wäre doppelte Polsterung und eine zweite Breitenbegrenzung.
+
+Nur gilt das nicht immer. Ist für den Jumbotron kein Container eingestellt, hat er
+auch keinen — und der Seitentitel lief dann über die volle Fensterbreite, während
+alles andere eingerückt stand. Die Variable wird jetzt nur noch gesetzt, wenn
+`{jumbotronContainer}` tatsächlich belegt ist.
+
+### Behoben — zwei veraltete Integrity-Hashes im CDN-Betrieb
+
+`bootstrap.cdn.bootstrapCssIntegrity` und `…JsIntegrity` standen in
+`constants.typoscript` auf den Hashes einer älteren Bootstrap-Fassung, während
+`settings.definitions.yaml` die richtigen führte. Beide Orte sind redundant: Wer
+das Set „OTHER SETTINGS" nicht einbindet, bekommt die Konstanten — und damit zwei
+falsche Hashes. Der Browser verweigert dann Bootstrap-CSS und -JS komplett, mit
+einer SRI-Meldung in der Konsole als einzigem Hinweis.
+
+Beide Werte sind gegen `bootstrap-5.3.8.tgz` nachgerechnet und angeglichen. Der
+Bundle-Hash war bereits korrekt.
+
+Vier weitere Werte standen an beiden Orten verschieden und sind auf den Stand der
+Site-Settings gebracht: `cdn.swiper` (11 → 12), `image.maxWidthToast` (20 → 40),
+`image.minimumWidth` (true → 0) und `backToTopTitle` („to tops" → „to top").
+
+Zwei CDN-Versionen sind bei der Gelegenheit nachgezogen: `cdn.baguetteBox`
+(1.11.1 → 1.13.0) und `cdn.glightbox` (3.2.0 → 3.3.1). Beide Pfade sind gegen das
+jeweilige Paket geprüft — cdnjs liefert `baguetteBox.min.js` unter der neuen
+Versionsnummer, und GLightbox behält `dist/css/` und `dist/js/`.
+
+Die Beschreibungen von `cdn.jarallax` und `cdn.swiper` behaupteten, der gepinnte
+Major sei zugleich der neueste. Das stimmt bei beiden nicht mehr — Jarallax steht
+bei 3.x, Swiper bei 14.x. Sie sagen jetzt, was der Pin tut, ohne eine Zahl zu
+nennen, die beim nächsten Release wieder falsch ist.
+
+`cdn.glightbox` hat außerdem eine Beschreibung bekommen, weil der Wert leicht
+überschätzt wird: Er wirkt nur im Kommando `t3sbootstrap:cdnToLocal`. Das
+CDN-Markup lädt GLightbox ohne Versionsangabe, also immer die neueste Fassung.
+
+### Behoben — Dropdown-Animation blieb dauerhaft aus
+
+Slide-In und Fade wurden ignoriert; das Dropdown bekam statt `dd-animate-1`
+die Klasse `removed-animate-1`.
+
+Die Umbenennung ist gewollt — unterhalb des Navbar-Breakpoints soll keine
+Animation laufen. Sie griff nur immer. Fehlt im Body das Attribut
+`data-navbar-breakpointWidth`, fällt `MainAssets.fluid.html` auf `99999` zurück.
+Für das Offcanvas ist das die sichere Annahme, für die Animation die falsche:
+`vw < 99999` stimmt auf jedem Bildschirm.
+
+Zwei Stellen sind nachgezogen. `OutsourcedFiles::resolveBreakpointWidth()` greift
+jetzt auf die Bootstrap-Standardbreiten zurück, wenn die Site-Settings keine
+liefern — das ist der Fall, sobald das Set „OTHER SETTINGS" fehlt, denn dort sind
+sie definiert. Und `t3sbDropdownAnimate()` liest einen Breakpoint, den kein
+Bildschirm erreicht, als „kein Breakpoint" statt als „immer mobil".
+
+### Behoben — fehlendes Backend-Layout-Partial riss die ganze Seite ab
+
+Ein Backend-Layout ohne passendes Partial unter `Partials/BackendLayouts/` warf
+eine `InvalidPartialException` und nahm die komplette Seite mit — ein weißer
+Bildschirm wegen eines falschen Werts in `pages.backend_layout`.
+
+Das traf jedes selbstgebaute Layout ohne eigenes Partial, und es traf die
+`_Extra`-Schlüssel älterer Installationen, bei denen der
+`BackendlayoutUpgradeWizard` nie gelaufen war. `Main.fluid.html` fällt jetzt auf
+`OneCol` zurück, statt abzubrechen.
+
+### Behoben — „Gallery columns" stand bei jedem Inhaltselement
+
+`tx_t3sbootstrap_inTextImgColumns` hatte als einziges Feld der Palette
+„T3SB Image Settings" keine `displayCond`. Bei Elementen ohne Bilder fielen die
+übrigen Felder weg, und übrig blieb ein nackter Kasten unter „Extended" — an
+einer Stelle, an der das Feld ohnehin wirkungslos ist.
+
+Es erscheint jetzt nur noch bei den sechs Bild-CTypes. Beschriftung und
+Beschreibung kommen aus der Sprachdatei statt hartkodiert aus der TCA und heißen
+jetzt „Breite des Bildblocks (Spalten)". Der alte Name legte eine Verwandtschaft
+zu „Number of Columns" (`imagecols`) nahe, die es nicht gibt: Das Feld bestimmt
+die Breite des umflossenen Bildblocks in Rasterspalten und wirkt ausschließlich
+bei den Ausrichtungen „im Text, rechts" und „im Text, links".
+
+### Behoben — fünf Beschriftungen blieben leer
+
+`f:translate` gibt für einen Schlüssel, den es nicht gibt, den Leerstring aus — man
+sieht also nichts und bekommt auch keinen Hinweis. Fünf Stellen traf das:
+
+| Stelle | war | ist |
+|---|---|---|
+| Carousel, Link unter dem Text | `locallang.xlf:read-more` fehlte | *Read more* / *Weiterlesen* |
+| Suchfeld, Platzhalter | `locallang.xlf:form.search` fehlte | *Search term* / *Suchbegriff* |
+| Suchfeld, Schaltfläche | `locallang.xlf:form.submit` fehlte | *Search* / *Suchen* |
+| Container-Vorschau, 2 und 4 Spalten | griff auf `flexform.cw.equalWidth` | greift auf `flexform.equalWidth` |
+| Toast-Vorschau, Platzierung | suchte in `locallang_be.xlf` | sucht in `locallang_db.xlf` |
+
+Die unteren beiden waren keine fehlenden Texte, sondern falsche Referenzen — die
+Schlüssel gab es längst, nur unter anderem Namen beziehungsweise in der anderen Datei.
+
+Dazu zwei Einträge, die nur auf Englisch vorlagen: *Expanded Content Top* und
+*Background Images*. Beide Sprachdateien tragen jetzt dieselben 841 Schlüssel.
+
+### Behoben — Meta-Zeile blieb leer, sobald nur Text hinterlegt war
+
+Gemeldet für 5.3.53: Ist `meta_value` leer und `meta_text` gefüllt, erschien die
+Meta-Zeile nicht. Die Bedingung in `Main.fluid.html`
+
+```html
+<f:if condition="{metaNavigation} || {config.meta.text}">
+```
+
+konnte nie wahr werden, weil **beide** Werte fehlten: `metaNavigation` erzeugt der
+Menü-Prozessor nur aus `meta_value`, und `config.meta` wurde im `ConfigProcessor`
+überhaupt nicht gebaut. Im `f:debug` tauchte deshalb keiner der beiden auf.
+
+Der Schaden reichte weiter als der Bericht: `Partials/Page/Meta` liest jeden seiner
+Werte aus `config.meta`. Auch mit gefülltem `meta_value` kam dort nichts an —
+`{config.meta.container}` war leer, blieb damit ungleich `none` und druckte
+`<div class=" d-flex justify-content-">` um die Zeile.
+
+`ConfigProcessor::processMeta()` baut den Block jetzt. `meta_enable` trägt dabei die
+Ausrichtung, so wie `navbar_enable` das Farbschema trägt — leer heißt aus, sonst
+`start`, `end` oder `scroller`. Ein nicht gespeicherter Container wird zu `none`
+statt zu einem leeren `class`-Attribut, und die eigene Klasse bekommt ihr führendes
+Leerzeichen, weil das Partial sie als `nav-meta{class}` ausgibt.
+
+Eine Falle steckt dabei in den generierten Konstanten: `OutsourcedFiles` schreibt ein
+leeres Feld als `0`, in `settings.config` kommt also die Zeichenkette `"0"` an, nicht
+`""`. Mit `??` wäre daraus `nav-meta 0` geworden — der Block prüft deshalb mit `?:`.
+
+Der seitenweise Opt-out wirkt unverändert: `applyPageOptOut()` leert `metaEnable`,
+bevor der Block gebaut wird.
+
+### Behoben — leeres Markup für Unterzeile und Überschrift
+
+Ein Inhaltselement mit Überschrift, aber ohne Unterzeile bekam trotzdem ein
+`<p class="subheader">` — leer. Umgekehrt stand über einem Element, das nur eine
+Unterzeile, ein Datum oder eine Überzeile trägt, ein leeres `<h2>`. Am auffälligsten
+im Hintergrund-Wrapper, wo der Kopfblock über oder auf dem Bild sitzt.
+
+Gemessen gibt `Partials/Content/Field` bei leerem Feld nicht den Leerstring zurück,
+sondern **ein Byte: `\n`**. Fluid entfernt beim Einlesen eines Partials die
+umschließenden `<html>`-Tags, behält aber, was dahinter steht — und das ist der
+Zeilenumbruch am Dateiende. In Fluid ist eine Zeichenkette aus Leerraum TRUE, also:
+
+```
+{subheader}                      -> "\n"   -> f:if TRUE
+{subheader -> f:format.trim()}   -> ""     -> f:if FALSE
+```
+
+`Header/All` prüft längst mit der getrimmten Fassung, reicht aber die ungetrimmte an
+`Header/SubHeader` weiter, und dort stand `<f:if condition="{subheader}">`. Dieselbe
+Falle hatte 5.3.52 schon beim Supraheader behoben — der Kommentar in `Content/Field`
+warnt vor einem Umbruch *vor* dem `<f:if>`, nicht vor dem am Dateiende.
+
+Beides ist jetzt zu: `Content/Field` endet ohne abschließenden Zeilenumbruch, und die
+beiden Partials prüfen auf den getrimmten Wert, damit ein Editor, der den Umbruch
+wieder einfügt, nichts kaputt macht. Ausgegeben wird weiter der ungetrimmte Wert —
+`f:format.trim` escaped, ein `<br>` in der Überschrift käme sonst als Text heraus.
+
+`Header/Header` hatte zusätzlich gar keine Prüfung: Es druckte das `<hN>` immer,
+sobald `Header/All` den Block rendert, und das tut es, sobald *irgendeines* der vier
+Felder gefüllt ist. Ein Icon ohne Text zählt dabei als Überschrift und wird weiter
+ausgegeben.
+
+### Behoben — kein Copyright-Hinweis in Carousel und Swiper
+
+Ein Bild im Carousel zeigte seinen Copyright-Hinweis nicht; dasselbe Bild als
+normales Inhaltselement schon. Im Swiper fehlte er ebenso.
+
+Die Verwechslung liegt nahe, denn `Partials/Content/Media/Carousel.fluid.html`
+hatte eine Section „Copyright", und die wurde dort auch gerendert — nur ist
+dieses Partial für die Galerie-Variante „Carousel" in Textmedia, Mediaobject und
+Card zuständig. Das Inhaltselement „Carousel" im Carousel-Container rendert
+`Templates/Content/Carousel.fluid.html`, und dort fehlte die Ausgabe
+vollständig: Das Wort „copyright" kam in der Datei nicht vor. In den drei
+Swiper-Partials ebenso wenig.
+
+Statt den Block jetzt viermal zu wiederholen, steht er in einem eigenen Partial
+`Media/CopyrightNote`. Es erwartet `{file}` und wird von beiden Carousel-Dateien
+sowie von `Swiper/Default`, `Swiper/CustomOne` und `Swiper/CustomTwo`
+eingebunden — jeweils im `figure` hinter dem Bild und vor einer Bildunterschrift,
+derselben Stelle wie bei `Media/Type/Image`. Dort muss der Hinweis stehen, denn
+`.img-copyright-default` zieht sich mit einem negativen Margin über die
+Unterkante des Bildes und braucht das Bild als vorangehendes Geschwister.
+
+Die Toast-Variante (Extension-Konfiguration `imgCopyright = 2`) bleibt den
+Slidern erspart: Ihr Skript hängt an `.image .img-copyright`, und ein geöffneter
+Toast würde beim nächsten Slide-Wechsel mitsamt seinem Slide weggeschoben. In
+Carousel und Swiper erscheint deshalb immer der eingebettete Hinweis.
+
+Das Galerie-Partial prüfte außerdem allein `tx_t3sbootstrap_copyright`. Ein Bild,
+bei dem nur das FAL-Feld `copyright` gefüllt ist, blieb dort ohne Hinweis,
+während es als normales Bild einen bekam. Das neue Partial behandelt die zwei
+Felder überall gleich — das FAL-Feld gewinnt.
+
+Eine Besonderheit in `Swiper/Default`: Dort liegt das ganze `figure` in einem
+`f:link.typolink`. Ein Klick auf den Copyright-Hinweis folgt also dem Bildlink.
+Das zu ändern hieße, die Verschachtelung umzubauen; dafür gab es keinen Anlass.
+
+### Behoben — Tabellen im RTE verloren ihre Bootstrap-Klasse
+
+Eine mit „Table Striped" formatierte Tabelle sah nach Öffnen und Speichern wieder
+schmucklos aus, und die Styles-Auswahl zeigte den Eintrag nicht mehr als aktiv.
+Dasselbe bei „Table Hover" und „Table".
+
+Der Grund steckt in CKEditor selbst. Dessen General-HTML-Support-Integration für
+Tabellen verbraucht beim Lesen eines `<table>` zuerst die Klasse `table` und sammelt
+erst danach die übrigen ein:
+
+```js
+o.consumable.consume(s, { classes: "table" });
+n(s, "htmlTableAttributes");
+```
+
+Eine verbrauchte Klasse wird nicht mehr aufgenommen. CKEditor darf das, weil sein
+eigenes Tabellen-Markup `<figure class="table">` als Hülle benutzt und den Namen
+deshalb als intern behandelt — für Bootstrap ist genau diese Klasse aber die tragende.
+Der Weg durch den Editor sah also so aus:
+
+```
+vorher    <table class="table table-striped">
+Modell    htmlTableAttributes = { classes: ['table-striped'] }
+nachher   <table class="table-striped">
+```
+
+Ohne `.table` greift keine der Bootstrap-Regeln, und `hasAllClasses` findet nicht mehr
+beide Klassen des Styles-Eintrags.
+
+Das neue `table-base-plugin.js` hängt einen Upcast-Konverter mit `priority: 'lowest'`
+hinter den von CKEditor (`'low'`) und legt die Basisklasse zurück ins Attribut; von
+dort schreibt der vorhandene Downcast sie wieder an das `<table>`. Die Styles-Einträge
+in `Default.yaml` bleiben unverändert, ein Toolbar-Element kommt nicht hinzu. Erkennt
+der Konverter eine `table-*`-Variante ohne Basisklasse, ergänzt er sie ebenfalls —
+damit räumen bereits beschädigte Inhalte beim nächsten Speichern sich selbst auf.
+
+### Behoben — „Linie darüber/darunter" wirkte in Wrappern nicht
+
+Die Rahmen-Option einer Seite („Erscheinungsbild" → Rahmen) blieb an einem Wrapper
+ohne Wirkung. Beim Hintergrund-Wrapper war die Linie nicht zu sehen, beim
+Parallax-Wrapper und beim Swiper-Container fehlte sie ganz.
+
+`Layouts/Content/Default` druckt bei einem Container **kein** `classAttr` an das
+`div#c{uid}`; die Klassen gehen über `{class}` an das jeweilige Template und landen
+dort an einem inneren Element. Für `frame-ruler-before` heißt das: Das Pseudoelement
+wird innerhalb des Wrappers gezeichnet, beim Hintergrundbild also hinter dem Bild. Und
+`ParallaxWrapper.fluid.html` wie `SwiperContainer.fluid.html` geben `{class}`
+überhaupt nicht aus, dort fiel die Klasse vollständig weg.
+
+Klassen, die das Element als Ganzes beschreiben, gehören an das Element mit der ID —
+die Linien, weil sie Pseudoelemente im Fluss sind, der Einzug, weil er die Überschrift
+mitnehmen muss. `BootstrapProcessor` sammelt beide jetzt in `outerAttr` (vormals
+`indentAttr`), löst `frame-*` bei Containern aus `class` heraus und das Layout druckt
+sie neben die ID. Ausgenommen ist das Accordion: Das Layout rendert es ohne dieses
+`div`, dort bleibt die Klasse, wo sie war.
+
+### Behoben — `content_margin_top` in Spalten-Containern
+
+Der automatische Abstand galt auch für Inhaltselemente in zwei-, drei-, vier- und
+sechsspaltigen Containern. Dort regelt die Rinne des Rasters den Abstand; ein
+Margin darüber schiebt die Spalten gegeneinander aus der Flucht, weil jede Spalte
+mit einem anderen Element beginnt. `DefaultHelper` nimmt jetzt beide
+Container-Listen aus — `TX_CONTAINER_GRID` und `TX_CONTAINER`.
+
+### Behoben — Abstand unter dem letzten Absatz in Alerts
+
+Die Regel `div.alert > *:last-child { margin-bottom: 0 }` erreichte Absätze nicht,
+die im RTE-Feld `bodytext` stecken. Sie gilt jetzt auch dort.
+
+### Behoben — Backend-Stylesheet verbog das Karten-Raster aller Module
+
+Gemeldet als [#527](https://github.com/t3solution/t3sbootstrap/issues/527). Seit
+5.3.30 lädt die Extension bei `preview = 1` die Datei `bestyles.css` als
+Backend-Stylesheet. Darin stand eine Regel ohne jede Eingrenzung:
+`@container (min-width: 992px) { .card-size-small { width: calc(50% - …) !important } }`.
+Sie traf jedes Backend-Modul, das die Karten des Cores benutzt — unter „Hilfe → Über"
+standen statt vier nur noch zwei Karten je Reihe, und wegen `!important` schlug sie
+auch `.w-100` fremder Module.
+
+Der Ansatz war dazu von Grund auf falsch: Der Core bemisst diese Karten nicht über
+`width`, sondern über `grid-template-columns` am `.card-container` — die Karten sind
+Grid-Items. Eine feste Breite ändert die Spaltenaufteilung nicht, sie lässt die Karte
+aus ihrer Zelle laufen. Breiter macht der Core eine Karte mit `grid-column`
+(so ist `.card-size-medium` gebaut). Die Klasse `card-size-small` kommt in der
+gesamten Extension sonst nirgends vor — die Regel konnte also nur fremde
+Oberflächen treffen. Ersatzlos entfernt.
+
+Im selben Zug eingegrenzt: `.settings-category-description` und
+`.settings-category-headline` standen ebenfalls unbegrenzt mit `max-width: 90% !important`
+in der Datei. Beide gelten jetzt nur noch im Site-Settings-Editor
+(`[data-module-name="site_configuration"]`) und kommen ohne `!important` aus.
+
+### Behoben — Offcanvas-Menü: Klasse `undefined`, Suchfeld, Ausrichtung
+
+Im Markup des Offcanvas stand eine Klasse namens `undefined`:
+
+```html
+<div id="navbarToggler" class="offcanvas offcanvas-end bg-primary undefined">
+```
+
+Im ausgelieferten HTML steht sie nicht — sie kommt aus `t3sbOffcanvas()`. Die Funktion
+setzt zwei Farbklassen (`utilColorArr[0]` und `[1]`), der `ConfigProcessor` liefert mit
+`'bg-' . $navbarColor` aber nur eine. `classList.add(undefined)` schreibt daraufhin die
+Zeichenkette „undefined" als Klasse ins DOM. Die Funktion arbeitet jetzt über die
+gefilterte Liste und setzt so viele Klassen, wie ankommen — eine wie zwei.
+
+Dieselbe Datei, zweiter Fund: `t3sbNavbarSearchbox()` greift unterhalb des Breakpoints
+ohne Prüfung auf `document.querySelector('.navbar form')` zu, während der Zweig darüber
+brav `if (form)` fragt. Ohne Suchformular in der Navbar brach die Funktion ab. Jetzt
+steht die Prüfung am Anfang.
+
+**Panel und Leiste sind dasselbe Markup.** Unterhalb des Breakpoints ist das Offcanvas
+ein Panel, darüber die waagerechte Navbar — in CSS war dieser Zustand bisher nicht
+unterscheidbar. `t3sbOffcanvas()` kennt ihn, weil sie Viewport und Breakpoint ohnehin
+vergleicht, und markiert ihn jetzt mit `t3sb-offcanvas-panel`. Daran hängen zwei neue
+Regeln, die nur im Panel gelten:
+
+- Das Suchformular bekommt eine Trennlinie und Luft nach oben, statt direkt unter dem
+  letzten Menüpunkt zu kleben
+- Die Ausrichtungsoptionen der waagerechten Navbar werden neutralisiert. Sie erreichen
+  das Panel über dieselbe Klasse: `nav-fill` und `nav-justified` zentrieren dort jede
+  Beschriftung (Bootstrap setzt `text-align` auf ihre Kinder), `ms-auto` schiebt den
+  ganzen Block an den Rand — beides kämpft im Panel mit dem linksbündigen Titel
+
+Das Suchfeld selbst (`Resources/Private/Extensions/ke_search/…/setup.typoscript`) trug in
+der Variante **ohne** Schaltfläche ein `me-2` — der Abstand zur Schaltfläche, die es dort
+nicht gibt. Das Feld hörte dadurch vor dem Rand auf. Platzhalter und `aria-label` kommen
+jetzt aus der Sprachdatei statt fest auf Deutsch bzw. Englisch dazustehen, und die
+Schaltfläche der zweiten Variante heißt nicht mehr fest „Search" und ist nicht mehr grün.
+
+### Entfernt — Debug-Template im Container-Ordner
+
+`Resources/Private/Templates/Container/Default.fluid.html` enthielt nichts als ein
+`<f:debug>` über alle Variablen. Kein Template referenziert es; im Release hat es nichts
+zu suchen.
+
+---
+
 ## 5.3.53 — TypoScript-Conditions, Abstände, FlexForm
 
 Betrifft die folgenden Dateien:

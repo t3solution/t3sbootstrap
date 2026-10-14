@@ -27,8 +27,8 @@ page {
 	page.includeJSFooter.t3sbPrism = EXT:t3sbootstrap/Resources/Public/Prism/prism.js
 [END]
 
-# Je Theme nur noch das Stylesheet. Eine Bedingung kann nur schalten und nicht
-# in den Pfad hineinschreiben, deshalb bleibt es bei einem Block pro Theme.
+# Only the stylesheet per theme. A condition can switch, not write into the
+# path, so one block per theme it stays.
 
 [t3sbootstrapValue('rteCodeBlock') == 'Default']
 	page.includeCSS.t3sbPrism = EXT:t3sbootstrap/Resources/Public/Prism/Default.css

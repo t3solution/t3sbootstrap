@@ -64,7 +64,7 @@ settings:
     category: Bootstrap.cdn
     description: ''
     type: string
-    default: '1.11.1'
+    default: '1.13.0'
   
   bootstrap.cdn.halkabox:
     label: 'Halkabox'
@@ -76,21 +76,21 @@ settings:
   bootstrap.cdn.glightbox:
     label: 'G Lightbox'
     category: Bootstrap.cdn
-    description: ''
+    description: 'Only used by the command "t3sbootstrap:cdnToLocal" - the CDN markup loads GLightbox without a version'
     type: string
-    default: '3.2.0'
+    default: '3.3.1'
   
   bootstrap.cdn.jarallax:
     label: 'Jarallax'
     category: Bootstrap.cdn
-    description: 'Set to 2 only to get v2.x (latest)'
+    description: 'Pins the major version: 2 always loads the newest 2.x. A newer major line exists - check the API before raising it'
     type: string
     default: '2'
   
   bootstrap.cdn.swiper:
     label: 'Swiper'
     category: Bootstrap.cdn
-    description: 'Set to 12 only to get v12.x (latest)'
+    description: 'Pins the major version: 12 always loads the newest 12.x. A newer major line exists - check the API before raising it'
     type: string
     default: '12'
   

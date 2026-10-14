@@ -22,7 +22,7 @@ final class ConfigTransferService
     public const FORMAT_VERSION = 1;
 
     /**
-     * Systemfelder, die nie exportiert werden (installationsabhaengig).
+     * System fields that are never exported (installation-specific).
      */
     private const SKIP_FIELDS = [
         'uid', 'pid', 'tstamp', 'crdate', 'cruser_id', 'deleted', 'sorting',
@@ -262,7 +262,7 @@ final class ConfigTransferService
     }
 
     /**
-     * Rootseiten fuer die Auswahl im Modul.
+     * Root pages for the selection in the module.
      *
      * @return array<int, array{uid: int, title: string}>
      */

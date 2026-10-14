@@ -25,7 +25,7 @@ const ATTRIBUTE = 't3sbBadge';
 const COMMAND = 't3sbBadge';
 
 /**
- * Baut die 16 Modellwerte: "primary" .. "dark" und "pill-primary" .. "pill-dark".
+ * Builds the 16 model values: "primary" .. "dark" and "pill-primary" .. "pill-dark".
  *
  * @returns {Array<{value: string, variant: string, pill: boolean, classes: string[], label: string}>}
  */
@@ -62,9 +62,9 @@ const BADGE_ICON = `
 `;
 
 /**
- * Faerbt die Eintraege im Dropdown. Das Dropdown gehoert zur Editor-Oberflaeche
- * und wird deshalb nicht von contentsCss erfasst - die Regeln muessen einmal je
- * Dokument eingehaengt werden. Gleiche Vorgehensweise wie im Alert-Plugin.
+ * Colours the entries in the dropdown. The dropdown belongs to the editor UI and
+ * is therefore not covered by contentsCss - the rules have to be hooked in once
+ * per document. Same approach as in the alert plugin.
  */
 function injectDropdownStyles() {
 	const id = 't3sb-badge-plugin-styles';
@@ -230,8 +230,8 @@ export class BadgePicker extends Core.Plugin {
 			tooltip: true
 		});
 
-		// createDropdown() bindet buttonView.isOn und .isEnabled bereits selbst -
-		// ein zweites bind() auf denselben Observable wirft.
+		// createDropdown() already binds buttonView.isOn and .isEnabled itself - a second
+		// bind() on the same observable throws.
 		dropdown.bind('isEnabled').to(command, 'isEnabled');
 
 		dropdown.buttonView.bind('tooltip').to(command, 'value', value => {

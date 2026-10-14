@@ -39,6 +39,17 @@ class BackgroundWrapper implements SingletonInterface
         // the headers of the elements inside it are untouched.
         $processedData['headerInside']     = !empty($flexconf['headerInside']);
 
+        // A vertical header inside the wrapper is taken out of the flow, so the wrapper
+        // has to be its frame of reference. Only two of the five section variants are
+        // positioned by themselves (those carrying .card), the plain background-image
+        // section and the one without media are not - without this the header anchors
+        // to whatever lies further up and leaves the wrapper altogether.
+        if ($processedData['headerInside']
+            && !empty($processedData['data']['tx_t3sbootstrap_header_vertical'])
+        ) {
+            $processedData['class'] = trim(($processedData['class'] ?? '').' position-relative');
+        }
+
         // The header is printed above the <section>, and the <section> is what
         // carries the class - so a contentMarginTop would land between the two.
         // Same condition as in the template; DefaultHelper moves the class over.
@@ -71,7 +82,7 @@ class BackgroundWrapper implements SingletonInterface
                 default               => $processedData, // audio – nichts tun
             };
         } else {
-            // Kein Medium – nur Hintergrundfarbe + Padding
+            // No medium - background colour and padding only
             if (!empty($flexconf['noMediaPaddingTopBottom'])) {
                 $processedData['style'] .= ' padding: ' . $flexconf['noMediaPaddingTopBottom'] . 'rem 0;';
             }

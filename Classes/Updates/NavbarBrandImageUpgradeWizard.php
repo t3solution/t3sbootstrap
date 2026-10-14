@@ -69,8 +69,8 @@ final class NavbarBrandImageUpgradeWizard implements UpgradeWizardInterface
     }
 
     /**
-     * Ermittelt je Datensatz die Felder, die aus der Site uebernommen werden
-     * muessen. Ein leeres Ergebnis heisst: nichts zu tun.
+     * Works out, per record, the fields that have to be taken over from the site.
+     * An empty result means: nothing to do.
      *
      * @return array<int, array{pid: int, values: array<string, int|string>}>
      */
@@ -94,7 +94,7 @@ final class NavbarBrandImageUpgradeWizard implements UpgradeWizardInterface
             try {
                 $site = $siteFinder->getSiteByPageId((int)$record['pid']);
             } catch (SiteNotFoundException) {
-                // Ein Datensatz ohne aufloesbare Site kann nichts erben.
+                // A record without a resolvable site cannot inherit anything.
                 continue;
             }
 

@@ -54,8 +54,8 @@ final class RteBadgeSettingUpgradeWizard implements UpgradeWizardInterface
         $legacy = $configuration[self::LEGACY_KEY];
         unset($configuration[self::LEGACY_KEY]);
 
-        // Ein leerer Altwert heisst "nie entschieden" - dann bleibt der Vorgabewert
-        // des neuen Schluessels stehen, statt ihn mit '' zu ueberschreiben.
+        // An empty legacy value means "never decided" - keep the new key's default
+        // instead of overwriting it with ''.
         if ($legacy !== '') {
             $configuration[self::NEW_KEY] = $legacy;
         }

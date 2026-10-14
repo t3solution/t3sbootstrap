@@ -92,7 +92,7 @@ class Carousel implements SingletonInterface
 			 || $file->getMimeType() === 'video/ogg' || $file->getMimeType() === 'video/flac' || $file->getMimeType() === 'video/opus') {
 				$processedData['localVideoPath'] = '/'.$file->getStorage()->getConfiguration()['basePath'].substr($file->getIdentifier(), 1);
 			}
-			// Nicht jede Referenz hat das Feld autoplay (nur Medien-Referenzen)
+			// Not every reference has the autoplay field (media references only)
 			$autoplay = $file->getProperties()['autoplay'] ?? '';
 			$processedData['autoplay'] = $autoplay;
 			$processedData['loop'] = !empty($flexconf['loop']) ? $flexconf['loop'] : false;
@@ -130,9 +130,9 @@ class Carousel implements SingletonInterface
 		}
 
 		if ( empty($processedData['files']) && !$processedData['localVideoPath'] ) {
-			// Ein Carousel-Container ohne ausgefuelltes FlexForm liefert weder
-			// ratio noch width. ?: warnt bei fehlendem Schluessel, ?? nicht -
-			// und eine Division durch 0 gaebe es obendrein.
+			// A carousel container without a filled flexform delivers neither ratio nor
+			// width. ?: warns about a missing key, ?? does not - and there would be a
+			// division by 0 on top.
 			$ratio = !empty($parentflexconf['ratio']) ? (string)$parentflexconf['ratio'] : '16:9';
 			$ratioParts = explode(':', $ratio);
 			$ratioX = (float)($ratioParts[0] ?? 0);
@@ -183,7 +183,7 @@ class Carousel implements SingletonInterface
 	public function getCarouselCaptionStyle( array $flexconf, bool $animate ): string
 	{
 		$style = '';
-		// public Methode - der Aufrufer muss captionVAlign nicht gesetzt haben
+		// public method - the caller need not have set captionVAlign
 		$vAlign = (string)($flexconf['captionVAlign'] ?? 'end');
 
 		if (!empty($flexconf['bgOverlay']) && $flexconf['bgOverlay'] === 'caption') {

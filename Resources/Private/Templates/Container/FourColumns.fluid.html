@@ -29,12 +29,12 @@
 <f:section name="Default">
 	<div class="row{class}"{styleAttr -> f:format.raw()}{dataAnimate}{f:if(condition: animationSettings, then: '{animationSettings -> f:format.raw()}')}>
 		<f:comment>
-			Die Ueberzeile zaehlt mit: sie steht oft allein ueber einem
-			Container, ohne Ueberschrift darunter. Ohne sie in dieser
-			Bedingung wurde Content/Header/All gar nicht erst gerendert -
-			und die dortige Pruefung kam nie zum Zug. Gekoppelt an
-			settings.supraheader, sonst entstuende bei abgeschalteter
-			Ueberzeile eine leere Spalte.
+			The supraheader counts too: it often stands alone above a
+			container, with no heading below it. Without it in this
+			condition Content/Header/All was not rendered at all - and the
+			check in there never got its turn. Tied to settings.supraheader,
+			otherwise a switched-off supraheader would leave an empty column
+			behind.
 		</f:comment>
 		<f:if condition="{data.header} || {data.subheader} || {data.date} || ({settings.supraheader} && {data.tx_t3sbootstrap_supraheader})">
 			<div class="col-12 w-100">

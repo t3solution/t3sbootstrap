@@ -20,9 +20,9 @@ class ToastContainer implements SingletonInterface
 		$processedData['expires']      = $flexconf['expires']      ?? '';
 		$processedData['multipleToast']= $flexconf['multipleToast'] ?? false;
 
-		// Der top-0/top-70-Versatz haengt an der Navbar, die Platzierung selbst nicht.
-		// Bisher stand beides im selben if - ohne Navbar fiel die im FlexForm
-		// gewaehlte Ecke ersatzlos weg.
+		// The top-0/top-70 offset depends on the navbar, the placement itself does not.
+		// Both used to sit in the same if - without a navbar the corner chosen in the
+		// flexform fell away with it.
 		$placement = $flexconf['placement'] ?? '';
 		if (!empty($placement)) {
 			if ($navbarEnable && str_starts_with($placement, 'top-0')) {

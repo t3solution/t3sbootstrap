@@ -86,14 +86,12 @@
 }
 
 
-@container (min-width: 992px) {
-  .card-size-small {
-  width: calc(50% - var(--typo3-card-grid-gap)) !important;
-  }
-}
 
-.settings-category-description, .settings-category-headline {
-  max-width: 90% !important;
+/* Wider setting descriptions, in the site settings editor only - the bare
+   selector reached every backend module (issue #527). */
+[data-module-name="site_configuration"] .settings-category-description,
+[data-module-name="site_configuration"] .settings-category-headline {
+  max-width: 90%;
 }
 
 /* Backend-layout icons */

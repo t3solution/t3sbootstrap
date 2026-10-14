@@ -103,7 +103,7 @@ final class ConfigController extends AbstractController
             }
         }
 
-        // Config Transfer: Export/Import der Konfiguration dieser Root-Seite
+        // Config transfer: export/import of this root page's configuration
         // only offer the pages this user is actually allowed to see
         $siteRootPages = array_values(array_filter(
             $this->configTransferService->getSiteRootPages(),

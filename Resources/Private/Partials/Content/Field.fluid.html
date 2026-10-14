@@ -14,9 +14,13 @@
 	{visualEditor} comes from the BootstrapProcessor.
 
 	NOTE ON WHITESPACE: everything between <html> and </html> is deliberately
-	on a single line. Fluid outputs the text around a ViewHelper verbatim, so a
-	line break before <f:if> would end up in the result. Callers store that
-	result in a variable and check it with f:if—and a string of blanks is TRUE.
-	That is how an empty supraheader ended up rendering <p class="supraheader">
-	with nothing in it. Keep this line unbroken.
+	on a single line, AND THE FILE ENDS WITHOUT A TRAILING NEWLINE. Fluid outputs
+	the text around a ViewHelper verbatim and keeps what follows </html>, so both
+	a line break before <f:if> and the usual newline at the end of the file end up
+	in the result. Callers store that result in a variable and check it with
+	f:if—and a string of blanks is TRUE. That is how an empty supraheader ended
+	up rendering <p class="supraheader"> with nothing in it, and an empty subheader
+	<p class="subheader">. Keep this line unbroken and the file without a final
+	newline; the partials that print the fields trim before they test, so the
+	output survives an editor that puts the newline back.
 </f:comment><f:if condition="{visualEditor}"><f:then>{record -> f:render.text(field: '{field}', optional: true)}</f:then><f:else>{data.{field} -> f:sanitize.html()}</f:else></f:if></html>

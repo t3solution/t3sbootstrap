@@ -12,14 +12,17 @@
 </html>
 
 <f:comment>
-	Container um den Seitentitel, Auswahl "Container" in der Konfiguration.
+	The container around the page title, chosen under "Container" in the
+	configuration.
 
-	Er greift nur dort, wo der Titel sonst randlos ueber die ganze Seite
-	laufen wuerde - also bei "Seitentitel im Inhaltsbereich". Steht der Titel
-	im Jumbotron, in der Brotkrumenleiste oder im erweiterten Inhalt, bringt
-	dieser Bereich seinen eigenen Container mit; ein zweiter darin waere eine
-	doppelte Polsterung und eine zweite Breitenbegrenzung. Diese Stellen
-	setzen deshalb pageTitleSkipContainer.
+	It takes effect everywhere the title would otherwise run edge to edge across
+	the page. If the surrounding section already brings a container, a second one
+	inside it would be double padding and a second width limit - those places set
+	pageTitleSkipContainer.
+
+	What counts is whether the section ACTUALLY has a container, not which section
+	it is: a jumbotron on a page without a container has none, and then the title's
+	container does belong.
 </f:comment>
 <f:section name="TitleAlign">
 <f:variable name="pageTitleContainer">{config.general.pageTitlecontainer}</f:variable>

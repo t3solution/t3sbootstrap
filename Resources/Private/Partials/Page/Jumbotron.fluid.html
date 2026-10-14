@@ -137,28 +137,34 @@
 	 || ({config.jumbotron.alignItem} && {jumbotronContainer} && {config.jumbotron.containerposition} == 'Outside')">
 		<f:then>
 			<f:comment>
-				w-100 ist hier Pflicht, nicht Kosmetik. .jumbotron ist ein
-				Flex-Container, dieses div also ein Flex-Item ohne eigene Breite -
-				es schrumpft auf seinen Inhalt. Darunter haengt
-				jumbotron-content.w-100, dessen 100 % sich auf eine Breite
-				beziehen, die es dann noch gar nicht gibt. Steht darin ein
-				Background-Wrapper mit lokalem Video, ist dessen figure per
-				Bootstrap-.ratio absolut positioniert und traegt ebenfalls nichts
-				zur Breite bei - die ganze Kette rechnet sich auf 0 herunter und
-				das Video verschwindet.
+				w-100 is mandatory here, not cosmetic. .jumbotron is a flex
+				container, so this div is a flex item without a width of its own -
+				it shrinks to its content. Below it hangs
+				jumbotron-content.w-100, whose 100 % refers to a width that does
+				not exist yet at that point. If a background wrapper with a local
+				video sits in there, its figure is absolutely positioned by Bootstrap's
+				.ratio and contributes nothing to the width either - the whole
+				chain computes down to 0 and the video disappears.
 
-				Sichtbar wird das nur im Jumbotron ohne Container: dort ist dieses
-				div das einzige, das eine Breite setzen koennte. Die zweite
-				Variante weiter oben in diesem Partial macht es bereits so.
+				This only shows in a jumbotron without a container: there this div
+				is the only one that could set a width. The second variant further
+				up in this partial already does it this way.
 			</f:comment>
 			<div class="w-100 {config.jumbotron.alignItem}">
 				<div class="jumbotron-content w-100">
 					<f:if condition="{config.general.pageTitle} == 'jumbotron'">
 						<f:comment>
-							Der Jumbotron bringt seinen eigenen Container mit - der
-							Container des Seitentitels bleibt hier deshalb aussen vor.
+							If the jumbotron has a container, the page title's stays out -
+							two inside each other would be double padding and a second width limit.
+
+							If it has none, the page title's container applies. This very branch
+							is reached without a container (see the condition of this section):
+							without the check the title would run edge to edge while everything
+							else in the jumbotron sits indented.
 						</f:comment>
-						<f:variable name="pageTitleSkipContainer" value="1" />
+						<f:if condition="{jumbotronContainer}">
+							<f:variable name="pageTitleSkipContainer" value="1" />
+						</f:if>
 						<f:render partial="Page/Title" arguments="{_all}" />
 					</f:if>
 					<f:if condition="{config.jumbotron.slide}">
@@ -175,7 +181,10 @@
 		<f:else>
 			<div class="jumbotron-content w-100">
 				<f:if condition="{config.general.pageTitle} == 'jumbotron'">
-					<f:variable name="pageTitleSkipContainer" value="1" />
+					<f:comment>Only skip it where the jumbotron itself has a container.</f:comment>
+					<f:if condition="{jumbotronContainer}">
+						<f:variable name="pageTitleSkipContainer" value="1" />
+					</f:if>
 					<f:render partial="Page/Title" arguments="{_all}" />
 				</f:if>
 				<f:if condition="{config.jumbotron.slide}">
@@ -214,11 +223,11 @@
 
 <f:section name="Div">
 	<f:comment>
-		Der Videofall steht vor dem Bildfall: bgSlides ist dann leer, weil das
-		Video den Bildstapel ersetzt - die Bedingung darunter griffe also gar
-		nicht mehr. Die Ratio-Klasse steckt in config.jumbotron.class und gilt
-		fuer beide; Bootstraps .ratio macht jedes direkte Kind formatfuellend,
-		also auch das Video.
+		The video case comes before the image case: bgSlides is empty then, because
+		the video replaces the image stack - so the condition below would no longer
+		apply. The ratio class sits in config.jumbotron.class and counts for both;
+		Bootstrap's .ratio makes every direct child fill the format, the video
+		included.
 	</f:comment>
 	<f:if condition="{config.jumbotron.video.url}">
 		<f:then>
@@ -245,13 +254,13 @@
 
 
 <f:comment>
-	Das Video selbst - einmal beschrieben, von beiden Faellen benutzt
-	(gewoehnliches Jumbotron und Vollbild).
+	The video itself - described once, used by both cases (ordinary jumbotron
+	and full screen).
 
-	Stumm ist Pflicht: ohne muted verweigern die Browser das automatische
-	Abspielen. playsinline haelt iOS vom Vollbildspieler ab. Ohne Autoplay
-	zeigt der Browser das Standbild und startet erst auf Klick - dann sind
-	auch Bedienelemente noetig, sonst laesst sich nichts starten.
+	Muted is mandatory: without it the browsers refuse to autoplay. playsinline
+	keeps iOS out of the fullscreen player. Without autoplay the browser shows
+	the still and starts on click only - then controls are needed too, otherwise
+	nothing can be started.
 </f:comment>
 <f:section name="BgVideo">
 	<f:asset.css identifier="jumbotronBgVideo">
@@ -259,8 +268,8 @@
 .jumbotron .jumbotron-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .jumbotron .jumbotron-bg-video-overlay { position: absolute; inset: 0; background-color: #000; pointer-events: none; }
 .jumbotron.background-video > *:not(video):not(.jumbotron-bg-video-overlay) { z-index: 2; }
-/* Ohne Autoplay traegt das Video Bedienelemente - dann muss der Zeiger sie
-   erreichen. Anklickbares im Kopf selbst bleibt anklickbar. */
+/* Without autoplay the video carries controls - the pointer has to reach
+   them. Anything clickable in the header itself stays clickable. */
 .jumbotron.background-video.has-controls > *:not(video):not(.jumbotron-bg-video-overlay) { pointer-events: none; }
 .jumbotron.background-video.has-controls a,
 .jumbotron.background-video.has-controls button { pointer-events: auto; }

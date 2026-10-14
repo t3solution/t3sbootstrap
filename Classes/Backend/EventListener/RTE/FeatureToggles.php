@@ -63,6 +63,16 @@ final readonly class FeatureToggles
 			'legacyExtconf' => 'rteStyleBadges',
 			'legacyFeature' => 'styleBadges',
 		],
+		'color' => [
+			'extconf' => 'rteColor',
+			'toolbar' => ['color'],
+			// The six text colors used to be twelve entries in the styles dropdown,
+			// inline and per paragraph, tied to "rteStyleColors". Anyone who had
+			// switched them off must not get them back after the update - see the
+			// order in getDisabledFeatures().
+			'legacyExtconf' => 'rteStyleColors',
+			'legacyFeature' => 'styleColors',
+		],
 		'table' => [
 			'extconf' => 'rteTable',
 			'toolbar' => ['insertTable'],
@@ -98,10 +108,6 @@ final readonly class FeatureToggles
 		'sourceEditing' => [
 			'extconf' => 'rteSourceEditing',
 			'toolbar' => ['sourceEditing'],
-		],
-		'styleColors' => [
-			'extconf' => 'rteStyleColors',
-			'styles'  => ['Block Color ', 'Text Color '],
 		],
 		'styleButtons' => [
 			'extconf' => 'rteStyleButtons',

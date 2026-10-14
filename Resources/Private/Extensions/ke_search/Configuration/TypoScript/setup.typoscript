@@ -23,17 +23,19 @@ plugin.tx_kesearch_pi2.includeFilters = 1
 
 
 lib.searchbox_html = TEXT
+lib.searchbox_html.insertData = 1
 lib.searchbox_html.value (
 <form method="get" id="form_kesearch_searchfield" class="d-flex m-0" name="form_kesearch_searchfield" action="/suchen/" role="search">
-  <input class="form-control me-2" type="search" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Suchbegriff" aria-label="Search" />
+  <input class="form-control" type="search" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="{LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.search}" aria-label="{LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.search}" />
 </form>
 )
 
 lib.searchboxWithButton_html = TEXT
+lib.searchboxWithButton_html.insertData = 1
 lib.searchboxWithButton_html.value (
 <form method="get" id="form_kesearch_searchfield" class="d-flex m-0" name="form_kesearch_searchfield" action="/suchen/" role="search">
-  <input class="form-control me-2" type="search" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Suchbegriff" aria-label="Search" />
-  <button class="btn btn-outline-success" type="submit">Search</button>
+  <input class="form-control me-2" type="search" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="{LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.search}" aria-label="{LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.search}" />
+  <button class="btn btn-outline-secondary" type="submit">{LLL:EXT:t3sbootstrap/Resources/Private/Language/locallang.xlf:form.submit}</button>
 </form>
 )
 

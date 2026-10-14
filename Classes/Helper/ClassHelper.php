@@ -200,7 +200,7 @@ class ClassHelper implements SingletonInterface
     /**
      * Returns processedData header class
      */
-    public function getHeaderClass(array $data): array
+    public function getHeaderClass(array $data, array $flexconf = []): array
     {
         $headerPosition = $data['header_position'];
         if ($headerPosition === 'left') {
@@ -235,6 +235,22 @@ class ClassHelper implements SingletonInterface
         }
 
         $header['class'] .= $data['tx_t3sbootstrap_header_class'] ? ' '.$data['tx_t3sbootstrap_header_class'] : '';
+
+        // Vertical header: the writing direction goes on the <header>, so the heading,
+        // the subheading and the supraheader turn together instead of each on its own.
+        //
+        // Bound to the background wrapper with "Header inside": the turned block is
+        // taken out of the flow and centred against the wrapper, and without one there
+        // is nothing to centre it in. Switching the option off therefore drops the
+        // rendering too, not just the field - a stored value stays untouched and takes
+        // effect again as soon as "Header inside" is back on.
+        if (!empty($data['tx_t3sbootstrap_header_vertical'])
+            && ($data['CType'] ?? '') === 'background_wrapper'
+            && !empty($flexconf['headerInside'])
+        ) {
+            $header['class'] .= ' t3sb-header-vertical t3sb-header-vertical-'
+                . ($data['tx_t3sbootstrap_header_vertical'] === 'down' ? 'down' : 'up');
+        }
         $header['hClass'] .= $data['tx_t3sbootstrap_header_display'] ? ' '.$data['tx_t3sbootstrap_header_display'] : '';
 
         if ($data['CType'] === 't3sbs_mediaobject') {
@@ -272,8 +288,8 @@ class ClassHelper implements SingletonInterface
                 break;
                  case 'variable':
 
-                 // gridSystem "variable" heisst nicht, dass auch alle Breakpoints
-                 // gesetzt sind - jeder fehlende loeste sonst eine Exception aus
+                 // gridSystem "variable" does not mean every breakpoint is set - each missing one
+                 // used to raise an exception
                  if (($flexconf['xsColumns'] ?? '') === 'equal'
                     || ($flexconf['smColumns'] ?? '') === 'equal'
                     || ($flexconf['mdColumns'] ?? '') === 'equal'

@@ -446,6 +446,66 @@ class TcaMatcher
 
 
     /**
+     * The vertical header only makes sense inside the background wrapper, and only
+     * while its flexform option "headerInside" is on - the heading is taken out of
+     * the flow and centred against the wrapper, which needs the wrapper around it.
+     *
+     * The flexform value is read from the record FormEngine hands over, not from the
+     * database: "headerInside" reloads the form on change, and that reload carries
+     * the current form values without saving them. The database is only the fallback
+     * for the shapes where the field has not been processed yet.
+     */
+    public function headerInside(array $arguments): bool
+    {
+        $record = $arguments['record'] ?? [];
+
+        $cType = $record['CType'] ?? '';
+        $cType = is_array($cType) ? (string)($cType[0] ?? '') : (string)$cType;
+        if ($cType !== 'background_wrapper') {
+            return false;
+        }
+
+        $flexform = $record['tx_t3sbootstrap_flexform'] ?? null;
+
+        // FormEngine hands the processed structure over, the database the raw XML.
+        if (is_array($flexform)) {
+            return !empty($flexform['data']['sDEF']['lDEF']['headerInside']['vDEF']);
+        }
+
+        if (is_string($flexform) && $flexform !== '') {
+            $flexconf = $this->flexFormTools->convertFlexFormContentToArray($flexform);
+            return !empty($flexconf['headerInside']);
+        }
+
+        // Nothing usable in the row - a saved record still has the value in the table.
+        // A new one has uid "NEW..." and no flexform yet, so it stays hidden.
+        if (!is_int($record['uid'] ?? null)) {
+            return false;
+        }
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $queryBuilder->getRestrictions()->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $row = $queryBuilder
+            ->select('tx_t3sbootstrap_flexform')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($record['uid'], Connection::PARAM_INT))
+            )
+            ->executeQuery()
+            ->fetchAssociative();
+
+        if (empty($row['tx_t3sbootstrap_flexform'])) {
+            return false;
+        }
+
+        $flexconf = $this->flexFormTools->convertFlexFormContentToArray((string)$row['tx_t3sbootstrap_flexform']);
+
+        return !empty($flexconf['headerInside']);
+    }
+
+
+    /**
      * allowReferences
      */
     public function allowReferences(array $arguments): bool

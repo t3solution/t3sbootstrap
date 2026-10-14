@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace T3SBS\T3sbootstrap\DataProcessing;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -19,6 +20,7 @@ class ConfigProcessor implements DataProcessorInterface
 	public function __construct(
 		private readonly FileRepository $fileRepository,
 		private readonly BackgroundImageUtility $backgroundImageUtility,
+		private readonly ExtensionConfiguration $extensionConfiguration,
 	) {}
 	
 
@@ -57,14 +59,28 @@ class ConfigProcessor implements DataProcessorInterface
 		$currentPage          = $pageInformation->getPageRecord();
 		$backendLayout        = $processedData['data']['currentValue_kidjls9dksoje'] ?? '';
 
+		// Per-page opt-out (tab "T3SB" of the page). Switched off right here, before
+		// any section is computed: everything downstream already knows how to deal
+		// with "off", so one place is enough and no template needs a second check.
+		// An empty string is the "none" of the select fields, 0 the one of the
+		// checkboxes - the same value the configuration record would store.
+		$processedRecordVars = $this->applyPageOptOut($processedRecordVars, $currentPage);
+
 		$processedData = $this->processExpandedContent($processedData, $processedRecordVars, $currentPage, $pageInformation);
 		$processedData = $this->processGeneral($processedData, $processedRecordVars, $pageInformation, $siteSettings, $backendLayout, $settings);
 		$processedData = $this->processNavbar($processedData, $processedRecordVars, $pageInformation, $settings, $request);
 		$processedData = $this->processJumbotron($processedData, $processedRecordVars, $pageInformation, $currentPage, $settings, $request);
 		$processedData = $this->processBackgroundImage($processedData, $processedRecordVars, $pageInformation, $settings);
+		$processedData = $this->processMeta($processedData, $processedRecordVars);
 		$processedData = $this->processBreadcrumb($processedData, $processedRecordVars, $pageInformation);
 		$processedData = $this->processSidebar($processedData, $processedRecordVars);
 		$processedData = $this->processFooter($processedData, $processedRecordVars);
+
+		// The meta row reads settings.config.metaEnable straight from TypoScript, so
+		// clearing the value above does not reach it. Its own key, set last, cannot
+		// be overwritten by any of the sections.
+		$processedData['config']['pageOptOut']['meta'] = $this->isPageOptOutEnabled()
+			&& !empty($currentPage['tx_t3sbootstrap_meta_disable']);
 
 		return $processedData;
 	}
@@ -626,6 +642,102 @@ class ConfigProcessor implements DataProcessorInterface
 				$settings['bgMediaQueries']
 			);
 		}
+
+		return $processedData;
+	}
+
+	/**
+	 * The master switch from the extension configuration.
+	 *
+	 * Off means the saved checkboxes have no effect at all - the same state as
+	 * before the fields existed. The tab is hidden then as well, see the TCA.
+	 */
+	private function isPageOptOutEnabled(): bool
+	{
+		try {
+			return !empty($this->extensionConfiguration->get('t3sbootstrap')['pageOptOut']);
+		} catch (\Throwable) {
+			// Unreadable configuration must not switch anything off unasked.
+			return false;
+		}
+	}
+
+	/**
+	 * Turns off the sections a single page opted out of.
+	 *
+	 * The breadcrumb knows two switches, above and below the content - both have
+	 * to go, otherwise it would simply reappear at the other end.
+	 */
+	private function applyPageOptOut(array $vars, array $currentPage): array
+	{
+		if (!$this->isPageOptOutEnabled()) {
+			return $vars;
+		}
+
+		if (!empty($currentPage['tx_t3sbootstrap_meta_disable'])) {
+			$vars['metaEnable'] = '';
+		}
+
+		if (!empty($currentPage['tx_t3sbootstrap_navbar_disable'])) {
+			$vars['navbarEnable'] = '';
+			// Without this the language menu would keep the navbar alive on its own.
+			$vars['navbarLangmenu'] = 0;
+		}
+
+		if (!empty($currentPage['tx_t3sbootstrap_jumbotron_disable'])) {
+			$vars['jumbotronEnable'] = 0;
+		}
+
+		if (!empty($currentPage['tx_t3sbootstrap_pagetitle_disable'])) {
+			$vars['pageTitle'] = '';
+		}
+
+		if (!empty($currentPage['tx_t3sbootstrap_footer_disable'])) {
+			$vars['footerEnable'] = 0;
+		}
+
+		if (!empty($currentPage['tx_t3sbootstrap_breadcrumb_disable'])) {
+			$vars['breadcrumbEnable'] = 0;
+			$vars['breadcrumbBottom'] = 0;
+		}
+
+		return $vars;
+	}
+
+	// ─── Meta row ─────────────────────────────────────────────────────────────
+
+	/**
+	 * The meta row above the navbar.
+	 *
+	 * Partials/Page/Meta reads every one of these from `config.meta`; without the
+	 * block the row fell back to an empty container and `justify-content-` without
+	 * a value, and the condition in Main.fluid.html never became true for a row
+	 * that carries only text.
+	 *
+	 * `meta_enable` holds the alignment, the same way `navbar_enable` holds the
+	 * colour scheme: empty means off, otherwise "start", "end" or "scroller". The
+	 * switch itself stays in TypoScript (settings.config.metaEnable), which is what
+	 * the partial tests - here it only decides whether the values are worth
+	 * collecting. The per-page opt-out has already emptied it at this point.
+	 */
+	private function processMeta(array $processedData, array $vars): array
+	{
+		if (empty($vars['metaEnable'])) {
+			return $processedData;
+		}
+
+		// An empty field reaches TypoScript as "0", so `?:` and not `??`.
+		$metaClass = trim((string)($vars['metaClass'] ?: ''));
+
+		$processedData['config']['meta'] = [
+			'align'     => $vars['metaEnable'],
+			// An unsaved record leaves this empty, and an empty container printed
+			// `<div class=" d-flex …">` around the row - "none" is the honest default.
+			'container' => $vars['metaContainer'] ?: 'none',
+			// Printed as `nav-meta{class}`, so it carries its own leading space.
+			'class'     => $metaClass !== '' ? ' '.$metaClass : '',
+			'text'      => $vars['metaText'] ?: '',
+		];
 
 		return $processedData;
 	}

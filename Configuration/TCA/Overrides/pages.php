@@ -189,6 +189,154 @@ ExtensionManagementUtility::addToAllTCAtypes(
 );
 
 
+// A tab of its own instead of yet another palette under Appearance: this is where
+// the switches that concern a single page are collected from now on.
+//
+// Columns, palette and tab all hang on the switch from the extension
+// configuration: with it off, stored checkboxes have no effect either (see
+// ConfigProcessor::applyPageOptOut) - then the fields do not belong in the form.
+// The columns stay in the database, so the values are untouched after switching
+// it back on.
+$t3sbPageItems = [];
+
+if (!empty($extconf['pageOptOut'])) {
+
+    ExtensionManagementUtility::addTCAcolumns('pages', [
+    // Each field hides its section ONLY on this page. It is visible only while that
+    // section is switched on in the T3SB configuration record at all - the fields
+    // behind it are the parameters of the USER condition.
+    'tx_t3sbootstrap_breadcrumb_disable' => [
+        'exclude' => true,
+        'label' => $dbModel.'.breadcrumbDisable',
+        'description' => $dbModel.'.breadcrumbDisable.description',
+        'displayCond' => 'USER:' . \T3SBS\T3sbootstrap\Backend\Form\DisplayCondition\SectionCondition::class . '->isEnabled:breadcrumb_enable:breadcrumb_bottom',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
+    'tx_t3sbootstrap_meta_disable' => [
+        'exclude' => true,
+        'label' => $dbModel.'.metaDisable',
+        'description' => $dbModel.'.metaDisable.description',
+        'displayCond' => 'USER:' . \T3SBS\T3sbootstrap\Backend\Form\DisplayCondition\SectionCondition::class . '->isEnabled:meta_enable',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
+    'tx_t3sbootstrap_navbar_disable' => [
+        'exclude' => true,
+        'label' => $dbModel.'.navbarDisable',
+        'description' => $dbModel.'.navbarDisable.description',
+        'displayCond' => 'USER:' . \T3SBS\T3sbootstrap\Backend\Form\DisplayCondition\SectionCondition::class . '->isEnabled:navbar_enable',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
+    'tx_t3sbootstrap_jumbotron_disable' => [
+        'exclude' => true,
+        'label' => $dbModel.'.jumbotronDisable',
+        'description' => $dbModel.'.jumbotronDisable.description',
+        'displayCond' => 'USER:' . \T3SBS\T3sbootstrap\Backend\Form\DisplayCondition\SectionCondition::class . '->isEnabled:jumbotron_enable',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
+    'tx_t3sbootstrap_footer_disable' => [
+        'exclude' => true,
+        'label' => $dbModel.'.footerDisable',
+        'description' => $dbModel.'.footerDisable.description',
+        'displayCond' => 'USER:' . \T3SBS\T3sbootstrap\Backend\Form\DisplayCondition\SectionCondition::class . '->isEnabled:footer_enable',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
+    'tx_t3sbootstrap_pagetitle_disable' => [
+        'exclude' => true,
+        'label' => $dbModel.'.pagetitleDisable',
+        'description' => $dbModel.'.pagetitleDisable.description',
+        'displayCond' => 'USER:' . \T3SBS\T3sbootstrap\Backend\Form\DisplayCondition\SectionCondition::class . '->isEnabled:page_title',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
+    ]);
+
+    $t3sbPageItems[] = 'tx_t3sbootstrap_navbar_disable, tx_t3sbootstrap_meta_disable,
+        --linebreak--, tx_t3sbootstrap_breadcrumb_disable, tx_t3sbootstrap_pagetitle_disable,
+        --linebreak--, tx_t3sbootstrap_jumbotron_disable, tx_t3sbootstrap_footer_disable';
+}
+
+
+// Indent of the content elements, per page and optionally inherited. Its own
+// switch, but the same tab as the opt-out checkboxes: both are settings that
+// concern this one page only.
+if (!empty($extconf['contentIndent'])) {
+
+    // Without inheritance there is nothing to inherit and nothing to interrupt: the
+    // empty value then simply means "no indent", and a stored '0' means the same -
+    // so flipping the switch leaves the values untouched.
+    $indentItems = !empty($extconf['contentIndentInherit'])
+        ? [
+            ['label' => $dbModel.'.indent.inherit', 'value' => ''],
+            ['label' => $dbModel.'.indent.none', 'value' => '0'],
+        ]
+        : [
+            ['label' => $dbModel.'.indent.none', 'value' => ''],
+        ];
+
+    ExtensionManagementUtility::addTCAcolumns('pages', [
+    'tx_t3sbootstrap_indent' => [
+        'exclude' => true,
+        'label' => $dbModel.'.indent',
+        'description' => !empty($extconf['contentIndentInherit'])
+            ? $dbModel.'.indent.description'
+            : $dbModel.'.indent.description.noInherit',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                ...$indentItems,
+                ['label' => $dbModel.'.indent.1', 'value' => '1'],
+                ['label' => $dbModel.'.indent.2', 'value' => '2'],
+                ['label' => $dbModel.'.indent.3', 'value' => '3'],
+                ['label' => $dbModel.'.indent.4', 'value' => '4'],
+                ['label' => $dbModel.'.indent.5', 'value' => '5'],
+                ['label' => $dbModel.'.indent.6', 'value' => '6'],
+            ],
+            'default' => '',
+        ]
+    ],
+    ]);
+
+    $t3sbPageItems[] = 'tx_t3sbootstrap_indent';
+}
+
+
+if (!empty($t3sbPageItems)) {
+    $GLOBALS['TCA']['pages']['palettes']['t3sbPage'] = [
+        'showitem' => implode(', --linebreak--, ', $t3sbPageItems),
+        'canNotCollapse' => 1
+    ];
+
+    // The tab itself is hung on by Backend/EventListener/TCA/TcaCompilation, not by
+    // addToAllTCAtypes: that only reaches the page types which exist at that moment.
+    // An extension with a page type of its own then writes a complete 'showitem' -
+    // and the tab would be gone again. After the TCA compilation every type is known.
+}
+
+
 if (!empty($extconf['titlecolor'])) {
     ExtensionManagementUtility::addFieldsToPalette(
         'pages',

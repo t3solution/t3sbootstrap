@@ -1860,6 +1860,13 @@
 			</segment>
 		</unit>
 
+		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontenttop">
+			<segment>
+				<source>Expanded Content Top</source>
+				<target>Erweiterter Inhalt oben</target>
+			</segment>
+		</unit>
+
 		<unit id="tx_t3sbootstrap_domain_model_config.expandedcontentbottom">
 			<segment>
 				<source>Expanded Content Bottom</source>
@@ -2180,6 +2187,20 @@
 			<segment>
 				<source>Gallery row width in %</source>
 				<target>Breite der Galeriezeile in %</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapintextimgcolumns">
+			<segment>
+				<source>Image block width (columns)</source>
+				<target>Breite des Bildblocks (Spalten)</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapintextimgcolumns.description">
+			<segment>
+				<source>Width of the image block the text wraps around, in grid columns of 12. Only applies to the positions "in text, right" and "in text, left".</source>
+				<target>Breite des Bildblocks, den der Text umfließt, in Rasterspalten von 12. Wirkt nur bei den Positionen „im Text, rechts“ und „im Text, links“.</target>
 			</segment>
 		</unit>
 		
@@ -2575,6 +2596,90 @@
 			</segment>
 		</unit>
 		
+		<unit id="tx_t3sbootstrap_domain_model_config.footerDisable">
+			<segment>
+				<source>No footer on this page</source>
+				<target>Kein Footer auf dieser Seite</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.footerDisable.description">
+			<segment>
+				<source>Hides the footer on this one page - for a landing page that should end with its own call to action.</source>
+				<target>Blendet den Footer auf dieser einen Seite aus – für eine Landingpage, die mit ihrem eigenen Abschluss enden soll.</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.metaDisable">
+			<segment>
+				<source>No meta row on this page</source>
+				<target>Kein Meta-Bereich auf dieser Seite</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.metaDisable.description">
+			<segment>
+				<source>Hides the meta row on this one page. The row itself is switched on in the T3SB configuration record.</source>
+				<target>Blendet den Meta-Bereich auf dieser einen Seite aus. Eingeschaltet wird er im T3SB-Konfigurations-Datensatz.</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarDisable">
+			<segment>
+				<source>No navbar on this page</source>
+				<target>Keine Navbar auf dieser Seite</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.navbarDisable.description">
+			<segment>
+				<source>Hides the navbar on this one page - for a landing page that should carry no navigation. The language menu goes with it.</source>
+				<target>Blendet die Navbar auf dieser einen Seite aus – für eine Landingpage, die keine Navigation tragen soll. Das Sprachmenü entfällt mit.</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronDisable">
+			<segment>
+				<source>No jumbotron on this page</source>
+				<target>Kein Jumbotron auf dieser Seite</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.jumbotronDisable.description">
+			<segment>
+				<source>Hides the jumbotron on this one page, including its background image or video.</source>
+				<target>Blendet das Jumbotron auf dieser einen Seite aus, mitsamt Hintergrundbild oder -video.</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitleDisable">
+			<segment>
+				<source>No page title on this page</source>
+				<target>Kein Seitentitel auf dieser Seite</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitleDisable.description">
+			<segment>
+				<source>Hides the automatically rendered page title on this one page - useful where the first content element already carries the heading.</source>
+				<target>Blendet den automatisch ausgegebenen Seitentitel auf dieser einen Seite aus – sinnvoll, wo schon das erste Inhaltselement die Überschrift trägt.</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbDisable">
+			<segment>
+				<source>No breadcrumb on this page</source>
+				<target>Kein Breadcrumb auf dieser Seite</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumbDisable.description">
+			<segment>
+				<source>Hides the breadcrumb on this one page. Useful on entry pages close to the root, where it only repeats the link to the home page. Sub pages are not affected.</source>
+				<target>Blendet den Breadcrumb auf dieser einen Seite aus. Sinnvoll auf Einstiegsseiten dicht unter der Wurzel, wo er nur den Link zur Startseite wiederholt. Unterseiten bleiben unberührt.</target>
+			</segment>
+		</unit>
+		
 		<unit id="tx_t3sbootstrap_domain_model_config.smallColumnsWidth">
 			<segment>
 				<source>Aside columns width</source>
@@ -2677,6 +2782,116 @@
 			<segment>
 				<source>Page Subtitle Color</source>
 				<target>Farbe des Seitenuntertitels</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.indent">
+			<segment>
+				<source>Content indent</source>
+				<target>Einzug der Inhalte</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.description">
+			<segment>
+				<source>Shifts the content elements of this page to the right, measured in Bootstrap grid columns. Applies from the "lg" breakpoint up and only under the one-column backend layout. Sub-pages inherit the value until one of them sets its own. A single element can be taken out of it in its "Appearance" tab.</source>
+				<target>Rückt die Inhaltselemente dieser Seite nach rechts, gemessen in Rasterspalten von Bootstrap. Gilt ab dem Breakpoint "lg" und nur beim einspaltigen Backend-Layout. Unterseiten erben den Wert, bis eine von ihnen einen eigenen setzt. Ein einzelnes Element lässt sich im Reiter "Erscheinungsbild" davon ausnehmen.</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.description.noInherit">
+			<segment>
+				<source>Shifts the content elements of this page to the right, measured in Bootstrap grid columns. Applies from the "lg" breakpoint up and only under the one-column backend layout. A single element can be taken out of it in its "Appearance" tab.</source>
+				<target>Rückt die Inhaltselemente dieser Seite nach rechts, gemessen in Rasterspalten von Bootstrap. Gilt ab dem Breakpoint "lg" und nur beim einspaltigen Backend-Layout. Ein einzelnes Element lässt sich im Reiter "Erscheinungsbild" davon ausnehmen.</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.inherit">
+			<segment>
+				<source>Inherit from the parent page</source>
+				<target>Von der übergeordneten Seite erben</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.none">
+			<segment>
+				<source>No indent</source>
+				<target>Kein Einzug</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.1">
+			<segment>
+				<source>1 column (8.33 %)</source>
+				<target>1 Spalte (8,33 %)</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.2">
+			<segment>
+				<source>2 columns (16.67 %)</source>
+				<target>2 Spalten (16,67 %)</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.3">
+			<segment>
+				<source>3 columns (25 %)</source>
+				<target>3 Spalten (25 %)</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.4">
+			<segment>
+				<source>4 columns (33.33 %)</source>
+				<target>4 Spalten (33,33 %)</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.5">
+			<segment>
+				<source>5 columns (41.67 %)</source>
+				<target>5 Spalten (41,67 %)</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.indent.6">
+			<segment>
+				<source>6 columns (50 %)</source>
+				<target>6 Spalten (50 %)</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.noIndent">
+			<segment>
+				<source>Without the page indent</source>
+				<target>Ohne den Einzug der Seite</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.noIndent.description">
+			<segment>
+				<source>Renders this element at the full width of the container, even when the page indents its content.</source>
+				<target>Gibt dieses Element über die volle Breite des Containers aus, auch wenn die Seite ihre Inhalte einrückt.</target>
+			</segment>
+		</unit>
+
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadervertical">
+			<segment>
+				<source>Vertical header</source>
+				<target>Überschrift senkrecht</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadervertical.description">
+			<segment>
+				<source>Turns the whole header block - heading, subheading and supraheader - by 90 degrees. Takes effect from the "lg" breakpoint up; below it the header stays horizontal, because a turned heading on a narrow screen becomes a very tall line. The field is offered in the background wrapper only, and only while its option "Header inside the section" is on: the turned heading is positioned against the wrapper and centred in it.</source>
+				<target>Dreht den ganzen Kopfbereich – Überschrift, Unterüberschrift und Überzeile – um 90 Grad. Wirkt ab dem Breakpoint "lg"; darunter bleibt der Kopf waagerecht, weil eine gedrehte Überschrift auf schmalem Schirm zu einer sehr hohen Zeile wird. Das Feld steht nur im Hintergrund-Wrapper zur Verfügung, und dort nur, solange seine Option „Überschrift in den Bereich legen“ aktiv ist: die gedrehte Überschrift wird am Wrapper ausgerichtet und darin mittig gesetzt.</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadervertical.item0">
+			<segment>
+				<source>Horizontal</source>
+				<target>Waagerecht</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadervertical.item1">
+			<segment>
+				<source>Vertical, reading bottom to top</source>
+				<target>Senkrecht, von unten nach oben</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.t3sbootstrapheadervertical.item2">
+			<segment>
+				<source>Vertical, reading top to bottom</source>
+				<target>Senkrecht, von oben nach unten</target>
 			</segment>
 		</unit>
 

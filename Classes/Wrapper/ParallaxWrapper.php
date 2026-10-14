@@ -43,8 +43,8 @@ class ParallaxWrapper implements SingletonInterface
 		}
 
 		$processedData['width']       = $flexconf['width'] ?? 'auto';
-		// ?: warnt bei fehlendem Schluessel, ?? nicht - der Wrapper muss auch
-		// ohne ausgefuelltes FlexForm durchlaufen
+		// ?: warns about a missing key, ?? does not - the wrapper has to run through
+		// without a filled flexform too
 		$processedData['speedFactor'] = !empty($flexconf['speedFactor']) ? $flexconf['speedFactor'] : 1;
 		$processedData['addHeight']   = !empty($flexconf['addHeight']) ? (int)$flexconf['addHeight'] : 0;
 		$processedData['no-mobile']   = !empty($flexconf['mobile']) ? '/iPad|iPhone|iPod|Android/' : '-';

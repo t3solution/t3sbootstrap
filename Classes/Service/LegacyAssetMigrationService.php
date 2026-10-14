@@ -22,9 +22,9 @@ final class LegacyAssetMigrationService implements SingletonInterface
         'T3SB-Bootstrap',
     ];
 
-    // -2, weil die erste Fassung die Include-Dateien zwar kopiert, ihre
-    // @import-Zeilen aber nicht umgeschrieben hat. Installationen, die schon
-    // migriert wurden, muessen deshalb noch einmal durchlaufen.
+    // -2, because the first version did copy the include files but did not rewrite
+    // their @import lines. Installations that were migrated already therefore have to
+    // run through once more.
     private const MARKER = '.legacy-migrated-2';
 
     public function __construct(
@@ -40,9 +40,9 @@ final class LegacyAssetMigrationService implements SingletonInterface
             return true;
         }
 
-        // Die Include-Datei muss auch dann repariert werden, wenn in
-        // EXT:t3sb_package nichts mehr liegt - genau das ist der Normalfall,
-        // nachdem ein composer update das Sitepackage ersetzt hat.
+        // The include file has to be repaired even when nothing is left in
+        // EXT:t3sb_package - which is exactly the normal case after a composer update has
+        // replaced the sitepackage.
         return $this->countLegacyFiles() === 0 && $this->findStaleIncludeFiles() === [];
     }
 

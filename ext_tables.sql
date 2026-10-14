@@ -154,6 +154,8 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 # Table structure for table 'tt_content'
 #
 CREATE TABLE tt_content (
+	tx_t3sbootstrap_no_indent tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_header_vertical varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_display varchar(9) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_class varchar(100) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_header_position varchar(6) DEFAULT '' NOT NULL,
@@ -231,6 +233,18 @@ CREATE TABLE sys_file_reference (
 CREATE TABLE pages (
 	tx_t3sbootstrap_container varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_linkToTop tinyint(4) DEFAULT '0' NOT NULL,
+	-- Hides the breadcrumb on this one page. The breadcrumb itself is switched
+	-- site-wide in the T3SB configuration record.
+	tx_t3sbootstrap_breadcrumb_disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_meta_disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_navbar_disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_jumbotron_disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_pagetitle_disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	tx_t3sbootstrap_footer_disable tinyint(1) unsigned DEFAULT '0' NOT NULL,
+
+	-- Indent of the content elements on this page, in grid columns (1-6).
+	-- Empty means inherit from the page above, '0' means expressly none.
+	tx_t3sbootstrap_indent varchar(2) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_smallColumns varchar(1) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_dropdownRight tinyint(4) DEFAULT '0' NOT NULL,
 	tx_t3sbootstrap_mobileOrder varchar(255) DEFAULT '' NOT NULL,

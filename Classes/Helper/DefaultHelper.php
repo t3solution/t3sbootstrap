@@ -13,6 +13,16 @@ class DefaultHelper implements SingletonInterface
 {
 
 	/**
+	 * Wrapper that reach from edge to edge of the container: a background, a parallax
+	 * or a slider looks broken once it is indented - the background would stop short
+	 * and the slides would sit off centre. Every other wrapper is ordinary content and
+	 * follows the indent like any element; an editor can still take a single one out
+	 * with the checkbox.
+	 */
+	private const FULL_WIDTH_CTYPES = 'background_wrapper,parallax_wrapper,carousel_container,swiper_container';
+
+
+	/**
 	 * Returns the $processedData
 	 */
 	public function getContainerClass(
@@ -147,20 +157,45 @@ class DefaultHelper implements SingletonInterface
 		# fall out through their colPos. The footer PAGE does not: its elements sit
 		# in colPos 0 like any other page, so it is tested separately.
 		#
-		# A wrapper is the exception: it brings its own padding, and the first element
-		# in it would push a gap between the wrapper's edge and its content. Only the
-		# column containers (two_columns and friends) keep the margin - there the
-		# elements stand one below the other and need the rhythm.
+		# Containers are the exception. A wrapper brings its own padding, and the
+		# first element in it would push a gap between the wrapper's edge and its
+		# content. In a column container the spacing is the business of the grid -
+		# the gutter sets it, and a margin on top of that pushes the columns out of
+		# line against each other, because each column starts with a different
+		# element. Both lists therefore switch the margin off.
 		$colPos = (int)($processedData['data']['colPos'] ?? 0);
 		$footerPid = (int)($containerConfig['footerPid'] ?? 0);
 		$isFooterPage = $footerPid > 0 && (int)($processedData['data']['pid'] ?? 0) === $footerPid;
-		$isInWrapper = $parentCType !== '' && in_array(
+		$isInContainer = $parentCType !== '' && in_array(
 			$parentCType,
-			GeneralUtility::trimExplode(',', BootstrapProcessor::TX_CONTAINER, true),
+			GeneralUtility::trimExplode(
+				',',
+				BootstrapProcessor::TX_CONTAINER.','.BootstrapProcessor::TX_CONTAINER_GRID,
+				true
+			),
 			true
 		);
 		$hasMarginTop = (bool)preg_match('/(^|\s)m[ty]?-/', (string)$processedData['class']);
-		if ($contentMarginTop && !$isInWrapper && !$isFooterPage
+
+		// Content indent of the page, inherited down the rootline and resolved in
+		// BootstrapProcessor. Only the main column: the jumbotron, the footer and the
+		// columns of a container bring their own width. The checkbox on the element
+		// wins over all of it.
+		$contentIndent = (int)($containerConfig['contentIndent'] ?? 0);
+		$isFullWidthCType = in_array(
+			$cType,
+			GeneralUtility::trimExplode(',', self::FULL_WIDTH_CTYPES, true),
+			true
+		);
+		if ($contentIndent > 0 && $colPos === 0 && !$isInContainer && !$isFooterPage
+			&& !$isFullWidthCType && empty($processedData['data']['tx_t3sbootstrap_no_indent'])) {
+			// Not into 'class': with a tx_container the layout prints "class" in the template
+			// only, so on a child. A margin-left on a .row with its negative gutter margins
+			// shifts the columns instead of the block, and the heading above it would stay
+			// put. The processor hangs the value on the element with the id.
+			$processedData['indentClass'] = 't3sb-indent-'.$contentIndent;
+		}
+		if ($contentMarginTop && !$isInContainer && !$isFooterPage
 			&& ($colPos === 0 || $colPos > 199) && $hasMarginTop === FALSE ) {
 			// A few containers print their header BEFORE the element that carries
 			// $processedData['class'] - the background wrapper is one. The margin

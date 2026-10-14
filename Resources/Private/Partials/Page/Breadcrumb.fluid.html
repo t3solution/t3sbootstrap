@@ -2,8 +2,8 @@
 <f:if condition="{config.general.pageTitle} == 'breadcrumb'">
 	<div class="{config.breadcrumb.container}">
 		<f:comment>
-			Der Container der Brotkrumenleiste steht schon darum - der des
-			Seitentitels bleibt hier aussen vor.
+			The breadcrumb bar's container is already around it - the page
+			title's stays out here.
 		</f:comment>
 		<f:variable name="pageTitleSkipContainer" value="1" />
 		<f:render partial="Page/Title" arguments="{_all}" />

@@ -2,11 +2,11 @@
 	xmlns:t3sb="http://typo3.org/ns/T3SBS/T3sbootstrap/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:comment> Poster for the video - only if PNG- or JPG-image with the name of the video is availabe in fileadmin/user_upload/ </f:comment>
 <f:comment>
-	playsinline: TYPO3s VideoTagRenderer kennt das Attribut nicht - es schreibt
-	nur controls, autoplay, muted und loop. Ein <video autoplay> ohne
-	playsinline geht auf dem iPhone beim Laden der Seite sofort in den
-	Vollbildmodus: sichtbar ist dann nur noch das Video auf schwarzem Grund.
-	Carousel und Jumbotron setzen das Attribut laengst selbst, hier fehlte es.
+	playsinline: TYPO3's VideoTagRenderer does not know the attribute - it only
+	writes controls, autoplay, muted and loop. A <video autoplay> without
+	playsinline goes straight into fullscreen on the iPhone while the page loads:
+	all that is visible then is the video on a black background. Carousel and
+	jumbotron have long set the attribute themselves, here it was missing.
 </f:comment>
 <f:if condition="{poster}">
 	<f:then>
