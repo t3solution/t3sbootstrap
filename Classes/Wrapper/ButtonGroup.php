@@ -9,16 +9,16 @@ class ButtonGroup implements SingletonInterface
 {
     public function getProcessedData(array $processedData, array $flexconf): array
     {
-        // Sicherstellen dass class initialisiert ist
+        // Make sure class is initialised
         $processedData['class']        = $processedData['class'] ?? '';
         $processedData['visiblePart']  = '';
 
-        // Basis-Klasse: vertikal oder horizontal
+        // Base class: vertical or horizontal
         $processedData['class'] .= !empty($flexconf['vertical'])
             ? ' btn-group-vertical'
             : ' btn-group';
 
-        // Größe: FlexForm speichert 'null' als String wenn kein Wert gewählt
+        // Size: the flexform stores 'null' as a string when nothing is chosen
         if (!empty($flexconf['btnsize']) && $flexconf['btnsize'] !== 'null') {
             $processedData['class'] .= ' ' . $flexconf['btnsize'];
         }
@@ -29,7 +29,7 @@ class ButtonGroup implements SingletonInterface
             $processedData['buttonGroupClass'] .=
                 ' d-none fixedGroupButton fixedPosition fixedPosition-' . $flexconf['fixedPosition'];
 
-            // rotate gilt nur wenn ein Wert gesetzt ist
+            // rotate only counts while a value is set
             if (!empty($flexconf['rotate'])) {
                 $processedData['class'] .= ' rotateFixedPosition rotate-' . $flexconf['rotate'];
             }
@@ -42,7 +42,7 @@ class ButtonGroup implements SingletonInterface
                 && $flexconf['fixedPosition'] === 'right'
             ) {
                 $processedData['class']       .= ' slideInButton';
-                // slideIn gesetzt heisst nicht, dass visiblePart existiert
+                // slideIn being set does not mean visiblePart exists
                 $processedData['visiblePart']  = !empty($flexconf['visiblePart'])
                     ? (int)$flexconf['visiblePart']
                     : 37;

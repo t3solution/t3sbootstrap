@@ -108,9 +108,9 @@ class BootstrapProcessor implements DataProcessorInterface
             return $processedData;
         }
 
-        // Der visuelle Editor braucht die Feldausgabe ueber das Record-Objekt,
-        // sonst findet er seine Marker nicht. Ohne ihn darf einfaches Markup in
-        // den input-Feldern stehen bleiben - siehe Partials/Content/Field.
+        // The visual editor needs the field output through the record object, otherwise it
+        // does not find its markers. Without it, simple markup may stay in the input
+        // fields - see Partials/Content/Field.
         $processedData['visualEditor'] = ExtensionManagementUtility::isLoaded('visual_editor');
 
         $request = $cObj->getRequest();
@@ -251,6 +251,7 @@ class BootstrapProcessor implements DataProcessorInterface
             'expandedcontentContainertop' => $expandedcontentContainertop,
             'expandedcontentContainerbottom' => $expandedcontentContainerbottom,
             'pageContainer' => !empty($pageContainer) ? true : false,
+            'contentIndent' => $this->resolveContentIndent($extConf, $pageInformation),
         ];
 
         // class
@@ -258,7 +259,7 @@ class BootstrapProcessor implements DataProcessorInterface
         $processedData['class'] = !empty($processedData['class']) ? $processedData['class'].' '.$class : $class;
 
         // header class
-        $processedData['header'] = $this->classHelper->getHeaderClass($processedData['data']);
+        $processedData['header'] = $this->classHelper->getHeaderClass($processedData['data'], $flexconf);
 
         // style
         $processedData['style'] = $this->styleHelper->getBgColor($processedData['data']);
@@ -501,6 +502,43 @@ class BootstrapProcessor implements DataProcessorInterface
             $containerConfig
         );
 
+        // Classes that describe the element as a whole belong on the element that
+        // carries the id: the indent has to take the heading above the block with it,
+        // and the frame rulers are pseudo elements in the flow. A container prints its
+        // own classes on an inner element, so these are collected here and handed to
+        // the layout, which prints them next to the id.
+        $outerClasses = [];
+
+        $indentClass = (string)($processedData['indentClass'] ?? '');
+        if ($indentClass !== '') {
+            if ($cType === 'button_group') {
+                $processedData['buttonGroupClass'] = trim(($processedData['buttonGroupClass'] ?? '').' '.$indentClass);
+            } elseif (!empty($processedData['isTxContainer'])) {
+                $outerClasses[] = $indentClass;
+            } else {
+                $processedData['class'] = trim($processedData['class'].' '.$indentClass);
+            }
+        }
+
+        // frame_class is already in `class`. On a container that string lands on an
+        // inner element, where the ruler's ::before/::after is drawn inside the wrapper
+        // - in a background wrapper behind the image, and nowhere at all where the
+        // template prints no class of its own. So move it out of `class` to the outside.
+        // The accordion is the one container the layout renders without that element
+        // (see Layouts/Content/Default), so there the class stays where it was.
+        if (!empty($processedData['isTxContainer']) && $cType !== 'collapsible_accordion') {
+            $frame = (string)($processedData['data']['frame_class'] ?? '');
+            if ($frame !== '' && $frame !== 'default') {
+                $frameClass = 'frame-'.$frame;
+                $classes = GeneralUtility::trimExplode(' ', (string)$processedData['class'], true);
+                $processedData['class'] = implode(' ', array_diff($classes, [$frameClass]));
+                $outerClasses[] = $frameClass;
+            }
+        }
+
+        $processedData['outerAttr'] = $outerClasses !== []
+            ? ' class="'.htmlspecialchars(implode(' ', $outerClasses), ENT_QUOTES).'"' : '';
+
         // trim header
         $processedData['data']['header'] = !empty($processedData['data']['header']) ? trim($processedData['data']['header']) : '';
 
@@ -571,6 +609,45 @@ class BootstrapProcessor implements DataProcessorInterface
             $s = self::removeChar($s, $c);
         }
         return $s;
+    }
+
+
+    /**
+     * The content indent of the current page, in Bootstrap grid columns.
+     *
+     * Inherited: the walk goes from the current page up the rootline and stops at the
+     * first value that is set. An empty field means "inherit", a stored '0' means
+     * "explicitly none" and stops the walk as well - that is what lets a sub-page cancel
+     * an indent its parent sets.
+     *
+     * With "contentIndentInherit" off only the current page counts, and an empty field
+     * simply means no indent. A '0' stored while inheritance was on reads the same way,
+     * so switching back and forth changes nothing about the saved values.
+     *
+     * Since TYPO3 v14 the rootline carries every column of the pages table
+     * (RootlineUtility::getPagesFields()), so the field is there without an extra query.
+     * The rootline is ordered root first, current page last - hence the reverse walk.
+     */
+    private function resolveContentIndent(array $extConf, PageInformation $pageInformation): int
+    {
+        if (empty($extConf['contentIndent'])) {
+            return 0;
+        }
+
+        $rootLine = $pageInformation->getRootLine();
+
+        if (empty($extConf['contentIndentInherit'])) {
+            return (int)($rootLine[array_key_last($rootLine)]['tx_t3sbootstrap_indent'] ?? 0);
+        }
+
+        for ($i = count($rootLine) - 1; $i >= 0; $i--) {
+            $value = (string)($rootLine[$i]['tx_t3sbootstrap_indent'] ?? '');
+            if ($value !== '') {
+                return (int)$value;
+            }
+        }
+
+        return 0;
     }
 
 }

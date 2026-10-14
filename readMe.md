@@ -16,8 +16,6 @@ Editors get rich, ready-to-use Bootstrap content elements. Integrators get a cle
 
 ## Table of Contents
 
-- [What's new in 5.3.51](#whats-new-in-5351)
-- [What's new in 5.3.50](#whats-new-in-5350)
 - [Highlights](#highlights)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -29,107 +27,6 @@ Editors get rich, ready-to-use Bootstrap content elements. Integrators get a cle
 - [Documentation & Demos](#documentation--demos)
 - [Support the project](#support-the-project)
 - [License](#license)
-
----
-
-## What's new in 5.3.51
-
-**A maintenance release, and it is all about the editor.** The CKEditor of `t3sbootstrap` learned
-three new tools, and integrators can now decide which of them their editors actually get to see.
-
-### New toolbar items
-
-| Item | What it does |
-|------|--------------|
-| **Columns** | Inserts a Bootstrap row with 2, 3 or 4 columns, converts an existing row to a different count, or removes it again. Surplus content is moved into the last remaining column instead of being dropped. A thin guide line marks the columns while editing — backend only. |
-| **Margin** | The Bootstrap spacing utilities `mt-1`…`mt-5` and `mb-1`…`mb-5` on the current block. Top and bottom are independent, so they combine freely; `none` clears one side. |
-| **Code block** | `<pre><code>` with a language picker — TypoScript, PHP, YAML, JSON, XML, HTML, CSS, SCSS, JavaScript, TypeScript, Bash, SQL, plain text. The inline `Code` button next to it now works too; the plugin behind it was never loaded before. |
-
-Alerts, columns and margins are real editor features, not entries in the Styles dropdown: their
-markup is declared in the schema and converted in both directions. That means the classes survive
-a save even in the default preset, whose General HTML Support whitelist only covers `<div>`.
-
-### Feature switches
-
-Not every installation wants every button. **Extension Configuration → category *RTE*** now holds
-one switch per toolbar item and one per group of the Styles dropdown. **Page TSconfig overrides it
-per page tree** and always wins:
-
-```typoscript
-RTE.t3sbootstrap.features {
-    columns = 0
-    sourceEditing = 0
-    styleBadges = 0
-}
-```
-
-Switching a feature off hides the button — it does not touch content. The CKEditor plugin stays
-loaded, so alerts, columns and code blocks that are already in the text remain editable and are
-written back unchanged. Style groups behave the same way: their element/class pairs move to the
-General HTML Support whitelist before the entry leaves the dropdown.
-
-### Also in this release
-
-- **New RTE preset `t3sbootstrap_extended`** — same editor, wider class whitelist, so classes on
-  `<p>`, `<span>`, `<a>`, lists and tables survive untouched. Opt in per page tree with
-  `RTE.default.preset = t3sbootstrap_extended`.
-- **A way out of a container** — an alert or a column at the very end of the field used to be a
-  dead end: no paragraph behind it, and no way to create one except the source view. Enter on an
-  empty last line now steps out of it, Backspace on an empty first line steps out upwards — the
-  same gesture CKEditor's own block quote uses.
-- **`icon-link` for links** — `class="icon-link"` and `icon-link icon-link-hover` are selectable in
-  the link wizard, and the hover animation now actually runs.
-- **Speaking ID** — the anchor `<span>` was written whenever an element had a value in
-  `tx_t3sbootstrap_anchor`, no matter whether the option was enabled; the TypoScript now honours
-  the switch. And inside a `.row` that span was a sibling of the columns, so `row-cols-*` and the
-  CSS grid counted it as a column — it is taken out of flow now.
-- Bug fixes: `FlexFormTools::convertFlexFormContentToArray()` with a `null` FlexForm (issue #517)
-  and its untracked twin in the card wrapper, an offcanvas menu reserving the height of a closed
-  dropdown, the accordion no longer scrolling to the top when it opens, and empty card buttons
-  caused by a missing label.
-
-Flush all caches after updating — the RTE preset, the import map and the DI container are cached.
-
----
-
-## What's new in 5.3.50
-
-**`EXT:t3sb_package` is no longer required.** Everything the extension generates now lives below
-`typo3temp/assets/t3sbootstrap/` instead of being written into a site package:
-
-```
-typo3temp/assets/t3sbootstrap/
-    TypoScript/       t3sbconstants.typoscript, t3sbsetup.typoscript
-    T3SB-SCSS/        custom-variables-<uid>.scss, custom-<uid>.scss
-    T3SB-CSS/         downloaded CSS
-    T3SB-JS/          downloaded JS
-    T3SB-Bootstrap/   Bootstrap sources from the release zip
-    css/              compiled CSS
-```
-
-None of it is a source: the TypoScript and the SCSS are derived from the configuration record in
-the database, the compiled CSS is derived from those, and the downloads are reproducible with
-`t3sbootstrap:cdnToLocal`. A middleware rewrites missing TypoScript and SCSS from the database on
-the next frontend request — after a deployment, after *Remove Temporary Assets*, or on a fresh
-install.
-
-Further changes:
-
-- **Upgrade wizard** *Move generated assets out of EXT:t3sb_package* copies existing files to the
-  new location once. Nothing is deleted.
-- **Configuration transfer** — export and import a site's configuration as JSON directly in the
-  T3SB backend module, with three import modes (update in place / replace / add).
-- **RTE** — the alert box became a dropdown offering all eight Bootstrap 5 contextual variants,
-  and a dedicated stylesheet shows the alert colors inside the editor. Everything else that
-  happened to the editor is in [5.3.51](#whats-new-in-5351).
-- **New setting `flexformDir`** — the directory holding your own FlexForm overrides is now
-  configurable instead of being fixed to `EXT:t3sb_package/Configuration/FlexForms/`.
-- **`b13/container` moves to `^4.1`.** If your root `composer.json` pins an older major, raise it:
-  `composer require "b13/container:^4.1" -W`
-- Numerous bug fixes across frontend rendering, the migration commands and the TCA.
-
-After updating, flush all caches (several constructor signatures changed, the compiled DI
-container has to be rebuilt) and run the database schema update.
 
 ---
 
@@ -215,10 +112,10 @@ For the full list, see the [official documentation](https://www.t3sbootstrap.de/
 Which items the t3sbootstrap RTE offers is configurable — no forked YAML preset needed.
 
 **Installation-wide:** Settings → Extension Configuration → `t3sbootstrap` → category **RTE**.
-One switch per toolbar item (`rteAlert`, `rteColumns`, `rteMargins`, `rteCodeBlock`,
-`rteTable`, `rteSourceEditing`, …) and one per group of the Styles dropdown (`rteStyleColors`,
-`rteStyleButtons`, `rteStyleBadges`, `rteStyleTables`). Everything is on by default, so an
-existing installation sees no change.
+One switch per toolbar item (`rteAlert`, `rteColumns`, `rteMargins`, `rteBadge`, `rteColor`,
+`rteCodeBlock`, `rteTable`, `rteSourceEditing`, …) and one per remaining group of the Styles
+dropdown (`rteStyleButtons`, `rteStyleTables`). Everything is on by default, so an existing
+installation sees no change.
 
 **Per page tree:** Page TSconfig wins over the Extension Configuration.
 
@@ -226,7 +123,7 @@ existing installation sees no change.
 RTE.t3sbootstrap.features {
     columns = 0
     sourceEditing = 0
-    styleBadges = 0
+    color = 0
 }
 ```
 

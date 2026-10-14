@@ -1156,8 +1156,8 @@
 
 		<unit id="flexform.bgw.headerInside.description">
 			<segment>
-				<source>Renders the header of this wrapper on top of the background instead of above it - together with the content.</source>
-				<target>Zeigt die Überschrift dieses Wrappers auf dem Hintergrund statt darüber – zusammen mit dem Inhalt.</target>
+				<source>Renders the header of this wrapper on top of the background instead of above it - together with the content. It also unlocks the field "Vertical header" in the "Headers" group of this element: a turned heading is positioned against the wrapper and has nothing to align to without it. That field exists only while "headerVertical" is on in the extension configuration - and switching "Header inside the section" off hides it again, a stored value then stops taking effect.</source>
+				<target>Zeigt die Überschrift dieses Wrappers auf dem Hintergrund statt darüber – zusammen mit dem Inhalt. Schaltet außerdem das Feld „Überschrift senkrecht“ im Bereich „Kopfzeilen“ dieses Elements frei: eine gedrehte Überschrift wird am Wrapper ausgerichtet und hätte ohne ihn keinen Bezug. Das Feld gibt es überhaupt nur, solange „headerVertical“ in der Extension-Konfiguration an ist – und wird „Überschrift in den Bereich legen“ wieder abgeschaltet, verschwindet es, ein gespeicherter Wert wirkt dann nicht mehr.</target>
 			</segment>
 		</unit>
 
@@ -2105,6 +2105,13 @@
 		</unit>
 		
 		<unit id="flexform.bgimageSheet">
+			<segment>
+				<source>Background Images</source>
+				<target>Hintergrundbilder</target>
+			</segment>
+		</unit>
+
+		<unit id="flexform.bgimages">
 			<segment>
 				<source>Background Images</source>
 				<target>Hintergrundbilder</target>

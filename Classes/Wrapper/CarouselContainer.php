@@ -19,16 +19,16 @@ class CarouselContainer implements SingletonInterface
 
     public function getProcessedData(array $processedData, array $flexconf): array
     {
-        // Bei einem Container ohne FlexForm existiert der Schluessel nicht.
-        // Ein blosses ? loest dann "Undefined array key" aus, und TYPO3s
-        // Error-Handler macht daraus eine Exception - Frontend steht.
+        // A container without a flexform has no such key. A bare ? then raises
+        // "Undefined array key", and TYPO3's error handler turns that into an exception -
+        // the frontend is down.
         $processedData['maxWidth']         = !empty($flexconf['width']) ? $flexconf['width'] . 'px' : '1440px';
         $processedData['interval']         = $flexconf['interval'] ?? 5000;
         $processedData['darkVariant']      = !empty($flexconf['darkVariant']) ? $flexconf['darkVariant'] : 'light';
         $processedData['thumbnails']       = !empty($flexconf['thumbnails']);
         $processedData['mobileIndicators'] = !empty($flexconf['mobileIndicators']) ? '' : ' d-none d-md-block';
 
-        // carousel-fade und carousel-dark als separate Keys — klarer im Template
+        // carousel-fade and carousel-dark as separate keys - clearer in the template
         $carouselFade  = !empty($flexconf['carouselFade'])  ? ' carousel-fade' : '';
         $carouselFade .= !empty($flexconf['darkVariant'])   ? ' carousel-dark' : '';
         $processedData['carouselFade'] = $carouselFade;

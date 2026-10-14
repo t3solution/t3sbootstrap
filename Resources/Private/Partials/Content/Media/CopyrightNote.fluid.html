@@ -1,0 +1,22 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+	Copyright notice for images in sliders - carousel and swiper.
+
+	Always the inline notice, never the toast of Media/Type/Image: that script is
+	wired to ".image .img-copyright", and a toast opened inside a slide would be
+	carried away with its slide as soon as the slider moves on. So imgCopyright = 2
+	shows the same notice as imgCopyright = 1 here.
+
+	Place it inside the figure, right behind the image and before any caption -
+	".img-copyright-default" pulls itself up over the lower edge of the image with a
+	negative margin and needs the image as its preceding sibling.
+
+	Expects {file} - a file reference or a file object.
+	The FAL field "copyright" wins over the t3sbootstrap one, same as Media/Type/Image.
+</f:comment>
+<f:if condition="{settings.imgCopyright} && ( {file.properties.tx_t3sbootstrap_copyright} || {file.properties.copyright} )">
+	<span class="img-copyright-default {file.properties.tx_t3sbootstrap_copyright_color}">
+		<span class="copyright">&copy;</span> <span class="copyright-note">{f:if(condition: file.properties.copyright, then: '{file.properties.copyright}', else: '{file.properties.tx_t3sbootstrap_copyright}')}</span>
+	</span>
+</f:if>
+</html>

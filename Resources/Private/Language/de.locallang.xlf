@@ -4,6 +4,27 @@
 	   srcLang="en" trgLang="de">
 	<file id="t3sbootstrap">
 	
+		<unit id="read-more">
+			<segment>
+				<source>Read more</source>
+				<target>Weiterlesen</target>
+			</segment>
+		</unit>
+
+		<unit id="form.search">
+			<segment>
+				<source>Search term</source>
+				<target>Suchbegriff</target>
+			</segment>
+		</unit>
+
+		<unit id="form.submit">
+			<segment>
+				<source>Search</source>
+				<target>Suchen</target>
+			</segment>
+		</unit>
+
 		<unit id="more">
 			<segment>
 				<source>more</source>

@@ -103,7 +103,7 @@ class Card implements SingletonInterface
             $backclass = '';
             $cardClass .= ' flip-card border-0 bg-transparent';
             $cardData['flipcard'] = true;
-            // rotateY kann fehlen, wenn das FlexForm nur teilweise gefuellt ist
+            // rotateY may be missing when the flexform is only partly filled
             $cardData['rotateY'] = $flexconf['rotateY'] ?? '';
             if ($processedData['data']['tx_t3sbootstrap_textcolor']) {
                 $backclass .= 'text-'.$processedData['data']['tx_t3sbootstrap_textcolor'];
@@ -148,8 +148,8 @@ class Card implements SingletonInterface
         // profile card
         $cardData['multiImage']['enable'] = false;
         if (!empty($flexconf['multiImage']['enable'])) {
-            // "enable" gesetzt heisst nicht, dass auch alle uebrigen Felder der
-            // Sektion vorhanden sind - jedes einzeln absichern
+            // "enable" being set does not mean every other field of the section is there -
+            // guard each one on its own
             $multiImage  = (array)($flexconf['multiImage'] ?? []);
             $percent     = (int)($multiImage['percent'] ?? 0);
             $borderWidth = (string)($multiImage['borderWidth'] ?? '');

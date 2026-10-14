@@ -33,7 +33,11 @@
 	<f:asset.script identifier="navbarDropdownAnimate_function">
 // Dropdown animate - Navbar/Assets.html
 function t3sbDropdownAnimate(vw, bp, dropdownAnimateValue) {
-	if ( vw < bp ) {
+	// Without a breakpoint width MainAssets falls back to 99999. For the offcanvas
+	// that is the safe assumption, here it is exactly the wrong one: every viewport
+	// would count as narrow and the animation would stay switched off for good.
+	// A breakpoint no screen can reach therefore means: keep the animation.
+	if ( bp < 3000 && vw < bp ) {
 		document.querySelectorAll('.dd-animate-'+dropdownAnimateValue).forEach(function(dda) {
 			dda.classList.remove('dd-animate-'+dropdownAnimateValue);
 			dda.classList.add('removed-animate-'+dropdownAnimateValue);

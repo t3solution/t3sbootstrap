@@ -187,8 +187,10 @@
 
 
 <f:section name="RealImage">
-	<f:comment> {class} und {styleAttr} fehlten hier - die eigenen Klassen und der
-	eigene Style des Wrappers kamen damit nie im DOM an. </f:comment>
+	<f:comment>
+	{class} and {styleAttr} were missing here - the wrapper's own classes and its
+	own style never reached the DOM.
+	</f:comment>
 	<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}{class}"{styleAttr -> f:format.raw()}>
 		<figure style="margin: 0 auto;">
 			<f:if condition="{settings.lazyLoadBgWrapperImage}">
@@ -237,9 +239,11 @@
 
 
 <f:section name="VideoLocal">
-	<f:comment> {class} und {styleAttr} fehlten hier - die eigenen Klassen und der
-	eigene Style des Wrappers (Abstaende, Rahmen, Extra-Klasse, Extra-Style)
-	kamen damit nie im DOM an, sichtbar war nur das Video. </f:comment>
+	<f:comment>
+	{class} and {styleAttr} were missing here - the wrapper's own classes and its
+	own style (spacing, border, extra class, extra style) never reached the DOM,
+	only the video was visible.
+	</f:comment>
 	<section id="s-{data.uid}" class="local-video card inline-flex rounded-0 border-0{f:if(condition: '{localVideo.class}', then: ' {localVideo.class}')}{class}"{styleAttr -> f:format.raw()}>
 		<f:render section="LocalVideoAssets" arguments="{_all}" />
 			<f:render partial="Media/Type/Video" arguments="{file: file, dimensions: dimensions,

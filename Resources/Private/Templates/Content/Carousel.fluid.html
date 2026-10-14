@@ -51,6 +51,8 @@
 						<figure{f:if(condition: files.0.properties.tx_t3sbootstrap_extra_class,
 						 then: ' class="{files.0.properties.tx_t3sbootstrap_extra_class}"')}>
 							<f:render section="Slide" arguments="{_all}" />
+							<f:comment> Copyright notice </f:comment>
+							<f:render partial="Media/CopyrightNote" arguments="{file: files.0}" />
 							<f:if condition="{data.header} || {data.bodytext} || ({data.header_link} && {carouselLink} == 'button') ">
 								<div id="c{data.uid}" class="carousel-caption{animate}"{styleAttr -> f:format.raw()}>
 									<div class="w-100{class}"{f:if(condition: '{innerStyle}',then: ' style="{innerStyle}"')}>

@@ -40,7 +40,7 @@ class SwiperContainer implements SingletonInterface
         $processedData['autoplay']         = (int)!empty($flexconf['autoplay']);
         $processedData['origImage']        = (int)!empty($flexconf['origImage']);
 
-        // delay nur sinnvoll wenn autoplay aktiv
+        // delay only makes sense while autoplay is on
         $processedData['delay'] = !empty($flexconf['autoplay']) && !empty($flexconf['delay'])
             ? (int)$flexconf['delay']
             : 0;

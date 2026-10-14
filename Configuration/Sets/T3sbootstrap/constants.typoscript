@@ -9,13 +9,13 @@ bootstrap.cdn.masonry = 4.2.2
 bootstrap.cdn.jquery = 3.7.1
 bootstrap.cdn.lazyload = 17.8.5
 bootstrap.cdn.animate = 4.1.1
-bootstrap.cdn.baguetteBox = 1.11.1
+bootstrap.cdn.baguetteBox = 1.13.0
 bootstrap.cdn.halkabox = 1.6.0
-bootstrap.cdn.glightbox = 3.2.0
+bootstrap.cdn.glightbox = 3.3.1
 bootstrap.cdn.jarallax = 2
-bootstrap.cdn.swiper = 11
-bootstrap.cdn.bootstrapCssIntegrity = sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT
-bootstrap.cdn.bootstrapJsIntegrity = sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D
+bootstrap.cdn.swiper = 12
+bootstrap.cdn.bootstrapCssIntegrity = sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB
+bootstrap.cdn.bootstrapJsIntegrity = sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y
 bootstrap.cdn.bootstrapBundleJsIntegrity = sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI
 bootstrap.cdn.popperjsIntegrity = sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r
 bootstrap.cdn.masonryIntegrity = sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D
@@ -75,18 +75,18 @@ bootstrap.pages.override.subtitlecolor =
 #-------------------------------------------------------------------------------
 
 bootstrap.image.viewportWidthCookie = 0
-bootstrap.image.minimumWidth = true
+bootstrap.image.minimumWidth = 0
 bootstrap.image.ratioWithHeight = 0
 bootstrap.image.maxWidthMediaObject = 200
-bootstrap.image.maxWidthToast = 20
+bootstrap.image.maxWidthToast = 40
 bootstrap.image.disableAutoRow = 0
 bootstrap.image.srcsetDesktop = 576, 768, 992, 1200, 1440, 1920, 2650
 bootstrap.image.srcsetTablet = 125, 255, 385, 576, 768, 992, 1200
 bootstrap.image.srcsetMobile = 60, 100, 200, 385, 575
 bootstrap.image.bgMediaQueries = 2560, 1920, 1200, 992, 768, 576
-# Seitentypen, deren Feld "Medien" beim Jumbotron-Hintergrund "on this and all
-# child pages (slide)" uebersprungen wird. Gedacht fuer Seitentypen, deren
-# Medien ein Teaserbild sind und kein Hintergrund. Kommaliste, leer = keine.
+# Page types whose "Media" field is skipped for the jumbotron background "on this
+# and all child pages (slide)". Meant for page types whose media is a teaser image
+# and not a background. Comma list, empty = none.
 bootstrap.image.jumbotronBgimageIgnoreDoktypes =
 bootstrap.image.lazyLoadThreshold = 0
 bootstrap.image.lazyLoadBgWrapperImage = 0
@@ -108,7 +108,7 @@ bootstrap.config.disableFaCss = 0
 # Fallback for installations without a configuration record - the record
 # overwrites this constant, an empty field there arriving as "0".
 bootstrap.config.favicon = EXT:backend/Resources/Public/Icons/favicon.ico
-bootstrap.backToTopTitle = to tops
+bootstrap.backToTopTitle = to top
 bootstrap.backToTopClass = fa-solid fa-circle-chevron-up fa-4x
 bootstrap.backToTopIconpack = fa7:solid,circle-chevron-up,size:4x
 bootstrap.backToTopForAllPages = 0
@@ -116,8 +116,8 @@ bootstrap.disable.jquery = 1
 bootstrap.config.jqueryHeader = 0
 bootstrap.disable.accordion.scrollToTop = 0
 bootstrap.navbar.noLinkTitle = 
-# Brand-Logo: gepflegt wird es im Konfigurations-Datensatz, Tab "Brand (Logo)".
-# Diese vier Konstanten sind nur noch der Rueckfall fuer leere Datensatzfelder.
+# Brand logo: maintained in the configuration record, tab "Brand (Logo)". These
+# four constants are only the fallback for empty record fields.
 bootstrap.navbar.image.defaultPath = EXT:t3sbootstrap/Resources/Public/Images/bootstrap-logo-white.svg
 bootstrap.navbar.image.width = 30
 bootstrap.navbar.image.height = 24

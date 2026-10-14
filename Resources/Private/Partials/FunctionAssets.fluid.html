@@ -249,12 +249,22 @@ function t3sbExtraRow(vw, bp) {
 // Offcanvas - Navbar/Assets.fluid.html
 function t3sbOffcanvas(vw, bp, utilColorArr) {
 	var navbarToggler = document.getElementById('navbarToggler');
-	if ( vw > bp ) {
-		navbarToggler.classList.remove(utilColorArr[0]);
-		navbarToggler.classList.remove(utilColorArr[1]);
-	} else {
-		navbarToggler.classList.add(utilColorArr[0]);
-		navbarToggler.classList.add(utilColorArr[1]);
+	if ( !navbarToggler ) {
+		return;
+	}
+	// Panel below the breakpoint, inline navbar above it - same markup either way.
+	// The state is not readable in CSS, so it is marked here: everything that only
+	// makes sense in the stacked panel hangs on this class.
+	navbarToggler.classList.toggle('t3sb-offcanvas-panel', vw <= bp);
+	// The colour class is a single token today, so [1] used to be undefined -
+	// and classList.add(undefined) writes a class literally named "undefined".
+	var utilColors = (utilColorArr || []).filter(Boolean);
+	if ( utilColors.length ) {
+		if ( vw > bp ) {
+			navbarToggler.classList.remove(...utilColors);
+		} else {
+			navbarToggler.classList.add(...utilColors);
+		}
 	}
 	let extraRow = document.querySelector('.navbar .extra-row');
 	if (extraRow) {
@@ -274,6 +284,9 @@ function t3sbOffcanvas(vw, bp, utilColorArr) {
 // Searchbox in Navbar - Navbar/Assets.fluid.html
 function t3sbNavbarSearchbox(vw, bp) {
 	let	form = document.querySelector('.navbar form');
+	if ( !form ) {
+		return;
+	}
 	if ( vw < bp ) {
 		if (form.classList.contains('ms-auto')) {
 			form.classList.remove('ms-auto');

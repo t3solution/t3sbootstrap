@@ -48,7 +48,14 @@
 				</div>
 			</f:then>
 			<f:else>
-				<header class="header-{data.uid} h-{data.header_layout}{f:if(condition: '{headerclass}',then: ' {headerclass}')}">
+				<f:comment>
+					A vertical header inside a wrapper is taken out of the flow, so the
+					content next to it keeps the full width instead of starting below the
+					turned block. headerInside is set by the background and parallax
+					wrapper only - everywhere else the variable is empty and nothing
+					changes.
+				</f:comment>
+				<header class="header-{data.uid} h-{data.header_layout}{f:if(condition: '{headerclass}',then: ' {headerclass}')}{f:if(condition: '{headerInside} && {data.tx_t3sbootstrap_header_vertical}', then: ' t3sb-header-vertical-inside')}">
 					<f:if condition="{settings.supraheader} && {supraheaderFilled}">
 						<p class="supraheader{f:if(condition: data.header_position, then: ' text-{data.header_position}')}{f:if(condition: data.tx_t3sbootstrap_supraheader_class, then: ' {data.tx_t3sbootstrap_supraheader_class}')}">
 							{supraheader -> f:sanitize.html()}

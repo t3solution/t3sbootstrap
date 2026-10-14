@@ -51,9 +51,25 @@
 				</f:if>
 				<f:comment> PAGE CONTENT </f:comment>
 				<div id="page-content"{f:if(condition: '{settings.config.pageContentExtraClass}',then: ' class="{settings.config.pageContentExtraClass}"')} >
+					<f:comment>
+						A backend layout without a matching partial used to throw
+						InvalidPartialException and take the whole page down with it - a
+						white screen because of one wrong value in pages.backend_layout.
+						That hits every self-built layout, and it hit the "_Extra" keys of
+						older installations whose BackendlayoutUpgradeWizard never ran.
+
+						renderPartial() catches InvalidTemplateResourceException (which
+						InvalidPartialException extends) when $ignoreUnknown is set, and
+						f:render falls back to its child content on an empty result. So
+						optional="true" plus the OneCol child turns the crash into the
+						default layout. Fluid's own argument description claims a partial
+						is "never" optional; the code says otherwise.
+					</f:comment>
 					<f:if condition="{be_layout} && {be_layout} != 'default'">
 						<f:then>
-							<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" />
+							<f:render partial="BackendLayouts/{be_layout}" arguments="{_all}" optional="true">
+								<f:render partial="BackendLayouts/OneCol" arguments="{_all}" />
+							</f:render>
 						</f:then>
 						<f:else>
 							<f:render partial="BackendLayouts/OneCol" arguments="{_all}" />

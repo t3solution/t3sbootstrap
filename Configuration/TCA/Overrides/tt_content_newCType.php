@@ -164,6 +164,25 @@ $tempContentColumns = [
             'type' => 'check'
         ]
     ],
+    'tx_t3sbootstrap_header_vertical' => [
+        'label' => $dbModel.'.t3sbootstrapheadervertical',
+        'description' => $dbModel.'.t3sbootstrapheadervertical.description',
+        'exclude' => 1,
+        // Only inside the background wrapper, and only while "Header inside" is on:
+        // the turned heading is positioned against the wrapper, so without it there
+        // is nothing to centre it in. The flexform field reloads the form on change.
+        'displayCond' => 'USER:T3SBS\\T3sbootstrap\\UserFunction\\TcaMatcher->headerInside',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                ['label' => $dbModel.'.t3sbootstrapheadervertical.item0', 'value' => '',],
+                ['label' => $dbModel.'.t3sbootstrapheadervertical.item1', 'value' => 'up',],
+                ['label' => $dbModel.'.t3sbootstrapheadervertical.item2', 'value' => 'down',],
+            ],
+            'default' => ''
+        ]
+    ],
     'tx_t3sbootstrap_header_position' => [
         'label' => $dbModel.'.t3sbootstrapheaderposition',
         'exclude' => 1,
@@ -297,6 +316,19 @@ $tempContentColumns = [
             'ds' => 'FILE:EXT:t3sbootstrap/Configuration/FlexForms/Bootstrap.xml'
         ]
     ],
+    // Takes this one element out of the page-wide indent (pages.tx_t3sbootstrap_indent).
+    // Only visible while the indent is on in the extension configuration - otherwise a
+    // stored checkbox would sit there without effect.
+    'tx_t3sbootstrap_no_indent' => [
+        'exclude' => true,
+        'label' => $dbModel.'.noIndent',
+        'description' => $dbModel.'.noIndent.description',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0
+        ]
+    ],
     'tx_t3sbootstrap_extra_class' => [
         'label' => $dbModel.'.t3sbootstrapextraclass',
         'exclude' => 1,
@@ -326,8 +358,29 @@ $tempContentColumns = [
         ],
     ],
     'tx_t3sbootstrap_inTextImgColumns' => [
-        'label' => 'Gallery columns',
+        'label' => $dbModel.'.t3sbootstrapintextimgcolumns',
+        'description' => $dbModel.'.t3sbootstrapintextimgcolumns.description',
         'exclude' => 1,
+        // Same condition as tx_t3sbootstrap_inTextImgRowWidth, its neighbour in the
+        // imageSettings palette. Without it the field showed on every CType: the
+        // palette is added with addToAllTCAtypes() and an empty type list, and its
+        // anchor "after:imageborder" only exists in the image CTypes - everywhere
+        // else TYPO3 appends the palette at the end of the form, which is the
+        // "Extended" tab. The other fields fell away through their own condition,
+        // so a bare "T3SB Image Settings" box was left behind there.
+        //
+        // GalleryHelper reads the value for imageorient 17 and 18 only ("in text,
+        // right/left"), where it becomes the col-md-* of the wrapped image block.
+        'displayCond' => [
+            'OR' => [
+                'FIELD:CType:=:textpic',
+                'FIELD:CType:=:textmedia',
+                'FIELD:CType:=:t3sbs_mediaobject',
+                'FIELD:CType:=:t3sbs_card',
+                'FIELD:CType:=:t3sbs_toast',
+                'FIELD:CType:=:t3sbs_gallery',
+            ],
+        ],
         'config' => [
             'type' => 'select',
             'renderType' => 'selectSingle',
@@ -1193,25 +1246,33 @@ if (ExtensionManagementUtility::isLoaded('iconpack')) {
     );
 }
 
+// The vertical header is an option, not a default: the field belongs in the form only
+// while it is enabled in the extension configuration. A stored value keeps working even
+// when the field is no longer shown (see ClassHelper).
+$headerVerticalField = !empty($extconf['headerVertical']) ? ', tx_t3sbootstrap_header_vertical' : '';
+
 ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'headers',
-	'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position',
+	'--linebreak--,tx_t3sbootstrap_header_display, tx_t3sbootstrap_header_class,--linebreak--,tx_t3sbootstrap_header_position'.$headerVerticalField,
 	'after:subheader'
 );
+
+// The "no indent" checkbox belongs in the form only when the indent is offered at all.
+$noIndentField = !empty($extconf['contentIndent']) ? 'tx_t3sbootstrap_no_indent,' : '';
 
 if (array_key_exists('extraStyle', $extconf) && $extconf['extraStyle'] === '1') {
 	ExtensionManagementUtility::addFieldsToPalette(
 		'tt_content',
 		'frames',
-		'--linebreak--,tx_t3sbootstrap_extra_class,tx_t3sbootstrap_extra_style,--linebreak--,tx_t3sbootstrap_container,--linebreak--, tx_t3sbootstrap_flexform',
+		'--linebreak--,tx_t3sbootstrap_extra_class,tx_t3sbootstrap_extra_style,--linebreak--,tx_t3sbootstrap_container,'.$noIndentField.'--linebreak--, tx_t3sbootstrap_flexform',
 		'after:frame_class'
 	);
 } else {
 	ExtensionManagementUtility::addFieldsToPalette(
 		'tt_content',
 		'frames',
-		'--linebreak--,tx_t3sbootstrap_extra_class,--linebreak--,tx_t3sbootstrap_container,--linebreak--, tx_t3sbootstrap_flexform',
+		'--linebreak--,tx_t3sbootstrap_extra_class,--linebreak--,tx_t3sbootstrap_container,'.$noIndentField.'--linebreak--, tx_t3sbootstrap_flexform',
 		'after:frame_class'
 	);
 }

@@ -1,4 +1,12 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+	Same reason as in SubHeader: the heading tag is only worth printing when
+	something goes inside it. All.fluid.html renders this block as soon as ANY of
+	heading, subheading, date or supraheader is filled, so an element carrying
+	only a subheading used to get an empty <h2> above it. An icon without text is
+	a heading of its own and counts.
+</f:comment>
+<f:if condition="{header -> f:format.trim()} || {hFa}">
 <f:switch expression="{layout}">
 	<f:case value="1">
 		<h1{f:if(condition: '{class}',then: ' class="{class}"')}>
@@ -51,6 +59,7 @@
 		</f:if>
 	</f:defaultCase>
 </f:switch>
+</f:if>
 </html>
 
 

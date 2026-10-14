@@ -993,7 +993,7 @@
 
 		<unit id="flexform.bgw.headerInside.description">
 			<segment>
-				<source>Renders the header of this wrapper on top of the background instead of above it - together with the content.</source>
+				<source>Renders the header of this wrapper on top of the background instead of above it - together with the content. It also unlocks the field "Vertical header" in the "Headers" group of this element: a turned heading is positioned against the wrapper and has nothing to align to without it. That field exists only while "headerVertical" is on in the extension configuration - and switching "Header inside the section" off hides it again, a stored value then stops taking effect.</source>
 			</segment>
 		</unit>
 

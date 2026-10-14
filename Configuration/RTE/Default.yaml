@@ -29,6 +29,10 @@ editor:
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/columns-plugin.js', exports: ['ColumnsGrid'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/margins-plugin.js', exports: ['MarginPicker'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/badge-plugin.js', exports: ['BadgePicker'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/color-plugin.js', exports: ['ColorPicker'] }
+      # Repairs the Bootstrap base class on <table>, which CKEditor's own table
+      # integration swallows on read - no toolbar item, converter only.
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/table-base-plugin.js', exports: ['TableBaseClass'] }
 
     extraPlugins:
       - Indent
@@ -65,6 +69,7 @@ editor:
         - alert
         - columns
         - badge
+        - color
         - '|'
         - alignment
         - margins
@@ -113,12 +118,6 @@ editor:
         # Block styles (applied to <p>)
         - { name: 'Block Lead', element: 'p', classes: ['lead'], isBlock: true }
         - { name: 'Block Small', element: 'p', classes: ['small'], isBlock: true }
-        - { name: 'Block Color Primary', element: 'p', classes: ['text-primary'], isBlock: true }
-        - { name: 'Block Color Secondary', element: 'p', classes: ['text-secondary'], isBlock: true }
-        - { name: 'Block Color Success', element: 'p', classes: ['text-success'], isBlock: true }
-        - { name: 'Block Color Info', element: 'p', classes: ['text-info'], isBlock: true }
-        - { name: 'Block Color Danger', element: 'p', classes: ['text-danger'], isBlock: true }
-        - { name: 'Block Color Warning', element: 'p', classes: ['text-warning'], isBlock: true }
         - { name: 'Block Lowercase', element: 'p', classes: ['text-lowercase'], isBlock: true }
         - { name: 'Block Uppercase', element: 'p', classes: ['text-uppercase'], isBlock: true }
         - { name: 'Block Capitalize', element: 'p', classes: ['text-capitalize'], isBlock: true }
@@ -131,12 +130,6 @@ editor:
         - { name: 'Code', element: 'code', classes: [] }
         - { name: 'Text Lead', element: 'span', classes: ['lead'] }
         - { name: 'Text Small', element: 'span', classes: ['small'] }
-        - { name: 'Text Color Primary', element: 'span', classes: ['text-primary'] }
-        - { name: 'Text Color Secondary', element: 'span', classes: ['text-secondary'] }
-        - { name: 'Text Color Success', element: 'span', classes: ['text-success'] }
-        - { name: 'Text Color Info', element: 'span', classes: ['text-info'] }
-        - { name: 'Text Color Danger', element: 'span', classes: ['text-danger'] }
-        - { name: 'Text Color Warning', element: 'span', classes: ['text-warning'] }
         - { name: 'Text Lowercase', element: 'span', classes: ['text-lowercase'] }
         - { name: 'Text Uppercase', element: 'span', classes: ['text-uppercase'] }
         - { name: 'Text Capitalize', element: 'span', classes: ['text-capitalize'] }
@@ -155,6 +148,10 @@ editor:
         # Since 5.3.51 badges and pill badges are a toolbar dropdown (badge-plugin.js,
         # toolbar item "badge"), not Styles entries; the markup is unchanged, so no
         # migration. Re-adding them here would give the same class two rival edit paths.
+
+        # The same for the six text colors, inline and per paragraph: a dropdown
+        # (color-plugin.js, toolbar item "color") instead of the twelve entries
+        # "Text Color *" and "Block Color *".
 
         # Lists
         - { name: 'List Unstyled', element: 'ul', classes: ['list-unstyled'] }

@@ -219,11 +219,35 @@ final readonly class OutsourcedFiles
 		}
 	}
 
+	/**
+	 * Bootstrap's own breakpoints, as a last resort.
+	 *
+	 * The widths normally come from the site settings, where the set
+	 * "T3sbootstrapOptional" defines them. A site that does not include that set
+	 * has no settings.bootstrap.navbar.breakpoint at all, and an empty width used
+	 * to travel all the way into the frontend: BodyTag.typoscript then skips the
+	 * data-navbar-breakpointWidth attribute, MainAssets falls back to 99999, and
+	 * every viewport counts as narrower than the breakpoint. The dropdown
+	 * animation was switched off permanently that way - see Navbar/Assets.
+	 */
+	private const DEFAULT_BREAKPOINT_WIDTHS = [
+		'sm'  => 576,
+		'md'  => 768,
+		'lg'  => 992,
+		'xl'  => 1200,
+		'xxl' => 1400,
+	];
+
 	private function resolveBreakpointWidth(Config $rootConfig, int $currentUid): string
 	{
-		if ($rootConfig->getNavbarBreakpoint() === 'no') {
+		$key = $rootConfig->getNavbarBreakpoint();
+
+		// "no" means the navbar never collapses, so there is no width to report.
+		if ($key === 'no') {
 			return '';
 		}
+
+		$fallback = (string)(self::DEFAULT_BREAKPOINT_WIDTHS[$key] ?? '');
 
 		try {
 			$site = $this->siteFinder->getSiteByPageId($currentUid);
@@ -232,14 +256,13 @@ final readonly class OutsourcedFiles
 				sprintf('No site config found for page %d: %s', $currentUid, $e->getMessage()),
 				'Warning'
 			);
-			return '';
+			return $fallback;
 		}
-		
+
 		$siteConfig = $site->getConfiguration();
 		$breakpoints = $siteConfig['settings']['bootstrap']['navbar']['breakpoint'] ?? [];
-		$key = $rootConfig->getNavbarBreakpoint();
 
-		return (string)($breakpoints[$key] ?? '');
+		return (string)($breakpoints[$key] ?? $fallback);
 	}
 
 	/**

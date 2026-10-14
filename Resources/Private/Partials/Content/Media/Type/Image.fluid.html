@@ -19,17 +19,15 @@
 						<f:then>
 						<f:comment> Lightbox (zoom) </f:comment>
 							<f:comment>
-								Welche Datei die Lightbox oeffnet, entscheidet zugleich ueber den
-								Zuschnitt: der ClickEnlarge-ViewHelper setzt sie per
-								setCurrentFile(), und die Popup-Konfiguration liest den Zuschnitt
-								mit "crop.data = file:current:crop" daraus. Die Dateireferenz
-								bringt ihren Zuschnitt mit, das Originalbild hat keinen.
+								Which file the lightbox opens decides the crop as well: the ClickEnlarge
+								view helper sets it with setCurrentFile(), and the popup configuration
+								reads the crop from it with "crop.data = file:current:crop". The file
+								reference brings its crop along, the original image has none.
 
-								originalFile gibt es nur auf einer Dateireferenz. Kommen die
-								Bilder aus einer Dateisammlung oder einem Ordner, liefert der
-								GalleryProcessor blanke File-Objekte - dann bleibt der Ausdruck
-								leer, und ohne diesen Rueckfall bekaeme der ViewHelper null fuer
-								ein Pflichtargument.
+								originalFile only exists on a file reference. When the images come from a
+								file collection or a folder, the GalleryProcessor delivers bare File
+								objects - the expression is empty then, and without this fallback the view
+								helper would get null for a required argument.
 							</f:comment>
 							<f:variable name="zoomfile" value="{file}" />
 							<f:if condition="{addmedia.origImageZoom} && {file.originalFile}">

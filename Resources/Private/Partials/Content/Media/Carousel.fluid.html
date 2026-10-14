@@ -51,7 +51,8 @@
 						</f:if>
 					</f:else>
 				</f:if>
-				<f:render section="Copyright" arguments="{_all}" />
+				<f:comment> Copyright notice </f:comment>
+				<f:render partial="Media/CopyrightNote" arguments="{file: media}" />
 				</figure>
 				<f:if condition="{media.title} || {media.description}">
 					<div class="carousel-caption d-none d-md-block">
@@ -101,14 +102,5 @@
 			hshift="{file.properties.tx_t3sbootstrap_shift_horizontal}"
 		/>
 	</f:else>
-</f:if>
-</f:section>
-
-
-<f:section name="Copyright">
-<f:if condition="{settings.imgCopyright} && {media.properties.tx_t3sbootstrap_copyright}">
-	<span class="img-copyright-default {media.properties.tx_t3sbootstrap_copyright_color}">
-		<span class="copyright">&copy;</span> <span class="copyright-note">{media.properties.tx_t3sbootstrap_copyright}</span>
-	</span>
 </f:if>
 </f:section>

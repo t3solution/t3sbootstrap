@@ -1,20 +1,21 @@
 <f:comment>
-	Die Breite fuer die Medienabfrage.
+	The width for the media query.
 
-	Hier stand settings.navbar. plus dem Wert von settings.config.navbarBreakpointWidth.
-	navbarBreakpointWidth ist aber bereits der Pixelwert (bei "lg" also 992),
-	gesucht wurde damit settings.navbar.992 - ein Schluessel, den es nicht gibt.
-	settings.navbar haelt sm/md/lg/xl/xxl. Herausgekommen ist
-	"@media (min-width: px)" - eine ungueltige At-Regel, die der Browser samt
-	ihrem gesamten Inhalt verwirft. Damit fiel die komplette Desktop-Darstellung
-	des Plusicons weg: die Dropdowns waren nicht mehr flex, der Plus-Button
-	rutschte unter den Menuepunkt, und der Bootstrap-Caret blieb neben dem Plus
-	stehen (Zeile darunter blendet ihn absichtlich generell ein).
+	This used to be settings.navbar. plus the value of
+	settings.config.navbarBreakpointWidth. But navbarBreakpointWidth is already
+	the pixel value (992 for "lg"), so what was looked up was
+	settings.navbar.992 - a key that does not exist. settings.navbar holds
+	sm/md/lg/xl/xxl. The result was "@media (min-width: px)" - an invalid
+	at-rule, which the browser discards along with all of its content. That
+	dropped the whole desktop rendering of the plus icon: the dropdowns were no
+	longer flex, the plus button slipped below the menu item, and the Bootstrap
+	caret stayed next to the plus (the line below shows it deliberately in
+	general).
 
-	Der passende Schluessel ist navbarBreakpoint - den setzt der ConfigProcessor
-	und faellt dort bereits auf "md" zurueck. Die zweite Absicherung hier greift,
-	falls der Breakpoint auf "no" steht: dann gaebe es settings.navbar.no nicht
-	und wir waeren wieder bei einer kaputten At-Regel.
+	The right key is navbarBreakpoint - the ConfigProcessor sets it and already
+	falls back to "md" there. The second safeguard here applies if the
+	breakpoint is "no": settings.navbar.no would not exist then and we would be
+	back at a broken at-rule.
 </f:comment>
 <f:variable name="plusiconBreakpointWidth" value="{settings.navbar.{navbarBreakpoint}}" />
 <f:if condition="{plusiconBreakpointWidth} == ''">

@@ -84,7 +84,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             $result = false;
 
             if (!empty($arguments['page']['uid'])) {
-                $pid = (int)$arguments['page']['uid'];
+                $pid = $this->resolveLivePageId($arguments['page']);
                 $config = $this->getConfig($pid, $arguments);
 
                 if (!empty($config)) {
@@ -120,35 +120,73 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
         });
     }
 
+    /**
+     * Page id the config record belongs to - the LIVE one.
+     *
+     * In a workspace, FormEngine edits the version record and hands exactly that one
+     * to the conditions: DatabaseEditRow reads it by its own uid, without a workspace
+     * overlay, and BackendLayoutView::determinePageId() passes that uid on. The config
+     * record, however, hangs on the live page and never has a version of its own - the
+     * table is not workspace aware. Asking for the version's uid therefore finds
+     * nothing, every colPosList() returns false and the page is left without a backend
+     * layout. On a root page nothing can catch that: above the version sits only uid 0.
+     */
+    private function resolveLivePageId(array $page): int
+    {
+        $liveId = (int)($page['t3ver_oid'] ?? 0);
+
+        return $liveId > 0 ? $liveId : (int)($page['uid'] ?? 0);
+    }
+
     private function getConfig(int $pid, array $arguments): array
     {
         $config = $this->fetchConfig($pid);
+        if (!empty($config)) {
+            return $config;
+        }
 
-        if (empty($config)
-            && isset($arguments['tree'])
-            && is_array($arguments['tree']->rootLineIds ?? null)
-        ) {
-            // rootLineIds is handed over sorted root page first, current page last.
-            // Normalize to "closest parent first" independently of that sorting.
-            $rootLineIdsArray = array_values($arguments['tree']->rootLineIds);
-            if ($rootLineIdsArray !== [] && (int)end($rootLineIdsArray) === $pid) {
-                $rootLineIdsArray = array_reverse($rootLineIdsArray);
-            }
-            // Only the current page is skipped (already checked above), the root page is kept.
-            $rootLineIdsArray = array_filter(
-                $rootLineIdsArray,
-                static fn($id): bool => (int)$id !== $pid
-            );
-
-            foreach ($rootLineIdsArray as $id) {
-                $config = $this->fetchConfig((int)$id);
-                if (!empty($config)) {
-                    break;
-                }
+        foreach ($this->getParentPageIds($pid, $arguments) as $parentPageId) {
+            $config = $this->fetchConfig($parentPageId);
+            if (!empty($config)) {
+                return $config;
             }
         }
 
-        return is_array($config) ? $config : [];
+        return [];
+    }
+
+    /**
+     * Rootline of the current page, closest parent first, without the page itself.
+     *
+     * The variables differ per TYPO3 version: since v13 PageTsConfigFactory hands over
+     * "fullRootLine" (page rows, root page first), v12 handed over a "tree" object carrying
+     * rootLineIds. Nothing provides "tree" any more, so reading it alone left every page
+     * without a config record of its own without a backend layout.
+     *
+     * @return int[]
+     */
+    private function getParentPageIds(int $pid, array $arguments): array
+    {
+        $pageIds = [];
+
+        if (is_array($arguments['fullRootLine'] ?? null)) {
+            foreach ($arguments['fullRootLine'] as $page) {
+                $pageIds[] = (int)($page['uid'] ?? 0);
+            }
+            // Root page first, so the closest parent is at the end.
+            $pageIds = array_reverse($pageIds);
+        } elseif (is_array($arguments['tree']->rootLineIds ?? null)) {
+            $pageIds = array_map('intval', array_values($arguments['tree']->rootLineIds));
+            if ($pageIds !== [] && end($pageIds) === $pid) {
+                $pageIds = array_reverse($pageIds);
+            }
+        }
+
+        // The page itself was checked above, uid 0 is the tree root and has no record.
+        return array_values(array_filter(
+            $pageIds,
+            static fn(int $pageId): bool => $pageId > 0 && $pageId !== $pid
+        ));
     }
 
     private function fetchConfig(int $pid): array|false
@@ -166,6 +204,7 @@ class T3sbConditionFunctionsProvider implements ExpressionFunctionProviderInterf
             ->where(
                 $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT))
             )
+            ->orderBy('uid')
             ->setMaxResults(1)
             ->executeQuery()
             ->fetchAssociative();
