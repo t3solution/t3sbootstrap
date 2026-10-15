@@ -99,6 +99,8 @@ rteInfo =
 rteAlert = 1
 # cat=RTE/enable/20; type=boolean; label=RTE Columns: Toolbar item "Columns" (2, 3 or 4 Bootstrap columns). Switching this off only hides the button - existing rows stay editable and are saved unchanged.
 rteColumns = 1
+# cat=RTE/enable/25; type=boolean; label=RTE Classes: Toolbar item "Classes" - sets Bootstrap utility classes on the row and on a single column of the "Columns" tool, from a list configured in the RTE YAML ("t3sbClassPicker"). Switching this off only hides the button - classes already set stay in the markup and are saved unchanged.
+rteClasses = 1
 # cat=RTE/enable/30; type=options[No code block=0, Code block without highlighting=1, Prism theme: Default=Default, Prism theme: Dark=Dark, Prism theme: Coy=Coy, Prism theme: Funky=Funky, Prism theme: Okaidia=Okaidia, Prism theme: Solarized Light=SolarizedLight, Prism theme: Tomorrow Night=TomorrowNight, Prism theme: Twilight=Twilight]; label=RTE Code block: Toolbar item "Code block" (<pre><code> with language selection). Existing code blocks stay editable. The editor writes the language as a class only - pick a Prism theme and Resources/Public/Prism/<theme>.css plus the shared prism.js are loaded in the frontend, which is what colorizes the code (clear cache)
 rteCodeBlock = 0
 # cat=RTE/enable/40; type=boolean; label=RTE Inline code: Toolbar item "Code" - marks a word inside a sentence as inline <code>. Not the same as "Code block" above, which inserts a whole <pre><code> block.

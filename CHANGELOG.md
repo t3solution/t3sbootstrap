@@ -4,6 +4,74 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.56 — Klassen im RTE, Vererbung des Backend-Layouts
+
+Betrifft die folgenden Dateien:
+
+```
+CHANGELOG.md
+composer.json
+ext_conf_template.txt
+ext_emconf.php
+releaseNote.pdf
+Classes/Backend/EventListener/RTE/FeatureToggles.php
+Configuration/RTE/Default.yaml
+Configuration/TSConfig/Page.tsconfig
+Resources/Public/JavaScript/ESM/rte_ckeditor/classes-plugin.js   (neu)
+```
+
+### Neu — Werkzeug „Klassen" in der Toolbar
+
+Das Spalten-Werkzeug hebt seit jeher jede Klasse auf, die es nicht selbst setzt,
+und schreibt sie unverändert zurück — eintragen ließ sich eine aber nur in der
+Quelltextansicht. Das neue Werkzeug ist der Weg dorthin: ein Dropdown hinter
+`Spalten`, zwei Gruppen für die Zeile und die einzelne Spalte, jeder Eintrag ein
+Schalter. Geschrieben wird in dasselbe Modellattribut `extraClasses`; es entsteht
+kein neues Element und kein zusätzliches Markup.
+
+Außerhalb einer Spalten-Zeile ist der Knopf aus, der Tooltip sagt warum und nennt
+sonst die gesetzten Klassen. Das Panel bleibt nach einem Schalter offen, weil
+mehrere Klassen fast immer zusammen gesetzt werden. Einträge mit demselben
+`exclusive`-Schlüssel ersetzen sich gegenseitig, so verdrängt `g-0` ein gesetztes
+`g-3`. Die Breitenklassen stehen nicht zur Wahl und sind nicht entfernbar.
+
+Die Auswahl steht als `t3sbClassPicker` in der RTE-YAML, nach `row` und `col`
+getrennt, und ist bewusst eine Map und keine Liste: TYPO3 führt importierte YAML
+mit `ArrayUtility::replaceAndAppendScalarValuesRecursive()` zusammen, hängt Listen
+also an und ersetzt nur Schlüssel. Ein Sitepackage ändert damit einen einzelnen
+Eintrag, entfernt ihn mit `null` oder ergänzt eigene. Ein Eintrag darf mehrere
+Klassen tragen; sie werden gemeinsam gesetzt und gemeinsam entfernt.
+
+Abschalten wie jedes andere T3SB-Werkzeug im RTE: Schalter `rteClasses` in der
+Extension-Konfiguration unter *RTE*, pro Seitenbaum über
+`RTE.t3sbootstrap.features` übersteuerbar. Das nimmt den Knopf aus der Toolbar
+und die Liste aus der Editor-Konfiguration; bereits gesetzte Klassen bleiben im
+Markup und werden weiterhin unverändert zurückgeschrieben.
+
+Keine neuen Datenbankfelder, keine Migration — nach dem Update genügt Cache leeren.
+
+### Behoben — „Backend-Layout (für Unterseiten)" wurde nicht vererbt
+
+Wer auf einer Seite unter *Erscheinungsbild* ein **Backend-Layout für Unterseiten**
+wählte, sah davon auf einer neu angelegten Unterseite nichts: Die stand weiterhin
+auf „1 Spalte". Schuld war ein Vorgabewert im Page-TSconfig der Extension,
+`TCAdefaults.pages.backend_layout = pagets__OneCol`. Er schrieb das Layout in das
+**eigene** Feld jeder neuen Seite, und die Vererbung greift nur, solange dieses Feld
+leer ist — im Backend löst `BackendLayoutView` erst das eigene Feld auf und steigt
+nur bei leerem Wert die Rootline hoch, im Frontend überschreibt
+`override.field = backend_layout` den geslideten Wert aus
+`backend_layout_next_level`. Die Einstellung war also nicht kaputt, sie kam nie zum
+Zug. Der Vorgabewert ist ersatzlos entfernt; ohne gesetztes Layout gilt weiterhin
+`OneCol`.
+
+**Bestehende Seiten ändern sich nicht:** bei ihnen steht `pagets__OneCol` real in
+der Datenbank. Ein Upgrade-Wizard wäre nicht möglich, weil sich ein bewusst
+gewähltes „1 Spalte" nicht von einem vorgegebenen unterscheiden lässt — wer die
+Vererbung dort will, leert das Feld auf den betroffenen Seiten. **Dank an den
+Melder**
+
+---
+
 ## 5.3.55 — Inhalt von 5.3.54 unter neuer Nummer
 
 Betrifft die folgenden Dateien:
