@@ -1,7 +1,9 @@
 #-------------------------------------------------------------------------------
 #	Pages
 #-------------------------------------------------------------------------------
-TCAdefaults.pages.backend_layout = pagets__OneCol
+# No default for backend_layout on purpose: a preset value lands in the page's own
+# field and beats "backend_layout_next_level" of every parent, so the inheritance a
+# user sets there would never take effect. An unset field falls back to OneCol anyway.
 TCAdefaults.pages.tx_t3sbootstrap_container = container
 TCAdefaults.pages.tx_t3sbootstrap_smallColumns = 3
 

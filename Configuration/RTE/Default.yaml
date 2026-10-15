@@ -16,6 +16,29 @@ editor:
     contentsCss:
       - 'EXT:t3sbootstrap/Resources/Public/Backend/Style/rte.css'
 
+    # Class picker for the Columns tool (classes-plugin.js, toolbar item "classes"):
+    # which utility classes may be set on the row and on a single column. The widths
+    # stay with the Columns tool and are not offered here. exclusive: entries sharing
+    # a key replace each other. A map and not a list on purpose - imported YAML is
+    # merged by key, while a list would be appended, so only this form lets a
+    # sitepackage change a single entry or drop it with "<key>: null".
+    t3sbClassPicker:
+      row:
+        gutter0: { class: 'g-0', label: 'Kein Spaltenabstand', exclusive: 'gutter' }
+        gutter3: { class: 'g-3', label: 'Spaltenabstand normal', exclusive: 'gutter' }
+        gutter5: { class: 'g-5', label: 'Spaltenabstand groß', exclusive: 'gutter' }
+        middle: { class: 'align-items-center', label: 'Spalten vertikal mittig' }
+        center: { class: 'justify-content-center', label: 'Spalten mittig' }
+        between: { class: 'justify-content-between', label: 'Spalten außen verteilt' }
+        textCenter: { class: 'text-center', label: 'Text zentriert' }
+      col:
+        padding: { class: 'p-3', label: 'Innenabstand' }
+        border: { class: 'border', label: 'Rahmen' }
+        rounded: { class: 'rounded', label: 'Ecken gerundet' }
+        textCenter: { class: 'text-center', label: 'Text zentriert' }
+        flex: { class: 'd-flex', label: 'Flex-Container' }
+        middle: { class: 'align-items-center', label: 'Inhalt mittig' }
+
     importModules:
       # TYPO3 loads @ckeditor/ckeditor5-basic-styles but exports only Bold, Italic,
       # Sub/Superscript, Strikethrough and Underline from it. Without this line the
@@ -27,6 +50,7 @@ editor:
       - { module: '@ckeditor/ckeditor5-word-count', exports: ['WordCount'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/alert-plugin.js', exports: ['AlertBox'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/columns-plugin.js', exports: ['ColumnsGrid'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/classes-plugin.js', exports: ['ClassPicker'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/margins-plugin.js', exports: ['MarginPicker'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/badge-plugin.js', exports: ['BadgePicker'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/color-plugin.js', exports: ['ColorPicker'] }
@@ -68,6 +92,7 @@ editor:
         - heading
         - alert
         - columns
+        - classes
         - badge
         - color
         - '|'

@@ -39,6 +39,12 @@ final readonly class FeatureToggles
 			'extconf' => 'rteColumns',
 			'toolbar' => ['columns'],
 		],
+		'classes' => [
+			'extconf' => 'rteClasses',
+			'toolbar' => ['classes'],
+			// The list goes with the button: without the toolbar item nothing reads it.
+			'config' => ['t3sbClassPicker'],
+		],
 		'codeBlock' => [
 			'extconf' => 'rteCodeBlock',
 			'toolbar' => ['codeBlock'],
