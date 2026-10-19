@@ -38,6 +38,11 @@ editor:
         textCenter: { class: 'text-center', label: 'Text zentriert' }
         flex: { class: 'd-flex', label: 'Flex-Container' }
         middle: { class: 'align-items-center', label: 'Inhalt mittig' }
+      div:
+        padding: { class: 'p-3', label: 'Innenabstand' }
+        border: { class: 'border', label: 'Rahmen' }
+        rounded: { class: 'rounded', label: 'Ecken gerundet' }
+        textCenter: { class: 'text-center', label: 'Text zentriert' }
 
     importModules:
       # TYPO3 loads @ckeditor/ckeditor5-basic-styles but exports only Bold, Italic,
@@ -51,6 +56,7 @@ editor:
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/alert-plugin.js', exports: ['AlertBox'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/columns-plugin.js', exports: ['ColumnsGrid'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/classes-plugin.js', exports: ['ClassPicker'] }
+      - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/div-plugin.js', exports: ['DivBlock'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/margins-plugin.js', exports: ['MarginPicker'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/badge-plugin.js', exports: ['BadgePicker'] }
       - { module: '@t3sbs/t3sbootstrap/rte_ckeditor/color-plugin.js', exports: ['ColorPicker'] }
@@ -93,6 +99,7 @@ editor:
         - alert
         - columns
         - classes
+        - div
         - badge
         - color
         - '|'

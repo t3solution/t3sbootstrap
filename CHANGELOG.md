@@ -4,6 +4,194 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.57 — Div als Block im RTE, Navigationstitel als h1
+
+Betrifft die folgenden Dateien:
+
+```
+CHANGELOG.md
+composer.json
+ext_conf_template.txt
+ext_emconf.php
+ext_tables.sql
+releaseNote.pdf
+Classes/Backend/EventListener/RTE/FeatureToggles.php
+Classes/DataProcessing/ConfigProcessor.php
+Classes/Domain/Model/Config.php
+Classes/EventListener/AssetRenderer/IsInline.php
+Configuration/RTE/Default.yaml
+Configuration/TCA/tx_t3sbootstrap_domain_model_config.php
+Resources/Private/Language/de.locallang_db.xlf
+Resources/Private/Language/locallang_db.xlf
+Resources/Private/Partials/Page/Title.fluid.html
+Resources/Public/JavaScript/ESM/rte_ckeditor/classes-plugin.js
+Resources/Public/JavaScript/ESM/rte_ckeditor/div-plugin.js   (neu)
+Classes/Command/CustomScss.php
+Classes/Controller/AbstractController.php
+Configuration/Sets/T3sbootstrap/settings.definitions.yaml
+Configuration/Sets/T3sbootstrap/setup.typoscript
+Resources/Private/Language/de.locallang.xlf
+Resources/Private/Language/locallang.xlf
+```
+
+### Geändert — der Datensatz ist die Quelle des eigenen SCSS
+
+Das Site-Setting **`bootstrap.cdn.keepVariables` ist entfallen.** Es hat sein Versprechen
+ohnehin nicht gehalten: `OutsourcedFiles::writeOutsourcedFiles()` hat die Datei beim
+Speichern im Backend immer aus dem Datensatz überschrieben, die Einstellung wirkte nur
+gegen den Scheduler-Task. Sie hielt die Datei also nur dann, wenn beide Felder im
+Datensatz leer blieben — und genau dann lag der Inhalt ausschließlich in `typo3temp/`,
+das bei jedem Update geleert wird. Die Einstellung erzeugte die Lücke, die sie schließen
+sollte. In v6 gibt es sie bereits nicht mehr.
+
+Ab jetzt gilt durchgängig: **der Konfigurations-Datensatz ist die Quelle, die Datei ist
+abgeleitet.** Damit greift beides, was es dafür schon gibt — *Konfiguration übertragen*
+(der JSON-Export enthält `custom_scss` und `custom_variables_scss`) und die
+Datensatz-Historie von TYPO3 mit Diff und Undo. Beide können eine Datei nicht sehen.
+
+**`t3sbootstrap:customScss` überschreibt vorhandenes SCSS nicht mehr.** Bis 5.3.56 hat das
+Kommando den Inhalt bei jedem Lauf auf das Bootswatch-Theme bzw. den Vorgabe-Kommentar
+zurückgesetzt — dafür waren die Zeitstempel-Kopien `_<zeit>-custom-<pid>.scss` neben der
+Datei da. Jetzt:
+
+| Lage | Verhalten |
+|---|---|
+| Datensatz hat Inhalt | Datei wird daraus geschrieben, Inhalt bleibt |
+| Datensatz leer, Datei vorhanden | Datei wird **einmalig in den Datensatz übernommen** (Altbestand aus `keepVariables = 1`) |
+| beides leer | Initialisierung aus Bootswatch oder Vorgabe-Kommentar, wie bisher |
+
+Wer das Bootswatch-Theme neu ziehen will, leert das Feld im Backend und lässt das
+Kommando laufen — explizit statt als stiller Nebeneffekt.
+
+Die Zeitstempel-Kopien entfallen ersatzlos. Der Hinweistext bei *Konfiguration
+übertragen* nennt jetzt das eigene SCSS und die Datensatz-Historie.
+
+**Zu tun beim Update:** Nichts, wenn `keepVariables` auf `0` stand (Standard). Stand es auf
+`1`, einmal `t3sbootstrap:customScss <Rootseiten-ID>` laufen lassen, **bevor** der
+Konfigurations-Datensatz gespeichert wird — dann wandert die Datei in den Datensatz.
+Danach in der Site-Konfiguration prüfen, ob die Einstellung dort noch gesetzt ist; sie
+wird ignoriert.
+
+### Neu — Hinweis, wenn die Bootstrap-Quellen fehlen
+
+`typo3temp/` ist im Core ausdrücklich als jederzeit löschbar deklariert, und Updates,
+Deployments und Cache-Flushes nutzen das. Die abgeleiteten Dateien schreibt die
+Middleware `EnsureGeneratedFiles` danach neu — die **heruntergeladenen** nicht. Die
+müssen von außerhalb geholt werden: Der Webserver braucht dafür einen ausgehenden
+Internetzugang zu `github.com` (Bootstrap-Quellen), `cdn.jsdelivr.net`,
+`cdnjs.cloudflare.com`, `unpkg.com`, `code.jquery.com` und, bei lokal gehosteten
+Google Fonts, `gwfh.mranftl.com`. Ein Seitenaufruf darf auf solche Downloads nicht
+warten — deshalb holt die Extension sie nicht von allein, sondern nur, wenn eines der
+beiden Kommandos läuft.
+
+Bisher hat das Backend-Modul davon nur den einen Fall gemeldet: fehlende CDN-Assets
+(`T3SB-CSS/bootstrap.min.css`). Der zweite, lautere blieb stumm — die entpackten
+Bootstrap-Quellen unter `T3SB-Bootstrap/Bootstrap/scss/`. Fehlen die bei aktiviertem
+SCSS, scheitert nicht nur die Darstellung: der `@import` des Compilers läuft ins Leere
+und wirft im PageRenderer-Hook.
+
+Neue Meldung im Modul mit dem Kommando, das es behebt:
+
+```
+typo3 t3sbootstrap:customScss <Rootseiten-ID>
+```
+
+Der Abgleich ist ein `is_file()` und läuft nur dort, wo ohnehin die anderen Hinweise
+zusammengestellt werden — nicht im Frontend.
+
+Zu bedenken bleibt der Fall `bootstrap.cdn.keepVariables = 1`: dann sind
+`custom-variables-<pid>.scss` und `custom-<pid>.scss` auf der Platte die Quelle und
+stehen in keiner Datenbank. Nach einem geleerten `typo3temp/` sind sie weg, und auch
+ein erneuter Lauf des Kommandos holt sie nicht zurück — der Zweig, der die Dateien neu
+anlegt, greift nur bei `keepVariables === false`.
+
+### Neu — Werkzeug „Div" in der Toolbar
+
+General HTML Support hält ein `<div>` zwar im Markup, macht daraus aber kein
+Widget: kein Auswahlrahmen, nichts, woran ein Toolbar-Eintrag ansetzen könnte —
+Klassen ließen sich nur in der Quelltextansicht eintragen. Das war seit dem
+Wechsel von CKEditor 4 auf 5 so und ist der Grund, warum ein einfacher
+Container-`div` im Editor praktisch unbenutzbar war.
+
+Das neue Werkzeug führt `div` als eigenes Modellelement `bsDiv` und zeichnet es
+als editierbares Widget aus. Einfügen umschließt die markierten Blöcke, wenn sie
+denselben Elternknoten haben, sonst entsteht ein leeres `div` mit einem Absatz;
+„Div auflösen" nimmt die Hülle weg und behält den Inhalt. Verschachtelung geht
+zwei Ebenen tief. Im Backend markiert eine graue Umrandung das Element, in der
+Ecke stehen seine Klassen — im Frontend ist davon nichts zu sehen.
+
+Die Klassen setzt das vorhandene Werkzeug **Klassen**, das dafür eine dritte
+Gruppe `div` bekommen hat. Konfiguriert wird sie wie die beiden anderen über
+`t3sbClassPicker` in der RTE-YAML.
+
+**Was sich an bestehenden Inhalten ändert:** Das Werkzeug beansprucht beim
+Einlesen jedes `div`, das keinem anderen Werkzeug gehört — alles außer `alert`,
+`row` und `col-*`. Ein Text mit solchen `div` zeigt sie nach dem Update also als
+Widget statt als unsichtbaren Block. Am gespeicherten Markup ändert das nichts:
+Klassen, `id`, `style` und `data-*` werden im Modell mitgeführt und unverändert
+zurückgeschrieben. Das ist nötig, weil General HTML Support für ein beanspruchtes
+Element nichts mehr aufhebt — ein inline gesetztes `column-count` ginge sonst beim
+ersten Speichern verloren.
+
+Abschaltbar über `rteDiv` in der Extension-Konfiguration unter *RTE*, pro
+Seitenbaum über `RTE.t3sbootstrap.features`. Angeregt durch einen
+Feature-Request zum Spalten-Werkzeug.
+
+`FeatureToggles` nimmt für dieses eine Werkzeug auch das Modul aus
+`importModules` — bisher entfernte der Schalter nur Toolbar-Einträge, und die
+Plugins blieben bewusst geladen, damit vorhandenes Markup bedienbar bleibt. Hier
+wäre das falsch herum: Das Plugin beansprucht jedes fremde `div` beim Einlesen
+und rahmt es im Editor ein. Ohne den Knopf ließe sich dieser Rahmen nicht mehr
+abstellen. Ausgeschaltet wird das Plugin deshalb gar nicht erst geladen — genau
+das stellt den Zustand von vorher wieder her. Neuer optionaler Schlüssel
+`'module'` in `FEATURES`, gesetzt nur bei `div`; alle anderen Werkzeuge bleiben
+unberührt geladen.
+
+### Neu — Navigationstitel als Seitentitel (h1)
+
+Die `h1` nahm bisher ausnahmslos den Seitentitel. Lange, für die Suche
+geschriebene Titel stehen damit auch über der Seite, obwohl im Menü die kurze
+Fassung steht. Der Konfigurations-Datensatz hat unter *Page title (h1)* jetzt
+den Schalter **Navigationstitel verwenden**: Ist er an, nimmt die `h1` das
+Seitenfeld `nav_title`.
+
+Seiten ohne Navigationstitel behalten ihren Seitentitel — eine Option darf keine
+leere Überschrift erzeugen. Der Schalter ist ab Werk aus, bestehende Seiten
+ändern sich also nicht.
+
+**ACHTUNG, neues DB-Feld:** `page_titlenavtitle` in
+`tx_t3sbootstrap_domain_model_config`. Nach dem Update die
+**Datenbankanalyse** ausführen (Install-Tool → *Analyze Database Structure*
+bzw. `vendor/bin/typo3 extension:setup`) und den **Konfigurations-Datensatz
+einmal speichern** — erst dabei wird die neue Konstante geschrieben.
+
+### Behoben — priorisiertes Inline-JavaScript lief zweimal
+
+Gemeldet als [Issue #532](https://github.com/t3solution/t3sbootstrap/issues/532).
+Registriert eine Extension ihr Inline-JavaScript mit `priority` — Cookie-Consent-
+Lösungen tun das regelmäßig, weil ihr Code vor allem anderen laufen muss —, stand
+es anschließend zweimal auf der Seite: einmal inline im HTML und ein zweites Mal
+in der von `IsInline` erzeugten Datei unter `typo3temp/assets/`. Bei `var` fällt
+das nicht auf, bei einem globalen `let`, `const` oder `class` wirft der zweite
+Durchlauf einen Redeclaration-Error — und der beendet die **gesamte** erzeugte
+Datei, nicht nur die doppelte Stelle. Sichtbar wurde das als Seite, die nie
+fertig lädt, weil der Preloader stehen bleibt.
+
+Die Ursache steckte in einem fehlenden Argument. `PageRenderer` rendert erst das
+priorisierte Inline-JS ins HTML und ruft erst danach das Ereignis für das
+nicht-priorisierte auf; gerendert wird dabei nur gelesen, der Collector behält
+seine Einträge. `getInlineJavaScripts()` ohne Argument filtert nicht nach
+Priorität und lieferte deshalb auch die bereits ausgegebenen Skripte. Das
+`removeInlineJavaScript()` danach kam zu spät. Die Schleife liest jetzt
+`getInlineJavaScripts(false)`.
+
+Priorisiertes Inline-JavaScript bleibt damit inline — wofür `priority` da ist.
+Die eigenen Assets der Extension sind nicht betroffen, sie werden ohne Priorität
+registriert. Wer bisher mit `disableInlineJs = 1` ausgewichen ist, kann den
+Schalter wieder zurücknehmen. **Dank an den Melder**
+
+---
+
 ## 5.3.56 — Klassen im RTE, Vererbung des Backend-Layouts
 
 Betrifft die folgenden Dateien:
@@ -48,7 +236,7 @@ Extension-Konfiguration unter *RTE*, pro Seitenbaum über
 und die Liste aus der Editor-Konfiguration; bereits gesetzte Klassen bleiben im
 Markup und werden weiterhin unverändert zurückgeschrieben.
 
-Keine neuen Datenbankfelder, keine Migration — nach dem Update genügt Cache leeren.
+Keine Migration nötig; zum neuen Datenbankfeld siehe den Abschnitt darunter.
 
 ### Behoben — „Backend-Layout (für Unterseiten)" wurde nicht vererbt
 

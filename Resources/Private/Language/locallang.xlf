@@ -225,6 +225,18 @@
 				<source>CDN delivery is disabled, but the local CSS/JS files are not present in typo3temp/assets/t3sbootstrap/. TYPO3 drops missing files from includeCSS/includeJS without an error, so the frontend may render unstyled. Run the console command "t3sbootstrap:cdnToLocal" (or the scheduler task) to fetch them.</source>
 			</segment>
 		</unit>
+
+		<unit id="notificationtitle_8">
+			<segment>
+				<source>Bootstrap SCSS sources are missing</source>
+			</segment>
+		</unit>
+
+		<unit id="notificationmessage_8">
+			<segment>
+				<source>SCSS is enabled, but the Bootstrap sources are not present in typo3temp/assets/t3sbootstrap/T3SB-Bootstrap/Bootstrap/scss/. They are a download and cannot be rebuilt from the configuration record, and typo3temp/ is cleared by every TYPO3 update, deployment or cache flush. Without them the stylesheet reference points at nothing, TYPO3 drops it without an error and the page renders unstyled. Note that the include file Bootstrap/bootstrap-&lt;uid&gt;.scss is not rebuilt from the configuration record either - only the command writes it. Run the console command "t3sbootstrap:customScss &lt;root page id&gt;" (or the scheduler task "T3SB Custom SCSS").</source>
+			</segment>
+		</unit>
 		
 		<unit id="transfer.title">
 			<segment>
@@ -234,7 +246,7 @@
 		
 		<unit id="transfer.description">
 			<segment>
-				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration.</source>
+				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration. The export does include the own SCSS (variables and overrides), so it doubles as the backup of that content; to step back through single changes use the record history of the configuration record.</source>
 			</segment>
 		</unit>
 		

@@ -100,6 +100,22 @@ abstract class AbstractController extends ActionController
             $notification['assets']['message'] = LocalizationUtility::translate('notificationmessage_7','t3sbootstrap');
         }
 
+        // Same thing one level down. typo3temp/ is cleared by every update and deployment,
+        // and unlike the generated files the Bootstrap sources cannot be rebuilt from the
+        // record - they are a download. Neither is the include file written beside them:
+        // OutsourcedFiles restores the two custom-*.scss, never Bootstrap/bootstrap-<uid>.scss,
+        // and filesAreMissing() does not even look at it. The reference in includeCSS then
+        // points at nothing, TYPO3 drops it without a word and the page renders unstyled.
+        // The check above only looks at the CDN assets, so this one stays silent otherwise.
+        if (!empty($this->settings['customScss'])
+            && empty($this->settings['cdn']['enable'])
+            && GeneralUtility::makeInstance(AssetPathService::class)
+                ->resolveFile('T3SB-Bootstrap/Bootstrap/scss/bootstrap.scss') === null
+        ) {
+            $notification['scssSources']['title'] = LocalizationUtility::translate('notificationtitle_8','t3sbootstrap');
+            $notification['scssSources']['message'] = LocalizationUtility::translate('notificationmessage_8','t3sbootstrap');
+        }
+
         if (!$this->request->hasArgument('id') || empty($this->request->getArgument('id'))) {
             $notification['idNull']['title'] = LocalizationUtility::translate('notificationtitle_6','t3sbootstrap');
             $notification['idNull']['message'] = LocalizationUtility::translate('notificationmessage_6','t3sbootstrap');

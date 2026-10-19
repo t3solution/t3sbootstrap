@@ -83,7 +83,14 @@ final readonly class IsInline
         $function  = '';
         $rawJs     = '';
 
-        foreach ($event->getAssetCollector()->getInlineJavaScripts() as $library => $source) {
+        // false and not the default null: without the filter the collector also hands
+        // back the PRIORITY inline scripts, which the core has just written into the
+        // HTML one line earlier (PageRenderer renders inline priority before inline
+        // non-priority, and rendering does not remove anything from the collector).
+        // They would end up in the generated file as well and run a second time - a
+        // global let or const then throws a redeclaration error that kills the whole
+        // file. Priority scripts stay inline, which is what priority is for.
+        foreach ($event->getAssetCollector()->getInlineJavaScripts(false) as $library => $source) {
             // Skip JSON data (TypoScript settings and the like)
             if (str_starts_with($source['source'], '{"')) {
                 continue;

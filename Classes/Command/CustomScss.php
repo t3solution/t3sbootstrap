@@ -144,8 +144,8 @@ final class CustomScss extends CommandBase
             $customFileName = 'custom-variables-'.$rootPageId.'.scss';
             $customFileNameOverride = 'custom-'.$rootPageId.'.scss';
 
-            $this->writeCustomFile($settings['bootstrap']['cdn']['keepVariables'], $rootPageId, $customFileName, $settings, '_variables');
-            $this->writeCustomFile($settings['bootstrap']['cdn']['keepVariables'], $rootPageId, $customFileNameOverride, $settings, '_bootswatch');
+            $this->writeCustomFile($rootPageId, $customFileName, $settings, '_variables');
+            $this->writeCustomFile($rootPageId, $customFileNameOverride, $settings, '_bootswatch');
 
             $includeFileName = 'bootstrap-'.$rootPageId.'.scss';
             $includeFile = $uploadScssAbsPath.$includeFileName;
@@ -199,14 +199,20 @@ final class CustomScss extends CommandBase
    }
 
 
-   private function writeCustomFile(bool $keepVariables, int $rootPageId, string $customFileName, array $settings, string $name): void
+   /**
+    * Keeps the editable SCSS of one root page in sync.
+    *
+    * The record is the source. That is what makes the configuration transfer (JSON
+    * export/import) and TYPO3's own record history cover this content - neither of
+    * them can see a file. Earlier versions let the site setting
+    * "bootstrap.cdn.keepVariables" turn that around and made the file authoritative;
+    * the setting is gone, and the first run takes such a file over into the record.
+    */
+   private function writeCustomFile(int $rootPageId, string $customFileName, array $settings, string $name): void
    {
-         // Checked up front, not further down: below the existing file is copied
-         // away and deleted, and bailing out after that would leave the include
-         // file pointing at a scss file that is no longer there.
          $config = $this->configRepository->findOneBy(['pid' => $rootPageId]);
 
-         if ($keepVariables === false && !$config instanceof Config) {
+         if (!$config instanceof Config) {
             throw new \RuntimeException(
                sprintf(
                   'No t3sbootstrap configuration record found on page %d - open the t3sbootstrap module on that page once and save it.',
@@ -216,79 +222,87 @@ final class CustomScss extends CommandBase
             );
          }
 
-         $bootstrapVariablesAbsPath = $this->getVariablesPath();
-         // delete all files with timestamp except the last 30 (true)
-         $this->deleteFilesFromDirectory($bootstrapVariablesAbsPath, true);
+         // the service creates the directory
+         $customFile = $this->getVariablesPath().$customFileName;
+         $recordContent = $name === '_variables'
+            ? (string)$config->getCustomVariablesScss()
+            : (string)$config->getCustomScss();
 
-         $customFile = $bootstrapVariablesAbsPath.$customFileName;
+         // One-time takeover from the removed setting "keepVariables": there the file was
+         // the source and the record was never written, so overwriting it from an empty
+         // record would throw the SCSS away without a trace.
+         if (trim($recordContent) === '' && is_file($customFile)) {
+            $fileContent = (string)file_get_contents($customFile);
 
-         if (file_exists($customFile)) {
-             $copyFile = $bootstrapVariablesAbsPath.'_'.time().'-'.$customFileName;
-             if (!copy($customFile, $copyFile)) {
-                 $this->addCustomMessage('Copy of "Write Custom File" faild', 'ERROR');
-             }
-             if ($keepVariables === false) {
-                 unlink($customFile);
-             }
+            if (trim($fileContent) !== '') {
+               $this->persistScss($config, $name, $fileContent);
+               $this->addCustomMessage(
+                  sprintf(
+                     '"%s" was taken over into the configuration record - from now on the record is the source and the file is written from it.',
+                     $customFileName
+                  ),
+                  'INFO'
+               );
+
+               return;
+            }
          }
 
-         if (!file_exists($customFile) && $keepVariables === false) {
+         // Written, not rebuilt: up to 5.3.56 this command reset the content to the
+         // Bootswatch theme or to the default comment on every run, which is what the
+         // timestamped copies beside the file were there to catch. Both are gone.
+         if (trim($recordContent) !== '') {
+            GeneralUtility::writeFile($customFile, $recordContent);
 
-            if (!is_dir($bootstrapVariablesAbsPath)) {
-               if (!mkdir($bootstrapVariablesAbsPath, 0755, true) && !is_dir($bootstrapVariablesAbsPath)) {
-                     throw new \RuntimeException(sprintf('Directory "%s" was not created', $bootstrapVariablesAbsPath));
-               }
-            }
-            $customContent = $name === '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' : '// Your own SCSS';
+            return;
+         }
 
-            $bootswatch = $settings['bootstrap']['cdn']['bootswatch'] ?? '';
-            if (!empty($bootswatch)) {
-               // A dead Bootswatch server used to put "false" into the database and
-               // into str_replace() - keep the default content instead.
-               $bootswatchContent = @file_get_contents(self::BOOTSWATCHURL.strtolower($bootswatch).'/'.$name.'.scss');
+         // Nothing anywhere - initialise.
+         $customContent = $name === '_variables' ? '// Overrides Bootstrap variables'.PHP_EOL.'// $enable-shadows: true;'.PHP_EOL.'// $enable-gradients: true;'.PHP_EOL.'// $enable-negative-margins: true;' : '// Your own SCSS';
 
-               if (is_string($bootswatchContent) && $bootswatchContent !== '') {
-                  $customContent = $name === '_variables'
-                     ? str_replace(' !default', '', $bootswatchContent)
-                     : $bootswatchContent;
-               } else {
-                  $this->addCustomMessage(
-                     sprintf('Could not load the Bootswatch theme "%s" - the default content was used instead.', $bootswatch),
-                     'ERROR'
-                  );
-               }
-            }
-            if ($name === '_variables') {
-               $config->setCustomVariablesScss($customContent);
+         $bootswatch = $settings['bootstrap']['cdn']['bootswatch'] ?? '';
+         if (!empty($bootswatch)) {
+            // A dead Bootswatch server used to put "false" into the database and
+            // into str_replace() - keep the default content instead.
+            $bootswatchContent = @file_get_contents(self::BOOTSWATCHURL.strtolower($bootswatch).'/'.$name.'.scss');
+
+            if (is_string($bootswatchContent) && $bootswatchContent !== '') {
+               $customContent = $name === '_variables'
+                  ? str_replace(' !default', '', $bootswatchContent)
+                  : $bootswatchContent;
             } else {
-               $config->setCustomScss($customContent);
+               $this->addCustomMessage(
+                  sprintf('Could not load the Bootswatch theme "%s" - the default content was used instead.', $bootswatch),
+                  'ERROR'
+               );
             }
-
-            $this->configRepository->update($config);
-            $this->persistenceManager->persistAll();
-
-             GeneralUtility::writeFile($customFile, $customContent);
          }
-     }
+
+         $this->persistScss($config, $name, $customContent);
+         GeneralUtility::writeFile($customFile, $customContent);
+   }
 
 
-    private function deleteFilesFromDirectory(string $directory, bool $onlyunderlined=false): void
+   private function persistScss(Config $config, string $name, string $content): void
+   {
+      if ($name === '_variables') {
+         $config->setCustomVariablesScss($content);
+      } else {
+         $config->setCustomScss($content);
+      }
+
+      $this->configRepository->update($config);
+      $this->persistenceManager->persistAll();
+   }
+
+
+    private function deleteFilesFromDirectory(string $directory): void
     {
         if (is_dir($directory)) {
             if ($dh = opendir($directory)) {
-               $n = 1;
                while (($file = readdir($dh)) !== false) {
                   if (!in_array($file,['.','..'])) {
-                     if ($onlyunderlined === true) {
-                        if (str_starts_with($file, '_')) {
-                           $n++;
-                           if ($n > 30) {
-                              unlink($directory.$file);
-                           }
-                        }
-                     } else {
-                        unlink($directory.$file);
-                     }
+                     unlink($directory.$file);
                   }
                }
                closedir($dh);

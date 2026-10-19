@@ -328,7 +328,8 @@ return [
                 page_title,--linebreak--,
                 page_titlealign,--linebreak--,
                 page_titlecontainer,--linebreak--,
-                page_titleclass
+                page_titleclass,--linebreak--,
+                page_titlenavtitle
             ',
         ],
         'breadcrumb' => [
@@ -1713,6 +1714,16 @@ return [
             'config' => [
                 'type' => 'input',
                 'searchable' => false
+            ]
+        ],
+        'page_titlenavtitle' => [
+            'exclude' => false,
+            'label' => $dbModel.'.pagetitlenavtitle',
+            'description' => $dbModel.'.pagetitlenavtitle.description',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'default' => 0
             ]
         ],
 

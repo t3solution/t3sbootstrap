@@ -62,7 +62,15 @@
 	<f:if condition="{data.page_icon}">
 		<t3sb:icon iconfig="{data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />
 	</f:if>
-	{data.title -> f:format.raw()}
+	<f:comment>
+		The navigation title instead of the page title, when the configuration record
+		asks for it. An empty nav_title falls back to the title - an option must not
+		be able to produce an empty h1.
+	</f:comment>
+	<f:if condition="{config.general.pageTitleNavTitle} && {data.nav_title}">
+		<f:then>{data.nav_title -> f:format.raw()}</f:then>
+		<f:else>{data.title -> f:format.raw()}</f:else>
+	</f:if>
 </h1>
 <f:if condition="{data.subtitle}">
 	<h2 class="display-4"{f:if(condition:'{data.tx_t3sbootstrap_subtitlecolor}',then:' style="color: {data.tx_t3sbootstrap_subtitlecolor};"')}>

@@ -262,6 +262,20 @@
 				<target>Die CDN-Auslieferung ist deaktiviert, aber die lokalen CSS/JS-Dateien liegen nicht in typo3temp/assets/t3sbootstrap/. TYPO3 verwirft fehlende Dateien aus includeCSS/includeJS ohne Fehlermeldung, das Frontend kann also unformatiert ausgeliefert werden. Bitte das Konsolenkommando „t3sbootstrap:cdnToLocal" oder den Scheduler-Task ausführen.</target>
 			</segment>
 		</unit>
+
+		<unit id="notificationtitle_8">
+			<segment>
+				<source>Bootstrap SCSS sources are missing</source>
+				<target>Bootstrap-SCSS-Quellen fehlen</target>
+			</segment>
+		</unit>
+
+		<unit id="notificationmessage_8">
+			<segment>
+				<source>SCSS is enabled, but the Bootstrap sources are not present.</source>
+				<target>SCSS ist aktiviert, aber die Bootstrap-Quellen liegen nicht in typo3temp/assets/t3sbootstrap/T3SB-Bootstrap/Bootstrap/scss/. Sie sind ein Download und lassen sich nicht aus dem Konfigurations-Datensatz neu erzeugen, und typo3temp/ wird bei jedem TYPO3-Update, jedem Deployment und jedem Cache-Flush geleert. Ohne sie zeigt die Stylesheet-Referenz ins Leere, TYPO3 verwirft sie ohne Fehlermeldung und die Seite wird unformatiert ausgeliefert. Zu beachten: Auch die Include-Datei Bootstrap/bootstrap-&lt;uid&gt;.scss wird nicht aus dem Konfigurations-Datensatz neu erzeugt - nur das Kommando schreibt sie. Bitte das Konsolenkommando „t3sbootstrap:customScss &lt;Rootseiten-ID&gt;" oder den Scheduler-Task „T3SB Custom SCSS" ausführen.</target>
+			</segment>
+		</unit>
 		
 		<unit id="transfer.title">
 			<segment>
@@ -272,8 +286,8 @@
 		
 		<unit id="transfer.description">
 			<segment>
-				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration.</source>
-				<target>Exportiert die t3sbootstrap-Konfiguration einer Root-Seite als portable JSON-Datei und importiert sie in eine andere Installation. Der Export enthält weder uid noch pid, der Seitenbaum des Ziels darf also völlig anders aussehen. Nicht enthalten sind die Site Settings (Bootstrap-Version, Bootswatch, Google Fonts) - die stehen in der Site-Konfiguration.</target>
+				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration. The export does include the own SCSS (variables and overrides), so it doubles as the backup of that content; to step back through single changes use the record history of the configuration record.</source>
+				<target>Exportiert die t3sbootstrap-Konfiguration einer Root-Seite als portable JSON-Datei und importiert sie in eine andere Installation. Der Export enthält weder uid noch pid, der Seitenbaum des Ziels darf also völlig anders aussehen. Nicht enthalten sind die Site Settings (Bootstrap-Version, Bootswatch, Google Fonts) - die stehen in der Site-Konfiguration. Enthalten ist auch das eigene SCSS (Variablen und Overrides) — der Export ist damit zugleich die Sicherung dieser Inhalte; für einzelne Schritte zurück gibt es die Historie des Konfigurations-Datensatzes.</target>
 			</segment>
 		</unit>
 		

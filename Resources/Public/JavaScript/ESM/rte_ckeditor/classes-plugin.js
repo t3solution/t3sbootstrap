@@ -34,12 +34,19 @@ const DEFAULT_DEFINITIONS = {
 		textCenter: { class: 'text-center', label: 'Text zentriert' },
 		flex: { class: 'd-flex', label: 'Flex-Container' },
 		middle: { class: 'align-items-center', label: 'Inhalt mittig' }
+	},
+	div: {
+		padding: { class: 'p-3', label: 'Innenabstand' },
+		border: { class: 'border', label: 'Rahmen' },
+		rounded: { class: 'rounded', label: 'Ecken gerundet' },
+		textCenter: { class: 'text-center', label: 'Text zentriert' }
 	}
 };
 
 const SCOPES = [
 	{ key: 'row', model: 'bsRow', label: 'Zeile' },
-	{ key: 'col', model: 'bsCol', label: 'Spalte' }
+	{ key: 'col', model: 'bsCol', label: 'Spalte' },
+	{ key: 'div', model: 'bsDiv', label: 'Div' }
 ];
 
 const CLASSES_ICON = `
@@ -145,22 +152,23 @@ class ClassCommand extends Core.Command {
 	refresh() {
 		const position = this.editor.model.document.selection.getFirstPosition();
 
-		this._elements = {
-			row: findAncestor(position, 'bsRow'),
-			col: findAncestor(position, 'bsCol')
-		};
+		this._elements = {};
+		const sets = {};
+		const has = {};
 
-		this.isEnabled = !!(this._elements.row || this._elements.col);
-		this.value = {
-			row: new Set(splitClasses(this._elements.row && this._elements.row.getAttribute(ATTRIBUTE))),
-			col: new Set(splitClasses(this._elements.col && this._elements.col.getAttribute(ATTRIBUTE))),
-			hasRow: !!this._elements.row,
-			hasCol: !!this._elements.col
-		};
+		for (const scope of SCOPES) {
+			const element = findAncestor(position, scope.model);
+			this._elements[scope.key] = element;
+			sets[scope.key] = new Set(splitClasses(element && element.getAttribute(ATTRIBUTE)));
+			has[scope.key] = !!element;
+		}
+
+		this.isEnabled = SCOPES.some(scope => has[scope.key]);
+		this.value = { sets, has };
 	}
 
 	execute(options = {}) {
-		const scope = options.scope === 'col' ? 'col' : 'row';
+		const scope = SCOPES.some(item => item.key === options.scope) ? options.scope : 'row';
 		const classes = Array.isArray(options.classes) ? options.classes : [];
 		const element = this._elements ? this._elements[scope] : null;
 
@@ -249,10 +257,10 @@ export class ClassPicker extends Core.Plugin {
 					withText: true
 				});
 				model.bind('isOn').to(command, 'value',
-					value => !!(value && definition.classes.every(name => value[scope.key].has(name))));
+					value => !!(value && definition.classes.every(name => value.sets[scope.key].has(name))));
 				// row entries stay greyed out while the caret sits outside a row
 				model.bind('isEnabled').to(command, 'value',
-					value => !!(value && value[scope.key === 'row' ? 'hasRow' : 'hasCol']));
+					value => !!(value && value.has[scope.key]));
 				items.add({ type: 'switchbutton', model });
 			}
 		}
@@ -269,20 +277,19 @@ export class ClassPicker extends Core.Plugin {
 		// bind() on the same observable throws.
 		dropdown.bind('isEnabled').to(command, 'isEnabled');
 
-		// The button sits in the toolbar for every text, but only works inside a row.
-		// The tooltip says so, and otherwise names what is currently set.
+		// The button sits in the toolbar for every text, but only works inside an
+		// element it knows. The tooltip says so, and otherwise names what is set.
 		dropdown.buttonView.bind('tooltip').to(command, 'value', value => {
-			if (!value || (!value.hasRow && !value.hasCol)) {
-				return 'Klassen - nur in einer Spalten-Zeile';
+			if (!value || !SCOPES.some(scope => value.has[scope.key])) {
+				return 'Klassen - nur in Zeile, Spalte oder Div';
 			}
 			const parts = [];
-			if (value.hasRow && value.row.size) {
-				parts.push('Zeile: ' + Array.from(value.row).join(' '));
+			for (const scope of SCOPES) {
+				if (value.has[scope.key] && value.sets[scope.key].size) {
+					parts.push(scope.label + ': ' + Array.from(value.sets[scope.key]).join(' '));
+				}
 			}
-			if (value.hasCol && value.col.size) {
-				parts.push('Spalte: ' + Array.from(value.col).join(' '));
-			}
-			return parts.length ? 'Klassen - ' + parts.join(' | ') : 'Klassen für Zeile und Spalte';
+			return parts.length ? 'Klassen - ' + parts.join(' | ') : 'Klassen setzen';
 		});
 
 		dropdown.on('execute', evt => {
