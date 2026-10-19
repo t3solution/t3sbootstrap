@@ -1544,6 +1544,18 @@
 				<target>Zusätzliche Class (extra class)</target>
 			</segment>
 		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlenavtitle">
+			<segment>
+				<source>Use the navigation title</source>
+				<target>Navigationstitel verwenden</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlenavtitle.description">
+			<segment>
+				<source>The h1 takes the page field "Navigation title" instead of "Page title". Pages without a navigation title keep their page title.</source>
+				<target>Die h1 nimmt das Seitenfeld „Navigationstitel“ statt „Seitentitel“. Seiten ohne Navigationstitel behalten ihren Seitentitel.</target>
+			</segment>
+		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumb.description">
 			<segment>

@@ -59,6 +59,13 @@ class Config extends AbstractEntity
     protected $pageTitleclass = '';
 
     /**
+     * pageTitlenavtitle
+     *
+     * @var bool
+     */
+    protected $pageTitlenavtitle = false;
+
+    /**
      * metaEnable
      *
      * @var string
@@ -1178,6 +1185,26 @@ class Config extends AbstractEntity
     public function setPageTitleclass($pageTitleclass): void
     {
         $this->pageTitleclass = $pageTitleclass;
+    }
+
+    /**
+     * Returns the pageTitlenavtitle
+     *
+     * @return bool $pageTitlenavtitle
+     */
+    public function getPageTitlenavtitle(): bool
+    {
+        return (bool)$this->pageTitlenavtitle;
+    }
+
+    /**
+     * Sets the pageTitlenavtitle
+     *
+     * @param bool $pageTitlenavtitle
+     */
+    public function setPageTitlenavtitle($pageTitlenavtitle): void
+    {
+        $this->pageTitlenavtitle = $pageTitlenavtitle;
     }
 
     /**

@@ -9,9 +9,10 @@ use TYPO3\CMS\RteCKEditor\Form\Element\Event\AfterPrepareConfigurationForEditorE
 
 /**
  * Which parts of the t3sbootstrap RTE are offered to editors: Extension Configuration
- * "RTE", overridable per page tree via RTE.t3sbootstrap.features. Only toolbar items
- * go, plugins stay loaded, so existing markup stays editable; a disabled style group
- * hands its element/class pairs to htmlSupport, or its classes are stripped on save.
+ * "RTE", overridable per page tree via RTE.t3sbootstrap.features. As a rule only toolbar
+ * items go and the plugins stay loaded, so existing markup stays editable; a disabled
+ * style group hands its element/class pairs to htmlSupport, or its classes are stripped
+ * on save. A feature that carries a 'module' is the exception: its import is dropped too.
  */
 #[AsEventListener(
 	identifier: 't3sbootstrap/rte-feature-toggles',
@@ -23,6 +24,8 @@ final readonly class FeatureToggles
 	 * feature id => [
 	 *   'extconf'       => key in the Extension Configuration,
 	 *   'toolbar'       => toolbar items to drop,
+	 *   'module'        => importModules entry to drop as well - only for a plugin
+	 *                      that claims markup on upcast, see 'div',
 	 *   'config'        => top level editor config keys to drop,
 	 *   'styles'        => style.definitions name prefixes to drop,
 	 *   'legacyExtconf' => former Extension Configuration key, read as long as
@@ -44,6 +47,17 @@ final readonly class FeatureToggles
 			'toolbar' => ['classes'],
 			// The list goes with the button: without the toolbar item nothing reads it.
 			'config' => ['t3sbClassPicker'],
+		],
+		'div' => [
+			'extconf' => 'rteDiv',
+			'toolbar' => ['div'],
+			// The only feature whose module has to go as well. Every other plugin just
+			// adds a tool; this one claims each div it does not recognise on upcast and
+			// frames it in the editor. Without the button that frame could not be
+			// removed any more, so switching the feature off has to unload the plugin -
+			// which is exactly what restores the behaviour before 5.3.57: General HTML
+			// Support keeps the div, and nothing marks it.
+			'module' => 'rte_ckeditor/div-plugin.js',
 		],
 		'codeBlock' => [
 			'extconf' => 'rteCodeBlock',
@@ -148,12 +162,17 @@ final readonly class FeatureToggles
 		$toolbarItems = [];
 		$configKeys = [];
 		$stylePrefixes = [];
+		$modules = [];
 
 		foreach ($disabled as $feature) {
 			$spec = self::FEATURES[$feature];
 			$toolbarItems = array_merge($toolbarItems, $spec['toolbar'] ?? []);
 			$configKeys = array_merge($configKeys, $spec['config'] ?? []);
 			$stylePrefixes = array_merge($stylePrefixes, $spec['styles'] ?? []);
+
+			if (!empty($spec['module'])) {
+				$modules[] = $spec['module'];
+			}
 		}
 
 		if ($stylePrefixes !== []) {
@@ -171,6 +190,11 @@ final readonly class FeatureToggles
 
 		if ($toolbarItems !== []) {
 			$configuration = $this->removeToolbarItems($configuration, $toolbarItems);
+		}
+
+		// After the preset check above, which reads importModules itself.
+		if ($modules !== []) {
+			$configuration = $this->removeImportModules($configuration, $modules);
 		}
 
 		$event->setConfiguration($configuration);
@@ -287,6 +311,43 @@ final readonly class FeatureToggles
 				'classes' => array_values($classes),
 			];
 		}
+
+		return $configuration;
+	}
+
+	/**
+	 * Drops the import of a plugin that is switched off.
+	 *
+	 * Matched on the path inside the package, not on the full specifier: a sitepackage
+	 * that publishes the modules under its own prefix is covered as well.
+	 *
+	 * @param list<string> $modules
+	 */
+	private function removeImportModules(array $configuration, array $modules): array
+	{
+		if (empty($configuration['importModules']) || !is_array($configuration['importModules'])) {
+			return $configuration;
+		}
+
+		$kept = [];
+
+		foreach ($configuration['importModules'] as $entry) {
+			$name = is_array($entry) ? (string)($entry['module'] ?? '') : (string)$entry;
+			$drop = false;
+
+			foreach ($modules as $module) {
+				if ($name !== '' && str_contains($name, $module)) {
+					$drop = true;
+					break;
+				}
+			}
+
+			if (!$drop) {
+				$kept[] = $entry;
+			}
+		}
+
+		$configuration['importModules'] = array_values($kept);
 
 		return $configuration;
 	}

@@ -12,6 +12,7 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	page_titlealign varchar(7) DEFAULT 'center' NOT NULL,
 	page_titlecontainer varchar(15) DEFAULT '' NOT NULL,
 	page_titleclass varchar(255) DEFAULT '' NOT NULL,
+	page_titlenavtitle tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	meta_enable varchar(8) DEFAULT '' NOT NULL,
 	meta_value varchar(255) DEFAULT '' NOT NULL,
 	meta_container varchar(15) DEFAULT '' NOT NULL,

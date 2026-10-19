@@ -116,6 +116,7 @@ class ConfigProcessor implements DataProcessorInterface
 		};
 		$processedData['config']['general']['pageTitlealign'] = $pageTitleAlign;
 		$processedData['config']['general']['pageTitleclass'] = $vars['pageTitleclass']   ?: '';
+		$processedData['config']['general']['pageTitleNavTitle'] = !empty($vars['pageTitlenavtitle']);
 
 		// "none" in the select list is the explicit decision AGAINST a container -
 		// it has no place in the markup, otherwise class="none" would end up in the
