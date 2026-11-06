@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace T3SBS\T3sbootstrap\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -11,6 +12,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use T3SBS\T3sbootstrap\Service\AssetPathService;
+use T3SBS\T3sbootstrap\Service\AssetStateService;
+use T3SBS\T3sbootstrap\Service\CdnAssetMap;
 
 #[AsCommand('t3sbootstrap:cdnToLocal', 'Write required CSS and JS into the configured site package')]
 final class CdnToLocal extends CommandBase
@@ -20,6 +23,8 @@ final class CdnToLocal extends CommandBase
         private readonly SiteFinder $siteFinder,
         private readonly RequestFactory $requestFactory,
         private readonly AssetPathService $assetPathService,
+        private readonly CdnAssetMap $cdnAssetMap,
+        private readonly AssetStateService $assetState,
     ) {
         parent::__construct();
     }
@@ -47,6 +52,27 @@ final class CdnToLocal extends CommandBase
     private function notice(string $message): void
     {
         $this->output?->writeln('<info>' . $message . '</info>');
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->addOption(
+                'dry-run',
+                null,
+                InputOption::VALUE_NONE,
+                'List every file and its source, download nothing.'
+            )
+            ->addOption(
+                'if-needed',
+                null,
+                InputOption::VALUE_NONE,
+                'Exit without downloading when every expected file is present and the cdn '
+                . 'settings are unchanged. Meant for a recurring task: set this option and choose '
+                . 'the type "recurring" (every 15 minutes is fine) when your host empties typo3temp/ '
+                . 'on automatic updates. Leave it off when you run the command by hand - then it '
+                . 'should download.'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -86,6 +112,27 @@ final class CdnToLocal extends CommandBase
             }
         }
 
+        if ($input->getOption('dry-run')) {
+            foreach ($this->cdnAssetMap->build($settings['cdn']) as $relPath => $source) {
+                $output->writeln($relPath . ' => ' . $source['url']);
+            }
+            // Not part of the map: the fonts arrive as a zip that is unpacked and
+            // turned into googlefonts.css, not a file copied from one url.
+            if (!empty($googleFontsArr)) {
+                $output->writeln('T3SB-CSS/googlefonts/ => (zip) ' . implode(', ', $googleFontsArr));
+            }
+
+            return Command::SUCCESS;
+        }
+
+        if ($input->getOption('if-needed')
+            && !$this->assetState->cdnNeedsRefresh($settings, $googleFontsArr)
+        ) {
+            $output->writeln('<info>Nothing to do - all files present, cdn settings unchanged.</info>');
+
+            return Command::SUCCESS;
+        }
+
         if (!empty($googleFontsArr) && $noZip === false) {
             $googleFonts = '';
             foreach ($googleFontsArr as $googleFont) {
@@ -118,113 +165,20 @@ final class CdnToLocal extends CommandBase
             }
         }
 
-        // version
-        foreach ($settings['cdn'] as $key=>$version) {
-            if ($key === 'jquery') {
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'jquery.min.js';
-                $cdnPath = 'https://code.jquery.com/jquery-'.$version.'.min.js';
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
+        // One source of truth for the file list - CdnAssetMap also drives
+        // --dry-run and the missing-files check.
+        foreach ($this->cdnAssetMap->build($settings['cdn']) as $relPath => $source) {
+            $this->writeCustomFile(
+                $baseDir . dirname($relPath) . '/',
+                basename($relPath),
+                $source['url'],
+                $source['extend'],
+            );
+        }
 
-            if ($key === 'bootstrap') {
-                $customPath = $baseDir.'T3SB-CSS/';
-                $customFileName = 'bootstrap.min.css';
-
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/css/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
-
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'bootstrap.min.js';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-                $customFileName = 'bootstrap.bundle.min.js';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'popperjs') {
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'popper.js';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/'.$version.'/umd/popper.min.js';
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-            if ($key === 'lazyload') {
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'lazyload.min.js';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@'.$version.'/dist/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'animate') {
-                $customPath = $baseDir.'T3SB-CSS/';
-                $customFileName = 'animate.compat.css';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'baguetteBox') {
-                $customPath = $baseDir.'T3SB-CSS/';
-                $customFileName = 'baguetteBox.min.css';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'baguetteBox.min.js';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-            if ($key === 'halkabox') {
-                $customPath = $baseDir.'T3SB-CSS/';
-                $customFileName = 'halkaBox.min.css';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath, true);
-
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'halkaBox.min.js';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/halkabox@'.$version.'/dist/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'glightbox') {
-                $customPath = $baseDir.'T3SB-CSS/';
-                $customFileName = 'glightbox.min.css';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/css/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'glightbox.min.js';
-                $cdnPath = 'https://cdn.jsdelivr.net/npm/glightbox@'.$version.'/dist/js/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'masonry') {
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'masonry.pkgd.min.js';
-                $cdnPath = 'https://cdnjs.cloudflare.com/ajax/libs/masonry/'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'jarallax') {
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'jarallax.min.js';
-                $cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-                $customFileName = 'jarallax-video.min.js';
-                $cdnPath = 'https://unpkg.com/jarallax@'.$version.'/dist/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
-
-            if ($key === 'swiper') {
-                $customPath = $baseDir.'T3SB-CSS/';
-                $customFileName = 'swiper-bundle.min.css';
-                $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-                $customPath = $baseDir.'T3SB-JS/';
-                $customFileName = 'swiper-bundle.min.js';
-                $cdnPath = 'https://unpkg.com/swiper@'.$version.'/'.$customFileName;
-                $this->writeCustomFile($customPath, $customFileName, $cdnPath);
-            }
+        if (!$this->hadFailure) {
+            // only a complete run may vouch for the configuration it ran with
+            $this->assetState->rememberCdnState($settings, $googleFontsArr);
         }
 
         // a skipped download must not look like a clean run in the scheduler

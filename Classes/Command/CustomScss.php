@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Site\SiteFinder;
@@ -19,6 +20,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use T3SBS\T3sbootstrap\Domain\Model\Config;
 use T3SBS\T3sbootstrap\Domain\Repository\ConfigRepository;
 use T3SBS\T3sbootstrap\Service\AssetPathService;
+use T3SBS\T3sbootstrap\Service\AssetStateService;
 
 #[AsCommand('t3sbootstrap:customScss', 'T3SB Custom Scss - write a custom scss file')]
 final class CustomScss extends CommandBase
@@ -35,6 +37,7 @@ final class CustomScss extends CommandBase
        private readonly RequestFactory $requestFactory,
        private readonly FlashMessageService $flashMessageService,
        private readonly AssetPathService $assetPathService,
+       private readonly AssetStateService $assetState,
    ) {
        parent::__construct();
    }
@@ -82,6 +85,15 @@ final class CustomScss extends CommandBase
             'rootPageId',
             InputArgument::REQUIRED,
             'Root page ID',
+      )
+      ->addOption(
+            'if-needed',
+            null,
+            InputOption::VALUE_NONE,
+            'Exit without work when the Bootstrap sources, the include file and the relevant '
+            . 'settings are unchanged. Meant for a recurring task: set this option and choose the '
+            . 'type "recurring" when your host empties typo3temp/ on automatic updates. Leave it '
+            . 'off when you run the command by hand - then it should rebuild.',
       );
    }
         
@@ -115,6 +127,17 @@ final class CustomScss extends CommandBase
 
          if ($settings['bootstrap']['cdn']['customScss'] === true && $settings['bootstrap']['cdn']['enable'] === false) {
 
+            // Nothing below can be skipped piecemeal: the run ends by deleting the
+            // compiled css, so a scheduler task that could not exit right here would
+            // force a full recompile on the next frontend hit, every time it fires.
+            if ($input->getOption('if-needed')
+                && !$this->assetState->scssNeedsRefresh($settings['bootstrap'] ?? [], $rootPageId)
+            ) {
+                $output->writeln('<info>Nothing to do - sources and include file present, settings unchanged.</info>');
+
+                return Command::SUCCESS;
+            }
+
             $bootstrapScssAbsPath = $this->getScssPath();
             $uploadScssAbsPath = $this->getBootstrapPath();
 
@@ -132,13 +155,21 @@ final class CustomScss extends CommandBase
 
             $bootstrapVersion = str_starts_with($settings['bootstrap']['cdn']['bootstrap'], '5.') ? $settings['bootstrap']['cdn']['bootstrap'] : self::BOOTSTRAPLATEST;
 
-            // The sources are no longer deleted before the download, so their mere
-            // presence says nothing about this run - ask getBootstrapFiles() itself.
-            if (!$this->getBootstrapFiles($bootstrapVersion)) {
+            // The GitHub archive is several megabytes and used to be fetched on every
+            // run. With --if-needed it is fetched when the sources are missing or
+            // belong to another version. Everything below still runs - the include
+            // file is rewritten every time, a stale one carries stale import paths.
+            if ($input->getOption('if-needed')
+                && !$this->assetState->bootstrapSourcesNeedDownload($bootstrapVersion)
+            ) {
+                $output->writeln(sprintf('<info>Bootstrap %s sources are present - download skipped.</info>', $bootstrapVersion));
+            } elseif (!$this->getBootstrapFiles($bootstrapVersion)) {
                 $this->addCustomMessage('Check the bootstrap version in the site set editor for validity!', 'ERROR');
                 $output->writeln('<error>Check the bootstrap version in the site set editor for validity!</error>');
 
                 return Command::FAILURE;
+            } else {
+                $this->assetState->rememberBootstrapSourceVersion($bootstrapVersion);
             }
 
             $customFileName = 'custom-variables-'.$rootPageId.'.scss';
@@ -177,9 +208,17 @@ final class CustomScss extends CommandBase
                 return Command::FAILURE;
             }
 
-            if ( !empty($settings['optimize']) ) {
+            // The entry point may already carry comments from an earlier run, because
+            // the sources are no longer re-downloaded on every call. Strip them first:
+            // otherwise re-enabling a component would have no effect and the "// "
+            // prefixes would pile up with every change.
+            $customContent = (string)preg_replace('~^//\s*(@import\s)~m', '$1', $customContent);
+
+            // settings.bootstrap.optimize - $settings holds the whole settings tree,
+            // so the flags never resolved and no @import was ever commented out.
+            if ( !empty($settings['bootstrap']['optimize']) ) {
                 // if site set bootstrap-optimize is set
-                foreach ($settings['optimize'] as $component=>$import) {
+                foreach ($settings['bootstrap']['optimize'] as $component=>$import) {
                     if (!$import && $customContent) {
                         $find = '@import "'.$component.'";';
                         $replace = '// @import "'.$component.'";';
@@ -189,6 +228,8 @@ final class CustomScss extends CommandBase
             }
    
             GeneralUtility::writeFile($customFile, $customContent);
+
+            $this->assetState->rememberScssState($settings['bootstrap'] ?? [], $rootPageId);
 
             return Command::SUCCESS;
         }

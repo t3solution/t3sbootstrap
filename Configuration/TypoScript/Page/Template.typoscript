@@ -319,10 +319,24 @@ page {
 						equals = Section
 						value = {$bootstrap.config.sidebarEnable}
 					}
+					# Pills is the same section menu, only drawn differently - without
+					# these two the data processor never runs and the partial stays empty
+					25 = TEXT
+					25.value = 1
+					25.if {
+						equals = Pills
+						value = {$bootstrap.config.sidebarEnable}
+					}
 					30 = TEXT
 					30.value = 1
 					30.if {
 						equals = Section
+						value = {$bootstrap.config.sidebarRightenable}
+					}
+					35 = TEXT
+					35.value = 1
+					35.if {
+						equals = Pills
 						value = {$bootstrap.config.sidebarRightenable}
 					}
 					40 = TEXT

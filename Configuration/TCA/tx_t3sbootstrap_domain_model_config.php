@@ -329,7 +329,8 @@ return [
                 page_titlealign,--linebreak--,
                 page_titlecontainer,--linebreak--,
                 page_titleclass,--linebreak--,
-                page_titlenavtitle
+                page_titlenavtitle,--linebreak--,
+                page_titlesubtitle
             ',
         ],
         'breadcrumb' => [
@@ -1726,6 +1727,16 @@ return [
                 'default' => 0
             ]
         ],
+        'page_titlesubtitle' => [
+            'exclude' => false,
+            'label' => $dbModel.'.pagetitlesubtitle',
+            'description' => $dbModel.'.pagetitlesubtitle.description',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'default' => 0
+            ]
+        ],
 
 
         'breadcrumb_enable' => [
@@ -1870,6 +1881,7 @@ return [
                     ['label' => 'none', 'value' => ''],
                     ['label' => $dbModel.'.sidebar.item1','value' => 'Sub'],
                     ['label' => $dbModel.'.sidebar.item2', 'value' => 'Section'],
+                    ['label' => $dbModel.'.sidebar.item3', 'value' => 'Pills'],
                 ],
                 'default' => '',
             ]
@@ -1885,6 +1897,7 @@ return [
                     ['label' => 'none', 'value' => ''],
                     ['label' => $dbModel.'.sidebar.item1','value' => 'Sub'],
                     ['label' => $dbModel.'.sidebar.item2', 'value' => 'Section'],
+                    ['label' => $dbModel.'.sidebar.item3', 'value' => 'Pills'],
                 ],
                 'default' => '',
             ]

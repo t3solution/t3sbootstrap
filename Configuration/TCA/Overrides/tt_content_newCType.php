@@ -796,9 +796,12 @@ $tempContentColumns = [
     'tx_t3sbootstrap_cardfooter' => [
         'label' => $dbModel.'.t3sbootstrapbodycardfooter',
         'config' => [
-            'type' => 'input',
-            'size' => 50,
-            'max' => 255,
+            // text and not input: the field carries RTE markup since the footer
+            // may hold links and formatting. varchar(255) was too small for that.
+            'type' => 'text',
+            'cols' => 80,
+            'rows' => 5,
+            'softref' => 'typolink_tag,email[subst],url'
         ],
     ],
     'tx_t3sbootstrap_list_item' => [
@@ -1127,6 +1130,11 @@ $GLOBALS['TCA']['tt_content']['types']['t3sbs_card'] = [
             ]
         ],
         'tx_t3sbootstrap_bodytext' => [
+            'config' => [
+                'enableRichtext' => true
+            ]
+        ],
+        'tx_t3sbootstrap_cardfooter' => [
             'config' => [
                 'enableRichtext' => true
             ]

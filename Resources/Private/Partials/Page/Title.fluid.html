@@ -58,6 +58,7 @@
 </f:section>
 
 <f:section name="Pagetitle">
+<hgroup>
 <h1 class="display-1"{f:if(condition:'{data.tx_t3sbootstrap_titlecolor}',then:' style="color: {data.tx_t3sbootstrap_titlecolor};"')}>
 	<f:if condition="{data.page_icon}">
 		<t3sb:icon iconfig="{data.page_icon}" additionalAttributes="{class:'pagetile-iconPack'}" />
@@ -72,9 +73,26 @@
 		<f:else>{data.title -> f:format.raw()}</f:else>
 	</f:if>
 </h1>
-<f:if condition="{data.subtitle}">
-	<h2 class="display-4"{f:if(condition:'{data.tx_t3sbootstrap_subtitlecolor}',then:' style="color: {data.tx_t3sbootstrap_subtitlecolor};"')}>
+<f:comment>
+	The page field "Subtitle", off by default. A paragraph and not a heading: a
+	heading would announce a section that does not exist, it would take the h2
+	level away from the first real content section below, and it would show up as
+	its own stop in the heading navigation of a screen reader. hgroup is exactly
+	this case in the HTML standard - one heading plus any number of paragraphs.
+	The element itself has no ARIA mapping and is not announced; the gain is in
+	the p.
+
+	mb-2 because Reboot gives a p a bottom margin of 1rem and a heading .5rem -
+	without it the gap below the title would grow.
+
+	Up to 5.3.57 this was an h2 and was printed whenever the field was filled.
+	Project styles addressing .page-title h2 have to follow; page-subtitle is
+	there as a stable target, the markup offered none before.
+</f:comment>
+<f:if condition="{config.general.pageTitleSubtitle} && {data.subtitle}">
+	<p class="display-4 page-subtitle mb-2"{f:if(condition:'{data.tx_t3sbootstrap_subtitlecolor}',then:' style="color: {data.tx_t3sbootstrap_subtitlecolor};"')}>
 		{data.subtitle -> f:format.raw()}
-	</h2>
+	</p>
 </f:if>
+</hgroup>
 </f:section>

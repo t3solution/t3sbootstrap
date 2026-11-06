@@ -4,6 +4,395 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.58 — Sektionsindex als Pillen, Downloads nur bei Bedarf, Untertitel optional, Card-Footer mit RTE, Klassen-Liste scrollt, Höhe des Background-Wrappers
+
+Betrifft die folgenden Dateien:
+
+```
+CHANGELOG.md
+composer.json
+ext_emconf.php
+ext_tables.sql
+releaseNote.pdf
+Classes/Command/CdnToLocal.php
+Classes/Command/CustomScss.php
+Classes/DataProcessing/ConfigProcessor.php
+Classes/Domain/Model/Config.php
+Classes/EventListener/AssetRenderer/IsInline.php
+Classes/Service/AssetStateService.php   (neu)
+Classes/Service/CdnAssetMap.php   (neu)
+Classes/Utility/BackgroundImageUtility.php
+Configuration/TCA/Overrides/tt_content_newCType.php
+Configuration/TCA/tx_t3sbootstrap_domain_model_config.php
+Configuration/TypoScript/Page/Template.typoscript
+Resources/Private/Language/de.locallang_db.xlf
+Resources/Private/Language/locallang_db.xlf
+Resources/Private/Partials/Content/Card/ProfileCard.fluid.html
+Resources/Private/Partials/Page/Pills.fluid.html   (neu)
+Resources/Private/Partials/Page/Title.fluid.html
+Resources/Private/Templates/Container/BackgroundWrapper.fluid.html
+Resources/Private/Templates/Container/CardWrapper.fluid.html
+Resources/Private/Templates/Content/Card.fluid.html
+Resources/Public/JavaScript/ESM/rte_ckeditor/classes-plugin.js
+Resources/Public/Styles/t3sbootstrap.css
+```
+
+### Neu — Sektionsindex als Pillen
+
+Die Sidebar-Auswahl im Konfigurations-Datensatz hat einen dritten Wert bekommen,
+links wie rechts: **sectionmenu as pills**. Derselbe Sektionsindex wie bisher, nur
+anders dargestellt — je Abschnitt eine nummerierte Pille, die ihren Titel zeigt,
+sobald der Zeiger darauf liegt oder der Fokus per Tastatur darauf springt. Den
+Abschnitt, in dem man gerade steht, markiert Scrollspy allein über die Farbe: Er
+fährt nicht aus, sonst würde sich das Menü beim Scrollen von selbst bewegen.
+
+Umgesetzt als eigenes Partial `Page/Pills.fluid.html`. Mehr war nicht nötig: Das
+Backend-Layout rendert `Page/{config.sidebar.left}`, der Wert des Feldes ist also
+bereits der Partial-Name — kein `f:switch`, keine Verzweigung.
+
+Das `div` behält bewusst die id `sectionmenu`: Scrollspy und das Anker-Scrollen in
+`Page/Assets.fluid.html` hängen daran, beides funktioniert damit unverändert. Die
+Nummer ist ein CSS-Zähler und kein Schleifenindex — die Schleife überspringt
+Elemente ohne Überschrift, ein Index aus `f:for` würde also springen.
+
+Der Titel wird mit `display` geschaltet und nicht hinter einer Breite hervorgeholt.
+Die erste Fassung hatte ihn über `max-width` aufgezogen, damit das Aufklappen
+animiert — das verlangt `overflow:hidden`, und genau diese Begrenzung hat lange
+Titel abgeschnitten, bei jedem Wert. Ohne sie ist die Pille schlicht so breit wie
+ihr Inhalt und legt sich über die Seite. Dass ein `display:none` den Titel aus dem
+Accessibility-Baum nimmt, fängt ein `aria-label` am Link ab; im Markup steht er
+ohnehin weiterhin, Suchmaschinen sehen ihn also.
+
+Die Farbe der aktiven Pille hängt an einer eigenen Variablen:
+
+```css
+:root{ --t3sb-pill-active-color:#ffc107; }
+```
+
+Bewusst nicht `--bs-warning` — die Variable ist auf der Seite an vielen Stellen in
+Gebrauch, diese hier lässt sich pro Site überschreiben, ohne die Bootstrap-Palette
+anzufassen.
+
+Unter 922px Viewport-Breite wird das Menü ausgeblendet. Eine offene Pille ist dort
+breiter als das Fenster, und die Abschnitte liegen ohnehin nur einen kurzen Scroll
+auseinander. `display:none`, nicht `visibility:hidden`, damit es auch aus der
+Tab-Reihenfolge verschwindet.
+
+Angeregt durch eine Umsetzung auf ordino.at, die dasselbe mit eigenem Markup und
+eigenem JavaScript im Konfigurations-Datensatz gelöst hat: Dort schreibt ein
+`onmouseover` den Titel aus einem `data`-Attribut in das Badge hinein und nimmt ihn
+danach wieder heraus. Hier braucht es dafür kein JavaScript.
+
+### Neu — Untertitel optional
+
+Unter *Seitentitel (h1)* steht ein neuer Schalter: **Untertitel ebenfalls
+ausgeben**. Das Seitenfeld „Untertitel" erscheint dann unter dem Seitentitel, mit
+der Farbe aus `tx_t3sbootstrap_subtitlecolor` wie bisher.
+
+Bisher gab es dafür keine Wahl — der Untertitel wurde immer ausgegeben, sobald das
+Feld gefüllt war.
+
+#### Geändertes Markup
+
+Der Untertitel ist jetzt ein Absatz und keine Überschrift mehr:
+
+```html
+<hgroup>
+	<h1 class="display-1">Seitentitel</h1>
+	<p class="display-4 page-subtitle mb-2">Untertitel</p>
+</hgroup>
+```
+
+Vorher stand dort eine `h2.display-4`. Eine Überschrift kündigt einen Abschnitt
+an — der Untertitel tut das nicht, er gehört zur `h1`. Die alte Fassung erzeugte
+damit einen Gliederungspunkt für einen Abschnitt, den es nicht gibt, belegte die
+Ebene `h2` vor dem ersten echten Inhaltsabschnitt und tauchte in der
+Überschriften-Navigation von Screenreadern als eigener Sprungpunkt auf. `hgroup`
+ist im HTML-Standard genau für diesen Fall vorgesehen: eine Überschrift plus
+beliebig viele Absätze.
+
+Optisch ändert sich nichts — `display-4` ist eine Schriftgrößen-Utility und wirkt
+auf einem `p` identisch. `mb-2` gleicht aus, dass Reboot einem `p` unten 1rem gibt
+und einer Überschrift 0.5rem.
+
+**Achtung bei eigenen Styles:** Projekt-CSS, das `.page-title h2` anspricht,
+greift nicht mehr. Ziel ist jetzt `.page-subtitle` — eine Klasse, die es vorher
+gar nicht gab. In der Extension selbst gibt es keine solche Regel.
+
+Daraus folgt eine Ungleichheit bei den Standardwerten, und die ist Absicht:
+
+| | Wert |
+|---|---|
+| TCA, `page_titlesubtitle` | `0` |
+| Datenbank, `ext_tables.sql` | `1` |
+
+Beim Update füllt die Datenbank die neue Spalte in allen vorhandenen Datensätzen
+mit ihrem eigenen Standard. Bestehende Installationen geben den Untertitel also
+weiter aus wie bisher — ein Standard von `0` hätte ihn auf jeder Seite entfernt,
+die einen hat. Neue Konfigurations-Datensätze entstehen über das TCA und starten
+mit dem Schalter aus.
+
+**DB-Update nötig** — die Spalte `page_titlesubtitle` kommt neu dazu.
+
+### Neu — Card-Footer mit Rich-Text-Editor
+
+Das Feld `tx_t3sbootstrap_cardfooter` war ein einzeiliges Eingabefeld über
+`varchar(255)`. Im Fuß einer Karte steht aber typischerweise ein Link, eine
+Mailadresse oder eine Zeile mit Formatierung — dafür war es zu klein und zu
+schlicht. Es ist jetzt ein RTE-Feld:
+
+```php
+'tx_t3sbootstrap_cardfooter' => [
+    'config' => [
+        'type' => 'text',
+        'cols' => 80,
+        'rows' => 5,
+        'softref' => 'typolink_tag,email[subst],url'
+    ],
+],
+```
+
+Der Editor selbst kommt über die `columnsOverrides` des CTypes `t3sbs_card` mit
+`enableRichtext => true` — so wie bei `bodytext` und `tx_t3sbootstrap_bodytext`.
+`softref` sorgt dafür, dass Links aus diesem Feld im Reference Index und beim
+Export mitgezählt werden.
+
+**DB-Update nötig** — die Spalte wird von `varchar(255)` auf `text` erweitert.
+
+Bei der Ausgabe gibt es eine Besonderheit, die mehr als dieses Feld betrifft: Ein
+RTE-Feld darf **nicht** durch das Partial `Content/Field` laufen. Das verwendet
+`f:sanitize.html()` und ruft `parseFunc` nicht auf — `t3://`-Links bleiben damit
+unaufgelöst im Markup stehen. Im Haupttemplate übernimmt deshalb die Record-API:
+
+```html
+<f:variable name="cardFooter">{record -> f:render.text(field: 'tx_t3sbootstrap_cardfooter')}</f:variable>
+```
+
+ausgegeben mit `{cardFooter -> f:format.raw()}`. `CardWrapper` und `ProfileCard`
+haben keinen Zugriff auf `record` und nehmen `f:format.html()`, was `parseFunc`
+ebenfalls durchläuft.
+
+---
+
+### Neu — Downloads nur noch bei Bedarf
+
+`typo3temp/` ist im Core ausdrücklich als wegwerfbar deklariert, und gemanagte
+Hoster leeren das Verzeichnis bei jedem automatischen Update. Seit 5.3.50 schreibt
+eine Middleware das generierte TypoScript und das eigene SCSS danach selbst neu —
+die **Downloads** aber nicht: CDN-Assets und Bootstrap-Quellen brauchen Netz, und
+ein Seitenaufruf darf darauf nicht warten. Bis hierher blieb nur, die beiden
+Kommandos nach jedem Update von Hand zu starten. Bei einem Hoster, dessen
+Update-Zeitpunkt man nicht kennt, gibt es dafür keine Stelle.
+
+Beide Kommandos nehmen deshalb jetzt `--if-needed` und steigen ohne Netzzugriff
+wieder aus, wenn es nichts zu tun gibt. Ein wiederkehrender Scheduler-Task wird
+damit billig genug für einen Takt von 15 Minuten:
+
+```
+vendor/bin/typo3 t3sbootstrap:cdnToLocal --if-needed
+vendor/bin/typo3 t3sbootstrap:customScss <Rootseiten-ID> --if-needed
+```
+
+**Die Regel dafür ist eine Zeile:** steht der Befehl in einem Zeitplan, dann mit
+der Option — tippt ihn jemand selbst, dann ohne. Ein Zeitplan läuft blind und oft,
+der braucht die Bremse; von Hand getippt wird der Befehl, *weil* etwas fehlt, und
+soll dann laden statt „Nothing to do" zu melden.
+
+Geprüft wird der **Zustand**, nicht die TYPO3-Version. Die wäre der falsche
+Auslöser, und zwar in beide Richtungen: `typo3temp/` wird geleert, ohne dass sich
+die Version ändert — Cache-Flush, „Remove Temporary Assets", ein Deployment ohne
+Code-Änderung — und die Version ändert sich, ohne dass die Dateien verschwinden.
+`cdnToLocal` sieht deshalb jede erwartete Datei nach und vergleicht zusätzlich
+einen Fingerprint über Versionen, Integrity-Hashes, Schriften und Schnitte;
+`customScss` prüft die Bootstrap-Quelldatei, die Include-Datei
+`bootstrap-<uid>.scss` und einen Fingerprint aus Bootstrap-Version, Bootswatch,
+den Optimize-Flags und der Extension-Version — letztere, weil die relativen
+`@import`-Pfade der Include-Datei aus dem Code kommen und ein Update sie ändern
+kann.
+
+Der Fingerprint liegt in `sys_registry`, also in der Datenbank — sie übersteht
+genau das, was `typo3temp/` nicht übersteht. **Ein fehlgeschlagener Download
+speichert ihn nie.** Sonst wäre ein kaputter Zustand als geprüft vermerkt, der
+nächste Lauf würde ihn überspringen und die Aufgabe bliebe grün; so bleibt sie
+rot und versucht es weiter.
+
+`customScss` steigt bewusst **vor** dem gesamten Block aus, nicht erst vor dem
+GitHub-Download. Der Lauf endet damit, das kompilierte CSS zu löschen — neu gebaut
+wird es erst beim nächsten Frontend-Aufruf. Viertelstündlich hätte das bedeutet,
+dass praktisch dauernd jemand auf den Compile wartet.
+
+**Einmal im Monat ohne die Option.** Angaben wie `swiper: 12` oder `jarallax: 2`
+sind gleitend, das CDN löst sie beim Abruf auf die neueste 12.x bzw. 2.x auf. Für
+den Fingerprint sieht die Einstellung „12" dabei immer unverändert aus — neue
+Unterversionen kommen also nur bei einem bedingungslosen Lauf an.
+
+Unterwegs ist aus `CdnToLocal` eine 109-zeilige `if`-Kette verschwunden. Welche
+Datei von welcher URL kommt, stand dort als Code; jetzt steht es in der reinen
+Klasse `CdnAssetMap` und ist damit die einzige Quelle für den Download, für die
+Fehlt-Prüfung und für das neue `--dry-run`, das die vollständige Liste ausgibt,
+ohne etwas zu laden:
+
+```
+vendor/bin/typo3 t3sbootstrap:cdnToLocal --dry-run
+```
+
+Praktisch auch, um eine Firewall-Freigabe zu beantragen.
+
+### Behoben — Einträge am Ende der Klassen-Liste nicht anklickbar
+
+Gemeldet von wini2 in [#529](https://github.com/t3solution/t3sbootstrap/issues/529).
+
+Das Panel des Werkzeugs *Klassen* hatte keine Höhenbegrenzung. CKEditors
+`.ck-dropdown__panel` bringt von sich aus keine mit, die Liste wächst also
+unbegrenzt über den Viewport hinaus — und was unten herausragt, lässt sich nicht
+mehr anklicken, weil nichts scrollt.
+
+Mit der mitgelieferten `t3sbClassPicker`-Liste sind das bereits 22 Zeilen: 17
+Schalter in den Gruppen *Zeile* (7), *Spalte* (6) und *Div* (4), dazu drei
+Überschriften und zwei Trenner. Bis 5.3.56 gab es zwei Gruppen und es ging
+knapp; die dritte aus 5.3.57 hat es ausgelöst. Da die Liste projektseitig
+beliebig lang werden darf, war eine Begrenzung ohnehin fällig.
+
+Das Panel trägt jetzt die Klasse `t3sb-classes-panel`, gesetzt über
+`dropdown.panelView.extendTemplate()`, und dazu kommt eine Regel:
+
+```css
+.ck.ck-dropdown__panel.t3sb-classes-panel .ck-list {
+	max-height: min(60vh, 420px);
+	overflow-y: auto;
+}
+```
+
+Bewusst auf das eigene Panel beschränkt: Ein blankes `.ck-list` hätte jedes
+Dropdown im Editor getroffen, auch die des Cores und fremder Extensions.
+`min(60vh, 420px)` statt eines festen Werts, damit die Begrenzung auf einem
+niedrigen Fenster nicht selbst zum Problem wird.
+
+Nur CSS und ein Attribut — keine neuen Spalten, kein Upgrade-Wizard, kein
+geändertes Markup. Nach dem Update genügt **Cache leeren**.
+
+### Behoben — Background-Wrapper ohne Höhe, wenn `disableInlineJs` gesetzt ist
+
+Gemeldet von ProWebs in [#534](https://github.com/t3solution/t3sbootstrap/issues/534).
+
+Die Zusatzhöhe eines Background-Wrappers wurde als Inline-Script registriert:
+
+```php
+$inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
+$this->assetCollector->addInlineJavaScript('addheight-'.$uid, $inline);
+```
+
+Für sich genommen ist das kein JavaScript, sondern ein halbes Objekt. Gültig wurde
+es erst dadurch, dass `IsInline` alle diese Fragmente einsammelt und zu
+`TYPO3.settings.ADDHEIGHT` zusammensetzt. Genau dieser Listener steigt aber sofort
+aus, sobald `disableInlineJs` oder `disableAssetRenderer` gesetzt ist — und dann
+schreibt der Core das Fragment roh in die Seite:
+
+```html
+<script>"4711":"600",</script>
+```
+
+Ein Syntaxfehler. `TYPO3.settings.ADDHEIGHT` entsteht nie, `t3sbAddHeight()` bricht
+beim Zugriff darauf ab, `min-height` wird nie gesetzt, und der Wrapper fällt auf die
+Höhe seines Inhalts zusammen.
+
+**Kein Folgefehler eines Updates.** Die Einstellung `disableInlineJs` gibt es seit
+5.3.4 (Februar 2024), das Fragment seit 4.5.5 — die Kombination war die ganze Zeit
+kaputt. Sichtbar wird sie erst, sobald die Einstellung gesetzt ist.
+
+Die Höhe steht jetzt als `data-addheight` am Wrapper selbst, und `t3sbAddHeight()`
+liest sie dort:
+
+```html
+<div id="bg-img-4711" class="background-image enableAutoheight" data-addheight="600">
+```
+
+Damit entfällt die Krücke vollständig: keine Inline-Fragmente mehr, kein
+`TYPO3.settings.ADDHEIGHT`, und der `addheight`-Zweig in `IsInline` ist raus. Die
+Autohöhe funktioniert damit in jeder Kombination der Asset-Einstellungen.
+
+Gleich mit behoben: Die Funktion hatte den Wert nie zum Element gesucht, sondern
+über alle Einträge iteriert und den letzten behalten —
+
+```js
+claimsArray.forEach(function (item, index) { addHeight = parseInt(item[1]); });
+```
+
+Bei zwei Background-Wrappern mit verschiedenen Zusatzhöhen bekamen also beide den
+Wert des letzten. Der Schlüssel hätte auch gar nicht gepasst: Das Element heißt
+`bg-img-4711`, der Schlüssel war `4711`.
+
+Nach dem Update **Cache leeren**.
+
+---
+
+### Behoben — Root-Seite blieb in der Navbar immer aktiv
+
+Die Root-Seite liegt in der Rootline **jeder** Seite, TYPO3 meldet sie im
+`ITEM_STATE` also auf jeder Unterseite als `ACT`. Sie bekam damit dauerhaft
+`parent-active` — und diese Klasse ist für Links der obersten Ebene identisch
+gestaltet wie `active`:
+
+```css
+.navbar-nav .nav-link.parent-active{color:var(--bs-navbar-active-color)}
+```
+
+„Home" sah deshalb auf jeder Unterseite nach der aktuellen Seite aus. Jetzt darf
+nur noch `current` die Root-Seite hervorheben:
+
+```php
+$isHome = (int)($navbarMenu['data']['uid'] ?? 0) === (int)$vars['homepageUid'];
+
+$item['activeClass'] = match(true) {
+    !empty($navbarMenu['current']) && !empty($navbarMenu['active']) => ' active',
+    !empty($navbarMenu['active']) && !$isHome                       => ' parent-active',
+    default                                                         => '',
+};
+```
+
+Untermenüs sehen die Root-Seite ohnehin nie, die Ausnahme greift also nur dort,
+wo sie gebraucht wird. Nach dem Update **Cache leeren**.
+
+---
+
+### Behoben — die Optimize-Einstellungen wirkten nie
+
+Das Site Set *T3S Bootstrap – BOOTSTRAP OPTIMIZE* soll einzelne
+Bootstrap-Komponenten aus dem kompilierten CSS heraushalten, indem ihre
+`@import`-Zeile auskommentiert wird. Gelesen wurden die Flags aber unter dem
+falschen Pfad:
+
+```php
+if ( !empty($settings['optimize']) ) {
+```
+
+`$settings` hält die gesamte Settings-Struktur, die Flags liegen unter
+`settings.bootstrap.optimize`. Die Bedingung war damit immer falsch, die Schleife
+lief nie, und keine einzige Komponente wurde je entfernt — seit es das Set gibt.
+
+**Verhaltensänderung.** Wer Häkchen entfernt hatte, bekam trotzdem das
+vollständige Bootstrap-CSS. Nach diesem Update greift die Einstellung tatsächlich:
+Das CSS wird kleiner, und abgewählte Komponenten sind weg. Wer sich
+zwischenzeitlich auf die vollen Stile verlassen hat, prüft die Auswahl im
+Settings-Editor einmal nach und lässt `t3sbootstrap:customScss <Rootseiten-ID>`
+laufen.
+
+Gleich mit behoben: Der Schritt kommentierte Zeilen nur aus und nahm das nie
+zurück. Solange die Quellen bei jedem Lauf frisch heruntergeladen wurden, fiel das
+nicht auf. Mit dem Download-Riegel aus diesem Release wäre daraus ein Fehler
+geworden — ein wieder gesetztes Häkchen hätte keine Wirkung mehr gehabt, und die
+`// `-Präfixe hätten sich mit jeder Änderung gestapelt. Der Eintragspunkt wird
+deshalb vor dem Auskommentieren normalisiert:
+
+```php
+$customContent = (string)preg_replace('~^//\s*(@import\s)~m', '$1', $customContent);
+```
+
+Damit ist der Schritt wiederholbar und umkehrbar, ohne dass dafür neu
+heruntergeladen werden muss.
+
+---
+
 ## 5.3.57 — Div als Block im RTE, Navigationstitel als h1
 
 Betrifft die folgenden Dateien:
