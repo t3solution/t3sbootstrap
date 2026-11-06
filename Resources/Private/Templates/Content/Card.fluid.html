@@ -21,6 +21,12 @@
 
 <f:variable name="bodytextTop">{record -> f:render.text(field: 'bodytext')}</f:variable>
 <f:variable name="bodytextBottom">{record -> f:render.text(field: 'tx_t3sbootstrap_bodytext')}</f:variable>
+<f:comment>
+	The footer is an RTE field. Content/Field would run it through sanitize.html
+	and skip parseFunc, leaving t3:// links unresolved - render.text is the way
+	for rich text, same as the two above.
+</f:comment>
+<f:variable name="cardFooter">{record -> f:render.text(field: 'tx_t3sbootstrap_cardfooter')}</f:variable>
 
 <f:if condition="{card.flipcard}">
 	<f:then>
@@ -86,7 +92,7 @@
 </f:if>
 <f:if condition="({data.tx_t3sbootstrap_cardfooter} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
 	<div class="card-footer">
-		<f:render partial="Content/Field" arguments="{record: record, data: data, field: 'tx_t3sbootstrap_cardfooter'}" />
+		{cardFooter -> f:format.raw()}
 		<f:if condition="{card.button.footer}">
 			<f:render section="Button" arguments="{_all}" />
 		</f:if>

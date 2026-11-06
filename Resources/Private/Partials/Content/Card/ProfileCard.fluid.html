@@ -33,7 +33,7 @@
 </f:if>
 <f:if condition="({data.tx_t3sbootstrap_cardfooter} || {card.multiImage.socialmedia.footer} || ({card.button.link} && {card.button.enable} && {card.button.footer} && !{card.image.overlay}))">
 	<div class="card-footer{f:if(condition: card.multiImage.socialmedia.enable,then: ' bg-white')}">
-		{data.tx_t3sbootstrap_cardfooter -> f:format.raw()}
+		{data.tx_t3sbootstrap_cardfooter -> f:format.html()}
 		<f:if condition="{card.button.footer}">
 			<f:render section="Button" arguments="{_all}" />
 		</f:if>

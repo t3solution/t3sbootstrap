@@ -58,3 +58,97 @@ a{outline:0}.subheader{margin:0}.alert{display:grid}.code{padding:.2rem .4rem;fo
    utilities, so no !important is needed. */
 .t3sb-offcanvas-panel .main-navbarnav{margin-inline:0;width:100%}
 .t3sb-offcanvas-panel .main-navbarnav .nav-link{text-align:start}
+
+/* --- Section menu as pills (Page/Pills.fluid.html) ---------------------------
+ * A numbered circle per section that shows its title on hover and on keyboard
+ * focus. The number is a CSS counter, not markup: the Fluid loop skips elements
+ * without a header, so an index taken from the loop would jump.
+ *
+ * The title is switched with display, not uncovered by growing a width. Every
+ * attempt to animate the pill open needed overflow:hidden plus a maximum width,
+ * and that maximum is what kept cutting the title off - whatever value it had.
+ * Without it the pill is simply as wide as its content and lies over the page,
+ * which is all the original does: there JavaScript writes the title into the
+ * badge on mouseover and takes it out again. Keeping it in the markup instead
+ * leaves it to search engines, and aria-label names the link for screen
+ * readers, which the number alone would not. */
+:root{
+	/* Colour of the pill of the section currently scrolled to. Its own variable,
+	 * not --bs-warning: that one is in use all over the page, this one can be
+	 * redefined per site without touching the Bootstrap palette. */
+	--t3sb-pill-active-color:#ffc107;
+}
+#sectionmenu.section-pills{
+	--t3sb-pill-size:2.5rem;
+	counter-reset:t3sb-pill;
+	display:flex;
+	flex-direction:column;
+	align-items:flex-start;
+	gap:.35rem;
+	z-index:1020;
+	/* Fixed with left and right left at auto: the menu keeps the horizontal
+	 * position of its column, translateY centres it without JavaScript. */
+	position:fixed;
+	top:50%;
+	transform:translateY(-50%);
+	margin:0;
+	/* No width of its own: a flex item is clamped to its container in the cross
+	 * axis, and that clamp is what cut the open pill off. The box is left as
+	 * wide as its widest pill and made transparent to the mouse instead, so it
+	 * cannot swallow clicks meant for the column behind it. */
+	width:auto;
+	pointer-events:none;
+}
+#sectionmenu.section-pills .section-pill{
+	display:inline-flex;
+	align-items:center;
+	min-height:var(--t3sb-pill-size);
+	pointer-events:auto;
+	padding:0;
+	border-radius:50rem;
+	background-color:var(--bs-primary);
+	color:#fff;
+	text-decoration:none;
+	white-space:nowrap;
+}
+#sectionmenu.section-pills .section-pill::before{
+	counter-increment:t3sb-pill;
+	content:counter(t3sb-pill);
+	/* Exactly as wide as the circle, and no side padding anywhere - that is what
+	 * keeps the number centred while the pill is closed. Longhands on purpose:
+	 * Safari drops a flex-basis that comes out of a var() inside the flex
+	 * shorthand, and the number then shrinks to the width of its own digit. */
+	flex-grow:0;
+	flex-shrink:0;
+	flex-basis:var(--t3sb-pill-size);
+	min-width:var(--t3sb-pill-size);
+	text-align:center;
+	font-weight:700;
+}
+#sectionmenu.section-pills .section-pill-title{
+	display:none;
+	padding-right:1rem;
+}
+#sectionmenu.section-pills .section-pill:hover,
+#sectionmenu.section-pills .section-pill:focus-visible{
+	color:#fff;
+}
+#sectionmenu.section-pills .section-pill:hover .section-pill-title,
+#sectionmenu.section-pills .section-pill:focus-visible .section-pill-title{
+	display:inline;
+}
+#sectionmenu.section-pills .section-pill.active{
+	color:var(--t3sb-pill-active-color);
+}
+#sectionmenu.section-pills .section-pill:focus-visible{
+	outline:2px solid var(--bs-primary);
+	outline-offset:2px;
+}
+#sectionmenu.section-pills .sectiontitle-iconPack{margin-right:.35rem}
+/* Below 922px the menu is hidden instead of scaled down: an open pill is wider
+ * than the viewport there, and the sections are a short scroll apart anyway.
+ * display, not visibility - it should leave the tab order and the a11y tree
+ * with it, the headings themselves are still the way through the page. */
+@media (max-width:921.98px){
+	#sectionmenu.section-pills{display:none}
+}

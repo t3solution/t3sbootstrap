@@ -13,6 +13,14 @@ CREATE TABLE tx_t3sbootstrap_domain_model_config (
 	page_titlecontainer varchar(15) DEFAULT '' NOT NULL,
 	page_titleclass varchar(255) DEFAULT '' NOT NULL,
 	page_titlenavtitle tinyint(1) unsigned DEFAULT '0' NOT NULL,
+#
+# page_titlesubtitle defaults to 1 and not to 0 like the TCA field: an existing
+# installation gets this value filled into every row the column is added to, and
+# there the subtitle was printed unconditionally before. Starting it at 0 would
+# take the subtitle off every page that has one. New records are created through
+# the TCA, which has the option switched off.
+#
+	page_titlesubtitle tinyint(1) unsigned DEFAULT '1' NOT NULL,
 	meta_enable varchar(8) DEFAULT '' NOT NULL,
 	meta_value varchar(255) DEFAULT '' NOT NULL,
 	meta_container varchar(15) DEFAULT '' NOT NULL,
@@ -186,7 +194,7 @@ CREATE TABLE tt_content (
 	tx_t3sbootstrap_image_orig varchar(4) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_cardheader varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_bodytext text,
-	tx_t3sbootstrap_cardfooter varchar(255) DEFAULT '' NOT NULL,
+	tx_t3sbootstrap_cardfooter text,
 	tx_t3sbootstrap_list_item varchar(255) DEFAULT '' NOT NULL,
 	tx_t3sbootstrap_gutters varchar(5) DEFAULT 'gx-4' NOT NULL,
 	tx_t3sbootstrap_verticalgutters varchar(5) DEFAULT 'mb-4' NOT NULL,

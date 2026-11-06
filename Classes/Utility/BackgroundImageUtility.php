@@ -176,13 +176,12 @@ class BackgroundImageUtility implements SingletonInterface
         $image = $this->imageService->getImage($file->getOriginalFile()->getUid(), $file->getOriginalFile(), 1);
 
         if (!empty($flexconf['enableAutoheight'])) {
-            // enableAutoheight being set does not mean addHeight exists
-            if (!empty($flexconf['addHeight'])) {
-                $inline = '"'.$uid.'":"'.$flexconf['addHeight'].'",';
-                if ($inline) {
-                    $this->assetCollector->addInlineJavaScript('addheight-'.$uid, $inline);
-                }
-            }
+            // addHeight rides along as a data attribute on the wrapper, written by
+            // Container/BackgroundWrapper.fluid.html. It used to be registered here as
+            // an inline script fragment ('"uid":"600",') that only became valid
+            // JavaScript once IsInline collected all of them into one object - and that
+            // listener returns early whenever disableInlineJs or disableAssetRenderer is
+            // set, which left a syntax error in the page and no height at all.
             $css = $this->generateCss('bg-img-'.$uid, $file, $image, $flexconf, $bgMediaQueries, $fileExtension);
         } else {
             $css = $this->generateCss('s-'.$uid, $file, $image, $flexconf, $bgMediaQueries, $fileExtension);

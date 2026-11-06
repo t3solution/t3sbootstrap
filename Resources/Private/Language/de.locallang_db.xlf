@@ -1556,6 +1556,18 @@
 				<target>Die h1 nimmt das Seitenfeld „Navigationstitel“ statt „Seitentitel“. Seiten ohne Navigationstitel behalten ihren Seitentitel.</target>
 			</segment>
 		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlesubtitle">
+			<segment>
+				<source>Also output the subtitle</source>
+				<target>Untertitel ebenfalls ausgeben</target>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlesubtitle.description">
+			<segment>
+				<source>The page field "Subtitle" is printed as h2 below the page title. Pages without a subtitle stay as they are.</source>
+				<target>Das Seitenfeld „Untertitel“ wird als h2 unter dem Seitentitel ausgegeben. Seiten ohne Untertitel bleiben wie sie sind.</target>
+			</segment>
+		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumb.description">
 			<segment>
@@ -1743,6 +1755,13 @@
 			<segment>
 				<source>sectionmenu</source>
 				<target>Sektionsindex (sectionmenu)</target>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.sidebar.item3">
+			<segment>
+				<source>sectionmenu as pills (position:fixed, hidden below 922px)</source>
+				<target>Sektionsindex als Pillen (position:fixed, unter 922px ausgeblendet)</target>
 			</segment>
 		</unit>
 		

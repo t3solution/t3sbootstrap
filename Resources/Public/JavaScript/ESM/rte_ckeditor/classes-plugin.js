@@ -133,7 +133,12 @@ function injectDropdownStyles() {
 	style.textContent =
 		'.ck.ck-button.t3sb-class--head.ck-disabled{opacity:1;cursor:default;background:none;' +
 		'font-size:.75em;text-transform:uppercase;letter-spacing:.06em;opacity:.65;padding-bottom:2px;}' +
-		'.ck.ck-button.t3sb-class--head.ck-disabled .ck-button__label{font-weight:700;}';
+		'.ck.ck-button.t3sb-class--head.ck-disabled .ck-button__label{font-weight:700;}' +
+		// The list grows with t3sbClassPicker and had no limit at all: with the three
+		// groups shipped it already runs past the viewport, and the entries at the bottom
+		// cannot be reached. Scoped to our own panel - the bare .ck-list selector would
+		// reach every dropdown in the editor, including the core's.
+		'.ck.ck-dropdown__panel.t3sb-classes-panel .ck-list{max-height:min(60vh,420px);overflow-y:auto;}';
 	document.head.appendChild(style);
 }
 
@@ -266,6 +271,11 @@ export class ClassPicker extends Core.Plugin {
 		}
 
 		UI.addListToDropdown(dropdown, items);
+
+		// marker for the height limit above
+		dropdown.panelView.extendTemplate({
+			attributes: { class: 't3sb-classes-panel' }
+		});
 
 		dropdown.buttonView.set({
 			label: 'Klassen',

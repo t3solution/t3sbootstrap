@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{sectionMenu.0.content.0}">
+	<f:if condition="{settings.config.sectionmenuStickyTop}">
+		<f:then>
+			<f:render partial="Page/Assets" arguments="{stickytop:'true', scrollspy:'true'}" />
+		</f:then>
+		<f:else>
+			<f:render partial="Page/Assets" arguments="{stickytop:'false', scrollspy:'true'}" />
+		</f:else>
+	</f:if>
+
+	<f:comment>
+		Same id as Page/Section on purpose: the scrollspy and the anchor scrolling in
+		Page/Assets both key off #sectionmenu, so only the presentation differs here -
+		a numbered pill that shows its title on hover and on keyboard focus, while the
+		section currently scrolled to is marked by colour alone.
+
+		The number is a CSS counter, not the loop index: the loop skips elements
+		without a header, and f:for would count those as well.
+
+		No sticky-top and no inline top here: the menu is positioned fixed and centred
+		vertically in the stylesheet, so it floats at the edge of its column instead of
+		scrolling with it. Both would fight that.
+	</f:comment>
+	<div id="sectionmenu" class="section-pills">
+		<f:for each="{sectionMenu.0.content}" as="element">
+			<f:if condition="( {element.data.header} || {element.data.tx_t3sbootstrap_header_sectionMenu} ) && {element.data.sectionIndex}">
+				<f:variable name="pillTitle" value="{f:if(condition: element.data.tx_t3sbootstrap_header_sectionMenu, then: element.data.tx_t3sbootstrap_header_sectionMenu, else: element.data.header)}" /><a class="section-pill" href="#c{element.data.uid}" aria-label="{pillTitle}"><span class="section-pill-title"><f:if condition="{element.data.header_icon}"><t3sb:icon iconfig="{element.data.header_icon}" additionalAttributes="{class:'sectiontitle-iconPack'}" /></f:if><f:if condition="{element.data.tx_t3sbootstrap_header_sectionMenu}"><f:then>{element.data.tx_t3sbootstrap_header_sectionMenu}</f:then><f:else>{f:if(condition:'{element.data.header}',then:'{element.data.header}',else:'* No Header for this Link *')}</f:else></f:if></span></a>
+			</f:if>
+		</f:for>
+	</div>
+</f:if>
+</html>

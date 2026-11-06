@@ -117,6 +117,7 @@ class ConfigProcessor implements DataProcessorInterface
 		$processedData['config']['general']['pageTitlealign'] = $pageTitleAlign;
 		$processedData['config']['general']['pageTitleclass'] = $vars['pageTitleclass']   ?: '';
 		$processedData['config']['general']['pageTitleNavTitle'] = !empty($vars['pageTitlenavtitle']);
+		$processedData['config']['general']['pageTitleSubtitle'] = !empty($vars['pageTitlesubtitle']);
 
 		// "none" in the select list is the explicit decision AGAINST a container -
 		// it has no place in the markup, otherwise class="none" would end up in the
@@ -234,9 +235,14 @@ class ConfigProcessor implements DataProcessorInterface
 			$item['dropdownRightClass'] = !empty($navbarMenu['data']['tx_t3sbootstrap_dropdownRight'])
 				? ' dropdown-menu-end' : '';
 
+			// The root page sits in the rootline of every page, so it is always ACT and
+			// would carry "parent-active" everywhere - which is styled like "active".
+			// Only "current" may highlight it. Child items never see the root page.
+			$isHome = (int)($navbarMenu['data']['uid'] ?? 0) === (int)$vars['homepageUid'];
+
 			$item['activeClass'] = match(true) {
 				!empty($navbarMenu['current']) && !empty($navbarMenu['active']) => ' active',
-				!empty($navbarMenu['active'])                                   => ' parent-active',
+				!empty($navbarMenu['active']) && !$isHome                       => ' parent-active',
 				default                                                         => '',
 			};
 			if (!empty($navbarMenu['current']) && !empty($navbarMenu['active'])) {
@@ -786,7 +792,9 @@ class ConfigProcessor implements DataProcessorInterface
 		if ($vars['sidebarEnable']) {
 			$processedData['config']['sidebar']['left'] = $vars['sidebarEnable'];
 
-			if ($vars['sidebarEnable'] === 'Section') {
+			// Pills is the same section menu, only presented as numbered pills - it
+			// needs the scrollspy and the sticky offset just as much.
+			if (in_array($vars['sidebarEnable'], ['Section', 'Pills'], true)) {
 				$topOffset = (int)$vars['sectionmenuAnchorOffset'] + (int)$vars['navbarHeight'];
 				$processedData['config']['sidebar'] = array_merge(
 					$processedData['config']['sidebar'] ?? [],

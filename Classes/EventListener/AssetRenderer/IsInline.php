@@ -77,7 +77,6 @@ final readonly class IsInline
 
     private function processInlineJs(BeforeJavaScriptsRenderingEvent $event): void
     {
-        $addheight = '';
         $jquery    = '';
         $js        = '';
         $function  = '';
@@ -100,8 +99,6 @@ final readonly class IsInline
                 $function .= $source['source'] . LF . LF;
             } elseif (str_starts_with($library, 'vanilla')) {
                 $js .= $source['source'] . LF;
-            } elseif (str_starts_with($library, 'addheight-')) {
-                $addheight .= $source['source'] . LF . LF;
             } elseif (str_starts_with($library, 'jquery')) {
                 $jquery .= $source['source'] . LF . LF;
             } else {
@@ -111,7 +108,7 @@ final readonly class IsInline
             $event->getAssetCollector()->removeInlineJavaScript($library);
         }
 
-        $source = $this->buildJsSource($function, $addheight, $js, $jquery, $rawJs);
+        $source = $this->buildJsSource($function, $js, $jquery, $rawJs);
 
         if (empty($source)) {
             return;
@@ -125,7 +122,6 @@ final readonly class IsInline
 
     private function buildJsSource(
         string $function,
-        string $addheight,
         string $js,
         string $jquery,
         string $rawJs
@@ -136,18 +132,10 @@ final readonly class IsInline
             $source .= $function . LF;
         }
 
-        $addheightJs = '';
-        if ($addheight) {
-            $addheightJs = LF
-                . '// Autoheight for background images' . LF
-                . 'var TYPO3 = TYPO3 || {};' . LF
-                . 'TYPO3.settings = {\'ADDHEIGHT\':{' . rtrim(trim($addheight), ',') . '}};' . LF;
-        }
-
         // DOMContentLoaded wrapper - only when there is something to wrap. Without the
         // condition $source is never empty, the caller's early return never fires, and
         // every page without inline JS still gets a typo3temp file plus an extra request.
-        if ($addheightJs !== '' || $js !== '') {
+        if ($js !== '') {
             $source .= <<<JS
                 function ready(fn) {
                     if (document.readyState !== 'loading') {
@@ -156,7 +144,7 @@ final readonly class IsInline
                         document.addEventListener('DOMContentLoaded', fn);
                     }
                 }
-                ready(() => {{$addheightJs}{$js}});
+                ready(() => {{$js}});
                 JS . LF;
         }
 

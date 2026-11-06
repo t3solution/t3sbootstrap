@@ -77,7 +77,7 @@
 					<f:comment>	BG-Image : overlay and autoheight </f:comment>
 					<section id="s-{data.uid}" class="card rounded-0 border-0">
 						<f:comment>	background-image by css </f:comment>
-						<div id="bg-img-{data.uid}" class="{imageRaster}background-image enableAutoheight{class}"{styleAttr -> f:format.raw()}>
+						<div id="bg-img-{data.uid}" class="{imageRaster}background-image enableAutoheight{class}" data-addheight="{addHeight}"{styleAttr -> f:format.raw()}>
 						</div>
 						<f:render section="SectionOverlayInner" arguments="{_all}" />
 					</section>
@@ -370,25 +370,29 @@ function t3sbBackgroundVideo(div, params) {
 <f:section name="Autoheight">
 	<f:asset.script identifier="autoheight_function">
 // Autoheight for backgroundimages - BackgroundWrapper.fluid.html
-function t3sbAddHeight(TYPO3, objKey) {
-	var overlay = document.getElementById(objKey).nextElementSibling;
+function t3sbAddHeight(objKey) {
+	var el = document.getElementById(objKey);
+	if (!el) { return; }
+	var overlay = el.nextElementSibling;
 	if (overlay) {
 		var totalHeight = 0;
-		var addHeight = 0;
-		var claimsArray = Object.entries(TYPO3.settings.ADDHEIGHT);
-		claimsArray.forEach(function (item, index) {
-			addHeight = parseInt(item[1]);
-		});
+		// Per element, out of its own data attribute. It used to come from a
+		// TYPO3.settings.ADDHEIGHT object that was assembled from inline script
+		// fragments - not valid JavaScript on their own, so the whole thing fell
+		// apart as soon as disableInlineJs kept them from being collected. The
+		// loop over that object also kept the last entry rather than the one
+		// belonging to this element, so two wrappers shared one height.
+		var addHeight = parseInt(el.dataset.addheight, 10) || 0;
 		if ( overlay.querySelector('.container') ) {
 			Array.from(overlay.getElementsByClassName('container')[0].children).forEach( bgwContent => {
 				totalHeight = bgwContent.clientHeight;
 			});
 			totalHeight = totalHeight + addHeight;
-			document.getElementById(objKey).style.minHeight = totalHeight+'px';
+			el.style.minHeight = totalHeight+'px';
 		} else {
 			totalHeight = overlay.children[0].children[0].clientHeight;
 			totalHeight = totalHeight + addHeight;
-			document.getElementById(objKey).style.minHeight = totalHeight+'px';
+			el.style.minHeight = totalHeight+'px';
 		}
 	}
 	var mobile = false;
@@ -405,7 +409,7 @@ function t3sbAddHeight(TYPO3, objKey) {
 	<f:asset.script identifier="vanilla_enableAutoheight">
 	// Autoheight for backgroundimages - BackgroundWrapper.fluid.html
 	document.querySelectorAll('.enableAutoheight').forEach(function(ah) {
-		t3sbAddHeight(TYPO3, ah.id);
+		t3sbAddHeight(ah.id);
 	});
 	</f:asset.script>
 </f:section>

@@ -1334,6 +1334,16 @@
 				<source>The h1 takes the page field "Navigation title" instead of "Page title". Pages without a navigation title keep their page title.</source>
 			</segment>
 		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlesubtitle">
+			<segment>
+				<source>Also output the subtitle</source>
+			</segment>
+		</unit>
+		<unit id="tx_t3sbootstrap_domain_model_config.pagetitlesubtitle.description">
+			<segment>
+				<source>The page field "Subtitle" is printed as h2 below the page title. Pages without a subtitle stay as they are.</source>
+			</segment>
+		</unit>
 		
 		<unit id="tx_t3sbootstrap_domain_model_config.breadcrumb.description">
 			<segment>
@@ -1494,6 +1504,12 @@
 		<unit id="tx_t3sbootstrap_domain_model_config.sidebar.item2">
 			<segment>
 				<source>sectionmenu</source>
+			</segment>
+		</unit>
+		
+		<unit id="tx_t3sbootstrap_domain_model_config.sidebar.item3">
+			<segment>
+				<source>sectionmenu as pills (position:fixed, hidden below 922px)</source>
 			</segment>
 		</unit>
 		
