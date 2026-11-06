@@ -4,7 +4,7 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
-## 5.3.58 — Sektionsindex als Pillen, Downloads nur bei Bedarf, Untertitel optional, Klassen-Liste scrollt, Höhe des Background-Wrappers
+## 5.3.58 — Sektionsindex als Pillen, Downloads nur bei Bedarf, Untertitel optional, Card-Footer mit RTE, Klassen-Liste scrollt, Höhe des Background-Wrappers
 
 Betrifft die folgenden Dateien:
 
@@ -13,6 +13,7 @@ CHANGELOG.md
 composer.json
 ext_emconf.php
 ext_tables.sql
+releaseNote.pdf
 Classes/Command/CdnToLocal.php
 Classes/Command/CustomScss.php
 Classes/DataProcessing/ConfigProcessor.php
@@ -21,13 +22,17 @@ Classes/EventListener/AssetRenderer/IsInline.php
 Classes/Service/AssetStateService.php   (neu)
 Classes/Service/CdnAssetMap.php   (neu)
 Classes/Utility/BackgroundImageUtility.php
+Configuration/TCA/Overrides/tt_content_newCType.php
 Configuration/TCA/tx_t3sbootstrap_domain_model_config.php
 Configuration/TypoScript/Page/Template.typoscript
 Resources/Private/Language/de.locallang_db.xlf
 Resources/Private/Language/locallang_db.xlf
+Resources/Private/Partials/Content/Card/ProfileCard.fluid.html
 Resources/Private/Partials/Page/Pills.fluid.html   (neu)
 Resources/Private/Partials/Page/Title.fluid.html
 Resources/Private/Templates/Container/BackgroundWrapper.fluid.html
+Resources/Private/Templates/Container/CardWrapper.fluid.html
+Resources/Private/Templates/Content/Card.fluid.html
 Resources/Public/JavaScript/ESM/rte_ckeditor/classes-plugin.js
 Resources/Public/Styles/t3sbootstrap.css
 ```
@@ -128,6 +133,46 @@ die einen hat. Neue Konfigurations-Datensätze entstehen über das TCA und start
 mit dem Schalter aus.
 
 **DB-Update nötig** — die Spalte `page_titlesubtitle` kommt neu dazu.
+
+### Neu — Card-Footer mit Rich-Text-Editor
+
+Das Feld `tx_t3sbootstrap_cardfooter` war ein einzeiliges Eingabefeld über
+`varchar(255)`. Im Fuß einer Karte steht aber typischerweise ein Link, eine
+Mailadresse oder eine Zeile mit Formatierung — dafür war es zu klein und zu
+schlicht. Es ist jetzt ein RTE-Feld:
+
+```php
+'tx_t3sbootstrap_cardfooter' => [
+    'config' => [
+        'type' => 'text',
+        'cols' => 80,
+        'rows' => 5,
+        'softref' => 'typolink_tag,email[subst],url'
+    ],
+],
+```
+
+Der Editor selbst kommt über die `columnsOverrides` des CTypes `t3sbs_card` mit
+`enableRichtext => true` — so wie bei `bodytext` und `tx_t3sbootstrap_bodytext`.
+`softref` sorgt dafür, dass Links aus diesem Feld im Reference Index und beim
+Export mitgezählt werden.
+
+**DB-Update nötig** — die Spalte wird von `varchar(255)` auf `text` erweitert.
+
+Bei der Ausgabe gibt es eine Besonderheit, die mehr als dieses Feld betrifft: Ein
+RTE-Feld darf **nicht** durch das Partial `Content/Field` laufen. Das verwendet
+`f:sanitize.html()` und ruft `parseFunc` nicht auf — `t3://`-Links bleiben damit
+unaufgelöst im Markup stehen. Im Haupttemplate übernimmt deshalb die Record-API:
+
+```html
+<f:variable name="cardFooter">{record -> f:render.text(field: 'tx_t3sbootstrap_cardfooter')}</f:variable>
+```
+
+ausgegeben mit `{cardFooter -> f:format.raw()}`. `CardWrapper` und `ProfileCard`
+haben keinen Zugriff auf `record` und nehmen `f:format.html()`, was `parseFunc`
+ebenfalls durchläuft.
+
+---
 
 ### Neu — Downloads nur noch bei Bedarf
 
