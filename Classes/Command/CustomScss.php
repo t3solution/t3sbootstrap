@@ -90,7 +90,10 @@ final class CustomScss extends CommandBase
             'if-needed',
             null,
             InputOption::VALUE_NONE,
-            'Skip the Bootstrap source download when the sources for the configured version are present.',
+            'Exit without work when the Bootstrap sources, the include file and the relevant '
+            . 'settings are unchanged. Meant for a recurring task: set this option and choose the '
+            . 'type "recurring" when your host empties typo3temp/ on automatic updates. Leave it '
+            . 'off when you run the command by hand - then it should rebuild.',
       );
    }
         
