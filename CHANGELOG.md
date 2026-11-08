@@ -100,6 +100,12 @@ den Standard zurück statt den Aufruf zu beenden. An diesem Wert hängt jede Dat
 der Extension; ein Tippfehler in der Extension-Konfiguration darf die Seite
 nicht abschalten.
 
+**Der wiederkehrende Planer-Task aus 5.3.58 kann danach weg.** Er war nur dafür da,
+ein geleertes `typo3temp/` wieder aufzufüllen; liegt das Verzeichnis woanders, gibt es
+nichts mehr zu reparieren. Stehen lassen schadet nicht, er meldet dann dauerhaft
+„Nothing to do". Unberührt bleibt der gelegentliche Lauf ohne die Option, mit dem die
+gleitenden CDN-Versionen nachkommen — der hat mit dem Ablageort nichts zu tun.
+
 Die beiden Hinweise des Backend-Moduls, die bisher fest `typo3temp/assets/t3sbootstrap/`
 nannten, nennen jetzt das tatsächlich konfigurierte Verzeichnis — der Pfad kommt als
 Argument in die Übersetzung. Dasselbe gilt für die Beschreibung im Settings-Editor, die
