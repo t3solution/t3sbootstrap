@@ -44,11 +44,12 @@ defined('TYPO3') or die();
     /***************
      * Custom Extensions
      */
-    # Asset root for the generated files. Published as a TypoScript constant so
-    # TypoScript and Fluid use the same value as the PHP side
-    # (Service\AssetPathService::BASE_REL).
+    # Asset root for the generated files, honouring the extension configuration
+    # "assetDir". Published as a TypoScript constant so TypoScript and Fluid use
+    # the same value as the PHP side (Service\AssetPathService).
+    $assetPath = GeneralUtility::makeInstance(AssetPathService::class)->getBaseRel();
     ExtensionManagementUtility::addTypoScriptConstants(
-        'bootstrap.assetPath = ' . AssetPathService::BASE_REL
+        'bootstrap.assetPath = ' . $assetPath
     );
 
     # Generated constants & setup. Written from the configuration record by
@@ -56,10 +57,10 @@ defined('TYPO3') or die();
     # when missing. TypoScript ignores a missing import, which is what we want
     # before the first configuration record has been saved.
     ExtensionManagementUtility::addTypoScriptConstants(
-        '@import \'' . AssetPathService::BASE_REL . 'TypoScript/t3sbconstants.typoscript\''
+        '@import \'' . $assetPath . 'TypoScript/t3sbconstants.typoscript\''
     );
     ExtensionManagementUtility::addTypoScriptSetup(
-        '@import \'' . AssetPathService::BASE_REL . 'TypoScript/t3sbsetup.typoscript\''
+        '@import \'' . $assetPath . 'TypoScript/t3sbsetup.typoscript\''
     );
 
     // if ke_search is loaded

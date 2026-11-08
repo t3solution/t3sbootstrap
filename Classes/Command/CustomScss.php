@@ -192,7 +192,7 @@ final class CustomScss extends CommandBase
 
             GeneralUtility::writeFile($includeFile, $includeContent);
 
-            $tempPath = GeneralUtility::getFileAbsFileName('typo3temp/assets/t3sbootstrap/css/');
+            $tempPath = $this->assetPathService->getPath('css');
             $this->deleteFilesFromDirectory($tempPath);
 
             $customFileName = 'bootstrap.scss';

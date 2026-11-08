@@ -89,7 +89,8 @@ After installation, complete these steps to get a working frontend:
 3. **Assets: CDN vs. local**
    By default, Bootstrap CSS & JS are loaded via CDN. For production, serve them locally: run the
    Scheduler task **"T3SB CDN to local"** (`vendor/bin/typo3 t3sbootstrap:cdnToLocal`), then switch
-   off *Enable CDN* in the site settings. The files end up in `typo3temp/assets/t3sbootstrap/`.
+   off *Enable CDN* in the site settings. The files end up in `typo3temp/assets/t3sbootstrap/`,
+   or wherever the extension configuration `assetDir` points.
 
 4. **Custom SCSS (optional)**
    With *Enable CDN* switched off you can activate *Enable Custom SCSS* and run

@@ -4,6 +4,114 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.59 — Asset-Verzeichnis konfigurierbar
+
+Betrifft die folgenden Dateien:
+
+```
+CHANGELOG.md
+composer.json
+ext_conf_template.txt
+ext_emconf.php
+ext_localconf.php
+readMe.md
+releaseNote.pdf
+Classes/Command/CustomScss.php
+Classes/Controller/AbstractController.php
+Classes/Hooks/PageRenderer/PreProcessHook.php
+Classes/Middleware/EnsureGeneratedFiles.php
+Classes/Service/AssetPathService.php
+Classes/Service/CompileService.php
+Classes/Updates/LegacyAssetLocationUpgradeWizard.php
+Configuration/Sets/T3sbootstrap/settings.definitions.yaml
+Resources/Private/Language/de.locallang.xlf
+Resources/Private/Language/locallang.xlf
+```
+
+### Neu — Asset-Verzeichnis konfigurierbar
+
+In `typo3temp/assets/t3sbootstrap/` liegen zwei Dinge mit gegensätzlicher
+Lebensdauer. **Abgeleitete** Dateien — TypoScript, eigenes SCSS, kompiliertes
+CSS — schreibt die Middleware seit 5.3.50 aus dem Konfigurations-Datensatz neu.
+**Downloads** — CDN-Assets und Bootstrap-Quellen — brauchen Netz und kommen nie
+von selbst zurück. Weil beide im selben Verzeichnis liegen, gilt die
+Wegwerf-Regel von `typo3temp/` auch für die Downloads.
+
+Die Extension-Konfiguration hat deshalb einen neuen Eintrag:
+
+```
+assetDir = uploads/t3sb-assets/
+```
+
+Leer gelassen bleibt alles wie bisher. Steht dort ein Pfad, wandert das ganze
+Verzeichnis dorthin — alles zusammen, damit die relativen `@import`-Pfade
+zwischen `T3SB-SCSS` und `T3SB-Bootstrap` weiter stimmen. Vorbild ist
+`flexformDir`, in 5.3.50 aus demselben Grund konfigurierbar geworden.
+
+**Die Wahl des Verzeichnisses ist in TYPO3 v14 nicht frei.** Asset-Referenzen
+liefert der Core nur noch aus den Pfaden aus, die das App-Package
+veröffentlicht — `DefaultAppResources.php` nennt genau drei:
+
+```
+_assets
+uploads
+typo3temp/assets
+```
+
+Dazu kommt `fileadmin/`, das über die Datei-Storage aufgelöst wird. Alles andere
+unterhalb von `public/` lässt `ResourceCollection::definitionForPath()` mit
+`SystemResourceDefinitionNotFoundException` auflaufen, der Core verwirft die
+Referenz **ohne Fehlermeldung**, und die Seite kommt unformatiert. Wer trotzdem
+ein eigenes Verzeichnis will, braucht dafür eine `PublicResourceDefinition` in
+`config/system/resources.php`.
+
+Damit bleibt `uploads/` die Empfehlung: vom Core freigegeben, nicht wegwerfbar,
+keine FAL-Storage — also für Redakteure unsichtbar und nicht in `sys_file`
+indiziert — und in Deployments ohnehin ein persistentes Verzeichnis. `_assets`
+fällt weg, das schreibt der Composer-Installer bei jedem Lauf neu. Ein Pfad
+unter `fileadmin/` funktioniert, wird aber als Datei indiziert und taucht im
+Dateilisten-Modul auf.
+
+An der `.htaccess` ist nichts zu tun: Die letzte Rewrite-Regel greift nur, wenn
+die angeforderte Datei **nicht** existiert, vorhandene Dateien liefert Apache
+also direkt aus. `uploads/` steht dort ohnehin in der Liste der bekannten
+Verzeichnisse.
+
+Weil ein Pfad unter `fileadmin/` als FAL-Referenz ankommt, kann
+`CompileService::resolveAbsolutePath()` jetzt auch `FAL:<storage>:<identifier>`
+auflösen — bisher kannte die Methode nur `PKG:` und das Ergebnis war ein Pfad
+wie `public/FAL:1:/…`, an dem der SCSS-Compiler scheiterte.
+
+Im Code war dafür wenig zu tun: Der Pfad stand schon seit 5.3.50 an genau einer
+Stelle, in `AssetPathService`. TypoScript und Fluid bekommen ihn als Konstante
+`{$bootstrap.assetPath}` aus `ext_localconf.php` — dort steht jetzt der
+aufgelöste Wert statt der Vorgabe, damit `includeCSS`, `includeJS` und die
+beiden `@import` der generierten TypoScript-Dateien mitwandern. Hart verdrahtet
+waren darüber hinaus nur zwei Werte, beide für das kompilierte CSS — das Zielverzeichnis und die vier `../`-Schritte zurück
+zur Document Root, mit denen der SCSS-Compiler `url()`-Angaben umschreibt. Die
+Schritte werden jetzt gezählt statt angegeben:
+
+```php
+str_repeat('../', substr_count(trim($this->getCssRelPath(), '/'), '/') + 1);
+```
+
+Ungültige Werte — ein absoluter Pfad, ein Schema, ein `..` — fallen stumm auf
+den Standard zurück statt den Aufruf zu beenden. An diesem Wert hängt jede Datei
+der Extension; ein Tippfehler in der Extension-Konfiguration darf die Seite
+nicht abschalten.
+
+Die beiden Hinweise des Backend-Moduls, die bisher fest `typo3temp/assets/t3sbootstrap/`
+nannten, nennen jetzt das tatsächlich konfigurierte Verzeichnis — der Pfad kommt als
+Argument in die Übersetzung. Dasselbe gilt für die Beschreibung im Settings-Editor, die
+readMe und den Text des Upgrade-Wizards: Sie behaupteten den Pfad als feststehend.
+
+**Nach einer Änderung sind die Dateien am neuen Ort noch nicht vorhanden.**
+Einmal `t3sbootstrap:cdnToLocal` und `t3sbootstrap:customScss <Rootseiten-ID>`
+laufen lassen, dann Cache leeren. Die alten Dateien bleiben liegen, wo sie
+waren, und dürfen von Hand weg.
+
+---
+
 ## 5.3.58 — Sektionsindex als Pillen, Downloads nur bei Bedarf, Untertitel optional, Card-Footer mit RTE, Klassen-Liste scrollt, Höhe des Background-Wrappers
 
 Betrifft die folgenden Dateien:

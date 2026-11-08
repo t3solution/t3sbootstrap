@@ -93,11 +93,19 @@ abstract class AbstractController extends ActionController
 
         // local delivery configured but the files are not there - TYPO3 would
         // silently drop them from includeCSS/includeJS, so say it out loud
+        $assetPathService = GeneralUtility::makeInstance(AssetPathService::class);
+
         if (empty($this->settings['cdn']['enable'])
-            && GeneralUtility::makeInstance(AssetPathService::class)->resolveFile('T3SB-CSS/bootstrap.min.css') === null
+            && $assetPathService->resolveFile('T3SB-CSS/bootstrap.min.css') === null
         ) {
+            // The directory is configurable, so the message names the one actually in use
+            // instead of the default - see Service\AssetPathService and "assetDir".
             $notification['assets']['title'] = LocalizationUtility::translate('notificationtitle_7','t3sbootstrap');
-            $notification['assets']['message'] = LocalizationUtility::translate('notificationmessage_7','t3sbootstrap');
+            $notification['assets']['message'] = LocalizationUtility::translate(
+                'notificationmessage_7',
+                't3sbootstrap',
+                [$assetPathService->getBaseRel()],
+            );
         }
 
         // Same thing one level down. typo3temp/ is cleared by every update and deployment,
@@ -109,11 +117,14 @@ abstract class AbstractController extends ActionController
         // The check above only looks at the CDN assets, so this one stays silent otherwise.
         if (!empty($this->settings['customScss'])
             && empty($this->settings['cdn']['enable'])
-            && GeneralUtility::makeInstance(AssetPathService::class)
-                ->resolveFile('T3SB-Bootstrap/Bootstrap/scss/bootstrap.scss') === null
+            && $assetPathService->resolveFile('T3SB-Bootstrap/Bootstrap/scss/bootstrap.scss') === null
         ) {
             $notification['scssSources']['title'] = LocalizationUtility::translate('notificationtitle_8','t3sbootstrap');
-            $notification['scssSources']['message'] = LocalizationUtility::translate('notificationmessage_8','t3sbootstrap');
+            $notification['scssSources']['message'] = LocalizationUtility::translate(
+                'notificationmessage_8',
+                't3sbootstrap',
+                [$assetPathService->getBaseRel()],
+            );
         }
 
         if (!$this->request->hasArgument('id') || empty($this->request->getArgument('id'))) {

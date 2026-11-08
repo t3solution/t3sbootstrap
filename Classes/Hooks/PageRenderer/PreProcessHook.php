@@ -44,11 +44,6 @@ class PreProcessHook
      */
     protected $compileService;
 
-    /**
-     * @var \T3SBS\T3sbootstrap\Service\AssetPathService
-     */
-    protected $assetPathService;
-
 
     /**
      * @param array $params

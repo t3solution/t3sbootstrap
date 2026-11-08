@@ -78,6 +78,8 @@ animateCss = 0
 linkHoverEffect = 0
 # cat=Advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache)
 lazyLoad = 0
+# cat=Advanced/enable/60; type=string; label=Asset directory: Where the generated and downloaded files are kept, relative to the public directory - default "typo3temp/assets/t3sbootstrap/". typo3temp/ is declared disposable by the core, so a host that empties it on automatic updates takes the downloaded CDN assets and Bootstrap sources with it, and those need network to come back. Moving them somewhere persistent, e.g. "uploads/t3sb-assets/", takes them out of that line of fire. Mind that TYPO3 v14 serves asset references only from the paths the app package publishes - typo3temp/assets, uploads and _assets (see DefaultAppResources.php) - plus fileadmin/ through the file storage. _assets is rewritten by the composer installer, and a path below fileadmin/ is indexed as a file and shown to editors in the Filelist module, which leaves uploads/ as the recommendation. Any other location needs its own PublicResourceDefinition in config/system/resources.php; without it TYPO3 drops the stylesheet reference without an error and the page renders unstyled. An invalid value falls back to the default. After a change the files are re-created at the new place: run t3sbootstrap:cdnToLocal and t3sbootstrap:customScss once, then clear the cache.
+assetDir =
 # cat=Advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache)
 extNews = 0
 

@@ -23,7 +23,7 @@ final class LegacyAssetLocationUpgradeWizard implements UpgradeWizardInterface
         return sprintf(
             'Up to version 5.3.49 the downloaded CSS/JS, the bootstrap sources and the '
             . 'generated SCSS were written into EXT:t3sb_package/Resources/Public/, where a '
-            . 'composer update replaces them. They now live in typo3temp/assets/t3sbootstrap/, '
+            . 'composer update replaces them. They now live in the asset directory, '
             . 'which is rebuilt from the configuration record and from t3sbootstrap:cdnToLocal. '
             . 'This wizard copies the %d file(s) still present in the old location, so the '
             . 'frontend keeps working without running the command first. Nothing is deleted.',
