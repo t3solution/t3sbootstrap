@@ -16,6 +16,7 @@ ext_emconf.php
 ext_localconf.php
 readMe.md
 releaseNote.pdf
+Classes/Command/CdnToLocal.php
 Classes/Command/CustomScss.php
 Classes/Controller/AbstractController.php
 Classes/Hooks/PageRenderer/PreProcessHook.php
@@ -110,6 +111,18 @@ Die beiden Hinweise des Backend-Moduls, die bisher fest `typo3temp/assets/t3sboo
 nannten, nennen jetzt das tatsächlich konfigurierte Verzeichnis — der Pfad kommt als
 Argument in die Übersetzung. Dasselbe gilt für die Beschreibung im Settings-Editor, die
 readMe und den Text des Upgrade-Wizards: Sie behaupteten den Pfad als feststehend.
+### Behoben — fünf Beschreibungen in der Extension-Konfiguration waren abgeschnitten
+
+Das Install Tool zerlegt eine Kommentarzeile in `ext_conf_template.txt` an `;`. Steht im
+Labeltext selbst eines, endet die Anzeige dort. Betroffen waren *Vertical header*,
+*Content indent*, *RTE Badge*, *RTE Color* und das neue *Asset directory* — bei allen
+fünf fehlte der letzte Satz, und beim Asset-Verzeichnis ausgerechnet der Teil, der sagt,
+was ohne eigene `PublicResourceDefinition` passiert und welche Kommandos danach laufen
+müssen. Die Semikolons sind durch Gedankenstriche ersetzt, die Texte sind unverändert.
+
+Dazu die Beschreibungen der beiden `--if-needed`-Optionen, die im Planer-Formular
+stehen — sie erklärten den wiederkehrenden Task zur Antwort auf einen Hoster, der
+`typo3temp/` leert, und nennen jetzt `assetDir` als den direkteren Weg.
 
 **Nach einer Änderung sind die Dateien am neuen Ort noch nicht vorhanden.**
 Einmal `t3sbootstrap:cdnToLocal` und `t3sbootstrap:customScss <Rootseiten-ID>`

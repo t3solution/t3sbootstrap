@@ -91,9 +91,10 @@ final class CustomScss extends CommandBase
             null,
             InputOption::VALUE_NONE,
             'Exit without work when the Bootstrap sources, the include file and the relevant '
-            . 'settings are unchanged. Meant for a recurring task: set this option and choose the '
-            . 'type "recurring" when your host empties typo3temp/ on automatic updates. Leave it '
-            . 'off when you run the command by hand - then it should rebuild.',
+            . 'settings are unchanged. Set it for every run from a schedule; leave it off when you '
+            . 'type the command yourself - then it should rebuild. A recurring task is only needed '
+            . 'as long as the asset directory is one the host empties on automatic updates - the '
+            . 'extension configuration "assetDir" moves it somewhere persistent.',
       );
    }
         

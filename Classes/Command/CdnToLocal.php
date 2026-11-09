@@ -68,10 +68,10 @@ final class CdnToLocal extends CommandBase
                 null,
                 InputOption::VALUE_NONE,
                 'Exit without downloading when every expected file is present and the cdn '
-                . 'settings are unchanged. Meant for a recurring task: set this option and choose '
-                . 'the type "recurring" (every 15 minutes is fine) when your host empties typo3temp/ '
-                . 'on automatic updates. Leave it off when you run the command by hand - then it '
-                . 'should download.'
+                . 'settings are unchanged. Set it for every run from a schedule; leave it off when '
+                . 'you type the command yourself - then it should download. A recurring task is only '
+                . 'needed as long as the asset directory is one the host empties on automatic updates '
+                . '- the extension configuration "assetDir" moves it somewhere persistent.'
             );
     }
 
