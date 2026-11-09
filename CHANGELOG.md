@@ -4,6 +4,23 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.60 (unveröffentlicht)
+
+Betrifft die folgenden Dateien:
+
+```
+Classes/Command/CdnToLocal.php
+```
+
+### Behoben — die Beschreibung von cdnToLocal nannte das Sitepackage
+
+Im Planer-Dialog und in `vendor/bin/typo3 list` stand bei `t3sbootstrap:cdnToLocal`
+noch *„Write required CSS and JS into the configured site package"*. Ein Sitepackage
+beschreibt das Kommando seit 5.3.50 nicht mehr; jetzt heißt es *„Write the required
+CSS, JS and fonts into the asset directory"*.
+
+---
+
 ## 5.3.59 — Asset-Verzeichnis konfigurierbar
 
 Betrifft die folgenden Dateien:

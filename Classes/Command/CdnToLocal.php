@@ -15,7 +15,7 @@ use T3SBS\T3sbootstrap\Service\AssetPathService;
 use T3SBS\T3sbootstrap\Service\AssetStateService;
 use T3SBS\T3sbootstrap\Service\CdnAssetMap;
 
-#[AsCommand('t3sbootstrap:cdnToLocal', 'Write required CSS and JS into the configured site package')]
+#[AsCommand('t3sbootstrap:cdnToLocal', 'Write the required CSS, JS and fonts into the asset directory')]
 final class CdnToLocal extends CommandBase
 {
 
