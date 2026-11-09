@@ -13,9 +13,9 @@ use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 
 /**
  * Rewrites the generated TypoScript and scss when they are gone; one database read is enough,
- * as everything below typo3temp/assets/ derives from the configuration record. Runs before
- * TypoScript is resolved, because RequestHandler silently drops includeCSS/includeJS entries
- * whose file is missing and caches that. Downloads are left out - they need network.
+ * as both derive from the configuration record. Runs before TypoScript is resolved, because
+ * RequestHandler silently drops includeCSS/includeJS entries whose file is missing and caches
+ * that. Downloads are left out - they need network.
  */
 final readonly class EnsureGeneratedFiles implements MiddlewareInterface
 {

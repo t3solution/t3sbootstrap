@@ -38,7 +38,7 @@ extraStyle = 0
 allowReferences = 0
 # cat=content/enable/80; type=boolean; label=Supraheader: A short text element placed directly above the heading (Latin supra = “above”)
 supraheader = 0
-# cat=content/enable/85; type=boolean; label=Vertical header: Shows a select-field "Vertical header" in the "Headers" tab of any content element. It turns the whole header block - heading, subheading and supraheader - by 90 degrees, from the "lg" breakpoint up. Switching this off only hides the field; a value already stored keeps rendering (clear cache)
+# cat=content/enable/85; type=boolean; label=Vertical header: Shows a select-field "Vertical header" in the "Headers" tab of any content element. It turns the whole header block - heading, subheading and supraheader - by 90 degrees, from the "lg" breakpoint up. Switching this off only hides the field - a value already stored keeps rendering (clear cache)
 headerVertical = 0
 # cat=content/enable/90; type=boolean; label=Speaking ID: Human-readable ID for deep links / onepage navigation. Off also stops the automatic generation on save - anchors already stored stay and keep rendering, clear them with "typo3 t3sbootstrap:anchor --mode clear". (clear cache)
 speakingID = 0
@@ -51,7 +51,7 @@ navbarmodal = 0
 titlecolor = 0
 # cat=page/enable/50; type=boolean; label=Tab "T3SB" under "Edit Page": Per-page switches to hide navbar, meta row, breadcrumb, page title or jumbotron on a single page. Each switch only appears if that part is enabled in the T3SB configuration record. Switching this off only hides the tab - values already saved keep working (clear cache)
 pageOptOut = 0
-# cat=page/enable/60; type=boolean; label=Content indent: A per-page indent for the content elements, in Bootstrap grid columns (1-6). It applies from the "lg" breakpoint up and only under the one-column backend layout; sub-pages inherit the value until one of them sets its own. Each content element can opt out of it in the "Appearance" tab. Switching this off only hides the fields - stored values are kept (clear cache)
+# cat=page/enable/60; type=boolean; label=Content indent: A per-page indent for the content elements, in Bootstrap grid columns (1-6). It applies from the "lg" breakpoint up and only under the one-column backend layout - sub-pages inherit the value until one of them sets its own. Each content element can opt out of it in the "Appearance" tab. Switching this off only hides the fields - stored values are kept (clear cache)
 contentIndent = 0
 # cat=page/enable/61; type=boolean; label=Content indent - inherit: Sub-pages take over the indent of the nearest page above them that has one set, until one of them sets its own. Switched off, an indent applies only to the page it is set on. Only has an effect while "Content indent" is on
 contentIndentInherit = 1
@@ -78,6 +78,8 @@ animateCss = 0
 linkHoverEffect = 0
 # cat=Advanced/enable/50; type=options[none=0, for all images=1, single selection in FAL=2, auto native image lazy-loading for all images=3]; label=Lazy Load: for images - include lazyload.min.js except native image lazy-loading (clear cache)
 lazyLoad = 0
+# cat=Advanced/enable/60; type=string; label=Asset directory: Where the generated and downloaded files are kept, relative to the public directory - default "typo3temp/assets/t3sbootstrap/". typo3temp/ is declared disposable by the core, so a host that empties it on automatic updates takes the downloaded CDN assets and Bootstrap sources with it, and those need network to come back. Moving them somewhere persistent, e.g. "uploads/t3sb-assets/", takes them out of that line of fire. The default is left alone on purpose, so that an update never moves the files of an existing installation - you decide when that happens. Mind that TYPO3 v14 serves asset references only from the paths the app package publishes - typo3temp/assets, uploads and _assets (see DefaultAppResources.php) - plus fileadmin/ through the file storage. _assets is rewritten by the composer installer, and a path below fileadmin/ is indexed as a file and shown to editors in the Filelist module, which leaves uploads/ as the recommendation. Any other location needs its own PublicResourceDefinition in config/system/resources.php - without it TYPO3 drops the stylesheet reference without an error and the page renders unstyled. An invalid value falls back to the default. After a change the files are re-created at the new place: run t3sbootstrap:cdnToLocal and t3sbootstrap:customScss once, then clear the cache.
+assetDir =
 # cat=Advanced/enable/70; type=boolean; label=Extension news: integration of templates adapted for bootstrap (clear cache)
 extNews = 0
 
@@ -109,9 +111,9 @@ rteCodeBlock = 0
 rteCode = 1
 # cat=RTE/enable/45; type=boolean; label=RTE Margins: Toolbar item "Margin" - a dropdown for the Bootstrap spacing utilities mt-1..mt-5 and mb-1..mb-5 on the current block. Top and bottom are independent.
 rteMargins = 1
-# cat=RTE/enable/47; type=boolean; label=RTE Badge: Toolbar item "Badge" - one dropdown holding the eight Bootstrap badge colors, each as a normal badge and as a pill. It replaces the 16 entries "Badge *" and "Pill Badge *" in the Styles dropdown; the markup is identical, so existing badges stay editable. Switching this off only hides the button.
+# cat=RTE/enable/47; type=boolean; label=RTE Badge: Toolbar item "Badge" - one dropdown holding the eight Bootstrap badge colors, each as a normal badge and as a pill. It replaces the 16 entries "Badge *" and "Pill Badge *" in the Styles dropdown - the markup is identical, so existing badges stay editable. Switching this off only hides the button.
 rteBadge = 1
-# cat=RTE/enable/48; type=boolean; label=RTE Color: Toolbar item "Color" - one dropdown holding the six Bootstrap text colors, once for the marked text and once for the whole paragraph. It replaces the twelve entries "Text Color *" and "Block Color *" in the Styles dropdown; the markup is identical, so existing colors stay editable. Switching this off only hides the button.
+# cat=RTE/enable/48; type=boolean; label=RTE Color: Toolbar item "Color" - one dropdown holding the six Bootstrap text colors, once for the marked text and once for the whole paragraph. It replaces the twelve entries "Text Color *" and "Block Color *" in the Styles dropdown - the markup is identical, so existing colors stay editable. Switching this off only hides the button.
 rteColor = 1
 # cat=RTE/enable/50; type=boolean; label=RTE Table: Toolbar item "Insert table". Existing tables stay editable.
 rteTable = 1

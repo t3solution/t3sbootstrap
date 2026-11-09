@@ -259,7 +259,7 @@
 		<unit id="notificationmessage_7">
 			<segment>
 				<source>CDN delivery is disabled, but the local CSS/JS files are not present.</source>
-				<target>Die CDN-Auslieferung ist deaktiviert, aber die lokalen CSS/JS-Dateien liegen nicht in typo3temp/assets/t3sbootstrap/. TYPO3 verwirft fehlende Dateien aus includeCSS/includeJS ohne Fehlermeldung, das Frontend kann also unformatiert ausgeliefert werden. Bitte das Konsolenkommando „t3sbootstrap:cdnToLocal" oder den Scheduler-Task ausführen.</target>
+				<target>Die CDN-Auslieferung ist deaktiviert, aber die lokalen CSS/JS-Dateien liegen nicht in %s. TYPO3 verwirft fehlende Dateien aus includeCSS/includeJS ohne Fehlermeldung, das Frontend kann also unformatiert ausgeliefert werden. Bitte das Konsolenkommando „t3sbootstrap:cdnToLocal" oder den Scheduler-Task ausführen.</target>
 			</segment>
 		</unit>
 
@@ -273,7 +273,7 @@
 		<unit id="notificationmessage_8">
 			<segment>
 				<source>SCSS is enabled, but the Bootstrap sources are not present.</source>
-				<target>SCSS ist aktiviert, aber die Bootstrap-Quellen liegen nicht in typo3temp/assets/t3sbootstrap/T3SB-Bootstrap/Bootstrap/scss/. Sie sind ein Download und lassen sich nicht aus dem Konfigurations-Datensatz neu erzeugen, und typo3temp/ wird bei jedem TYPO3-Update, jedem Deployment und jedem Cache-Flush geleert. Ohne sie zeigt die Stylesheet-Referenz ins Leere, TYPO3 verwirft sie ohne Fehlermeldung und die Seite wird unformatiert ausgeliefert. Zu beachten: Auch die Include-Datei Bootstrap/bootstrap-&lt;uid&gt;.scss wird nicht aus dem Konfigurations-Datensatz neu erzeugt - nur das Kommando schreibt sie. Bitte das Konsolenkommando „t3sbootstrap:customScss &lt;Rootseiten-ID&gt;" oder den Scheduler-Task „T3SB Custom SCSS" ausführen.</target>
+				<target>SCSS ist aktiviert, aber die Bootstrap-Quellen liegen nicht in %sT3SB-Bootstrap/Bootstrap/scss/. Sie sind ein Download und lassen sich nicht aus dem Konfigurations-Datensatz neu erzeugen, und ein Verzeichnis unterhalb von typo3temp/ wird bei jedem TYPO3-Update, jedem Deployment und jedem Cache-Flush geleert. Ohne sie zeigt die Stylesheet-Referenz ins Leere, TYPO3 verwirft sie ohne Fehlermeldung und die Seite wird unformatiert ausgeliefert. Zu beachten: Auch die Include-Datei Bootstrap/bootstrap-&lt;uid&gt;.scss wird nicht aus dem Konfigurations-Datensatz neu erzeugt - nur das Kommando schreibt sie. Bitte das Konsolenkommando „t3sbootstrap:customScss &lt;Rootseiten-ID&gt;" oder den Scheduler-Task „T3SB Custom SCSS" ausführen.</target>
 			</segment>
 		</unit>
 		
