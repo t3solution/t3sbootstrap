@@ -25,6 +25,8 @@ return [
                 'list',
                 'export',
                 'import',
+                'transferPreview',
+                'transferApply',
             ],
         ],
     ],

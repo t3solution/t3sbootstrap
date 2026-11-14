@@ -279,15 +279,15 @@
 		
 		<unit id="transfer.title">
 			<segment>
-				<source>Configuration transfer</source>
-				<target>Konfiguration übertragen</target>
+				<source>Back up and transfer the configuration</source>
+				<target>Konfiguration sichern und übertragen</target>
 			</segment>
 		</unit>
 		
 		<unit id="transfer.description">
 			<segment>
-				<source>Export the t3sbootstrap configuration of a site root as a portable JSON file and import it into another installation. The export contains no uid and no pid, so the target page tree may look completely different. Site settings (Bootstrap version, Bootswatch, Google Fonts) are not part of it - those live in the site configuration. The export does include the own SCSS (variables and overrides), so it doubles as the backup of that content; to step back through single changes use the record history of the configuration record.</source>
-				<target>Exportiert die t3sbootstrap-Konfiguration einer Root-Seite als portable JSON-Datei und importiert sie in eine andere Installation. Der Export enthält weder uid noch pid, der Seitenbaum des Ziels darf also völlig anders aussehen. Nicht enthalten sind die Site Settings (Bootstrap-Version, Bootswatch, Google Fonts) - die stehen in der Site-Konfiguration. Enthalten ist auch das eigene SCSS (Variablen und Overrides) — der Export ist damit zugleich die Sicherung dieser Inhalte; für einzelne Schritte zurück gibt es die Historie des Konfigurations-Datensatzes.</target>
+				<source>Saves the t3sbootstrap configuration of a site root as a portable JSON file - as the backup of this installation, or to import it into another one. The export contains no uid and no pid, so the target page tree may look completely different. It holds everything a setup consists of: the configuration record with the own scss (variables and overrides), the extension configuration, and the site&apos;s t3sbootstrap sets together with their settings - Bootstrap version, Bootswatch and Google Fonts among them. To step back through single changes instead, use the record history of the configuration record.</source>
+				<target>Sichert die t3sbootstrap-Konfiguration einer Root-Seite als portable JSON-Datei - als Sicherung dieser Installation oder zum Import in eine andere. Der Export enthält weder uid noch pid, der Seitenbaum des Ziels darf also völlig anders aussehen. Enthalten ist alles, woraus ein Setup besteht: der Konfigurations-Datensatz mit dem eigenen SCSS (Variablen und Overrides), die Extension-Konfiguration sowie die t3sbootstrap-Sets der Site samt ihren Settings - darunter Bootstrap-Version, Bootswatch und Google Fonts. Für einzelne Schritte zurück gibt es stattdessen die Historie des Konfigurations-Datensatzes.</target>
 			</segment>
 		</unit>
 		
@@ -356,8 +356,8 @@
 		
 		<unit id="transfer.imported">
 			<segment>
-				<source>%d record(s) imported on page %d.</source>
-				<target>%d Datensatz/Datensätze auf Seite %d importiert.</target>
+				<source>Configuration records written on page %2$d: %1$d</source>
+				<target>Konfigurations-Datensätze auf Seite %2$d geschrieben: %1$d</target>
 			</segment>
 		</unit>
 		
@@ -389,10 +389,544 @@
 			</segment>
 		</unit>
 		
-		<unit id="transfer.mode.hint">
+		<unit id="transfer.inventory">
 			<segment>
-				<source>Update is the normal case: fields missing from the import are reset to their default, so the result matches the export exactly. Replace changes the uid and leaves a deleted row behind.</source>
-				<target>Aktualisieren ist der Normalfall: Felder, die der Import nicht enthält, werden auf den Standardwert zurückgesetzt, das Ergebnis entspricht also exakt dem Export. Ersetzen ändert die uid und hinterlässt einen gelöschten Datensatz.</target>
+				<source>What this installation would export</source>
+				<target>Was diese Installation exportieren würde</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.description">
+			<segment>
+				<source>TYPO3 %s on PHP %s. Besides the configuration record the export carries the extension configuration, the sets and settings of this site, and the inventory below - so the target installation can tell what it is missing. Only the t3sbootstrap sets are imported there, the others are listed for reference.</source>
+				<target>TYPO3 %s unter PHP %s. Neben dem Konfigurations-Datensatz enthält der Export die Extension-Konfiguration, die Sets und Settings dieser Site sowie den folgenden Bestand - damit die Ziel-Installation erkennt, was ihr fehlt. Importiert werden dort nur die t3sbootstrap-Sets, die übrigen stehen zur Orientierung dabei.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.set">
+			<segment>
+				<source>Set</source>
+				<target>Set</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.extension">
+			<segment>
+				<source>provided by</source>
+				<target>bereitgestellt von</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.unknown">
+			<segment>
+				<source>not found - this set is missing in this installation</source>
+				<target>nicht gefunden - dieses Set fehlt in dieser Installation</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.nosite">
+			<segment>
+				<source>This page belongs to no site, so no sets can be read.</source>
+				<target>Diese Seite gehört zu keiner Site, es können daher keine Sets ausgelesen werden.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.readonly">
+			<segment>
+				<source>config/system/settings.php is not writable here. The export works regardless - this only matters for an import into this installation.</source>
+				<target>config/system/settings.php ist hier nicht schreibbar. Der Export funktioniert davon unabhängig - das betrifft nur einen Import in diese Installation.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.history">
+			<segment>
+				<source>History of the configuration record</source>
+				<target>Historie des Konfigurations-Datensatzes</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.sets.title">
+			<segment>
+				<source>Site Sets</source>
+				<target>Site Sets</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.sets.origin">
+			<segment>
+				<source>The %s sets of this site, read from config/sites/%s/config.yaml.</source>
+				<target>Die %s Sets dieser Site, gelesen aus config/sites/%s/config.yaml.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.sets.origin.unknown">
+			<segment>
+				<source>This page belongs to no site, so there are no sets to read.</source>
+				<target>Diese Seite gehört zu keiner Site, es lassen sich daher keine Sets auslesen.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.sets.managed">
+			<segment>
+				<source>They are maintained in Site Management, Sites, tab Sets. The import adds only the ones marked t3sbootstrap - the others are listed because a site configuration becomes invalid as soon as one of its sets is missing on the target, and that is easier to see here than there.</source>
+				<target>Gepflegt werden sie in Site-Verwaltung, Sites, Reiter Sets. Der Import ergänzt nur die mit dem Kennzeichen t3sbootstrap - die übrigen stehen hier, weil eine Site-Konfiguration ungültig wird, sobald eines ihrer Sets im Ziel fehlt, und das sieht man hier leichter als dort.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.extensions.title">
+			<segment>
+				<source>Extension inventory</source>
+				<target>Extension-Bestand</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.extensions.description">
+			<segment>
+				<source>The export names all %s extensions installed here with their composer name and version - core packages excluded, those follow from the TYPO3 version. None of it is ever imported, an extension cannot install another one. The list is meant for the target installation: its preview compares it against what is installed there and names what is missing, with the matching composer require line. It is also the record of the environment this setup ran in.</source>
+				<target>Der Export nennt alle %s hier installierten Extensions mit Composer-Namen und Version - Core-Pakete ausgenommen, die ergeben sich aus der TYPO3-Version. Importiert wird davon nichts, eine Extension kann keine andere installieren. Die Liste ist für die Ziel-Installation gedacht: deren Vorschau vergleicht sie mit dem dortigen Bestand und nennt, was fehlt, samt passender composer-require-Zeile. Zugleich hält sie fest, in welcher Umgebung dieses Setup lief.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.sets.show">
+			<segment>
+				<source>Show the %s site sets</source>
+				<target>Die %s Site Sets anzeigen</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.extensions.show">
+			<segment>
+				<source>Show the %s extensions</source>
+				<target>Die %s Extensions anzeigen</target>
+			</segment>
+		</unit>
+		<unit id="transfer.figure.records">
+			<segment>
+				<source>configuration record</source>
+				<target>Konfigurations-Datensatz</target>
+			</segment>
+		</unit>
+		<unit id="transfer.figure.configuration">
+			<segment>
+				<source>extension configuration values</source>
+				<target>Werte Extension-Konfiguration</target>
+			</segment>
+		</unit>
+		<unit id="transfer.figure.sets">
+			<segment>
+				<source>t3sbootstrap sets</source>
+				<target>t3sbootstrap-Sets</target>
+			</segment>
+		</unit>
+		<unit id="transfer.figure.settings">
+			<segment>
+				<source>site settings</source>
+				<target>Site-Settings</target>
+			</segment>
+		</unit>
+		<unit id="transfer.figure.extensions">
+			<segment>
+				<source>installed extensions</source>
+				<target>installierte Extensions</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.settings.title">
+			<segment>
+				<source>Site settings</source>
+				<target>Site-Settings</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.settings.description">
+			<segment>
+				<source>The %s values with the prefix bootstrap. from the settings.yaml of this site - only those that differ from the defaults of the sets. These are written on the target, every other extension's settings there stay untouched.</source>
+				<target>Die %s Werte mit dem Präfix bootstrap. aus der settings.yaml dieser Site - nur die, die von den Vorgaben der Sets abweichen. Sie werden im Ziel geschrieben; die Settings aller anderen Extensions bleiben dort unangetastet.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.settings.show">
+			<segment>
+				<source>Show the %s settings</source>
+				<target>Die %s Settings anzeigen</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.settings.none">
+			<segment>
+				<source>This site has no own t3sbootstrap settings - everything is on the defaults of the sets.</source>
+				<target>Diese Site hat keine eigenen t3sbootstrap-Settings - alles steht auf den Vorgaben der Sets.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.configuration.title">
+			<segment>
+				<source>Extension configuration</source>
+				<target>Extension-Konfiguration</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.configuration.description">
+			<segment>
+				<source>The %s values from EXTENSIONS.t3sbootstrap in config/system/settings.php, maintained in the install tool. The two paths assetDir and flexformDir are missing on purpose - they belong to the host and are never written on a target.</source>
+				<target>Die %s Werte aus EXTENSIONS.t3sbootstrap in config/system/settings.php, gepflegt im Installations-Werkzeug. Die beiden Pfade assetDir und flexformDir fehlen mit Absicht - sie gehören zum Host und werden in einem Ziel nie geschrieben.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.configuration.show">
+			<segment>
+				<source>Show the %s values</source>
+				<target>Die %s Werte anzeigen</target>
+			</segment>
+		</unit>
+		<unit id="transfer.export.command">
+			<segment>
+				<source>The same export as a file, for a scheduler task that keeps a regular backup, or for a deployment script:</source>
+				<target>Derselbe Export als Datei - für eine Planer-Aufgabe, die regelmäßig sichert, oder für ein Deployment-Skript:</target>
+			</segment>
+		</unit>
+		<unit id="transfer.mode.hint.update">
+			<segment>
+				<source>Update is the normal case: the existing record is overwritten and keeps its uid. Fields the import does not carry are reset to their default value, so the result matches the export exactly.</source>
+				<target>Aktualisieren ist der Normalfall: der vorhandene Datensatz wird überschrieben und behält seine uid. Felder, die der Import nicht enthält, werden auf den Standardwert zurückgesetzt - das Ergebnis entspricht also exakt dem Export.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.mode.hint.replace">
+			<segment>
+				<source>Replace deletes the existing record and creates a new one. Its uid changes, and the old one stays behind as a deleted record. Rarely necessary.</source>
+				<target>Ersetzen löscht den vorhandenen Datensatz und legt einen neuen an. Dessen uid ändert sich, und der alte bleibt als gelöschter Datensatz liegen. Nötig ist das selten.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.mode.hint.add">
+			<segment>
+				<source>Add only imports when the target page has no configuration at all. If there already is one, the import stops with a message and changes nothing - the safe choice when you are not sure what is on the target page.</source>
+				<target>Hinzufügen importiert nur, wenn die Zielseite noch gar keine Konfiguration hat. Liegt dort schon eine, bricht der Import mit einer Meldung ab und ändert nichts - der sichere Modus, wenn du nicht weißt, was auf der Zielseite liegt.</target>
+			</segment>
+		</unit>
+		<unit id="constants.constant">
+			<segment>
+				<source>Constant</source>
+				<target>Konstante</target>
+			</segment>
+		</unit>
+		<unit id="constants.value">
+			<segment>
+				<source>Value</source>
+				<target>Wert</target>
+			</segment>
+		</unit>
+		<unit id="constants.meaning">
+			<segment>
+				<source>Field it comes from</source>
+				<target>Feld, aus dem er stammt</target>
+			</segment>
+		</unit>
+		<unit id="constants.astyposcript">
+			<segment>
+				<source>Show as TypoScript to copy</source>
+				<target>Als TypoScript zum Kopieren anzeigen</target>
+			</segment>
+		</unit>
+		<unit id="constants.uid">
+			<segment>
+				<source>uid of the configuration record this block belongs to</source>
+				<target>uid des Konfigurations-Datensatzes, zu dem dieser Block gehört</target>
+			</segment>
+		</unit>
+		<unit id="constants.breakpointwidth">
+			<segment>
+				<source>Pixel width of the navbar breakpoint, derived from the chosen breakpoint</source>
+				<target>Pixelbreite des Navbar-Breakpoints, abgeleitet aus dem gewählten Breakpoint</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system.where">
+			<segment>
+				<source>Written to config/system/settings.php (the block EXTENSIONS.t3sbootstrap) and to the config/sites/ folder of the site the target page selected above belongs to - config.yaml for the sets, settings.yaml for the settings.</source>
+				<target>Geschrieben wird in config/system/settings.php (Block EXTENSIONS.t3sbootstrap) und in das config/sites/-Verzeichnis der Site, zu der die oben gewählte Zielseite gehört - config.yaml für die Sets, settings.yaml für die Settings.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system.preview">
+			<segment>
+				<source>Nothing is written right away. First comes a preview with every value that would change, old and new side by side, and only a second confirmation writes it.</source>
+				<target>Sofort geschrieben wird nichts. Zuerst kommt eine Vorschau mit jedem Wert, der sich ändern würde, alt und neu nebeneinander - erst eine zweite Bestätigung schreibt.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system.scope">
+			<segment>
+				<source>Only what belongs to t3sbootstrap is touched: sets with the prefix t3sbs/t3sbootstrap and settings with the prefix bootstrap. The settings of every other extension in the same settings.yaml stay exactly as they are.</source>
+				<target>Angefasst wird nur, was zu t3sbootstrap gehört: Sets mit dem Präfix t3sbs/t3sbootstrap und Settings mit dem Präfix bootstrap. Die Settings aller anderen Extensions in derselben settings.yaml bleiben unverändert.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system.host">
+			<segment>
+				<source>The two paths assetDir and flexformDir are never imported. They belong to this host, and overwriting the asset directory leaves the site without styling.</source>
+				<target>Die beiden Pfade assetDir und flexformDir werden nie übernommen. Sie gehören zu diesem Host, und ein überschriebenes Asset-Verzeichnis lässt die Seite ohne Styling zurück.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system.deployment">
+			<segment>
+				<source>Both files usually live in version control, so a write here lasts until the next deployment. If they are not writable, the preview offers the finished lines to paste instead.</source>
+				<target>Beide Dateien liegen meist in der Versionsverwaltung - ein Schreibvorgang hier hält also bis zum nächsten Deployment. Sind sie nicht schreibbar, bietet die Vorschau stattdessen die fertigen Zeilen zum Einfügen an.</target>
+			</segment>
+		</unit>
+		<unit id="constants.edit">
+			<segment>
+				<source>Edit this field in the configuration record</source>
+				<target>Dieses Feld im Konfigurations-Datensatz bearbeiten</target>
+			</segment>
+		</unit>
+		<unit id="constants.scope">
+			<segment>
+				<source>%s of these %s constants carry a pencil, which opens that one field for editing.</source>
+				<target>%s der %s Konstanten tragen einen Stift, der genau dieses eine Feld zum Bearbeiten öffnet.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.composer">
+			<segment>
+				<source>To set the same %s extensions up elsewhere - the versions of this installation, a branch stays a branch:</source>
+				<target>Um dieselben %s Extensions anderswo einzurichten - die Versionen dieser Installation, ein Branch bleibt ein Branch:</target>
+			</segment>
+		</unit>
+		<unit id="transfer.inventory.composer.skipped">
+			<segment>
+				<source>Without a composer name and therefore not in the line, these were installed without composer:</source>
+				<target>Ohne Composer-Namen und daher nicht in der Zeile - diese wurden ohne Composer installiert:</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.composer">
+			<segment>
+				<source>The %s missing extensions in one line:</source>
+				<target>Die %s fehlenden Extensions in einer Zeile:</target>
+			</segment>
+		</unit>
+		<unit id="constants.none">
+			<segment>
+				<source>No constants were generated: no configuration record on this page has "Uid of the home page" pointing at this page. Open "Edit configuration" and set that field.</source>
+				<target>Keine Konstanten erzeugt: Auf dieser Seite zeigt bei keinem Konfigurations-Datensatz das Feld „Uid der Startseite" auf diese Seite. Unter „Konfiguration bearbeiten" eintragen.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.expired">
+			<segment>
+				<source>The preview is no longer available - nothing was written. Please upload the file again.</source>
+				<target>Die Vorschau ist nicht mehr verfügbar - es wurde nichts geschrieben. Bitte die Datei erneut hochladen.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.nowarranty">
+			<segment>
+				<source>The import changes files of this installation. Make a backup first - this extension comes with no warranty (GPL-2.0-or-later), and no liability is accepted for any damage.</source>
+				<target>Der Import verändert Dateien dieser Installation. Lege vorher eine Sicherung an - die Extension wird ohne Gewährleistung bereitgestellt (GPL-2.0-or-later), eine Haftung für Schäden wird nicht übernommen.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.records">
+			<segment>
+				<source>Configuration record (including your scss)</source>
+				<target>Konfigurations-Datensatz (einschließlich eigenem SCSS)</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system">
+			<segment>
+				<source>System configuration: extension configuration, sets and site settings</source>
+				<target>System-Konfiguration: Extension-Konfiguration, Sets und Site-Settings</target>
+			</segment>
+		</unit>
+		<unit id="transfer.part.system.hint">
+			<segment>
+				<source>These three parts are not in the database. What happens when you import them:</source>
+				<target>Diese drei Teile liegen nicht in der Datenbank. Was beim Import mit ihnen geschieht:</target>
+			</segment>
+		</unit>
+		<unit id="transfer.error.nothingselected">
+			<segment>
+				<source>Nothing was selected to import.</source>
+				<target>Es wurde nichts zum Importieren ausgewählt.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.system.adminonly">
+			<segment>
+				<source>Only an administrator can import the system configuration.</source>
+				<target>Nur ein Administrator kann die System-Konfiguration importieren.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.system.notinfile">
+			<segment>
+				<source>The file carries no system configuration - it was written by a version before 5.3.60.</source>
+				<target>Die Datei enthält keine System-Konfiguration - sie stammt aus einer Version vor 5.3.60.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.system.nosite">
+			<segment>
+				<source>The target page belongs to no site, so sets and site settings are skipped.</source>
+				<target>Die Zielseite gehört zu keiner Site, Sets und Site-Settings werden daher übersprungen.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.system.extwritten">
+			<segment>
+				<source>%d value(s) written to the extension configuration.</source>
+				<target>%d Wert(e) in die Extension-Konfiguration geschrieben.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.system.sitewritten">
+			<segment>
+				<source>Site %s: %d set(s) and %d setting(s) written.</source>
+				<target>Site %s: %d Set(s) und %d Setting(s) geschrieben.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.title">
+			<segment>
+				<source>Import system configuration</source>
+				<target>System-Konfiguration importieren</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.description">
+			<segment>
+				<source>For the system configuration nothing has been written yet. Check what would change and confirm below. Configuration records, if you imported them, are already written.</source>
+				<target>Für die System-Konfiguration wurde noch nichts geschrieben. Prüfe, was sich ändern würde, und bestätige unten. Die Konfigurations-Datensätze sind, falls mit importiert, bereits geschrieben.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.source">
+			<segment>
+				<source>Source of the export</source>
+				<target>Quelle des Exports</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.extension">
+			<segment>
+				<source>Extension configuration</source>
+				<target>Extension-Konfiguration</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.key">
+			<segment>
+				<source>Key</source>
+				<target>Schlüssel</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.from">
+			<segment>
+				<source>Currently</source>
+				<target>Aktuell</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.to">
+			<segment>
+				<source>After the import</source>
+				<target>Nach dem Import</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.count">
+			<segment>
+				<source>%s of %s values differ.</source>
+				<target>%s von %s Werten weichen ab.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.nochanges">
+			<segment>
+				<source>Nothing would change here.</source>
+				<target>Hier würde sich nichts ändern.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.skipped">
+			<segment>
+				<source>Skipped, unknown in this installation</source>
+				<target>Übersprungen, in dieser Installation nicht vorhanden</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.hostspecific">
+			<segment>
+				<source>Not imported, these paths belong to this installation</source>
+				<target>Nicht importiert, diese Pfade gehören zu dieser Installation</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.hostspecific.hint">
+			<segment>
+				<source>The values shown are the ones from the export, for reference. Your own asset directory is left as it is - overwriting it would leave the site unstyled.</source>
+				<target>Angezeigt werden die Werte aus dem Export, zur Orientierung. Dein eigenes Asset-Verzeichnis bleibt unangetastet - es zu überschreiben würde die Seite ohne Styling zurücklassen.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.empty">
+			<segment>
+				<source>empty</source>
+				<target>leer</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.site">
+			<segment>
+				<source>Site %s</source>
+				<target>Site %s</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.sets">
+			<segment>
+				<source>Sets that would be added</source>
+				<target>Sets, die hinzugefügt würden</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.sets.complete">
+			<segment>
+				<source>All sets of the export are already in use.</source>
+				<target>Alle Sets des Exports sind bereits eingebunden.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.notwritable.settings">
+			<segment>
+				<source>config/system/settings.php is not writable. Use the snippet below.</source>
+				<target>config/system/settings.php ist nicht schreibbar. Nutze das Snippet weiter unten.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.notwritable.site">
+			<segment>
+				<source>The site configuration is not writable. Use the snippet below.</source>
+				<target>Die Site-Konfiguration ist nicht schreibbar. Nutze das Snippet weiter unten.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.snippets">
+			<segment>
+				<source>Copy by hand instead</source>
+				<target>Stattdessen von Hand übernehmen</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.snippets.hint">
+			<segment>
+				<source>Both files are usually under version control, so a write here lasts until the next deployment. For a permanent change, put these lines into your repository.</source>
+				<target>Beide Dateien liegen meist in der Versionsverwaltung, ein Schreibvorgang hier hält also bis zum nächsten Deployment. Für eine dauerhafte Änderung gehören diese Zeilen ins Repository.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.apply">
+			<segment>
+				<source>Write now</source>
+				<target>Jetzt schreiben</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.cancel">
+			<segment>
+				<source>Cancel</source>
+				<target>Abbrechen</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment">
+			<segment>
+				<source>Source installation</source>
+				<target>Quell-Installation</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.versions">
+			<segment>
+				<source>Exported from TYPO3 %s on PHP %s.</source>
+				<target>Exportiert aus TYPO3 %s unter PHP %s.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.missingsets">
+			<segment>
+				<source>Sets the source site uses and this installation does not know</source>
+				<target>Sets, die die Quell-Site nutzt und die diese Installation nicht kennt</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.missingsets.hint">
+			<segment>
+				<source>A site configuration that names an unknown set is invalid, so install the extensions below first. Only the t3sbootstrap sets are added by this import, the others have to be entered into the site configuration.</source>
+				<target>Eine Site-Konfiguration, die ein unbekanntes Set nennt, ist ungültig - installiere daher zuerst die unten genannten Extensions. Dieser Import ergänzt nur die t3sbootstrap-Sets, die übrigen gehören von Hand in die Site-Konfiguration.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.from">
+			<segment>
+				<source>from</source>
+				<target>aus</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.missingext">
+			<segment>
+				<source>Extensions of the source installation that are not installed here</source>
+				<target>Extensions der Quell-Installation, die hier nicht installiert sind</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.missingext.hint">
+			<segment>
+				<source>Not every one of them is needed - the list is the whole inventory of the source. Settings that point at a missing extension simply do nothing.</source>
+				<target>Nicht jede davon wird gebraucht - die Liste ist der komplette Bestand der Quelle. Settings, die auf eine fehlende Extension zeigen, bleiben einfach wirkungslos.</target>
+			</segment>
+		</unit>
+		<unit id="transfer.preview.environment.complete">
+			<segment>
+				<source>Every set and every extension of the source installation is present here.</source>
+				<target>Alle Sets und Extensions der Quell-Installation sind hier vorhanden.</target>
 			</segment>
 		</unit>
 		

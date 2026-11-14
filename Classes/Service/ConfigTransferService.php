@@ -12,14 +12,20 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Portable export/import of the t3sbootstrap configuration. The export holds no uids and no
- * pid, only field values and FAL references as combined identifiers ("1:/user_upload/logo.svg").
- * The import goes through the DataHandler, so RefIndex, hooks and workspaces are served.
+ * Portable export/import of the t3sbootstrap configuration record. The export holds no uids
+ * and no pid, only field values and FAL references as combined identifiers
+ * ("1:/user_upload/logo.svg"). The import goes through the DataHandler, so RefIndex, hooks
+ * and workspaces are served.
+ *
+ * Format version 2 adds the parts that live outside the database - extension configuration
+ * and the sites' sets and settings. Those are handled by SystemTransferService and merged
+ * into the same file by the controller, so one export carries a complete setup. A version 1
+ * file simply has no such nodes and still imports.
  */
 final class ConfigTransferService
 {
     public const TABLE = 'tx_t3sbootstrap_domain_model_config';
-    public const FORMAT_VERSION = 1;
+    public const FORMAT_VERSION = 2;
 
     /**
      * System fields that are never exported (installation-specific).
@@ -57,12 +63,20 @@ final class ConfigTransferService
 
         $rows = $queryBuilder->executeQuery()->fetchAllAssociative();
         $fileFields = $this->getFileFields();
+        // The query reads the whole row, but the table may carry columns the TCA does not
+        // know - a leftover of an older version, or one the core generates itself. The
+        // import can only write columns the TCA has, so they are left out here instead of
+        // travelling along and being reported as skipped on the other side.
+        $availableColumns = array_keys($GLOBALS['TCA'][self::TABLE]['columns'] ?? []);
         $records = [];
 
         foreach ($rows as $row) {
             $fields = [];
             foreach ($row as $field => $value) {
                 if (in_array($field, self::SKIP_FIELDS, true) || in_array($field, $fileFields, true)) {
+                    continue;
+                }
+                if ($availableColumns !== [] && !in_array($field, $availableColumns, true)) {
                     continue;
                 }
                 $fields[$field] = $value;
@@ -124,14 +138,43 @@ final class ConfigTransferService
         $errors = [];
 
         if (($payload['meta']['table'] ?? '') !== self::TABLE) {
-            throw new \RuntimeException('Die Datei enthaelt keinen t3sbootstrap-Config-Export.', 1754500001);
+            throw new \RuntimeException('Die Datei enthält keinen t3sbootstrap-Config-Export.', 1754500001);
         }
         $records = $payload['records'] ?? [];
         if (!is_array($records) || $records === []) {
-            throw new \RuntimeException('Der Export enthaelt keine Datensaetze.', 1754500002);
+            throw new \RuntimeException('Der Export enthält keine Datensätze.', 1754500002);
         }
         if ($pid <= 0) {
-            throw new \RuntimeException('Es wurde keine gueltige Zielseite gewaehlt.', 1754500003);
+            throw new \RuntimeException('Es wurde keine gültige Zielseite gewählt.', 1754500003);
+        }
+
+        // An export without a page filter holds the records of every root page of the source
+        // installation. The import writes them all to the one target page, which would carry
+        // several sites' configurations - each keeping the homepage uid of its own root page,
+        // so none of them would be in effect any more. Such a file is a backup, not something
+        // to import into a page.
+        $sourcePages = [];
+        foreach ($records as $record) {
+            $sourceUid = (int)(((array)($record['sourcePage'] ?? []))['uid'] ?? 0);
+            $sourceTitle = (string)(((array)($record['sourcePage'] ?? []))['title'] ?? '');
+            if ($sourceUid > 0) {
+                $sourcePages[$sourceUid] = $sourceTitle;
+            }
+        }
+
+        if (count($sourcePages) > 1) {
+            $list = [];
+            foreach ($sourcePages as $sourceUid => $sourceTitle) {
+                $list[] = $sourceTitle === '' ? (string)$sourceUid : $sourceTitle . ' [' . $sourceUid . ']';
+            }
+
+            throw new \RuntimeException(
+                'Die Datei enthält die Konfigurationen mehrerer Seiten (' . implode(', ', $list) . ') '
+                . 'und lässt sich nicht in eine einzelne Zielseite importieren. Sie stammt aus einem '
+                . 'Export über die ganze Installation und taugt als Sicherung, nicht als Importquelle. '
+                . 'Exportiere stattdessen die gewünschte Root-Seite einzeln.',
+                1763040001
+            );
         }
 
         $availableColumns = array_keys($GLOBALS['TCA'][self::TABLE]['columns'] ?? []);
@@ -139,47 +182,80 @@ final class ConfigTransferService
 
         $data = [];
         $commands = [];
-        $existingUids = $this->getExistingUids($pid);
+        $existing = $this->getExistingRecords($pid);
+        $typeField = $this->getTypeField();
 
-        // uid of the record that gets updated in place, null when creating
-        $updateUid = null;
+        // payload index => uid of the record it updates, null when it creates a new one
+        $targets = [];
 
         switch ($mode) {
             case self::MODE_ADD:
-                if ($existingUids !== []) {
+                if ($existing !== []) {
                     throw new \RuntimeException(
                         'Auf der Zielseite existiert bereits eine Konfiguration. '
-                        . 'Waehle "Aktualisieren" oder "Ersetzen".',
+                        . 'Wähle "Aktualisieren" oder "Ersetzen".',
                         1754500004
                     );
                 }
                 break;
 
             case self::MODE_REPLACE:
-                foreach ($existingUids as $uid) {
+                foreach (array_keys($existing) as $uid) {
                     $commands[self::TABLE][$uid]['delete'] = 1;
                 }
                 break;
 
             case self::MODE_UPDATE:
             default:
-                if ($existingUids !== []) {
-                    // the lowest uid is the one findOneBy() returns, so that is
-                    // the record that is actually in effect
-                    $updateUid = (int)min($existingUids);
+                // Records are matched to the ones already on the target page. The type is
+                // tried first, but it is only a hint: in this table the type switches which
+                // group of fields the form shows, so the same record may sit on "navbar"
+                // today and on "general" tomorrow. Whatever is left over is therefore
+                // matched by position rather than created anew - that keeps the uid and the
+                // history of a record whose type happens to differ.
+                $pool = $existing;
 
-                    $surplus = array_diff($existingUids, [$updateUid]);
-                    foreach ($surplus as $uid) {
-                        $commands[self::TABLE][$uid]['delete'] = 1;
+                foreach ($records as $index => $record) {
+                    $fieldsOfRecord = (array)($record['fields'] ?? []);
+                    $type = (string)($fieldsOfRecord[$typeField] ?? '');
+                    $match = null;
+
+                    if ($typeField !== '') {
+                        foreach ($pool as $uid => $existingType) {
+                            if ($existingType === $type) {
+                                $match = $uid;
+                                break;
+                            }
+                        }
                     }
-                    if ($surplus !== []) {
-                        $messages[] = sprintf(
-                            '%d ueberzaehlige Konfiguration(en) auf der Zielseite geloescht - '
-                            . 'nur der Datensatz mit uid %d ist wirksam.',
-                            count($surplus),
-                            $updateUid
-                        );
+
+                    if ($match !== null) {
+                        unset($pool[$match]);
                     }
+                    $targets[$index] = $match;
+                }
+
+                // second pass: everything still unassigned takes the next free record
+                foreach ($targets as $index => $match) {
+                    if ($match !== null || $pool === []) {
+                        continue;
+                    }
+                    $uid = (int)array_key_first($pool);
+                    unset($pool[$uid]);
+                    $targets[$index] = $uid;
+                }
+
+                // what is left has no counterpart in the export
+                foreach (array_keys($pool) as $uid) {
+                    $commands[self::TABLE][$uid]['delete'] = 1;
+                }
+                if ($pool !== []) {
+                    $messages[] = sprintf(
+                        '%d Konfiguration(en) auf der Zielseite gelöscht - zu ihrem Typ (%s) '
+                        . 'enthält der Export keinen Datensatz.',
+                        count($pool),
+                        implode(', ', array_map(static fn(string $t): string => $t === '' ? '?' : $t, $pool))
+                    );
                 }
                 break;
         }
@@ -187,9 +263,9 @@ final class ConfigTransferService
         $recordIndex = 0;
         $referenceIndex = 0;
 
-        foreach ($records as $record) {
-            // first payload record updates the existing one, further records are new
-            $isUpdate = $updateUid !== null && $recordIndex === 0;
+        foreach ($records as $index => $record) {
+            $updateUid = $targets[$index] ?? null;
+            $isUpdate = $updateUid !== null;
             $newRecordId = $isUpdate ? (string)$updateUid : 'NEW_t3sb_' . ($recordIndex + 1);
             $recordIndex++;
 
@@ -204,7 +280,7 @@ final class ConfigTransferService
 
             $unknown = array_diff(array_keys((array)($record['fields'] ?? [])), $availableColumns);
             if ($unknown !== []) {
-                $messages[] = 'Uebersprungene Felder (in dieser Installation nicht vorhanden): ' . implode(', ', $unknown);
+                $messages[] = 'Übersprungene Felder (in dieser Installation nicht vorhanden): ' . implode(', ', $unknown);
             }
 
             foreach ((array)($record['files'] ?? []) as $fileField => $references) {
@@ -217,7 +293,7 @@ final class ConfigTransferService
                     try {
                         $file = $this->resourceFactory->getFileObjectFromCombinedIdentifier($identifier);
                     } catch (\Throwable $e) {
-                        $errors[] = 'Datei nicht gefunden, Referenz uebersprungen: ' . $identifier;
+                        $errors[] = 'Datei nicht gefunden, Referenz übersprungen: ' . $identifier;
                         continue;
                     }
                     $newReferenceId = 'NEW_t3sbref_' . ++$referenceIndex;
@@ -349,23 +425,43 @@ final class ConfigTransferService
     }
 
     /**
-     * @return int[]
+     * The configuration records of a page as uid => record type, lowest uid first. A page
+     * can carry one record per type - general, navbar, jumbotron and so on - so the type
+     * is what identifies a record, not its position.
+     *
+     * @return array<int, string>
      */
-    private function getExistingUids(int $pid): array
+    private function getExistingRecords(int $pid): array
     {
+        $typeField = $this->getTypeField();
+
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         $rows = $queryBuilder
-            ->select('uid')
+            ->select(...($typeField === '' ? ['uid'] : ['uid', $typeField]))
             ->from(self::TABLE)
             ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)))
+            ->orderBy('uid')
             ->executeQuery()
             ->fetchAllAssociative();
 
-        return array_map(static fn(array $row): int => (int)$row['uid'], $rows);
+        $records = [];
+        foreach ($rows as $row) {
+            $records[(int)$row['uid']] = $typeField === '' ? '' : (string)($row[$typeField] ?? '');
+        }
+
+        return $records;
+    }
+
+    /**
+     * Name of the TCA type field, empty when the table has none.
+     */
+    private function getTypeField(): string
+    {
+        return (string)($GLOBALS['TCA'][self::TABLE]['ctrl']['type'] ?? '');
     }
 
     /**

@@ -1,0 +1,226 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers/"
+	data-namespace-typo3-fluid="true">
+<f:layout name="Module" />
+<f:section name="Content">
+<f:flashMessages />
+
+<div class="card" style="margin:15px;">
+	<div class="card-header card-header-light">
+		<h2>
+			<core:icon identifier="actions-upload" size="mega" />
+			<f:translate key="transfer.preview.title" />
+		</h2>
+	</div>
+	<div class="card-body t3sb-transfer">
+
+		<p class="text-muted">
+			<f:translate key="transfer.preview.description" />
+			<f:if condition="{transfer.source}">
+				<br /><strong><f:translate key="transfer.preview.source" />:</strong> {transfer.source}
+			</f:if>
+		</p>
+
+		<f:if condition="{transfer.environment.typo3}">
+			<div class="mb-4">
+				<h4><f:translate key="transfer.preview.environment" /></h4>
+				<p class="text-muted">
+					<f:translate key="transfer.preview.environment.versions" arguments="{0: transfer.environment.typo3, 1: transfer.environment.php}" />
+				</p>
+
+				<f:if condition="{transfer.environment.missingSets}">
+					<div class="alert alert-danger">
+						<strong><f:translate key="transfer.preview.environment.missingsets" /></strong>
+						<ul class="mb-0">
+							<f:for each="{transfer.environment.missingSets}" as="set">
+								<li>
+									<code>{set.name}</code>
+									<f:if condition="{set.extension}">
+										<f:translate key="transfer.preview.environment.from" /> <code>{set.extension}</code>
+									</f:if>
+								</li>
+							</f:for>
+						</ul>
+						<f:translate key="transfer.preview.environment.missingsets.hint" />
+					</div>
+				</f:if>
+
+				<f:if condition="{transfer.environment.missingExtensions}">
+					<div class="alert alert-warning">
+						<strong><f:translate key="transfer.preview.environment.missingext" /></strong>
+						<ul class="mb-0">
+							<f:for each="{transfer.environment.missingExtensions}" as="extension" key="key">
+								<li>
+									<code>{key}</code> {extension.version}
+									<f:if condition="{extension.composer}">
+										&#8211; <code>composer require {extension.composer}</code>
+									</f:if>
+								</li>
+							</f:for>
+						</ul>
+						<f:translate key="transfer.preview.environment.missingext.hint" />
+					</div>
+					<f:if condition="{transfer.environment.composer.snippet}">
+						<p class="text-muted mb-1">
+							<f:translate key="transfer.preview.environment.composer" arguments="{0: transfer.environment.composer.required}" />
+						</p>
+						<pre class="t3sb-command mb-3"><code>{transfer.environment.composer.snippet}</code></pre>
+					</f:if>
+				</f:if>
+
+				<f:if condition="{transfer.environment.complete}">
+					<p class="text-muted"><f:translate key="transfer.preview.environment.complete" /></p>
+				</f:if>
+			</div>
+		</f:if>
+
+		<h4><f:translate key="transfer.preview.extension" /></h4>
+		<f:if condition="{transfer.extension.changes}">
+			<f:then>
+				<f:if condition="{transfer.extension.writable} == false">
+					<div class="alert alert-warning">
+						<f:translate key="transfer.preview.notwritable.settings" />
+					</div>
+				</f:if>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th><f:translate key="transfer.preview.key" /></th>
+							<th><f:translate key="transfer.preview.from" /></th>
+							<th><f:translate key="transfer.preview.to" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<f:for each="{transfer.extension.changes}" as="change" key="key">
+							<tr>
+								<td><code>{key}</code></td>
+								<td class="text-muted">{change.from}</td>
+								<td><strong>{change.to}</strong></td>
+							</tr>
+						</f:for>
+					</tbody>
+				</table>
+				<p class="text-muted">
+					<f:translate key="transfer.preview.count" arguments="{0: transfer.extension.changesCount, 1: transfer.extension.total}" />
+				</p>
+			</f:then>
+			<f:else>
+				<p class="text-muted"><f:translate key="transfer.preview.nochanges" /></p>
+			</f:else>
+		</f:if>
+
+		<f:if condition="{transfer.extension.skipped}">
+			<div class="alert alert-info">
+				<f:translate key="transfer.preview.skipped" />: <code>{transfer.extension.skipped -> f:join(separator: ', ')}</code>
+			</div>
+		</f:if>
+
+		<f:if condition="{transfer.hostSpecific}">
+			<div class="alert alert-info">
+				<strong><f:translate key="transfer.preview.hostspecific" /></strong>
+				<ul class="mb-0">
+					<f:for each="{transfer.hostSpecific}" as="value" key="key">
+						<li><code>{key}</code>: <f:if condition="{value}"><f:then>{value}</f:then><f:else><em><f:translate key="transfer.preview.empty" /></em></f:else></f:if></li>
+					</f:for>
+				</ul>
+				<f:translate key="transfer.preview.hostspecific.hint" />
+			</div>
+		</f:if>
+
+		<f:if condition="{transfer.site.site}">
+			<h4 class="mt-4"><f:translate key="transfer.preview.site" arguments="{0: transfer.site.site}" /></h4>
+
+			<f:if condition="{transfer.site.writable} == false">
+				<div class="alert alert-warning">
+					<f:translate key="transfer.preview.notwritable.site" />
+				</div>
+			</f:if>
+
+			<f:if condition="{transfer.site.setsMissing}">
+				<f:then>
+					<p><strong><f:translate key="transfer.preview.sets" /></strong></p>
+					<ul>
+						<f:for each="{transfer.site.setsMissing}" as="set">
+							<li><code>{set}</code></li>
+						</f:for>
+					</ul>
+				</f:then>
+				<f:else>
+					<p class="text-muted"><f:translate key="transfer.preview.sets.complete" /></p>
+				</f:else>
+			</f:if>
+
+			<f:if condition="{transfer.site.changes}">
+				<f:then>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th><f:translate key="transfer.preview.key" /></th>
+								<th><f:translate key="transfer.preview.from" /></th>
+								<th><f:translate key="transfer.preview.to" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<f:for each="{transfer.site.changes}" as="change" key="key">
+								<tr>
+									<td><code>{key}</code></td>
+									<td class="text-muted">{change.from}</td>
+									<td><strong>{change.to}</strong></td>
+								</tr>
+							</f:for>
+						</tbody>
+					</table>
+				</f:then>
+				<f:else>
+					<p class="text-muted"><f:translate key="transfer.preview.nochanges" /></p>
+				</f:else>
+			</f:if>
+		</f:if>
+
+		<f:if condition="{transfer.extension.snippet} || {transfer.site.snippetSets} || {transfer.site.snippetSettings}">
+			<div class="panel panel-default mt-4">
+				<div class="panel-heading">
+					<h3 class="panel-title" id="snippet-heading">
+						<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#snippet-panel" aria-expanded="false" aria-controls="snippet-panel">
+							<span class="caret"></span>
+							<f:translate key="transfer.preview.snippets" />
+						</a>
+					</h3>
+				</div>
+				<div id="snippet-panel" class="collapse">
+					<div class="panel-body p-4">
+						<p class="text-muted"><f:translate key="transfer.preview.snippets.hint" /></p>
+						<f:if condition="{transfer.extension.snippet}">
+							<pre class="bg-light p-3"><code>{transfer.extension.snippet}</code></pre>
+						</f:if>
+						<f:if condition="{transfer.site.snippetSets}">
+							<pre class="bg-light p-3"><code>{transfer.site.snippetSets}</code></pre>
+						</f:if>
+						<f:if condition="{transfer.site.snippetSettings}">
+							<pre class="bg-light p-3"><code>{transfer.site.snippetSettings}</code></pre>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</f:if>
+
+		<div class="alert alert-warning mt-4">
+			<f:translate key="transfer.nowarranty" />
+		</div>
+
+		<div class="mt-4">
+			<f:form action="transferApply" method="post" additionalParams="{id: currentUid}" class="d-inline">
+				<f:form.button type="submit" class="btn btn-warning">
+					<core:icon identifier="actions-check" size="small" /> <f:translate key="transfer.preview.apply" />
+				</f:form.button>
+			</f:form>
+			<f:link.action action="list" additionalParams="{id: currentUid}" class="btn btn-default ms-2">
+				<f:translate key="transfer.preview.cancel" />
+			</f:link.action>
+		</div>
+
+	</div>
+</div>
+
+</f:section>
+</html>
