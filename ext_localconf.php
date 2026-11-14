@@ -9,6 +9,10 @@ use T3SBS\T3sbootstrap\Parser\ScssParser;
 use T3SBS\T3sbootstrap\Hooks\PageRenderer\PreProcessHook;
 use T3SBS\T3sbootstrap\Service\AssetPathService;
 use T3SBS\T3sbootstrap\Backend\Hooks\OutsourcedFiles;
+use T3SBS\T3sbootstrap\Form\FormDataProvider\ShowColumnsOfAnyType;
+use TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRecordTypeValue;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaColumnsProcessShowitem;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaColumnsRemoveUnused;
 
 defined('TYPO3') or die();
 
@@ -189,6 +193,16 @@ defined('TYPO3') or die();
     
     // HOOK: Outsourced files
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = OutsourcedFiles::class;
+
+    /***************
+     * FormEngine
+     */
+    // Lets the pencil in the backend module open any field of the configuration record,
+    // whatever record type the record currently shows
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][ShowColumnsOfAnyType::class] = [
+        'depends' => [DatabaseRecordTypeValue::class],
+        'before' => [TcaColumnsProcessShowitem::class, TcaColumnsRemoveUnused::class],
+    ];
 
     /***************
      * Parser
