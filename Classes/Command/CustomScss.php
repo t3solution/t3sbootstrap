@@ -26,7 +26,7 @@ use T3SBS\T3sbootstrap\Service\AssetStateService;
 final class CustomScss extends CommandBase
 {
 
-    public const BOOTSTRAPLATEST = '5.3.8';
+    public const BOOTSTRAPLATEST = '5.3.9';
     public const BOOTSWATCHURL   = 'https://bootswatch.com/5/';
 
 
