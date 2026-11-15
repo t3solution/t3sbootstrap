@@ -1,0 +1,6 @@
+# Files that belong to development, not into a distribution archive.
+# "git archive" skips them, so the TER zip can be built with
+#   git archive --format=zip --prefix= -o <name>.zip <tag>
+/.github/           export-ignore
+/.gitignore         export-ignore
+/.gitattributes     export-ignore
