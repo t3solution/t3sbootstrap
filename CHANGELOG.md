@@ -4,13 +4,266 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
-## 5.3.60 (unveröffentlicht)
+## 5.3.60 — Export und Import des kompletten Setups
 
 Betrifft die folgenden Dateien:
 
 ```
+CHANGELOG.md
+composer.json
+ext_emconf.php
 Classes/Command/CdnToLocal.php
+Classes/Command/ConfigExport.php
+Classes/Command/CustomScss.php
+Classes/Controller/ConfigController.php
+Classes/Service/ConfigTransferService.php
+Classes/Service/SystemTransferService.php
+Configuration/Backend/Modules.php
+Configuration/Sets/T3sbootstrap/constants.typoscript
+Configuration/Sets/T3sbootstrapVersion/settings.definitions.yaml
+Resources/Private/Backend/Templates/Config/List.fluid.html
+Resources/Private/Backend/Templates/Config/TransferPreview.fluid.html
+Resources/Private/Language/de.locallang.xlf
+Resources/Private/Language/locallang.xlf
+Resources/Public/Backend/Style/bestyles.css
 ```
+
+### Neu — der Export umfasst jetzt auch Extension-Konfiguration, Sets und Site-Settings
+
+Bisher war im Export nur der Konfigurations-Datensatz enthalten. Das reicht für das
+eigene SCSS, nicht aber für ein vollständiges Setup: die Extension-Konfiguration liegt
+in `config/system/settings.php`, die Sets und ihre Settings in `config/sites/<site>/`.
+Beim Umzug auf eine andere Installation musste man beides von Hand nachziehen.
+
+Der Export trägt diese Teile jetzt mit — als **Format-Version 2**. Dateien der
+Version 1 lassen sich weiterhin importieren, sie haben die neuen Knoten einfach nicht.
+
+Erfasst wird ausschließlich, was zu t3sbootstrap gehört: aus `settings.php` der Block
+`EXTENSIONS.t3sbootstrap`, aus der `config.yaml` die Sets mit dem Präfix
+`t3sbs/t3sbootstrap`, aus der `settings.yaml` die Schlüssel mit dem Präfix
+`bootstrap.`. Settings anderer Extensions werden weder gelesen noch verändert.
+
+### Neu — Import mit Vorschau statt auf Zuruf
+
+Der Datensatz wird wie bisher direkt über den DataHandler geschrieben, dafür sind die
+drei Modi da. Die beiden Datei-Anteile nicht: sie werden zuerst als Differenz
+angezeigt — Schlüssel, aktueller Wert, Wert nach dem Import — und erst nach einer
+zweiten Bestätigung geschrieben. Vorschau und Schreibvorgang laufen durch denselben
+Code, können also nicht auseinanderlaufen.
+
+Weitere Festlegungen:
+
+* **Nur für Administratoren.** Das Modul ist für Redakteure zugänglich, diese beiden
+  Teile betreffen aber die ganze Installation. Auch der Export gibt sie nur an
+  Administratoren heraus.
+* **`assetDir` und `flexformDir` werden nie importiert.** Sie gehören zum Host. Im
+  Export stehen sie zur Orientierung in einem eigenen Knoten `hostSpecific`.
+* **Nicht schreibbare Dateien sind kein Fehler.** Ist `settings.php` oder das
+  Site-Verzeichnis nicht schreibbar, erscheint das fertige PHP- bzw. YAML-Snippet zum
+  Kopieren. Dasselbe Snippet ist auch sonst erreichbar — beide Dateien liegen meist in
+  der Versionsverwaltung, ein Schreibvorgang hält dort nur bis zum nächsten Deployment.
+* **Die `settings.yaml` wird nie überschrieben.** Sie wird gelesen, nur die
+  `bootstrap.`-Schlüssel werden ersetzt, dann wird sie vollständig zurückgeschrieben.
+  Werte, die dem Set-Default entsprechen, fallen dabei heraus.
+
+### Neu — Bestandsaufnahme der Quell-Installation
+
+Ein Setup besteht nicht nur aus den eigenen Einstellungen: die Site hängt an Sets
+anderer Extensions — Sitepackage, Iconpack, News, was auch immer eingebunden ist — und
+eine Site-Konfiguration, die ein unbekanntes Set nennt, ist ungültig. Importiert man in
+eine Installation, in der diese Extensions fehlen, bliebe das bisher unbemerkt.
+
+Der Export trägt deshalb einen Knoten `environment` mit TYPO3- und PHP-Version der
+Quelle sowie allen dort installierten Extensions samt Composer-Name und Version
+(Core-Pakete ausgenommen, die stehen schon in der TYPO3-Version). Je Site kommt die
+vollständige Set-Liste hinzu, jeweils mit der Extension, die das Set bereitstellt.
+
+Importiert wird davon **nichts** — eine Extension kann keine andere installieren. Die
+Vorschau nutzt die Liste aber als Vorab-Prüfung und nennt, was hier fehlt: unbekannte
+Sets als Fehler, nicht installierte Extensions als Hinweis mit der passenden
+`composer require`-Zeile.
+
+Derselbe Bestand steht außerdem im Modul selbst, oberhalb der Export-Schaltfläche —
+Sets der aktuellen Site mit der Extension dahinter, die t3sbootstrap-eigenen
+gekennzeichnet, und aufklappbar die Liste der installierten Extensions. Dazu steht, aus
+welcher `config.yaml` die Sets stammen und wo sie gepflegt werden. So ist vor dem Export
+sichtbar, was die Datei enthält, und ein Set, dessen Extension fehlt, fällt schon in der
+Quelle auf. Nur für Administratoren, die ohnehin die einzigen sind, die diese Teile
+exportieren.
+
+### Behoben — der Verweis auf die Historie führte nirgendwohin
+
+Die Beschreibung des Transfer-Abschnitts nennt die Historie des Konfigurations-Datensatzes
+als Weg, einzelne Änderungen zurückzunehmen — ohne zu sagen, wo die zu finden ist. Aus dem
+Modul führte dorthin auch kein Weg. Jetzt steht neben der Beschreibung ein Link direkt auf
+die Datensatz-Historie, sofern die Seite überhaupt einen Konfigurations-Datensatz hat.
+
+### Neu — Bootstrap 5.3.9
+
+Die Vorgabe-Version steigt von 5.3.8 auf **5.3.9**, zusammen mit den drei
+Integrity-Hashes für `bootstrap.min.css`, `bootstrap.min.js` und
+`bootstrap.bundle.min.js`. Betroffen sind das Site Set `T3sbootstrapVersion`, die
+Konstanten des Sets `T3sbootstrap` und `BOOTSTRAPLATEST` im Kommando `customScss`.
+
+Für Bootstrap sind es vor allem Korrekturen: Carousel-Touch ohne Pointer Events,
+Carousel ohne aktiven Indikator wirft keinen Fehler mehr, ScrollSpy springt bei
+verschachtelten Link-Inhalten richtig, und Tooltip- und Popover-Texte aus
+Data-Attributen bleiben wörtlich erhalten. Am SCSS ändert sich nichts Brechendes.
+
+**Zu tun beim Update:** Wer die Version in seinen eigenen Site Settings überschrieben
+hat, muss dort die Hashes mit anpassen — eine neue Version mit alten Hashes liefert
+eine Seite ohne CSS und ohne JS, weil der Browser die Dateien wegen SRI verwirft. Im
+lokalen Betrieb (`cdnToLocal`) genügt ein Lauf des Kommandos, die geänderte Version
+stößt den Neu-Download selbst an.
+
+### Geändert — der Transfer-Abschnitt im Modul
+
+Der Abschnitt heißt jetzt **„Konfiguration sichern und übertragen"** statt nur
+„Konfiguration übertragen" — die Sicherung stand bisher erst im Kleingedruckten, obwohl
+sie für die meisten der häufigere Anlass sein dürfte. Auch der einleitende Text nennt
+beide Zwecke jetzt im ersten Satz.
+
+Er zeigte bisher nur zwei Formulare. Jetzt steht darüber, was ein Export dieser
+Installation überhaupt enthält:
+
+* eine Kennzahlen-Zeile — Datensatz, Werte der Extension-Konfiguration, eigene Sets,
+  Site-Settings, installierte Extensions
+* vier aufklappbare Listen: Site Sets, Site-Settings, Extension-Konfiguration und
+  Extension-Bestand, jede mit einem Absatz, warum sie dort steht und was mit ihr beim
+  Import geschieht
+* in der Set-Liste stehen die t3sbootstrap-Sets oben und gekennzeichnet, die fremden
+  darunter gedämpft — importiert werden nur die eigenen
+* Export und Import sitzen in je einer Karte, die des Imports in Warnfarbe, weil nur
+  sie schreibt; unter dem Export steht die Kommandozeile für die Planer-Aufgabe
+* ein Link auf die Historie des Konfigurations-Datensatzes, siehe unten
+
+Die beiden Teile, die ein Import tatsächlich schreibt — Site-Settings und
+Extension-Konfiguration — waren vorher nirgends sichtbar, während der nicht
+importierte Extension-Bestand aufgelistet war. Das stand genau verkehrt herum.
+
+### Behoben — Konflikt mit anderen SCSS-Compilern (#537)
+
+Zwei Fehler, die zusammen jede Installation trafen, in der eine weitere Extension
+SCSS kompiliert — `ws_scss` etwa.
+
+Der erste: t3sbootstrap bringt scssphp 1.12 unter `Contrib/` mit und lädt es nur,
+wenn die Klasse noch nicht existiert. Hatte eine andere Extension ihre eigene
+Fassung zuerst geladen, arbeitete unser Parser mit deren Compiler weiter — in 2.x
+verlangt `registerFunction()` aber drei Argumente statt zwei, und eigene Funktionen
+bekommen Wertobjekte statt der alten Array-Form. Ergebnis war ein Fatal beim
+Seitenaufruf. Der Parser prüft jetzt die geladene Version und tritt beiseite, wenn
+es nicht die mitgelieferte ist; die andere Extension kompiliert dann weiter wie
+zuvor, und ein Hinweis landet im Log. Eigenes SCSS von t3sbootstrap steht in dieser
+Konstellation nicht zur Verfügung — stattdessen wird die lokale `bootstrap.min.css`
+eingebunden. Ohne diesen Rückfall käme die Seite ganz ohne Bootstrap: Die TypoScript-
+Bedingung, die das eigene SCSS einbindet, schließt `bootstrap.min.css` aus.
+
+Der zweite: `PreProcessHook` lief über sämtliche `cssLibs` und `cssFiles` der Seite
+und schickte jede Datei mit der Endung `scss` durch unseren Parser — auch die eines
+fremden Sitepackages. t3sbootstrap hat damit die SCSS-Kompilierung der ganzen
+Installation an sich gezogen, unabhängig davon, ob „Enable Custom SCSS" an war.
+Angefasst werden jetzt nur noch Dateien unterhalb des eigenen Asset-Verzeichnisses.
+
+Dazu passend: `url()` löst jetzt auch `EXT:`-Pfade auf. Bei `@import` ging das längst,
+bei `url()` nicht — wer eine Schrift aus seinem Sitepackage einbinden wollte, hatte
+keinen Weg dorthin. `url(EXT:mein_sitepackage/Resources/Public/Fonts/x.woff2)`
+funktioniert jetzt und wird in Composer-Installationen zum passenden
+`_assets/<hash>/`-Pfad aufgelöst.
+
+### Geändert — die ausgelagerten Konstanten als Tabelle
+
+Der Abschnitt gab bisher den erzeugten TypoScript-Block roh aus: 137 Zeilen
+`bootstrap.config.*`, aus denen nicht hervorgeht, was die einzelne Konstante bewirkt.
+Jetzt steht dort eine Tabelle aus Konstante, Wert und dem Feld, aus dem der Wert stammt
+— mit dessen Beschriftung und, wo vorhanden, dessen Beschreibung aus der TCA, also in
+der Sprache des Backends statt als Schlüssel.
+
+Jede Zeile hat rechts einen Stift. Er öffnet den Konfigurations-Datensatz mit
+`columnsOnly`, also mit genau diesem einen Feld im Formular, und führt nach dem
+Speichern ins Modul zurück. Bei mehreren Site-Roots zeigt der Link auf den Datensatz des
+jeweiligen Bedingungsblocks.
+
+Das gilt für jedes Feld, unabhängig vom eingestellten Konfigurationstyp. FormEngine löst
+`columnsOnly` sonst nur gegen das `showitem` des aktuellen Typs auf — ein Feld einer
+anderen Gruppe hätte eine leere Maske geöffnet. Die Typen sind aber eine Ansichts-
+umschaltung auf ein und demselben Datensatz, keine Datensatzarten, und die Konstanten
+entstehen aus allen Spalten der Tabelle. Der FormDataProvider `ShowColumnsOfAnyType`
+ergänzt deshalb die angeforderte Spalte im `showitem`, sofern der aktuelle Typ sie nicht
+ohnehin zeigt — nur bei einer `columnsOnly`-Anfrage auf diese eine Tabelle; ein
+vollständiges Bearbeitungsformular bleibt unberührt.
+
+`bootstrap.config.recordType` steht nicht mehr in der Tabelle. Die Konstante sagt nur,
+auf welche Ansicht der Datensatz zuletzt eingestellt war — über die Konstanten selbst sagt
+sie nichts, und seit der Stift ohnehin jedes Feld erreicht, auch über deren Bearbeitbarkeit
+nicht mehr. Im rohen TypoScript darunter ist sie weiterhin enthalten.
+
+Im Einzelfeld-Formular blenden sich **Neu** und **Löschen** aus. Der ButtonBar-Listener
+erkannte diesen Fall bisher nicht, weil der Stift-Link keine Seiten-ID trägt; er prüft
+jetzt zusätzlich auf `columnsOnly`. Eine Maske, die eine einzelne Einstellung zeigt, ist
+kein Ort, an dem man den ganzen Konfigurations-Datensatz löscht.
+
+Einen Stift bekommt, was in irgendeinem Typ ein Formularfeld hat. Spalten, die in keinem
+`showitem` vorkommen, bleiben außen vor — `homepage_uid` ist der Fall dafür: Der Wert
+wird von der Extension gepflegt und entscheidet darüber, ob ein Datensatz überhaupt
+Konstanten erzeugt. `navbarBreakpointWidth` hat keine eigene Spalte, der Stift führt
+deshalb auf `navbar_breakpoint`, aus dem der Wert abgeleitet wird.
+
+Das rohe TypoScript bleibt erreichbar — zum Übernehmen in die eigenen Konstanten braucht
+man es weiterhin — steht jetzt aber aufklappbar unterhalb der Tabelle.
+
+### Geändert — Farbe und Aufbau der beiden Abschnitte
+
+Beide Abschnitte haben eine durchgehende Akzentfarbe bekommen, abgeleitet aus dem Violett
+der Extension und für den Dunkelmodus aufgehellt. Die Kennzahlen sind Kacheln mit Symbol,
+die vier Teile des Exports je eine Karte mit Symbol und Anzahl im Kopf, die lange
+Konstanten-Tabelle einen mitlaufenden Kopf und eine Zeilenhervorhebung unter dem Zeiger.
+Alles hängt an der Klasse `t3sb-transfer`, das übrige Backend bleibt unberührt.
+
+### Behoben — ein Export über die ganze Installation ließ sich in eine Seite importieren
+
+`t3sbootstrap:configExport` ohne `--pid` schreibt die Datensätze **aller** Root-Seiten in
+eine Datei. Der Import schreibt dagegen alles auf **eine** Zielseite. Beides zusammen legte
+die Konfigurationen fremder Root-Seiten als Kopien auf der Zielseite ab — jede mit der
+`homepage_uid` ihrer eigenen Root-Seite. Danach zeigte auf der Zielseite kein Datensatz mehr
+auf sie selbst, und die ausgelagerten Konstanten blieben leer.
+
+Der Import weist eine solche Datei jetzt ab und nennt die enthaltenen Seiten. Das Kommando
+sagt beim Export über die ganze Installation dazu, dass die Datei eine Sicherung ist und für
+einen Transfer `--pid` gehört.
+
+### Behoben — der Import ordnete mehrere Konfigurations-Datensätze falsch zu
+
+Eine Seite kann mehrere Konfigurations-Datensätze tragen, einen je Typ — `general`,
+`navbar`, `jumbo` und so weiter. Der Import im Modus *Aktualisieren* ging bisher davon aus,
+dass es nur einen gibt: Er aktualisierte den mit der kleinsten uid, **löschte alle übrigen**
+und legte sie aus dem Export sofort wieder neu an. Unterm Strich standen danach zwar wieder
+gleich viele Datensätze da, aber mit neuen uids und ohne ihre Historie. Die Meldung
+*„2 überzählige Konfiguration(en) gelöscht"* beschrieb außerdem etwas, das derselbe Lauf
+gleich wieder rückgängig machte.
+
+Jetzt wird jeder Datensatz des Exports zuerst dem Datensatz **desselben Typs** auf der
+Zielseite zugeordnet. Was danach übrig bleibt, wird der Reihe nach verteilt — denn der Typ
+ist in dieser Tabelle nur ein Umschalter dafür, welche Feldgruppe das Formular zeigt, und
+derselbe Datensatz kann heute auf `navbar` und morgen auf `general` stehen. Angelegt wird
+ein Datensatz erst, wenn die Zielseite keinen freien mehr hat; gelöscht nur, was dann noch
+ohne Partner dasteht. uids und Historie bleiben in allen anderen Fällen erhalten.
+
+### Behoben — der Export trug Spalten mit, die kein Import schreiben kann
+
+Der Export las die ganze Datenbankzeile. Spalten, die die TCA nicht kennt — ein Rest aus
+einer älteren Version oder eine, die der Core selbst erzeugt — landeten damit in der Datei
+und wurden beim Einlesen wieder verworfen, pro Datensatz mit einer eigenen Meldung
+*„Übersprungene Felder"*. Jetzt werden sie gar nicht erst exportiert. Die Meldung bleibt
+für den Fall, für den sie gedacht ist: einen Export aus einer neueren Version.
+
+Nebenbei tragen die Meldungen dieser Klasse jetzt echte Umlaute statt `ae`, `oe` und `ue`.
+
+### Neu — Kommando `t3sbootstrap:configExport`
+
+Derselbe Export als Datei, für Planer oder Deployment-Skript. Ohne `--file` landet er
+in `var/transfer/`, also außerhalb des öffentlichen Verzeichnisses. Die Datei beschreibt
+das Erscheinungsbild und den Extension-Bestand der Installation — sie enthält keine
+Zugangsdaten, gehört aber trotzdem nicht ins öffentliche Verzeichnis.
 
 ### Behoben — die Beschreibung von cdnToLocal nannte das Sitepackage
 
