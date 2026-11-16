@@ -160,4 +160,269 @@
 [data-colpos="310"] > .t3-page-column-header .t3-page-column-title {color: var(--t3sb-color) !important;}
 
 
+/* Transfer panel and import preview: rows of set names, paths and settings keys.
+   Monospace in tight rows is hard to scan, so the lines get room to breathe. */
+.t3sb-transfer p,
+.t3sb-transfer li {line-height: 1.7;}
+/* Intro of the panel: a lead, but sized for a backend module rather than a landing
+   page - Bootstrap's 1.25rem turns five lines of explanation into a headline. */
+.t3sb-transfer p.t3sb-lead {
+	font-size: 1.1rem;
+	font-weight: 400;
+	line-height: 1.75;
+	margin-bottom: .75rem;
+}
+.t3sb-transfer li {margin-bottom: .35rem;}
+.t3sb-transfer table.table {line-height: 1.6;}
+.t3sb-transfer table.table > :not(caption) > * > * {padding-top: .7rem; padding-bottom: .7rem;}
+.t3sb-transfer table.table code {line-height: 1.6;}
 
+/* The two lists are revealed by a summary styled as a button - a plain disclosure
+   triangle is easy to miss, and both of them sit in the same block. The native
+   marker goes, the chevron turns when the list is open. */
+.t3sb-transfer details.t3sb-reveal > summary {
+	display: inline-flex;
+	align-items: center;
+	gap: .4rem;
+	cursor: pointer;
+	list-style: none;
+	margin: .25rem 0 .5rem;
+}
+.t3sb-transfer details.t3sb-reveal > summary::-webkit-details-marker {display: none;}
+.t3sb-transfer details.t3sb-reveal > summary::marker {content: '';}
+.t3sb-transfer details.t3sb-reveal > summary .icon {transition: transform .15s ease-in-out;}
+.t3sb-transfer details.t3sb-reveal[open] > summary .icon {transform: rotate(180deg);}
+
+/* Sets of other extensions: listed for completeness, not imported. */
+.t3sb-transfer tr.t3sb-foreign {opacity: .7;}
+
+/* Export and import as two cards - the import one writes, so it is marked. */
+.t3sb-transfer .t3sb-card > .card-header {
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: .4rem;
+	padding: .75rem 1rem;
+	line-height: 1.5;
+}
+.t3sb-transfer .t3sb-card > .card-body {padding: 1.25rem 1rem 1.1rem;}
+/* form rows in the two cards: labels, hints and options get the same air as the
+   rest of the panel - the import form is read before it is used, not scanned */
+.t3sb-transfer .t3sb-card .form-label {margin-bottom: .35rem; line-height: 1.5;}
+.t3sb-transfer .t3sb-card .form-text {margin-top: .5rem; line-height: 1.8;}
+/* the three import modes: one line each reads better than one dense paragraph */
+.t3sb-transfer .t3sb-card ul.t3sb-modes {margin: .5rem 0 0; padding-left: 1.1rem;}
+.t3sb-transfer .t3sb-card ul.t3sb-modes li {margin-bottom: .5rem; line-height: 1.8;}
+.t3sb-transfer .t3sb-card ul.t3sb-modes li:last-child {margin-bottom: 0;}
+.t3sb-transfer .t3sb-card .form-check {margin-bottom: .4rem;}
+.t3sb-transfer .t3sb-card .form-check-label {line-height: 1.6;}
+.t3sb-transfer .t3sb-card-write {border-color: var(--typo3-state-warning-border-color, #b8860b);}
+.t3sb-transfer .t3sb-card-write > .card-header {
+	background: var(--typo3-state-warning-bg, rgba(184,134,11,.12));
+	color: var(--typo3-state-warning-color, inherit);
+}
+
+/* Command lines meant to be selected and copied: the scheduler export, and the
+   composer require line for the extension inventory. The multi line one keeps its
+   backslashes, so it has to stay unwrapped and scroll instead. */
+.t3sb-transfer code.t3sb-command,
+.t3sb-transfer pre.t3sb-command {
+	display: block;
+	margin: 0;
+	padding: .6rem .8rem;
+	border-left: 3px solid var(--t3sb-accent);
+	border-radius: 4px;
+	background: var(--t3sb-accent-soft);
+	user-select: all;
+}
+.t3sb-transfer code.t3sb-command {word-break: break-all;}
+/* one long command, wrapped for reading at the spaces between the packages - what
+   gets copied stays a single line */
+.t3sb-transfer pre.t3sb-command {
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+	max-height: 22rem;
+	overflow-y: auto;
+	line-height: 1.7;
+}
+.t3sb-transfer pre.t3sb-command code {background: none; padding: 0; color: inherit;}
+
+/* Outsourced constants as a table: the generated file is one long list of
+   bootstrap.config.* lines, which says nothing about what each one does. */
+.t3sb-constants td:first-child, .t3sb-constants th:first-child {width: 30%;}
+.t3sb-constants td:nth-child(2), .t3sb-constants th:nth-child(2) {width: 18%;}
+.t3sb-constants td code {word-break: break-all;}
+.t3sb-constants td.t3sb-constants-edit, .t3sb-constants th.t3sb-constants-edit {width: 3rem; text-align: right;}
+.t3sb-constants td .text-muted {font-size: .9em; margin-top: .15rem;}
+
+
+/* ---------------------------------------------------------------------------
+   Transfer panel and constants: one accent colour, cards per topic, counts as
+   badges. Everything is scoped to .t3sb-transfer so the rest of the backend
+   keeps its own look. The accent is the extension's purple, lightened for dark
+   mode where the dark variant would not carry enough contrast.
+   --------------------------------------------------------------------------- */
+.t3sb-transfer {
+	--t3sb-accent: #412aa2;
+	--t3sb-accent-soft: rgba(65, 42, 162, .10);
+	--t3sb-accent-line: rgba(65, 42, 162, .35);
+	/* what goes on top of a filled accent - the badges and count pills */
+	--t3sb-accent-on: #fff;
+	/* neutral counterpart for the parts that document rather than travel - they are
+	   set apart by a quieter colour, not by having none, which reads as unfinished */
+	--t3sb-quiet: #6c6c7a;
+	--t3sb-quiet-soft: rgba(108, 108, 122, .10);
+	--t3sb-quiet-line: rgba(108, 108, 122, .35);
+	--t3sb-quiet-on: #fff;
+	/* warning tone for the two spots that must not be skimmed: the no-warranty note
+	   and the button that writes files */
+	--t3sb-warn: #7a4e00;
+	--t3sb-warn-soft: rgba(255, 193, 7, .14);
+	--t3sb-warn-line: rgba(122, 78, 0, .40);
+	--t3sb-warn-fill: #ffc107;
+	--t3sb-warn-on: #17171c;
+}
+/* Dark mode needs a lighter accent to carry: #b4a7ff reaches 8.2:1 against the backend
+   background where the previous tone reached 6.3:1. A light fill flips what can sit on
+   top, so the pills switch to dark text instead of white.
+
+   Two selectors, because the backend only writes data-color-scheme when the user picked
+   light or dark explicitly - on "auto", which is the default, the attribute is absent and
+   the operating system decides. The attribute rule covers an explicit choice, the media
+   query covers "auto" while leaving an explicit light alone. */
+[data-color-scheme="dark"] .t3sb-transfer {
+	--t3sb-accent: #b4a7ff;
+	--t3sb-accent-soft: rgba(180, 167, 255, .16);
+	--t3sb-accent-line: rgba(180, 167, 255, .45);
+	--t3sb-accent-on: #17171c;
+	--t3sb-quiet: #a6a6b4;
+	--t3sb-quiet-soft: rgba(166, 166, 180, .14);
+	--t3sb-quiet-line: rgba(166, 166, 180, .42);
+	--t3sb-quiet-on: #17171c;
+	--t3sb-warn: #ffce5a;
+	--t3sb-warn-soft: rgba(255, 206, 90, .14);
+	--t3sb-warn-line: rgba(255, 206, 90, .45);
+	--t3sb-warn-fill: #ffce5a;
+	--t3sb-warn-on: #17171c;
+}
+@media (prefers-color-scheme: dark) {
+	html:not([data-color-scheme="light"]) .t3sb-transfer {
+		--t3sb-accent: #b4a7ff;
+		--t3sb-accent-soft: rgba(180, 167, 255, .16);
+		--t3sb-accent-line: rgba(180, 167, 255, .45);
+		--t3sb-accent-on: #17171c;
+		--t3sb-quiet: #a6a6b4;
+		--t3sb-quiet-soft: rgba(166, 166, 180, .14);
+		--t3sb-quiet-line: rgba(166, 166, 180, .42);
+		--t3sb-quiet-on: #17171c;
+		--t3sb-warn: #ffce5a;
+		--t3sb-warn-soft: rgba(255, 206, 90, .14);
+		--t3sb-warn-line: rgba(255, 206, 90, .45);
+		--t3sb-warn-fill: #ffce5a;
+		--t3sb-warn-on: #17171c;
+	}
+}
+
+/* Section heading with an accent bar instead of a bare h4 */
+.t3sb-transfer .t3sb-section-title {
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	padding-left: .7rem;
+	border-left: 4px solid var(--t3sb-accent);
+	margin-bottom: .6rem;
+}
+
+/* Figures: one tile per part of the export */
+.t3sb-transfer .t3sb-figures {display: flex; flex-wrap: wrap; gap: .6rem;}
+.t3sb-transfer .t3sb-figure {
+	display: inline-flex;
+	align-items: center;
+	gap: .45rem;
+	padding: .45rem .8rem;
+	border: 1px solid var(--t3sb-accent-line);
+	border-left-width: 4px;
+	border-radius: 5px;
+	background: var(--t3sb-accent-soft);
+	font-size: .92em;
+	line-height: 1.4;
+}
+.t3sb-transfer .t3sb-figure strong {font-size: 1.15em; color: var(--t3sb-accent);}
+/* the inventory documents the source, it does not travel - kept out of the accent */
+.t3sb-transfer .t3sb-figure.t3sb-figure-muted {
+	border-color: var(--t3sb-quiet-line);
+	background: var(--t3sb-quiet-soft);
+}
+.t3sb-transfer .t3sb-figure.t3sb-figure-muted strong {color: var(--t3sb-quiet);}
+
+/* Cards, one per part, two per row where there is room */
+.t3sb-transfer .t3sb-cards {display: grid; grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr)); gap: 1rem;}
+.t3sb-transfer .t3sb-card-part > .card-header {
+	border-left: 4px solid var(--t3sb-accent);
+	background: var(--t3sb-accent-soft);
+}
+.t3sb-transfer .t3sb-card-quiet > .card-header {
+	border-left-color: var(--t3sb-quiet);
+	background: var(--t3sb-quiet-soft);
+}
+.t3sb-transfer .t3sb-count {
+	margin-left: auto;
+	padding: .1rem .5rem;
+	border-radius: 1rem;
+	background: var(--t3sb-accent);
+	color: var(--t3sb-accent-on);
+	font-size: .8em;
+	font-weight: 700;
+}
+.t3sb-transfer .t3sb-card-quiet .t3sb-count {background: var(--t3sb-quiet); color: var(--t3sb-quiet-on);}
+.t3sb-transfer .t3sb-badge {background: var(--t3sb-accent); color: var(--t3sb-accent-on); font-weight: 600;}
+
+/* Values read better when they stand out from the key next to them */
+.t3sb-transfer code.t3sb-value {color: var(--t3sb-accent); font-weight: 600;}
+
+/* The long constants table: a head that stays put while scrolling, and a row
+   that lights up under the pointer - with 137 rows the eye loses the line. */
+.t3sb-constants {margin-bottom: 1.5rem;}
+.t3sb-constants thead th {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background: var(--typo3-component-bg, #fff);
+	border-bottom: 2px solid var(--t3sb-accent);
+}
+[data-color-scheme="dark"] .t3sb-constants thead th {background: var(--typo3-component-bg, #1a1a1a);}
+@media (prefers-color-scheme: dark) {
+	html:not([data-color-scheme="light"]) .t3sb-constants thead th {background: var(--typo3-component-bg, #1a1a1a);}
+}
+.t3sb-constants tbody tr:hover {background: var(--t3sb-accent-soft);}
+.t3sb-constants tbody tr:hover .t3sb-constants-edit a {opacity: 1;}
+.t3sb-constants .t3sb-constants-edit a {opacity: .45; transition: opacity .15s;}
+.t3sb-constants .t3sb-constants-edit a:hover {opacity: 1;}
+
+
+/* The backend's own warning tokens do not survive dark mode: the alert keeps a dark
+   text colour on a dark fill, which leaves the note unreadable, and the button puts
+   white on amber. Both are restated here, scoped to the module. */
+.t3sb-transfer .alert-warning {
+	color: var(--t3sb-warn);
+	background: var(--t3sb-warn-soft);
+	border: 1px solid var(--t3sb-warn-line);
+	border-left: 4px solid var(--t3sb-warn-fill);
+}
+.t3sb-transfer .alert-warning strong,
+.t3sb-transfer .alert-warning code,
+.t3sb-transfer .alert-warning a {color: var(--t3sb-warn);}
+.t3sb-transfer .btn-warning {
+	background: var(--t3sb-warn-fill);
+	border-color: var(--t3sb-warn-fill);
+	color: var(--t3sb-warn-on);
+	font-weight: 600;
+}
+.t3sb-transfer .btn-warning:hover,
+.t3sb-transfer .btn-warning:focus,
+.t3sb-transfer .btn-warning:active {
+	background: var(--t3sb-warn-fill);
+	border-color: var(--t3sb-warn-fill);
+	color: var(--t3sb-warn-on);
+	filter: brightness(.92);
+}

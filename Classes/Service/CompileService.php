@@ -24,6 +24,13 @@ class CompileService
     {
         $absoluteFile = $this->resolveAbsolutePath($file);
 
+        // Other extensions bring their own scss along, and a compiler for it. Only files
+        // below our own asset directory are ours to touch - everything else is handed
+        // back untouched and reaches whoever put it there.
+        if ($absoluteFile === '' || !$this->isBelowAssetPath($absoluteFile)) {
+            return null;
+        }
+
         // The css lives below the configured asset directory, which may have been
         // moved out of typo3temp/ - getPath() creates it when it is not there yet.
         $this->assetPathService->getPath('css');
@@ -65,9 +72,29 @@ class CompileService
             }
         }
 
+        // Our own scss, but no parser took it - see Parser\ScssParser, which steps aside when
+        // another extension has loaded a scssphp it cannot drive. The TypoScript condition that
+        // includes this file excludes bootstrap.min.css, so without a substitute the page would
+        // come without any Bootstrap at all. Plain Bootstrap beats nothing.
+        if (strtolower((string)($settings['file']['info']['extension'] ?? '')) === 'scss') {
+            $fallback = $this->assetPathService->getRelPath('T3SB-CSS') . 'bootstrap.min.css';
+
+            if (is_file(Environment::getPublicPath() . '/' . $fallback)) {
+                return $fallback;
+            }
+        }
+
         return null;
     }
 
+
+    /**
+     * The asset directory is ours; a file outside it belongs to someone else.
+     */
+    private function isBelowAssetPath(string $absoluteFile): bool
+    {
+        return str_starts_with($absoluteFile, rtrim($this->assetPathService->getPath(), '/') . '/');
+    }
 
     /**
      * Resolves a PageRenderer file reference to an absolute file system path. Since TYPO3 v14 the

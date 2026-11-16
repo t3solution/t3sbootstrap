@@ -102,6 +102,20 @@ After installation, complete these steps to get a working frontend:
 > each deployment. The backend module points this out when local delivery is configured and the
 > files are missing.
 
+5. **Back up and transfer the configuration**
+   The backend module exports the whole setup of a root page as one JSON file: the configuration
+   record including your own SCSS, the extension configuration, and the t3sbootstrap site sets and
+   settings. The same export is available as a command for a scheduler task or a deployment script:
+
+   ```
+   vendor/bin/typo3 t3sbootstrap:configExport
+   ```
+
+   Without options the file is written to `var/transfer/` with a timestamp in its name. `--file`
+   picks another location, `--pid` limits the export to the record of one page. Importing writes
+   the record straight away; the two parts that live in files are shown as a diff first and are
+   written only after a second confirmation. Only keys belonging to t3sbootstrap are touched.
+
 ## Configuration
 
 `t3sbootstrap` offers a wide range of options via **Extension Configuration** (Settings → Extension Configuration → `t3sbootstrap`), TypoScript, and the website settings, as well as in the backend module
@@ -140,7 +154,7 @@ survive the round trip.
 
 | Extension          | Purpose                                                                 |
 |--------------------|-------------------------------------------------------------------------|
-| `t3sbootstrap_builder` | [Visual Bootstrap 5.3 theme builder](https://github.com/t3solution/t3sbootstrap_builder) as a backend module — around 200 variables with live preview. Version 1.0.2 requires t3sbootstrap `>= 5.3.50`. |
+| `t3sbootstrap_builder` | [Visual Bootstrap 5.3 theme builder](https://github.com/t3solution/t3sbootstrap_builder) as a backend module — around 200 variables with live preview. Version 1.0.3 requires t3sbootstrap `>= 5.3.50`. |
 | `t3s_swiper`       | [Swiper slider](https://github.com/t3solution/t3s_swiper) content element, based on Content Blocks |
 | `iconpack` / `iconpack_fontawesome` | Icon picker integration (replacement for `rte_ckeditor_fontawesome`) |
 

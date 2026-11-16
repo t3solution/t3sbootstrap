@@ -22,7 +22,7 @@ settings:
     category: Bootstrap.cdn
     description: ''
     type: string
-    default: '5.3.8'
+    default: '5.3.9'
   
   bootstrap.cdn.popperjs:
     label: 'Popper JS'
@@ -100,21 +100,21 @@ settings:
     category: Bootstrap.integrity
     description: ''
     type: string
-    default: 'sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB'
+    default: 'sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX'
   
   bootstrap.cdn.bootstrapJsIntegrity:
     label: 'Bootstrap JS'
     category: Bootstrap.integrity
     description: ''
     type: string
-    default: 'sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y'
+    default: 'sha384-89aa4glufciPv46aKltztWQEmk+Tu9W2RhzXr6VcnUUEub7F8+06RcL2RYLCOHUq'
   
   bootstrap.cdn.bootstrapBundleJsIntegrity:
     label: 'Bootstrap Bundle JS'
     category: Bootstrap.integrity
     description: ''
     type: string
-    default: 'sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI'
+    default: 'sha384-WyOxWvTyr1QaMPfiPJSv76iReVthorl5uWlFtZPyK0IEB0hGzo9y5Bp9mYanr8Bu'
   
   bootstrap.cdn.popperjsIntegrity:
     label: 'Popper JS'

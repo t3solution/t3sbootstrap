@@ -101,8 +101,65 @@
 		</div>
 		<div id="constants-panel" class="collapse" aria-labelledby="constants-heading-panel" data-bs-parent="#accordionList">
 			<div class="panel-body p-4">
-				<p><f:translate key="overrideconstants" /></p>
-				<div id="constants" class="p-3 callout callout-notice"><pre>{filecontent}</pre></div>
+				<p class="lead t3sb-lead"><f:translate key="overrideconstants" /></p>
+
+				<div class="t3sb-transfer t3sb-constants-wrap">
+					<f:if condition="{constantBlocks}">
+						<f:else>
+							<div class="alert alert-warning">
+								<f:translate key="constants.none" />
+							</div>
+						</f:else>
+					</f:if>
+
+					<f:for each="{constantBlocks}" as="block">
+						<f:if condition="{block.condition}">
+							<p class="mb-1"><code>{block.condition}</code></p>
+						</f:if>
+						<p class="text-muted mb-2">
+							<f:translate key="constants.scope" arguments="{0: block.editableCount, 1: block.rowCount}" />
+						</p>
+						<table class="table table-striped t3sb-constants">
+							<thead>
+								<tr>
+									<th><f:translate key="constants.constant" /></th>
+									<th><f:translate key="constants.value" /></th>
+									<th><f:translate key="constants.meaning" /></th>
+									<th class="t3sb-constants-edit"><span class="visually-hidden"><f:translate key="constants.edit" /></span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<f:for each="{block.rows}" as="row">
+									<tr>
+										<td><code>{row.constant}</code></td>
+										<td><code>{row.value}</code></td>
+										<td>
+											{row.label}
+											<f:if condition="{row.description}">
+												<span class="d-block text-muted">{row.description}</span>
+											</f:if>
+										</td>
+										<td class="t3sb-constants-edit">
+											<f:if condition="{row.editUri}">
+												<a href="{row.editUri}" title="{f:translate(key: 'constants.edit')}">
+													<core:icon identifier="actions-open" size="small" />
+												</a>
+											</f:if>
+										</td>
+									</tr>
+								</f:for>
+							</tbody>
+						</table>
+					</f:for>
+
+					<details class="t3sb-reveal">
+						<summary class="btn btn-default">
+							<core:icon identifier="actions-chevron-down" size="small" />
+							<f:translate key="constants.astyposcript" />
+						</summary>
+						<div id="constants" class="p-3 callout callout-notice mt-2"><pre>{filecontent}</pre></div>
+					</details>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -120,14 +177,239 @@
 			</h3>
 		</div>
 		<div id="transfer-panel" class="collapse" aria-labelledby="transfer-heading-panel" data-bs-parent="#accordionList">
-			<div class="panel-body p-4">
-				<p class="text-muted"><f:translate key="transfer.description" /></p>
+			<div class="panel-body p-4 t3sb-transfer">
+				<p class="lead t3sb-lead"><f:translate key="transfer.description" /></p>
+				<f:if condition="{transfer.historyUri}">
+					<p class="mb-4">
+						<a href="{transfer.historyUri}">
+							<core:icon identifier="actions-history" size="small" />
+							<f:translate key="transfer.history" />
+						</a>
+					</p>
+				</f:if>
+
+				<f:if condition="{transfer.inventory}">
+					<div class="t3sb-inventory mb-4">
+						<h4 class="t3sb-section-title">
+							<core:icon identifier="actions-file-t3d" size="small" />
+							<f:translate key="transfer.inventory" />
+						</h4>
+						<p class="text-muted mb-3">
+							<f:translate key="transfer.inventory.description" arguments="{0: transfer.inventory.typo3, 1: transfer.inventory.php}" />
+						</p>
+
+						<div class="t3sb-figures mb-4">
+							<span class="t3sb-figure">
+								<core:icon identifier="actions-database" size="small" />
+								<strong>{transfer.inventory.recordCount}</strong>
+								<f:translate key="transfer.figure.records" />
+							</span>
+							<span class="t3sb-figure">
+								<core:icon identifier="actions-cog" size="small" />
+								<strong>{transfer.inventory.configurationCount}</strong>
+								<f:translate key="transfer.figure.configuration" />
+							</span>
+							<span class="t3sb-figure">
+								<core:icon identifier="actions-package" size="small" />
+								<strong>{transfer.inventory.ownSetCount}</strong>
+								<f:translate key="transfer.figure.sets" />
+							</span>
+							<span class="t3sb-figure">
+								<core:icon identifier="actions-tag" size="small" />
+								<strong>{transfer.inventory.settingCount}</strong>
+								<f:translate key="transfer.figure.settings" />
+							</span>
+							<span class="t3sb-figure t3sb-figure-muted">
+								<core:icon identifier="module-extensionmanager" size="small" />
+								<strong>{transfer.inventory.extensionCount}</strong>
+								<f:translate key="transfer.figure.extensions" />
+							</span>
+						</div>
+
+						<f:if condition="{transfer.inventory.extensionConfigurationWritable} == false">
+							<div class="alert alert-info"><f:translate key="transfer.inventory.readonly" /></div>
+						</f:if>
+
+						<div class="t3sb-cards">
+
+							<div class="card t3sb-card t3sb-card-part">
+								<div class="card-header">
+									<core:icon identifier="actions-package" size="small" />
+									<f:translate key="transfer.inventory.sets.title" />
+									<span class="t3sb-count">{transfer.inventory.setCount}</span>
+								</div>
+								<div class="card-body">
+									<p class="text-muted mb-2">
+										<f:if condition="{transfer.inventory.site}">
+											<f:then><f:translate key="transfer.inventory.sets.origin" arguments="{0: transfer.inventory.setCount, 1: transfer.inventory.site}" /></f:then>
+											<f:else><f:translate key="transfer.inventory.sets.origin.unknown" /></f:else>
+										</f:if>
+										<f:translate key="transfer.inventory.sets.managed" />
+									</p>
+									<f:if condition="{transfer.inventory.sets}">
+										<f:then>
+											<details class="t3sb-reveal">
+												<summary class="btn btn-default">
+													<core:icon identifier="actions-chevron-down" size="small" />
+													<f:translate key="transfer.inventory.sets.show" arguments="{0: transfer.inventory.setCount}" />
+												</summary>
+												<table class="table table-striped mt-2">
+													<thead>
+														<tr>
+															<th><f:translate key="transfer.inventory.set" /></th>
+															<th><f:translate key="transfer.inventory.extension" /></th>
+														</tr>
+													</thead>
+													<tbody>
+														<f:for each="{transfer.inventory.sets}" as="set">
+															<tr class="{f:if(condition: set.own, then: '', else: 't3sb-foreign')}">
+																<td>
+																	<code>{set.name}</code>
+																	<f:if condition="{set.own}">
+																		<span class="badge t3sb-badge ms-1">t3sbootstrap</span>
+																	</f:if>
+																</td>
+																<td>
+																	<f:if condition="{set.extension}">
+																		<f:then><code>{set.extension}</code></f:then>
+																		<f:else><em class="text-danger"><f:translate key="transfer.inventory.unknown" /></em></f:else>
+																	</f:if>
+																</td>
+															</tr>
+														</f:for>
+													</tbody>
+												</table>
+											</details>
+										</f:then>
+										<f:else>
+											<p class="text-muted mb-0"><f:translate key="transfer.inventory.nosite" /></p>
+										</f:else>
+									</f:if>
+								</div>
+							</div>
+
+							<div class="card t3sb-card t3sb-card-part">
+								<div class="card-header">
+									<core:icon identifier="actions-tag" size="small" />
+									<f:translate key="transfer.inventory.settings.title" />
+									<span class="t3sb-count">{transfer.inventory.settingCount}</span>
+								</div>
+								<div class="card-body">
+									<p class="text-muted mb-2">
+										<f:translate key="transfer.inventory.settings.description" arguments="{0: transfer.inventory.settingCount}" />
+									</p>
+									<f:if condition="{transfer.inventory.settings}">
+										<f:then>
+											<details class="t3sb-reveal">
+												<summary class="btn btn-default">
+													<core:icon identifier="actions-chevron-down" size="small" />
+													<f:translate key="transfer.inventory.settings.show" arguments="{0: transfer.inventory.settingCount}" />
+												</summary>
+												<table class="table table-striped mt-2">
+													<tbody>
+														<f:for each="{transfer.inventory.settings}" as="value" key="key">
+															<tr>
+																<td><code>{key}</code></td>
+																<td><code class="t3sb-value">{value}</code></td>
+															</tr>
+														</f:for>
+													</tbody>
+												</table>
+											</details>
+										</f:then>
+										<f:else>
+											<p class="text-muted mb-0"><f:translate key="transfer.inventory.settings.none" /></p>
+										</f:else>
+									</f:if>
+								</div>
+							</div>
+
+							<div class="card t3sb-card t3sb-card-part">
+								<div class="card-header">
+									<core:icon identifier="actions-cog" size="small" />
+									<f:translate key="transfer.inventory.configuration.title" />
+									<span class="t3sb-count">{transfer.inventory.configurationCount}</span>
+								</div>
+								<div class="card-body">
+									<p class="text-muted mb-2">
+										<f:translate key="transfer.inventory.configuration.description" arguments="{0: transfer.inventory.configurationCount}" />
+									</p>
+									<details class="t3sb-reveal">
+										<summary class="btn btn-default">
+											<core:icon identifier="actions-chevron-down" size="small" />
+											<f:translate key="transfer.inventory.configuration.show" arguments="{0: transfer.inventory.configurationCount}" />
+										</summary>
+										<table class="table table-striped mt-2">
+											<tbody>
+												<f:for each="{transfer.inventory.configuration}" as="value" key="key">
+													<tr>
+														<td><code>{key}</code></td>
+														<td><code class="t3sb-value">{value}</code></td>
+													</tr>
+												</f:for>
+											</tbody>
+										</table>
+									</details>
+								</div>
+							</div>
+
+							<div class="card t3sb-card t3sb-card-part t3sb-card-quiet">
+								<div class="card-header">
+									<core:icon identifier="module-extensionmanager" size="small" />
+									<f:translate key="transfer.inventory.extensions.title" />
+									<span class="t3sb-count">{transfer.inventory.extensionCount}</span>
+								</div>
+								<div class="card-body">
+									<p class="text-muted mb-2">
+										<f:translate key="transfer.inventory.extensions.description" arguments="{0: transfer.inventory.extensionCount}" />
+									</p>
+									<f:if condition="{transfer.inventory.composer.snippet}">
+										<p class="text-muted mb-1">
+											<f:translate key="transfer.inventory.composer" arguments="{0: transfer.inventory.composer.required}" />
+										</p>
+										<pre class="t3sb-command mb-3"><code>{transfer.inventory.composer.snippet}</code></pre>
+										<f:if condition="{transfer.inventory.composer.skipped}">
+											<p class="text-muted mb-3">
+												<f:translate key="transfer.inventory.composer.skipped" />
+												<code>{transfer.inventory.composer.skipped -> f:join(separator: ', ')}</code>
+											</p>
+										</f:if>
+									</f:if>
+
+									<details class="t3sb-reveal">
+										<summary class="btn btn-default">
+											<core:icon identifier="actions-chevron-down" size="small" />
+											<f:translate key="transfer.inventory.extensions.show" arguments="{0: transfer.inventory.extensionCount}" />
+										</summary>
+										<table class="table table-striped mt-2">
+											<tbody>
+												<f:for each="{transfer.inventory.extensions}" as="extension" key="key">
+													<tr>
+														<td><code>{key}</code></td>
+														<td class="text-muted">{extension.composer}</td>
+														<td><code class="t3sb-value">{extension.version}</code></td>
+													</tr>
+												</f:for>
+											</tbody>
+										</table>
+									</details>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</f:if>
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
-						<h4><f:translate key="transfer.export" /></h4>
+						<div class="card h-100 t3sb-card">
+							<div class="card-header">
+								<core:icon identifier="actions-download" size="small" />
+								<f:translate key="transfer.export" />
+							</div>
+							<div class="card-body">
 						<f:form action="export" method="post" additionalParams="{id: currentUid}">
-							<div class="mb-2">
+							<div class="mb-3">
 								<label class="form-label" for="t3sb-export-pid"><f:translate key="transfer.sourcepage" /></label>
 								<f:form.select id="t3sb-export-pid" class="form-select" name="exportPid"
 									options="{transfer.pageOptions}" value="{transfer.currentPid}" />
@@ -136,30 +418,67 @@
 								<core:icon identifier="actions-download" size="small" /> <f:translate key="transfer.export.submit" />
 							</f:form.button>
 						</f:form>
+
+						<p class="text-muted mt-3 mb-1"><f:translate key="transfer.export.command" /></p>
+						<code class="t3sb-command">vendor/bin/typo3 t3sbootstrap:configExport</code>
+							</div>
+						</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<h4><f:translate key="transfer.import" /></h4>
+						<div class="card h-100 t3sb-card t3sb-card-write">
+							<div class="card-header">
+								<core:icon identifier="actions-upload" size="small" />
+								<f:translate key="transfer.import" />
+							</div>
+							<div class="card-body">
 						<f:form action="import" method="post" enctype="multipart/form-data" additionalParams="{id: currentUid}">
-							<div class="mb-2">
+							<div class="mb-3">
 								<label class="form-label" for="t3sb-import-file"><f:translate key="transfer.file" /></label>
 								<f:form.upload id="t3sb-import-file" class="form-control" name="configFile" additionalAttributes="{accept: 'application/json,.json', required: 'required'}" />
 							</div>
-							<div class="mb-2">
+							<div class="mb-3">
 								<label class="form-label" for="t3sb-target-pid"><f:translate key="transfer.targetpage" /></label>
 								<f:form.select id="t3sb-target-pid" class="form-select" name="targetPid"
 									options="{transfer.pageOptions}" value="{transfer.currentPid}" />
 							</div>
-							<div class="mb-2">
+							<div class="mb-3">
 								<label class="form-label" for="t3sb-mode"><f:translate key="transfer.mode" /></label>
 								<f:form.select id="t3sb-mode" class="form-select" name="importMode"
 									options="{transfer.modeOptions}" value="update" />
-								<div class="form-text"><f:translate key="transfer.mode.hint" /></div>
+								<ul class="form-text t3sb-modes">
+									<li><f:translate key="transfer.mode.hint.update" /></li>
+									<li><f:translate key="transfer.mode.hint.replace" /></li>
+									<li><f:translate key="transfer.mode.hint.add" /></li>
+								</ul>
 							</div>
+							<div class="form-check mb-2">
+								<f:form.checkbox id="t3sb-import-records" class="form-check-input" name="importRecords" value="1" checked="true" />
+								<label class="form-check-label" for="t3sb-import-records"><f:translate key="transfer.part.records" /></label>
+							</div>
+							<f:if condition="{transfer.admin}">
+								<div class="form-check">
+									<f:form.checkbox id="t3sb-import-system" class="form-check-input" name="importSystem" value="1" checked="true" />
+									<label class="form-check-label" for="t3sb-import-system"><f:translate key="transfer.part.system" /></label>
+								</div>
+								<div class="form-text mb-3">
+									<f:translate key="transfer.part.system.hint" />
+									<ul class="t3sb-modes">
+										<li><f:translate key="transfer.part.system.where" /></li>
+										<li><f:translate key="transfer.part.system.preview" /></li>
+										<li><f:translate key="transfer.part.system.scope" /></li>
+										<li><f:translate key="transfer.part.system.host" /></li>
+										<li><f:translate key="transfer.part.system.deployment" /></li>
+										<li><strong><f:translate key="transfer.nowarranty" /></strong></li>
+									</ul>
+								</div>
+							</f:if>
 							<f:form.button type="submit" class="btn btn-warning">
 								<core:icon identifier="actions-upload" size="small" /> <f:translate key="transfer.import.submit" />
 							</f:form.button>
 						</f:form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
