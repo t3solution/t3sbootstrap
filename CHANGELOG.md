@@ -4,6 +4,47 @@ Alle nennenswerten Änderungen an `EXT:t3sbootstrap`.
 
 ---
 
+## 5.3.61 — PHP-Warnung beim Container-Override
+
+Reine Fehlerbehebung, keine neuen Funktionen.
+
+### Behoben — „Trying to access array offset on null" ([#539](https://github.com/t3solution/t3sbootstrap/issues/539))
+
+Die Abfrage des Page-TSconfig-Overrides
+
+```
+module.tx_t3sbootstrap.settings.pages.override.tx_t3sbootstrap_container
+```
+
+griff ungesichert durch fünf Array-Ebenen. Ist das Override nicht gesetzt — der
+Normalfall —, ist bereits `$ts['module.']` null, und PHP 8 meldet bei jedem
+weiteren Index eine Warnung.
+
+Betroffen ist nicht jede Installation. Die Extension definiert den Pfad in ihrem
+eigenen TypoScript (`Configuration/Sets/T3sbootstrap/setup.typoscript`), und wo
+dieses greift, existieren alle fünf Ebenen — der Wert ist dann leer, aber die
+Schlüssel sind da. Die Warnung tritt dort auf, wo das TypoScript im Moment des
+Zugriffs nicht aufgelöst ist; gemeldet wurde sie aus dem Seiten-Modul, in dem ein
+ViewHelper die Infozeile unter jedes Inhaltselement schreibt.
+
+Dieselbe ungesicherte Kette steht auch im `BootstrapProcessor` und im
+`GalleryProcessor`. Im normalen Frontend-Betrieb greift dort das TypoScript, die
+Warnung bleibt also aus — unter denselben Umständen wie im Backend würde sie
+aber genauso auftreten.
+
+In dieser Form steht die Zeile seit 5.3.40 im Code; gewarnt wird ab PHP 7.4.
+
+Alle drei sind jetzt abgesichert, zusammen mit drei gleichartigen Zugriffen in
+denselben Anweisungen. Einer davon war mehr als eine fehlende Absicherung: Im
+`BootstrapProcessor` prüfte `!empty($pageRecord)`, ob überhaupt ein
+Seitendatensatz vorliegt — nicht, ob die Spalte gesetzt ist. Bei vorhandenem
+Datensatz ohne die Spalte warnte der Ausdruck genauso.
+
+Am Verhalten ändert sich nichts: Wo vorher eine Warnung stand, steht jetzt ein
+leerer Wert, und den behandelte der Code schon vorher als „kein Override".
+
+---
+
 ## 5.3.60 — Export und Import des kompletten Setups
 
 Betrifft die folgenden Dateien:
