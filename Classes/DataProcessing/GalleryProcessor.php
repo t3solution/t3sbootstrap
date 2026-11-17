@@ -183,14 +183,14 @@ class GalleryProcessor implements DataProcessorInterface
         $this->parentflexconf = !empty($this->processedParentData['tx_t3sbootstrap_flexform'])
          ? $flexFormTools->convertFlexFormContentToArray($this->processedParentData['tx_t3sbootstrap_flexform']) : [];
 
-        $pageContainer = $pageInformation->getPageRecord()['tx_t3sbootstrap_container'];
-        $contentContainer = $this->processedData['data']['tx_t3sbootstrap_container'];
+        $pageContainer = $pageInformation->getPageRecord()['tx_t3sbootstrap_container'] ?? '';
+        $contentContainer = $this->processedData['data']['tx_t3sbootstrap_container'] ?? '';
         if (empty($pageContainer) && empty($contentContainer)) {
             $pageContainer = '';
         }
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);	
         $ts = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        $pagesOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'];
+        $pagesOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'] ?? '';
         if (!empty($pagesOverride)) {
             if ($pageContainer !== 'none') {
                 $pageContainer = $pagesOverride;

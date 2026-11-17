@@ -57,7 +57,7 @@ class InfoViewHelper extends AbstractViewHelper
 
 				if (!empty($container)) {
 
-					$pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'];
+					$pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'] ?? '';
 					
 					if (!empty($pOverride)) {
 						if ($pageContainer === 'none') {

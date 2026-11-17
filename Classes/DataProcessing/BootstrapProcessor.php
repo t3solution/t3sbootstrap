@@ -232,9 +232,9 @@ class BootstrapProcessor implements DataProcessorInterface
 
         // container config
         $pageRecord = $pageInformation->getPageRecord();
-        $pageContainer = !empty($pageRecord) ? $pageRecord['tx_t3sbootstrap_container'] : '';
+        $pageContainer = $pageRecord['tx_t3sbootstrap_container'] ?? '';
         $ts = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        $pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'];
+        $pOverride = $ts['module.']['tx_t3sbootstrap.']['settings.']['pages.']['override.']['tx_t3sbootstrap_container'] ?? '';
         if (!empty($pOverride)) {
             $pageContainer = !empty($pageContainer) ? $pageContainer : '';
             if ($pageContainer === 'none') {
